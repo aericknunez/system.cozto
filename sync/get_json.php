@@ -18,7 +18,7 @@ $hora = date("H:i:s");
 
 
 
-$data =  file_get_contents('https://pizto.com/login/application/includes/db_sync_json.php?x=' . $_SESSION["temporal_td"]); 
+$data =  file_get_contents('http://localhost/app/api/bd_remota.php?x=' . $_SESSION["temporal_td"] . '&type=2');  
 $datos = json_decode($data, true);
 
 foreach ($datos as $valores) { // vamos hacer un archivo por cada hash
@@ -27,66 +27,61 @@ foreach ($datos as $valores) { // vamos hacer un archivo por cada hash
 $a = $db->query("SELECT * FROM login_db_sync WHERE hash = '$sync'");
 if($a->num_rows == 0){
 
-	$handle = fopen($sync . ".sql",'w+');
-	$resultado.= 'INSERT INTO login_sync VALUES("", "'.$sync.'", "4", "1",  "'.$fecha.'", "'.$hora.'", "'.$_SESSION["temporal_td"].'");';
-	
-	fwrite($handle,$resultado);
-	unset($resultado);
-	fclose($handle);
 
-	$dato = array();
-	$dato["hash"] = $sync;
-	$dato["fecha"] = $fecha;
-	$dato["hora"] = $hora;
-	$datos["hash"] = Helpers::HashId();
-	$datos["time"] = Helpers::TimeId();
-	$db->insert("login_db_sync", $dato);
+      $updata = array('validate'=>  1,
+      				  'hash'   	=>  $sync,
+				      'type' 	=>  2,
+				  	  'x'   	=>  $_SESSION["temporal_td"]);
 
-// aqui ejecuto el sql que deberia estar en el directorio descargado de git
-$archx = "sql/" . $sync . ".sql";            
+    $api_url = "http://localhost/app/api/bd_remota.php";
+    $client = curl_init($api_url);
+    curl_setopt($client, CURLOPT_POST, true);
+    curl_setopt($client, CURLOPT_POSTFIELDS, $updata);
+    curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+    $response = curl_exec($client);
+    curl_close($client);
+    $result = json_decode($response, true);
 
-if (file_exists($archx)) {
-$sql = explode(";",file_get_contents($archx));//
-foreach($sql as $query){
-@$db->query($query);
-} @unlink($archx); } 
+	// print_r($result);
+    foreach($result as $keys => $values){
+	      if($result[$keys]['success'] == '1'){
+	      		$dato = array();
+				$dato["hash"] = $sync;
+				$dato["fecha"] = $fecha;
+				$dato["hora"] = $hora;
+				$db->insert("login_db_sync", $dato);
 
-//
+				// aqui ejecuto el sql que deberia estar en el directorio descargado de git
+				$archx = "sql/" . $sync . ".sql";            
+
+				if (file_exists($archx)) {
+				$sql = explode(";",file_get_contents($archx));//
+				foreach($sql as $query){
+				@$db->query($query);
+				} @unlink($archx); } 
+
+				//
+	     }
+    }
+
+
+
 	} $a->close();
 
 
-	if($sync != NULL){
-		if(SubirFtp($sync) == TRUE){
-			@unlink($sync . ".sql");	
-		}	 
-	} 
 
 
 } // foreach
 
 
-function SubirFtp($sync){
-	include_once '../system/sync/Ftp.php';
-		$subir =  new Ftp;
-		if($subir->Servidor("ftp.pizto.com",
-						"erick@pizto.com",
-						"caca007125-",
-						$sync,
-						"/login/sync/database/",
-						"C:/AppServ/www/cozto/sync/". $sync .".sql") == TRUE){
-						return TRUE;
-		} else {
-			return FALSE;
-		}
-}
-
 
 
 
 ///////// actualizar el root
-$data =  file_get_contents('https://pizto.com/login/application/includes/root_json.php?x=' . $_SESSION["temporal_td"]); 
-$cambio = json_decode($data, true);
-$db->update("config_root", $cambio, "WHERE td=".$_SESSION["temporal_td"]."");
+if($data = file_get_contents('https://pizto.com/login/application/includes/root_json.php?x=' . $_SESSION["temporal_td"])){
+	$cambio = json_decode($data, true);
+	$db->update("config_root", $cambio, "WHERE td=".$_SESSION["temporal_td"]."");
+}
 
 unset($_SESSION["temporal_td"]);
 

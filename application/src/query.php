@@ -268,6 +268,11 @@ echo '<script type="text/javascript" src="assets/js/query/paginador.js?v='.$nume
 echo '<script type="text/javascript" src="assets/js/query/planilla.js?v='.$numero.'"></script>';
 } 
 
+//////////////// BackUp
+elseif(isset($_GET["backup"])) {
+echo '<script type="text/javascript" src="assets/js/query/backup.js?v='.$numero.'"></script>';
+} 
+
 
 else{
 /// lo que llevara index

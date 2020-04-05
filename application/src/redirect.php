@@ -76,6 +76,9 @@ elseif(isset($_GET["verempleado"])) include_once 'system/planilla/empleadover.ph
 elseif(isset($_GET["descuentos"])) include_once 'system/planilla/descuentos.php'; // ver descuentos
 elseif(isset($_GET["planillasver"])) include_once 'system/planilla/planillasver.php'; // ver planilla
 
+// backup
+elseif(isset($_GET["backup"])) include_once 'system/bdbackup/respaldo.php'; // backup de bd
+
 
 else{
 include_once 'system/index/index.php';
