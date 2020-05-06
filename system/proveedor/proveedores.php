@@ -18,12 +18,12 @@ $proveedor = new Proveedores();
   <div class="form-row">
 
   <div class="col-md-8 mb-2 md-form">
-      <label for="descripcion">* Nombre</label>
+      <label for="nombre">* Nombre</label>
       <input type="text" class="form-control" id="nombre" name="nombre">
     </div>
 
     <div class="col-md-4 mb-2 md-form">
-      <label for="cod">* Documento</label>
+      <label for="documento">* Documento</label>
       <input type="text" class="form-control" id="documento" name="documento">
     </div>
 
@@ -32,28 +32,36 @@ $proveedor = new Proveedores();
 
   <div class="form-row">
 
-    <div class="col-md-4 mb-2 md-form">
-      <label for="cod">Registro</label>
+    <div class="col-md-6 mb-2 md-form">
+      <label for="registro">Registro</label>
       <input type="text" class="form-control" id="registro" name="registro">
     </div>
 
-  <div class="col-md-8 mb-2 md-form">
-      <label for="descripcion">* Direcci&oacuten</label>
+        <div class="col-md-6 mb-2 md-form">
+      <label for="giro">* Giro</label>
+      <input type="text" class="form-control" id="giro" name="giro">
+    </div>
+
+  </div>
+
+  <div class="form-row">
+
+  <div class="col-md-12 mb-2 md-form">
+      <label for="direccion">* Direcci&oacuten</label>
       <input type="text" class="form-control" id="direccion" name="direccion">
     </div>
 
   </div>
 
-
   <div class="form-row">
 
     <div class="col-md-6 mb-2 md-form">
-      <label for="cod">Departamento</label>
+      <label for="departamento">Departamento</label>
       <input type="text" class="form-control" id="departamento" name="departamento">
     </div>
 
   <div class="col-md-6 mb-2 md-form">
-      <label for="descripcion">Municipio</label>
+      <label for="municipio">Municipio</label>
       <input type="text" class="form-control" id="municipio" name="municipio">
     </div>
 
@@ -62,15 +70,16 @@ $proveedor = new Proveedores();
 
   <div class="form-row">
 
-    <div class="col-md-4 mb-2 md-form">
-      <label for="cod">* Giro</label>
-      <input type="text" class="form-control" id="giro" name="giro">
-    </div>
-
-  <div class="col-md-8 mb-2 md-form">
-      <label for="descripcion">* Tel&eacutefono</label>
+  <div class="col-md-6 mb-2 md-form">
+      <label for="telefono">* Tel&eacutefono</label>
       <input type="text" class="form-control" id="telefono" name="telefono">
     </div>
+
+    <div class="col-md-6 mb-2 md-form">
+      <label for="email">Email</label>
+      <input type="text" class="form-control" id="email" name="email">
+    </div>
+
 
   </div>
 
@@ -78,15 +87,19 @@ $proveedor = new Proveedores();
 
   <div class="form-row">
 
-    <div class="col-md-6 mb-2 md-form">
-      <label for="cod">Email</label>
-      <input type="text" class="form-control" id="email" name="email">
-    </div>
+
 
   <div class="col-md-6 mb-2 md-form">
-      <label for="descripcion">Nombre Contacto</label>
+      <label for="contacto">Nombre Contacto</label>
       <input type="text" class="form-control" id="contacto" name="contacto">
     </div>
+
+
+  <div class="col-md-6 mb-2 md-form">
+      <label for="tel_contacto">* Tel&eacutefono Contacto</label>
+      <input type="text" class="form-control" id="tel_contacto" name="tel_contacto">
+    </div>
+
 
   </div>
 

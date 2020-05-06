@@ -231,7 +231,7 @@ class Clientes {
                     <td>Telefono: '.$r["telefono"].'</td>
                   </tr>
                   <tr>
-                    <td>Contacto: '.$r["contacto"].'</td>
+                    <td>Fecha de Nacimiento: '.$r["nacimiento"].'</td>
                     <td>Comentarios: '.$r["comentarios"].'</td>
                   </tr>
                 </tbody>

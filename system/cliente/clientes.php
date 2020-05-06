@@ -70,8 +70,7 @@ $cliente = new Clientes();
     </div>
 
   <div class="col-md-6 mb-2 md-form">
-      <label for="descripcion">Nombre Contacto</label>
-      <input type="text" class="form-control" id="contacto" name="contacto">
+      <input placeholder="Fecha de Nacimiento" type="text" id="nacimiento" name="nacimiento" class="form-control datepicker">
     </div>
 
   </div>

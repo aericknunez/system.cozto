@@ -186,11 +186,11 @@ class Proveedores{
                   </tr>
                   <tr>
                     <td>Giro: '.$r["giro"].'</td>
-                    <td>Telefono: '.$r["telefono"].'</td>
+                    <td>Telefono: '.$r["telefono"].'  |  Email: '.$r["email"].'</td>
                   </tr>
                   <tr>
-                    <td>Email: '.$r["email"].'</td>
                     <td>Contacto: '.$r["contacto"].'</td>
+                    <td>Tel. Contacto: '.$r["tel_contacto"].'</td>
                   </tr>
                   <tr>
                     <th colspan="2">Comenatarios: '.$r["comentarios"].'</th>

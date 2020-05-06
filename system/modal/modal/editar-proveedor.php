@@ -22,6 +22,7 @@ $giro = $r["giro"];
 $telefono = $r["telefono"]; 
 $email = $r["email"];
 $contacto = $r["contacto"]; 
+$tel_contacto = $r["tel_contacto"]; 
 $comentarios = $r["comentarios"]; 
   }  unset($r); ?>
 
@@ -35,12 +36,12 @@ $comentarios = $r["comentarios"];
 
 <input type="hidden" id="hash" name="hash" value="<?php echo $hash; ?>">
   <div class="col-md-8 mb-2 md-form">
-      <label for="descripcion">* Nombre</label>
+      <label for="nombre">* Nombre</label>
       <input type="text" class="form-control" id="nombre" name="nombre" value="<?php echo $nombre; ?>">
     </div>
 
     <div class="col-md-4 mb-2 md-form">
-      <label for="cod">* Documento</label>
+      <label for="documento">* Documento</label>
       <input type="text" class="form-control" id="documento" name="documento" value="<?php echo $documento; ?>">
     </div>
 
@@ -49,13 +50,23 @@ $comentarios = $r["comentarios"];
 
   <div class="form-row">
 
-    <div class="col-md-4 mb-2 md-form">
-      <label for="cod">Registro</label>
+    <div class="col-md-6 mb-2 md-form">
+      <label for="registro">Registro</label>
       <input type="text" class="form-control" id="registro" name="registro" value="<?php echo $registro; ?>">
     </div>
 
-  <div class="col-md-8 mb-2 md-form">
-      <label for="descripcion">* Direcci&oacuten</label>
+    <div class="col-md-6 mb-2 md-form">
+      <label for="giro">* Giro</label>
+      <input type="text" class="form-control" id="giro" name="giro" value="<?php echo $giro; ?>">
+    </div>
+
+  </div>
+
+
+  <div class="form-row">
+
+  <div class="col-md-12 mb-2 md-form">
+      <label for="direccion">* Direcci&oacuten</label>
       <input type="text" class="form-control" id="direccion" name="direccion" value="<?php echo $direccion; ?>">
     </div>
 
@@ -65,12 +76,12 @@ $comentarios = $r["comentarios"];
   <div class="form-row">
 
     <div class="col-md-6 mb-2 md-form">
-      <label for="cod">Departamento</label>
+      <label for="departamento">Departamento</label>
       <input type="text" class="form-control" id="departamento" name="departamento" value="<?php echo $departamento; ?>">
     </div>
 
   <div class="col-md-6 mb-2 md-form">
-      <label for="descripcion">Municipio</label>
+      <label for="municipio">Municipio</label>
       <input type="text" class="form-control" id="municipio" name="municipio" value="<?php echo $municipio; ?>">
     </div>
 
@@ -79,14 +90,15 @@ $comentarios = $r["comentarios"];
 
   <div class="form-row">
 
-    <div class="col-md-4 mb-2 md-form">
-      <label for="cod">* Giro</label>
-      <input type="text" class="form-control" id="giro" name="giro" value="<?php echo $giro; ?>">
+
+  <div class="col-md-6 mb-2 md-form">
+      <label for="telefono">* Tel&eacutefono</label>
+      <input type="text" class="form-control" id="telefono" name="telefono" value="<?php echo $telefono; ?>">
     </div>
 
-  <div class="col-md-8 mb-2 md-form">
-      <label for="descripcion">* Tel&eacutefono</label>
-      <input type="text" class="form-control" id="telefono" name="telefono" value="<?php echo $telefono; ?>">
+    <div class="col-md-6 mb-2 md-form">
+      <label for="email">Email</label>
+      <input type="text" class="form-control" id="email" name="email" value="<?php echo $email; ?>">
     </div>
 
   </div>
@@ -95,15 +107,16 @@ $comentarios = $r["comentarios"];
 
   <div class="form-row">
 
-    <div class="col-md-6 mb-2 md-form">
-      <label for="cod">Email</label>
-      <input type="text" class="form-control" id="email" name="email" value="<?php echo $email; ?>">
+  <div class="col-md-6 mb-2 md-form">
+      <label for="contacto">Nombre Contacto</label>
+      <input type="text" class="form-control" id="contacto" name="contacto" value="<?php echo $contacto; ?>">
     </div>
 
   <div class="col-md-6 mb-2 md-form">
-      <label for="descripcion">Nombre Contacto</label>
-      <input type="text" class="form-control" id="contacto" name="contacto" value="<?php echo $contacto; ?>">
+      <label for="tel_contacto">* Tel&eacutefono Contacto</label>
+      <input type="text" class="form-control" id="tel_contacto" name="tel_contacto" value="<?php echo $tel_contacto; ?>">
     </div>
+
 
   </div>
 

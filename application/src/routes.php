@@ -495,6 +495,8 @@ include_once '../../system/proveedor/Proveedor.php';
 if($_REQUEST["op"]=="64"){ // agregar cliente
 include_once '../../system/cliente/Cliente.php';
 	$cliente = new Clientes;
+	$_POST["nacimiento"] = $_POST["nacimiento_submit"];
+	unset($_POST["nacimiento_submit"]);
 	$cliente->AddCliente($_POST);
 }
 
@@ -513,6 +515,8 @@ include_once '../../system/cliente/Cliente.php';
 if($_REQUEST["op"]=="67"){ // actualizar cliente
 include_once '../../system/cliente/Cliente.php';
 	$cliente = new Clientes;
+	$_POST["nacimiento"] = $_POST["nacimiento_submit"];
+	unset($_POST["nacimiento_submit"]);
 	$cliente->UpCliente($_POST);
 }
 

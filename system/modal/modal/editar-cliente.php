@@ -19,7 +19,7 @@ $municipio = $r["municipio"];
 $departamento = $r["departamento"]; 
 $telefono = $r["telefono"]; 
 $email = $r["email"];
-$contacto = $r["contacto"]; 
+$nacimiento = $r["nacimiento"]; 
 $comentarios = $r["comentarios"]; 
   }  unset($r); ?>
 
@@ -84,13 +84,10 @@ $comentarios = $r["comentarios"];
     </div>
 
   <div class="col-md-6 mb-2 md-form">
-      <label for="descripcion">Nombre Contacto</label>
-      <input type="text" class="form-control" id="contacto" name="contacto" value="<?php echo $contacto; ?>">
+      <input placeholder="Fecha de Nacimiento" type="text" id="nacimiento" name="nacimiento" <?php if($nacimiento != NULL) echo 'data-value="' . $nacimiento .'"'; ?> class="form-control datepicker">
     </div>
 
   </div>
-
-
 
   <div class="form-row">
 
