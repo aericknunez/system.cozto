@@ -10,7 +10,9 @@ $(document).ready(function()
 		  'Nov', 'Dic'],
 		  showMonthsShort: true,
 		  formatSubmit: 'dd-mm-yyyy',
-		  close: 'Cancel'
+		  close: 'Cancelar',
+		  clear: 'Limpiar',
+		  today: 'Hoy'
 		})
 
 

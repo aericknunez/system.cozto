@@ -1,22 +1,25 @@
 <?php 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+include_once 'application/common/Fechas.php';
 include_once 'application/common/Alerts.php';
-include_once 'system/producto/Productos.php';
-$producto = new Productos(); 
+include_once 'system/producto/ProductoOtros.php';
+$producto = new ProductoOtros(); 
 ?>
 
 <div id="msj"></div>
-<h2 class="h2-responsive">PRODUCTOS CON BAJAS EXISTENCIAS</h2>
+<h2 class="h2-responsive">PRODUCTOS CON VENCIMIENTO PROXIMO</h2>
 
 
-<div id="contenido">
-   <?php $producto->BajasExistencias(1, "producto.id", "asc"); ?>
+<div id="CargaContenido"></div>
+
+<div id="MensajeCarga" class="row d-flex justify-content-md-center">
+  <?php Alerts::Mensajex("Por favor espere... Este proceso puede tardar unos segundos","danger"); ?>
 </div>
 
-<div class="row justify-content-center">
-  <a href="system/imprimir/imprimir.php?op=11" class="btn btn-info my-2 btn-rounded btn-sm waves-effect" title="Imprimir todos los productos">Imprimir Todo</a>
-</div>
+
+
+
 
 
 <!-- Ver producto -->

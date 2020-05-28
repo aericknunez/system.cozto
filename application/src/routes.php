@@ -440,11 +440,19 @@ include_once '../../system/producto/Productos.php';
 }
 
 
-if($_REQUEST["op"]=="67"){ // busca producto
-include_once '../../system/ventas/ProductoBusqueda.php';
-	$proBusqueda = new ProductoBusqueda;
-	$proBusqueda->Busqueda($_POST);
+if($_REQUEST["op"]=="57"){ // Bajas Existancias
+include_once '../../system/producto/ProductoOtros.php';
+	$productos = new ProductoOtros;
+	$productos->Caducidades();
 }
+
+
+
+// if($_REQUEST["op"]=="67"){ // busca producto
+// include_once '../../system/ventas/ProductoBusqueda.php';
+// 	$proBusqueda = new ProductoBusqueda;
+// 	$proBusqueda->Busqueda($_POST);
+// }
 
 
 if($_REQUEST["op"]=="58"){ // ver detalles del producto desde modal

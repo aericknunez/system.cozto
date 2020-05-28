@@ -7,6 +7,8 @@ include_once 'system/index/Inicio.php';
 include_once 'system/corte/Corte.php';
 $cut = new Corte();
 
+$datalive = TRUE; /// para saber que estoy en index
+
 if($_SESSION["cotizacion"]){
 Alerts::Mensajex("ADVERTENCIA! Se detecto una cotizaci&oacuten sin concluir.", "danger", '<a href="?cotizar" class="btn btn-danger">ir a Cotizaciones</a>');
 }

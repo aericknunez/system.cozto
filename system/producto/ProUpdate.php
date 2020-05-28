@@ -90,6 +90,7 @@ class ProUpdate{
               $datos = array();
               $datos["producto"] = $datox["cod"];
               $datos["cant"] = $datox["cantidad"];
+              $datos["existencia"] = $datox["cantidad"];
               $datos["precio_costo"] = $datox["precio"];
               $datos["caduca"] = $datox["caduca_submit"];
               $datos["caducaF"] = Fechas::Format($datox["caduca_submit"]);

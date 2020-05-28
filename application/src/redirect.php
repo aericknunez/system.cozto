@@ -20,6 +20,8 @@ elseif(isset($_GET["proup"])) include_once 'system/producto/proup.php'; // actua
 elseif(isset($_GET["proagregar"])) include_once 'system/producto/proagregar.php'; // agregar producto
 elseif(isset($_GET["proaverias"])) include_once 'system/producto/proaverias.php'; // agregar averias
 elseif(isset($_GET["bajasexistencias"])) include_once 'system/producto/bajasexistencias.php'; 
+elseif(isset($_GET["vencimientos"])) include_once 'system/producto/vencimientos.php'; 
+
 elseif(isset($_GET["cotizar"])) include_once 'system/cotizar/cotizar.php'; 
 elseif(isset($_GET["cotizaciones"])) include_once 'system/cotizar/cotizaciones.php'; 
 
