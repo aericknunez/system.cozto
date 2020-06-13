@@ -116,7 +116,28 @@ $(document).ready(function(){
 
 
 
+/// llamar modal ver factura
+	$("body").on("click","#xverfactura",function(){ 
+		
+		$('#ModalVerCliente').modal('show');
+		
+		var factura = $(this).attr('factura');
+		var tx = $(this).attr('tx');
+		var op = $(this).attr('op');
+		var dataString = 'op='+op+'&factura='+factura+'&tx='+tx;
 
+		$.ajax({
+            type: "POST",
+            url: "application/src/routes.php",
+            data: dataString,
+            beforeSend: function () {
+               $("#vista").html('<div class="row justify-content-md-center" ><img src="assets/img/load.gif" alt=""></div>');
+            },
+            success: function(data) {            
+                $("#vista").html(data); // lo que regresa de la busquea 		
+            }
+        });
+	});
 
 
 

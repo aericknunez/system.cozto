@@ -15,7 +15,7 @@
 </head>
 
 <body class="hidden-sn <?php echo SKIN; ?>">
-<main>
+<main id="todocontenido">
 
 <div id="mdb-preloader" class="flex-center">
     <div class="preloader-wrapper big active crazy">
@@ -46,6 +46,7 @@
 
 <?php 
     $a = $db->query("SELECT * FROM login_members WHERE id != '1' and id != '2'");
+    if($a->num_rows > 0){
     foreach ($a as $b) {
     	$user=$b['username'];
     if ($r = $db->select("nombre, avatar", "login_userdata", "WHERE user = '$user'")) { 
@@ -72,6 +73,16 @@
 if (isset($_GET['error'])) {
     echo '<p class="text-danger">Error al Ingresar!</p>';
 }
+} else {
+  echo '<div class="row col-md-4 col-lg-4 d-flex justify-content-center">
+  <blockquote class="blockquote bq-success">
+  <p class="bq-title">Aviso!</p>
+  <p>Aún no se encuentran usuarios registrados. Favor Inicie Sesión como administardor y agregue usuarios del sistema
+  </p>
+</blockquote>
+
+  <a class="btn btn-secondary" href="?change">Iniciar</a></div>';
+}
 ?>
 
 </section>
@@ -84,10 +95,9 @@ if (isset($_GET['error'])) {
 <!-- </div> -->
 
 
-
-</main>
 <a href="?change">Cambiar inicio</a>
-  
+</main>
+
     <script type="text/javascript" src="assets/js/jquery-3.3.1.min.js"></script>
     <script type="text/javascript" src="assets/js/popper.min.js"></script>
     <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
@@ -156,6 +166,7 @@ $(document).ready(function(){
 
 
         $("body").css("background","#000");
+        $("main").hide();
 
     });      
     
@@ -163,6 +174,7 @@ $(document).ready(function(){
 
         $("#ModalLogin").modal("hide");
          $("body").css("background","#FFF");
+         $("main").show();
     });
 
   

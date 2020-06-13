@@ -395,8 +395,8 @@ $page <= 1 ? $enable = 'disabled' : $enable = '';
             Alerts::Alerta("error","Error!","Ocurrio un error inesperado!");
           }     
   }
-
   $this->VerExtra($datos["empleado"],$datos["opcion"]);
+
 }
 
 
@@ -458,6 +458,30 @@ public function ExtraSan($datos){
       
   }
 
+
+
+  public function DelExtra($data){ // elimina el extra
+    $db = new dbConn();
+    $hash = $data["key"]; 
+
+        if (Helpers::DeleteId("planilla_extras", "hash='$hash'")) {
+            // si es adelanto de personal y es de hoy
+              if($data["fechaF"] == Fechas::Format(date("d-m-Y")) and $data["tipo"] == 2){ 
+                
+                  if ($r = $db->select("id", "gastos", "WHERE fechaF = '".$data["fechaF"]."' and cantidad = '".$data["cantidad"]."' and td = ".$_SESSION["td"]."")) { 
+                      $iden = $r["id"];
+                  }
+                $cambio = array();
+                $cambio["edo"] = 0;               
+                Helpers::UpdateId("gastos", $cambio, "id='$iden' and td = ".$_SESSION["td"]."");
+              } // termina si es adelanto
+           Alerts::Alerta("success","Eliminado!","Extra eliminado correctamente!");
+        } else {
+            Alerts::Alerta("error","Error!","Algo Ocurrio!");
+        } 
+
+        $this->VerTodasExtras($data["empleado"]);
+  }
 
 
 
@@ -651,15 +675,28 @@ $finextra = $fechahoy;
           $data; 
               foreach ($a as $b) {
 
-      if($borrar == 1) $bor = '<td><a id="dextra" op="307" key="'. $b["hash"] .'" empleado="'. $empleado .'">
+          if($borrar == 1) { 
+            if($b["fechaF"] == Fechas::Format(date("d-m-Y"))){
+              $btn = '<a id="dextra" op="307" key="'. $b["hash"] .'" empleado="'. $empleado .'" cantidad="'. $b["cantidad"] .'" tipo="'. $b["tipo"] .'" fechaF="'. $b["fechaF"] .'">
               <span class="badge red"><i class="fas fa-trash-alt" aria-hidden="true"></i></span>
-              </a></td>'; else $bor = "  ";
+              </a>';
+            } else {
+              $btn = '<span class="badge black"><i class="fas fa-ban" aria-hidden="true"></i></span>';
+            }
 
-      $data.= '<tr>
+            $data = '<tr>
+              <td>'.$b["extra"].'</td>
+              <td>'. $sig . Helpers::Dinero($b["cantidad"]).'</td>
+              <td>'. $btn .'</td>'; } else {
+
+               $data.= '<tr>
               <td colspan="2">'.$b["extra"].'</td>
               <td>'. $sig . Helpers::Dinero($b["cantidad"]).'</td>
-              '.$bor.'
-            </tr>';          
+            </tr>'; 
+
+          }
+
+         
       }
   } $a->close(); 
 
@@ -698,19 +735,6 @@ echo $this-> ExtraFactura($empleado, 3,1);
 
 
 
-  public function DelExtra($data){ // elimina precio
-    $db = new dbConn();
-    $hash = $data["key"]; 
-
-        if (Helpers::DeleteId("planilla_extras", "hash='$hash'")) {
-           Alerts::Alerta("success","Eliminado!","Extra eliminado correctamente!");
-        } else {
-            Alerts::Alerta("error","Error!","Algo Ocurrio!");
-        } 
-
-
-        $this->VerTodasExtras($data["empleado"]);
-  }
 
 
 

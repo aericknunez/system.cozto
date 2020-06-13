@@ -156,6 +156,10 @@ elseif(isset($_GET["vencimientos"])) {
 echo '<script type="text/javascript" src="assets/js/query/vencimientos.js?v='.$numero.'"></script>';
 echo '<script type="text/javascript" src="assets/js/query/producto_vermodal.js?v='.$numero.'"></script>';
 } 
+elseif(isset($_GET["promociones"])) {
+echo '<script type="text/javascript" src="assets/js/query/paginador.js?v='.$numero.'"></script>';
+echo '<script type="text/javascript" src="assets/js/query/producto_vermodal.js?v='.$numero.'"></script>';
+} 
 elseif(isset($_GET["cotizar"])) {
 echo '<script type="text/javascript" src="assets/js/printThis.js?v='.$numero.'"></script>';
 echo '<script type="text/javascript" src="assets/js/query/cotizaR.js?v='.$numero.'"></script>';
@@ -189,6 +193,12 @@ echo '
 <script type="text/javascript" src="assets/js/query/clientedatatable.js?v='.$numero.'"></script>
 <script type="text/javascript" src="assets/js/query/cliente.js?v='.$numero.'"></script>';
 } 
+elseif(isset($_GET["cliente_facturas"])) {
+echo '
+<script type="text/javascript" src="assets/js/addons/datatables.min.js?v='.$numero.'"></script>
+<script type="text/javascript" src="assets/js/query/clientedatatable.js?v='.$numero.'"></script>
+<script type="text/javascript" src="assets/js/query/cliente.js?v='.$numero.'"></script>';
+} 
 
 //////////////// creditos
 elseif(isset($_GET["creditos"])) {
@@ -197,6 +207,11 @@ echo '<script type="text/javascript" src="assets/js/query/credito.js?v='.$numero
 } 
 
 elseif(isset($_GET["creditospendientes"])) {
+echo '<script type="text/javascript" src="assets/js/query/paginador.js?v='.$numero.'"></script>';
+echo '<script type="text/javascript" src="assets/js/query/credito.js?v='.$numero.'"></script>';
+} 
+
+elseif(isset($_GET["creditosvercliente"])) {
 echo '<script type="text/javascript" src="assets/js/query/paginador.js?v='.$numero.'"></script>';
 echo '<script type="text/javascript" src="assets/js/query/credito.js?v='.$numero.'"></script>';
 } 
@@ -263,7 +278,7 @@ echo '<script type="text/javascript" src="assets/js/printThis.js?v='.$numero.'">
 echo '<script type="text/javascript" src="assets/js/query/paginador.js?v='.$numero.'"></script>';
 echo '<script type="text/javascript" src="assets/js/query/planilla.js?v='.$numero.'"></script>';
 } 
-elseif(isset($_GET["descuentos"])) {
+elseif(isset($_GET["pdescuentos"])) {
 echo '<script type="text/javascript" src="assets/js/query/planilla.js?v='.$numero.'"></script>';
 } 
 elseif(isset($_GET["planillasver"])) {

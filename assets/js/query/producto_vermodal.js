@@ -50,4 +50,31 @@ $("#mdb-lightbox-ui").load("assets/mdb-addons/mdb-lightbox-ui.html");
 
 
 
+/// para promociones
+///////////// llamar modal para eliminar elemento
+    $("body").on("click","#xdelete",function(){ 
+        
+        var op = $(this).attr('op');
+        var hash = $(this).attr('hash');
+        var cod = $(this).attr('cod');
+        
+        $('#delpromo').attr("op",op).attr("hash",hash).attr("cod",cod);
+        $('#ConfirmDelete').modal('show');
+    });
+
+
+
+    $("body").on("click","#delpromo",function(){ // borrar promo
+    var op = $(this).attr('op');
+    var hash = $(this).attr('hash');
+    var cod = $(this).attr('cod');
+        $.post("application/src/routes.php", {op:op, hash:hash, cod:cod}, function(data){
+        $("#contenido").html(data);
+        $('#ConfirmDelete').modal('hide');
+         });
+    });
+
+
+
+
 });

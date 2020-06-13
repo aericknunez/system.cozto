@@ -23,7 +23,7 @@ $planilla = new Planilla();
   <div class="tab-content" id="nav-tabContent">
 
     <div class="tab-pane fade show active" id="nav-descuentos" role="tabpanel" aria-labelledby="nav-descuentos-tab">
-    <?php Alerts::Mensajex("Agregue los descuentos a registrar","info"); ?>
+    <?php Alerts::Mensajex("Agregue los descuentos a registrar. Estos son los descuentos Globales que se aplicar&aacuten a todas las planillas","info"); ?>
     
 
 <div class="row">

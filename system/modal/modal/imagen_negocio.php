@@ -32,7 +32,7 @@
     <div id="result" class="text-center">
       
       <?php 
-      include_once 'application/common/ImagenesSuccess.php';
+      include_once 'system/config_configuraciones/ImagenesSuccess.php';
       $Up = new Success;
       $Up->VerImgNegocio("assets/img/logo/");
        ?>

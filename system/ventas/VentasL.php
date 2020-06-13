@@ -414,6 +414,7 @@ if($datos["precio"] != NULL and $datos["producto"] != NULL){
 		    $datos["nombre"] = NULL;
 		    $datos["correlativo"] = $ultimoorden + 1;
 		    $datos["empleado"] = $_SESSION["nombre"];
+		    $datos["user"] = $_SESSION["user"];
 		    $datos["fecha"] = date("d-m-Y");
 		    $datos["hora"] = date("H:i:s");
 		    $datos["estado"] = 1;

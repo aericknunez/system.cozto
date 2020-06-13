@@ -222,8 +222,8 @@ class Cotizar{
 		    $datos["fecha"] = date("d-m-Y");
 		    $datos["hora"] = date("H:i:s");
 		    $datos["fechaF"] = Fechas::Format(date("d-m-Y"));
-		    $datos["caduca"] = Fechas::DiaSuma(date("d-m-Y"),15);
-		    $datos["caducaF"] = Fechas::Format(Fechas::DiaSuma(date("d-m-Y"),15));
+		    $datos["caduca"] = Fechas::DiaSuma(date("d-m-Y"), $_SESSION['config_dias_cotizacion']);
+		    $datos["caducaF"] = Fechas::Format(Fechas::DiaSuma(date("d-m-Y"), $_SESSION['config_dias_cotizacion']));
 		    $datos["edo"] = 1;
 		    $datos["hash"] = Helpers::HashId();
 		    $datos["time"] = Helpers::TimeId();
@@ -488,6 +488,7 @@ if($dir == "asc") $dir2 = "desc";
             <th class="th-sm"><a id="paginador" op="'.$op.'" iden="1" orden="correlativo" dir="'.$dir2.'">Cotizaci&oacuten</a></th>
             <th class="th-sm"><a id="paginador" op="'.$op.'" iden="1" orden="fecha" dir="'.$dir2.'">Fecha</a></th>
             <th class="th-sm"><a id="paginador" op="'.$op.'" iden="1" orden="caduca" dir="'.$dir2.'">Caduca</a></th>
+            <th class="th-sm">Estado</th>
             <th class="th-sm">Ver</th>
           </tr>
         </thead>
@@ -497,11 +498,18 @@ if($dir == "asc") $dir2 = "desc";
     if ($r = $db->select("nombre", "clientes", "WHERE hash = '".$b["cliente"]."' and td = ". $_SESSION["td"] ."")) { 
         $cliente = $r["nombre"]; } unset($r); 
 
+       if($b["caducaF"] < Fechas::Format(date("d-m-Y"))){ 
+       	$edo = '<div class="text-danger font-weight-bold">Caducada<div>'; 
+       	} else { 
+       $edo = '<div class="text-success font-weight-bold">Activa<div>'; 
+   		}
+
           echo '<tr>
                       <td>'.$cliente.'</td>
                       <td>'.$b["correlativo"].'</td>
                       <td>'.$b["fecha"].'</td>
                       <td>'.$b["caduca"].'</td>
+                      <td>'.$edo.'</td>
                       <td><a id="xver" op="160" key="'.$b["id"].'" cotizacion="'.$b["correlativo"].'"><i class="fas fa-search fa-lg green-text"></i></a></td>
                     </tr>';
         }

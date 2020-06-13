@@ -73,8 +73,8 @@ $r = $db->select("*", "config_master", "where td = ".$_SESSION['td']."")
         Giro
     </small><input type="text" id="giro" name="giro" class="form-control mb-1" placeholder="Giro" value="<? echo $r["giro"]; ?>"></td>
        <td><small id="nit" class="form-text text-muted mb-1">
-        NIT o RTN
-    </small><input type="text" id="nit" name="nit" class="form-control mb-1" placeholder="NIT" value="<? echo $r["nit"]; ?>"></td>
+       <?php echo $_SESSION["config_nombre_documento"]; ?>
+    </small><input type="text" id="nit" name="nit" class="form-control mb-1" placeholder="<?php echo $_SESSION["config_nombre_documento"]; ?>" value="<? echo $r["nit"]; ?>"></td>
   </tr>
 
   <tr>
@@ -129,7 +129,7 @@ $r = $db->select("*", "config_master", "where td = ".$_SESSION['td']."")
 
   <tr>
     <td>
-      <div class="switch">
+      <div class="switch mt-4">
             <label>
              Permitir TX ||  Off
               <input type="checkbox" <?php if($r["cambio_tx"] == "on") echo "checked"; ?> id="cambio_tx" name="cambio_tx" >
@@ -137,12 +137,37 @@ $r = $db->select("*", "config_master", "where td = ".$_SESSION['td']."")
             </label>
           </div>
     </td>
+
+    <td><small id="dias_vencimiento" class="form-text text-muted mb-1">
+        Dias de vencimiento
+    </small><input type="text" id="dias_vencimiento" name="dias_vencimiento" class="form-control mb-1" placeholder="Dias de Vencimiento" value="<? echo $r["dias_vencimiento"]; ?>"></td>
+
+  </tr>
+
+  <tr>
+       <td><div class="switch mt-4">
+            <label>
+             Multicaja ||  Off
+          <input type="checkbox" <?php if($r["multicaja"] == "on") echo "checked"; ?> id="multicaja" name="multicaja" >
+              <span class="lever"></span> On 
+            </label>
+          </div></td>
+
+    <td><small id="dias_cotizacion" class="form-text text-muted mb-1">
+        Dias de Cotizacion
+    </small><input type="text" id="dias_cotizacion" name="dias_cotizacion" class="form-control mb-1" placeholder="Dias de Cotizacion" value="<? echo $r["dias_cotizacion"]; ?>"></td>
+
+  </tr>
+
+
+  <tr>
+
+    
     <td>
     <button class="btn btn-info my-4" type="submit" id="btn-config" name="btn-config">Realizar Cambios</button>
   
     </td>
   </tr>
-
 <?
  unset($r);  
 

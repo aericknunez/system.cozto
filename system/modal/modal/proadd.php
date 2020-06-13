@@ -255,9 +255,9 @@ $dep = $_REQUEST["dep"];
     </form>
 <div id="contenido-img">
  <?php 
-include_once 'application/common/ImagenesSuccess.php';
+include_once 'system/producto/ImagenesSuccess.php';
 $imgs = new Success();
-$imgs->VerProducto($_REQUEST["key"], "assets/img/productos/");
+$imgs->VerProducto($_REQUEST["key"], "assets/img/productos/" . $_SESSION["td"] . "/");
   ?> 
 </div>
       <!-- form -->

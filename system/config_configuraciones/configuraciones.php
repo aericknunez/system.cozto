@@ -63,7 +63,7 @@ $r = $db->select("*", "config_master", "where td = ".$_SESSION['td']."")
        
      </tr>
      <tr>
-       <td>NIT</td>
+       <td><?php echo $_SESSION["config_nombre_documento"]; ?></td>
        <td><? echo $r["nit"]; ?></td>
        
      </tr>
@@ -112,6 +112,20 @@ $r = $db->select("*", "config_master", "where td = ".$_SESSION['td']."")
        <td><? if($r["cambio_tx"] == "on") echo "Activado"; else echo "Inactivo"; ?></td>    
      </tr>
 
+     <tr>
+       <td>Dias Vencimiento de Producto</td>
+       <td><? echo $r["dias_vencimiento"]; ?></td>    
+     </tr>
+
+     <tr>
+       <td>Dias Vencimiento de Cotizaci&oacuten</td>
+       <td><? echo $r["dias_cotizacion"]; ?></td>    
+     </tr>
+
+     <tr>
+       <td>Multicaja</td>
+       <td><? if($r["multicaja"] == "on") echo "Activado"; else echo "Inactivo"; ?></td>    
+     </tr>
 <?
  unset($r);  
 

@@ -1,5 +1,5 @@
 <?php 
-class Corte{
+class CorteMulticaja{
 
 	public function __construct() { 
      } 

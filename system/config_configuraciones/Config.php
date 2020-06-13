@@ -5,7 +5,7 @@ class Config{
      } 
 
 
-	public function Configuraciones($sistema,$cliente,$slogan,$propietario,$telefono,$direccion,$email,$pais,$giro,$nit,$imp,$nombre_impuesto,$nombre_documento,$moneda,$moneda_simbolo,$tipo_inicio,$skin,$inicio_tx,$otras_ventas,$cambio_tx){
+	public function Configuraciones($sistema,$cliente,$slogan,$propietario,$telefono,$direccion,$email,$pais,$giro,$nit,$imp,$nombre_impuesto,$nombre_documento,$moneda,$moneda_simbolo,$tipo_inicio,$skin,$inicio_tx,$otras_ventas,$cambio_tx, $dias_vencimiento, $dias_cotizacion, $multicaja){
 		$db = new dbConn();
 
 		$cambio = array();
@@ -29,6 +29,9 @@ class Config{
 	    $cambio["inicio_tx"] = $inicio_tx;
 	    $cambio["otras_ventas"] = $otras_ventas;
 	    $cambio["cambio_tx"] = $cambio_tx;
+	    $cambio["dias_vencimiento"] = $dias_vencimiento;
+	    $cambio["dias_cotizacion"] = $dias_cotizacion;
+	    $cambio["multicaja"] = $multicaja;
 	    $cambio["time"] = Helpers::TimeId();
 	    if (Helpers::UpdateId("config_master", $cambio, "td = ".$_SESSION["td"]."")) {
 	    	$this->CrearVariables();
@@ -101,6 +104,9 @@ class Config{
 			$_SESSION['tx'] = $r["inicio_tx"];
 			$_SESSION['config_otras_ventas'] = $r["otras_ventas"];
 			$_SESSION['config_cambio_tx'] = $r["cambio_tx"];
+			$_SESSION['config_dias_vencimiento'] = $r["dias_vencimiento"];
+			$_SESSION['config_dias_cotizacion'] = $r["dias_cotizacion"];
+			$_SESSION['config_multicaja'] = $r["multicaja"];
 
 			if($_SESSION['config_skin'] == NULL) $_SESSION['config_skin'] = "mdb-skin";
 			// white-skin , mdb-skin , grey-skin , pink-skin ,  light-blue-skin , black-skin  cyan-skin, navy-blue-skin

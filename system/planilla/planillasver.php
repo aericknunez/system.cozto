@@ -8,7 +8,7 @@ $planilla = new Planilla();
 ?>
 
 <div id="msj"></div>
-<h2 class="h2-responsive">Todos los empleados</h2>
+<h2 class="h2-responsive">PLANILLAS DE EMPLEADOS</h2>
 
 
 <div id="contenido">
@@ -169,7 +169,7 @@ $planilla = new Planilla();
       </div>
       <div class="modal-footer">
 
-<a id="cerrarmodal" class="btn btn-primary btn-rounded" data-dismiss="modal">Regresar</a>
+<a id="cerrarmodal" class="btn btn-secondary btn-rounded" data-dismiss="modal">Cerrar</a>
 
         
     

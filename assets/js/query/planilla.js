@@ -136,7 +136,7 @@ $(document).ready(function(){
 /// llamar modal todas las extras
 	$("body").on("click","#verextras",function(){ 
 		
-		$('#ModalExtra').modal('hide');
+		// $('#ModalExtra').modal('hide');
 		$('#ModalVerExtras').modal('show');
 
 		var key = $(this).attr('key');
@@ -163,7 +163,10 @@ $(document).ready(function(){
 	var op = $(this).attr('op');
 	var key = $(this).attr('key');
 	var empleado = $(this).attr('empleado');
-	    $.post("application/src/routes.php", {op:op, key:key, empleado:empleado}, function(data){
+	var cantidad = $(this).attr('cantidad');
+	var tipo = $(this).attr('tipo');
+	var fechaF = $(this).attr('fechaF');
+	    $.post("application/src/routes.php", {op:op, key:key, empleado:empleado, cantidad:cantidad, tipo:tipo, fechaF:fechaF}, function(data){
 		$("#vista-extras").html(data);
 	   	 });
 	});

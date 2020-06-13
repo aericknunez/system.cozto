@@ -21,6 +21,8 @@ elseif(isset($_GET["proagregar"])) include_once 'system/producto/proagregar.php'
 elseif(isset($_GET["proaverias"])) include_once 'system/producto/proaverias.php'; // agregar averias
 elseif(isset($_GET["bajasexistencias"])) include_once 'system/producto/bajasexistencias.php'; 
 elseif(isset($_GET["vencimientos"])) include_once 'system/producto/vencimientos.php'; 
+elseif(isset($_GET["promociones"])) include_once 'system/producto/promociones.php'; 
+
 
 elseif(isset($_GET["cotizar"])) include_once 'system/cotizar/cotizar.php'; 
 elseif(isset($_GET["cotizaciones"])) include_once 'system/cotizar/cotizaciones.php'; 
@@ -34,10 +36,12 @@ elseif(isset($_GET["proveedorver"])) include_once 'system/proveedor/proveedorver
 // clientes
 elseif(isset($_GET["clienteadd"])) include_once 'system/cliente/clientes.php'; // agregar cliente
 elseif(isset($_GET["clientever"])) include_once 'system/cliente/clientever.php'; // ver clientes
+elseif(isset($_GET["cliente_facturas"])) include_once 'system/cliente/cliente_facturas.php'; // ver clientes
 
 // creditos
 elseif(isset($_GET["creditos"])) include_once 'system/credito/creditosver.php'; // ver todos los creditos
 elseif(isset($_GET["creditospendientes"])) include_once 'system/credito/creditospendientes.php'; // pendientes
+elseif(isset($_GET["creditosvercliente"])) include_once 'system/credito/creditosvercliente.php'; // credito cleinte
 
 
 // Gastos y compras
@@ -75,7 +79,7 @@ elseif(isset($_GET["control"])) include_once 'system/control/control.php';
 // planilla
 elseif(isset($_GET["addempleado"])) include_once 'system/planilla/empleados.php'; // agregar planilla
 elseif(isset($_GET["verempleado"])) include_once 'system/planilla/empleadover.php'; // ver empleados
-elseif(isset($_GET["descuentos"])) include_once 'system/planilla/descuentos.php'; // ver descuentos
+elseif(isset($_GET["pdescuentos"])) include_once 'system/planilla/descuentos.php'; // ver descuentos
 elseif(isset($_GET["planillasver"])) include_once 'system/planilla/planillasver.php'; // ver planilla
 
 // backup

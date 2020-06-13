@@ -8,7 +8,7 @@ $producto = new ProductoOtros();
 ?>
 
 <div id="msj"></div>
-<h2 class="h2-responsive">PRODUCTOS CON VENCIMIENTO PROXIMO</h2>
+<h2 class="h2-responsive">PRODUCTOS CON VENCIMIENTO PROXIMO ( <?php echo $_SESSION['config_dias_vencimiento'] . " dias"; ?>)</h2>
 
 
 <div id="CargaContenido"></div>

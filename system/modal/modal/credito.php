@@ -33,7 +33,7 @@ if($_SESSION['cliente_credito']){
 <!-- ./  content -->
       </div>
       <div class="modal-footer">
-
+          <a href="?clienteadd" class="btn btn-secondary btn-rounded">Agregar Cliente</a>
           <a href="?" class="btn btn-primary btn-rounded">Regresar</a>
     
       </div>

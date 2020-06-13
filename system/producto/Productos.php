@@ -198,6 +198,15 @@ class Productos{
     }
 
 
+
+  public function GetNombreProducto($cod){
+      $db = new dbConn();
+      if ($r = $db->select("descripcion", "producto", "WHERE cod = ".$cod." and td = ".$_SESSION["td"]."")) { 
+        $nombre = $r["descripcion"];
+      }  unset($r); 
+      return $nombre;
+  }
+
   public function VerCompuesto($producto){
       $db = new dbConn();
           $a = $db->query("SELECT * FROM producto_compuestos WHERE producto = '$producto' and td = ".$_SESSION["td"]."");
@@ -216,13 +225,10 @@ class Productos{
           <tbody>';
           $n = 1;
               foreach ($a as $b) { 
-                    if ($r = $db->select("descripcion", "producto", "WHERE cod = ".$b["agregado"]." and td = ".$_SESSION["td"]."")) { 
-                        $nombre = $r["descripcion"];
-                      }  unset($r);  
                 echo '<tr>
                       <th scope="row">'. $n ++ .'</th>
                       <td>'.$b["cant"].'</td>
-                      <td>'.$nombre.'</td>
+                      <td>'.$this->GetNombreProducto($b["agregado"]).'</td>
                       <td><a id="delcompuesto" hash="'.$b["hash"].'" op="34" producto="'.$producto.'"><i class="fa fa-minus-circle fa-lg red-text"></i></a></td>
                     </tr>';          
               }
@@ -283,13 +289,10 @@ class Productos{
           <tbody>';
           $n = 1;
               foreach ($a as $b) { 
-                    if ($r = $db->select("descripcion", "producto", "WHERE cod = ".$b["dependiente"]." and td = ".$_SESSION["td"]."")) { 
-                        $nombre = $r["descripcion"];
-                      }  unset($r);  
                 echo '<tr>
                       <th scope="row">'. $n ++ .'</th>
                       <td>'.$b["cant"].'</td>
-                      <td>'.$nombre.'</td>
+                      <td>'.$this->GetNombreProducto($b["dependiente"]).'</td>
                       <td><a id="deldependiente" hash="'.$b["hash"].'" op="36" producto="'.$producto.'" ><i class="fa fa-minus-circle fa-lg red-text"></i></a></td>
                     </tr>';          
               }
@@ -317,7 +320,7 @@ class Productos{
 
   public function TagsBusqueda($keyword){ // Busquedade tags agragados
     $db = new dbConn();
-      $a = $db->query("SELECT * FROM producto_tags WHERE tag like '%".$keyword."%' and td = ".$_SESSION["td"]." limit 3");
+      $a = $db->query("SELECT * FROM producto_tags WHERE tag like '%".$keyword."%' and td = ".$_SESSION["td"]." GROUP BY tag limit 3");
            if($a->num_rows > 0){
             echo '<table class="table table-sm table-hover">';
                  foreach ($a as $b) {
@@ -479,7 +482,7 @@ class Productos{
 
   }
 
-  public function CuentaProductosU($cod){ // Es el Select de la Ubicacion Para poder Recargarlo
+  public function CuentaProductosU($cod){ //
     $db = new dbConn();
         if ($r = $db->select("cantidad", "producto", "WHERE cod = '$cod' and td = ".$_SESSION["td"]."")) { 
         $total = $r["cantidad"];
@@ -1006,9 +1009,11 @@ $page <= 1 ? $enable = 'disabled' : $enable = '';
                     <li class="list-group-item">Cantidad: <strong>'. $b["cantidad"] .'</strong>  ||   Minima: <strong>'. $b["existencia_minima"] .'</strong></li>
                     <li class="list-group-item">Caduca: <strong>'. $b["caduca"] .'</strong>  || Compuesto: <strong>'. $b["compuesto"] .'</strong>  || Gravado: <strong>'. $b["gravado"] .'</strong> </li>
                     <li class="list-group-item">Receta: '. $b["receta"] .'  ||  Dependiente: <strong>'. $b["dependiente"] .'</strong>  || Servicio: '. $b["servicio"] .' </li>
-                    <li class="list-group-item">Categoria: <strong>'. $b["categoria"] .'</strong> || Unidad: <strong>'. $b["nombre"] .'</strong>  || Proveeedor: <strong>'. $b["proveedores"] .'</strong></li>
+                    <li class="list-group-item">Categoria: <strong>'. $b["categoria"] .'</strong> || Unidad: <strong>'. $b["nombre"] .'</strong>  || Proveedor: <strong>'. $b["proveedores"] .'</strong></li>
                   </ul>'; 
         }
+
+        echo "<hr>";
 
               $ap = $db->query("SELECT * FROM producto_precio WHERE producto = '".$data["key"]."' AND td = ".$_SESSION["td"]."");
               if($ap->num_rows > 0){
@@ -1033,6 +1038,9 @@ $page <= 1 ? $enable = 'disabled' : $enable = '';
               }
 
 
+        echo "<hr>";
+
+
               $au = $db->query("SELECT ubicacion.ubicacion, ubicacion_asig.cant FROM ubicacion_asig, ubicacion WHERE ubicacion_asig.ubicacion = ubicacion.hash AND ubicacion_asig.producto = '".$data["key"]."' AND ubicacion_asig.td = ".$_SESSION["td"]."");
               if($au->num_rows > 0){
                   echo '<ul class="list-group">
@@ -1042,9 +1050,10 @@ $page <= 1 ? $enable = 'disabled' : $enable = '';
                      <span class="badge badge-primary badge-pill">'.Helpers::Format($bu["cant"]).'</span></li>';
                   } $au->close();
                   echo '</ul>';
-              } else {
-                Alerts::Mensajex("No hay ubicaci&oacuten asignada","warning",$boton,$boton2);
-              }
+              } 
+              // else {
+              //   Alerts::Mensajex("No hay ubicaci&oacuten asignada","warning",$boton,$boton2);
+              // }
 
               $ac = $db->query("SELECT caracteristicas.caracteristica, caracteristicas_asig.cant FROM caracteristicas_asig, caracteristicas WHERE caracteristicas_asig.caracteristica = caracteristicas.hash AND caracteristicas_asig.producto = '".$data["key"]."' AND caracteristicas_asig.td = ".$_SESSION["td"]."");
               if($ac->num_rows > 0){
@@ -1055,9 +1064,38 @@ $page <= 1 ? $enable = 'disabled' : $enable = '';
                  <span class="badge badge-secondary badge-pill">'.Helpers::Format($bc["cant"]).'</span></li>';
               } $ac->close();
               echo '</ul>';
-            } else {
-                Alerts::Mensajex("No hay caracteristica asignada","warning",$boton,$boton2);
+            } 
+            // else {
+            //     Alerts::Mensajex("No hay caracteristica asignada","warning",$boton,$boton2);
+            //   }
+
+
+        /// si es un producto compuesto o promocion
+        if($b["compuesto"] == "on"){
+
+              $ap = $db->query("SELECT * FROM producto_compuestos WHERE producto = '".$data["key"]."' AND td = ".$_SESSION["td"]."");
+              if($ap->num_rows > 0){
+              echo '<h3>Productos que componen este elemento</h3>';
+              echo '<table class="table table-sm table-hover table-striped">
+                    <thead>
+                      <tr>
+                        <th scope="col">C&oacutedigo</th>
+                        <th scope="col">Producto</th>
+                      </tr>
+                    </thead>
+                    <tbody>';
+              foreach ($ap as $bp) {
+                 echo '<tr>
+                        <td>'.$bp["agregado"].'</td>
+                        <td><strong>'.$this->GetNombreProducto($bp["agregado"]).'</strong></td>';
+              } $ap->close();
+              echo '</tbody>
+                  </table>';
               }
+
+
+        }
+        ///       
 
       } else {
                 Alerts::Mensajex("No se encuentra el producto","danger",$boton,$boton2);

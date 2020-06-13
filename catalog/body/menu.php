@@ -94,12 +94,12 @@ if((Helpers::ServerDomain() == FALSE and $_SESSION["root_plataforma"] == 0) or (
 ?>
 <li><a href="?proopciones" class="waves-effect arrow-r"><i class="fas fa-handshake"></i> Opciones</a></li>
 <?php  } ?>
-
+<li><a href="?promociones" class="waves-effect"><i class="fas fa-address-book"></i> Pormociones y Compuestos</a></li>
 <?php  } ?>
+
 <li><a href="?productos" class="waves-effect"><i class="fas fa-address-book"></i> Todos los productos</a></li>
 <!-- <li><a href="?" class="waves-effect"><i class="fas fa-database"></i> Cambios</a></li>
 <li><a href="?" class="waves-effect arrow-r"><i class="fas fa-database"></i> Devoluciones</a></li> -->
-
 <li><a href="?bajasexistencias" class="waves-effect"><i class="fas fa-address-book"></i> Bajas Existencias</a></li>
 <li><a href="?vencimientos" class="waves-effect"><i class="fas fa-address-book"></i> Proximos Vencimientos</a></li>
 </ul>
@@ -186,7 +186,7 @@ if((Helpers::ServerDomain() == FALSE and $_SESSION["root_plataforma"] == 0) or (
 <li><a href="?planillasver" class="waves-effect"><i class="fas fa-search"></i> Ver Planillas</a></li>
 <li><a href="?addempleado" class="waves-effect"><i class="fas fa-user"></i> Agrega Empleado</a></li>
 <li><a href="?verempleado" class="waves-effect"><i class="fas fa-barcode"></i> Ver Empleados</a></li>
-<li><a href="?descuentos" class="waves-effect"><i class="fas fa-search"></i> Aplicar Descuentos</a></li>
+<li><a href="?pdescuentos" class="waves-effect"><i class="fas fa-search"></i> Aplicar Descuentos</a></li>
 
 </ul>
 </div>
