@@ -236,12 +236,21 @@ $page <= 1 ? $enable = 'disabled' : $enable = '';
   public function EliminarCompuestos($cod, $hash){
       $db = new dbConn();
 
-        if (Helpers::DeleteId("producto", "hash='$hash'")) {
+        if (Helpers::DeleteId("producto", "hash='$hash' and td = ". $_SESSION["td"] ."")) {
 
-            Helpers::DeleteId("producto_precio", "producto='$cod'");
-            Helpers::DeleteId("producto_compuestos", "producto='$cod'");
-            Helpers::DeleteId("producto_imagenes", "producto='$cod'");
-            Helpers::DeleteId("producto_tags", "producto='$cod'");
+            Helpers::DeleteId("producto_precio", "producto='$cod' and td = ". $_SESSION["td"] ."");
+            Helpers::DeleteId("producto_compuestos", "producto='$cod' and td = ". $_SESSION["td"] ."");
+            Helpers::DeleteId("producto_tags", "producto='$cod' and td = ". $_SESSION["td"] ."");   
+
+
+                $a = $db->query("SELECT imagen FROM producto_imagenes WHERE producto='$cod' and td = ". $_SESSION["td"] ."");
+                foreach ($a as $b) {
+               
+                    if(Helpers::DeleteId("producto_imagenes", "producto='$cod' and td = ". $_SESSION["td"] ."")){
+                        if (file_exists("../../assets/img/productos/" . $_SESSION["td"] . "/" . $b["imagen"])) { unlink("../../assets/img/productos/" . $_SESSION["td"] . "/" . $b["imagen"]); }
+                    }
+
+                } $a->close();
 
            Alerts::Alerta("success","Eliminado!","Elemento eliminado correctamente!");
         } else {
