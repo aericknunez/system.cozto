@@ -382,7 +382,7 @@ class Cotizar{
             echo '<table class="table table-sm table-hover">';
     foreach ($a as $b) {
                echo '<tr>
-                      <td scope="row"><a id="select-c" hash="'. $b["hash"] .'" nombre="'. $b["nombre"] .'">'. $b["nombre"] .'   ||   '. $b["documento"].'</a></td>
+                      <td scope="row"><a id="select-c" hash="'. $b["hash"] .'" nombre="'. $b["nombre"] .'"><div>'. $b["nombre"] .'   ||   '. $b["documento"].'</div></a></td>
                     </tr>'; 
     }  $a->close();
 

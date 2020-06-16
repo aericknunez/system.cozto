@@ -1,5 +1,8 @@
 $(document).ready(function(){
 
+ $("#key").focus(); // focus en el formulario busqueda
+ $("#muestra-busqueda").hide();
+
 // busqueda actualizar
 	$("#key").keyup(function(){ /// para la caja de busqueda
 		$.ajax({
@@ -21,14 +24,14 @@ $(document).ready(function(){
 
     $('#btn-busqueda').click(function(e){ /// para que funcione la busqueda al dar enter
     e.preventDefault();
+    $("#muestra-busqueda").hide();
     $.ajax({
             url: "application/src/routes.php?op=58",
             method: "POST",
             data: $("#p-busqueda").serialize(),
             success: function(data){ 
-                $("#muestra-busqueda").hide();
-                $("#contenido").html(data); // lo que regresa de la busquea 
-                $("#p-busqueda").trigger("reset");
+                $("#contenido").html(data); // lo que regresa de la busquea 				
+				$("#p-busqueda").trigger("reset"); 
             }
         })
     });

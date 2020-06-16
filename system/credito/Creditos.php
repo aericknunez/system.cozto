@@ -453,12 +453,12 @@ $page <= 1 ? $enable = 'disabled' : $enable = '';
                     echo '<table class="table table-striped table-sm table-hover">';
             foreach ($a as $b) {
                        echo '<tr>
-                              <td scope="row"><a id="select-p" op="111" cliente="'. $b["hash"] .'">
-                              '. $b["nombre"] .'</a></td>
+                              <td scope="row"><a id="select-p" op="111" cliente="'. $b["hash"] .'"><div>
+                              '. $b["nombre"] .'</div></a></td>
                             </tr>'; 
             }  
                         echo '<tr>
-                              <td scope="row"><a id="cancel-p">CANCELAR</a></td>
+                              <td scope="row"><a id="cancel-p"><div>CANCELAR</div></a></td>
                             </tr>'; 
                 $a->close();
 
@@ -469,7 +469,7 @@ $page <= 1 ? $enable = 'disabled' : $enable = '';
                               <td scope="row">El criterio de busqueda no corresponde a un producto</td>
                             </tr>';
                     echo '<tr>
-                              <td scope="row"><a id="cancel-p">CANCELAR</a></td>
+                              <td scope="row"><a id="cancel-p"><div>CANCELAR</div></a></td>
                             </tr>';
              }
 

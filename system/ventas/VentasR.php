@@ -597,7 +597,7 @@ echo '<div class="display-4 text-center font-weight-bold">'. Helpers::Dinero($ca
             echo '<table class="table table-sm table-hover">';
     foreach ($a as $b) {
                echo '<tr>
-                      <td scope="row"><a id="select-c" hash="'. $b["hash"] .'" nombre="'. $b["nombre"] .'">'. $b["nombre"] .'   ||   '. $b["documento"].'</a></td>
+                      <td scope="row"><a id="select-c" hash="'. $b["hash"] .'" nombre="'. $b["nombre"] .'"><div>'. $b["nombre"] .'   ||   '. $b["documento"].'</div></a></td>
                     </tr>'; 
     }  $a->close();
 
@@ -640,7 +640,7 @@ echo '<div class="display-4 text-center font-weight-bold">'. Helpers::Dinero($ca
             echo '<table class="table table-sm table-hover">';
     foreach ($a as $b) {
                echo '<tr>
-                      <td scope="row"><a id="select-cli" hash="'. $b["hash"] .'" nombre="'. $b["nombre"] .'">'. $b["nombre"] .'   ||   '. $b["documento"].'</a></td>
+                      <td scope="row"><a id="select-cli" hash="'. $b["hash"] .'" nombre="'. $b["nombre"] .'"><div>'. $b["nombre"] .'   ||   '. $b["documento"].'</div></a></td>
                     </tr>'; 
     }  $a->close();
 
@@ -677,7 +677,7 @@ echo '<div class="display-4 text-center font-weight-bold">'. Helpers::Dinero($ca
             echo '<table class="table table-sm table-hover">';
     foreach ($a as $b) {
                echo '<tr>
-                      <td scope="row"><a id="select-d" documento="'. $b["documento"] .'" cliente="'. $b["cliente"] .'">'. $b["cliente"] .'</a></td>
+                      <td scope="row"><a id="select-d" documento="'. $b["documento"] .'" cliente="'. $b["cliente"] .'"><div>'. $b["cliente"] .'</div></a></td>
                     </tr>'; 
     }  $a->close();
 

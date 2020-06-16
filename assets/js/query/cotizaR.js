@@ -134,6 +134,12 @@ $(document).ready(function(){
     });
 
 
+$("#c-busqueda").keypress(function(e) {//Para deshabilitar el uso de la tecla "Enter"
+if (e.which == 13) {
+return false;
+}
+});
+
 
     $("body").on("click","#select-c",function(){
     var hash = $(this).attr('hash');
