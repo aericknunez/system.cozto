@@ -1,13 +1,9 @@
-<br />
-<b>Warning</b>:  require(streams.php): failed to open stream: No such file or directory in <b>C:\AppServ\www\phpMyAdmin\libraries\php-gettext\gettext.inc</b> on line <b>41</b><br />
-<br />
-<b>Warning</b>:  require(gettext.php): failed to open stream: No such file or directory in <b>C:\AppServ\www\phpMyAdmin\libraries\php-gettext\gettext.inc</b> on line <b>42</b><br />
 -- phpMyAdmin SQL Dump
 -- version 4.6.6
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 15-06-2020 a las 05:31:14
+-- Tiempo de generación: 11-07-2020 a las 23:41:54
 -- Versión del servidor: 5.7.17-log
 -- Versión de PHP: 5.6.30
 
@@ -120,6 +116,7 @@ CREATE TABLE `config_master` (
   `dias_vencimiento` int(3) NOT NULL,
   `dias_cotizacion` int(3) NOT NULL,
   `multicaja` varchar(3) NOT NULL,
+  `mayorista` varchar(3) NOT NULL,
   `hash` varchar(12) NOT NULL,
   `time` int(12) NOT NULL,
   `td` int(5) NOT NULL
@@ -129,9 +126,10 @@ CREATE TABLE `config_master` (
 -- Volcado de datos para la tabla `config_master`
 --
 
-INSERT INTO `config_master` (`id`, `sistema`, `cliente`, `slogan`, `propietario`, `telefono`, `giro`, `nit`, `imp`, `direccion`, `email`, `imagen`, `logo`, `skin`, `tipo_inicio`, `pais`, `moneda`, `moneda_simbolo`, `nombre_impuesto`, `nombre_documento`, `inicio_tx`, `otras_ventas`, `cambio_tx`, `dias_vencimiento`, `dias_cotizacion`, `multicaja`, `hash`, `time`, `td`) VALUES
-(1, 'Sistema de contro', 'FERRETERIAS DE AQUI', 'LO MEJOR EN FERRETERIA', 'Erick Nunez', '60623882', '', '0207-210386-102-9', 13.00, 'San Salvador', 'aerick.nunez@gmail.com', '1592065898.png', 'pizto.png', 'grey-skin', 2, '1', 'Dolares', '$', 'IVA', 'NIT', 1, 1, '', 30, 30, '', '0215951ce2', 1592065898, 10),
-(2, 'Sistema de control', 'LA CURVA', 'ABARROTES Y MAS', '', '', '', '', 13.00, '', '', '1592220116.png', 'pizto.png', 'mdb-skin', 1, '1', 'Dolares', '$', 'IVA', 'NIT', 1, 1, '', 0, 0, '', '', 1592220117, 11);
+INSERT INTO `config_master` (`id`, `sistema`, `cliente`, `slogan`, `propietario`, `telefono`, `giro`, `nit`, `imp`, `direccion`, `email`, `imagen`, `logo`, `skin`, `tipo_inicio`, `pais`, `moneda`, `moneda_simbolo`, `nombre_impuesto`, `nombre_documento`, `inicio_tx`, `otras_ventas`, `cambio_tx`, `dias_vencimiento`, `dias_cotizacion`, `multicaja`, `mayorista`, `hash`, `time`, `td`) VALUES
+(1, 'Sistema de contro', 'FERRETERIAS DE AQUI', 'LO MEJOR EN FERRETERIA', 'Erick Nunez', '60623882', '', '0207-210386-102-9', 13.00, 'San Salvador', 'aerick.nunez@gmail.com', '1592065898.png', 'pizto.png', 'grey-skin', 2, '1', 'Dolares', '$', 'IVA', 'NIT', 1, 1, '', 30, 30, '', 'on', '0215951ce2', 1593657941, 10),
+(2, 'Sistema de control', 'LA CURVA', 'ABARROTES Y MAS', '', '', '', '', 13.00, '', '', '1592220116.png', 'pizto.png', 'mdb-skin', 1, '1', 'Dolares', '$', 'IVA', 'NIT', 1, 1, '', 0, 0, '', '', '', 1592220117, 11),
+(3, 'Sistema de control', 'FARMACIA PRINCIPAL', 'LOS MEJORES PRECIOS', '', '', '', '', 13.00, '', '', '1594527215.png', 'pizto.png', 'mdb-skin', 1, '1', 'Dolares', '$', 'IVA', 'NIT', 1, 1, '', 15, 30, '', '', '', 1594532274, 12);
 
 -- --------------------------------------------------------
 
@@ -150,6 +148,8 @@ CREATE TABLE `config_root` (
   `ftp_password` varchar(100) NOT NULL,
   `tipo_sistema` varchar(100) NOT NULL COMMENT '0 = demo 1 - basico, 2- profesionl, 3 -corporativo',
   `plataforma` varchar(100) NOT NULL COMMENT '0 local, 1, web',
+  `multiusuario` varchar(100) NOT NULL,
+  `ecommerce` varchar(100) NOT NULL,
   `hash` varchar(12) NOT NULL,
   `time` int(12) NOT NULL,
   `td` int(4) NOT NULL
@@ -159,9 +159,10 @@ CREATE TABLE `config_root` (
 -- Volcado de datos para la tabla `config_root`
 --
 
-INSERT INTO `config_root` (`id`, `expira`, `expiracion`, `ftp_servidor`, `ftp_path`, `ftp_ruta`, `ftp_user`, `ftp_password`, `tipo_sistema`, `plataforma`, `hash`, `time`, `td`) VALUES
-(1, 'eTFDTEpDRG12Qlc4K3dCenZzRVBrZz09', 'VUdMdTZ0VitMazhaeDJqbnNneWFwUT09', 'WlBoUUVvemxaU1M2Nm5wV0N2MGorUT09', 'WlBoUUVvemxaU1M2Nm5wV0N2MGorUT09', 'WlBoUUVvemxaU1M2Nm5wV0N2MGorUT09', 'WlBoUUVvemxaU1M2Nm5wV0N2MGorUT09', 'WlBoUUVvemxaU1M2Nm5wV0N2MGorUT09', 'S2hONmxpd3BldVlQOHVvSHhYa1BGdz09', 'S2hONmxpd3BldVlQOHVvSHhYa1BGdz09', 'dfb401079e', 1584659138, 10),
-(2, 'QnR2NDN4U0x4WWJjcysybThvbWUyUT09', 'dUN2M25sZ0xNUy9UZS9KUXFzTlMydz09', 'SjJJUFJCM0lPczBaZVU4K3IrTnVEZz09', 'SjJJUFJCM0lPczBaZVU4K3IrTnVEZz09', 'SjJJUFJCM0lPczBaZVU4K3IrTnVEZz09', 'SjJJUFJCM0lPczBaZVU4K3IrTnVEZz09', 'SjJJUFJCM0lPczBaZVU4K3IrTnVEZz09', 'ZzZZcEg3bzJpUEpGeEVNRnVyQzBFUT09', 'WWpKeUpVeVoxT1pBZXZhazFrOGM4Zz09', '', 1584572222, 11);
+INSERT INTO `config_root` (`id`, `expira`, `expiracion`, `ftp_servidor`, `ftp_path`, `ftp_ruta`, `ftp_user`, `ftp_password`, `tipo_sistema`, `plataforma`, `multiusuario`, `ecommerce`, `hash`, `time`, `td`) VALUES
+(1, 'eTFDTEpDRG12Qlc4K3dCenZzRVBrZz09', 'VUdMdTZ0VitMazhaeDJqbnNneWFwUT09', 'WlBoUUVvemxaU1M2Nm5wV0N2MGorUT09', 'WlBoUUVvemxaU1M2Nm5wV0N2MGorUT09', 'WlBoUUVvemxaU1M2Nm5wV0N2MGorUT09', 'WlBoUUVvemxaU1M2Nm5wV0N2MGorUT09', 'WlBoUUVvemxaU1M2Nm5wV0N2MGorUT09', 'S2hONmxpd3BldVlQOHVvSHhYa1BGdz09', 'S2hONmxpd3BldVlQOHVvSHhYa1BGdz09', 'WlBoUUVvemxaU1M2Nm5wV0N2MGorUT09', 'Q1F1WFJHcEhBVnd2WU1ZRGRrdDI5QT09', 'dfb401079e', 1593665370, 10),
+(2, 'QnR2NDN4U0x4WWJjcysybThvbWUyUT09', 'dUN2M25sZ0xNUy9UZS9KUXFzTlMydz09', 'SjJJUFJCM0lPczBaZVU4K3IrTnVEZz09', 'SjJJUFJCM0lPczBaZVU4K3IrTnVEZz09', 'SjJJUFJCM0lPczBaZVU4K3IrTnVEZz09', 'SjJJUFJCM0lPczBaZVU4K3IrTnVEZz09', 'SjJJUFJCM0lPczBaZVU4K3IrTnVEZz09', 'ZzZZcEg3bzJpUEpGeEVNRnVyQzBFUT09', 'WWpKeUpVeVoxT1pBZXZhazFrOGM4Zz09', '', '', '', 1584572222, 11),
+(3, 'V29LUHlBZGh5WFREOGNURWM1Ty9aQT09', 'TDRCTGJ0NXpZZ1dDMnZrektrdzNwUT09', 'NW5GRTJ1c2lGRmhkekpSdG03UTI1Zz09', 'NW5GRTJ1c2lGRmhkekpSdG03UTI1Zz09', 'NW5GRTJ1c2lGRmhkekpSdG03UTI1Zz09', 'NW5GRTJ1c2lGRmhkekpSdG03UTI1Zz09', 'NW5GRTJ1c2lGRmhkekpSdG03UTI1Zz09', 'ZkduWDBhRE5wbks2OTBEeDlHdmI3dz09', 'ZkduWDBhRE5wbks2OTBEeDlHdmI3dz09', 'NW5GRTJ1c2lGRmhkekpSdG03UTI1Zz09', 'NW5GRTJ1c2lGRmhkekpSdG03UTI1Zz09', '', 1594526855, 12);
 
 -- --------------------------------------------------------
 
@@ -239,7 +240,9 @@ INSERT INTO `corte_diario` (`id`, `fecha`, `fecha_format`, `hora`, `productos`, 
 (40, '19-03-2020', '1584597600', '16:52:03', 15, 4, 1175.36, 112.32, 0.00, 112.32, 112.32, 0.00, 0.00, 0.00, 0.00, '3c67697e18899300a2648199a9798dffb359cab2', 2, '2742516902', 1584664070, 10),
 (41, '19-03-2020', '1584597600', '17:05:07', 15, 4, 1175.36, 112.32, 0.00, 112.32, 112.32, 0.00, 0.00, 0.00, 0.00, '3c67697e18899300a2648199a9798dffb359cab2', 2, 'f793936854', 1584664070, 10),
 (42, '19-03-2020', '1584597600', '17:06:08', 15, 4, 1175.36, 112.32, 0.00, 112.32, 112.32, 0.00, 0.00, 0.00, 0.00, '3c67697e18899300a2648199a9798dffb359cab2', 2, 'c446565980', 1584664070, 10),
-(43, '19-03-2020', '1584597600', '18:28:05', 15, 4, 1175.36, 112.32, 0.00, 112.32, 112.32, 0.00, 0.00, 0.00, 0.00, '3c67697e18899300a2648199a9798dffb359cab2', 1, 'e3d0634393', 1584664085, 10);
+(43, '19-03-2020', '1584597600', '18:28:05', 15, 4, 1175.36, 112.32, 0.00, 112.32, 112.32, 0.00, 0.00, 0.00, 0.00, '3c67697e18899300a2648199a9798dffb359cab2', 1, 'e3d0634393', 1584664085, 10),
+(44, '20-06-2020', '1592632800', '22:49:21', 0, 0, 413.20, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 'db2625', 1, '380b5eff51', 1592714962, 11),
+(45, '11-07-2020', '1594447200', '23:38:27', 4, 2, 0.89, 72.86, 0.00, 72.86, 0.89, 71.97, 0.00, 0.00, 0.00, 'f8819e', 1, 'ca766843d1', 1594532307, 12);
 
 -- --------------------------------------------------------
 
@@ -330,7 +333,7 @@ INSERT INTO `cotizaciones_data` (`id`, `cliente`, `correlativo`, `fecha`, `hora`
 (8, '461904b806', 3, '20-03-2020', '17:54:04', '1584684000', '04-04-2020', '1585980000', 2, '71576f2984', 1584748491, 10),
 (10, '461904b806', 4, '20-03-2020', '18:57:00', '1584684000', '04-04-2020', '1585980000', 2, '2b17a156e9', 1584752245, 10),
 (11, '4d2344fe9e', 5, '20-03-2020', '18:57:47', '1584684000', '04-04-2020', '1585980000', 2, '97f8b5c8e9', 1591708246, 10),
-(12, '9811234b6f', 1, '20-03-2020', '19:00:18', '1584684000', '04-04-2020', '1585980000', 2, '3709a34ecd', 1584752465, 11),
+(12, '9811234b6f', 1, '20-03-2020', '19:00:18', '1584684000', '04-04-2020', '1585980000', 2, '3709a34ecd', 1592320425, 11),
 (13, '461904b806', 6, '09-06-2020', '07:18:07', '1591682400', '24-06-2020', '1592978400', 2, 'a44bfce2c1', 1591708715, 10),
 (14, '4d2344fe9e', 7, '13-06-2020', '08:41:53', '1592028000', '13-07-2020', '1594620000', 2, '67bed5c5c6', 1592059332, 10);
 
@@ -393,38 +396,74 @@ CREATE TABLE `creditos_abonos` (
   `td` int(5) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- --------------------------------------------------------
+
 --
--- Volcado de datos para la tabla `creditos_abonos`
+-- Estructura de tabla para la tabla `cuentas`
 --
 
-INSERT INTO `creditos_abonos` (`id`, `credito`, `nombre`, `abono`, `user`, `fecha`, `hora`, `user_del`, `hora_del`, `edo`, `hash`, `time`, `td`) VALUES
-(1, 'b9059d125a', 'CARLOS LOPEZ', 5.00, 'a9166cd5465a89b70f144e4cb4700a5054f4d2cb', '01-03-2020', '17:07:52', '', '', 1, '1ca4c6cea1', 1583104072, 11),
-(2, '8efb226e9f', 'JUAN PEREZ', 11.00, 'a9166cd5465a89b70f144e4cb4700a5054f4d2cb', '01-03-2020', '17:08:14', '', '', 1, '64f61ba06f', 1583104094, 11),
-(3, '19a6739b74', 'JUAN PEREZ', 0.00, '1321247b13afc962352b12dc3545ba06c206afdf', '01-03-2020', '17:14:55', '', '', 1, 'b02a6f4a60', 1583104495, 10),
-(4, 'c4819a6516', 'JUAN PEREZ', 9.80, '1321247b13afc962352b12dc3545ba06c206afdf', '01-03-2020', '17:20:41', '', '', 1, 'ac5c5cc6d9', 1583104841, 10),
-(5, 'b9059d125a', 'CARLOS LOPEZ', 4.67, '3c67697e18899300a2648199a9798dffb359cab2', '03-03-2020', '17:46:57', '', '', 1, 'b7ed22e787', 1583279217, 11),
-(6, '4d227b1b61', 'JUAN HERNANDEZ', 20.00, '3c67697e18899300a2648199a9798dffb359cab2', '03-03-2020', '18:00:00', '', '', 1, '0a27c112ea', 1583280000, 10),
-(7, '3bff3e7071', 'JUAN PEREZ', 10.00, '3c67697e18899300a2648199a9798dffb359cab2', '04-03-2020', '18:23:58', '3c67697e18899300a2648199a9798dffb359cab2', '18:24:01', 2, 'cb69a97635', 1583367841, 11),
-(8, '3bff3e7071', 'JUAN PEREZ', 15.00, '3c67697e18899300a2648199a9798dffb359cab2', '04-03-2020', '18:24:06', '', '', 1, 'e03bed4ed0', 1583367846, 11),
-(9, '8efb226e9f', 'JUAN PEREZ', 5.27, '3c67697e18899300a2648199a9798dffb359cab2', '05-03-2020', '18:40:39', '', '', 1, '6be18f6aa4', 1583455239, 11),
-(10, '8efb226e9f', 'JUAN PEREZ', 5.00, '3c67697e18899300a2648199a9798dffb359cab2', '06-03-2020', '18:50:27', '3c67697e18899300a2648199a9798dffb359cab2', '18:50:46', 2, '98c558b6cc', 1583542246, 11),
-(11, '8efb226e9f', 'JUAN PEREZ', 5.00, '3c67697e18899300a2648199a9798dffb359cab2', '06-03-2020', '18:51:06', '', '', 1, '4e83951106', 1583542266, 11),
-(12, '3bff3e7071', 'JUAN PEREZ', 4.07, '3c67697e18899300a2648199a9798dffb359cab2', '10-03-2020', '19:12:25', '', '', 1, '1ad471e6cd', 1583889145, 11),
-(13, '4290443283', 'JUAN PEREZ', 20.00, '3c67697e18899300a2648199a9798dffb359cab2', '12-03-2020', '19:27:04', '3c67697e18899300a2648199a9798dffb359cab2', '19:27:06', 2, 'df87af7852', 1584062827, 11),
-(14, '4290443283', 'JUAN PEREZ', 20.00, '3c67697e18899300a2648199a9798dffb359cab2', '12-03-2020', '19:27:10', '', '', 1, '026ef82c7d', 1584062830, 11),
-(15, '4290443283', 'JUAN PEREZ', 15.00, '3c67697e18899300a2648199a9798dffb359cab2', '13-03-2020', '19:37:57', '', '', 1, '75e95e9972', 1584149877, 11),
-(16, '4290443283', 'JUAN PEREZ', 10.40, '3c67697e18899300a2648199a9798dffb359cab2', '18-03-2020', '19:50:55', '3c67697e18899300a2648199a9798dffb359cab2', '19:50:57', 2, '35aa773bca', 1584582658, 11),
-(17, '4290443283', 'JUAN PEREZ', 10.40, '3c67697e18899300a2648199a9798dffb359cab2', '18-03-2020', '19:51:01', '', '', 1, '0f39573b2e', 1584582661, 11),
-(18, '8658737798', 'JUAN HERNANDEZ', 30.00, '3c67697e18899300a2648199a9798dffb359cab2', '06-03-2020', '19:57:32', '3c67697e18899300a2648199a9798dffb359cab2', '19:57:37', 2, 'a5ab7f2d0a', 1583546257, 10),
-(19, '8658737798', 'JUAN HERNANDEZ', 20.00, '3c67697e18899300a2648199a9798dffb359cab2', '06-03-2020', '19:57:40', '', '', 1, '97eb025a5b', 1583546260, 10),
-(20, 'c4819a6516', 'JUAN PEREZ', 9.80, '3c67697e18899300a2648199a9798dffb359cab2', '06-03-2020', '19:57:51', '3c67697e18899300a2648199a9798dffb359cab2', '19:58:15', 2, 'a62509ace0', 1583546295, 10),
-(21, 'c4819a6516', 'JUAN PEREZ', 40.00, '3c67697e18899300a2648199a9798dffb359cab2', '06-03-2020', '19:58:21', '', '', 1, '91abc7efa5', 1583546301, 10),
-(22, '8658737798', 'JUAN HERNANDEZ', 47.60, '3c67697e18899300a2648199a9798dffb359cab2', '08-03-2020', '20:03:33', '', '', 1, '92f358662e', 1583719413, 10),
-(23, '4d227b1b61', 'JUAN HERNANDEZ', 20.00, '3c67697e18899300a2648199a9798dffb359cab2', '08-03-2020', '20:03:44', '', '', 1, 'e468f47cdf', 1583719424, 10),
-(24, '4d227b1b61', 'JUAN HERNANDEZ', 43.30, '3c67697e18899300a2648199a9798dffb359cab2', '08-03-2020', '20:03:50', '', '', 1, '8cf54c50c1', 1583719430, 10),
-(25, 'c4819a6516', 'JUAN PEREZ', 50.00, '3c67697e18899300a2648199a9798dffb359cab2', '08-03-2020', '20:04:02', '', '', 1, '98169de229', 1583719442, 10),
-(26, '298c2dea30', 'JUAN HERNANDEZ', 50.00, '3c67697e18899300a2648199a9798dffb359cab2', '13-03-2020', '20:11:36', '', '', 1, '76550664f0', 1584151896, 10),
-(27, '298c2dea30', 'JUAN HERNANDEZ', 30.00, '3c67697e18899300a2648199a9798dffb359cab2', '18-03-2020', '20:18:01', '', '', 1, '4ffea1ff6a', 1584584281, 10);
+CREATE TABLE `cuentas` (
+  `id` int(6) NOT NULL,
+  `hash_proveedor` varchar(12) NOT NULL,
+  `nombre` varchar(50) NOT NULL,
+  `detalles` text NOT NULL,
+  `factura` int(6) NOT NULL,
+  `total` float(10,2) NOT NULL,
+  `fecha` varchar(30) NOT NULL,
+  `fechaF` varchar(20) NOT NULL,
+  `hora` varchar(30) NOT NULL,
+  `fecha_limite` varchar(20) NOT NULL,
+  `fecha_limiteF` varchar(20) NOT NULL,
+  `edo` int(2) NOT NULL COMMENT '0, eliminado 1 activo, 2 pagado',
+  `hash` varchar(12) NOT NULL,
+  `time` int(12) NOT NULL,
+  `td` int(6) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Tabla de las cuentas por cobrar';
+
+--
+-- Volcado de datos para la tabla `cuentas`
+--
+
+INSERT INTO `cuentas` (`id`, `hash_proveedor`, `nombre`, `detalles`, `factura`, `total`, `fecha`, `fechaF`, `hora`, `fecha_limite`, `fecha_limiteF`, `edo`, `hash`, `time`, `td`) VALUES
+(1, '162550f47d', 'FHGFJHGJ', 'ljkljkljkl;k', 46546, 50.00, '19-06-2020', '1592546400', '20:00:06', '30-06-2020', '1593496800', 2, 'bf53d88b22', 1592635458, 10),
+(2, '6da060c351', 'CUENTA DE  COMPRA DE TOMATES', 'Se compraron varios tomates y se han echo algunos deposito', 2354, 24.95, '19-06-2020', '1592546400', '22:54:04', '30-06-2020', '1593496800', 2, '01051b2438', 1592635471, 10),
+(3, '162550f47d', 'COMPRA DE FRUTAS', 'Compra de frutas ', 465, 124.00, '19-06-2020', '1592546400', '23:09:14', '28-06-2020', '1593324000', 0, '0deb583319', 1592630322, 10),
+(4, '162550f47d', 'NUEVA COSA POR COBRAR', 'Nueva cosa por cobrar', 565, 656.00, '19-06-2020', '1592546400', '23:25:17', '24-06-2020', '1592978400', 0, '262aa3ffcf', 1592630832, 10),
+(5, '162550f47d', 'FACTURA DE MEDICINA', 'Medicamento para el dolor de cabeza', 124535, 400.00, '20-06-2020', '1592632800', '16:59:20', '29-06-2020', '1593410400', 1, 'be46ae5ff1', 1592694064, 10);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `cuentas_abonos`
+--
+
+CREATE TABLE `cuentas_abonos` (
+  `id` int(6) NOT NULL,
+  `cuenta` varchar(12) NOT NULL,
+  `abono` float(10,2) NOT NULL,
+  `user` varchar(100) NOT NULL,
+  `fecha` varchar(25) NOT NULL,
+  `hora` varchar(25) NOT NULL,
+  `user_del` varchar(100) NOT NULL,
+  `hora_del` varchar(50) NOT NULL,
+  `edo` int(2) NOT NULL COMMENT '1activo 2 borrado',
+  `hash` varchar(12) NOT NULL,
+  `time` int(12) NOT NULL,
+  `td` int(5) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `cuentas_abonos`
+--
+
+INSERT INTO `cuentas_abonos` (`id`, `cuenta`, `abono`, `user`, `fecha`, `hora`, `user_del`, `hora_del`, `edo`, `hash`, `time`, `td`) VALUES
+(1, '01051b2438', 10.00, 'Erick', '20-06-2020', '00:31:27', 'Erick', '00:31:29', 2, 'f1d3df0fe7', 1592634689, 10),
+(2, '01051b2438', 15.00, 'Erick', '20-06-2020', '00:31:32', '', '', 1, 'fbcf09e082', 1592634692, 10),
+(3, 'bf53d88b22', 50.00, 'Erick', '20-06-2020', '00:44:18', '', '', 1, '867fec136f', 1592635458, 10),
+(4, '01051b2438', 9.95, 'Erick', '20-06-2020', '00:44:31', '', '', 1, 'c18adc84ec', 1592635471, 10),
+(5, 'be46ae5ff1', 150.00, 'Erick', '20-06-2020', '17:00:06', 'Erick', '17:01:04', 2, '5f02a6258e', 1592694064, 10),
+(6, 'be46ae5ff1', 120.00, 'Erick', '20-06-2020', '17:01:12', '', '', 1, 'ad7a77549c', 1592694072, 10),
+(7, 'be46ae5ff1', 40.00, 'Erick', '20-06-2020', '17:01:20', '', '', 1, 'a0a816777f', 1592694080, 10);
 
 -- --------------------------------------------------------
 
@@ -500,7 +539,7 @@ CREATE TABLE `gastos` (
   `fechaF` varchar(30) NOT NULL,
   `hora` varchar(20) NOT NULL,
   `user` varchar(100) NOT NULL,
-  `edo` int(2) NOT NULL,
+  `edo` int(2) NOT NULL COMMENT 'o eliminado, 1 activo, 2 - activo no se puede borrar',
   `hash` varchar(12) NOT NULL,
   `time` int(12) NOT NULL,
   `td` int(2) NOT NULL
@@ -511,38 +550,18 @@ CREATE TABLE `gastos` (
 --
 
 INSERT INTO `gastos` (`id`, `tipo`, `nombre`, `descripcion`, `cantidad`, `fecha`, `fechaF`, `hora`, `user`, `edo`, `hash`, `time`, `td`) VALUES
-(1, 1, 'Compra de Material de limpieza', 'Se compro desinfectante y lejia', 6.20, '01-03-2020', '1583042400', '17:09:05', 'a9166cd5465a89b70f144e4cb4700a5054f4d2cb', 1, 'deb8a59c94', 1583104145, 11),
-(2, 1, 'Compra de Trapiador', '3 trapeadores para la sala', 2.50, '01-03-2020', '1583042400', '17:09:43', 'a9166cd5465a89b70f144e4cb4700a5054f4d2cb', 1, '265d13f807', 1583104183, 11),
-(3, 2, 'Material de limpieza', 'Compra de desinfectante y lejia', 4.50, '02-03-2020', '1583128800', '17:24:53', '3c67697e18899300a2648199a9798dffb359cab2', 1, 'a260879998', 1583191493, 10),
-(4, 2, 'Compra de candado', 'Candado para puerta trasera', 7.26, '02-03-2020', '1583128800', '17:25:59', '3c67697e18899300a2648199a9798dffb359cab2', 1, '163087971d', 1583191559, 10),
-(5, 2, 'Compra de lapiz', 'Compra de lapices para oficina', 2.46, '02-03-2020', '1583128800', '17:33:17', '3c67697e18899300a2648199a9798dffb359cab2', 1, 'cd82bc9e5d', 1583191997, 11),
-(6, 2, 'Pago de Luz', 'Pago del recibo de luz del mes de marzo', 84.10, '03-03-2020', '1583215200', '17:47:52', '3c67697e18899300a2648199a9798dffb359cab2', 1, 'b09f5a83fc', 1583279272, 11),
-(7, 2, 'Energia', 'Para pago de energia electrica del mes de marzo', 91.15, '03-03-2020', '1583215200', '18:00:58', '3c67697e18899300a2648199a9798dffb359cab2', 1, 'f5bf7497a7', 1583280058, 10),
-(8, 2, 'Compra de libros', 'Libros para apuntes de oficina', 15.20, '04-03-2020', '1583301600', '18:25:12', '3c67697e18899300a2648199a9798dffb359cab2', 1, '8318bc8fde', 1583367912, 11),
-(9, 3, 'Banco', 'Remesa para el banco Agricola', 450.00, '04-03-2020', '1583301600', '18:32:19', '3c67697e18899300a2648199a9798dffb359cab2', 1, '82a939bdbb', 1583368339, 10),
-(10, 2, 'Compra de Material de oficina', 'Compra de materia de oficina, lapices, cuadernos', 15.20, '06-03-2020', '1583474400', '18:51:53', '3c67697e18899300a2648199a9798dffb359cab2', 1, 'bf566d14f6', 1583542313, 11),
-(11, 3, 'Remesa', 'Remesa banco Agricola', 500.00, '07-03-2020', '1583560800', '19:02:32', '3c67697e18899300a2648199a9798dffb359cab2', 1, '8497a834c8', 1583629352, 11),
-(12, 2, 'Papel ', 'Compra de papel para impresora', 15.80, '09-03-2020', '1583733600', '19:08:16', '3c67697e18899300a2648199a9798dffb359cab2', 1, '1214913509', 1583802496, 11),
-(13, 3, 'Banco', 'Remesa al banco Agricola', 568.27, '10-03-2020', '1583820000', '19:11:38', '3c67697e18899300a2648199a9798dffb359cab2', 1, '21b1171c36', 1583889098, 11),
-(14, 1, 'Pago Agua', 'Compra de agua para los empleados', 22.40, '11-03-2020', '1583906400', '19:15:39', '3c67697e18899300a2648199a9798dffb359cab2', 1, '6a2fce8ed8', 1583975739, 11),
-(15, 2, 'Baterias', 'Compra de baterias para los controles', 1.20, '12-03-2020', '1583992800', '19:27:41', '3c67697e18899300a2648199a9798dffb359cab2', 1, '5c35f44c55', 1584062861, 11),
-(16, 3, 'Banco', 'Remesa Banco Agricola', 350.00, '14-03-2020', '1584165600', '19:41:13', '3c67697e18899300a2648199a9798dffb359cab2', 1, 'ea6b339d45', 1584236473, 11),
-(17, 2, 'Telefono', 'Pago de telefono del mes de marzo', 38.40, '17-03-2020', '1584424800', '19:47:41', '3c67697e18899300a2648199a9798dffb359cab2', 1, '801674f9a1', 1584496061, 11),
-(18, 3, 'Banco', 'Remesa al banco Agricola', 400.00, '17-03-2020', '1584424800', '19:48:15', '3c67697e18899300a2648199a9798dffb359cab2', 1, '7deab77fa2', 1584496095, 11),
-(19, 1, 'Compra', 'Compra de desinfectante para piso', 5.00, '18-03-2020', '1584511200', '19:52:12', '3c67697e18899300a2648199a9798dffb359cab2', 1, 'e06516397e', 1584582732, 11),
-(20, 3, 'Banco', 'Remes a banco Agricola', 200.00, '06-03-2020', '1583474400', '19:58:58', '3c67697e18899300a2648199a9798dffb359cab2', 1, 'f51fb9bfb6', 1583546338, 10),
-(21, 2, 'Papeleria', 'Compra de papeleria ', 20.00, '07-03-2020', '1583560800', '20:02:30', '3c67697e18899300a2648199a9798dffb359cab2', 1, 'b3562819fa', 1583632950, 10),
-(22, 3, 'Banco', 'Remesa a banco agricola', 1500.00, '09-03-2020', '1583733600', '20:05:51', '3c67697e18899300a2648199a9798dffb359cab2', 1, 'aeea4f03c4', 1583805951, 10),
-(23, 3, 'Banco', 'Remesa a banco Agricola', 500.00, '12-03-2020', '1583992800', '20:10:20', '3c67697e18899300a2648199a9798dffb359cab2', 1, '45daec7740', 1584065420, 10),
-(24, 3, 'Banco', 'Remesa a  Baanco Agricola', 1000.00, '14-03-2020', '1584165600', '20:12:48', '3c67697e18899300a2648199a9798dffb359cab2', 1, '248db749cf', 1584238368, 10),
-(25, 1, 'papel', 'Compra de papel para impresora', 5.20, '17-03-2020', '1584424800', '20:16:24', '3c67697e18899300a2648199a9798dffb359cab2', 1, '680ee1942b', 1584497784, 10),
-(26, 3, 'Banco', 'Remesa a banco Agricola', 1500.00, '18-03-2020', '1584511200', '20:18:31', '3c67697e18899300a2648199a9798dffb359cab2', 1, '1a18d93184', 1584584311, 10),
-(27, 2, 'Tinta', 'Tinta para impresora', 20.40, '18-03-2020', '1584511200', '20:18:49', '3c67697e18899300a2648199a9798dffb359cab2', 1, '847d8dba93', 1584584329, 10),
-(28, 5, 'Compra de Material', 'Compra de material para la remodela cion', 1250.00, '18-03-2020', '1584511200', '20:19:13', '3c67697e18899300a2648199a9798dffb359cab2', 1, '7b23ccc00a', 1584584353, 10),
-(37, 4, 'Adelanto', 'Adelanto a ERICK NUNEZ', 10.00, '27-05-2020', '1590559200', '23:47:52', 'Erick', 0, 'bd69825b50', 1590644884, 10),
-(38, 4, 'Adelanto', 'Adelanto a ERICK NUNEZ', 10.00, '27-05-2020', '1590559200', '23:53:38', 'Erick', 1, 'a3efccdc1d', 1590645218, 10),
-(39, 2, 'Compra de sal', '30 libras de sal para cocina', 15.00, '09-06-2020', '1591682400', '04:29:04', 'Erick', 0, '5217cb499f', 1591698592, 10),
-(40, 1, 'Compra de sal', 'Compra de sal para cocina', 15.20, '09-06-2020', '1591682400', '04:32:56', 'Erick', 1, 'fbcc934a96', 1591698776, 10);
+(1, 2, 'Abono a cuenta por pagar', 'ABONO A: CUENTA DE  COMPRA DE TOMATES', 10.00, '20-06-2020', '1592632800', '00:31:27', 'Erick', 0, '2e9046cb0c', 1592634775, 10),
+(2, 2, 'Abono a cuenta por pagar', 'ABONO A: CUENTA DE  COMPRA DE TOMATES', 15.00, '20-06-2020', '1592632800', '00:31:32', 'Erick', 2, 'f3e655fa8e', 1592634692, 10),
+(3, 4, 'Adelanto', 'Adelanto a ERICK NUNEZ', 10.00, '20-06-2020', '1592632800', '00:32:18', 'Erick', 2, '42a46f5245', 1592634738, 10),
+(4, 4, 'Adelanto chingon', 'Adelanto a ERICK NUNEZ', 20.00, '20-06-2020', '1592632800', '00:35:35', 'Erick', 0, '43b971001a', 1592634948, 10),
+(5, 4, 'Adelanto de emergencia', 'Adelanto a JAZMIN NUNEZ', 15.20, '20-06-2020', '1592632800', '00:37:38', 'Erick', 2, '2cd9347050', 1592635058, 10),
+(6, 4, 'Adelanto de emergencia', 'Adelanto a JAZMIN NUNEZ', 13.00, '20-06-2020', '1592632800', '00:40:51', 'Erick', 0, '521df434ee', 1592635276, 10),
+(7, 4, 'Adelanto a Neagan', 'Adelanto a ERICK NUNEZ', 12.50, '20-06-2020', '1592632800', '00:41:51', 'Erick', 0, '73e77319bf', 1592635316, 10),
+(8, 2, 'Abono a cuenta por pagar', 'ABONO A: FHGFJHGJ', 50.00, '20-06-2020', '1592632800', '00:44:19', 'Erick', 2, '700c8c9258', 1592635459, 10),
+(9, 2, 'Abono a cuenta por pagar', 'ABONO A: CUENTA DE  COMPRA DE TOMATES', 9.95, '20-06-2020', '1592632800', '00:44:31', 'Erick', 2, 'cc9c7d4607', 1592635471, 10),
+(10, 2, 'Abono a cuenta por pagar', 'ABONO A: FACTURA DE MEDICINA', 150.00, '20-06-2020', '1592632800', '17:00:06', 'Erick', 0, 'd2ba9b84e2', 1592694064, 10),
+(11, 2, 'Abono a cuenta por pagar', 'ABONO A: FACTURA DE MEDICINA', 120.00, '20-06-2020', '1592632800', '17:01:12', 'Erick', 2, '77d41c57d6', 1592694072, 10),
+(12, 2, 'Abono a cuenta por pagar', 'ABONO A: FACTURA DE MEDICINA', 40.00, '20-06-2020', '1592632800', '17:01:20', 'Erick', 2, 'fd0565167b', 1592694080, 10);
 
 -- --------------------------------------------------------
 
@@ -594,7 +613,13 @@ INSERT INTO `login_attempts` (`user_id`, `time`) VALUES
 (3, '1591292833'),
 (3, '1591725239'),
 (3, '1591725242'),
-(3, '1591725595');
+(3, '1591725595'),
+(3, '1592325076'),
+(3, '1592325096'),
+(3, '1594334394'),
+(3, '1594334398'),
+(3, '1594334403'),
+(3, '1594340480');
 
 -- --------------------------------------------------------
 
@@ -661,7 +686,8 @@ CREATE TABLE `login_members` (
 INSERT INTO `login_members` (`id`, `username`, `email`, `password`, `salt`) VALUES
 (1, 'Erick', 'aerick.nunez@gmail.com', '50236c59c304c8b5c2f6b5c1af94f4416d998e3ba3fd2fc5a795f740431c35e9bbd9d4439a3dad8a182173b14291a308e4716458278fc228ad7c8f9930d9547e', '5f1e8cce7a67bf3282acf41dee11c7c784b5c8b6687bc4a10b3a81e2af81f186402d4f19e545b62e474f308f9dbc142eb3c66c6033b264cd0e1ffe1209cdf57d'),
 (3, 'db2625', 'abarrotes@pizto.com', 'cbe63f9a2905f07c5e7eee57a063dfb7dc375c570aa1430ea46fe534a831763c73985df3eaf7fb2dd266b106739eb74ba81c659d0fdf46fcd007394d942cf690', '8251d03b00004a87aa90fa276fab8140a6ffa84bec6ab88132fd474cc6a2eae8f42b46e517ee22d19f950553aaba774aa98f374bb9b2aa5e3645192ee4779abc'),
-(4, '6f129e', 'ferreteria@pizto.com', '35c84227380b306f0c75d874316a06090c1418ea86c97ac3830d41c456759879dea31cc4d39e680215534e15438925304c2f8c5a2a8204bfad4b40321da445ec', 'f6ad1faa4e63f5b4f1cf0266db07892cb92aa63f1cb4e9a73bd3cf8507fe35d14e13cfacb7c145c7c298245afb55df23f0694218f78ca85cc2600de5c9db05a9');
+(4, '6f129e', 'ferreteria@pizto.com', '35c84227380b306f0c75d874316a06090c1418ea86c97ac3830d41c456759879dea31cc4d39e680215534e15438925304c2f8c5a2a8204bfad4b40321da445ec', 'f6ad1faa4e63f5b4f1cf0266db07892cb92aa63f1cb4e9a73bd3cf8507fe35d14e13cfacb7c145c7c298245afb55df23f0694218f78ca85cc2600de5c9db05a9'),
+(5, 'f8819e', 'farmacia@pizto.com', 'e8c412d7a7c83a5ea583dd7f5c2b92751f73d0733b96b4b940cc8b2488fb358d08925ceddbbc10e468f711bb5126eae0e7551da90875f5b87d01424a8374bb79', '0a21ff335ed74c9ed060cb650077e92ef214b1c59dfe484eef9f9f6b71797a29d1078f5e494027013e862bd44e8b8a4f9a0813d3895b02c1676ee1b970a74144');
 
 -- --------------------------------------------------------
 
@@ -714,7 +740,8 @@ CREATE TABLE `login_userdata` (
 INSERT INTO `login_userdata` (`id`, `nombre`, `tipo`, `user`, `tkn`, `avatar`, `td`) VALUES
 (1, 'Erick Nunez', 1, 'Erick', '1', '11.png', 10),
 (3, 'Abarrotes Admin', 5, 'db2625', '1', '11.png', 11),
-(4, 'Admin Ferreteria', 2, '6f129e', '1', 'neagan.jpg', 10);
+(4, 'Admin Ferreteria', 2, '6f129e', '1', 'neagan.jpg', 10),
+(5, 'Admin Farmacia', 5, 'f8819e', '1', '1.png', 12);
 
 -- --------------------------------------------------------
 
@@ -785,14 +812,6 @@ CREATE TABLE `planilla_empleados` (
   `time` int(12) NOT NULL,
   `td` int(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='registra los empleados del negocio';
-
---
--- Volcado de datos para la tabla `planilla_empleados`
---
-
-INSERT INTO `planilla_empleados` (`id`, `nombre`, `puesto`, `documento`, `nit`, `direccion`, `telefono`, `sueldo`, `entradas`, `extra`, `nocturnas`, `comentarios`, `edo`, `hash`, `time`, `td`) VALUES
-(1, 'ERICK NUNEZ', 'Gerente', '03547604-0', '0207-210386-1029', 'Las americas', '60623882', 500.00, '', '', '', '', 0, '8742933e1c', 1590636974, 10),
-(2, 'JAZMIN NUNEZ', 'Empleado', '03659865-4', '02569859-1029', 'Las Americas', '20154854', 320.00, '', '', '', '', 0, '7f919596f8', 1590637013, 10);
 
 -- --------------------------------------------------------
 
@@ -887,24 +906,24 @@ CREATE TABLE `producto` (
 --
 
 INSERT INTO `producto` (`id`, `cod`, `descripcion`, `categoria`, `cantidad`, `medida`, `proveedor`, `informacion`, `existencia_minima`, `caduca`, `compuesto`, `gravado`, `receta`, `dependiente`, `servicio`, `hash`, `time`, `td`) VALUES
-(1, '1001', 'ABRAZADERA STRUT 1/2 TOPAZ', 'f42d664196', 248.00, 'c3254c9416', '162550f47d', '', 10.00, '0', '0', 'on', '0', '0', '0', 'c07a933eed', 1591707673, 10),
-(2, '1002', 'CEMENTO BLANCO, BOLSA DE 42.5 KGS.', 'f42d664196', 307.00, '93b81b44cb', '162550f47d', '', 10.00, '0', '0', 'on', '0', '0', '0', 'f62197dd5b', 1591710990, 10),
-(3, '1003', 'CEMENTO BLANCO, BOLSA DE 42.5 KGS.', 'f42d664196', 243.00, '93b81b44cb', '6da060c351', '', 20.00, '0', '0', 'on', '0', '0', '0', 'c88923f2d3', 1591708295, 10),
-(4, '1004', 'CEMENTO GRIS CUSCATLáN, BOLSA DE 42.5 KGS', 'f42d664196', 214.00, '93b81b44cb', '6da060c351', '', 20.00, '0', '0', 'on', '0', '0', '0', '1c32d0e43d', 1591708295, 10),
-(5, '1005', 'DECOBLOCK BLANCO HUESO GRANO MEDIO, BOLSA DE 40 KGS.', 'f42d664196', 243.00, '93b81b44cb', '162550f47d', '', 20.00, '0', '0', 'on', '0', '0', '0', 'e20e1f23c8', 1584751732, 10),
-(6, '1006', 'DECOBLOCK GRIS GRANO FINO, BOLSA DE 40 KGS.', 'f42d664196', 240.00, '93b81b44cb', '162550f47d', '', 20.00, '0', '0', 'on', '0', '0', '0', '23f40f7a4c', 1588973395, 10),
+(1, '1001', 'ABRAZADERA STRUT 1/2 TOPAZ', 'e80a237b3e', 248.00, 'c3254c9416', '162550f47d', '', 10.00, '0', '0', 'on', '0', '0', '0', 'c07a933eed', 1593657960, 10),
+(2, '1002', 'CEMENTO BLANCO, BOLSA DE 42.5 KGS.', 'e80a237b3e', 307.00, '93b81b44cb', '162550f47d', '', 10.00, '0', '0', 'on', '0', '0', '0', 'f62197dd5b', 1593663071, 10),
+(3, '1003', 'CEMENTO BLANCO, BOLSA DE 42.5 KGS.', 'f42d664196', 243.00, '93b81b44cb', '6da060c351', '', 20.00, '0', '0', 'on', '0', '0', '0', 'c88923f2d3', 1593663196, 10),
+(4, '1004', 'CEMENTO GRIS CUSCATLáN, BOLSA DE 42.5 KGS', 'e80a237b3e', 214.00, 'c3254c9416', '6da060c351', '', 20.00, '0', '0', 'on', '0', '0', '0', '1c32d0e43d', 1593663200, 10),
+(5, '1005', 'DECOBLOCK BLANCO HUESO GRANO MEDIO, BOLSA DE 40 KGS.', 'f42d664196', 243.00, '93b81b44cb', '162550f47d', '', 20.00, '0', '0', 'on', '0', '0', '0', 'e20e1f23c8', 1593668488, 10),
+(6, '1006', 'DECOBLOCK GRIS GRANO FINO, BOLSA DE 40 KGS.', 'f42d664196', 240.00, '93b81b44cb', '6da060c351', '', 20.00, '0', '0', 'on', '0', '0', '0', '23f40f7a4c', 1593661896, 10),
 (7, '1007', 'LIMPIADOR DE CONTACTOS SECADO RáPIDO', 'adf83d083b', 230.00, 'c3254c9416', '162550f47d', '', 20.00, '0', '0', 'on', '0', '0', '0', '3dd1002f6b', 1584654376, 10),
 (8, '1008', 'NAVAJA PARA ELECTRICISTA', 'adf83d083b', 17.00, 'c3254c9416', '162550f47d', '', 10.00, '0', '0', 'on', '0', '0', '0', '3930c1b9ab', 1584654358, 10),
-(9, '1009', 'TENAZA MULTIUSO 16 EN 1 CON ESTUCHE Y LUZ LED', 'adf83d083b', 34.00, 'c3254c9416', '162550f47d', '', 10.00, '0', '0', 'on', '0', '0', '0', 'f724519abe', 1584411281, 10),
-(10, '1010', 'CAJA PARA HERRAMIENTAS PLáSTICA DE 12PLG', 'adf83d083b', 5.00, 'c3254c9416', '162550f47d', '', 5.00, '0', '0', 'on', '0', '0', '0', '125a435efe', 1591708295, 10),
-(11, '1011', 'CAJA PARA HERRAMIENTAS PLáSTICA DE 26PLG', 'adf83d083b', 8.00, 'c3254c9416', '162550f47d', 'Ideal para el almacenamiento de artículos y accesorios de trabajo, material de alta resistencia y durabilidad prolongada.', 5.00, '0', '0', 'on', '0', '0', '0', 'a7d350ce89', 1591708295, 10),
-(12, '1012', 'JUEGO DE LLAVES MIXTAS 6-19 MM, SET 9 PZS', 'adf83d083b', 18.00, 'c3254c9416', '162550f47d', 'Juego de llaves adecuadas para mantenimiento y reparaciones, fabricadas en material de alta resistencia a la tensión.', 10.00, '0', '0', 'on', '0', '0', '0', '9628da07ea', 1584751941, 10),
-(13, '1013', 'FOCO ESMERILADO DE 40 WATTS', 'adf83d083b', 46.00, 'c3254c9416', '162550f47d', '', 20.00, '0', '0', 'on', '0', '0', '0', '8b05c85074', 1591708295, 10),
-(14, '1014', 'FOCO CLARO GE 60W-130V 24651/3', 'adf83d083b', 51.00, 'c3254c9416', '162550f47d', '', 20.00, '0', '0', 'on', '0', '0', '0', '365d446876', 1590501185, 10),
-(15, '1015', 'ACE - LáMPARA DE PARED LED 20W, LUZ BLANCA.', 'adf83d083b', 19.00, 'c3254c9416', '162550f47d', '', 10.00, '0', '0', 'on', '0', '0', '0', 'cef2ed0eee', 1583632875, 10),
+(9, '1009', 'TENAZA MULTIUSO 16 EN 1 CON ESTUCHE Y LUZ LED', 'adf83d083b', 34.00, 'c3254c9416', '162550f47d', '', 10.00, '0', '0', 'on', '0', '0', '0', 'f724519abe', 1593663134, 10),
+(10, '1010', 'CAJA PARA HERRAMIENTAS PLáSTICA DE 12PLG', 'adf83d083b', 5.00, 'c3254c9416', '162550f47d', '', 5.00, '0', '0', 'on', '0', '0', '0', '125a435efe', 1592717761, 10),
+(11, '1011', 'CAJA PARA HERRAMIENTAS PLáSTICA DE 26PLG', 'adf83d083b', 8.00, 'c3254c9416', '162550f47d', 'Ideal para el almacenamiento de artículos y accesorios de trabajo, material de alta resistencia y durabilidad prolongada.', 5.00, '0', '0', 'on', '0', '0', '0', 'a7d350ce89', 1592717762, 10),
+(12, '1012', 'JUEGO DE LLAVES MIXTAS 6-19 MM, SET 9 PZS', '555196e9c6', 18.00, 'c3254c9416', '162550f47d', 'Juego de llaves adecuadas para mantenimiento y reparaciones, fabricadas en material de alta resistencia a la tensión.', 10.00, '0', '0', 'on', '0', '0', '0', '9628da07ea', 1593660571, 10),
+(13, '1013', 'FOCO ESMERILADO DE 40 WATTS', 'adf83d083b', 46.00, 'c3254c9416', '162550f47d', '', 20.00, '0', '0', 'on', '0', '0', '0', '8b05c85074', 1592717761, 10),
+(14, '1014', 'FOCO CLARO GE 60W-130V 24651/3', 'adf83d083b', 51.00, 'c3254c9416', '162550f47d', '', 20.00, '0', '0', 'on', '0', '0', '0', '365d446876', 1592711565, 10),
+(15, '1015', 'ACE - LáMPARA DE PARED LED 20W, LUZ BLANCA.', 'adf83d083b', 19.00, 'c3254c9416', '162550f47d', '', 10.00, '0', '0', 'on', '0', '0', '0', 'cef2ed0eee', 1592710269, 10),
 (16, '1016', 'EXTENSIóN PARA MECáNICO DE 50', 'adf83d083b', 10.00, 'c3254c9416', '162550f47d', '', 2.00, '0', '0', 'on', '0', '0', '0', '7ddff06de5', 1583368170, 10),
 (17, '1017', 'EXTENSIóN ELéCTRICA DE 15 MTS, 3 SALIDAS, 16/3 AWG.', 'adf83d083b', 12.00, 'c3254c9416', '162550f47d', '', 10.00, '0', '0', 'on', '0', '0', '0', '2c1d1d95bd', 1592067086, 10),
-(18, '1018', 'TUBO PVC DE 160 PSI, 1 PULGADA.', 'f42d664196', 160.00, 'c3254c9416', '6da060c351', '', 25.00, '0', '0', 'on', '0', '0', '0', 'dc528b4c86', 1584485995, 10),
+(18, '1018', 'TUBO PVC DE 160 PSI, 1 PULGADA.', 'f42d664196', 160.00, 'c3254c9416', '6da060c351', '', 25.00, '0', '0', 'on', '0', '0', '0', 'dc528b4c86', 1593661890, 10),
 (19, '1019', 'TUBO PVC DE 160 PSI, 2.1/2 PULGADAS.', 'f42d664196', 85.00, 'c3254c9416', '6da060c351', '', 20.00, '0', '0', 'on', '0', '0', '0', 'bb237f950e', 1584411270, 10),
 (20, '1001', '2 PACK ARROZ BLANCO CINCO ESTRELLA LIBRA', '940fe7179c', 485.00, 'd21c51860c', 'b06519fdb5', '', 25.00, '0', '0', 'on', '0', '0', '0', '4455ce8c12', 1584752502, 11),
 (21, '1002', '2 PACK ARROZ BLANCO DANY 1 LB', '940fe7179c', 471.00, 'd21c51860c', '4aba2e319e', '', 20.00, '0', '0', 'on', '0', '0', '0', 'deedb4db2a', 1584752501, 11),
@@ -916,12 +935,23 @@ INSERT INTO `producto` (`id`, `cod`, `descripcion`, `categoria`, `cantidad`, `me
 (27, '1008', 'SOPA EN VASO RES MARUCHAN 12/2 25 OZ', '940fe7179c', 173.00, 'd21c51860c', '4aba2e319e', '', 20.00, '0', '0', 'on', '0', '0', '0', '87fc44a1cf', 1584409530, 11),
 (28, '1009', 'ACEITE CANOLA ORISOL 3000ML PET', '940fe7179c', 144.00, 'd21c51860c', '4aba2e319e', '', 20.00, '0', '0', 'on', '0', '0', '0', 'cb91116b74', 1584582579, 11),
 (29, '1010', 'ACEITE ORISOL 3000ML PET', '940fe7179c', 191.00, 'd21c51860c', '4aba2e319e', '', 10.00, '0', '0', 'on', '0', '0', '0', 'bd471a840d', 1584752502, 11),
-(30, '1011', 'ADEREZO P/ENSALADA RANCH LIGHT 237 ML CL', '940fe7179c', 177.00, 'd21c51860c', '4aba2e319e', '', 20.00, '0', '0', 'on', '0', '0', '0', 'c35aae3c6a', 1584752502, 11),
+(30, '1011', 'ADEREZO P/ENSALADA RANCH LIGHT 237 ML CL', '940fe7179c', 177.00, 'd21c51860c', '4aba2e319e', '', 20.00, '0', '0', 'on', '0', '0', '0', 'c35aae3c6a', 1592713892, 11),
 (31, '1012', 'AVENA MOSH PARA FRESCO ORIGI QUAKER 600G', '940fe7179c', 177.00, 'd21c51860c', '4aba2e319e', '', 20.00, '0', '0', 'on', '0', '0', '0', '96ce3c014f', 1584752502, 11),
 (32, '1013', 'BARRA GRANOLA MIEL HELIOS 162 G', '940fe7179c', 150.00, 'd21c51860c', '4aba2e319e', '', 20.00, '0', '0', 'on', '0', '0', '0', '7b1e7305c1', 1584409453, 11),
 (33, '1014', 'CEREAL KOMPLETE PASAS Y MANZANA 460 G', '940fe7179c', 162.00, 'd21c51860c', '4aba2e319e', '', 20.00, '0', '0', 'on', '0', '0', '0', '36af61b270', 1584409453, 11),
 (34, '1015', 'PASTILLAS PARA DORMIR', '940fe7179c', 380.00, 'd21c51860c', '4aba2e319e', '', 10.00, 'on', '0', 'on', '0', '0', '0', '8adccf87dc', 1590497872, 11),
-(35, '1016', 'PASTILLA PARA DESPERTAR', '940fe7179c', 195.00, 'd21c51860c', 'b06519fdb5', '', 10.00, 'on', '0', 'on', '0', '0', '0', '69a3ec574f', 1590497915, 11);
+(35, '1016', 'PASTILLA PARA DESPERTAR', '940fe7179c', 195.00, 'd21c51860c', 'b06519fdb5', '', 10.00, 'on', '0', 'on', '0', '0', '0', '69a3ec574f', 1590497915, 11),
+(36, '1001', 'CEPILLO GUM END TUFT IMPLANTES 308', '86f6971494', 26.00, '950c4f5124', 'f83d87f177', '\r\nBeneficios\r\nEl diseño cónico limpia áreas problemáticas.\r\nLimpia bandas de ortodoncias, implantes, furcas y espacios interdentales.\r\nUltra suave para una limpieza cuidadosa.', 10.00, '0', '0', 'on', '0', '0', '0', '467a9f1fca', 1594528121, 12),
+(37, '1002', 'GUM  INTERDENTAL SOFT PICK 40 UNID 632', '86f6971494', 89.00, '950c4f5124', 'f83d87f177', '', 10.00, '0', '0', 'on', '0', '0', '0', '798238ef2d', 1594528216, 12),
+(38, '1003', 'CREMA DENTAL COLGATE ORIGINAL BIG RED 75 ML', '86f6971494', 98.00, '950c4f5124', '7a3fb9112a', 'Beneficios\r\nAyuda a remover las manchas y revela el blanco natural de los dientes\r\nEfectiva remoción de la placa bacteriana\r\nRefresca el aliento', 10.00, '0', '0', 'on', '0', '0', '0', '00fa2502c1', 1594528315, 12),
+(39, '1004', 'TOSSIL X 1 CARAMELO', 'dd0ac7b070', 100.00, '950c4f5124', '7a3fb9112a', '\r\nNombre Ingrediente	Cantidad\r\nTintura de drosera	1.00GR\r\nTintura de lobelia	1.00GR\r\nTintura grindelia	1.00GR\r\nExtracto fluido de tolú	1.00GR\r\nCitrato de Sodio	4.00GR\r\nMentol	0.01GR\r\nClorhidrato de Efedrina	0.01GR\r\nBenzoato de Sodio	1.00GR\r\n', 10.00, '0', '0', 'on', '0', '0', '0', 'e7d5eec2b0', 1594528532, 12),
+(40, '1005', 'BRONCOHELIX (HEDERA HELIX) JARABE FRASCO 120 ML', 'dd0ac7b070', 20.00, '950c4f5124', '7a3fb9112a', '\r\nNombre Ingrediente	Cantidad\r\nEstracto de Hiedra	0.04MG', 20.00, '0', '0', 'on', '0', '0', '0', '2d96399f5e', 1594528614, 12),
+(41, '1006', 'ANTIGRIP-PM X 1 SOBRE DE 2 TABLETAS', '30d060ea0d', 20.00, '950c4f5124', '7a3fb9112a', 'Nombre Ingrediente	Cantidad\r\nMaleato de Clorfeniramina	3.00MG\r\nFenilefrina HCL	5.00MG\r\nParacetamol	500.00MG', 20.00, '0', '0', 'on', '0', '0', '0', '68152f8563', 1594528755, 12),
+(42, '1007', 'CREMA FACIAL ACIDO HIALURONICO BABARIA 125ML', '3b2c40478e', 25.00, '950c4f5124', '7a3fb9112a', 'Cosmetico Facial', 20.00, '0', '0', 'on', '0', '0', '0', 'c9fc863bcf', 1594528879, 12),
+(43, '1008', 'ABRILAR JARABE FRASCO X 100 ML', 'dd0ac7b070', 40.00, '950c4f5124', 'f83d87f177', 'Nombre Ingrediente	Cantidad\r\nEstracto de Hiedra	0.04MG', 10.00, 'on', '0', 'on', '0', '0', '0', '52ae504eb8', 1594529087, 12),
+(44, '1009', 'ALGODON FACIAL JALOMA 30 UNIDADES', '3b2c40478e', 24.00, '950c4f5124', '7a3fb9112a', 'Cosmeticos para mujer', 25.00, 'on', '0', 'on', '0', '0', '0', '9d37a048b1', 1594529914, 12),
+(45, '1010', 'EUCERIN HYALURON ELASTICITY FACIAL NOCHE 50ML', '3b2c40478e', 30.00, '950c4f5124', 'f83d87f177', '', 20.00, 'on', '0', 'on', '0', '0', '0', 'f6e94ca81f', 1594531418, 12),
+(46, '1011', 'HELIOCARE ULTRA GEL SPF 90 50 ML', '3b2c40478e', 22.00, '950c4f5124', '7a3fb9112a', 'Te verde', 25.00, 'on', '0', 'on', '0', '0', '0', '26308cc3ac', 1594530502, 12);
 
 -- --------------------------------------------------------
 
@@ -983,8 +1013,40 @@ CREATE TABLE `producto_categoria` (
 INSERT INTO `producto_categoria` (`id`, `categoria`, `hash`, `time`, `td`) VALUES
 (1, 'CONSTRUCCION', 'f42d664196', 1584479859, 10),
 (2, 'ELECTRICO', 'adf83d083b', 1584479867, 10),
-(3, 'HOGAR', '05a6649213', 1584479878, 10),
-(4, 'ABARROTES', '940fe7179c', 1584500312, 11);
+(4, 'ABARROTES', '940fe7179c', 1584500312, 11),
+(39, 'HOGAR', '4c3dcd20a9', 1592874840, 10),
+(40, 'HIGIENE', '140600521c', 1594528017, 12),
+(41, 'MEDICAMENTO', '0ebe6845e3', 1594528435, 12);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `producto_categoria_sub`
+--
+
+CREATE TABLE `producto_categoria_sub` (
+  `id` int(5) NOT NULL,
+  `categoria` varchar(50) NOT NULL,
+  `subcategoria` varchar(50) NOT NULL,
+  `hash` varchar(12) NOT NULL,
+  `time` int(12) NOT NULL,
+  `td` int(5) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Categorias de los productos';
+
+--
+-- Volcado de datos para la tabla `producto_categoria_sub`
+--
+
+INSERT INTO `producto_categoria_sub` (`id`, `categoria`, `subcategoria`, `hash`, `time`, `td`) VALUES
+(28, 'f42d664196', 'CEMENTO', 'e80a237b3e', 1592879844, 10),
+(29, 'f42d664196', 'LADRILLOS', '7f34f68500', 1592879855, 10),
+(30, 'adf83d083b', 'FOCOS', '905a7e683a', 1592879860, 10),
+(31, '4c3dcd20a9', 'JARDINERIA', '555196e9c6', 1592879867, 10),
+(32, '4c3dcd20a9', 'ILUMINACION', 'fc457df3fa', 1592879879, 10),
+(33, '140600521c', 'HIGIENE BUCAL', '86f6971494', 1594528029, 12),
+(34, '140600521c', 'CUIDADO PERSONAL', '3b2c40478e', 1594528043, 12),
+(35, '0ebe6845e3', 'EXPECTORANTE', 'dd0ac7b070', 1594528444, 12),
+(36, '0ebe6845e3', 'ATIGRIPAL', '30d060ea0d', 1594528708, 12);
 
 -- --------------------------------------------------------
 
@@ -1085,7 +1147,18 @@ INSERT INTO `producto_imagenes` (`id`, `producto`, `imagen`, `descripcion`, `anc
 (23, 1009, '1584502947.jpg', '', 500, 500, '6ea7cce567', 1584502948, 11),
 (24, 1011, '1584503100.jpg', '', 800, 800, '53687b8e24', 1584503103, 11),
 (25, 1012, '1584503247.jpg', '', 500, 500, 'e0998f6908', 1584503247, 11),
-(26, 1014, '1584503634.jpg', '', 524, 800, 'be8fe8a009', 1584503636, 11);
+(26, 1014, '1584503634.jpg', '', 524, 800, 'be8fe8a009', 1584503636, 11),
+(27, 1001, '1594528177.jpg', '', 800, 800, '4912d12735', 1594528180, 12),
+(28, 1002, '1594528261.jpg', '', 800, 800, 'fddef39709', 1594528263, 12),
+(29, 1003, '1594528348.jpg', '', 800, 800, 'b589490c08', 1594528351, 12),
+(30, 1004, '1594528565.jpg', '', 800, 800, '43f571b2db', 1594528568, 12),
+(31, 1005, '1594528653.jpg', '', 800, 800, 'f21832d15f', 1594528657, 12),
+(32, 1006, '1594528801.jpg', '', 800, 800, '0ab82005c0', 1594528803, 12),
+(33, 1007, '1594528920.jpg', '', 800, 800, '7c6e96eefa', 1594528923, 12),
+(34, 1008, '1594529036.jpg', '', 800, 800, 'd28a951153', 1594529039, 12),
+(35, 1009, '1594529872.jpg', '', 800, 800, '8fb5262ce7', 1594529875, 12),
+(36, 1010, '1594530313.jpg', '', 800, 800, '44fc9cf3a9', 1594530317, 12),
+(37, 1011, '1594530459.jpg', '', 800, 800, '8b10d9b64d', 1594530461, 12);
 
 -- --------------------------------------------------------
 
@@ -1152,11 +1225,25 @@ INSERT INTO `producto_ingresado` (`id`, `producto`, `cant`, `existencia`, `preci
 (36, 1015, 200.00, 180.00, 0.10, '30-05-2020', '1590818400', '', '26-05-2020', '06:57:31', '7f7fd5f3b1', 1590625914, 11),
 (37, 1015, 200.00, 200.00, 0.10, '30-06-2020', '1593496800', '', '26-05-2020', '06:57:52', '93905b18b2', 1590624018, 11),
 (38, 1016, 200.00, 195.00, 0.10, '16-07-2020', '1594879200', '', '26-05-2020', '06:58:35', '5dae9e4630', 1590625914, 11),
-(39, 1020, 1.00, 0.00, 20.00, '', '', '', '08-06-2020', '07:09:48', '59ad11392e', 1591621788, 10),
-(40, 1020, 10.00, 0.00, 10.00, '', '', '', '13-06-2020', '12:27:02', '541c79309f', 1592072822, 10),
-(41, 1020, 5.00, 0.00, 10.00, '', '', '', '13-06-2020', '13:24:18', '691c026e3d', 1592076258, 10),
-(42, 1020, 12.00, 0.00, 12.00, '', '', '', '13-06-2020', '13:26:51', '0cda5a2f0f', 1592076411, 10),
-(43, 1020, 12.00, 0.00, 1.00, '', '', '', '13-06-2020', '13:29:47', '772e03da31', 1592076587, 10);
+(39, 1020, 1.00, 1.00, 20.00, '', '', '', '08-06-2020', '07:09:48', '59ad11392e', 1591621788, 10),
+(40, 1020, 10.00, 10.00, 10.00, '', '', '', '13-06-2020', '12:27:02', '541c79309f', 1592072822, 10),
+(41, 1020, 5.00, 5.00, 10.00, '', '', '', '13-06-2020', '13:24:18', '691c026e3d', 1592076258, 10),
+(42, 1020, 12.00, 12.00, 12.00, '', '', '', '13-06-2020', '13:26:51', '0cda5a2f0f', 1592076411, 10),
+(43, 1020, 12.00, 12.00, 1.00, '', '', '', '13-06-2020', '13:29:47', '772e03da31', 1592076587, 10),
+(44, 1001, 26.00, 26.00, 1.25, '', '', '', '11-07-2020', '22:28:54', '53db3a3893', 1594528134, 12),
+(45, 1002, 89.00, 89.00, 2.00, '', '', '', '11-07-2020', '22:30:26', '54247913d2', 1594528226, 12),
+(46, 1003, 98.00, 98.00, 1.10, '', '', '', '11-07-2020', '22:32:02', '485ca76ae5', 1594528322, 12),
+(47, 1004, 100.00, 100.00, 0.03, '', '', '', '11-07-2020', '22:35:40', 'd71fd39301', 1594528540, 12),
+(48, 1005, 20.00, 20.00, 7.20, '', '', '', '11-07-2020', '22:37:01', '6c5e809d55', 1594528621, 12),
+(49, 1006, 20.00, 20.00, 0.20, '', '', '', '11-07-2020', '22:39:24', 'ba4640cec4', 1594528764, 12),
+(50, 1007, 25.00, 25.00, 7.90, '', '', '', '11-07-2020', '22:41:31', '05e14b4e14', 1594528891, 12),
+(51, 1008, 20.00, 20.00, 7.20, '10-07-2020', '1594360800', '', '11-07-2020', '22:43:22', 'ea53f24b61', 1594529002, 12),
+(52, 1008, 10.00, 10.00, 7.10, '31-07-2020', '1596175200', '', '11-07-2020', '22:44:33', '493a35343e', 1594529073, 12),
+(53, 1008, 10.00, 10.00, 7.20, '24-09-2020', '1600927200', '', '11-07-2020', '22:44:47', 'a8c7d68e06', 1594529087, 12),
+(54, 1009, 25.00, 24.00, 0.50, '15-07-2020', '1594792800', '', '11-07-2020', '22:57:23', '73a4f03682', 1594530001, 12),
+(55, 1010, 20.00, 20.00, 25.00, '18-07-2020', '1595052000', '', '11-07-2020', '23:04:32', '264eb7ac32', 1594530272, 12),
+(56, 1011, 25.00, 22.00, 20.00, '18-07-2020', '1595052000', '', '11-07-2020', '23:07:18', 'dfdcd6913c', 1594530507, 12),
+(57, 1010, 10.00, 10.00, 25.00, '18-07-2020', '1595052000', '', '11-07-2020', '23:23:38', '34a269e7c1', 1594531418, 12);
 
 -- --------------------------------------------------------
 
@@ -1179,7 +1266,6 @@ CREATE TABLE `producto_precio` (
 --
 
 INSERT INTO `producto_precio` (`id`, `producto`, `cant`, `precio`, `hash`, `time`, `td`) VALUES
-(1, '1001', 1, 0.95, '81d0618b30', 1584480506, 10),
 (2, '1002', 1, 17.50, 'b6abf18f03', 1584481541, 10),
 (3, '1003', 1, 8.20, '0a06cadf3e', 1584481698, 10),
 (4, '1004', 1, 8.20, '926be1cc40', 1584481816, 10),
@@ -1217,7 +1303,35 @@ INSERT INTO `producto_precio` (`id`, `producto`, `cant`, `precio`, `hash`, `time
 (36, '1013', 1, 1.45, 'de674cdb7f', 1584503439, 11),
 (37, '1014', 1, 3.25, '3aa20efe9a', 1584503624, 11),
 (38, '1015', 1, 0.20, 'b412c40cf4', 1590497751, 11),
-(39, '1016', 1, 0.20, '345dd6a94a', 1590497813, 11);
+(39, '1016', 1, 0.20, '345dd6a94a', 1590497813, 11),
+(42, '1001', 1, 20.00, '782aeb1f01', 1593659659, 10),
+(43, '1001', 1, 2.49, 'a18bd4a8a7', 1594528144, 12),
+(44, '1002', 1, 4.85, '341034eb40', 1594528235, 12),
+(45, '1003', 1, 1.99, '324e125c6b', 1594528328, 12),
+(46, '1004', 1, 0.06, 'a7a8ad750a', 1594528546, 12),
+(47, '1005', 1, 9.95, '6f1b06f61d', 1594528630, 12),
+(48, '1006', 1, 0.35, '7ee11d4d81', 1594528772, 12),
+(49, '1007', 1, 10.75, '6bd9207ec0', 1594528900, 12),
+(50, '1008', 1, 10.54, 'f8694b7ff6', 1594529022, 12),
+(51, '1009', 1, 0.89, '910bd367a2', 1594529851, 12),
+(52, '1010', 1, 38.25, '70a9c8e3a3', 1594530299, 12),
+(53, '1011', 1, 23.99, '4ff7e254eb', 1594530444, 12);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `producto_precio_mayorista`
+--
+
+CREATE TABLE `producto_precio_mayorista` (
+  `id` int(5) NOT NULL,
+  `producto` varchar(25) NOT NULL,
+  `cant` int(5) NOT NULL,
+  `precio` float(10,2) NOT NULL,
+  `hash` varchar(12) NOT NULL,
+  `time` int(12) NOT NULL,
+  `td` int(5) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Maneja los diferentes precios para cada producto';
 
 -- --------------------------------------------------------
 
@@ -1261,7 +1375,10 @@ INSERT INTO `producto_unidades` (`id`, `nombre`, `abreviacion`, `hash`, `time`, 
 (5, 'Bolsa', 'Bls', '93b81b44cb', 1584481489, 10),
 (6, 'UNIDAD', 'U', 'd21c51860c', 1584500323, 11),
 (7, 'Libra', 'Lbs', 'bccfff7785', 1584500344, 11),
-(8, 'Kilogramo', 'Kg', '9b6e57b5ba', 1584500351, 11);
+(8, 'Kilogramo', 'Kg', '9b6e57b5ba', 1584500351, 11),
+(9, 'Unidad', 'U', '950c4f5124', 1594527842, 12),
+(10, 'Caja', 'Cja', '3deef1d4ba', 1594527849, 12),
+(11, 'Litro', 'L', '6488bb8a12', 1594527866, 12);
 
 -- --------------------------------------------------------
 
@@ -1296,7 +1413,9 @@ INSERT INTO `proveedores` (`id`, `nombre`, `documento`, `registro`, `direccion`,
 (1, 'PROMACO', '32659821-9', '987987', 'CALLE LA MASCOTA', 'SAN SALVADOR', 'SAN SLVADOR', 'FERRETEROS', '87984512', '', 'JUAN PEREZ', '', '', '162550f47d', 1584480070, 10),
 (2, 'LA CASTELLANA', '98798789-8', '879878', 'CALLE LA DIVIAN PROVIDENCIA', 'SANTA ANA', 'SANTA ANA', 'FERRETEROS', '87854784', 'la castellana@gmail.com', 'JUAN HERNANDEZ', '78529862', ' ', '6da060c351', 1588786512, 10),
 (3, 'DON JAB', '97898778-7', '987978', 'LAS CASCADAS ', 'SAN SALVADOR', 'SAN SALVADOR', '', '87874551', '', 'JUAN PEREZ', '', '', 'b06519fdb5', 1584500171, 11),
-(4, 'LAS CASCADAS', '78897978-8', '8798787', 'CALLE CHILTIUPAN', 'SAN SALVADOR', 'SAN SALVADOR', '', '54874578', '', 'JUAN PEREZ', '', '', '4aba2e319e', 1584500275, 11);
+(4, 'LAS CASCADAS', '78897978-8', '8798787', 'CALLE CHILTIUPAN', 'SAN SALVADOR', 'SAN SALVADOR', '', '54874578', '', 'JUAN PEREZ', '', '', '4aba2e319e', 1584500275, 11),
+(5, 'EURICIN', '01214549-8', '31321321', 'Col San Benito', 'San Salvador', 'San Salvador', 'Medicamentos', '78986532', '', 'Juan PErez', '78451245', '', '7a3fb9112a', 1594527742, 12),
+(6, 'Pharmaton', '87987894-4', '878784545', 'Col San Benito', 'San Salvador', 'San Salvador ', 'Medicamentos', '78548754', '', 'Juan Perez', '21326545', '', 'f83d87f177', 1594527806, 12);
 
 -- --------------------------------------------------------
 
@@ -1395,7 +1514,7 @@ INSERT INTO `sync_tables_updates` (`id`, `tabla`, `hash`, `time`, `action`, `td`
 (57, 'ticket', '4986870b89', 1583103822, 2, 11),
 (58, 'ticket_orden', 'a16cb24004', 1583103822, 2, 11),
 (59, 'producto', '96ce3c014f', 1584752502, 2, 11),
-(60, 'producto', 'c35aae3c6a', 1584752502, 2, 11),
+(60, 'producto', 'c35aae3c6a', 1592713892, 2, 11),
 (61, 'producto', 'c7de962e9a', 1584752501, 2, 11),
 (62, 'ticket', '2aeaea9543', 1583103836, 2, 11),
 (63, 'ticket', 'c36e90c5fe', 1583103844, 2, 11),
@@ -1747,7 +1866,7 @@ INSERT INTO `sync_tables_updates` (`id`, `tabla`, `hash`, `time`, `action`, `td`
 (533, 'ticket_orden', '7dfed48e88', 1584655153, 2, 10),
 (534, 'corte_diario', '2742516902', 1584659093, 2, 10),
 (535, 'cotizaciones', '66dd828e47', 1584752436, 2, 11),
-(536, 'cotizaciones_data', '3709a34ecd', 1584752465, 2, 11),
+(536, 'cotizaciones_data', '3709a34ecd', 1592320425, 2, 11),
 (537, 'cotizaciones', 'b3ec5ab4d3', 1584752463, 2, 11),
 (538, 'ticket', 'e6bcf19121', 1584752501, 2, 11),
 (539, 'ticket_orden', '4b85dc9eb7', 1584752501, 2, 11),
@@ -1844,7 +1963,148 @@ INSERT INTO `sync_tables_updates` (`id`, `tabla`, `hash`, `time`, `action`, `td`
 (630, 'ticket', '5498a16c95', 1592220247, 1, 11),
 (631, 'ticket_orden', 'a9fe303a9e', 1592220247, 1, 11),
 (632, 'ticket', 'e14f7603cc', 1592220265, 1, 11),
-(633, 'ticket_orden', 'd981de4351', 1592220265, 1, 11);
+(633, 'ticket_orden', 'd981de4351', 1592220265, 1, 11),
+(634, 'ticket', '8193af6a0b', 1592318034, 2, 11),
+(635, 'ticket', 'a09ece192d', 1592318036, 2, 11),
+(636, 'ticket', 'd5a479c45d', 1592318033, 2, 11),
+(637, 'ticket', 'f7195d27c3', 1592318047, 1, 11),
+(638, 'ticket', 'd5a479c45d', 1592318047, 1, 11),
+(639, 'ticket', 'a09ece192d', 1592318047, 1, 11),
+(640, 'ticket', '8193af6a0b', 1592318047, 1, 11),
+(641, 'ticket', 'a2ef19e702', 1592318047, 1, 11),
+(642, 'ticket_orden', '9e1a183b15', 1592318047, 1, 11),
+(643, 'ticket', 'd0088600bb', 1592319865, 2, 11),
+(644, 'ticket', '5da5395550', 1592320079, 1, 11),
+(645, 'ticket', '2da34cdbcf', 1592320080, 1, 11),
+(646, 'ticket', '1cf747dbf4', 1592320080, 1, 11),
+(647, 'ticket', 'd0088600bb', 1592320080, 1, 11),
+(648, 'ticket_orden', 'e11f26e43c', 1592320080, 1, 11),
+(649, 'ticket', 'ddc4246604', 1592320098, 1, 11),
+(650, 'ticket', 'f7cd2ec6af', 1592320099, 1, 11),
+(651, 'ticket', '7d08f87f20', 1592320100, 1, 11),
+(652, 'ticket_orden', '98ea298b90', 1592320100, 1, 11),
+(653, 'ticket', 'e829e9f7b5', 1592320306, 2, 11),
+(654, 'ticket', '5c2c0e0c7d', 1592320290, 2, 11),
+(655, 'ticket', 'dffba3a2c6', 1592320301, 2, 11),
+(656, 'ticket', 'a6b9aef1b2', 1592320308, 2, 11),
+(657, 'ticket', 'e829e9f7b5', 1592320312, 1, 11),
+(658, 'ticket', 'dffba3a2c6', 1592320312, 1, 11),
+(659, 'ticket', 'a6b9aef1b2', 1592320312, 1, 11),
+(660, 'ticket', 'a46538922a', 1592320313, 1, 11),
+(661, 'ticket', 'a7e5e205d4', 1592320313, 1, 11),
+(662, 'ticket', '5c2c0e0c7d', 1592320313, 1, 11),
+(663, 'ticket', '9cb1456d2d', 1592320313, 1, 11),
+(664, 'ticket', 'e67a0ba61c', 1592320313, 1, 11),
+(665, 'ticket_orden', '20d98b4fb5', 1592320313, 1, 11),
+(666, 'cotizaciones_data', '61fe97b708', 1592320706, 1, 11),
+(667, 'ticket', 'ea81b44044', 1592320859, 1, 11),
+(668, 'ticket_orden', '7c7cd37f12', 1592320859, 1, 11),
+(669, 'cotizaciones_data', 'b03b951cc1', 1592321395, 1, 11),
+(670, 'ticket', 'd5e70a6c4f', 1592322595, 1, 11),
+(671, 'ticket_orden', '9e59d486c3', 1592322596, 1, 11),
+(672, 'ticket', '57ec55b378', 1592324071, 1, 11),
+(673, 'ticket_orden', '3a30c5b984', 1592324071, 1, 11),
+(674, 'ticket', 'a02469ab5d', 1592324231, 1, 11),
+(675, 'ticket_orden', '003289cb33', 1592324231, 1, 11),
+(676, 'ticket', 'f630a64f28', 1592324510, 2, 11),
+(677, 'ticket', '8ddfe5c9e0', 1592324503, 2, 11),
+(678, 'ticket', 'd05ef6c6e3', 1592324523, 2, 11),
+(679, 'ticket', 'fcfc033e61', 1592324526, 2, 11),
+(680, 'ticket_orden', '8430612072', 1592324556, 2, 11),
+(681, 'ticket', '39b279a96e', 1592324543, 2, 11),
+(682, 'ticket_orden', 'a65d078c11', 1592324562, 2, 11),
+(683, 'ticket', '8b2706a70f', 1592324559, 1, 11),
+(684, 'ticket', 'f630a64f28', 1592324559, 1, 11),
+(685, 'ticket', '8ddfe5c9e0', 1592324559, 1, 11),
+(686, 'ticket', 'f493aed6d7', 1592324559, 1, 11),
+(687, 'ticket', '300feeec2a', 1592324559, 1, 11),
+(688, 'ticket', '5cc59e442d', 1592324560, 1, 11),
+(689, 'ticket', '879941c5e7', 1592324560, 1, 11),
+(690, 'ticket', 'd05ef6c6e3', 1592324560, 1, 11),
+(691, 'ticket', 'fcfc033e61', 1592324560, 1, 11),
+(692, 'ticket', '3916b61866', 1592324560, 1, 11),
+(693, 'ticket_orden', '8430612072', 1592324561, 1, 11),
+(694, 'ticket', 'ce74a594c6', 1592324564, 1, 11),
+(695, 'ticket', '39b279a96e', 1592324564, 1, 11),
+(696, 'ticket', 'be8510971a', 1592324564, 1, 11),
+(697, 'ticket_orden', 'a65d078c11', 1592324564, 1, 11),
+(698, 'ticket', '5950852601', 1592711769, 2, 11),
+(699, 'ticket', 'd32fbde675', 1592711768, 2, 11),
+(700, 'ticket_orden', '64c9ad34b5', 1592711778, 2, 11),
+(701, 'ticket', '2f3542b336', 1592711780, 1, 11),
+(702, 'ticket', 'd32fbde675', 1592711780, 1, 11),
+(703, 'ticket', '5950852601', 1592711780, 1, 11),
+(704, 'ticket', '7a28133fed', 1592711781, 1, 11),
+(705, 'ticket', '29bee7a875', 1592711781, 1, 11),
+(706, 'ticket_orden', '64c9ad34b5', 1592711781, 1, 11),
+(707, 'ticket', 'b9d343d16d', 1592711792, 1, 11),
+(708, 'ticket_orden', '16a41e370c', 1592711792, 1, 11),
+(709, 'ticket', 'ff4053bc48', 1592711800, 2, 11),
+(710, 'ticket', '28b68687a0', 1592711802, 2, 11),
+(711, 'ticket', 'ff4053bc48', 1592711806, 1, 11),
+(712, 'ticket', '28b68687a0', 1592711807, 1, 11),
+(713, 'ticket', '0417870a94', 1592711807, 1, 11),
+(714, 'ticket_orden', 'ea9fbece72', 1592711807, 1, 11),
+(715, 'ticket', '17fc2bc2a3', 1592711848, 2, 11),
+(716, 'ticket', '11bf50b190', 1592711837, 2, 11),
+(717, 'ticket', '17fc2bc2a3', 1592711850, 1, 11),
+(718, 'ticket', '11bf50b190', 1592711852, 1, 11),
+(719, 'ticket_orden', 'a629700b32', 1592711852, 1, 11),
+(720, 'ticket', 'f2a09f2248', 1592711869, 1, 11),
+(721, 'ticket', 'd02382e965', 1592711870, 1, 11),
+(722, 'ticket', 'aee1bd2b24', 1592711871, 1, 11),
+(723, 'ticket', '8fa837cf67', 1592711873, 1, 11),
+(724, 'ticket', '9f29b49424', 1592711874, 1, 11),
+(725, 'ticket_orden', '140756de10', 1592711874, 1, 11),
+(726, 'ticket', '49fc32fde1', 1592711952, 2, 11),
+(727, 'ticket', '48f12f9465', 1592711954, 2, 11),
+(728, 'ticket_orden', '900f68a6dd', 1592711971, 2, 11),
+(729, 'ticket', 'ad8195765f', 1592711982, 1, 11),
+(730, 'ticket', '49fc32fde1', 1592711983, 1, 11),
+(731, 'ticket', '48f12f9465', 1592711983, 1, 11),
+(732, 'ticket', '8c83b167f6', 1592711983, 1, 11),
+(733, 'ticket', 'ab7a308521', 1592711983, 1, 11),
+(734, 'ticket', 'b40f8849e0', 1592711983, 1, 11),
+(735, 'ticket_orden', '900f68a6dd', 1592711984, 1, 11),
+(736, 'ticket', '6a46afed7d', 1592711994, 2, 11),
+(737, 'ticket_orden', '4cba01476e', 1592712072, 2, 11),
+(738, 'ticket', '54d44639a8', 1592712015, 2, 11),
+(739, 'ticket_orden', 'da53d598c9', 1592712078, 2, 11),
+(740, 'ticket', '91a30fef40', 1592712075, 1, 11),
+(741, 'ticket', '30e47a07ba', 1592712075, 1, 11),
+(742, 'ticket', '6a46afed7d', 1592712075, 1, 11),
+(743, 'ticket', '4d444655b8', 1592712076, 1, 11),
+(744, 'ticket_orden', '4cba01476e', 1592712076, 1, 11),
+(745, 'ticket', '54d44639a8', 1592712080, 1, 11),
+(746, 'ticket', '0fe80b5af0', 1592712080, 1, 11),
+(747, 'ticket_orden', 'da53d598c9', 1592712080, 1, 11),
+(748, 'ubicacion_asig', '7fe8b773ff', 1592714002, 1, 11),
+(749, 'ticket', 'c97ceff029', 1592714110, 2, 11),
+(750, 'ticket', 'c97ceff029', 1592714112, 1, 11),
+(751, 'ticket_orden', '87db40ed70', 1592714112, 1, 11),
+(752, 'ticket', 'a83280217e', 1592714522, 2, 11),
+(753, 'ticket', '446f8bf091', 1592714496, 2, 11),
+(754, 'ticket', '3874cda515', 1592714525, 2, 11),
+(755, 'ticket_orden', '3a2cc45180', 1592714668, 2, 11),
+(756, 'ticket_orden', 'd7839bcbab', 1592714676, 2, 11),
+(757, 'ticket', 'a83280217e', 1592714672, 1, 11),
+(758, 'ticket', '446f8bf091', 1592714673, 1, 11),
+(759, 'ticket', '9568d384bc', 1592714673, 1, 11),
+(760, 'ticket', '3874cda515', 1592714673, 1, 11),
+(761, 'ticket_orden', '3a2cc45180', 1592714673, 1, 11),
+(762, 'ticket', 'a4cf322880', 1592714678, 1, 11),
+(763, 'ticket_orden', 'd7839bcbab', 1592714678, 1, 11),
+(764, 'ticket_orden', '01b3b9872e', 1592714693, 2, 11),
+(765, 'ticket', '91e1affa5d', 1592714695, 1, 11),
+(766, 'ticket_orden', '01b3b9872e', 1592714695, 1, 11),
+(767, 'ticket_orden', '37d95a683e', 1592714743, 2, 11),
+(768, 'ticket', '96c3a82da7', 1592714746, 1, 11),
+(769, 'ticket', 'dfbda03d90', 1592714746, 1, 11),
+(770, 'ticket', '181781be77', 1592714747, 1, 11),
+(771, 'ticket', '5e29cbbb1e', 1592714747, 1, 11),
+(772, 'ticket', 'efedeaa0f6', 1592714747, 1, 11),
+(773, 'ticket', 'df293ddd9e', 1592714747, 1, 11),
+(774, 'ticket_orden', '37d95a683e', 1592714747, 1, 11);
 
 -- --------------------------------------------------------
 
@@ -1883,7 +2143,8 @@ INSERT INTO `sync_up` (`id`, `creado`, `subido`, `ejecutado`, `fecha`, `hora`, `
 (26, 1, 0, 0, '18-03-2020', '19:52:32', '1584511200', '1584582752-10-1d007ab66e79460f0504f438864eb086', 1584496112, 1584582752, 'f197ac3c24', 1584582752, 10),
 (39, 1, 0, 0, '18-03-2020', '20:19:48', '1584511200', '1584584388-10-0d4f4c6661dafd11d42771c32744d959', 1584582752, 1584584388, '84738b0e38', 1584584388, 10),
 (40, 1, 0, 0, '19-03-2020', '16:55:08', '1584597600', '1584658508-10-ece5c5fe45e64d7b2ba64c0fe84ba379', 1584584388, 1584658508, 'ae9d9beee3', 1584658508, 10),
-(41, 1, 0, 0, '19-03-2020', '17:05:08', '1584597600', '1584659108-10-4caf4650537f7a97d6d2070c414272fe', 1584658508, 1584659108, 'fac3661f19', 1584659108, 10);
+(41, 1, 0, 0, '19-03-2020', '17:05:08', '1584597600', '1584659108-10-4caf4650537f7a97d6d2070c414272fe', 1584658508, 1584659108, 'fac3661f19', 1584659108, 10),
+(42, 1, 1, 0, '20-06-2020', '22:49:24', '1592632800', '1592714964-10-4a1453b0d1a7b3acfee7a91d117b9352', 1584659108, 1592714964, 'c3e261dd98', 1592714964, 10);
 
 -- --------------------------------------------------------
 
@@ -2350,7 +2611,9 @@ INSERT INTO `ticket` (`id`, `cod`, `cant`, `producto`, `pv`, `stotal`, `imp`, `t
 (476, 1012, 1, 'AVENA MOSH PARA FRESCO ORIGI QUAKER 600G', 2.21, 1.96, 0.25, 2.21, 93, 0.00, '20-03-2020', '19:01:15', 92, 'Abarrotes Admin', '1', 'db2625', 1, '1584684000', 1, '5a4266fc36', 1584752501, 11),
 (477, 1011, 3, 'ADEREZO P/ENSALADA RANCH LIGHT 237 ML CL', 2.10, 5.58, 0.72, 6.30, 93, 0.00, '20-03-2020', '19:01:15', 92, 'Abarrotes Admin', '1', 'db2625', 1, '1584684000', 1, '40b323171f', 1584752501, 11),
 (478, 1001, 1, '2 PACK ARROZ BLANCO CINCO ESTRELLA LIBRA', 1.38, 1.22, 0.16, 1.38, 93, 0.00, '20-03-2020', '19:01:15', 92, 'Abarrotes Admin', '1', 'db2625', 1, '1584684000', 1, '22edd3bdb5', 1584752501, 11),
-(479, 1001, 3, 'ABRAZADERA STRUT 1/2 TOPAZ', 0.95, 2.52, 0.33, 2.85, 69, 0.00, '23-03-2020', '15:45:17', 69, 'Erick Nunez', '1', 'Erick', 1, '1584943200', 1, 'd7a89affd8', 1584999925, 10);
+(479, 1001, 3, 'ABRAZADERA STRUT 1/2 TOPAZ', 0.95, 2.52, 0.33, 2.85, 69, 0.00, '23-03-2020', '15:45:17', 69, 'Erick Nunez', '1', 'Erick', 1, '1584943200', 1, 'd7a89affd8', 1584999925, 10),
+(483, 1009, 1, 'ALGODON FACIAL JALOMA 30 UNIDADES', 0.89, 0.79, 0.10, 0.89, 1, 0.00, '11-07-2020', '22:58:28', 1, 'Admin Farmacia', '1', 'f8819e', 1, '1594447200', 1, 'e29e5d370a', 1594529914, 12),
+(484, 1011, 3, 'HELIOCARE ULTRA GEL SPF 90 50 ML', 23.99, 63.69, 8.28, 71.97, 2, 0.00, '11-07-2020', '23:08:02', 2, 'Admin Farmacia', '2', 'f8819e', 1, '1594447200', 1, '1d5797291d', 1594530502, 12);
 
 -- --------------------------------------------------------
 
@@ -2595,7 +2858,9 @@ INSERT INTO `ticket_num` (`id`, `fecha`, `hora`, `num_fac`, `orden`, `efectivo`,
 (159, '20-03-2020', '18:55:59', 67, 67, 0.00, 1, 1, '951c058412', 1584752159, 10),
 (160, '20-03-2020', '18:59:19', 68, 68, 0.00, 1, 1, '7669c76098', 1584752359, 10),
 (161, '20-03-2020', '19:01:41', 93, 92, 0.00, 1, 1, 'cfa0b8aad8', 1584752501, 11),
-(162, '23-03-2020', '15:45:25', 69, 69, 0.00, 1, 1, '5c5b99c99e', 1584999925, 10);
+(162, '23-03-2020', '15:45:25', 69, 69, 0.00, 1, 1, '5c5b99c99e', 1584999925, 10),
+(163, '11-07-2020', '22:58:34', 1, 1, 0.00, 1, 1, 'e6195c0e56', 1594529914, 12),
+(164, '11-07-2020', '23:08:22', 2, 2, 0.00, 1, 1, '01ee709988', 1594530502, 12);
 
 -- --------------------------------------------------------
 
@@ -2783,7 +3048,9 @@ INSERT INTO `ticket_orden` (`id`, `nombre`, `correlativo`, `empleado`, `user`, `
 (166, '', 67, 'Erick Nunez', '', '20-03-2020', '17:48:37', 2, 1, 'fa032a52c6', 1584752160, 10),
 (178, '', 68, 'Erick Nunez', '', '20-03-2020', '18:58:46', 2, 1, '9e73c579e8', 1584752359, 10),
 (180, '', 92, 'Abarrotes Admin', '', '20-03-2020', '19:01:15', 2, 1, '4b85dc9eb7', 1584752501, 11),
-(181, '', 69, 'Erick Nunez', '', '23-03-2020', '15:45:17', 2, 1, '449b922b3b', 1584999925, 10);
+(181, '', 69, 'Erick Nunez', '', '23-03-2020', '15:45:17', 2, 1, '449b922b3b', 1584999925, 10),
+(184, '', 1, 'Admin Farmacia', 'f8819e', '11-07-2020', '22:58:28', 2, 1, '4ea33f60a8', 1594529914, 12),
+(185, '', 2, 'Admin Farmacia', 'f8819e', '11-07-2020', '23:08:02', 2, 1, 'fd4b6f3dbb', 1594530502, 12);
 
 -- --------------------------------------------------------
 
@@ -2798,6 +3065,14 @@ CREATE TABLE `ubicacion` (
   `time` int(12) NOT NULL,
   `td` int(2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='ubicacion de los productos, como eje estantes';
+
+--
+-- Volcado de datos para la tabla `ubicacion`
+--
+
+INSERT INTO `ubicacion` (`id`, `ubicacion`, `hash`, `time`, `td`) VALUES
+(1, 'Principal', 'f98acfe42f', 1592713937, 11),
+(2, 'Bodega', 'f72240a52e', 1592713943, 11);
 
 -- --------------------------------------------------------
 
@@ -2877,6 +3152,18 @@ ALTER TABLE `creditos`
 -- Indices de la tabla `creditos_abonos`
 --
 ALTER TABLE `creditos_abonos`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `cuentas`
+--
+ALTER TABLE `cuentas`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `cuentas_abonos`
+--
+ALTER TABLE `cuentas_abonos`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -3008,6 +3295,12 @@ ALTER TABLE `producto_categoria`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `producto_categoria_sub`
+--
+ALTER TABLE `producto_categoria_sub`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `producto_compuestos`
 --
 ALTER TABLE `producto_compuestos`
@@ -3041,6 +3334,12 @@ ALTER TABLE `producto_ingresado`
 -- Indices de la tabla `producto_precio`
 --
 ALTER TABLE `producto_precio`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `producto_precio_mayorista`
+--
+ALTER TABLE `producto_precio_mayorista`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -3157,17 +3456,17 @@ ALTER TABLE `clientes`
 -- AUTO_INCREMENT de la tabla `config_master`
 --
 ALTER TABLE `config_master`
-  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT de la tabla `config_root`
 --
 ALTER TABLE `config_root`
-  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT de la tabla `corte_diario`
 --
 ALTER TABLE `corte_diario`
-  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 --
 -- AUTO_INCREMENT de la tabla `cotizaciones`
 --
@@ -3187,7 +3486,17 @@ ALTER TABLE `creditos`
 -- AUTO_INCREMENT de la tabla `creditos_abonos`
 --
 ALTER TABLE `creditos_abonos`
-  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT de la tabla `cuentas`
+--
+ALTER TABLE `cuentas`
+  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+--
+-- AUTO_INCREMENT de la tabla `cuentas_abonos`
+--
+ALTER TABLE `cuentas_abonos`
+  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT de la tabla `entradas_efectivo`
 --
@@ -3207,7 +3516,7 @@ ALTER TABLE `facturar_documento_factura`
 -- AUTO_INCREMENT de la tabla `gastos`
 --
 ALTER TABLE `gastos`
-  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT de la tabla `gastos_images`
 --
@@ -3232,7 +3541,7 @@ ALTER TABLE `login_inout`
 -- AUTO_INCREMENT de la tabla `login_members`
 --
 ALTER TABLE `login_members`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT de la tabla `login_sucursales`
 --
@@ -3247,7 +3556,7 @@ ALTER TABLE `login_sync`
 -- AUTO_INCREMENT de la tabla `login_userdata`
 --
 ALTER TABLE `login_userdata`
-  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT de la tabla `planilla_descuentos`
 --
@@ -3262,7 +3571,7 @@ ALTER TABLE `planilla_descuentos_asig`
 -- AUTO_INCREMENT de la tabla `planilla_empleados`
 --
 ALTER TABLE `planilla_empleados`
-  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `planilla_extras`
 --
@@ -3277,7 +3586,7 @@ ALTER TABLE `planilla_pagos`
 -- AUTO_INCREMENT de la tabla `producto`
 --
 ALTER TABLE `producto`
-  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 --
 -- AUTO_INCREMENT de la tabla `producto_averias`
 --
@@ -3292,12 +3601,17 @@ ALTER TABLE `producto_cambios`
 -- AUTO_INCREMENT de la tabla `producto_categoria`
 --
 ALTER TABLE `producto_categoria`
-  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+--
+-- AUTO_INCREMENT de la tabla `producto_categoria_sub`
+--
+ALTER TABLE `producto_categoria_sub`
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 --
 -- AUTO_INCREMENT de la tabla `producto_compuestos`
 --
 ALTER TABLE `producto_compuestos`
-  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `producto_dependiente`
 --
@@ -3312,17 +3626,22 @@ ALTER TABLE `producto_devoluciones`
 -- AUTO_INCREMENT de la tabla `producto_imagenes`
 --
 ALTER TABLE `producto_imagenes`
-  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 --
 -- AUTO_INCREMENT de la tabla `producto_ingresado`
 --
 ALTER TABLE `producto_ingresado`
-  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
 --
 -- AUTO_INCREMENT de la tabla `producto_precio`
 --
 ALTER TABLE `producto_precio`
-  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
+--
+-- AUTO_INCREMENT de la tabla `producto_precio_mayorista`
+--
+ALTER TABLE `producto_precio_mayorista`
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `producto_tags`
 --
@@ -3332,12 +3651,12 @@ ALTER TABLE `producto_tags`
 -- AUTO_INCREMENT de la tabla `producto_unidades`
 --
 ALTER TABLE `producto_unidades`
-  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT de la tabla `proveedores`
 --
 ALTER TABLE `proveedores`
-  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT de la tabla `sync_tabla`
 --
@@ -3347,12 +3666,12 @@ ALTER TABLE `sync_tabla`
 -- AUTO_INCREMENT de la tabla `sync_tables_updates`
 --
 ALTER TABLE `sync_tables_updates`
-  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=634;
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=775;
 --
 -- AUTO_INCREMENT de la tabla `sync_up`
 --
 ALTER TABLE `sync_up`
-  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 --
 -- AUTO_INCREMENT de la tabla `sync_up_cloud`
 --
@@ -3362,7 +3681,7 @@ ALTER TABLE `sync_up_cloud`
 -- AUTO_INCREMENT de la tabla `ticket`
 --
 ALTER TABLE `ticket`
-  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=490;
+  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=485;
 --
 -- AUTO_INCREMENT de la tabla `ticket_cliente`
 --
@@ -3377,17 +3696,17 @@ ALTER TABLE `ticket_descuenta`
 -- AUTO_INCREMENT de la tabla `ticket_num`
 --
 ALTER TABLE `ticket_num`
-  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=163;
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=165;
 --
 -- AUTO_INCREMENT de la tabla `ticket_orden`
 --
 ALTER TABLE `ticket_orden`
-  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=187;
+  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=186;
 --
 -- AUTO_INCREMENT de la tabla `ubicacion`
 --
 ALTER TABLE `ubicacion`
-  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT de la tabla `ubicacion_asig`
 --
