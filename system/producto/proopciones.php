@@ -56,6 +56,30 @@ $producto = new Productos();
               </form>
 				<!-- Termina Formulario -->
 
+          <hr class="border-bottom border-info">
+          <h3>Sub Categoria</h3>
+                  <!-- Inicia Formulario -->
+                <form id="form-subcategoria">
+  
+                    <div class="col-md-12 mb-2 md-form">
+                      <label for="cod">Sub Categoria</label>
+                      <input type="text" class="form-control" id="subcategoria" name="subcategoria" required>
+                    </div>
+
+                  <div class="col-md-12 mb-2 md-form">
+                    <select class="mdb-select md-form colorful-select dropdown-dark" id="categoriax" name="categoriax">
+                      <?php echo Helpers::SelectData("Categoria", "producto_categoria", "hash", "categoria"); ?>
+                    </select>
+                  </div>
+
+
+                  <div class="col-md-12 text-center">
+                           <button class="btn btn-info" type="submit" id="btn-subcategoria"><i class="fas fa-save mr-1"></i> Guardar</button>
+                  </div>
+
+
+              </form>
+        <!-- Termina Formulario -->
 		    </div>
 		    
 		    <div class="col-md-6 btn-outline-danger z-depth-2" id="destinocategoria">

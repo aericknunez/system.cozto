@@ -44,6 +44,12 @@ elseif(isset($_GET["creditospendientes"])) include_once 'system/credito/creditos
 elseif(isset($_GET["creditosvercliente"])) include_once 'system/credito/creditosvercliente.php'; // credito cleinte
 
 
+// Cuentas por pagar
+elseif(isset($_GET["cuentas"])) include_once 'system/cuentas/cuentasver.php'; // ver todos las cuentas
+elseif(isset($_GET["cuentaspendientes"])) include_once 'system/cuenta/cuentaspendientes.php'; // pendientes
+
+
+
 // Gastos y compras
 elseif(isset($_GET["gastos"])) include_once 'system/gastos/gastos.php'; 
 elseif(isset($_GET["entradas"])) include_once 'system/gastos/entradas.php'; 

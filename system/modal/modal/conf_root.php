@@ -72,6 +72,29 @@ $r = $db->select("*", "config_root", "where td = ".$_SESSION['td']."")
   </tr>
 
   <tr>
+    <td>
+      <div class="switch mt-4">
+            <label>
+             Multi Ususario ||  Off
+              <input type="checkbox" <?php if(Encrypt::Decrypt($r["multiusuario"],$_SESSION['secret_key']) == "on") echo "checked"; ?> id="multiusuario" name="multiusuario" >
+              <span class="lever"></span> On 
+            </label>
+          </div>
+    </td>
+
+    <td>
+          <div class="switch mt-4">
+            <label>
+             E-Commerce ||  Off
+              <input type="checkbox" <?php if(Encrypt::Decrypt($r["ecommerce"],$_SESSION['secret_key']) == "on") echo "checked"; ?> id="ecommerce" name="ecommerce" >
+              <span class="lever"></span> On 
+            </label>
+          </div>
+    </td>
+
+  </tr>
+
+  <tr>
         <td><button class="btn btn-info my-4" type="submit" id="btn-root" name="btn-root">Realizar Cambios</button></td>
   </tr>
 

@@ -11,7 +11,7 @@ $(document).ready(function()
 			data: $("#form-gastos").serialize(),
 			beforeSend: function () {
 				$('#btn-gastos').html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>Loading...').addClass('disabled');
-	           // $("#contenido").html('<div class="row justify-content-md-center" ><img src="assets/img/load.gif" alt=""></div>');
+	           // $("#contenido").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt=""></div>');
             },
 			success: function(data){
 				$('#btn-gastos').html('Agregar Gasto').removeClass('disabled');	      
@@ -45,7 +45,7 @@ return false;
             url: "application/src/routes.php",
             data: dataString,
             beforeSend: function () {
-               $("#contenido").html('<div class="row justify-content-md-center" ><img src="assets/img/load.gif" alt=""></div>');
+               $("#contenido").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt=""></div>');
             },
             success: function(data) {            
                 $("#contenido").html(data); // lo que regresa de la busquea 
@@ -66,7 +66,7 @@ return false;
 			data: $("#form-entradas").serialize(),
 			beforeSend: function () {
 				$('#btn-entradas').html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>Loading...').addClass('disabled');
-	           // $("#contenido").html('<div class="row justify-content-md-center" ><img src="assets/img/load.gif" alt=""></div>');
+	           // $("#contenido").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt=""></div>');
             },
 			success: function(data){
 				$('#btn-entradas').html('Agregar Efectivo').removeClass('disabled');	      
@@ -98,7 +98,7 @@ return false;
             url: "application/src/routes.php",
             data: dataString,
             beforeSend: function () {
-               $("#contenido").html('<div class="row justify-content-md-center" ><img src="assets/img/load.gif" alt=""></div>');
+               $("#contenido").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt=""></div>');
             },
             success: function(data) {            
                 $("#contenido").html(data); // lo que regresa de la busquea 

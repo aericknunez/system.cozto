@@ -9,7 +9,7 @@ $(document).ready(function()
 			method: "POST",
 			data: $("#form-corte").serialize(),
 			beforeSend: function () {
-               $("#content").html('<div class="row justify-content-md-center" ><img src="assets/img/load.gif" alt=""></div>');
+               $("#content").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt=""></div>');
             },
 			success: function(data){
 				$("#corte").html(data);
@@ -40,7 +40,7 @@ return false;
             data: dataString,
             beforeSend: function () {
             $("#contenido").hide();
-               $("#corte").html('<div class="row justify-content-md-center" ><img src="assets/img/load.gif" alt=""></div>');
+               $("#corte").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt=""></div>');
             },
             success: function(data) {  
             $("#contenido").show();          
@@ -61,7 +61,7 @@ return false;
 			method: "POST",
 			data: $("#form-cancelar").serialize(),
 			beforeSend: function () {
-               $("#content").html('<div class="row justify-content-md-center" ><img src="assets/img/load.gif" alt=""></div>');
+               $("#content").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt=""></div>');
             },
 			success: function(data){
 				$("#corte").html(data);

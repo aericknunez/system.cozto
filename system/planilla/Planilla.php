@@ -92,7 +92,7 @@ class Planilla {
   }
 
 
-  public function DelEmpleado($hash, $dir){ // elimina precio
+  public function DelEmpleado($hash, $dir){ // elimina empleado
     $db = new dbConn();
         if (Helpers::DeleteId("planilla_empleados", "hash='$hash'")) {
            Alerts::Alerta("success","Eliminado!","Empleado eliminado correctamente!");
@@ -382,7 +382,7 @@ $page <= 1 ? $enable = 'disabled' : $enable = '';
                 $gastox["fechaF"] = Fechas::Format(date("d-m-Y"));
                 $gastox["hora"] = date("H:i:s");
                 $gastox["user"] = $_SESSION["user"];
-                $gastox["edo"] = 1;
+                $gastox["edo"] = 2;
                 $gastox["hash"] = Helpers::HashId();
                 $gastox["time"] = Helpers::TimeId();
                 $gastox["td"] = $_SESSION["td"];
@@ -468,12 +468,12 @@ public function ExtraSan($datos){
             // si es adelanto de personal y es de hoy
               if($data["fechaF"] == Fechas::Format(date("d-m-Y")) and $data["tipo"] == 2){ 
                 
-                  if ($r = $db->select("id", "gastos", "WHERE fechaF = '".$data["fechaF"]."' and cantidad = '".$data["cantidad"]."' and td = ".$_SESSION["td"]."")) { 
-                      $iden = $r["id"];
+                  if ($r = $db->select("hash", "gastos", "WHERE fechaF = '".$data["fechaF"]."' and cantidad = '".$data["cantidad"]."' and edo = 2 and td = ".$_SESSION["td"]."")) { 
+                      $hashx = $r["hash"];
                   }
                 $cambio = array();
                 $cambio["edo"] = 0;               
-                Helpers::UpdateId("gastos", $cambio, "id='$iden' and td = ".$_SESSION["td"]."");
+                Helpers::UpdateId("gastos", $cambio, "hash='$hashx' and td = ".$_SESSION["td"]."");
               } // termina si es adelanto
            Alerts::Alerta("success","Eliminado!","Extra eliminado correctamente!");
         } else {

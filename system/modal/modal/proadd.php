@@ -131,8 +131,15 @@ $dep = $_REQUEST["dep"];
               if(isset($_GET["msj"])) Alerts::Mensaje("Debe agregar un precio del producto","danger",$boton,$boton2);
              $productos->VerPrecios($_REQUEST["key"]); 
               ?></div>
-         <?php $url = "application/src/routes.php?op=47&key=$key&step=2&cad=$cad&com=$com&dep=$dep"; ?>
-              <a href="<?php echo $url; ?>" class="btn btn-info my-1" type="submit" id="btn-preciosdone"><i class="fa fa-save mr-1"></i> Continuar</a>
+              
+              <?php $url = "application/src/routes.php?op=47&key=$key&step=2&cad=$cad&com=$com&dep=$dep"; ?>
+              
+              <?php if($_SESSION["config_mayorista"] == "on"){
+                echo '<a id="llamarmayorista" class="btn btn-danger my-1 btn-sm btn-rounded" type="submit" id="btn-preciosdone"><i class="fa fa-plus mr-1"></i> Precios Mayoristas</a>';
+              } ?>
+              
+
+              <a href="<?php echo $url; ?>" class="btn btn-info my-1" type="submit" id="btn-preciosdone"><i class="fa fa-save mr-1"></i> Continuar <i class="fa fa-arrow-right mr-1"></i></a>
               </div>
               </div>
 
@@ -531,3 +538,81 @@ $imgs->VerProducto($_REQUEST["key"], "assets/img/productos/" . $_SESSION["td"] .
   </div>
 </div>
 <!--Modal: modalConfirmDelete-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="ModalMayorista" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">PRECIOS DE MAYORISTA</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+<!-- contenido -->
+
+                <form id="form-preciosmayorista">
+  
+                  <div class="form-row">
+                    <div class="col-md-4 mb-2 md-form">
+                      <label for="cod">Cantidad</label>
+                      <input type="number" step="any" class="form-control" id="cantidad" name="cantidad" required>
+                    </div>
+                    <div class="col-md-4 mb-2 md-form">
+                      <label for="cod">Precio</label>
+                      <input type="number" step="any" class="form-control" id="precio" name="precio" required>
+                    </div>
+
+                  <div class="col-md-4 mb-4 md-form">
+                      <button class="btn-floating btn-sm btn-secondary" type="submit" id="btn-preciosmayorista"><i class="fa fa-plus"></i></button>
+                    </div>
+
+                  </div>
+                      <input type="hidden" id="producto" name="producto" value="<?php echo $_REQUEST["key"] ?>" >
+              </form>
+
+
+              <div id="muestrapreciosmayorista"><?php 
+             $productos->VerPreciosMayorista($_REQUEST["key"]); 
+              ?></div>
+
+<!-- contenido -->
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- modal -->
+
+
+
+

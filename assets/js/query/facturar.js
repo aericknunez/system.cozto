@@ -9,7 +9,7 @@ $(document).ready(function(){
 			beforeSend: function () {
 			   $("#formularios").hide();
 			   $("#btn-te").hide(); // esconde boton tarjeta y efectivo
-               $("#resultado").html('<div class="row justify-content-md-center" ><img src="assets/img/load.gif" alt=""></div>');
+               $("#resultado").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt=""></div>');
             },
 			success: function(data){
 				$("#form-facturar").trigger("reset");

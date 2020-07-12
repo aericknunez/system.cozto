@@ -2,11 +2,6 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 
-// realizo las consultas de los select aqui
-    $a = $db->query("SELECT hash, nombre FROM proveedores WHERE td = ".$_SESSION["td"]."");
-    $c = $db->query("SELECT hash, categoria FROM producto_categoria WHERE td = ".$_SESSION["td"]."");
-    $e = $db->query("SELECT hash, nombre FROM producto_unidades WHERE td = ".$_SESSION["td"]."");
-
     if ($r = $db->select("cod", "producto", "WHERE td = ".$_SESSION["td"]." ORDER BY id desc limit 1")) { 
         $codigox = $r["cod"] + 1;
     } unset($r);  
@@ -37,30 +32,30 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
     <div class="col-md-4 mb-1 md-form">
       <select class="mdb-select md-form colorful-select dropdown-dark" id="proveedor" name="proveedor">
-        <option selected disabled>Proveedor</option>
-        <?php foreach ($a as $b) {
-        echo '<option value="'. $b["hash"] .'">'. $b["nombre"] .'</option>'; 
-        } $a->close(); ?>
+        <?php echo Helpers::SelectData("* Proveedor", "proveedores", "hash", "nombre"); ?>
       </select>
     </div>
 
 
     <div class="col-md-4 mb-1 md-form">
-      <select class="mdb-select md-form colorful-select dropdown-dark" id="categoria" name="categoria">
-        <option selected disabled>* Categorias</option>
-        <?php foreach ($c as $d) {
-        echo '<option value="'. $d["hash"] .'">'. $d["categoria"] .'</option>'; 
-        } $c->close(); ?>
+      <select class="mdb-select md-form colorful-select dropdown-dark" id="categoria" name="categoria">   
+        <?php 
+       echo Helpers::SelectDataMultiple("* Categoria", 
+        "producto_categoria", "hash", "categoria", 
+        "categoria",
+        "producto_categoria_sub", "hash", "subcategoria", 
+          NULL); 
+        ?>
+
+        <?php 
+        // echo Helpers::SelectData("* Categoria", "producto_categoria_sub", "hash", "subcategoria"); 
+        ?>
       </select>
     </div>
 
     <div class="col-md-4 mb-1 md-form">
         <select class="mdb-select md-form colorful-select dropdown-dark" id="medida" name="medida">
-        <option selected disabled>* Unidad de Medida</option>
-        <?php foreach ($e as $f) {
-        echo '<option value="'. $f["hash"] .'">'. $f["nombre"] .'</option>'; 
-        } $e->close();
-         ?>
+        <?php echo Helpers::SelectData("* Unidad de Medida", "producto_unidades", "hash", "nombre"); ?>
       </select>
     </div>
 

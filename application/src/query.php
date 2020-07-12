@@ -75,6 +75,12 @@ echo '
 	if($_GET["modal"] == "abonos"){
 	echo '<script type="text/javascript" src="assets/js/query/credito.js?v='.$numero.'"></script>';
 	}
+// abonos cuentas
+	if($_GET["modal"] == "abonos_cuentas"){
+	echo '<script type="text/javascript" src="assets/js/query/cuentas.js?v='.$numero.'"></script>';
+	}
+
+
 // cotizador
 	if($_GET["modal"] == "cantidadc"){
 	echo '<script type="text/javascript" src="assets/js/query/cotizaR.js?v='.$numero.'"></script>';
@@ -216,6 +222,20 @@ echo '<script type="text/javascript" src="assets/js/query/paginador.js?v='.$nume
 echo '<script type="text/javascript" src="assets/js/query/credito.js?v='.$numero.'"></script>';
 } 
 
+
+
+//////////////// cuentas
+elseif(isset($_GET["cuentas"])) {
+echo '<script type="text/javascript" src="assets/js/query/paginador.js?v='.$numero.'"></script>';
+echo '<script type="text/javascript" src="assets/js/query/cuentas.js?v='.$numero.'"></script>';
+} 
+
+elseif(isset($_GET["ccuentaspendientes"])) {
+echo '<script type="text/javascript" src="assets/js/query/paginador.js?v='.$numero.'"></script>';
+echo '<script type="text/javascript" src="assets/js/query/cuentas.js?v='.$numero.'"></script>';
+} 
+
+
 //// gastos
 elseif(isset($_GET["gastos"])) {
 echo '<script type="text/javascript" src="assets/js/query/gastos.js?v='.$numero.'"></script>';
@@ -304,7 +324,12 @@ else{
 			echo '<script type="text/javascript" src="assets/js/query/ventaL.js?v='.$numero.'"></script>';
 		}
 
-		//echo '<script type="text/javascript" src="assets/js/query/venta_getlateral.js?v='.$numero.'"></script>';
+	/// para actualizar automaticamente el lateral cada 3 seg
+	if($_SESSION['root_multiusuario'] == "on"){
+	echo '<script type="text/javascript" src="assets/js/query/venta_getlateral.js?v='.$numero.'"></script>';		
+	}
+
+
 
 	} else { // panel de control
 			/// query del panel de conttrol a implementar  para root

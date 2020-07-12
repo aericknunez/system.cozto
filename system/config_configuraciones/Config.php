@@ -5,7 +5,7 @@ class Config{
      } 
 
 
-	public function Configuraciones($sistema,$cliente,$slogan,$propietario,$telefono,$direccion,$email,$pais,$giro,$nit,$imp,$nombre_impuesto,$nombre_documento,$moneda,$moneda_simbolo,$tipo_inicio,$skin,$inicio_tx,$otras_ventas,$cambio_tx, $dias_vencimiento, $dias_cotizacion, $multicaja){
+	public function Configuraciones($sistema,$cliente,$slogan,$propietario,$telefono,$direccion,$email,$pais,$giro,$nit,$imp,$nombre_impuesto,$nombre_documento,$moneda,$moneda_simbolo,$tipo_inicio,$skin,$inicio_tx,$otras_ventas,$cambio_tx, $dias_vencimiento, $dias_cotizacion, $multicaja,$mayorista){
 		$db = new dbConn();
 
 		$cambio = array();
@@ -32,6 +32,7 @@ class Config{
 	    $cambio["dias_vencimiento"] = $dias_vencimiento;
 	    $cambio["dias_cotizacion"] = $dias_cotizacion;
 	    $cambio["multicaja"] = $multicaja;
+	    $cambio["mayorista"] = $mayorista;
 	    $cambio["time"] = Helpers::TimeId();
 	    if (Helpers::UpdateId("config_master", $cambio, "td = ".$_SESSION["td"]."")) {
 	    	$this->CrearVariables();
@@ -45,7 +46,7 @@ class Config{
 
 
 
-	public function Root($expira,$expiracion,$ftp_servidor,$ftp_path,$ftp_ruta,$ftp_user,$ftp_password,$tipo_sistema,$plataforma){
+	public function Root($expira,$expiracion,$ftp_servidor,$ftp_path,$ftp_ruta,$ftp_user,$ftp_password,$tipo_sistema,$plataforma,$multiusuario,$ecommerce){
 		$db = new dbConn();
 
 		$cambio = array();
@@ -58,6 +59,8 @@ class Config{
 	    $cambio["ftp_password"] = $ftp_password;
 	    $cambio["tipo_sistema"] = $tipo_sistema;
 	    $cambio["plataforma"] = $plataforma;
+	    $cambio["multiusuario"] = $multiusuario;
+	    $cambio["ecommerce"] = $ecommerce;
 	    $cambio["time"] = Helpers::TimeId();
 	    if (Helpers::UpdateId("config_root", $cambio, "td = ".$_SESSION["td"]."")) {
 	    	$this->CrearVariables();
@@ -107,6 +110,7 @@ class Config{
 			$_SESSION['config_dias_vencimiento'] = $r["dias_vencimiento"];
 			$_SESSION['config_dias_cotizacion'] = $r["dias_cotizacion"];
 			$_SESSION['config_multicaja'] = $r["multicaja"];
+			$_SESSION['config_mayorista'] = $r["mayorista"];
 
 			if($_SESSION['config_skin'] == NULL) $_SESSION['config_skin'] = "mdb-skin";
 			// white-skin , mdb-skin , grey-skin , pink-skin ,  light-blue-skin , black-skin  cyan-skin, navy-blue-skin
@@ -121,6 +125,8 @@ class Config{
 			$_SESSION['root_expiracion'] = $root["expiracion"];
 			$_SESSION['root_tipo_sistema'] = $root["tipo_sistema"];
 			$_SESSION['root_plataforma'] = $root["plataforma"];
+			$_SESSION['root_multiusuario'] = $root["multiusuario"];
+			$_SESSION['root_ecomerce'] = $root["ecomerce"];
      
 			} unset($root);
 			$_SESSION['root_tipo_sistema'] = $encrypt->Decrypt(
@@ -128,6 +134,12 @@ class Config{
 
 			$_SESSION['root_plataforma'] = $encrypt->Decrypt(
 			$_SESSION['root_plataforma'],$_SESSION['secret_key']);
+
+			$_SESSION['root_multiusuario'] = $encrypt->Decrypt(
+			$_SESSION['root_multiusuario'],$_SESSION['secret_key']);
+
+			$_SESSION['root_ecommerce'] = $encrypt->Decrypt(
+			$_SESSION['root_ecommerce'],$_SESSION['secret_key']);
 
 	}
 

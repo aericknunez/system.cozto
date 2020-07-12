@@ -1,6 +1,6 @@
 <?php if($_SESSION["tipo_cuenta"] == 1 or $_SESSION["tipo_cuenta"] == 5) { ?>
 
-<li><a href="?control" class="waves-effect arrow-r"><i class="fas fa-tv"></i> Panel de Control </a></li>
+<li><a href="?control" class="waves-effect arrow-r"><i class="fas fa-tv"></i> PANEL DE CONTROL </a></li>
 
 <?php } ?>
 
@@ -11,7 +11,7 @@
 if((Helpers::ServerDomain() == FALSE and $_SESSION["root_plataforma"] == 0) or (Helpers::ServerDomain() == TRUE and $_SESSION["root_plataforma"] == 1)) {
 ?>
 
-<li><a href="?corte" class="waves-effect arrow-r"><i class="fas fa-user"></i> Corte Diario </a></li>
+<li><a href="?corte" class="waves-effect arrow-r"><i class="fas fa-user"></i> CORTE DIARIO </a></li>
 
 
 <?php } } ?>
@@ -22,7 +22,7 @@ if((Helpers::ServerDomain() == FALSE and $_SESSION["root_plataforma"] == 0) or (
 
 <?php if($_SESSION["tipo_cuenta"] == 1 or $_SESSION["tipo_cuenta"] == 5) { ?>
 
-<li><a class="collapsible-header waves-effect arrow-r"><i class="fas fa-cog"></i> Historial<i class="fa fa-angle-down rotate-icon"></i></a>
+<li><a class="collapsible-header waves-effect arrow-r"><i class="fas fa-cog"></i> HISTORIAL<i class="fa fa-angle-down rotate-icon"></i></a>
 <div class="collapsible-body">
 <ul class="list-unstyled">
 
@@ -57,7 +57,7 @@ if((Helpers::ServerDomain() == FALSE and $_SESSION["root_plataforma"] == 0) or (
 if((Helpers::ServerDomain() == FALSE and $_SESSION["root_plataforma"] == 0) or (Helpers::ServerDomain() == TRUE and $_SESSION["root_plataforma"] == 1)) {
 ?>
 
-<li><a class="collapsible-header waves-effect arrow-r"><i class="fas fa-cog"></i> Movimientos de Efectivo<i class="fa fa-angle-down rotate-icon"></i></a>
+<li><a class="collapsible-header waves-effect arrow-r"><i class="fas fa-cog"></i> MOVIMIENTOS DE EFECTIVO<i class="fa fa-angle-down rotate-icon"></i></a>
 <div class="collapsible-body">
 <ul class="list-unstyled">
 
@@ -78,7 +78,7 @@ if((Helpers::ServerDomain() == FALSE and $_SESSION["root_plataforma"] == 0) or (
 
 
 
-<li><a class="collapsible-header waves-effect arrow-r"><i class="fas fa-calculator"></i> Productos<i class="fa fa-angle-down rotate-icon"></i></a>
+<li><a class="collapsible-header waves-effect arrow-r"><i class="fas fa-calculator"></i> INVENTARIO<i class="fa fa-angle-down rotate-icon"></i></a>
 <div class="collapsible-body">
 <ul class="list-unstyled">
 
@@ -108,7 +108,7 @@ if((Helpers::ServerDomain() == FALSE and $_SESSION["root_plataforma"] == 0) or (
 
 
 
-<li><a class="collapsible-header waves-effect arrow-r"><i class="fas fa-columns"></i> Cotizaciones <i class="fa fa-angle-down rotate-icon"></i></a>
+<li><a class="collapsible-header waves-effect arrow-r"><i class="fas fa-columns"></i> COTIZACIONES <i class="fa fa-angle-down rotate-icon"></i></a>
 <div class="collapsible-body">
 <ul class="list-unstyled">
 <li><a href="?cotizar" class="waves-effect"><i class="fas fa-columns"></i> Nueva Cotizaci&oacuten </a></li>
@@ -127,7 +127,7 @@ if((Helpers::ServerDomain() == FALSE and $_SESSION["root_plataforma"] == 0) or (
 
 if((Helpers::ServerDomain() == FALSE and $_SESSION["root_plataforma"] == 0) or (Helpers::ServerDomain() == TRUE and $_SESSION["root_plataforma"] == 1)) {
 ?>
-<li><a class="collapsible-header waves-effect arrow-r"><i class="fas fa-money-bill-alt"></i> Creditos<i class="fa fa-angle-down rotate-icon"></i></a>
+<li><a class="collapsible-header waves-effect arrow-r"><i class="fas fa-money-bill-alt"></i> CREDITOS<i class="fa fa-angle-down rotate-icon"></i></a>
 <div class="collapsible-body">
 <ul class="list-unstyled">
 
@@ -142,7 +142,29 @@ if((Helpers::ServerDomain() == FALSE and $_SESSION["root_plataforma"] == 0) or (
 
 
 
-<li><a class="collapsible-header waves-effect arrow-r"><i class="far fa-user"></i> Clientes<i class="fa fa-angle-down rotate-icon"></i></a>
+
+
+<?php if($_SESSION["tipo_cuenta"] != 4) { 
+
+if((Helpers::ServerDomain() == FALSE and $_SESSION["root_plataforma"] == 0) or (Helpers::ServerDomain() == TRUE and $_SESSION["root_plataforma"] == 1)) {
+?>
+<li><a class="collapsible-header waves-effect arrow-r"><i class="fas fa-money-bill-alt"></i> CUENTAS POR PAGAR<i class="fa fa-angle-down rotate-icon"></i></a>
+<div class="collapsible-body">
+<ul class="list-unstyled">
+
+<li><a href="?cuentas" class="waves-effect"><i class="fas fa-money-bill-alt"></i> Ver todas las cuentas</a></li>
+</ul>
+</div>
+</li>
+<?php } } ?>
+
+
+
+
+
+
+
+<li><a class="collapsible-header waves-effect arrow-r"><i class="far fa-user"></i> CLIENTES<i class="fa fa-angle-down rotate-icon"></i></a>
 <div class="collapsible-body">
 <ul class="list-unstyled">
 
@@ -158,7 +180,7 @@ if((Helpers::ServerDomain() == FALSE and $_SESSION["root_plataforma"] == 0) or (
 
 <?php if($_SESSION["tipo_cuenta"] != 4) {  ?>
 
-<li><a class="collapsible-header waves-effect arrow-r"><i class="fas fa-user-alt"></i> Proveedores<i class="fa fa-angle-down rotate-icon"></i></a>
+<li><a class="collapsible-header waves-effect arrow-r"><i class="fas fa-user-alt"></i> PROVEEDORES<i class="fa fa-angle-down rotate-icon"></i></a>
 <div class="collapsible-body">
 <ul class="list-unstyled">
 
@@ -180,7 +202,7 @@ if((Helpers::ServerDomain() == FALSE and $_SESSION["root_plataforma"] == 0) or (
 
 <?php if($_SESSION["tipo_cuenta"] != 4) {  /// planilla?>
 
-<li><a class="collapsible-header waves-effect arrow-r"><i class="fas fa-user-alt"></i> Planilla<i class="fa fa-angle-down rotate-icon"></i></a>
+<li><a class="collapsible-header waves-effect arrow-r"><i class="fas fa-user-alt"></i> PLANILLA<i class="fa fa-angle-down rotate-icon"></i></a>
 <div class="collapsible-body">
 <ul class="list-unstyled">
 <li><a href="?planillasver" class="waves-effect"><i class="fas fa-search"></i> Ver Planillas</a></li>
@@ -199,7 +221,7 @@ if((Helpers::ServerDomain() == FALSE and $_SESSION["root_plataforma"] == 0) or (
 
 
 
-<li><a class="collapsible-header waves-effect arrow-r"><i class="fas fa-cog"></i> Facturas<i class="fa fa-angle-down rotate-icon"></i></a>
+<li><a class="collapsible-header waves-effect arrow-r"><i class="fas fa-cog"></i> FACTURAS<i class="fa fa-angle-down rotate-icon"></i></a>
 <div class="collapsible-body">
 <ul class="list-unstyled">
 
@@ -219,7 +241,7 @@ if((Helpers::ServerDomain() == FALSE and $_SESSION["root_plataforma"] == 0) or (
 if((Helpers::ServerDomain() == FALSE and $_SESSION["root_plataforma"] == 0) or (Helpers::ServerDomain() == TRUE and $_SESSION["root_plataforma"] == 1)) {
  ?>
 
-<li><a class="collapsible-header waves-effect arrow-r"><i class="fas fa-cog"></i> Configuraciones<i class="fa fa-angle-down rotate-icon"></i></a>
+<li><a class="collapsible-header waves-effect arrow-r"><i class="fas fa-cog"></i> CONFIGURACIONES<i class="fa fa-angle-down rotate-icon"></i></a>
 <div class="collapsible-body">
 <ul class="list-unstyled">
 
@@ -262,7 +284,7 @@ if((Helpers::ServerDomain() == FALSE and $_SESSION["root_plataforma"] == 0) or (
 
 
 
-<li><a href="application/includes/logout.php" class="waves-effect arrow-r"><i class="fas fa-power-off"></i> Salir </a></li>
+<li><a href="application/includes/logout.php" class="waves-effect arrow-r"><i class="fas fa-power-off"></i> SALIR </a></li>
 
 </ul>
 </li>

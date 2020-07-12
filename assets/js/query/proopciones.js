@@ -1,5 +1,11 @@
 $(document).ready(function(){
 
+    $(document).ready(function() {
+    $('.mdb-select').materialSelect();
+    });
+
+
+
 /// categorias
 	$('#btn-addcategoria').click(function(e){ /// para agregar categoria
 	e.preventDefault();
@@ -9,7 +15,8 @@ $(document).ready(function(){
 			data: $("#form-addcategoria").serialize(),
 			success: function(data){
 				$("#form-addcategoria").trigger("reset");
-				$("#destinocategoria").html(data);			
+				$("#destinocategoria").html(data);
+				$("#categoriax").load('application/src/routes.php?op=14&select=Categoria&tabla=producto_categoria&iden=hash&nombre=categoria');
 			}
 		})
 	})
@@ -22,6 +29,29 @@ $(document).ready(function(){
 	});
 
 
+
+
+
+/// sub categorias
+	$('#btn-subcategoria').click(function(e){ /// agregar sub categoria
+	e.preventDefault();
+	$.ajax({
+			url: "application/src/routes.php?op=19",
+			method: "POST",
+			data: $("#form-subcategoria").serialize(),
+			beforeSend: function () {
+				$('#btn-subcategoria').html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>Loading...').addClass('disabled');
+	           // $("#contenido").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt=""></div>');
+            },
+			success: function(data){
+				$('#btn-subcategoria').html('Guardar').removeClass('disabled');	      
+				$("#form-subcategoria").trigger("reset");
+				$("#destinocategoria").html(data);	
+				$("#categoriax").load('application/src/routes.php?op=14&select=Categoria&tabla=producto_categoria&iden=hash&nombre=categoria');				
+			}
+		})
+	});
+    
 
 /// Unidades de medida
 	$('#btn-addunidad').click(function(e){ /// para agregar categoria
@@ -109,9 +139,11 @@ $(document).ready(function(){
 		var op = $(this).attr('op');
 		var hash = $(this).attr('hash');
 		var valor = $(this).attr('valor');
+		var tipo = $(this).attr('tipo');
 
-		
-		$('#btn-modal').attr("valor",valor).attr("op",op).attr("hash",hash);
+		// valor es para ver cual div actualizar
+		// tipo es solo para categoria, si es 1 categoria, 2 subcategoria
+		$('#btn-modal').attr("valor",valor).attr("op",op).attr("hash",hash).attr("tipo",tipo);
 		$('#ConfirmDelete').modal('show');
 	});
     
@@ -122,7 +154,8 @@ $(document).ready(function(){
 	var op = $(this).attr('op');
 	var valor = $(this).attr('valor');
 	var hash = $(this).attr('hash');
-	    $.post("application/src/routes.php", {op:op, hash:hash}, function(data){
+	var tipo = $(this).attr('tipo');
+	    $.post("application/src/routes.php", {op:op, hash:hash, tipo:tipo}, function(data){
 	    	
 	    	if(valor == '1'){ $("#destinocategoria").html(data); }
 	    	if(valor == '2'){ $("#destinounidad").html(data); }

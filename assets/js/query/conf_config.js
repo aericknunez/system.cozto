@@ -50,7 +50,7 @@ return false;
             url: "application/src/routes.php",
             data: dataString,
             beforeSend: function () {
-               $("#contenido").html('<div class="row justify-content-md-center" ><img src="assets/img/load.gif" alt=""></div>');
+               $("#contenido").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt=""></div>');
             },
             success: function(data) {            
                 $("#contenido").html(data); // lo que regresa de la busquea 

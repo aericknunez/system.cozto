@@ -464,4 +464,66 @@ $(document).ready(function(){
 
 
 
+
+
+
+
+
+
+
+
+
+
+//// mayoristas
+	$("body").on("click","#llamarmayorista",function(){ 
+		
+		$('#ModalMayorista').modal('show');	
+	});
+
+	$('#btn-preciosmayorista').click(function(e){ /// para el formulario
+
+	e.preventDefault();
+	$.ajax({
+			url: "application/src/routes.php?op=30x",
+			method: "POST",
+			data: $("#form-preciosmayorista").serialize(),
+			success: function(data){
+				$("#form-preciosmayorista").trigger("reset");
+				$("#muestrapreciosmayorista").html(data);			
+			}
+		})
+	})
+    
+
+
+
+	$("#form-preciosmayorista").keypress(function(e) {//Para deshabilitar el uso de la tecla "Enter"
+	if (e.which == 13) {
+	return false;
+	}
+	});
+
+
+// borrar un precio de producto
+	$("body").on("click","#delpreciomayorista",function(){
+		var op = $(this).attr('op');
+		var hash = $(this).attr('hash');
+		var producto = $(this).attr('producto');
+	    $.post("application/src/routes.php", {op:op, hash:hash, producto:producto}, function(data){
+		$("#muestrapreciosmayorista").html(data);
+	   	 });
+	});
+
+
+
+
+
+
+
+
+
+
+
+
+
 }); // termina query

@@ -13,7 +13,7 @@ function CargarDatos(){
             url: "application/src/routes.php",
             data: dataString,
             beforeSend: function () {
-               $("#CargaContenido").html('<div class="row justify-content-md-center" ><img src="assets/img/load.gif" alt=""></div>');
+               $("#CargaContenido").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt=""></div>');
                 $("#MensajeCarga").addClass("visible");
                 $("#MensajeCarga").removeClass("invisible"); 
             },

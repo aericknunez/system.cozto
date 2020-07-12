@@ -61,13 +61,15 @@ $this->EmparejaExistencias();
 $a = $db->query("SELECT * FROM producto WHERE caduca = 'on' and td = ".$_SESSION["td"]."");
   
   if($a->num_rows  > 0){
-       echo '<table class="table table-sm table-striped">
+       echo '<div class="table-responsive">
+       <table class="table table-sm table-striped">
     <thead>
       <tr>
         <th class="th-sm">Cod</th>
         <th class="th-sm">Producto</th>
         <th class="th-sm">Existencia</th>
         <th class="th-sm">Vencimiento</th>
+        <th class="th-sm">Edo</th>
         <th class="th-sm">Ver</th>
       </tr>
     </thead>
@@ -83,20 +85,32 @@ $a = $db->query("SELECT * FROM producto WHERE caduca = 'on' and td = ".$_SESSION
 
               $contador = $contador + 1;
 
+              /// color del caduca
+              if(Fechas::Format(date("d-m-Y")) > $y["caducaF"]){ // cadicados
+                $edo = Helpers::EdoCaduca(2, $y["caduca"]); 
+              } elseif(Fechas::Format(date("d-m-Y")) < $fechasx){
+                $edo = Helpers::EdoCaduca(1, $y["caduca"]); 
+              } else {
+                $edo = Helpers::EdoCaduca(0, $y["caduca"]); 
+              }
+
                 echo '<tr>
                             <td>'.$y["producto"].'</td>
                             <td>'.$b["descripcion"].'</td>
                             <td>'.$y["existencia"].'</td>
                             <td>'.$y["caduca"].'</td>
+                            <td>'.$edo.'</td>
                             <td><a id="xver" op="55" key="'.$b["cod"].'"><i class="fas fa-search fa-lg green-text"></i></a></td>
                           </tr>';
+              // unset($caduca);
               }
 
             } $x->close();
              /// termina la busqueda de productos 
    }// foreach
       echo '</tbody>
-    </table>';
+    </table>
+    </div>';
   } else{
     Alerts::Mensajex("No existen productos que contengan fecha de vencimiento en el sistema","info");
   }  $a->close();
@@ -140,10 +154,11 @@ if($dir == "asc") $dir2 = "desc";
 
 $op = "69";
 
- $a = $db->query("SELECT producto.cod, producto.descripcion, producto.cantidad, producto.hash, producto.existencia_minima, producto_categoria.categoria FROM producto INNER JOIN producto_categoria ON producto.categoria = producto_categoria.hash and producto.td = ".$_SESSION["td"]." WHERE producto.compuesto = 'on' order by ".$orden." ".$dir." limit $offset, $limit");
+ $a = $db->query("SELECT producto.cod, producto.descripcion, producto.cantidad, producto.hash, producto.existencia_minima, producto_categoria_sub.subcategoria FROM producto INNER JOIN producto_categoria_sub ON producto.categoria = producto_categoria_sub.hash and producto.td = ".$_SESSION["td"]." WHERE producto.compuesto = 'on' order by ".$orden." ".$dir." limit $offset, $limit");
       
       if($a->num_rows > 0){
-          echo '<table class="table table-sm table-striped">
+          echo '<div class="table-responsive">
+          <table class="table table-sm table-striped">
         <thead>
           <tr>
             <th class="th-sm"><a id="paginador" op="'.$op.'" iden="1" orden="producto.cod" dir="'.$dir2.'">Cod</a></th>
@@ -172,7 +187,8 @@ $op = "69";
                     </tr>';
         }
         echo '</tbody>
-        </table>';
+        </table>
+        </div>';
       }
         $a->close();
 

@@ -71,7 +71,7 @@ return false;
 			method: "POST",
 			data: $("#form-addform").serialize(),
 			beforeSend: function () {
-               $("#ver").html('<div class="row justify-content-md-center" ><img src="assets/img/load.gif" alt=""></div>');
+               $("#ver").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt=""></div>');
             },
 			success: function(data){
 				$("#form-addform").trigger("reset");
@@ -123,7 +123,7 @@ Esconder();
             url: "application/src/routes.php",
             data: dataString,
             beforeSend: function () {
-               $("#ver").html('<div class="row justify-content-md-center" ><img src="assets/img/load.gif" alt=""></div>');
+               $("#ver").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt=""></div>');
             },
             success: function(data) {            
                 $("#ver").html(data); // lo que regresa de la busquea 
@@ -144,7 +144,7 @@ Esconder();
             url: "application/src/routes.php",
             data: dataString,
             beforeSend: function () {
-               $("#ver").html('<div class="row justify-content-md-center" ><img src="assets/img/load.gif" alt=""></div>');
+               $("#ver").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt=""></div>');
             },
             success: function(data) {            
                 $("#ver").html(data); // lo que regresa de la busquea 
@@ -166,7 +166,7 @@ Esconder();
             url: "application/src/routes.php",
             data: dataString,
             beforeSend: function () {
-               $("#ver").html('<div class="row justify-content-md-center" ><img src="assets/img/load.gif" alt=""></div>');
+               $("#ver").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt=""></div>');
             },
             success: function(data) {            
                 $("#ver").load('application/src/routes.php?op=84'); // ver productos de la orden 
@@ -188,7 +188,7 @@ Esconder();
             url: "application/src/routes.php",
             data: dataString,
             beforeSend: function () {
-               $("#ver").html('<div class="row justify-content-md-center" ><img src="assets/img/load.gif" alt=""></div>');
+               $("#ver").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt=""></div>');
             },
             success: function(data) {            
                 $("#ver").html(data); // lo que regresa de la busquea 

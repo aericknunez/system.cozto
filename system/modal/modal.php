@@ -45,6 +45,11 @@ if($_REQUEST["modal"]=="abonos") include_once 'system/modal/modal/creditos_abono
 
 if($_REQUEST["modal"]=="cre_prodcuto") include_once 'system/modal/modal/creditos_producto.php';
 
+
+// cuentas abonos
+if($_REQUEST["modal"]=="abonos_cuentas") include_once 'system/modal/modal/cuentas_abonos.php';
+
+
 // cotizacion
 if($_REQUEST["modal"]=="cantidadc") include_once 'system/modal/modal/cantidad_cotizador.php';
 

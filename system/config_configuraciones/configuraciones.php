@@ -126,6 +126,11 @@ $r = $db->select("*", "config_master", "where td = ".$_SESSION['td']."")
        <td>Multicaja</td>
        <td><? if($r["multicaja"] == "on") echo "Activado"; else echo "Inactivo"; ?></td>    
      </tr>
+
+     <tr>
+       <td>Precios de Mayorista</td>
+       <td><? if($r["mayorista"] == "on") echo "Activado"; else echo "Inactivo"; ?></td>    
+     </tr>    
 <?
  unset($r);  
 

@@ -13,7 +13,7 @@ $(document).ready(function(){
             url: "application/src/routes.php",
             data: dataString,
             beforeSend: function () {
-               $("#ver").html('<div class="row justify-content-md-center" ><img src="assets/img/load.gif" alt=""></div>');
+               $("#ver").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt=""></div>');
             },
             success: function(data) {            
                 $("#ver").html(data); // lo que regresa de la busquea 
@@ -34,7 +34,7 @@ $(document).ready(function(){
             url: "application/src/routes.php",
             data: dataString,
             beforeSend: function () {
-               $("#ver").html('<div class="row justify-content-md-center" ><img src="assets/img/load.gif" alt=""></div>');
+               $("#ver").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt=""></div>');
             },
             success: function(data) {            
                 $("#ver").load('application/src/routes.php?op=93'); // ver productos de la orden 
@@ -56,7 +56,7 @@ $(document).ready(function(){
             url: "application/src/routes.php",
             data: dataString,
             beforeSend: function () {
-               $("#ver").html('<div class="row justify-content-md-center" ><img src="assets/img/load.gif" alt=""></div>');
+               $("#ver").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt=""></div>');
             },
             success: function(data) {            
                $("#ver").load('application/src/routes.php?op=93'); // ver productos de la orden 
@@ -80,7 +80,7 @@ $(document).ready(function(){
     			method: "POST",
     			data: $("#form-busquedaR").serialize(),
     		// beforeSend: function(){
-    		// 	$("#ver").html('<div class="row justify-content-md-center" ><img src="assets/img/load.gif" alt=""></div>');
+    		// 	$("#ver").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt=""></div>');
       //           },
     		success: function(data){
     			$("#ver").html(data);
@@ -104,7 +104,7 @@ $(document).ready(function(){
             url: "application/src/routes.php",
             data: dataString,
             // beforeSend: function () {
-            //    $("#ver").html('<div class="row justify-content-md-center" ><img src="assets/img/load.gif" alt=""></div>');
+            //    $("#ver").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt=""></div>');
             // },
             success: function(data) {            
                 $("#ver").load('application/src/routes.php?op=93'); // ver productos de la orden 
@@ -172,7 +172,7 @@ $(document).ready(function(){
             url: "application/src/routes.php",
             data: dataString,
             beforeSend: function () {
-               $("#ver").html('<div class="row justify-content-md-center" ><img src="assets/img/load.gif" alt=""></div>');
+               $("#ver").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt=""></div>');
             },
             success: function(data) {            
                 $("#ver").html(data); // lo que regresa de la busquea 

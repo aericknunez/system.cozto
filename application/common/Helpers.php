@@ -44,6 +44,8 @@ class Helpers{
     }
 
 
+
+
     public function Gasto($string) {
     if($string == "1") return '<p class="text-danger font-weight-bold">Compra No Facturado</p>';
     if($string == "2") return '<p class="text-success font-weight-bold">Compra con Factura</p>';
@@ -54,9 +56,17 @@ class Helpers{
 
 
     static public function EstadoCredito($string) {
-    if($string == "1") return 'Activo';
-    if($string == "2") return 'Pagado';
-    if($string == "0") return 'Eliminado';
+    if($string == "1") return '<div class="text-success font-weight-bold">Activo</div>';
+    if($string == "2") return '<div class="text-info font-weight-bold">Pagado</div>';
+    if($string == "0") return '<div class="text-danger font-weight-bold">Eliminado</div>';
+    }
+
+
+
+    static public function EdoCaduca($edo) {
+    if($edo == "1") return '<i class="fas fa-exclamation-triangle fa-lg orange-text"></i> Por caducar';
+    if($edo == "2") return '<i class="fas fa-exclamation-circle fa-lg red-text"></i> Caducado';
+    if($edo == "0") return '<i class="fas fa-heart fa-lg"></i> Bueno';
     }
 
 
@@ -336,6 +346,54 @@ public static function UpdateId($tabla, $dato, $condicion){
 }
 
 
+/// para hacer un select sencilo y no tener que andar haciendolos uno a uno
+   static public function SelectData($select, $tabla, $iden, $nombre, $selected = NULL) { // NOmbre, tabla, iden = hash nombre= listado
+    $db = new dbConn();
+
+      $a = $db->query("SELECT $iden, $nombre FROM $tabla WHERE td = ".$_SESSION["td"]."");
+      echo '<option selected disabled>'.$select.'</option>';
+      foreach ($a as $b) {  
+
+          if($selected != NULL and $selected == $b[$iden]){
+              echo '<option value="'. $b[$iden] .'" selected >'. $b[$nombre] .'</option>'; 
+          } else {
+              echo '<option value="'. $b[$iden] .'">'. $b[$nombre] .'</option>'; 
+          }
+
+      } $a->close(); 
+
+    }
+
+
+
+   static public function SelectDataMultiple($select, 
+   $tabla, $iden, $nombre, 
+   $campo, 
+   $tabla2, $iden2, $nombre2, 
+   $selected = NULL) { // NOmbre, tabla, iden = hash nombre= listado
+    $db = new dbConn();
+
+      $a = $db->query("SELECT $iden, $nombre FROM $tabla WHERE td = ".$_SESSION["td"]."");
+      echo '<option selected disabled>'.$select.'</option>';
+      foreach ($a as $b) {  
+        echo '<optgroup label="'.$b[$nombre].'">';
+
+              $x = $db->query("SELECT $iden2, $nombre2 FROM $tabla2 WHERE $campo = '".$b[$iden]."' and td = ".$_SESSION["td"]."");
+              foreach ($x as $y) {
+
+                  if($selected != NULL and $selected == $y[$iden2]){
+                      echo '<option value="'. $y[$iden2] .'" selected >'. $y[$nombre2] .'</option>'; 
+                  } else {
+                      echo '<option value="'. $y[$iden2] .'">'. $y[$nombre2] .'</option>'; 
+                  }
+
+
+              }$x->close();
+        echo '</optgroup>';   
+
+      } $a->close(); 
+
+    }
 
 
 

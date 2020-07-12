@@ -63,7 +63,7 @@ class Gastos {
 			  $n = 0;
 		    foreach ($a as $b) {
 		    	$n++;
-		    	if($b["edo"] == 1){
+		    	if($b["edo"] != 0){
 				$total = $total + $b["cantidad"];
 				$colores='class="text-black"';
 				} else {
@@ -86,6 +86,8 @@ class Gastos {
 			      <a id="xdelete" op="171" iden="'. $b["id"] .'">
 				      <span class="badge red"><i class="fas fa-trash-alt" aria-hidden="true"></i></span>
 				      </a>';
+			      } if($b["edo"] == 2 and $g == NULL){
+			      	echo '<span class="badge red"><i class="fas fa-ban" aria-hidden="true"></i></span>';
 			      }
 			      echo '</td>
 			    </tr>';

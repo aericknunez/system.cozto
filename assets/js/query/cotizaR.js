@@ -13,7 +13,7 @@ $(document).ready(function(){
             url: "application/src/routes.php",
             data: dataString,
             beforeSend: function () {
-               $("#ver").html('<div class="row justify-content-md-center" ><img src="assets/img/load.gif" alt=""></div>');
+               $("#ver").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt=""></div>');
             },
             success: function(data) {            
                 $("#ver").html(data); // lo que regresa de la busquea 
@@ -34,7 +34,7 @@ $(document).ready(function(){
             url: "application/src/routes.php",
             data: dataString,
             beforeSend: function () {
-               $("#ver").html('<div class="row justify-content-md-center" ><img src="assets/img/load.gif" alt=""></div>');
+               $("#ver").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt=""></div>');
             },
             success: function(data) {            
                 $("#ver").html(data); // lo que regresa de la busquea 
@@ -56,7 +56,7 @@ $(document).ready(function(){
             url: "application/src/routes.php",
             data: dataString,
             beforeSend: function () {
-               $("#ver").html('<div class="row justify-content-md-center" ><img src="assets/img/load.gif" alt=""></div>');
+               $("#ver").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt=""></div>');
             },
             success: function(data) {            
                 $("#ver").load('application/src/routes.php?op=153'); // ver productos de la orden 
@@ -79,7 +79,7 @@ $(document).ready(function(){
     			method: "POST",
     			data: $("#form-busquedaR").serialize(),
     		// beforeSend: function(){
-    		// 	$("#ver").html('<div class="row justify-content-md-center" ><img src="assets/img/load.gif" alt=""></div>');
+    		// 	$("#ver").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt=""></div>');
       //           },
     		success: function(data){
     			$("#ver").html(data);
@@ -103,7 +103,7 @@ $(document).ready(function(){
             url: "application/src/routes.php",
             data: dataString,
             // beforeSend: function () {
-            //    $("#ver").html('<div class="row justify-content-md-center" ><img src="assets/img/load.gif" alt=""></div>');
+            //    $("#ver").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt=""></div>');
             // },
             success: function(data) {            
                 $("#ver").load('application/src/routes.php?op=153'); // ver productos de la orden 
@@ -162,7 +162,7 @@ return false;
             url: "application/src/routes.php",
             data: dataString,
             beforeSend: function () {
-               $("#ver").html('<div class="row justify-content-md-center" ><img src="assets/img/load.gif" alt=""></div>');
+               $("#ver").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt=""></div>');
             },
             success: function(data) {            
                 $("#ver").html(data); // lo que regresa de la busquea 
@@ -225,7 +225,7 @@ return false;
             url: "application/src/routes.php",
             data: dataString,
             beforeSend: function () {
-               $("#ver").html('<div class="row justify-content-md-center" ><img src="assets/img/load.gif" alt=""></div>');
+               $("#ver").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt=""></div>');
             },
             success: function(data) {            
                 $("#ver").html(data); // lo que regresa de la busquea 
@@ -259,7 +259,7 @@ $('#ModalBusqueda').on('shown.bs.modal', function() { // para autofocus en el mo
             method: "POST",
             data: $("#form-Ccantidad").serialize(),
             beforeSend: function () {
-               $("#ver").html('<div class="row justify-content-md-center" ><img src="assets/img/load.gif" alt=""></div>');
+               $("#ver").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt=""></div>');
             },
             success: function(data){
                 $("#form-Ccantidad").trigger("reset");
@@ -278,7 +278,7 @@ $('#ModalBusqueda').on('shown.bs.modal', function() { // para autofocus en el mo
             method: "POST",
             data: $("#form-descuento").serialize(),
             beforeSend: function () {
-               $("#ver").html('<div class="row justify-content-md-center" ><img src="assets/img/load.gif" alt=""></div>');
+               $("#ver").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt=""></div>');
             },
             success: function(data){
                 $("#form-descuento").trigger("reset");
@@ -297,7 +297,7 @@ $('#ModalBusqueda').on('shown.bs.modal', function() { // para autofocus en el mo
             url: "application/src/routes.php",
             data: dataString,
             beforeSend: function () {
-               $("#ver").html('<div class="row justify-content-md-center" ><img src="assets/img/load.gif" alt=""></div>');
+               $("#ver").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt=""></div>');
             },
             success: function(data) {            
                 $("#ver").html(data); // lo que regresa de la busquea 
@@ -324,7 +324,7 @@ $('#ModalBusqueda').on('shown.bs.modal', function() { // para autofocus en el mo
             url: "application/src/routes.php",
             data: dataString,
             beforeSend: function () {
-               $("#vista").html('<div class="row justify-content-md-center" ><img src="assets/img/load.gif" alt=""></div>');
+               $("#vista").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt=""></div>');
             },
             success: function(data) {            
                 $("#vista").html(data); // lo que regresa de la busquea
@@ -354,7 +354,7 @@ $('#ModalBusqueda').on('shown.bs.modal', function() { // para autofocus en el mo
             url: "application/src/routes.php",
             data: dataString,
             beforeSend: function () {
-               $("#vista").html('<div class="row justify-content-md-center" ><img src="assets/img/load.gif" alt=""></div>');
+               $("#vista").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt=""></div>');
             },
             success: function(data) {            
                  window.location.href="?cotizar";
@@ -377,7 +377,7 @@ $('#ModalBusqueda').on('shown.bs.modal', function() { // para autofocus en el mo
             url: "application/src/routes.php",
             data: dataString,
             beforeSend: function () {
-               $("#vista").html('<div class="row justify-content-md-center" ><img src="assets/img/load.gif" alt=""></div>');
+               $("#vista").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt=""></div>');
             },
             success: function(data) {            
                  window.location.href="?";

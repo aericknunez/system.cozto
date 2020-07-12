@@ -8,15 +8,12 @@ $seslog = new Login();
 $seslog->sec_session_start();
 
 
-
-
-
 include_once '../common/Alerts.php';
-$alert = new Alerts;
-$helps = new Helpers;
 include_once '../common/Fechas.php';
 include_once '../common/Encrypt.php';
 include_once '../common/Dinero.php';
+
+
 
 
 // filtros para cuando no hay session abierta
@@ -71,7 +68,8 @@ case "10":
 									$_POST["cambio_tx"],
 									$_POST["dias_vencimiento"],
 									$_POST["dias_cotizacion"],
-									$_POST["multicaja"]);
+									$_POST["multicaja"],
+									$_POST["mayorista"]);
 break;
 
 
@@ -89,7 +87,9 @@ include_once '../../system/config_configuraciones/Config.php';
 						Encrypt::Encrypt($_POST["ftp_user"],$_SESSION['secret_key']),
 						Encrypt::Encrypt($_POST["ftp_password"],$_SESSION['secret_key']),
 						Encrypt::Encrypt($_POST["tipo_sistema"],$_SESSION['secret_key']),
-						Encrypt::Encrypt($_POST["plataforma"],$_SESSION['secret_key']));
+						Encrypt::Encrypt($_POST["plataforma"],$_SESSION['secret_key']),
+						Encrypt::Encrypt($_POST["multiusuario"],$_SESSION['secret_key']),
+						Encrypt::Encrypt($_POST["ecommerce"],$_SESSION['secret_key']));
 break;
 
 
@@ -128,6 +128,11 @@ case "13":
 	include_once '../../system/config_configuraciones/Config.php';
 	$configuracion = new Config;
 	$configuracion->ModTabla($_POST);
+break;
+
+
+case "14":  /// para el div de regarga automatico
+echo Helpers::SelectData($_REQUEST["select"], $_REQUEST["tabla"], $_REQUEST["iden"], $_REQUEST["nombre"]);
 break;
 
 
@@ -187,6 +192,13 @@ $imgs->VerImg($_REQUEST["key"], "assets/img/productos/" . $_SESSION["td"] . "/")
 break;
 
 
+case "19": // formulario add sub categoria
+include_once '../../system/producto/Productos.php';
+	$productos = new Productos;
+	$productos->AddSubCategoria($_POST);
+break;
+
+
 
 case "20": // agrega primeros datos del producto
 include_once '../../system/producto/Productos.php';
@@ -213,10 +225,10 @@ break;
 
 
 
-case "23": // borrar categoria
+case "23": // borrar categoria y sub categoria
 include_once '../../system/producto/Productos.php';
 	$productos = new Productos;
-	$productos->DelCategoria($_REQUEST["hash"]);
+	$productos->DelCategoria($_REQUEST["hash"], $_REQUEST["tipo"]);
 break;
 
 
@@ -284,6 +296,21 @@ case "31": // elimina los precios de cada producto
 include_once '../../system/producto/Productos.php';
 	$productos = new Productos;
 	$productos->DelPrecios($_REQUEST["hash"], $_REQUEST["producto"]);
+break;
+
+
+case "30x": // agrega los precios de mayorista
+include_once '../../system/producto/Productos.php';
+	$productos = new Productos;
+	$productos->AddPreciosMayorista($_POST);
+break;
+
+
+
+case "31x": // elimina los precios de mayorista
+include_once '../../system/producto/Productos.php';
+	$productos = new Productos;
+	$productos->DelPrecioMayorista($_REQUEST["hash"], $_REQUEST["producto"]);
 break;
 
 
@@ -1500,6 +1527,72 @@ include_once '../../system/bdbackup/Backup.php';
 	$back = new BackUp();
 	$back->Search();
 break;
+
+
+
+case "400": // busqueda de proveedores
+include_once '../../system/cuentas/Cuentas.php';
+	$cuenta = new Cuentas();
+	$cuenta->AddCuenta($_POST);
+break;
+
+
+
+case "401": // ver todass las cuentas
+include_once '../../system/cuentas/Cuentas.php';
+	$cuenta = new Cuentas();
+	$cuenta->VerCuentas($_POST["iden"], $_POST["orden"], $_POST["dir"]);
+break;
+
+
+
+case "402": // modal ver
+include_once '../../system/cuentas/Cuentas.php';
+	$cuenta = new Cuentas(); 
+	$cuenta->VistaCuenta($_POST["cuenta"]);
+break;
+
+
+
+case "403": // cargar abonos
+include_once '../../system/cuentas/Cuentas.php';
+	$cuenta = new Cuentas(); 
+	echo Helpers::Dinero($cuenta->TotalAbono($_REQUEST["cuenta"]));
+break;
+
+
+
+case "404": // cargar total
+include_once '../../system/cuentas/Cuentas.php';
+	$cuenta = new Cuentas(); 
+	echo Helpers::Dinero($cuenta->ObtenerTotal($_REQUEST["cuenta"]) - $cuenta->TotalAbono($_REQUEST["cuenta"]));
+break;
+
+
+
+case "405": // agragar Abono
+include_once '../../system/cuentas/Cuentas.php';
+	$cuenta = new Cuentas(); 
+	$cuenta->AddAbono($_POST);
+break;
+
+
+
+case "406": // Borrar Abono
+include_once '../../system/cuentas/Cuentas.php';
+	$cuenta = new Cuentas(); 
+	$cuenta->DelAbono($_POST["hash"], $_POST["cuenta"]);
+break;
+
+
+
+case "408": // Borrar cuenta
+include_once '../../system/cuentas/Cuentas.php';
+	$cuenta = new Cuentas(); 
+	$cuenta->DelCuenta($_POST["iden"]);
+break;
+
+
 
 
 

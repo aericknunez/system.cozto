@@ -59,37 +59,31 @@ if($cod != NULL){
 
 
     <div class="col-md-4 mb-1 md-form">
-      <?php $a = $db->query("SELECT hash, nombre FROM proveedores WHERE td = ".$_SESSION["td"].""); ?>
       <select class="browser-default custom-select" id="proveedor" name="proveedor">
-        <option selected disabled>Proveedor</option>
-        <?php foreach ($a as $b) {
-          if($proveedor == $b["hash"]) $pro = " selected"; else $pro = "";
-        echo '<option value="'. $b["hash"] .'"'.$pro.'>'. $b["nombre"] .'</option>'; 
-        } $a->close(); ?>
+        <?php 
+        echo Helpers::SelectData("Proveedor", "proveedores", "hash", "nombre", $proveedor); 
+        ?>
       </select>
     </div>
 
 
     <div class="col-md-4 mb-1 md-form">
-      <?php $c = $db->query("SELECT hash, categoria FROM producto_categoria WHERE td = ".$_SESSION["td"].""); ?>
-      <select class="browser-default custom-select" id="categoria" name="categoria">
-        <option selected disabled>* Categorias</option>
-        <?php foreach ($c as $d) {
-          if($categoria == $d["hash"]) $pro = " selected"; else $pro = "";
-        echo '<option value="'. $d["hash"] .'"'.$pro.'>'. $d["categoria"] .'</option>'; 
-        } $c->close(); ?>
+      <select class="browser-default custom-select" id="categoria" name="categoria">     
+        <?php 
+       echo Helpers::SelectDataMultiple("* Categorias", 
+        "producto_categoria", "hash", "categoria", 
+        "categoria",
+        "producto_categoria_sub", "hash", "subcategoria", 
+        $categoria); 
+        ?>
       </select>
     </div>
 
     <div class="col-md-4 mb-1 md-form">
-      <?php  $e = $db->query("SELECT hash, nombre FROM producto_unidades WHERE td = ".$_SESSION["td"].""); ?>
         <select class="browser-default custom-select" id="medida" name="medida">
-        <option selected disabled>* Unidad de Medida</option>
-        <?php foreach ($e as $f) {
-          if($medida == $f["hash"]) $pro = " selected"; else $pro = "";
-        echo '<option value="'. $f["hash"] .'" '.$pro.'>'. $f["nombre"] .'</option>'; 
-        } $e->close();
-         ?>
+      <?php 
+        echo Helpers::SelectData("* Unidad de Medida", "producto_unidades", "hash", "nombre", $medida); 
+        ?>         
       </select>
     </div>
 

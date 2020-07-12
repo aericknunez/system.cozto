@@ -66,6 +66,7 @@ class Productos{
               $datos = array();
               $datos["producto"] = $datox["producto"];
               $datos["cant"] = $canti;
+              $datos["existencia"] = $canti;
               $datos["precio_costo"] = $datox["precio_costo"];
               $datos["caduca"] = $datox["caduca_submit"];
               $datos["caducaF"] = Fechas::Format($datox["caduca_submit"]);
@@ -602,6 +603,7 @@ class Productos{
     $db = new dbConn();
 
       if($datos["categoria"] != NULL){
+              $datos["categoria"] = strtoupper($datos["categoria"]);
               $datos["hash"] = Helpers::HashId();
               $datos["time"] = Helpers::TimeId();
               $datos["td"] = $_SESSION["td"];
@@ -618,12 +620,33 @@ class Productos{
   }
 
 
+  public function AddSubCategoria($datos){ // agrega una sub categoria para ponersela al producto
+    $db = new dbConn();
+
+      $datos["categoria"] = $datos["categoriax"]; unset($datos["categoriax"]);
+ 
+      if($datos["categoria"] != NULL and $datos["subcategoria"] != NULL){
+              $datos["subcategoria"] = strtoupper($datos["subcategoria"]);
+              $datos["hash"] = Helpers::HashId();
+              $datos["time"] = Helpers::TimeId();
+              $datos["td"] = $_SESSION["td"];
+              if ($db->insert("producto_categoria_sub", $datos)) {
+                   Alerts::Alerta("success","Agregado!","Agregado Correctamente!");
+                  
+              }else {
+            Alerts::Alerta("error","Error!","Algo Ocurrio!");
+          }
+      } else {
+        Alerts::Alerta("error","Error!","Faltan Datos!");
+      }
+      $this->VerCategoria();
+  }
 
 
   public function VerCategoria(){ // listado de categorias
     $db = new dbConn();
 
-      $a = $db->query("SELECT * FROM producto_categoria WHERE td = ".$_SESSION["td"]."");
+      $a = $db->query("SELECT categoria, hash FROM producto_categoria WHERE td = ".$_SESSION["td"]."");
       if($a->num_rows > 0){
     echo '<table class="table table-sm table-hover">
       <thead>
@@ -639,8 +662,19 @@ class Productos{
             echo '<tr>
                   <th scope="row">'. $n ++ .'</th>
                   <td>'.$b["categoria"].'</td>
-                  <td><a id="xdelete" valor="1" hash="'.$b["hash"].'" op="23" ><i class="fa fa-minus-circle fa-lg red-text"></i></a></td>
-                </tr>';          
+                  <td><a id="xdelete" valor="1" tipo="1" hash="'.$b["hash"].'" op="23" ><i class="fa fa-minus-circle fa-lg red-text"></i></a></td>
+                </tr>';  
+                
+                $x = $db->query("SELECT subcategoria, hash FROM producto_categoria_sub WHERE categoria = '".$b["hash"]."' and td = ".$_SESSION["td"]."");
+                          foreach ($x as $y) { ;
+                    echo '<tr class="blue lighten-5">
+                          <th scope="row"> -- </th>
+                          <td>'.$y["subcategoria"].'</td>
+                          <td><a id="xdelete" valor="1" tipo="2" hash="'.$y["hash"].'" op="23" ><i class="fa fa-minus-circle fa-lg red-text"></i></a></td>
+                        </tr>';                            
+                  }  $x->close();
+      
+                        
           }
     echo '</tbody>
     </table>';
@@ -650,13 +684,26 @@ class Productos{
 
 
 
-  public function DelCategoria($hash){ // elimina categoria
+  public function DelCategoria($hash, $tipo){ // elimina categoria
     $db = new dbConn();
+
+    if($tipo == "1"){
         if (Helpers::DeleteId("producto_categoria", "hash='$hash'")) {
+            Helpers::DeleteId("producto_categoria_sub", "categoria='$hash'"); // borro las subcategorias
            Alerts::Alerta("success","Eliminado!","Categoria eliminada correctamente!");
         } else {
             Alerts::Alerta("error","Error!","Algo Ocurrio!");
         } 
+    }
+
+    if($tipo == "2"){
+        if (Helpers::DeleteId("producto_categoria_sub", "hash='$hash'")) {
+           Alerts::Alerta("success","Eliminado!","Sub categoria eliminada correctamente!");
+        } else {
+            Alerts::Alerta("error","Error!","Algo Ocurrio!");
+        } 
+    }
+
       $this->VerCategoria();
   }
 
@@ -907,10 +954,11 @@ class Productos{
 if($dir == "desc") $dir2 = "asc";
 if($dir == "asc") $dir2 = "desc";
 
- $a = $db->query("SELECT producto.cod, producto.descripcion, producto.cantidad, producto.existencia_minima, producto_categoria.categoria FROM producto INNER JOIN producto_categoria ON producto.categoria = producto_categoria.hash and producto.td = ".$_SESSION["td"]." order by ".$orden." ".$dir." limit $offset, $limit");
+ $a = $db->query("SELECT producto.cod, producto.descripcion, producto.cantidad, producto.existencia_minima, producto_categoria_sub.subcategoria FROM producto INNER JOIN producto_categoria_sub ON producto.categoria = producto_categoria_sub.hash and producto.td = ".$_SESSION["td"]." order by ".$orden." ".$dir." limit $offset, $limit");
       
       if($a->num_rows > 0){
-          echo '<table class="table table-sm table-striped">
+          echo '<div class="table-responsive">
+          <table class="table table-sm table-striped">
         <thead>
           <tr>
             <th class="th-sm"><a id="paginador" op="54" iden="1" orden="producto.cod" dir="'.$dir2.'">Cod</a></th>
@@ -937,7 +985,8 @@ if($dir == "asc") $dir2 = "desc";
                     </tr>';
         }
         echo '</tbody>
-        </table>';
+        </table>
+        </div>';
       }
         $a->close();
 
@@ -1000,7 +1049,7 @@ $page <= 1 ? $enable = 'disabled' : $enable = '';
   public function DetallesProducto($data){
       $db = new dbConn();
 
-    $a = $db->query("SELECT producto.cod, producto.descripcion, producto.cantidad, producto.existencia_minima, producto.caduca, producto.compuesto, producto.gravado, producto.receta, producto.dependiente, producto.servicio, producto_categoria.categoria, producto_unidades.nombre, proveedores.nombre as proveedores FROM producto INNER JOIN producto_categoria ON producto.categoria = producto_categoria.hash INNER JOIN producto_unidades ON producto.medida = producto_unidades.hash INNER JOIN proveedores ON producto.proveedor = proveedores.hash WHERE producto.cod = '".$data["key"]."' AND producto.td = ".$_SESSION["td"]."");
+    $a = $db->query("SELECT producto.cod, producto.descripcion, producto.cantidad, producto.existencia_minima, producto.caduca, producto.compuesto, producto.gravado, producto.receta, producto.dependiente, producto.servicio, producto_categoria_sub.subcategoria, producto_unidades.nombre, proveedores.nombre as proveedores FROM producto INNER JOIN producto_categoria_sub ON producto.categoria = producto_categoria_sub.hash INNER JOIN producto_unidades ON producto.medida = producto_unidades.hash INNER JOIN proveedores ON producto.proveedor = proveedores.hash WHERE producto.cod = '".$data["key"]."' AND producto.td = ".$_SESSION["td"]."");
     
     if($a->num_rows > 0){
         foreach ($a as $b) {        
@@ -1135,7 +1184,7 @@ $page <= 1 ? $enable = 'disabled' : $enable = '';
 if($dir == "desc") $dir2 = "asc";
 if($dir == "asc") $dir2 = "desc";
 
- $a = $db->query("SELECT producto.cod, producto.descripcion, producto.cantidad, producto.existencia_minima, producto_categoria.categoria FROM producto INNER JOIN producto_categoria ON producto.categoria = producto_categoria.hash and producto.cantidad <= producto.existencia_minima and producto.td = ".$_SESSION["td"]." order by ".$orden." ".$dir." limit $offset, $limit");
+ $a = $db->query("SELECT producto.cod, producto.descripcion, producto.cantidad, producto.existencia_minima, producto_categoria_sub.subcategoria FROM producto INNER JOIN producto_categoria_sub ON producto.categoria = producto_categoria_sub.hash and producto.cantidad <= producto.existencia_minima and producto.td = ".$_SESSION["td"]." order by ".$orden." ".$dir." limit $offset, $limit");
       
       if($a->num_rows > 0){
           echo '<table class="table table-sm table-striped">
@@ -1222,6 +1271,81 @@ $page <= 1 ? $enable = 'disabled' : $enable = '';
   } // termina productos
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+///// precios Mayorita
+
+  public function AddPreciosMayorista($datox){ // ingresa un nuevo lote de productos
+      $db = new dbConn();
+          if($datox["cantidad"] != NULL or $datox["precio"] != NULL){
+              $datos = array();
+              $datos["producto"] = $datox["producto"];
+              $datos["cant"] = $datox["cantidad"];
+              $datos["precio"] = $datox["precio"];
+              $datos["td"] = $_SESSION["td"];
+              $datos["hash"] = Helpers::HashId();
+              $datos["time"] = Helpers::TimeId();
+              if ($db->insert("producto_precio_mayorista", $datos)) {
+
+                 Alerts::Alerta("success","Realizado!","Precio agregado correctamente!");
+                
+              }
+          } else {
+              Alerts::Alerta("error","Error!","Faltan Datos!");
+          }
+          $this->VerPreciosMayorista($datox["producto"]);
+  }
+
+
+  public function VerPreciosMayorista($producto){
+      $db = new dbConn();
+          $a = $db->query("SELECT * FROM producto_precio_mayorista WHERE producto = '$producto' and td = ".$_SESSION["td"]."");
+          if($a->num_rows > 0){
+        echo '<table class="table table-sm table-hover">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Cantidad</th>
+              <th scope="col">Precio</th>
+              <th scope="col">Eliminar</th>
+            </tr>
+          </thead>
+          <tbody>';
+          $n = 1;
+              foreach ($a as $b) { ;
+                echo '<tr>
+                      <th scope="row">'. $n ++ .'</th>
+                      <td>'.$b["cant"].'</td>
+                      <td>'.$b["precio"].'</td>
+                      <td><a id="delpreciomayorista" hash="'.$b["hash"].'" op="31x" producto="'.$producto.'" ><i class="fa fa-minus-circle fa-lg red-text"></i></a></td>
+                    </tr>';          
+              }
+        echo '</tbody>
+        </table>';
+
+          } $a->close();  
+  }
+
+
+  public function DelPrecioMayorista($hash, $producto){ // elimina precio
+    $db = new dbConn();
+        if (Helpers::DeleteId("producto_precio_mayorista", "hash='$hash'")) {
+           Alerts::Alerta("success","Eliminado!","Precio eliminado correctamente!");
+        } else {
+            Alerts::Alerta("error","Error!","Algo Ocurrio!");
+        } 
+      $this->VerPreciosMayorista($producto);
+  }
 
 
 

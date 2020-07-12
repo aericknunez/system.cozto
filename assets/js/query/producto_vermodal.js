@@ -15,7 +15,7 @@ $(document).ready(function()
             url: "application/src/routes.php",
             data: dataString,
             beforeSend: function () {
-               $("#vista").html('<div class="row justify-content-md-center" ><img src="assets/img/load.gif" alt=""></div>');
+               $("#vista").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt=""></div>');
             },
             success: function(data) {            
                 $("#vista").html(data); // lo que regresa de la busquea         

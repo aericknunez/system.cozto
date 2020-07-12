@@ -95,7 +95,7 @@ return false;
             url: "system/user/redirect.php",
             data: dataString,
             beforeSend: function () {
-               $("#lista_usuarios").html('<div class="row justify-content-md-center" ><img src="assets/img/load.gif" alt=""></div>');
+               $("#lista_usuarios").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt=""></div>');
             },
             success: function(data) {            
 				$("#lista_usuarios").load('system/user/redirect.php?op=8');
@@ -128,7 +128,7 @@ return false;
 	            url: "system/user/redirect.php",
 	            data: dataString,
 	            beforeSend: function () {
-	               $("#vista_password").html('<div class="row justify-content-md-center" ><img src="assets/img/load.gif" alt=""></div>');
+	               $("#vista_password").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt=""></div>');
 	            },
 	            success: function(data) {            
 					$("#vista_password").html(data);	
@@ -168,7 +168,7 @@ return false;
 	            url: "system/user/redirect.php",
 	            data: dataString,
 	            beforeSend: function () {
-	               $("#vista_update").html('<div class="row justify-content-md-center" ><img src="assets/img/load.gif" alt=""></div>');
+	               $("#vista_update").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt=""></div>');
 	            },
 	            success: function(data) {            
 					$("#vista_update").html(data);	
@@ -185,7 +185,7 @@ return false;
 			data: $("#form-actualizar").serialize(),
 			beforeSend: function () {
 				$('#btn-registrar').html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>Loading...').addClass('disabled');
-				$("#lista_usuarios").html('<div class="row justify-content-md-center" ><img src="assets/img/load.gif" alt=""></div>');
+				$("#lista_usuarios").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt=""></div>');
 	        },
 			success: function(data){
 				$('#btn-actualizar').html('Login').removeClass('disabled');	      
@@ -223,7 +223,7 @@ return false;
 	            url: "system/user/redirect.php",
 	            data: dataString,
 	            beforeSend: function () {
-	               $("#vista_avatar").html('<div class="row justify-content-md-center" ><img src="assets/img/load.gif" alt=""></div>');
+	               $("#vista_avatar").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt=""></div>');
 	            },
 	            success: function(data) {            
 					$("#vista_avatar").html(data);	
@@ -245,7 +245,7 @@ return false;
             url: "system/user/redirect.php",
             data: dataString,
             beforeSend: function () {
-               $("#avatar-select").html('<div class="row justify-content-md-center" ><img src="assets/img/load.gif" alt=""></div>');
+               $("#avatar-select").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt=""></div>');
             },
             success: function(data) {            
 				$("#avatar-select").html(data);

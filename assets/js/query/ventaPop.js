@@ -10,7 +10,7 @@ $(document).ready(function(){
             method: "POST",
             data: $("#form-descuento").serialize(),
             beforeSend: function () {
-               $("#ver").html('<div class="row justify-content-md-center" ><img src="assets/img/load.gif" alt=""></div>');
+               $("#ver").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt=""></div>');
             },
             success: function(data){
                 $("#form-descuento").trigger("reset");
@@ -29,7 +29,7 @@ $(document).ready(function(){
             url: "application/src/routes.php",
             data: dataString,
             beforeSend: function () {
-               $("#ver").html('<div class="row justify-content-md-center" ><img src="assets/img/load.gif" alt=""></div>');
+               $("#ver").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt=""></div>');
             },
             success: function(data) {            
                 $("#ver").html(data); // lo que regresa de la busquea 
@@ -84,7 +84,7 @@ $(document).ready(function(){
             url: "application/src/routes.php",
             data: dataString,
             beforeSend: function () {
-               $("#ver").html('<div class="row justify-content-md-center" ><img src="assets/img/load.gif" alt=""></div>');
+               $("#ver").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt=""></div>');
             },
             success: function(data) {            
                 $("#ver").html(data); // lo que regresa de la busquea 
@@ -140,7 +140,7 @@ $(document).ready(function(){
             url: "application/src/routes.php",
             data: dataString,
             beforeSend: function () {
-               $("#ver").html('<div class="row justify-content-md-center" ><img src="assets/img/load.gif" alt=""></div>');
+               $("#ver").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt=""></div>');
             },
             success: function(data) {            
                 $("#ver").html(data); // lo que regresa de la busquea 
@@ -157,7 +157,7 @@ $(document).ready(function(){
             method: "POST",
             data: $("#form-documento").serialize(),
             beforeSend: function () {
-               $("#ver").html('<div class="row justify-content-md-center" ><img src="assets/img/load.gif" alt=""></div>');
+               $("#ver").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt=""></div>');
             },
             success: function(data){
                 $("#form-documento").trigger("reset");
@@ -219,7 +219,7 @@ $(document).ready(function(){
             url: "application/src/routes.php",
             data: dataString,
             beforeSend: function () {
-               $("#ver").html('<div class="row justify-content-md-center" ><img src="assets/img/load.gif" alt=""></div>');
+               $("#ver").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt=""></div>');
             },
             success: function(data) {            
                 $("#ver").html(data); // lo que regresa de la busquea 
