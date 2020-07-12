@@ -101,7 +101,7 @@ if($cod != NULL){
       <input type="number" class="form-control" id="existencia_minima" name="existencia_minima" required value="<?php echo $existencia_minima; ?>">
     </div>
   
-  <div class="col-md-2 mb-1 md-form">
+  <div class="col-6 col-md-2 mb-1 md-form">
         <div class="switch">
             <label>
             * Gravado
@@ -111,7 +111,7 @@ if($cod != NULL){
           </div>
     </div>
 
-  <div class="col-md-2 mb-1 md-form">
+  <div class="col-6 col-md-2 mb-1 md-form">
         <div class="switch">
             <label>
             * Receta
@@ -135,7 +135,7 @@ if($cod != NULL){
 
   <div class="form-row">
   
-  <div class="col-md-3 mb-1 md-form">
+  <div class="col-6 col-md-3 mb-1 md-form">
         <div class="switch">
             <label>
              Servicio ||  Off
@@ -145,7 +145,7 @@ if($cod != NULL){
           </div>
     </div>
 
-  <div class="col-md-3 mb-1 md-form">
+  <div class="col-6 col-md-3 mb-1 md-form">
         <div class="switch">
             <label>
              Compuesto ||  Off
@@ -155,7 +155,7 @@ if($cod != NULL){
           </div>
     </div>
 
-   <div class="col-md-3 mb-1 md-form">
+   <div class="col-6 col-md-3 mb-1 md-form">
         <div class="switch">
             <label>
              Caduca ||  Off
@@ -165,7 +165,7 @@ if($cod != NULL){
           </div>
     </div>
 
-    <div class="col-md-3 mb-1 md-form">
+    <div class="col-6 col-md-3 mb-1 md-form">
         <div class="switch">
             <label>
              Dependiente ||  Off

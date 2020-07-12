@@ -63,17 +63,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
   <div class="form-row">
   	
-    <div class="col-md-4 mb-1 md-form">
+    <div class="col-6 col-md-4 mb-1 md-form">
       <label for="cantidad">* Cantidad</label>
       <input type="number" step="any" class="form-control" id="cantidad" name="cantidad" required>
     </div>
 
-    <div class="col-md-4 mb-1 md-form">
+    <div class="col-6 col-md-4 mb-1 md-form">
       <label for="existencia_minima">* Existencia Minima</label>
       <input type="number" class="form-control" id="existencia_minima" name="existencia_minima" required>
     </div>
 	
-	<div class="col-md-2 mb-1 md-form">
+	<div class="col-6 col-md-2 mb-1 md-form">
       	<div class="switch">
             <label>
             * Gravado
@@ -83,7 +83,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           </div>
     </div>
 
-  <div class="col-md-2 mb-1 md-form">
+  <div class="col-6 col-md-2 mb-1 md-form">
         <div class="switch">
             <label>
             * Receta
@@ -107,7 +107,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
   <div class="form-row">
 	
-	<div class="col-md-3 mb-1 md-form">
+	<div class="col-6 col-md-3 mb-1 md-form">
       	<div class="switch">
             <label>
              Servicio ||  Off
@@ -117,7 +117,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           </div>
     </div>
 
-	<div class="col-md-3 mb-1 md-form">
+	<div class="col-6 col-md-3 mb-1 md-form">
       	<div class="switch">
             <label>
              Compuesto ||  Off
@@ -127,7 +127,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           </div>
     </div>
 
-   <div class="col-md-3 mb-1 md-form">
+   <div class="col-6 col-md-3 mb-1 md-form">
       	<div class="switch">
             <label>
              Caduca ||  Off
@@ -137,7 +137,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           </div>
     </div>
 
-    <div class="col-md-3 mb-1 md-form">
+    <div class="col-6 col-md-3 mb-1 md-form">
       	<div class="switch">
             <label>
              Dependiente ||  Off
