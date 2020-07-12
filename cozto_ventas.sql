@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 11-07-2020 a las 23:41:54
+-- Tiempo de generación: 11-07-2020 a las 23:44:27
 -- Versión del servidor: 5.7.17-log
 -- Versión de PHP: 5.6.30
 
@@ -81,7 +81,8 @@ INSERT INTO `clientes` (`id`, `nombre`, `documento`, `direccion`, `municipio`, `
 (2, 'CARLOS LOPEZ', '0000000-0', 'San salvador', 'San Salvador', 'San Salvador', '00000000', '', '', '', '73e0d7c3ff', 1583103942, 11),
 (3, 'JUAN HERNANDEZ', '00000000-0', 'San Salvador', 'San Salvador', 'San Salvador', '00000000', '', '10-06-1992', ' ', '461904b806', 1591703312, 10),
 (4, 'JUAN PEREZ', '00000000-0', 'San Salvador', 'San Salvador', 'San Salvador', '60623882', '', '21-03-1986', '       ', '4d2344fe9e', 1591703034, 10),
-(5, 'NEAGAN MARADIAGA', '03251695-8', 'Las Americas', 'Metapan', 'Santa Ana', '89526325', 'neagan@pizto.com', '21-03-1986', '   Es el mejor de todos', '66d09fa92f', 1588785002, 10);
+(5, 'NEAGAN MARADIAGA', '03251695-8', 'Las Americas', 'Metapan', 'Santa Ana', '89526325', 'neagan@pizto.com', '21-03-1986', '   Es el mejor de todos', '66d09fa92f', 1588785002, 10),
+(6, 'ERICK NUNEZ', '03547604-0', 'Col. San Benito', 'San Salvador', 'San salvador ', '89653265', '', '21-03-1986', '', '736a471101', 1594532631, 12);
 
 -- --------------------------------------------------------
 
@@ -3451,7 +3452,7 @@ ALTER TABLE `caracteristicas_asig`
 -- AUTO_INCREMENT de la tabla `clientes`
 --
 ALTER TABLE `clientes`
-  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT de la tabla `config_master`
 --
