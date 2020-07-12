@@ -979,7 +979,7 @@ if($dir == "asc") $dir2 = "desc";
                       <td>'.$b["cod"].'</td>
                       <td>'.$b["descripcion"].'</td>
                       <td>'.$b["cantidad"].'</td>
-                      <td>'.$b["categoria"].'</td>
+                      <td>'.$b["subcategoria"].'</td>
                       <td class="d-none d-md-block">'.$b["existencia_minima"].'</td>
                       <td><a id="xver" op="55" key="'.$b["cod"].'"><i class="fas fa-search fa-lg green-text"></i></a></td>
                     </tr>';
@@ -1058,7 +1058,7 @@ $page <= 1 ? $enable = 'disabled' : $enable = '';
                     <li class="list-group-item">Cantidad: <strong>'. $b["cantidad"] .'</strong>  ||   Minima: <strong>'. $b["existencia_minima"] .'</strong></li>
                     <li class="list-group-item">Caduca: <strong>'. $b["caduca"] .'</strong>  || Compuesto: <strong>'. $b["compuesto"] .'</strong>  || Gravado: <strong>'. $b["gravado"] .'</strong> </li>
                     <li class="list-group-item">Receta: '. $b["receta"] .'  ||  Dependiente: <strong>'. $b["dependiente"] .'</strong>  || Servicio: '. $b["servicio"] .' </li>
-                    <li class="list-group-item">Categoria: <strong>'. $b["categoria"] .'</strong> || Unidad: <strong>'. $b["nombre"] .'</strong>  || Proveedor: <strong>'. $b["proveedores"] .'</strong></li>
+                    <li class="list-group-item">Categoria: <strong>'. $b["subcategoria"] .'</strong> || Unidad: <strong>'. $b["nombre"] .'</strong>  || Proveedor: <strong>'. $b["proveedores"] .'</strong></li>
                   </ul>'; 
         }
 
@@ -1208,7 +1208,7 @@ if($dir == "asc") $dir2 = "desc";
                       <td>'.$b["cod"].'</td>
                       <td>'.$b["descripcion"].'</td>
                       <td>'.$b["cantidad"].'</td>
-                      <td>'.$b["categoria"].'</td>
+                      <td>'.$b["subcategoria"].'</td>
                       <td class="d-none d-md-block">'.$b["existencia_minima"].'</td>
                       <td><a id="xver" op="55" key="'.$b["cod"].'"><i class="fas fa-search fa-lg green-text"></i></a></td>
                     </tr>';
