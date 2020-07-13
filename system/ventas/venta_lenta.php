@@ -65,7 +65,7 @@ $ventas->VerProducto();
   <div class="col-md-12 z-depth-2 justify-content-center">
       <div class="md-form mt-0">
         <form id="form-Ddescuento">
-        <input class="form-control form-control-lg" type="number" step="any" min="1" placeholder="Descuento" id="descuento" name="descuento" autofocus>
+        <input class="form-control form-control-lg" type="number" step="any" min="1" placeholder="Descuento %" id="descuento" name="descuento" autofocus>
         <input type="hidden" id="dcantidad" name="dcantidad" value="">
         <input type="hidden" id="dcodigo" name="dcodigo" value="">
          <button class="btn aqua-gradient btn-rounded btn-sm" type="submit" id="btn-Ddescuento" name="btn-Ddescuento">Agregar</button>

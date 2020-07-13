@@ -4,6 +4,7 @@ include_once '../includes/variables_db.php';
 include_once '../common/Mysqli.php';
 $db = new dbConn();
 
+// ESTE ARCHIVO ES EXCLUSIVO SOLO PARA ECOMMERCE, AQUI SE EJECUTAN LAS SOLICITUDES DEL SERVER
 
 include_once '../common/Alerts.php';
 include_once '../common/Fechas.php';
@@ -14,13 +15,14 @@ include_once '../common/Dinero.php';
 // print_r(array_sort($people, 'surname', SORT_ASC)); // Sort by surname
 
 
-/// productos destacados
-/// categorias
-/// subcategorias
-/// promociones
-/// detalles // producto por codigo
-
+//FALTA:
+//agregar productos al carrito
+//agregar ususarios
+//pasarela de pagos
 // carrito // productos que ha agregado
+
+
+
 if($_REQUEST["cantidad"] != NULL){
 	$limit = "limit " . $_REQUEST["cantidad"];
 } else {
