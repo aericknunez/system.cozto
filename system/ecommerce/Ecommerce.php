@@ -216,6 +216,109 @@ echo json_encode($data);
 
 
 
+  public function ObtenerTotal($data, $td){
+      $db = new dbConn();
+
+      $a = $db->query("SELECT sum(total) FROM ecommerce WHERE orden = '".$data["orden"]."' and usuario = '".$data["usuario"]."' and td = ".$td."");
+        foreach ($a as $b) {
+         $total = $b["sum(total)"];
+        } $a->close();
+
+
+    $datos = array();
+    $datos["total"] =  $total;
+
+  echo json_encode($datos);
+
+
+  } // termina total
+
+
+
+
+
+
+  public function ContenidoCarrito($data){
+      $db = new dbConn();
+
+$datos = array();
+
+    $a = $db->query("SELECT * FROM ecommerce WHERE usuario = '".$data["usr"]."' and orden = '".$data["orden"]."' and td = '".$data["td"]."'");
+    foreach ($a as $b) {
+        $datos["productos"][] = $b;
+    }
+
+    $a->close();
+
+  echo json_encode($datos);
+
+
+  } // termina total
+
+
+
+  public function BorrarItem($data, $td, $iden){ // borro un item del carrito
+      $db = new dbConn();
+
+    Helpers::DeleteId("ecommerce", "usuario='".$data["usuario"]."' and orden='".$data["orden"]."' and td = ".$td." and id = '".$iden."'");
+}
+
+
+
+
+
+  public function UserUpdate($data, $td){ // reemplazo el usuario temporal por el del  usuario registrado
+      $db = new dbConn();
+
+$cambio = array();
+$cambio["usuario"] = $data["user"];
+Helpers::UpdateId("ecommerce", $cambio, "usuario='".$data["usuario"]."' and td = ".$td."");
+
+
+$cambios = array();
+$cambios["usuario"] = $data["user"];
+Helpers::UpdateId("ecommerce_data", $cambios, "usuario='".$data["usuario"]."' and td = ".$td."");
+
+
+/// obtener el ultimo numero de orden
+$a = $db->query("SELECT orden FROM ecommerce_data WHERE usuario='".$data["user"]."' and td = ".$td." order by id desc limit 1");
+foreach ($a as $b) {
+$orden = $b["orden"];
+} $a->close();
+
+/// pasar a una sola orden todos los producto
+$a = $db->query("SELECT hash FROM ecommerce_data WHERE usuario='".$data["user"]."' and td = ".$td." and edo = 1");
+foreach ($a as $b) {
+
+$cambios = array();
+$cambios["orden"] = $orden;
+Helpers::UpdateId("ecommerce_data", $cambios, "usuario='".$data["user"]."' and td = ".$td." and hash=".$b["hash"]."");
+
+$cambio = array();
+$cambio["orden"] = $orden;
+Helpers::UpdateId("ecommerce", $cambio, "usuario='".$data["user"]."' and td = ".$td."");
+
+
+} $a->close();
+
+
+    Helpers::DeleteId("ecommerce_data", "usuario='".$data["user"]."' and td = ".$td." and orden != '".$orden."' and edo = 1");
+
+
+
+    $datos = array();
+    $datos["orden"] =  $orden;
+
+  echo json_encode($datos);
+
+
+  } // termina total
+
+
+
+
+
+
 
 
 

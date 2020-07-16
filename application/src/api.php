@@ -64,6 +64,43 @@ break;
 
 
 
+case "20": /// add Item
+	include_once '../../system/ecommerce/Movimientos.php';
+	$ecom = new Movimientos();
+	$ecom->AddItem($_POST, $_REQUEST["td"]); // para detalles de un producto (codigo, td]
+break;
+
+
+
+case "22":
+	include_once '../../system/ecommerce/Ecommerce.php';
+	$data = new EcommerceData();
+	$data->ObtenerTotal($_POST, $_REQUEST["td"]); 
+break;
+
+
+
+case "23":
+	include_once '../../system/ecommerce/Ecommerce.php';
+	$data = new EcommerceData();
+	$data->ContenidoCarrito($_REQUEST); 
+break;
+
+
+case "24":
+	include_once '../../system/ecommerce/Ecommerce.php';
+	$data = new EcommerceData();
+	$data->BorrarItem($_POST, $_REQUEST["td"], $_REQUEST["iden"]); 
+break;
+
+
+case "30": /// remplazo el user temporal por el usuario registrado
+	include_once '../../system/ecommerce/Ecommerce.php';
+	$data = new EcommerceData();
+	$data->UserUpdate($_POST, $_REQUEST["td"]); 
+break;
+
+
 
 
 
