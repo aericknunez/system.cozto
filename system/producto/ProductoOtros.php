@@ -164,7 +164,7 @@ $op = "69";
             <th class="th-sm"><a id="paginador" op="'.$op.'" iden="1" orden="producto.cod" dir="'.$dir2.'">Cod</a></th>
             <th class="th-sm"><a id="paginador" op="'.$op.'" iden="1" orden="producto.descripcion" dir="'.$dir2.'">Producto</a></th>
             <th class="th-sm"><a id="paginador" op="'.$op.'" iden="1" orden="producto.cantidad" dir="'.$dir2.'">Cantidad</a></th>
-            <th class="th-sm"><a id="paginador" op="'.$op.'" iden="1" orden="producto.categoria" dir="'.$dir2.'">Categoria</a></th>
+            <th class="th-sm"><a id="paginador" op="'.$op.'" iden="1" orden="producto.subcategoria" dir="'.$dir2.'">Categoria</a></th>
             <th class="th-sm d-none d-md-block"><a id="paginador" op="'.$op.'" iden="1" orden="producto.existencia_minima" dir="'.$dir2.'">Minimo</a></th>
             <th class="th-sm">Ver</th>
             <th class="th-sm">Eliminar</th>
@@ -180,7 +180,7 @@ $op = "69";
                       <td>'.$b["cod"].'</td>
                       <td>'.$b["descripcion"].'</td>
                       <td>'.$b["cantidad"].'</td>
-                      <td>'.$b["categoria"].'</td>
+                      <td>'.$b["subcategoria"].'</td>
                       <td class="d-none d-md-block">'.$b["existencia_minima"].'</td>
                       <td><a id="xver" op="55" key="'.$b["cod"].'"><i class="fas fa-search fa-lg green-text"></i></a></td>
                       <td><a id="xdelete" hash="'.$b["hash"].'" cod="'.$b["cod"].'" op="71"><i class="fa fa-minus-circle fa-lg red-text"></i></a></td>

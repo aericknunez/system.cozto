@@ -7,7 +7,7 @@ $producto = new ProductoOtros();
 ?>
 
 <div id="msj"></div>
-<h2 class="h2-responsive">PROMOCIONES Y PRODUCTOS COMPUESTOS</h2>
+<h2 class="h2-responsive">PRODUCTOS COMPUESTOS</h2>
 
 
 <div id="contenido">

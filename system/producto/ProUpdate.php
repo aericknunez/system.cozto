@@ -14,6 +14,8 @@ class ProUpdate{
                 if($datos["compuesto"] == NULL) $datos["compuesto"] = 0;
                 if($datos["caduca"] == NULL) $datos["caduca"] = 0;
                 if($datos["dependiente"] == NULL) $datos["dependiente"] = 0;
+                if($datos["promocion"] == NULL) $datos["promocion"] = 0;
+                if($datos["verecommerce"] == NULL) $datos["verecommerce"] = 0;
                 $datos["descripcion"] = strtoupper($datos["descripcion"]);
                 $datos["time"] = Helpers::TimeId();
               if (Helpers::UpdateId("producto", $datos, "cod = ".$datos["cod"]." and td = ".$_SESSION["td"]."")) {

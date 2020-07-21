@@ -21,7 +21,7 @@ elseif(isset($_GET["proagregar"])) include_once 'system/producto/proagregar.php'
 elseif(isset($_GET["proaverias"])) include_once 'system/producto/proaverias.php'; // agregar averias
 elseif(isset($_GET["bajasexistencias"])) include_once 'system/producto/bajasexistencias.php'; 
 elseif(isset($_GET["vencimientos"])) include_once 'system/producto/vencimientos.php'; 
-elseif(isset($_GET["promociones"])) include_once 'system/producto/promociones.php'; 
+elseif(isset($_GET["compuestos"])) include_once 'system/producto/compuestos.php'; 
 
 
 elseif(isset($_GET["cotizar"])) include_once 'system/cotizar/cotizar.php'; 

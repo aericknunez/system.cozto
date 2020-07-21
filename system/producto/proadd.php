@@ -151,6 +151,45 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 
 
+<!-- solo si tiene activo la opcion de ecommerce se mostrara esta parte -->
+<?php 
+
+if($_SESSION['root_ecommerce'] == "on"){
+?>
+  <div class="form-row mt-5">
+  
+  <div class="col-6 col-md-6 mb-1 md-form">
+        <div class="switch">
+            <label>
+             Ver en Ecommerce ||  Off
+              <input type="checkbox" id="verecommerce" name="verecommerce" checked="checked">
+              <span class="lever"></span> On 
+            </label>
+          </div>
+    </div>
+
+  <div class="col-6 col-md-6 mb-1 md-form">
+        <div class="switch">
+            <label>
+             Mostrar Promocion ||  Off
+              <input type="checkbox" id="promocion" name="promocion">
+              <span class="lever"></span> On 
+            </label>
+          </div>
+    </div>
+
+  </div>
+
+<?php }
+
+ ?>
+
+
+
+
+
+
+
 
 
 

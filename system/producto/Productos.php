@@ -14,6 +14,8 @@ class Productos{
                 if($datos["compuesto"] == NULL) $datos["compuesto"] = 0;
                 if($datos["caduca"] == NULL) $datos["caduca"] = 0;
                 if($datos["dependiente"] == NULL) $datos["dependiente"] = 0;
+                if($datos["promocion"] == NULL) $datos["promocion"] = 0;
+                if($datos["verecommerce"] == NULL) $datos["verecommerce"] = 0;
                 $datos["descripcion"] = strtoupper($datos["descripcion"]);
                 $datos["hash"] = Helpers::HashId();
                 $datos["time"] = Helpers::TimeId();
@@ -1130,13 +1132,15 @@ $page <= 1 ? $enable = 'disabled' : $enable = '';
                       <tr>
                         <th scope="col">C&oacutedigo</th>
                         <th scope="col">Producto</th>
+                        <th scope="col">Existencias</th>
                       </tr>
                     </thead>
                     <tbody>';
               foreach ($ap as $bp) {
                  echo '<tr>
                         <td>'.$bp["agregado"].'</td>
-                        <td><strong>'.$this->GetNombreProducto($bp["agregado"]).'</strong></td>';
+                        <td><strong>'.$this->GetNombreProducto($bp["agregado"]).'</strong></td>
+                        <td><strong>'.$this->CuentaProductosU($bp["agregado"]).'</strong></td>';
               } $ap->close();
               echo '</tbody>
                   </table>';

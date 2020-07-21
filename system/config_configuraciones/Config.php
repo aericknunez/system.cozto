@@ -126,7 +126,7 @@ class Config{
 			$_SESSION['root_tipo_sistema'] = $root["tipo_sistema"];
 			$_SESSION['root_plataforma'] = $root["plataforma"];
 			$_SESSION['root_multiusuario'] = $root["multiusuario"];
-			$_SESSION['root_ecomerce'] = $root["ecomerce"];
+			$_SESSION['root_ecommerce'] = $root["ecommerce"];
      
 			} unset($root);
 			$_SESSION['root_tipo_sistema'] = $encrypt->Decrypt(

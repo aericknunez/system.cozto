@@ -46,7 +46,7 @@ class Helpers{
 
 
 
-    public function Gasto($string) {
+    static public function Gasto($string) {
     if($string == "1") return '<p class="text-danger font-weight-bold">Compra No Facturado</p>';
     if($string == "2") return '<p class="text-success font-weight-bold">Compra con Factura</p>';
     if($string == "3") return '<p class="text-info font-weight-bold">Remesas</p>';
@@ -79,7 +79,7 @@ class Helpers{
     }
 
 
-        public function InOut($string) {
+        static public function InOut($string) {
     if($string == "1") return '<p class="text-success font-weight-bold">Entrada</p>';
     if($string == "2") return '<p class="text-danger font-weight-bold">Salida</p>';
     }
@@ -104,7 +104,7 @@ class Helpers{
 
 
 
-    public function Signo($string) {
+    static public function Signo($string) {
     if($string == "1") return '+';
     if($string == "2") return '-';
     }
@@ -125,16 +125,16 @@ class Helpers{
     }
 
 
-    public function Mayusculas($nombre){
+    static public function Mayusculas($nombre){
         return ucwords(strtolower($nombre));
     }
 
-    public function MayusInicial($nombre){
+    static public function MayusInicial($nombre){
     return ucfirst(strtolower($nombre));
     }
 
 
-    public function Dinero($numero){  
+   static  public function Dinero($numero){  
         $format= $_SESSION['config_moneda_simbolo'] ." " . number_format($numero,2,'.',',');
         return $format;
      } 
@@ -145,33 +145,33 @@ class Helpers{
         return $format;
      } 
 
-    public function Entero($numero){ 
+    static public function Entero($numero){ 
         $format=intval($numero);
         return $format;
      } 
 
     
-    public function STotal($numero, $impuestos){  
+    static public function STotal($numero, $impuestos){  
         $imp = ($impuestos / 100)+1;
         $st = $numero / $imp;
         return $st;
      } 
 
 
-    public function Impuesto($numero, $impuestos){  
+    static public function Impuesto($numero, $impuestos){  
         $imp = $impuestos / 100;
         return $numero * $imp;
     } 
 
 
-    public function Propina($numero){ 
+    static public function Propina($numero){ 
         $num = $_SESSION['config_propina'] / 100;
         $propina = $numero * $num;
         return $propina;
     }
 
 
-    public function PropinaTotal($numero){ 
+    static public function PropinaTotal($numero){ 
         $num = $_SESSION['config_propina'] / 100;
         $propina = $numero * $num;
         $numer = $propina + $numero;
@@ -179,27 +179,27 @@ class Helpers{
     }
 
 
-    public function Descuento($numero){ 
+    static public function Descuento($numero){ 
         $num = $_SESSION['descuento'] / 100;
         $descuento = $numero * $num;
         return $descuento;
     }
 
-    public function DescuentoTotal($numero){ 
+    static public function DescuentoTotal($numero){ 
         $num = $_SESSION['descuento'] / 100;
         $descuento = $numero * $num;
         $numer = $numero - $descuento;
         return $numer;
     }
 
-    public function DescuentoTotalCot($numero){ 
+    static public function DescuentoTotalCot($numero){ 
         $num = $_SESSION['descuento_cot'] / 100;
         $descuento = $numero * $num;
         $numer = $numero - $descuento;
         return $numer;
     }
 
-    public function NFactura($numero){ 
+   static  public function NFactura($numero){ 
         $numero1=str_pad($numero, 8, "0", STR_PAD_LEFT);
         $format="000-001-01-$numero1";
         return $format;
@@ -210,7 +210,7 @@ class Helpers{
 
 
 ///////////// para usos de control de usuario ////////
-    public function GetIp(){
+    static public function GetIp(){
         // Intentamos primero saber si se ha utilizado un proxy para acceder a la página,
             // y si éste ha indicado en alguna cabecera la IP real del usuario.
             if (getenv('HTTP_CLIENT_IP')) {
@@ -235,7 +235,7 @@ class Helpers{
 
 
 
-    public function ObtenerNavegador($user_agent) {
+    static public function ObtenerNavegador($user_agent) {
      $navegadores = array(
           'Opera' => 'Opera',
           'Mozilla Firefox'=> '(Firebird)|(Firefox)',

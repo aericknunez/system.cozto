@@ -13,7 +13,7 @@ public function AddRegistro($sistema){
       'sistema'  =>  $sistema,
       'td'   =>  $_SESSION['td']
         );
-    $api_url = "http://localhost/app/api/addbackup.php";
+    $api_url = "https://hibridosv.com/app/api/addbackup.php";
     $client = curl_init($api_url);
     curl_setopt($client, CURLOPT_POST, true);
     curl_setopt($client, CURLOPT_POSTFIELDS, $updata);
@@ -36,7 +36,7 @@ public function AddRegistro($sistema){
 public function Search(){
     $db = new dbConn();
 
-$api_url = "http://localhost/app/api/addbackup.php?action=search&x=" . $_SESSION["td"] . "&type=2";
+$api_url = "http://hibridosv.com/app/api/addbackup.php?action=search&x=" . $_SESSION["td"] . "&type=2";
 $client = curl_init($api_url);
 curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
 $response = curl_exec($client);
@@ -117,26 +117,8 @@ foreach ($dir as $key => $tabla) {
 
 public function Tablas(){
   $dir  = array(
-"caracteristicas", 
-"caracteristicas_asig", 
-"clientes", 
 "config_master", 
 "config_root", 
-"corte_diario", 
-"cotizaciones", 
-"cotizaciones_data", 
-"creditos", 
-"creditos_abonos", 
-"entradas_efectivo", 
-"facturar_documento", 
-"facturar_documento_factura", 
-"gastos", 
-"gastos_images", 
-"planilla_descuentos", 
-"planilla_descuentos_asig", 
-"planilla_empleados", 
-"planilla_extras", 
-"planilla_pagos", 
 "producto", 
 "producto_averias", 
 "roducto_cambios", 
@@ -148,19 +130,56 @@ public function Tablas(){
 "producto_ingresado", 
 "producto_precio", 
 "producto_tags", 
-"producto_unidades", 
-"proveedores", 
-"sync_tabla", 
-"sync_tables_updates", 
-"sync_up", 
-"sync_up_cloud", 
-"ticket", 
-"ticket_cliente", 
-"ticket_descuenta", 
-"ticket_num", 
-"ticket_orden", 
-"ubicacion", 
-"ubicacion_asig"); // directorios a recorrer
+"producto_unidades"); // directorios a recorrer
+
+
+
+
+//   $dir  = array(
+// "caracteristicas", 
+// "caracteristicas_asig", 
+// "clientes", 
+// "config_master", 
+// "config_root", 
+// "corte_diario", 
+// "cotizaciones", 
+// "cotizaciones_data", 
+// "creditos", 
+// "creditos_abonos", 
+// "entradas_efectivo", 
+// "facturar_documento", 
+// "facturar_documento_factura", 
+// "gastos", 
+// "gastos_images", 
+// "planilla_descuentos", 
+// "planilla_descuentos_asig", 
+// "planilla_empleados", 
+// "planilla_extras", 
+// "planilla_pagos", 
+// "producto", 
+// "producto_averias", 
+// "roducto_cambios", 
+// "producto_categoria", 
+// "producto_compuestos", 
+// "producto_dependiente", 
+// "producto_devoluciones", 
+// "producto_imagenes", 
+// "producto_ingresado", 
+// "producto_precio", 
+// "producto_tags", 
+// "producto_unidades", 
+// "proveedores", 
+// "sync_tabla", 
+// "sync_tables_updates", 
+// "sync_up", 
+// "sync_up_cloud", 
+// "ticket", 
+// "ticket_cliente", 
+// "ticket_descuenta", 
+// "ticket_num", 
+// "ticket_orden", 
+// "ubicacion", 
+// "ubicacion_asig"); // directorios a recorrer
 
   return $dir;
 }

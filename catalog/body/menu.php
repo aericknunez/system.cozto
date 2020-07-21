@@ -94,7 +94,7 @@ if((Helpers::ServerDomain() == FALSE and $_SESSION["root_plataforma"] == 0) or (
 ?>
 <li><a href="?proopciones" class="waves-effect arrow-r"><i class="fas fa-handshake"></i> Opciones</a></li>
 <?php  } ?>
-<li><a href="?promociones" class="waves-effect"><i class="fas fa-address-book"></i> Pormociones y Compuestos</a></li>
+<li><a href="?compuestos" class="waves-effect"><i class="fas fa-address-book"></i> Productos Compuestos</a></li>
 <?php  } ?>
 
 <li><a href="?productos" class="waves-effect"><i class="fas fa-address-book"></i> Todos los productos</a></li>
@@ -248,8 +248,11 @@ if((Helpers::ServerDomain() == FALSE and $_SESSION["root_plataforma"] == 0) or (
 <?php if($_SESSION["tipo_cuenta"] == 1 or $_SESSION["tipo_cuenta"] == 2 or $_SESSION["tipo_cuenta"] == 5) { ?>
 
 <li><a href="?configuraciones" class="waves-effect"><i class="fas fa-cog"></i> Configuraciones</a></li>
+<?php if(Helpers::ServerDomain() == FALSE) { ?>
 <li><a href="?tablas" class="waves-effect"><i class="fas fa-cogs"></i> Tablas a respaldar</a></li>
-<?php } ?>
+<?php 
+}// tablas a respaldar
+} ?>
 
 <li><a href="?user" class="waves-effect arrow-r"><i class="fas fa-user"></i> Usuarios </a></li>
 
