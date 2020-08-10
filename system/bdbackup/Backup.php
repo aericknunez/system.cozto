@@ -36,7 +36,7 @@ public function AddRegistro($sistema){
 public function Search(){
     $db = new dbConn();
 
-$api_url = "http://hibridosv.com/app/api/addbackup.php?action=search&x=" . $_SESSION["td"] . "&type=2";
+$api_url = "https://hibridosv.com/app/api/addbackup.php?action=search&x=" . $_SESSION["td"] . "&type=2";
 $client = curl_init($api_url);
 curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
 $response = curl_exec($client);

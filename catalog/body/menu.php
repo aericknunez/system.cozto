@@ -200,7 +200,7 @@ if((Helpers::ServerDomain() == FALSE and $_SESSION["root_plataforma"] == 0) or (
 
 
 
-<?php if($_SESSION["tipo_cuenta"] != 4) {  /// planilla?>
+<?php if($_SESSION["tipo_cuenta"] != 4 and $_SESSION["tipo_sistema"] == 3) {  /// planilla?>
 
 <li><a class="collapsible-header waves-effect arrow-r"><i class="fas fa-user-alt"></i> PLANILLA<i class="fa fa-angle-down rotate-icon"></i></a>
 <div class="collapsible-body">

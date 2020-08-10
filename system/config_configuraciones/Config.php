@@ -5,34 +5,42 @@ class Config{
      } 
 
 
-	public function Configuraciones($sistema,$cliente,$slogan,$propietario,$telefono,$direccion,$email,$pais,$giro,$nit,$imp,$nombre_impuesto,$nombre_documento,$moneda,$moneda_simbolo,$tipo_inicio,$skin,$inicio_tx,$otras_ventas,$cambio_tx, $dias_vencimiento, $dias_cotizacion, $multicaja,$mayorista){
+	public function Configuraciones($data){
 		$db = new dbConn();
 
+	if($data["pais"] == 1){
+		$moneda = "Dolares"; $simbolo = "$"; $imp = "IVA"; $doc = "NIT";
+	}if($data["pais"] == 2){
+		$moneda = "Lempiras"; $simbolo = "L"; $imp = "ISV"; $doc = "RTN";
+	}if($data["pais"] == 3){
+		$moneda = "Quetzales"; $simbolo = "Q"; $imp = "IVA"; $doc = "NIT";
+	}
+
 		$cambio = array();
-	    $cambio["sistema"] = $sistema;
-	    $cambio["cliente"] = $cliente;
-	    $cambio["slogan"] = $slogan;
-	    $cambio["propietario"] = $propietario;
-	    $cambio["telefono"] = $telefono;
-	    $cambio["direccion"] = $direccion;
-	    $cambio["email"] = $email;
-	    $cambio["pais"] = $pais;
-	    $cambio["giro"] = $giro;
-	    $cambio["nit"] = $nit;
-	    $cambio["imp"] = $imp;
-	    $cambio["nombre_impuesto"] = $nombre_impuesto;
-	    $cambio["nombre_documento"] = $nombre_documento;
+	    $cambio["sistema"] = $data["sistema"];
+	    $cambio["cliente"] =  $data["cliente"];
+	    $cambio["slogan"] = $data["slogan"];
+	    $cambio["propietario"] = $data["propietario"];
+	    $cambio["telefono"] = $data["telefono"];
+	    $cambio["direccion"] = $data["direccion"];
+	    $cambio["email"] = $data["email"];
+	    $cambio["pais"] = $data["pais"];
+	    $cambio["giro"] =$data["giro"];
+	    $cambio["nit"] = $data["nit"];
+	    $cambio["imp"] = $data["imp"];
+	    $cambio["nombre_impuesto"] = $imp;
+	    $cambio["nombre_documento"] = $doc;
 	    $cambio["moneda"] = $moneda;
-	    $cambio["moneda_simbolo"] = $moneda_simbolo;
-	    $cambio["tipo_inicio"] = $tipo_inicio;
-	    $cambio["skin"] = $skin;
-	    $cambio["inicio_tx"] = $inicio_tx;
-	    $cambio["otras_ventas"] = $otras_ventas;
-	    $cambio["cambio_tx"] = $cambio_tx;
-	    $cambio["dias_vencimiento"] = $dias_vencimiento;
-	    $cambio["dias_cotizacion"] = $dias_cotizacion;
-	    $cambio["multicaja"] = $multicaja;
-	    $cambio["mayorista"] = $mayorista;
+	    $cambio["moneda_simbolo"] = $simbolo;
+	    $cambio["tipo_inicio"] = $data["tipo_inicio"];
+	    $cambio["skin"] = $data["skin"];
+	    $cambio["inicio_tx"] = $data["inicio_tx"];
+	    $cambio["otras_ventas"] = $data["otras_ventas"];
+	    $cambio["cambio_tx"] = $data["cambio_tx"];
+	    $cambio["dias_vencimiento"] = $data["dias_vencimiento"];
+	    $cambio["dias_cotizacion"] = $data["dias_cotizacion"];
+	    $cambio["multicaja"] = $data["multicaja"];
+	    $cambio["mayorista"] = $data["mayorista"];
 	    $cambio["time"] = Helpers::TimeId();
 	    if (Helpers::UpdateId("config_master", $cambio, "td = ".$_SESSION["td"]."")) {
 	    	$this->CrearVariables();
@@ -41,26 +49,27 @@ class Config{
 	       Alerts::Alerta("error","Error!","Ocurrio un error desconocido!");   
 	    }
 
-	
+
 	}
 
 
 
-	public function Root($expira,$expiracion,$ftp_servidor,$ftp_path,$ftp_ruta,$ftp_user,$ftp_password,$tipo_sistema,$plataforma,$multiusuario,$ecommerce){
+	public function Root($data){
 		$db = new dbConn();
 
 		$cambio = array();
-	    $cambio["expira"] = $expira;
-	    $cambio["expiracion"] = $expiracion;
-	    $cambio["ftp_servidor"] = $ftp_servidor;
-	    $cambio["ftp_path"] = $ftp_path;
-	    $cambio["ftp_ruta"] = $ftp_ruta;
-	    $cambio["ftp_user"] = $ftp_user;
-	    $cambio["ftp_password"] = $ftp_password;
-	    $cambio["tipo_sistema"] = $tipo_sistema;
-	    $cambio["plataforma"] = $plataforma;
-	    $cambio["multiusuario"] = $multiusuario;
-	    $cambio["ecommerce"] = $ecommerce;
+	    $cambio["expira"] = Encrypt::Encrypt($data["expira"],$_SESSION['secret_key']);
+	    $cambio["expiracion"] = Encrypt::Encrypt(Fechas::Format($data["expira"]),$_SESSION['secret_key']);
+	    $cambio["ftp_servidor"] = Encrypt::Encrypt($data["ftp_servidor"],$_SESSION['secret_key']);
+	    $cambio["ftp_path"] = Encrypt::Encrypt($data["ftp_path"],$_SESSION['secret_key']);
+	    $cambio["ftp_ruta"] = Encrypt::Encrypt($data["ftp_ruta"],$_SESSION['secret_key']);
+	    $cambio["ftp_user"] = Encrypt::Encrypt($data["ftp_user"],$_SESSION['secret_key']);
+	    $cambio["ftp_password"] = Encrypt::Encrypt($data["ftp_password"],$_SESSION['secret_key']);
+	    $cambio["tipo_sistema"] = Encrypt::Encrypt($data["tipo_sistema"],$_SESSION['secret_key']);
+	    $cambio["plataforma"] = Encrypt::Encrypt($data["plataforma"],$_SESSION['secret_key']);
+	    $cambio["multiusuario"] = Encrypt::Encrypt($data["multiusuario"],$_SESSION['secret_key']);
+	    $cambio["ecommerce"] = Encrypt::Encrypt($data["ecommerce"],$_SESSION['secret_key']);
+	    $cambio["receta"] = Encrypt::Encrypt($data["receta"],$_SESSION['secret_key']);
 	    $cambio["time"] = Helpers::TimeId();
 	    if (Helpers::UpdateId("config_root", $cambio, "td = ".$_SESSION["td"]."")) {
 	    	$this->CrearVariables();
@@ -127,6 +136,7 @@ class Config{
 			$_SESSION['root_plataforma'] = $root["plataforma"];
 			$_SESSION['root_multiusuario'] = $root["multiusuario"];
 			$_SESSION['root_ecommerce'] = $root["ecommerce"];
+			$_SESSION['root_receta'] = $root["receta"];
      
 			} unset($root);
 			$_SESSION['root_tipo_sistema'] = $encrypt->Decrypt(
@@ -140,6 +150,9 @@ class Config{
 
 			$_SESSION['root_ecommerce'] = $encrypt->Decrypt(
 			$_SESSION['root_ecommerce'],$_SESSION['secret_key']);
+
+			$_SESSION['root_receta'] = $encrypt->Decrypt(
+			$_SESSION['root_receta'],$_SESSION['secret_key']);
 
 	}
 

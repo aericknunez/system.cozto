@@ -151,6 +151,7 @@ CREATE TABLE `config_root` (
   `plataforma` varchar(100) NOT NULL COMMENT '0 local, 1, web',
   `multiusuario` varchar(100) NOT NULL,
   `ecommerce` varchar(100) NOT NULL,
+  `receta` varchar(100) NOT NULL,
   `hash` varchar(12) NOT NULL,
   `time` int(12) NOT NULL,
   `td` int(4) NOT NULL
@@ -160,10 +161,10 @@ CREATE TABLE `config_root` (
 -- Volcado de datos para la tabla `config_root`
 --
 
-INSERT INTO `config_root` (`id`, `expira`, `expiracion`, `ftp_servidor`, `ftp_path`, `ftp_ruta`, `ftp_user`, `ftp_password`, `tipo_sistema`, `plataforma`, `multiusuario`, `ecommerce`, `hash`, `time`, `td`) VALUES
-(1, 'eTFDTEpDRG12Qlc4K3dCenZzRVBrZz09', 'VUdMdTZ0VitMazhaeDJqbnNneWFwUT09', 'WlBoUUVvemxaU1M2Nm5wV0N2MGorUT09', 'WlBoUUVvemxaU1M2Nm5wV0N2MGorUT09', 'WlBoUUVvemxaU1M2Nm5wV0N2MGorUT09', 'WlBoUUVvemxaU1M2Nm5wV0N2MGorUT09', 'WlBoUUVvemxaU1M2Nm5wV0N2MGorUT09', 'S2hONmxpd3BldVlQOHVvSHhYa1BGdz09', 'S2hONmxpd3BldVlQOHVvSHhYa1BGdz09', 'WlBoUUVvemxaU1M2Nm5wV0N2MGorUT09', 'Q1F1WFJHcEhBVnd2WU1ZRGRrdDI5QT09', 'dfb401079e', 1593665370, 10),
-(2, 'QnR2NDN4U0x4WWJjcysybThvbWUyUT09', 'dUN2M25sZ0xNUy9UZS9KUXFzTlMydz09', 'SjJJUFJCM0lPczBaZVU4K3IrTnVEZz09', 'SjJJUFJCM0lPczBaZVU4K3IrTnVEZz09', 'SjJJUFJCM0lPczBaZVU4K3IrTnVEZz09', 'SjJJUFJCM0lPczBaZVU4K3IrTnVEZz09', 'SjJJUFJCM0lPczBaZVU4K3IrTnVEZz09', 'ZzZZcEg3bzJpUEpGeEVNRnVyQzBFUT09', 'WWpKeUpVeVoxT1pBZXZhazFrOGM4Zz09', '', '', '', 1584572222, 11),
-(3, 'V29LUHlBZGh5WFREOGNURWM1Ty9aQT09', 'TDRCTGJ0NXpZZ1dDMnZrektrdzNwUT09', 'NW5GRTJ1c2lGRmhkekpSdG03UTI1Zz09', 'NW5GRTJ1c2lGRmhkekpSdG03UTI1Zz09', 'NW5GRTJ1c2lGRmhkekpSdG03UTI1Zz09', 'NW5GRTJ1c2lGRmhkekpSdG03UTI1Zz09', 'NW5GRTJ1c2lGRmhkekpSdG03UTI1Zz09', 'ZkduWDBhRE5wbks2OTBEeDlHdmI3dz09', 'ZkduWDBhRE5wbks2OTBEeDlHdmI3dz09', 'NW5GRTJ1c2lGRmhkekpSdG03UTI1Zz09', 'NW5GRTJ1c2lGRmhkekpSdG03UTI1Zz09', '', 1594526855, 12);
+INSERT INTO `config_root` (`id`, `expira`, `expiracion`, `ftp_servidor`, `ftp_path`, `ftp_ruta`, `ftp_user`, `ftp_password`, `tipo_sistema`, `plataforma`, `multiusuario`, `ecommerce`, `receta`, `hash`, `time`, `td`) VALUES
+(1, 'eTFDTEpDRG12Qlc4K3dCenZzRVBrZz09', 'VUdMdTZ0VitMazhaeDJqbnNneWFwUT09', 'WlBoUUVvemxaU1M2Nm5wV0N2MGorUT09', 'WlBoUUVvemxaU1M2Nm5wV0N2MGorUT09', 'WlBoUUVvemxaU1M2Nm5wV0N2MGorUT09', 'WlBoUUVvemxaU1M2Nm5wV0N2MGorUT09', 'WlBoUUVvemxaU1M2Nm5wV0N2MGorUT09', 'S2hONmxpd3BldVlQOHVvSHhYa1BGdz09', 'S2hONmxpd3BldVlQOHVvSHhYa1BGdz09', 'WlBoUUVvemxaU1M2Nm5wV0N2MGorUT09', 'Q1F1WFJHcEhBVnd2WU1ZRGRrdDI5QT09', '', 'dfb401079e', 1593665370, 10),
+(2, 'QnR2NDN4U0x4WWJjcysybThvbWUyUT09', 'dUN2M25sZ0xNUy9UZS9KUXFzTlMydz09', 'SjJJUFJCM0lPczBaZVU4K3IrTnVEZz09', 'SjJJUFJCM0lPczBaZVU4K3IrTnVEZz09', 'SjJJUFJCM0lPczBaZVU4K3IrTnVEZz09', 'SjJJUFJCM0lPczBaZVU4K3IrTnVEZz09', 'SjJJUFJCM0lPczBaZVU4K3IrTnVEZz09', 'ZzZZcEg3bzJpUEpGeEVNRnVyQzBFUT09', 'WWpKeUpVeVoxT1pBZXZhazFrOGM4Zz09', '', '', '', '', 1584572222, 11),
+(3, 'V29LUHlBZGh5WFREOGNURWM1Ty9aQT09', 'TDRCTGJ0NXpZZ1dDMnZrektrdzNwUT09', 'NW5GRTJ1c2lGRmhkekpSdG03UTI1Zz09', 'NW5GRTJ1c2lGRmhkekpSdG03UTI1Zz09', 'NW5GRTJ1c2lGRmhkekpSdG03UTI1Zz09', 'NW5GRTJ1c2lGRmhkekpSdG03UTI1Zz09', 'NW5GRTJ1c2lGRmhkekpSdG03UTI1Zz09', 'ZkduWDBhRE5wbks2OTBEeDlHdmI3dz09', 'ZkduWDBhRE5wbks2OTBEeDlHdmI3dz09', 'NW5GRTJ1c2lGRmhkekpSdG03UTI1Zz09', 'NW5GRTJ1c2lGRmhkekpSdG03UTI1Zz09', '', '', 1594526855, 12);
 
 -- --------------------------------------------------------
 

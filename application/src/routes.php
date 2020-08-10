@@ -37,39 +37,7 @@ switch ($_REQUEST["op"]) {
 case "10":
 	include_once '../../system/config_configuraciones/Config.php';
 	$configuracion = new Config;
-
-	if($_POST["pais"] == 1){
-		$moneda = "Dolares"; $simbolo = "$"; $imp = "IVA"; $doc = "NIT";
-	}if($_POST["pais"] == 2){
-		$moneda = "Lempiras"; $simbolo = "L"; $imp = "ISV"; $doc = "RTN";
-	}if($_POST["pais"] == 3){
-		$moneda = "Quetzales"; $simbolo = "Q"; $imp = "IVA"; $doc = "NIT";
-	}
-
-	$configuracion->Configuraciones($_POST["sistema"],
-									$_POST["cliente"],
-									$_POST["slogan"],
-									$_POST["propietario"],
-									$_POST["telefono"],
-									$_POST["direccion"],
-									$_POST["email"],
-									$_POST["pais"],
-									$_POST["giro"],
-									$_POST["nit"],
-									$_POST["imp"],
-									$imp,
-									$doc,
-									$moneda,
-									$simbolo,
-									$_POST["tipo_inicio"],
-									$_POST["skin"],
-									$_POST["inicio_tx"],
-									$_POST["otras_ventas"],
-									$_POST["cambio_tx"],
-									$_POST["dias_vencimiento"],
-									$_POST["dias_cotizacion"],
-									$_POST["multicaja"],
-									$_POST["mayorista"]);
+	$configuracion->Configuraciones($_POST);
 break;
 
 
@@ -77,19 +45,7 @@ break;
 case "11":
 include_once '../../system/config_configuraciones/Config.php';
 	$configuracion = new Config;
-
-	include_once '../common/Encrypt.php';
-	$configuracion->Root(Encrypt::Encrypt($_POST["expira"],$_SESSION['secret_key']),
-		Encrypt::Encrypt(Fechas::Format($_POST["expira"]),$_SESSION['secret_key']),
-						Encrypt::Encrypt($_POST["ftp_servidor"],$_SESSION['secret_key']),
-						Encrypt::Encrypt($_POST["ftp_path"],$_SESSION['secret_key']),
-						Encrypt::Encrypt($_POST["ftp_ruta"],$_SESSION['secret_key']),
-						Encrypt::Encrypt($_POST["ftp_user"],$_SESSION['secret_key']),
-						Encrypt::Encrypt($_POST["ftp_password"],$_SESSION['secret_key']),
-						Encrypt::Encrypt($_POST["tipo_sistema"],$_SESSION['secret_key']),
-						Encrypt::Encrypt($_POST["plataforma"],$_SESSION['secret_key']),
-						Encrypt::Encrypt($_POST["multiusuario"],$_SESSION['secret_key']),
-						Encrypt::Encrypt($_POST["ecommerce"],$_SESSION['secret_key']));
+	$configuracion->Root($_POST);
 break;
 
 

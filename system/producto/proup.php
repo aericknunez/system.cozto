@@ -112,7 +112,7 @@ if($cod != NULL){
             </label>
           </div>
     </div>
-
+<?php if($_SESSION["root_receta"] == "on"){ // si esta activada la opcion en root ?>
   <div class="col-6 col-md-2 mb-1 md-form">
         <div class="switch">
             <label>
@@ -122,12 +122,12 @@ if($cod != NULL){
             </label>
           </div>
     </div>
-
+<?php } ?>
   </div>
 
   <div class="form-row">
     
-    <div class="col-md-12 mb-1 md-form">
+    <div class="col-md-12 mb-1 md-form mt-4">
       <textarea id="informacion" name="informacion" class="md-textarea form-control" rows="3"><?php echo $informacion; ?></textarea>
       <label for="informacion">Informaci&oacuten adicional</label>
     </div>
