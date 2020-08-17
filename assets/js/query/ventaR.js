@@ -125,7 +125,7 @@ $(document).ready(function(){
     $("#producto-busqueda").keyup(function(){ /// para la caja de busqueda
         $.ajax({
         type: "POST",
-        url: "application/src/routes.php?op=75",
+        url: "application/src/routes.php?op=" + Btags(),
         data:'keyword='+$(this).val(),
         beforeSend: function(){
             $("#muestra-busqueda").css("background","#FFF url(assets/img/LoaderIcon.gif) no-repeat 550px");
@@ -145,6 +145,33 @@ $(document).ready(function(){
         $("#p-busqueda").trigger("reset"); 
     });
 
+
+// switch de busqueda por tags
+    $("body").on("click","#busquedaTags",function(){ /// para el los botones de opciones
+
+        if($(this).attr('checked')){ // es por que estaba activo
+            $('#busquedaTags').removeAttr("checked","checked");
+            $('#producto-busqueda').attr("placeholder","Ingrese el nombre del producto");
+        } 
+        else {
+            $('#busquedaTags').attr("checked","checked");
+            $('#producto-busqueda').attr("placeholder","Ingrese palabras claves a buscar");
+        }
+    });
+
+function Btags(){
+
+        if($("#busquedaTags").attr('checked')){ // es por que estaba activo
+            var opnum = '500'; // 500 busqueda por tags
+        } 
+        else {
+            var opnum = '75'; // 75 busqueda por nombre
+        }
+
+        return opnum;
+}
+
+/// switch
 ////////////////
 
 

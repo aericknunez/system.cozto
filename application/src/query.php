@@ -137,6 +137,9 @@ echo '<script type="text/javascript" src="system/user/login.js?v='.$numero.'"></
 /// producto
 elseif(isset($_GET["proadd"])) {
 echo '<script type="text/javascript" src="assets/js/query/producto.js?v='.$numero.'"></script>';
+		if($_SESSION["root_autoparts"] == "on"){
+	echo '<script type="text/javascript" src="assets/js/query/autoparts.js?v='.$numero.'"></script>';	
+		}
 } 
 elseif(isset($_GET["proopciones"])) {
 echo '<script type="text/javascript" src="assets/js/query/proopciones.js?v='.$numero.'"></script>';
@@ -313,6 +316,26 @@ echo '<script type="text/javascript" src="assets/js/query/backup.js?v='.$numero.
 } 
 
 
+elseif(isset($_GET["autoopciones"])) {
+echo '<script type="text/javascript" src="assets/js/query/autoparts_opciones.js?v='.$numero.'"></script>';
+} 
+
+
+elseif(isset($_GET["autoverproductos"])) {
+if($_SESSION["root_autoparts"] == "on"){
+echo '<script type="text/javascript" src="assets/js/query/autopartsVerProductos.js?v='.$numero.'"></script>';	
+}
+} 
+
+
+
+
+//////////////// factura
+elseif(isset($_GET["mod_factura"])) {
+echo '<script type="text/javascript" src="assets/js/query/conf_facturar.js?v='.$numero.'"></script>';
+} 
+
+
 else{
 /// lo que llevara index
 //echo '<script type="text/javascript" src="assets/js/query/ventas.js?v='.$numero.'"></script>';
@@ -354,6 +377,36 @@ else{
     $(window).on("load", function () {
         $('#mdb-preloader').fadeOut('fast');
     });
+
+
+	$.fn.extend({  // evita seleccionar
+	    disableSelection: function() { 
+	        this.each(function() { 
+	            if (typeof this.onselectstart != 'undefined') {
+	                this.onselectstart = function() { return false; };
+	            } else if (typeof this.style.MozUserSelect != 'undefined') {
+	                this.style.MozUserSelect = 'none';
+	            } else {
+	                this.onmousedown = function() { return false; };
+	            }
+	        }); 
+	    } 
+	});
+
+    $(document).ready(function() {
+        $('body').disableSelection();
+
+    });
+
+    $(document).on('dragstart', 'body', function(evt) { // evita arrartrar
+      evt.preventDefault();
+    });
+
+    // $(document).ready(function(){ // evita clic derecho
+    //    $(document).bind("contextmenu",function(e){
+    //       return false;
+    //    });
+    // });
 
 
 </script>

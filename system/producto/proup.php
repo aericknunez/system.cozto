@@ -61,16 +61,25 @@ if($cod != NULL){
 
 
     <div class="col-md-4 mb-1 md-form">
+      <div class="row">
+        <div class="col-10">
       <select class="browser-default custom-select" id="proveedor" name="proveedor">
         <?php 
         echo Helpers::SelectData("Proveedor", "proveedores", "hash", "nombre", $proveedor); 
         ?>
       </select>
+        </div>
+        <div class="col-2">
+          <i class="fas fa-plus-circle fa-2x green-text"></i>
+        </div>
+      </div>
     </div>
 
 
     <div class="col-md-4 mb-1 md-form">
-      <select class="browser-default custom-select" id="categoria" name="categoria">     
+      <div class="row">
+        <div class="col-10">
+        <select class="browser-default custom-select" id="categoria" name="categoria">     
         <?php 
        echo Helpers::SelectDataMultiple("* Categorias", 
         "producto_categoria", "hash", "categoria", 
@@ -79,15 +88,28 @@ if($cod != NULL){
         $categoria); 
         ?>
       </select>
+        </div>
+        <div class="col-2">
+          <i class="fas fa-plus-circle fa-2x green-text"></i>
+        </div>
+      </div>
     </div>
 
     <div class="col-md-4 mb-1 md-form">
-        <select class="browser-default custom-select" id="medida" name="medida">
+      <div class="row">
+        <div class="col-10">
+      <select class="browser-default custom-select" id="medida" name="medida">
       <?php 
         echo Helpers::SelectData("* Unidad de Medida", "producto_unidades", "hash", "nombre", $medida); 
         ?>         
       </select>
+        </div>
+        <div class="col-2">
+          <i class="fas fa-plus-circle fa-2x green-text"></i>
+        </div>
+      </div>
     </div>
+
 
   </div>
 
@@ -125,9 +147,9 @@ if($cod != NULL){
 <?php } ?>
   </div>
 
-  <div class="form-row">
+  <div class="form-row mt-4">
     
-    <div class="col-md-12 mb-1 md-form mt-4">
+    <div class="col-md-12 mb-1 md-form">
       <textarea id="informacion" name="informacion" class="md-textarea form-control" rows="3"><?php echo $informacion; ?></textarea>
       <label for="informacion">Informaci&oacuten adicional</label>
     </div>
@@ -204,7 +226,7 @@ if($_SESSION['root_ecommerce'] == "on"){
   <div class="col-6 col-md-6 mb-1 md-form">
         <div class="switch">
             <label>
-             Mostrar Promocion ||  Off
+             Mostrar Promoción ||  Off
               <input type="checkbox" id="promocion" <?php if($promocion == "on") echo "checked"; ?> name="promocion">
               <span class="lever"></span> On 
             </label>
@@ -222,7 +244,7 @@ if($_SESSION['root_ecommerce'] == "on"){
 
 
 
-  <div class="form-row">
+  <div class="form-row  mt-4">
     <div class="col-md-12 my-6 md-form text-center">
      <button class="btn btn-info my-4" type="submit" id="btn-proup"><i class="fa fa-save mr-1"></i> Guardar y continuar</button>
 

@@ -131,7 +131,12 @@ $r = $db->select("*", "config_master", "where td = ".$_SESSION['td']."")
        <td>Precios de Mayorista</td>
        <td><? if($r["mayorista"] == "on") echo "Activado"; else echo "Inactivo"; ?></td>    
      </tr>    
-<?
+
+     <tr>
+       <td>Activar Sonido</td>
+       <td><? if($r["sonido"] == "on") echo "Activado"; else echo "Inactivo"; ?></td>    
+     </tr>  
+     <?
  unset($r);  
 
    ?>

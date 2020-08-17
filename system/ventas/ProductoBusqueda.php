@@ -41,6 +41,60 @@ class ProductoBusqueda{
 
 
 
+  public function BusquedaToTags($dato){ // Busqueda para busqueda lenta
+    $db = new dbConn();
+      if($dato["keyword"] != NULL){
+
+            $aKeyword = explode(" ", $dato["keyword"]);
+
+            $queryB .= '(tag like ';
+            $queryB .= "'%" . $aKeyword[0] . "%'";
+
+            for($i = 1; $i < count($aKeyword); $i++) {
+                  if(!empty($aKeyword[$i])) {
+                      $queryB .= " OR tag like '%" . $aKeyword[$i] . "%'";
+                  }
+                }
+            $queryB .= ")";
+
+             $a = $db->selectGroup("producto", "producto_tags", "WHERE $queryB and td = ".$_SESSION["td"]." GROUP BY producto");
+
+
+                if($a->num_rows > 0){
+                    echo '<table class="table table-striped table-sm table-hover">';
+            while($b = $a->fetch_assoc() ) {
+
+    if ($r = $db->select("cod, descripcion", "producto", "WHERE cod = '".$b["producto"]."' and td = ".$_SESSION["td"]."")) { 
+              $cod = $r["cod"]; $descripcion = $r["descripcion"];
+     } unset($r);  
+                       echo '<tr>
+                              <td scope="row"><a id="select-p" cod="'. $cod .'"><div>
+                              '. $cod .'  || '. $descripcion .'</div></a></td>
+                            </tr>'; 
+            }  
+                        echo '<tr>
+                              <td scope="row"><a id="cancel-p"><div>CANCELAR</div></a></td>
+                            </tr>'; 
+                $a->close();
+
+                
+              } else {
+                 echo '<table class="table table-sm table-hover">';
+                    echo '<tr>
+                              <td scope="row">El criterio de busqueda no corresponde a un producto</td>
+                            </tr>';
+                    echo '<tr>
+                              <td scope="row"><a id="cancel-p"><div>CANCELAR</div></a></td>
+                            </tr>';
+             }
+
+          echo '</table>';
+        }
+
+  }
+
+
+
 
 
 public function DetallesProducto($data){

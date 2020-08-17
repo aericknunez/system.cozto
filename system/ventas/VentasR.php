@@ -292,7 +292,9 @@ class Ventas{
 		    $a = $db->query("SELECT * FROM ticket WHERE orden = ".$_SESSION["orden"]." and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."");
 
 		    if($a->num_rows > 0){
-		    		echo '<table class="table table-striped table-sm">
+
+		    		echo '<div class="table-responsive">
+		    		<table class="table table-striped table-sm">
 					  <thead>
 					    <tr>
 					      <th scope="col">Cant</th>
@@ -327,7 +329,8 @@ class Ventas{
 					</tr>';
 				    }
 				    	echo '</tbody>
-							</table>';
+							</table>
+							</div>';
 		    } $a->close();
 
 		    $this->Sonar();
@@ -458,7 +461,7 @@ class Ventas{
 		// primero verifico si el producto es un compuesto. si es compuesto o dependiente actualizo todos los productos que este conlleva . si es un servicio no se hace nada
 		// 
 		    if ($r = $db->select("compuesto, dependiente, servicio", "producto", "WHERE cod = '".$bx["cod"]."' and td = ".$_SESSION["td"]."")) { 
-		        $compuesto = $r["nombre"]; $dependiente = $r["dependiente"]; $servicio = $r["servicio"];
+		        $compuesto = $r["compuesto"]; $dependiente = $r["dependiente"]; $servicio = $r["servicio"];
 		    }  unset($r);  
 
 			if($compuesto == "on"){ // aqui veo que productos lleva el producto comp
@@ -472,6 +475,7 @@ class Ventas{
 				    $cambio = array();
 				    $cambio["cantidad"] = $cantidad;
 				    Helpers::UpdateId("producto", $cambio, "cod='".$b["agregado"]."' and td = ".$_SESSION["td"]."");
+				    $this->UpdateUbicacion($b["agregado"], $cantidades);
 				    // termina la parte de actualizar producto
 				} $a->close();
 
@@ -486,6 +490,7 @@ class Ventas{
 				    $cambio = array();
 				    $cambio["cantidad"] = $cantidad;
 				    Helpers::UpdateId("producto", $cambio, "cod='".$b["dependiente"]."' and td = ".$_SESSION["td"]."");
+				    $this->UpdateUbicacion($b["dependiente"], $cantidades);
 				    // termina la parte de actualizar producto
 				} $a->close();
 
@@ -493,10 +498,11 @@ class Ventas{
 				// si es servicio no se hace nada// solo valido la opcion para hacer el else
 			} else {
 
-					$cantidad = $this->ObtenerCantidad($bx["cod"]) - $bx["cant"]; 
+				$cantidad = $this->ObtenerCantidad($bx["cod"]) - $bx["cant"]; 
 			    $cambio = array();
 			    $cambio["cantidad"] = $cantidad;
 			    Helpers::UpdateId("producto", $cambio, "cod='".$bx["cod"]."' and td = ".$_SESSION["td"]."");
+			    $this->UpdateUbicacion($bx["cod"], $bx["cant"]);
 			    // termina la parte de actualizar producto
 			}	////////////////
 
@@ -507,6 +513,23 @@ class Ventas{
 
 	}
 
+
+   public function UpdateUbicacion($producto, $cantidad){
+  		$db = new dbConn();
+  // busco la predeterminada
+	    if ($r = $db->select("hash", "ubicacion", "WHERE predeterminada = 1 and td = ".$_SESSION["td"]."")) { 
+	        $hashpredet = $r["hash"];
+	    } unset($r);  
+
+	    if ($r = $db->select("cant", "ubicacion_asig", "WHERE producto = '$producto' and ubicacion = '$hashpredet' and td = ".$_SESSION["td"]."")) { 
+	        $cantpredet = $r["cant"];
+	    } unset($r);  
+	    
+	    $cambio = array();
+	    $cambio["cant"] = $cantpredet - $cantidad;
+	    Helpers::UpdateId("ubicacion_asig", $cambio, "producto = '$producto' and ubicacion = '".$hashpredet."' and td = ".$_SESSION["td"]."");   
+
+  	}
 
 
    public function Facturar($datos){
@@ -530,6 +553,7 @@ class Ventas{
 
 	   	$this->DescontarProducto($factura);
 	   	$this->FacturaResult($factura, $datos["efectivo"]);
+	   	$this->RegistroDocumento($factura);
 
 	   	if(isset($_SESSION["cliente_c"])){ // agregar el credito
 	   		$opciones = new Opciones();
@@ -574,15 +598,32 @@ echo '<div class="display-4 text-center font-weight-bold">'. Helpers::Dinero($ef
 echo '<p class="text-center font-weight-bold">CAMBIO:</p>'; 
 echo '<div class="display-4 text-center font-weight-bold">'. Helpers::Dinero($cambio) . '</div>'; 
 
+$_SESSION["factura_actual_print"] = $factura; // solo para imprimir la factura correcta
+$_SESSION["cambio_actual_print"] = $cambio; // solo para imprimir la factura correcta
+
+
+// echo '<hr>
+// <div class="clearfix">
+// <div class="float-left">
+// <a href="system/facturar/ticket_web.php?factura='.$factura.'" class="btn-floating btn-sm btn-success"><i class="fas fa-print"></i></a>
+// </div>
+// <div class="float-right">
+// <a href="system/facturar/ticket_web.php?factura='.$factura.'" class="btn-floating btn-sm btn-info"><i class="fas fa-print"></i></a>
+// </div>
+// </div>';
 
    }
 
 
 	public function Sonar(){
+
+		if($_SESSION["config_sonido"] == "on"){
 		echo '<audio id="audioplayer" autoplay=true>
-				  <source src="assets/sound/bleep.mp3" type="audio/mpeg">
-				  <source src="assets/sound/bleep.ogg" type="audio/ogg">
-				</audio>';
+				  <source src="assets/sound/Beep4.mp3" type="audio/mpeg">
+				  <source src="assets/sound/Beep4.ogg" type="audio/ogg">
+			</audio>';
+
+		}
 	}
 
 
@@ -702,6 +743,25 @@ echo '<div class="display-4 text-center font-weight-bold">'. Helpers::Dinero($ca
   }
 
 
+  public function RegistroDocumento($factura){ // registra el documento al facturar
+    $db = new dbConn();
+
+	if($_SESSION["factura_cliente"] != NULL and $_SESSION["factura_documento"] != NULL){
+		$datos = array();
+		$datos["factura"] = $factura;
+	    $datos["tx"] = $_SESSION["tx"];
+	    $datos["cliente"] = $_SESSION["factura_cliente"];
+	    $datos["documento"] = $_SESSION["factura_documento"];
+	    $datos["hash"] = Helpers::HashId();
+	    $datos["time"] = Helpers::TimeId();
+	    $datos["td"] = $_SESSION["td"];
+	    if($db->insert("facturar_documento_factura", $datos)){
+	    	unset($_SESSION["factura_cliente"]);
+	    	unset($_SESSION["factura_documento"]);
+	    } 	
+	}
+
+}
 
 
 

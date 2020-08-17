@@ -19,8 +19,14 @@ class Productos{
                 $datos["descripcion"] = strtoupper($datos["descripcion"]);
                 $datos["hash"] = Helpers::HashId();
                 $datos["time"] = Helpers::TimeId();
-              $datos["td"] = $_SESSION["td"];
+                $datos["td"] = $_SESSION["td"];
               if ($db->insert("producto", $datos)) {
+                  
+                  if($_SESSION["root_autoparts"] == "on"){ // si es autopartrs  lo agrego datos
+                    $auto = new Autoparts(); 
+                    $auto->InsertDataProduct($datos["cod"]);  
+                  }
+
                   $this->Redirect($datos);
               }           
 
@@ -433,6 +439,7 @@ class Productos{
               <th scope="col">Cantidad</th>
               <th scope="col">Ubicacion Agregado</th>
               <th scope="col">Eliminar</th>
+              <th scope="col">Principal</th>
             </tr>
           </thead>
           <tbody>';
@@ -440,14 +447,20 @@ class Productos{
           $canta = 0;
               foreach ($a as $b) { 
                 $ubica = $b["ubicacion"];
-                if ($r = $db->select("ubicacion", "ubicacion", "WHERE hash = '$ubica' and td = ".$_SESSION["td"]."")) { 
+                if ($r = $db->select("ubicacion, predeterminada", "ubicacion", "WHERE hash = '$ubica' and td = ".$_SESSION["td"]."")) { 
                         $nombre = $r["ubicacion"];
+                        $predeterminada = $r["predeterminada"];
                       }  unset($r); 
                 echo '<tr>
                       <th scope="row">'. $n ++ .'</th>
                       <td>'.$b["cant"].'</td>
                       <td>'.$nombre.'</td>
                       <td><a id="delubicacionasig" hash="'.$b["hash"].'" op="41" producto="'.$producto.'" ><i class="fa fa-minus-circle fa-lg red-text"></i></a></td>
+                      <td>';
+                  if($predeterminada == 1){
+                    echo '<i class="fa fa-check-circle fa-lg green-text"></i>';
+                  }                  
+                  echo '</td>
                     </tr>';
                     $canta =  $canta + $b["cant"];          
               }
@@ -493,6 +506,60 @@ class Productos{
     return $total; 
 
   }
+
+
+// para igualar la ubicacion al salir
+  public function IgualarUbicacion($producto){ 
+    $db = new dbConn();
+
+    $cantidad = $this->CuentaProductosU($producto);
+
+    $a = $db->query("SELECT sum(cant) FROM ubicacion_asig WHERE producto = '$producto' and td = ".$_SESSION["td"]."");
+    foreach ($a as $b) {
+        $suma=$b["sum(cant)"];
+    } $a->close();
+
+$dif = $cantidad - $suma;
+
+// busco la predeterminada
+    if ($r = $db->select("hash", "ubicacion", "WHERE predeterminada = 1 and td = ".$_SESSION["td"]."")) { 
+        $hashpredet = $r["hash"];
+    } unset($r);  
+
+    if ($r = $db->select("cant", "ubicacion_asig", "WHERE producto = '$producto' and ubicacion = '$hashpredet' and td = ".$_SESSION["td"]."")) { 
+        $cantpredet = $r["cant"];
+    } unset($r);  
+
+// verifico si exite ya el producto asignado
+$a = $db->query("SELECT * FROM ubicacion_asig WHERE producto = '$producto' and ubicacion = '$hashpredet' and td = ".$_SESSION["td"]."");
+$exispredet = $a->num_rows;
+$a->close();
+
+if($exispredet == 0){
+ // agrego el registro
+    $datos = array();
+    $datos["ubicacion"] = $hashpredet;
+    $datos["producto"] = $producto;
+    $datos["cant"] = $dif;
+    $datos["td"] = $_SESSION["td"];
+    $datos["hash"] = Helpers::HashId();
+    $datos["time"] = Helpers::TimeId();
+    $db->insert("ubicacion_asig", $datos); 
+} else {
+  // actualiza el registro
+  $up = $suma - $cantpredet;
+  $up = $cantidad - $up;
+
+    $cambio = array();
+    $cambio["cant"] = $up;
+    Helpers::UpdateId("ubicacion_asig", $cambio, "producto = '$producto' and ubicacion = '".$hashpredet."' and td = ".$_SESSION["td"]."");
+}
+
+
+
+  }
+
+
 
 ///////////////// caracteristicas asign
 
@@ -860,14 +927,23 @@ class Productos{
 
 
 
-// categorias
+// ubicacion
 
-  public function AddUbicacion($datos){ // agrega una categoria para ponersela al producto
+  public function AddUbicacion($datos){ // agrega una ubicacion para ponersela al producto
     $db = new dbConn();
 
+$a = $db->query("SELECT * FROM ubicacion WHERE td = ".$_SESSION["td"]."");
+if($a->num_rows == 0){
+  $predet = 1;
+} else {
+  $predet = 0;
+} $a->close();
+
+
       if($datos["ubicacion"] != NULL){
+              $datos["predeterminada"] = $predet;
               $datos["hash"] = Helpers::HashId();
-                $datos["time"] = Helpers::TimeId();
+              $datos["time"] = Helpers::TimeId();
               $datos["td"] = $_SESSION["td"];
               if ($db->insert("ubicacion", $datos)) {
                   
@@ -885,7 +961,7 @@ class Productos{
 
 
 
-  public function VerUbicacion(){ // listado de categorias
+  public function VerUbicacion(){ // listado de ubicacion
     $db = new dbConn();
 
       $a = $db->query("SELECT * FROM ubicacion WHERE td = ".$_SESSION["td"]."");
@@ -896,6 +972,7 @@ class Productos{
           <th scope="col">#</th>
           <th scope="col">Ubicaci&oacuten</th>
           <th scope="col">Eliminar</th>
+          <th scope="col">Principal</th>
         </tr>
       </thead>
       <tbody>';
@@ -905,6 +982,11 @@ class Productos{
                   <th scope="row">'. $n ++ .'</th>
                   <td>'.$b["ubicacion"].'</td>
                   <td><a id="xdelete" valor="4" hash="'.$b["hash"].'" op="29"><i class="fa fa-minus-circle fa-lg red-text"></i></a></td>
+                  <td>';
+                  if($b["predeterminada"] == 1){
+                    echo '<i class="fa fa-check-circle fa-lg green-text"></i>';
+                  }                  
+                  echo '</td>
                 </tr>';          
           }
     echo '</tbody>
@@ -915,14 +997,52 @@ class Productos{
 
 
 
-  public function DelUbicacion($hash){ // elimina categoria
+  public function DelUbicacion($hash){ // elimina ubicacion
     $db = new dbConn();
+// verifico que no sea la predeterminada
+
+    if ($r = $db->select("predeterminada", "ubicacion", "WHERE hash='$hash' and td = ".$_SESSION["td"]."")) { 
+        $predeterminada = $r["predeterminada"];
+    } unset($r);  
+
+if($predeterminada != "1"){
+
+   
+// veo cal es la predeterminada
+    if ($r = $db->select("hash", "ubicacion", "WHERE predeterminada = 1 and td = ".$_SESSION["td"]."")) { 
+        $hashpredet = $r["hash"];
+    } unset($r);  
+
+
+    $a = $db->query("SELECT producto, cant, ubicacion FROM ubicacion_asig WHERE ubicacion='$hash' and td = ".$_SESSION["td"]."");
+    foreach ($a as $b) {
+
+        $producto = $b["producto"];
+        $cant = $b["cant"];
+        $ubicacion = $b["ubicacion"];
+
+    if ($r = $db->select("cant", "ubicacion_asig", "WHERE producto='".$b["producto"]."' and ubicacion = '$hashpredet' and td = ".$_SESSION["td"]."")) { 
+        $cantpredet = $r["cant"];
+    } unset($r);  
+ // actualizo
+          $cambio = array();
+          $cambio["cant"] = $cantpredet + $cant;
+          Helpers::UpdateId("ubicacion_asig", $cambio, "producto='".$b["producto"]."' and ubicacion = '".$hashpredet."' and td = ".$_SESSION["td"]."");   
+
+    } $a->close();
+
+//
+
+
         if (Helpers::DeleteId("ubicacion", "hash='$hash'")) {
           Helpers::DeleteId("ubicacion_asig", "ubicacion='$hash' and td = " . $_SESSION["td"] );  
            Alerts::Alerta("success","Eliminado!","Ubicacion eliminada correctamente!");
         } else {
             Alerts::Alerta("error","Error!","Algo Ocurrio!");
-        } 
+        }
+} else {
+  Alerts::Alerta("error","Error!","No se puede eliminar la ubicación predeterminada!");
+}       
       $this->VerUbicacion();
   }
 

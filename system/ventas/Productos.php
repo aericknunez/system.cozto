@@ -85,8 +85,9 @@ if($Imagen == NULL) { $Imagen = "default.jpg"; } else { $Imagen = $_SESSION["td"
     ($cantidad > 0) ? $value = 1 : $value = 0;
 
       echo '<div class="md-form md-outline form-sm col-md-2">
+      <label for="cantidad">Cantidad</label>
       <input id="cantidad" name="cantidad" class="form-control form-control-sm" type="number" value="'.$value.'" step="any" max="'. $cantidad .'" min="1">
-      <label for="cantidad">Cant</label>
+      
     </div>';
 
     $this->CompruebaCaracteristicas($dato["cod"]);
@@ -120,7 +121,7 @@ if($Imagen == NULL) { $Imagen = "default.jpg"; } else { $Imagen = $_SESSION["td"
               } unset($r); 
 
         echo '<div class="col-md-2 mb-1 md-form">
-              <label for="cantidad">'. $carac .'</label>
+              <label for="caracteristica">'. $carac .'</label>
               <input type="number" step="any" class="form-control form-control-sm" id="caracteristica['. $b["caracteristica"] .']" name="caracteristica['. $b["caracteristica"] .']" max="'. $b["cant"] .'">
             </div>';
     } 
@@ -140,16 +141,23 @@ if($Imagen == NULL) { $Imagen = "default.jpg"; } else { $Imagen = $_SESSION["td"
     if($a->num_rows > 0){
         echo 'Ubicaci&oacuten de donde descontar&aacute
         <div class="form-row">';
+
+        $number = 0;
       foreach ($a as $b) {
+        $number ++;
 
               if ($r = $db->select("ubicacion", "ubicacion", "WHERE hash = '". $b["ubicacion"] ."' and td = ".$_SESSION["td"]."")) { 
                   $ubi = $r["ubicacion"];
               } unset($r); 
 
+        if($number == 1){ $check = "checked"; } else { $check = ""; }
+
         echo '<div class="form-check form-check-inline">
-              <input type="radio" class="form-check-input" id="'. $b["ubicacion"] .'" name="ubicacion" value="'. $b["ubicacion"] .'">
+              <input type="radio" class="form-check-input" id="'. $b["ubicacion"] .'" name="ubicacion" value="'. $b["ubicacion"] .'" '.$check.'>
               <label class="form-check-label" for="'. $b["ubicacion"] .'">'. $ubi .'</label>
             </div>';
+
+
     } 
       echo '</div>';
 

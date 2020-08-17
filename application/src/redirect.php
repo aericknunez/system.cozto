@@ -92,6 +92,16 @@ elseif(isset($_GET["planillasver"])) include_once 'system/planilla/planillasver.
 elseif(isset($_GET["backup"])) include_once 'system/bdbackup/respaldo.php'; // backup de bd
 
 
+// opciones de autoparts
+elseif(isset($_GET["autoopciones"])) include_once 'system/autoparts/opciones.php'; 
+elseif(isset($_GET["autoverproductos"])) include_once 'system/autoparts/verproductos.php'; 
+
+
+
+// factura
+elseif(isset($_GET["mod_factura"])) include_once 'system/facturar/mod_factura.php'; // cambia lo de la factra
+
+
 else{
 include_once 'system/index/index.php';
 }

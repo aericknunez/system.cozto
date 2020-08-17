@@ -492,7 +492,7 @@ $(document).ready(function(){
 				$("#muestrapreciosmayorista").html(data);			
 			}
 		})
-	})
+	});
     
 
 
@@ -518,6 +518,29 @@ $(document).ready(function(){
 
 
 
+
+
+
+
+/// salir del modal
+    $("body").on("click","#modalOut",function(){
+        var op = "501";
+		var producto = $(this).attr('producto');
+        var dataString = 'op='+op+'&producto='+producto;
+
+        $.ajax({
+            type: "POST",
+            url: "application/src/routes.php",
+            data: dataString,
+            // beforeSend: function () {
+            //    $("#ver").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt=""></div>');
+            // },
+            success: function(data) {            
+               window.location.href="?"
+            }
+        });
+    });   
+    
 
 
 

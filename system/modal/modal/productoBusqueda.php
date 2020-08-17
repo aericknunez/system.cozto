@@ -23,6 +23,16 @@
 <div id="contenido">
   
 </div>
+        <!-- Default switch -->
+          <div class="switch">
+            Busqueda por Tags
+            <label>
+             Off
+              <input type="checkbox" id="busquedaTags" name="busquedaTags" >
+              <span class="lever"></span> 
+             On 
+            </label>
+          </div>
 <!-- ./  content -->
       </div>
       <div class="modal-footer">

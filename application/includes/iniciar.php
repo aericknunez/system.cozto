@@ -54,12 +54,31 @@ $_SESSION["ver_avatar"] = NULL;
 
             if ($r = $db->select("*", "config_master", "WHERE td = " . $_SESSION['td'])) { 
                 if($r["cliente"] == NULL or $r["moneda"] == NULL){
+
+                    // inserto ubicacion predeterminada
+                    AddUbicacion();
+
                         $_SESSION['nodatainicial'] = md5($_SESSION['td']); // es para los que no llena datos 
                       header("location: ../../?modal=conf_config&inicio");
                        exit();
                 }  
             } unset($r); 
     }
+
+
+
+    function AddUbicacion(){ // ubicaion predeterminada para cuando no hay datos
+        $db = new dbConn();
+
+        $datos["ubicacion"] = "Principal";
+        $datos["predeterminada"] = 1;
+        $datos["hash"] = Helpers::HashId();
+        $datos["time"] = Helpers::TimeId();
+        $datos["td"] = $_SESSION["td"];
+        $db->insert("ubicacion", $datos);
+    }
+
+
 
 
 UserInicio($user);

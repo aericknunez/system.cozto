@@ -106,18 +106,18 @@ $r = $db->select("*", "config_root", "where td = ".$_SESSION['td']."")
           </div>
     </td>
 
-<!--     <td>
+ <td>
           <div class="switch mt-4">
             <label>
-             E-Commerce ||  Off
-              <input type="checkbox" <?php if(Encrypt::Decrypt($r["ecommerce"],$_SESSION['secret_key']) == "on") echo "checked"; ?> id="ecommerce" name="ecommerce" >
+             AutoParts ||  Off
+              <input type="checkbox" <?php if(Encrypt::Decrypt($r["autoparts"],$_SESSION['secret_key']) == "on") echo "checked"; ?> id="autoparts" name="autoparts" >
               <span class="lever"></span> On 
             </label>
           </div>
     </td>
 
   </tr>
- -->
+
 
 
 

@@ -72,7 +72,7 @@ $r = $db->select("*", "config_root", "where td = ".$_SESSION['td']."");
      </tr>
 
      <tr>
-       <td>Ecomerce</td>
+       <td>Ecommerce</td>
        <td><? if(Encrypt::Decrypt($r["ecommerce"],$_SESSION['secret_key']) == "on") echo "Activado";
               if(Encrypt::Decrypt($r["ecommerce"],$_SESSION['secret_key']) == "") echo "Inactivo"; ?></td>
        
@@ -81,8 +81,13 @@ $r = $db->select("*", "config_root", "where td = ".$_SESSION['td']."");
        <td>Activar Receta</td>
        <td><? if(Encrypt::Decrypt($r["receta"],$_SESSION['secret_key']) == "on") echo "Activado";
               if(Encrypt::Decrypt($r["receta"],$_SESSION['secret_key']) == "") echo "Inactivo"; ?></td>
-       
      </tr> 
+     <tr>
+       <td>Activar AutoParts</td>
+       <td><? if(Encrypt::Decrypt($r["autoparts"],$_SESSION['secret_key']) == "on") echo "Activado";
+              if(Encrypt::Decrypt($r["autoparts"],$_SESSION['secret_key']) == "") echo "Inactivo"; ?></td>
+     </tr> 
+
 <?
  unset($r);  
    ?>

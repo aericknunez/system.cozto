@@ -6,8 +6,9 @@ $nombre =  $_REQUEST["name"] . ".". $ext;
 
 /// type
 /// 1 . back up // system/bdbackup/backup/
-if($_REQUEST["type"] == 1) $t = "system/bdbackup/backup/" .$_SESSION["td"] . "/";
-
+if($_REQUEST["type"] == 1) $t = "system/bdbackup/backup/" . $_REQUEST["x"] . "/";
+/// 2 . back up // system/bdbackup/backup/
+if($_REQUEST["type"] == 2) $t = "system/bdbackup/backup/" . $_REQUEST["x"] . "/";
 
 $filename = $t . $_REQUEST["data"]; 
 $size = filesize($filename); 

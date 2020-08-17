@@ -62,9 +62,9 @@ $result = json_decode($response, true);
 
     $dir = $this->Tablas();
 
-foreach ($dir as $key => $tabla) {
+foreach ($dir as $tabla) {
   //////////////////////        
-    $s = $db->query("SELECT * FROM $tabla WHERE td = '$td'");
+    $s = $db->query("SELECT * FROM $tabla WHERE td = '".$td."'");
     foreach ($s as $y){ 
 
     $archivo.= "INSERT INTO $tabla VALUES(";
@@ -79,7 +79,7 @@ foreach ($dir as $key => $tabla) {
   else $archivo.= "\"" . $y["$campo"] . "\"";
 
         }
-    $archivo.= "); \n";
+    $archivo.= "); \n \n";
 
     }
      $s->close();
@@ -121,7 +121,7 @@ public function Tablas(){
 "config_root", 
 "producto", 
 "producto_averias", 
-"roducto_cambios", 
+"producto_cambios", 
 "producto_categoria", 
 "producto_compuestos", 
 "producto_dependiente", 
@@ -158,7 +158,7 @@ public function Tablas(){
 // "planilla_pagos", 
 // "producto", 
 // "producto_averias", 
-// "roducto_cambios", 
+// "producto_cambios", 
 // "producto_categoria", 
 // "producto_compuestos", 
 // "producto_dependiente", 
@@ -202,7 +202,7 @@ public function VerRespaldos($url){
              <td>' . $data . '</td>
              <td>' . $size . '</td>
              <td>
-             <a href="downloader.php?data='. $filename . $ext .'&name='. $data .'&type=2" class="btn btn-indigo btn-sm m-0">Descargar
+             <a href="downloader.php?data='. $filename . $ext .'&name='. $data .'&type=2&x='.$_SESSION["td"].'" class="btn btn-indigo btn-sm m-0">Descargar
             </a>
              </td>
              <td>

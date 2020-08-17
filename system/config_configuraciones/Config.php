@@ -41,6 +41,7 @@ class Config{
 	    $cambio["dias_cotizacion"] = $data["dias_cotizacion"];
 	    $cambio["multicaja"] = $data["multicaja"];
 	    $cambio["mayorista"] = $data["mayorista"];
+	    $cambio["sonido"] = $data["sonido"];
 	    $cambio["time"] = Helpers::TimeId();
 	    if (Helpers::UpdateId("config_master", $cambio, "td = ".$_SESSION["td"]."")) {
 	    	$this->CrearVariables();
@@ -70,6 +71,7 @@ class Config{
 	    $cambio["multiusuario"] = Encrypt::Encrypt($data["multiusuario"],$_SESSION['secret_key']);
 	    $cambio["ecommerce"] = Encrypt::Encrypt($data["ecommerce"],$_SESSION['secret_key']);
 	    $cambio["receta"] = Encrypt::Encrypt($data["receta"],$_SESSION['secret_key']);
+	    $cambio["autoparts"] = Encrypt::Encrypt($data["autoparts"],$_SESSION['secret_key']);
 	    $cambio["time"] = Helpers::TimeId();
 	    if (Helpers::UpdateId("config_root", $cambio, "td = ".$_SESSION["td"]."")) {
 	    	$this->CrearVariables();
@@ -120,6 +122,7 @@ class Config{
 			$_SESSION['config_dias_cotizacion'] = $r["dias_cotizacion"];
 			$_SESSION['config_multicaja'] = $r["multicaja"];
 			$_SESSION['config_mayorista'] = $r["mayorista"];
+			$_SESSION['config_sonido'] = $r["sonido"];
 
 			if($_SESSION['config_skin'] == NULL) $_SESSION['config_skin'] = "mdb-skin";
 			// white-skin , mdb-skin , grey-skin , pink-skin ,  light-blue-skin , black-skin  cyan-skin, navy-blue-skin
@@ -137,6 +140,7 @@ class Config{
 			$_SESSION['root_multiusuario'] = $root["multiusuario"];
 			$_SESSION['root_ecommerce'] = $root["ecommerce"];
 			$_SESSION['root_receta'] = $root["receta"];
+			$_SESSION['root_autoparts'] = $root["autoparts"];
      
 			} unset($root);
 			$_SESSION['root_tipo_sistema'] = $encrypt->Decrypt(
@@ -153,6 +157,9 @@ class Config{
 
 			$_SESSION['root_receta'] = $encrypt->Decrypt(
 			$_SESSION['root_receta'],$_SESSION['secret_key']);
+
+			$_SESSION['root_autoparts'] = $encrypt->Decrypt(
+			$_SESSION['root_autoparts'],$_SESSION['secret_key']);
 
 	}
 

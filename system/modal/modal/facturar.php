@@ -81,11 +81,16 @@ echo '<div class="display-4 text-center font-weight-bold">'. Helpers::Dinero($to
 <!-- ./  content -->
       </div>
     
-      <div class="modal-footer">
+      <div class="clearfix modal-footer">
+        
+        <div id="botones-imprimir" class="float-left">
         <?php if(!isset($_SESSION["cliente_c"])) { ?>
           <a href="<?php echo $dir; ?>" id="btn-te" class="btn btn-secondary btn-rounded"><?php echo $txt; ?></a>
         <?php } ?>
+        </div>
+        <div class="float-right">
           <a href="?" class="btn btn-primary btn-rounded">Regresar</a>
+        </div>
     
       </div>
     </div>

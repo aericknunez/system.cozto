@@ -58,7 +58,11 @@ return false;
 		    $("#btn-addform").show();
 		    $("#p-busqueda").trigger("reset"); // no funciona
 		    $("#lateral").load('application/src/routes.php?op=70'); // caraga el lateral
+
+            $("#cantidad").focus();
+
    	 	});
+
 	});
 
 
@@ -265,6 +269,7 @@ Esconder();
                $("#lateral").load('application/src/routes.php?op=70'); // caraga el lateral
         });
     });
+
 
 
 

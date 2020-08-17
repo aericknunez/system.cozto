@@ -150,5 +150,16 @@ Existe un corte realizado este dia, ya no se puede seguir agregando '.$tipo.' a 
 
 
 
+
+
+    public function Mensajey($texto,$style,$boton = NULL){ // es lo mismo pero todo va centrado y sin boton cerrar
+      echo '<div class="border border-light alert alert-'.$style.' alert-dismissible text-center">
+      <button id="'. $boton .'" type="button" class="close">&times;</button>
+      '.$texto.'
+      </div>';
+    }
+
+
+
 }
  ?>

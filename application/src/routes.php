@@ -159,6 +159,10 @@ break;
 case "20": // agrega primeros datos del producto
 include_once '../../system/producto/Productos.php';
 	$productos = new Productos;
+// si es autoparts
+	if($_SESSION["root_autoparts"] == "on"){
+		include_once '../../system/autoparts/Autoparts.php';
+	}	
 	$productos->AddProducto($_POST);
 break;
 
@@ -995,6 +999,19 @@ break;
 
 
 
+case "120": // mostar los botones imprimir factura
+	include_once '../../system/facturar/Facturar.php'; // obtiene el estado de la factura tx, local o web
+	include_once '../../system/facturar/facturas/'.$_SESSION["td"].'/Impresiones.php'; // tiene las 
+	
+	$fac = new Facturar();
+	$fac->ObtenerEstadoFactura($_SESSION["cambio_actual_print"], $_SESSION["factura_actual_print"]);
+
+// elimino las dos variables
+unset($_SESSION["factura_actual_print"], $_SESSION["cambio_actual_print"]);
+break;
+
+
+
 case "123": // historial descuentos
 	include_once '../../system/historial/Historial.php';
 	$historial = new Historial;
@@ -1549,17 +1566,141 @@ include_once '../../system/cuentas/Cuentas.php';
 break;
 
 
+case "450": /// comienza lo de las facturas
+	include_once '../../system/facturar/Facturar.php';
+	$fact = new Facturar();
+	$fact->ModFactura($_POST);
+break;
 
 
 
+case "500": // busqueda por tags
+include_once '../../system/ventas/ProductoBusqueda.php';
+	$proBusqueda = new ProductoBusqueda();
+	$proBusqueda->BusquedaToTags($_POST);
+break;
 
 
 
+case "501": // igualar ubicacion de productos
+include_once '../../system/producto/Productos.php';
+	$producto = new Productos();
+	$producto->IgualarUbicacion($_POST["producto"]);
+break;
 
 
 
+case "520": // autoparts select
+include_once '../../system/autoparts/Autoparts.php';
+	$auto = new Autoparts(); 
+	$auto->SelectStep();
+break;
 
 
+case "521": // Add Marca
+include_once '../../system/autoparts/Autoparts.php';
+	$auto = new Autoparts(); 
+	$auto->SelectMarca($_POST["marca"]);
+break;
+
+
+
+case "522": // autoparts select modelo
+include_once '../../system/autoparts/Autoparts.php';
+	$auto = new Autoparts(); 
+	$auto->SelectModelo($_POST["modelo"]);
+break;
+
+
+case "523": // autoparts select modelo
+include_once '../../system/autoparts/Autoparts.php';
+	$auto = new Autoparts(); 
+	$auto->SelectAnio($_POST["anio"]);
+break;
+
+
+
+case "524": // autoparts select modelo
+include_once '../../system/autoparts/Autoparts.php';
+	$auto = new Autoparts(); 
+	$auto->DetallesSeleccion();
+break;
+
+
+case "525": // eliminar las variables de autoparts
+include_once '../../system/autoparts/Autoparts.php';
+	$auto = new Autoparts(); 
+	$auto->EliminarDatos();
+break;
+
+
+
+case "526": // autoparts select motor
+include_once '../../system/autoparts/Autoparts.php';
+	$auto = new Autoparts(); 
+	$auto->SelectMotor($_POST["motor"]);
+break;
+
+
+case "527": // autoparts select motor
+include_once '../../system/autoparts/AutopartsOp.php';
+	$auto = new Autoparts(); 
+	$auto->VerTodosProductos();
+break;
+
+
+
+case "528": // autoparts select modelo solo para en mostar productos
+include_once '../../system/autoparts/AutopartsOp.php';
+	$auto = new Autoparts(); 
+	$auto->DetallesSeleccion();
+break;
+
+
+
+case "530": // autoparts select motor
+include_once '../../system/autoparts/AutopartsOp.php';
+	$auto = new Autoparts(); 
+	$auto->AddMarca($_POST);
+break;
+
+
+
+case "531": // autoparts select motor
+include_once '../../system/autoparts/AutopartsOp.php';
+	$auto = new Autoparts(); 
+	$auto->DelMarca($_POST["hash"]);
+break;
+
+
+
+case "532": // autoparts select motor
+include_once '../../system/autoparts/AutopartsOp.php';
+	$auto = new Autoparts(); 
+	$auto->AddModelo($_POST);
+break;
+
+
+case "533": // autoparts select motor
+include_once '../../system/autoparts/AutopartsOp.php';
+	$auto = new Autoparts(); 
+	$auto->DelModelo($_POST["hash"]);
+break;
+
+
+
+case "534": // autoparts select motor
+include_once '../../system/autoparts/AutopartsOp.php';
+	$auto = new Autoparts(); 
+	$auto->AddMotor($_POST);
+break;
+
+
+case "535": // autoparts select motor
+include_once '../../system/autoparts/AutopartsOp.php';
+	$auto = new Autoparts(); 
+	$auto->DelMotor($_POST["hash"]);
+break;
 
 
 

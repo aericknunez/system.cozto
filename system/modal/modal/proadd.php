@@ -401,7 +401,7 @@ $imgs->VerProducto($_REQUEST["key"], "assets/img/productos/" . $_SESSION["td"] .
           <?php // aparece hasta terminar el ingreso
               if($_REQUEST["step"] == 5) {  ?>
                <div class="modal-footer">
-                  <a href="?" class="btn btn-primary btn-rounded">TERMINAR</a>
+                  <a id="modalOut" producto="<?php echo $_REQUEST["key"]; ?>" class="btn btn-primary btn-rounded">TERMINAR</a>
               </div>
             <?php }  ?>
           

@@ -216,7 +216,7 @@ echo '<label>Tipo de Cuenta</label>
 
 
 
-	public function VerUsuarios($avatar = NULL){
+		public function VerUsuarios($avatar = NULL){
 	$db = new dbConn();
 
 	if($_SESSION["tipo_cuenta"] != 1){
@@ -224,6 +224,7 @@ echo '<label>Tipo de Cuenta</label>
 	} else {
 		$a = $db->query("SELECT * FROM login_members INNER JOIN login_userdata ON login_members.username = login_userdata.user WHERE login_userdata.id != 1");
 	}
+	
 
 	if($a->num_rows > 0){
 		echo '<table class="table table-sm">
@@ -244,7 +245,7 @@ echo '<label>Tipo de Cuenta</label>
 	}
     foreach ($a as $b) {
 
-    	if(($_SESSION["user"] == $user) or ($_SESSION["tipo_cuenta"]!= 5)){
+    	if(($_SESSION["user"] == $b["user"]) or ($_SESSION["tipo_cuenta"] == 1 or $_SESSION["tipo_cuenta"] == 2 or $_SESSION["tipo_cuenta"] == 5)){
 
     	echo '<tr>';
 		
@@ -252,13 +253,13 @@ echo '<label>Tipo de Cuenta</label>
 		      <td class="d-none d-md-block">'.$b["email"].'</td>
 		      <td>'.Helpers::UserName($b["tipo"]).'</td>';
 
-			if($_SESSION["user"] == $b["username"] or $_SESSION["tipo_cuenta"] == 1  or $_SESSION["tipo_cuenta"] == 2){
+			if($_SESSION["user"] == $b["username"] or $_SESSION["tipo_cuenta"] == 1  or $_SESSION["tipo_cuenta"] == 5){
 				echo '<td><a id="xdelete" op="7" iden="'.$b["id"].'" username="'.$b["username"].'" ><i class="fa fa-trash red-text fa-lg"></i></a></td>';
 			} else {
 				echo '<td><a><i class="fa fa-trash grey-text  fa-lg"></i></a></td>';
 			}
 
-			if($_SESSION["user"] == $b["username"] or $_SESSION["tipo_cuenta"] == 1  or $_SESSION["tipo_cuenta"] == 2){
+			if($_SESSION["user"] == $b["username"] or $_SESSION["tipo_cuenta"] == 1  or $_SESSION["tipo_cuenta"] == 2 or $_SESSION["tipo_cuenta"] == 5){
 				echo '<td><a id="u_pass" username="'.$b["username"].'" op="9"><i class="fa fa-unlock-alt red-text fa-lg"></i></a>
 					<a id="u_update" username="'.$b["username"].'" op="10"><i class="fa fa-edit red-text fa-lg"></i></a></td>';
 			} else {
@@ -268,7 +269,7 @@ echo '<label>Tipo de Cuenta</label>
 
 		if($avatar == NULL){
 			
-			if($_SESSION["user"] == $b["username"] or $_SESSION["tipo_cuenta"] == 1  or $_SESSION["tipo_cuenta"] == 2){
+			if($_SESSION["user"] == $b["username"] or $_SESSION["tipo_cuenta"] == 1  or $_SESSION["tipo_cuenta"] == 5){
 				echo '<td><a id="ver_avatar" op="6" username = "'.$b["username"].'"><i class="fa fa-user red-text fa-lg"></i></a></td>';
 			} else {
 				echo '<td><a ><i class="fa fa-user grey-text fa-lg"></i></a></td>';
@@ -285,6 +286,7 @@ echo '<label>Tipo de Cuenta</label>
 
 	}
 
+	
 
 
 

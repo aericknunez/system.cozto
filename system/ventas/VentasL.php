@@ -272,7 +272,7 @@ if($datos["precio"] != NULL and $datos["producto"] != NULL){
 		// primero verifico si el producto es un compuesto. si es compuesto o dependiente actualizo todos los productos que este conlleva . si es un servicio no se hace nada
 		// 
 		    if ($r = $db->select("compuesto, dependiente, servicio", "producto", "WHERE cod = '$cod' and td = ".$_SESSION["td"]."")) { 
-		        $compuesto = $r["nombre"]; $dependiente = $r["dependiente"]; $servicio = $r["servicio"];
+		        $compuesto = $r["compuesto"]; $dependiente = $r["dependiente"]; $servicio = $r["servicio"];
 		    }  unset($r);  
 
 			if($compuesto == "on"){ // aqui veo que productos lleva el producto comp
@@ -442,13 +442,14 @@ if($datos["precio"] != NULL and $datos["producto"] != NULL){
 		    $a = $db->query("SELECT * FROM ticket WHERE orden = ".$_SESSION["orden"]." and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."");
 
 		    if($a->num_rows > 0){
-		    		echo '<table class="table table-striped table-sm">
+		    		echo '<div class="table-responsive">
+		    		<table class="table table-striped table-sm">
 					  <thead>
 					    <tr>
 					      <th scope="col">Cant</th>
 					      <th scope="col">Producto</th>
 					      <th scope="col">Precio</th>
-					      <th scope="col">Subtotal</th>
+					      <th scope="col" class="d-none d-md-block">Subtotal</th>
 					      <th scope="col">Impuesto</th>
 					      <th scope="col">Total</th>
 					      <th scope="col">Borrar</th>
@@ -470,7 +471,8 @@ if($datos["precio"] != NULL and $datos["producto"] != NULL){
 					</tr>';
 				    }
 				    	echo '</tbody>
-							</table>';
+							</table>
+							</div>';
 		    } $a->close();
 
 		} else {
@@ -683,6 +685,7 @@ if($datos["precio"] != NULL and $datos["producto"] != NULL){
 	   	Helpers::UpdateId("ticket_orden", $cambios, "correlativo = ".$_SESSION["orden"]." and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."");  
 
 	   	$this->FacturaResult($factura, $datos["efectivo"]);
+	   	$this->RegistroDocumento($factura);
 
 	   	if(isset($_SESSION["cliente_c"])){ // agregar el credito
 	   		$opciones = new Opciones();
@@ -728,10 +731,43 @@ echo '<p class="text-center font-weight-bold">CAMBIO:</p>';
 echo '<div class="display-4 text-center font-weight-bold">'. Helpers::Dinero($cambio) . '</div>'; 
 
 
+$_SESSION["factura_actual_print"] = $factura; // solo para imprimir la factura correcta
+$_SESSION["cambio_actual_print"] = $cambio; // solo para imprimir la factura correcta
+
+
+// echo '<hr>
+// <div class="clearfix">
+// <div class="float-left">
+// <a href="system/facturar/ticket_web.php?factura='.$factura.'" class="btn-floating btn-sm btn-success"><i class="fas fa-print"></i></a>
+// </div>
+// <div class="float-right">
+// <a href="system/facturar/ticket_web.php?factura='.$factura.'" class="btn-floating btn-sm btn-info"><i class="fas fa-print"></i></a>
+// </div>
+// </div>';
+
+
    }
 
 
+  public function RegistroDocumento($factura){ // registra el documento al facturar
+    $db = new dbConn();
 
+	if($_SESSION["factura_cliente"] != NULL and $_SESSION["factura_documento"] != NULL){
+		$datos = array();
+		$datos["factura"] = $factura;
+	    $datos["tx"] = $_SESSION["tx"];
+	    $datos["cliente"] = $_SESSION["factura_cliente"];
+	    $datos["documento"] = $_SESSION["factura_documento"];
+	    $datos["hash"] = Helpers::HashId();
+	    $datos["time"] = Helpers::TimeId();
+	    $datos["td"] = $_SESSION["td"];
+	    if($db->insert("facturar_documento_factura", $datos)){
+	    	unset($_SESSION["factura_cliente"]);
+	    	unset($_SESSION["factura_documento"]);
+	    } 	
+	}
+
+}
 
 
 

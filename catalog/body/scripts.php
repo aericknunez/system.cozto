@@ -23,4 +23,3 @@
     <!-- carga el query correcto -->
     <?php include_once 'application/src/query.php' ?> 
 
-

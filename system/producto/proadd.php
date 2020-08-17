@@ -1,6 +1,6 @@
 <?php 
 defined('BASEPATH') OR exit('No direct script access allowed');
-
+include_once 'application/common/Alerts.php';
 
     if ($r = $db->select("cod", "producto", "WHERE td = ".$_SESSION["td"]." ORDER BY id desc limit 1")) { 
         $codigox = $r["cod"] + 1;
@@ -31,14 +31,23 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 
     <div class="col-md-4 mb-1 md-form">
-      <select class="mdb-select md-form colorful-select dropdown-dark" id="proveedor" name="proveedor">
+      <div class="row">
+        <div class="col-10">
+          <select class="mdb-select md-form colorful-select dropdown-dark" id="proveedor" name="proveedor">
         <?php echo Helpers::SelectData("* Proveedor", "proveedores", "hash", "nombre"); ?>
       </select>
+        </div>
+        <div class="col-2 mt-4">
+          <i class="fas fa-plus-circle fa-2x green-text"></i>
+        </div>
+      </div>       
     </div>
 
 
     <div class="col-md-4 mb-1 md-form">
-      <select class="mdb-select md-form colorful-select dropdown-dark" id="categoria" name="categoria">   
+      <div class="row">
+        <div class="col-10">
+          <select class="mdb-select md-form colorful-select dropdown-dark" id="categoria" name="categoria">   
         <?php 
        echo Helpers::SelectDataMultiple("* Categoria", 
         "producto_categoria", "hash", "categoria", 
@@ -47,17 +56,27 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           NULL); 
         ?>
 
-        <?php 
-        // echo Helpers::SelectData("* Categoria", "producto_categoria_sub", "hash", "subcategoria"); 
-        ?>
-      </select>
+        </select>
+        </div>
+        <div class="col-2 mt-4">
+          <i class="fas fa-plus-circle fa-2x green-text"></i>
+        </div>
+      </div>
     </div>
 
     <div class="col-md-4 mb-1 md-form">
-        <select class="mdb-select md-form colorful-select dropdown-dark" id="medida" name="medida">
+      <div class="row">
+        <div class="col-10">
+      <select class="mdb-select md-form colorful-select dropdown-dark" id="medida" name="medida">
         <?php echo Helpers::SelectData("* Unidad de Medida", "producto_unidades", "hash", "nombre"); ?>
       </select>
-    </div>
+        </div>
+        <div class="col-2 mt-4">
+          <i class="fas fa-plus-circle fa-2x green-text"></i>
+        </div>
+      </div>
+  </div>
+
 
   </div>
 
@@ -95,9 +114,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <?php } ?>
   </div>
 
-  <div class="form-row">
+  <div class="form-row mt-4">
   	
-    <div class="col-md-12 mb-1 md-form mt-4">
+    <div class="col-md-12 mb-1 md-form">
       <textarea id="informacion" name="informacion" class="md-textarea form-control" rows="3"></textarea>
   		<label for="informacion">Informaci&oacuten adicional</label>
     </div>
@@ -171,7 +190,7 @@ if($_SESSION['root_ecommerce'] == "on"){
   <div class="col-6 col-md-6 mb-1 md-form">
         <div class="switch">
             <label>
-             Mostrar Promocion ||  Off
+             Mostrar Promoción ||  Off
               <input type="checkbox" id="promocion" name="promocion">
               <span class="lever"></span> On 
             </label>
@@ -203,3 +222,41 @@ if($_SESSION['root_ecommerce'] == "on"){
 </form>
 
 <!-- TERMINA FORMULARIO PRINCIPAL -->
+
+
+
+
+
+<?php 
+if($_SESSION["root_autoparts"] == "on"){
+ ?>
+<!-- para agregar los detalles de autoparts -->
+<!-- modal para ver el credito -->
+<div class="modal" id="AddAutoParts" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"  data-backdrop="false">
+  <div class="modal-dialog modal-lg z-depth-5" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">
+         AGREGAR DETALLES</h5>
+      </div>
+      <div class="modal-body">
+<!-- ./  content -->
+
+<div id="vista"></div>
+
+<!-- ./  content -->
+      </div>
+      <div class="modal-footer">
+
+        <a id="eliminardatos" op="525" class="btn-floating btn-sm btn-secondary"><i class="fas fa-trash"></i></a>
+        <a id="cerrarDetalles" class="btn btn-danger btn-rounded">Omitir Estos Datos</a>
+ 
+   
+      </div>
+    </div>
+  </div>
+</div>
+<!-- ./  Modal -->
+<?php 
+}
+ ?>

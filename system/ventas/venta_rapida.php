@@ -52,6 +52,17 @@ $ventas->VerProducto();
   </div>
   <div class="col-md-12 z-depth-2 justify-content-center" id="muestra-busqueda"></div>
 </div>
+
+        <!-- Default switch -->
+          <div class="switch">
+            Busqueda por Tags
+            <label>
+             Off
+              <input type="checkbox" id="busquedaTags" name="busquedaTags" >
+              <span class="lever"></span> 
+             On 
+            </label>
+          </div>
 <!-- CONTENIDO -->
       </div>
       <div class="modal-footer">

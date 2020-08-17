@@ -90,8 +90,16 @@ if((Helpers::ServerDomain() == FALSE and $_SESSION["root_plataforma"] == 0) or (
 <li><a href="?proagregar" class="waves-effect"><i class="fas fa-columns"></i> Agregar Productos</a></li>
 <li><a href="?proaverias" class="waves-effect"><i class="fas fa-database"></i> Descontar Averias</a></li>
 
+<?php 
+if($_SESSION["root_autoparts"] == "on"){
+ ?>
+<li><a href="?autoopciones" class="waves-effect arrow-r"><i class="fas fa-handshake"></i> Marcas y modelos</a></li>
+<li><a href="?autoverproductos" class="waves-effect arrow-r"><i class="fas fa-handshake"></i> Productos por marca</a></li>
+<?php } ?>
+
 <?php  if((Helpers::ServerDomain() == FALSE and $_SESSION["root_plataforma"] == 0) or (Helpers::ServerDomain() == TRUE and $_SESSION["root_plataforma"] == 1)) {
 ?>
+
 <li><a href="?proopciones" class="waves-effect arrow-r"><i class="fas fa-handshake"></i> Opciones</a></li>
 <?php  } ?>
 <li><a href="?compuestos" class="waves-effect"><i class="fas fa-address-book"></i> Productos Compuestos</a></li>
@@ -200,7 +208,7 @@ if((Helpers::ServerDomain() == FALSE and $_SESSION["root_plataforma"] == 0) or (
 
 
 
-<?php if($_SESSION["tipo_cuenta"] != 4 and $_SESSION["tipo_sistema"] == 3) {  /// planilla?>
+<?php if($_SESSION["tipo_cuenta"] != 4 and $_SESSION["root_tipo_sistema"] == 3) {  /// planilla ?>
 
 <li><a class="collapsible-header waves-effect arrow-r"><i class="fas fa-user-alt"></i> PLANILLA<i class="fa fa-angle-down rotate-icon"></i></a>
 <div class="collapsible-body">
@@ -257,6 +265,7 @@ if((Helpers::ServerDomain() == FALSE and $_SESSION["root_plataforma"] == 0) or (
 <li><a href="?user" class="waves-effect arrow-r"><i class="fas fa-user"></i> Usuarios </a></li>
 
 <?php if($_SESSION["tipo_cuenta"] == 1) { ?>
+<li><a href="?mod_factura" class="waves-effect"><i class="fas fa-cogs"></i> Configuraciones Facturas</a></li>
 <li><a href="?root" class="waves-effect"><i class="fas fa-cogs"></i> Configuraciones Root</a></li>
 <?php } ?>
 </ul>

@@ -22,5 +22,5 @@ if($cut->UltimaFecha() != date("d-m-Y")){ // comprobacion de corte
 } else { /// termina comprobacion de corte
 	Alerts::CorteEcho("ventas");
 }
-// print_r($_SESSION);
+
 ?>
