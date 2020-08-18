@@ -8,19 +8,6 @@ $seslog = new Login();
 
 $seslog->sec_session_start(); // Our custom secure way of starting a PHP session.
 
-//////////////////// QUITAR ESTE CODIGO ///////////////
- $db = new dbConn();     
-    $a = $db->query("SELECT username FROM login_members");
-    foreach ($a as $b) {
-            
-            $userx = sha1($b["username"]);
-            $cambio = array();
-            $cambio["user"] = $b["username"];
-            $db->update("login_userdata", $cambio, "WHERE user='$userx'");
-    
-    } $a->close();
-
-////////////////////////////////////////////////////
 
 if (isset($_POST['email'], $_POST['password'])) {
     $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
