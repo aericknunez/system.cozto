@@ -19,7 +19,7 @@ public function AddMarca($data){
       $cod = $cod + 1;
 
         $datos["cod"] = $cod;
-        $datos["marca"] = $data["marca"];
+        $datos["marca"] = strtoupper($data["marca"]);
         $datos["hash"] = Helpers::HashId();
         $datos["time"] = Helpers::TimeId();
         $datos["td"] = $_SESSION["td"];
@@ -96,7 +96,7 @@ public function AddModelo($data){
         $datos = array();
         $datos["marca"] = $data["marca-modelo"];
         $datos["cod"] = $cod;
-        $datos["modelo"] = $data["modelo"];
+        $datos["modelo"] = strtoupper($data["modelo"]);
         $datos["hash"] = Helpers::HashId();
         $datos["time"] = Helpers::TimeId();
         $datos["td"] = $_SESSION["td"];
@@ -180,7 +180,7 @@ public function AddItem($data){
 
         $datos = array();
         $datos["cod"] = $cod;
-        $datos["item"] = $data["item"];
+        $datos["item"] = strtoupper($data["item"]);
         $datos["hash"] = Helpers::HashId();
         $datos["time"] = Helpers::TimeId();
         $datos["td"] = $_SESSION["td"];
