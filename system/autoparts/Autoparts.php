@@ -16,8 +16,8 @@ public function SelectStep(){
   elseif(!isset($_SESSION["detallesAtoparts"]["anio"])){
     $this->AddAnio();
   }
-    elseif(!isset($_SESSION["detallesAtoparts"]["motor"])){
-    $this->AddMotor();
+  elseif(!isset($_SESSION["detallesAtoparts"]["anio2"])){
+    $this->AddAnio2();
   } else {
 
     $this->DetallesSeleccion();
@@ -88,7 +88,7 @@ public function SelectModelo($modelo){
     $db = new dbConn();
 
      echo '<blockquote class="blockquote bq-primary">
-      <p class="bq-title">Seleccione un Año</p>
+      <p class="bq-title">Seleccione un Año inicial</p>
     </blockquote>';
 
         for ($i = 2000; $i <= date("Y"); $i++) {
@@ -104,25 +104,21 @@ public function SelectAnio($anio){
 }
 
 
-  public function AddMotor(){
+  public function AddAnio2(){
     $db = new dbConn();
 
-     echo '<blockquote class="blockquote bq-primary">
-      <p class="bq-title">Seleccione un Motor</p>
+     echo '<blockquote class="blockquote bq-secondary">
+      <p class="bq-title">Seleccione un Año final</p>
     </blockquote>';
 
-      
-    $a = $db->query("SELECT * FROM autoparts_motor WHERE marca = '".$_SESSION["detallesAtoparts"]["marca"]."' and td = " . $_SESSION["td"]);
-    foreach ($a as $b) {
-      
-      echo '<a id="selectmotor" op="526" motor="'.$b["hash"].'" type="button" class="btn btn-secondary btn-rounded waves-effect">'.$b["motor"].'</a>';
-
-    } $a->close();
-      echo '<a id="selectmotor" op="526" motor="" type="button" class="btn btn-warning btn-rounded waves-effect">Ninguno</a>';        
+        for ($i = 2000; $i <= date("Y"); $i++) {
+        echo '<a id="selectanio2" op="526" anio2="'.$i.'" type="button" class="btn btn-secondary btn-rounded waves-effect">'.$i.'</a>';
+        }
   }
 
-public function SelectMotor($motor){
-  $_SESSION["detallesAtoparts"]["motor"] = $motor;
+
+public function SelectAnio2($anio2){
+  $_SESSION["detallesAtoparts"]["anio2"] = $anio2;
 
   $this->SelectStep();
 }
@@ -136,19 +132,26 @@ public function DetallesSeleccion(){
 
   if($_SESSION["detallesAtoparts"] != NULL){
 
-        if ($r = $db->select("marca", "autoparts_marca", "WHERE hash = '".$_SESSION["detallesAtoparts"]["marca"]."' and td = " . $_SESSION["td"])) { 
+        if ($r = $db->select("cod, marca", "autoparts_marca", "WHERE hash = '".$_SESSION["detallesAtoparts"]["marca"]."' and td = " . $_SESSION["td"])) { 
         $marca = $r["marca"];
+        $cod = $r["cod"];
+        $_SESSION["detallesAtoparts"]["marcatxt"] = $marca;
+        $_SESSION["detallesAtoparts"]["marcacod"] = $cod;
     } unset($r);  
 
-    if ($r = $db->select("modelo", "autoparts_modelo", "WHERE hash = '".$_SESSION["detallesAtoparts"]["modelo"]."' and td = " . $_SESSION["td"])) { 
+    if ($r = $db->select("cod, modelo", "autoparts_modelo", "WHERE hash = '".$_SESSION["detallesAtoparts"]["modelo"]."' and td = " . $_SESSION["td"])) { 
         $modelo = $r["modelo"];
+        $cod = $r["cod"];
+        $_SESSION["detallesAtoparts"]["modelotxt"] = $modelo;
+        $_SESSION["detallesAtoparts"]["modelocod"] = $cod;
     } unset($r);  
 
-    if ($r = $db->select("motor", "autoparts_motor", "WHERE hash = '".$_SESSION["detallesAtoparts"]["motor"]."' and td = " . $_SESSION["td"])) { 
-        $motor = $r["motor"];
-    } unset($r);  
 
-  Alerts::Mensajey($marca . ", " . $modelo . ", " . $motor . ", " .$_SESSION["detallesAtoparts"]["anio"], "success", "verModal");
+  Alerts::Mensajey($marca . " - " . $modelo . " Desde " .$_SESSION["detallesAtoparts"]["anio"] . " hasta " .$_SESSION["detallesAtoparts"]["anio2"] , "success", "verModal");
+
+
+  } else {
+    Alerts::Mensajey("Seleccione Marca y Modelo", "danger", "verModal");
   }
 
 }
@@ -181,18 +184,18 @@ public function InsertDataProduct($producto){
         $modelo = $r["modelo"];
     } unset($r);  
 
-    if ($r = $db->select("motor", "autoparts_motor", "WHERE hash = '".$_SESSION["detallesAtoparts"]["motor"]."' and td = " . $_SESSION["td"])) { 
-        $motor = $r["motor"];
-    } unset($r);  
+  
 
     $anio = $_SESSION["detallesAtoparts"]["anio"];
+    $anio = $_SESSION["detallesAtoparts"]["anio2"];
+
 
     $datos = array();
     $datos["producto"] = $producto;
     $datos["marca"] = $marca;
-    $datos["modelo"] = $modelo;
-    $datos["motor"] = $motor;
+    $datos["modelo"] = $modelo;    
     $datos["anio"] = $anio;
+    $datos["anio2"] = $anio2;
     $datos["hash"] = Helpers::HashId();
     $datos["time"] = Helpers::TimeId();
     $datos["td"] = $_SESSION["td"];

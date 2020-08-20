@@ -95,7 +95,7 @@ elseif(isset($_GET["backup"])) include_once 'system/bdbackup/respaldo.php'; // b
 // opciones de autoparts
 elseif(isset($_GET["autoopciones"])) include_once 'system/autoparts/opciones.php'; 
 elseif(isset($_GET["autoverproductos"])) include_once 'system/autoparts/verproductos.php'; 
-
+elseif(isset($_GET["autoproadd"])) include_once 'system/autoparts/proadd.php'; // agregar
 
 
 // factura

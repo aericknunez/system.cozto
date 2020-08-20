@@ -21,7 +21,7 @@ $producto = new ProUpdate();
 
 <?php if($_REQUEST["key"] != NULL){ 
   
-  if ($r = $db->select("*", "producto", "WHERE cod = ".$_REQUEST["key"]." and td = ".$_SESSION["td"]."")) { 
+  if ($r = $db->select("*", "producto", "WHERE cod = '".$_REQUEST["key"]."' and td = ".$_SESSION["td"]."")) { 
 
 $cod = $r["cod"];
 $descripcion = $r["descripcion"];  

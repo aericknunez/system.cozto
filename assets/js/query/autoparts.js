@@ -35,7 +35,7 @@ $(document).ready(function(){
 
 
    $("body").on("click","#verModal",function(){  // es solo para ver el modal 
-        $('#AddAutoParts').modal('show');
+        AddDetallesAutoParts();
     });
 
 
@@ -102,11 +102,11 @@ $(document).ready(function(){
 
 
 
-    $("body").on("click","#selectmotor",function(){
+    $("body").on("click","#selectanio2",function(){
        
         var op = $(this).attr('op');
-        var motor = $(this).attr('motor');
-        var dataString = 'op='+op+'&motor='+motor;
+        var anio2 = $(this).attr('anio2');
+        var dataString = 'op='+op+'&anio2='+anio2;
            
         $.ajax({
             type: "POST",

@@ -1635,11 +1635,12 @@ break;
 
 
 
-case "526": // autoparts select motor
+case "526": // autoparts select ano 2
 include_once '../../system/autoparts/Autoparts.php';
 	$auto = new Autoparts(); 
-	$auto->SelectMotor($_POST["motor"]);
+	$auto->SelectAnio2($_POST["anio2"]);
 break;
+
 
 
 case "527": // autoparts select motor
@@ -1658,7 +1659,7 @@ break;
 
 
 
-case "530": // autoparts select motor
+case "530": // 
 include_once '../../system/autoparts/AutopartsOp.php';
 	$auto = new Autoparts(); 
 	$auto->AddMarca($_POST);
@@ -1666,7 +1667,7 @@ break;
 
 
 
-case "531": // autoparts select motor
+case "531": // 
 include_once '../../system/autoparts/AutopartsOp.php';
 	$auto = new Autoparts(); 
 	$auto->DelMarca($_POST["hash"]);
@@ -1674,14 +1675,14 @@ break;
 
 
 
-case "532": // autoparts select motor
+case "532": // 
 include_once '../../system/autoparts/AutopartsOp.php';
 	$auto = new Autoparts(); 
 	$auto->AddModelo($_POST);
 break;
 
 
-case "533": // autoparts select motor
+case "533": // 
 include_once '../../system/autoparts/AutopartsOp.php';
 	$auto = new Autoparts(); 
 	$auto->DelModelo($_POST["hash"]);
@@ -1689,20 +1690,92 @@ break;
 
 
 
-case "534": // autoparts select motor
+case "534": // gregar los items
 include_once '../../system/autoparts/AutopartsOp.php';
 	$auto = new Autoparts(); 
-	$auto->AddMotor($_POST);
+	$auto->AddItem($_POST);
 break;
 
 
-case "535": // autoparts select motor
+
+case "535": // 
 include_once '../../system/autoparts/AutopartsOp.php';
 	$auto = new Autoparts(); 
-	$auto->DelMotor($_POST["hash"]);
+	$auto->DelItem($_POST["hash"]);
 break;
 
 
+
+case "536": // agregar Producstos al sistema
+include_once '../../system/autoparts/AutopartsOp.php';
+	$auto = new Autoparts(); 
+	$auto->AddProductos($_POST);
+break;
+
+
+
+case "537": // Busqueda de 
+include_once '../../system/autoparts/AutopartsOp.php';
+	$auto = new Autoparts(); 
+	$auto->BusquedaProductos($_POST);
+break;
+
+
+
+case "538":  /// ver los productos agregados en el modal de agregar mas
+include_once '../../system/producto/ProUpdate.php';
+	$productos = new ProUpdate;
+	$productos->VerAgrega($_POST["key"]);
+break;
+
+
+
+case "539":  /// ver datos modal
+include_once '../../system/autoparts/AutopartsOp.php';
+	$auto = new Autoparts(); 
+	$auto->VerDatosProducto($_POST["key"]);
+break;
+
+
+
+case "540":  /// verifica si ya existe el producto para no ingresarlo
+include_once '../../system/autoparts/AutopartsOp.php';
+	$auto = new Autoparts(); 
+	$auto->VerificarExistencia($_POST["cod"]);
+break;
+
+
+
+
+case "541":  /// ver datos modal
+include_once '../../system/autoparts/AutopartsOp.php';
+	$auto = new Autoparts(); 
+	$auto->VerDatosProducto($_POST["key"], 1);
+break;
+
+
+
+case "542":  /// ver cantidad
+include_once '../../system/autoparts/AutopartsOp.php';
+	$auto = new Autoparts(); 
+	echo $auto->VerCantidad($_REQUEST["key"]);
+break;
+
+
+
+case "543":  /// ver precio
+include_once '../../system/autoparts/AutopartsOp.php';
+	$auto = new Autoparts(); 
+	echo $auto->VerPrecio($_REQUEST["key"]);
+break;
+
+
+
+case "544":  /// cambiar precio
+include_once '../../system/autoparts/AutopartsOp.php';
+	$auto = new Autoparts(); 
+	echo $auto->CambiarPrecio($_POST);
+break;
 
 
 

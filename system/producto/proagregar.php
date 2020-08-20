@@ -21,7 +21,7 @@ $producto = new ProUpdate();
 
 <?php if($_REQUEST["key"] != NULL){ 
   
-  if ($r = $db->select("*", "producto", "WHERE cod = ".$_REQUEST["key"]." and td = ".$_SESSION["td"]."")) { 
+  if ($r = $db->select("*", "producto", "WHERE cod = '".$_REQUEST["key"]."' and td = ".$_SESSION["td"]."")) { 
 
 $cod = $r["cod"];
 $descripcion = $r["descripcion"];  
@@ -44,12 +44,12 @@ echo '<h2 class="h2-responsive">'.$descripcion .'</h2>';
   <div class="form-row">
     <div class="col-md-4 mb-2 md-form">
       <label for="cod">* Codigo Producto</label>
-      <input type="number" class="form-control" id="cod" name="cod" readonly value="<?php echo $cod; ?>">
+      <input type="text" class="form-control" id="cod" name="cod" readonly value="<?php echo $cod; ?>">
     </div>
 
   <div class="col-md-8 mb-2 md-form">
       <label for="descripcion">* Descripci&oacuten</label>
-      <input type="text" class="form-control" value="<?php echo $descripcion; ?>" readonly>
+      <input type="text" id="descripcion" name="descripcion" class="form-control" value="<?php echo $descripcion; ?>" readonly>
     </div>
 
   </div>

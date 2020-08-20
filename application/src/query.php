@@ -326,7 +326,12 @@ if($_SESSION["root_autoparts"] == "on"){
 echo '<script type="text/javascript" src="assets/js/query/autopartsVerProductos.js?v='.$numero.'"></script>';	
 }
 } 
-
+elseif(isset($_GET["autoproadd"])) {
+		if($_SESSION["root_autoparts"] == "on"){
+	echo '<script type="text/javascript" src="assets/js/query/autoparts.js?v='.$numero.'"></script>';
+	echo '<script type="text/javascript" src="assets/js/query/autopartsProducto.js?v='.$numero.'"></script>';	
+		}
+} 
 
 
 

@@ -210,7 +210,7 @@ class Productos{
 
   public function GetNombreProducto($cod){
       $db = new dbConn();
-      if ($r = $db->select("descripcion", "producto", "WHERE cod = ".$cod." and td = ".$_SESSION["td"]."")) { 
+      if ($r = $db->select("descripcion", "producto", "WHERE cod = '".$cod."' and td = ".$_SESSION["td"]."")) { 
         $nombre = $r["descripcion"];
       }  unset($r); 
       return $nombre;
@@ -410,7 +410,7 @@ class Productos{
               $datos["cant"] = $datox["cantidad"];
               $datos["td"] = $_SESSION["td"];
               $datos["hash"] = Helpers::HashId();
-                $datos["time"] = Helpers::TimeId();
+              $datos["time"] = Helpers::TimeId();
               if ($db->insert("ubicacion_asig", $datos)) {
                   Alerts::Alerta("success","Agregado!","Agregado correctamente!");
               }
@@ -1270,6 +1270,8 @@ $page <= 1 ? $enable = 'disabled' : $enable = '';
         }
         ///       
 
+        $this->VerTagModal($data["key"]);
+
       } else {
                 Alerts::Mensajex("No se encuentra el producto","danger",$boton,$boton2);
               } $a->close();
@@ -1277,6 +1279,22 @@ $page <= 1 ? $enable = 'disabled' : $enable = '';
 
 
           
+  }
+
+  public function VerTagModal($producto){
+      $db = new dbConn();
+          $a = $db->query("SELECT * FROM producto_tags WHERE producto = '$producto' and td = ".$_SESSION["td"]."");
+          if($a->num_rows > 0){
+
+
+              echo '<strong class="mr-2">Palabras Clave: </strong>';
+              foreach ($a as $b) {  
+                echo '<div class="badge badge-pill badge-light mr-3">
+                        '.$b["tag"].'
+                     </div>';
+      
+              }
+          } $a->close();  
   }
 
 

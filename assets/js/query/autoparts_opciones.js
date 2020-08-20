@@ -15,8 +15,6 @@ $('.mdb-select').materialSelect();
 			success: function(data){
 				$("#form-addmarca").trigger("reset");
 				$("#destinomarca").html(data);
-				$("#marca-motor").load('application/src/routes.php?op=14&select=Marca&tabla=autoparts_marca&iden=hash&nombre=marca');		
-
 				LoaderOn();
 			
 			}
@@ -54,21 +52,21 @@ $('.mdb-select').materialSelect();
 
 
 
-	$('#btn-addmotor').click(function(e){ /// para agregar marca
+	$('#btn-additem').click(function(e){ /// para agregar marca
 	e.preventDefault();
 	$.ajax({
 			url: "application/src/routes.php?op=534",
 			method: "POST",
-			data: $("#form-addmotor").serialize(),
+			data: $("#form-additem").serialize(),
 			success: function(data){
-				$("#form-addmotor").trigger("reset");
-				$("#destinomotor").html(data);
+				$("#form-additem").trigger("reset");
+				$("#destinoitems").html(data);
 			}
 		});
 	});
     
 
-	$("#form-addmotor").keypress(function(e) {//Para deshabilitar el uso de la tecla "Enter"
+	$("#form-additem").keypress(function(e) {//Para deshabilitar el uso de la tecla "Enter"
 	if (e.which == 13) {
 	return false;
 	}
@@ -105,15 +103,11 @@ $('.mdb-select').materialSelect();
 	    	
 	    	if(valor == '1'){ $("#destinomarca").html(data); }
 	    	if(valor == '2'){ $("#destinomodelo").html(data); }
-	    	if(valor == '3'){ $("#destinomotor").html(data); }
+	    	if(valor == '3'){ $("#destinoitems").html(data); }
 			$('#ConfirmDelete').modal('hide');
 			
-			$("#marca-motor").load('application/src/routes.php?op=14&select=Marca&tabla=autoparts_marca&iden=hash&nombre=marca');		
-
-	   	 });
-	    LoaderOn();
-
-	    
+			LoaderOn();
+	   	 });	    
 	});
 
 

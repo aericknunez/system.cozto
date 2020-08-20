@@ -21,7 +21,7 @@ $auto = new Autoparts();
     </li>
     <li class="nav-item">
       <a class="nav-link waves-light" id="caracteristicas-tab-classic" data-toggle="tab" href="#caracteristicas-classic" role="tab"
-        aria-controls="caracteristicas-classic" aria-selected="false">MOTORES</a>
+        aria-controls="caracteristicas-classic" aria-selected="false">ITEM PRODUCTOS</a>
     </li>
 
   </ul>
@@ -108,39 +108,49 @@ $auto = new Autoparts();
 
 
     <div class="tab-pane fade" id="caracteristicas-classic" role="tabpanel" aria-labelledby="caracteristicas-tab-classic">
-      <?php Alerts::Mensaje("Ingrese tipos de motores","success",$boton,$boton2); ?>
+      <?php Alerts::Mensaje("Ingrese los items de los productos","success",$boton,$boton2); ?>
 
 		<div class="row">
 		    <div class="col-md-6 btn-outline-info z-depth-2" id="zonamotores">
                 
-                  <!-- Inicia Formulario -->
-                <form id="form-addmotor">
+        <!-- Inicia Formulario -->
+                <form id="form-additem">
+
+                  <div class="form-row">
+
+<select class="browser-default custom-select" id="categoria" name="categoria">   
+<?php 
+echo Helpers::SelectDataMultiple("* Categoria", 
+"producto_categoria", "hash", "categoria", 
+"categoria",
+"producto_categoria_sub", "hash", "subcategoria", 
+"CARROCERIA"); 
+?>
+
+</select>
+
+                  </div>
   
-                    <div class="col-md-12 mb-2 md-form">
-                      <label for="cod">Motor</label>
-                      <input type="text" class="form-control" id="motor" name="motor" required>
+                  <div class="form-row">
+                    <div class="col-md-8 mb-2 md-form">
+                      <label for="item">Item - Producto</label>
+                      <input type="text" class="form-control" id="item" name="item" required>
                     </div>
 
-                  <div class="col-md-12 mb-2 md-form">
-                    <select class="mdb-select md-form colorful-select dropdown-dark" id="marca-motor" name="marca-motor">
-                      <?php echo Helpers::SelectData("Marca", "autoparts_marca", "hash", "marca"); ?>
-                    </select>
+                  <div class="col-md-4 mb-4 md-form">
+                      <button class="btn-floating btn-sm btn-primary" type="submit" id="btn-additem"><i class="fa fa-save"></i></button>
+                    </div>
+
                   </div>
-
-
-                  <div class="col-md-12 text-center">
-                           <button class="btn btn-info" type="submit" id="btn-addmotor"><i class="fas fa-save mr-1"></i> Guardar</button>
-                  </div>
-
 
               </form>
         <!-- Termina Formulario -->
 
 		    </div>
 		    
-		    <div class="col-md-6 btn-outline-danger z-depth-2" id="destinomotor">
+		    <div class="col-md-6 btn-outline-danger z-depth-2" id="destinoitems">
 		        <?php 
-		            $auto->VerMotor();        
+		             $auto->VerItem();        
 		         ?>
 		    </div>
 		   

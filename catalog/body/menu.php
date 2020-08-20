@@ -85,7 +85,16 @@ if((Helpers::ServerDomain() == FALSE and $_SESSION["root_plataforma"] == 0) or (
 
 <?php if($_SESSION["tipo_cuenta"] != 4) { 
 ?>
-<li><a href="?proadd" class="waves-effect"><i class="fas fa-plus"></i> Nuevo Producto</a></li>
+
+<?php 
+if($_SESSION["root_autoparts"] == "on"){
+ ?>
+<li><a href="?autoproadd" class="waves-effect"><i class="fas fa-plus"></i> Nuevo Producto</a></li>
+ <?php } else {  ?>
+<li><a href="?proadd" class="waves-effect"><i class="fas fa-plus"></i> Nuevo Producto</a></li> 	
+<?php
+ } ?>
+
 <li><a href="?proup" class="waves-effect"><i class="fas fa-pencil-alt"></i> Actualizar Producto</a></li>
 <li><a href="?proagregar" class="waves-effect"><i class="fas fa-columns"></i> Agregar Productos</a></li>
 <li><a href="?proaverias" class="waves-effect"><i class="fas fa-database"></i> Descontar Averias</a></li>
@@ -109,7 +118,11 @@ if($_SESSION["root_autoparts"] == "on"){
 <!-- <li><a href="?" class="waves-effect"><i class="fas fa-database"></i> Cambios</a></li>
 <li><a href="?" class="waves-effect arrow-r"><i class="fas fa-database"></i> Devoluciones</a></li> -->
 <li><a href="?bajasexistencias" class="waves-effect"><i class="fas fa-address-book"></i> Bajas Existencias</a></li>
+<?php 
+if($_SESSION["root_autoparts"] != "on"){
+ ?>
 <li><a href="?vencimientos" class="waves-effect"><i class="fas fa-address-book"></i> Proximos Vencimientos</a></li>
+<?php } ?>
 </ul>
 </div>
 </li>

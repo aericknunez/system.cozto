@@ -27,7 +27,7 @@ $(document).ready(function(){
 
 
    $("body").on("click","#verModal",function(){  // es solo para ver el modal 
-        $('#AddAutoParts').modal('show');
+        AddDetallesAutoParts();
     });
 
 
@@ -104,11 +104,11 @@ $(document).ready(function(){
 
 
 
-    $("body").on("click","#selectmotor",function(){
+    $("body").on("click","#selectanio2",function(){
        
         var op = $(this).attr('op');
-        var motor = $(this).attr('motor');
-        var dataString = 'op='+op+'&motor='+motor;
+        var anio2 = $(this).attr('anio2');
+        var dataString = 'op='+op+'&anio2='+anio2;
            
         $.ajax({
             type: "POST",
@@ -223,6 +223,149 @@ $(function () { /// despliega el light box
 $("#mdb-lightbox-ui").load("assets/mdb-addons/mdb-lightbox-ui.html");
 });
 
+
+
+
+
+
+
+
+
+
+//// agregar productos
+
+   $("body").on("click","#addproducto",function(){ 
+        
+        $('#ModalAgregar').modal('show');
+        
+        var key = $(this).attr('key');
+        var op = $(this).attr('op');
+        var dataString = 'op='+op+'&key='+key;
+
+        $.ajax({
+            type: "POST",
+            url: "application/src/routes.php",
+            data: dataString,
+            beforeSend: function () {
+               $("#destinoproductoagrega").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt=""></div>');
+            },
+            success: function(data) {            
+                $("#destinoproductoagrega").html(data); // lo que regresa de la busquea         
+            }
+        });
+
+
+        $('#btn-productoagrega').attr("cod", key);
+
+        DatosDelProducto(key);
+
+        
+    });
+
+
+function DatosDelProducto(key){
+        var op = "539";
+        var dataString = 'op='+op+'&key='+key;
+
+        $.ajax({
+            type: "POST",
+            url: "application/src/routes.php",
+            data: dataString,
+            success: function(data) {            
+                $("#datosproducto").html(data); // lo que regresa de la busquea         
+            }
+        });
+}
+
+
+
+///
+// agrega
+    $('#btn-productoagrega').click(function(e){ /// para el formulario
+    e.preventDefault();
+    var cod = $(this).attr('cod');
+    $.ajax({
+            url: "application/src/routes.php?op=48",
+            method: "POST",
+            data: $("#form-productoagrega").serialize(),
+            beforeSend: function () {
+                $('#btn-productoagrega').html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>Loading...').addClass('disabled');
+            },
+            success: function(data){
+                $('#btn-productoagrega').html('<i class="fa fa-save mr-1"></i> Guardar').removeClass('disabled');  
+                $("#form-productoagrega").trigger("reset");
+                $("#destinoproductoagrega").html(data);
+                $("#cant-"+cod).load('application/src/routes.php?op=542&key='+cod);  
+                $("#cant-"+cod).addClass("red-text");       
+            }
+        })
+    });
+
+
+    $("body").on("click","#delproagrega",function(){ // borrar producto
+    var op = $(this).attr('op');
+    var hash = $(this).attr('hash');
+    var producto = $(this).attr('producto');
+
+        $.post("application/src/routes.php", {op:op, hash:hash, producto:producto}, function(data){
+        $("#destinoproductoagrega").html(data);
+        $("#cant-"+producto).load('application/src/routes.php?op=542&key='+producto);
+        $("#cant-"+producto).addClass("red-text");
+         });
+    });
+
+
+
+
+//// acambiar el precio de los productos
+
+   $("body").on("click","#cambiarprecio",function(){ 
+        
+        $('#ModalCambiarPrecio').modal('show');
+        
+        var key = $(this).attr('key');
+        var op = $(this).attr('op');
+        var dataString = 'op='+op+'&key='+key;
+
+        var cod = $(this).attr('cod');
+
+        $.ajax({
+            type: "POST",
+            url: "application/src/routes.php",
+            data: dataString,
+            beforeSend: function () {
+               $("#vista-precio").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt=""></div>');
+            },
+            success: function(data) {            
+                $("#vista-precio").html(data); // lo que regresa de la busquea         
+            }
+        });
+
+        $('#btn-modprecio').attr("cod", key);
+    });
+
+
+// agrega
+    $('#btn-modprecio').click(function(e){ /// para el formulario
+    e.preventDefault();
+    var cod = $(this).attr('cod');
+    $.ajax({
+            url: "application/src/routes.php?op=544",
+            method: "POST",
+            data: $("#form-modprecio").serialize(),
+            beforeSend: function () {
+                $('#btn-modprecio').html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>Loading...').addClass('disabled');
+            },
+            success: function(data){
+                $('#btn-modprecio').html('<i class="fa fa-save mr-1"></i> Guardar').removeClass('disabled');          
+                $("#form-modprecio").trigger("reset");
+                $("#vista-precio").html(data);
+                $("#precio-"+cod).load('application/src/routes.php?op=543&key='+cod);  
+                $("#precio-"+cod).addClass("red-text"); 
+                 $('#ModalCambiarPrecio').modal('hide');      
+            }
+        })
+    });
 
 
 

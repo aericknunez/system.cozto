@@ -18,7 +18,7 @@ class ProUpdate{
                 if($datos["verecommerce"] == NULL) $datos["verecommerce"] = 0;
                 $datos["descripcion"] = strtoupper($datos["descripcion"]);
                 $datos["time"] = Helpers::TimeId();
-              if (Helpers::UpdateId("producto", $datos, "cod = ".$datos["cod"]." and td = ".$_SESSION["td"]."")) {
+              if (Helpers::UpdateId("producto", $datos, "cod = '".$datos["cod"]."' and td = ".$_SESSION["td"]."")) {
                   $this->Redirect($datos);
               }           
 
@@ -104,12 +104,13 @@ class ProUpdate{
               $datos["time"] = Helpers::TimeId();
               if ($db->insert("producto_ingresado", $datos)) {
                 // debo actualizar el total (cantidad) de producto
-                    if ($r = $db->select("cantidad", "producto", "WHERE cod = ".$datox["cod"]." and td = ".$_SESSION["td"]."")) { 
+                    if ($r = $db->select("cantidad", "producto", "WHERE cod = '".$datox["cod"]."' and td = ".$_SESSION["td"]."")) { 
                         $canti = $r["cantidad"];
                     } unset($r); 
+                        
                         $cambio = array();
                         $cambio["cantidad"] = $datox["cantidad"] + $canti;
-                        Helpers::UpdateId("producto", $cambio, "cod = ".$datox["cod"]." and td = ".$_SESSION["td"].""); 
+                        Helpers::UpdateId("producto", $cambio, "cod = '".$datox["cod"]."' and td = ".$_SESSION["td"].""); 
                     //////////// 
                 Alerts::Alerta("success","Realizado!","Registro creado exitosamente!");
                 }
@@ -117,6 +118,7 @@ class ProUpdate{
               Alerts::Alerta("error","Error!","Faltan Datos!");
           }
         $this->VerAgrega($datox["cod"]);
+
   }
 
 
@@ -168,7 +170,7 @@ class ProUpdate{
   public function DelProAgrega($hash, $producto){ // elimina precio
     $db = new dbConn();
     // debo actualizar el total (cantidad) de producto
-      if ($r = $db->select("cantidad", "producto", "WHERE cod = ".$producto." and td = ".$_SESSION["td"]."")) { 
+      if ($r = $db->select("cantidad", "producto", "WHERE cod = '".$producto."' and td = ".$_SESSION["td"]."")) { 
           $canti = $r["cantidad"];
       } unset($r); 
       if ($r = $db->select("cant, fecha", "producto_ingresado", "WHERE hash = '$hash' and td = ".$_SESSION["td"]."")) { 
@@ -234,12 +236,12 @@ public function AgregaBusqueda($dato){ // Busqueda para compuestos
               $datos["time"] = Helpers::TimeId();
               if ($db->insert("producto_averias", $datos)) {
                 // debo actualizar el total (cantidad) de producto
-                    if ($r = $db->select("cantidad", "producto", "WHERE cod = ".$datox["cod"]." and td = ".$_SESSION["td"]."")) { 
+                    if ($r = $db->select("cantidad", "producto", "WHERE cod = '".$datox["cod"]."' and td = ".$_SESSION["td"]."")) { 
                         $canti = $r["cantidad"];
                     } unset($r); 
                         $cambio = array();
                         $cambio["cantidad"] = $canti - $datox["cantidad"];
-                        Helpers::UpdateId("producto", $cambio, "cod = ".$datox["cod"]." and td = ".$_SESSION["td"].""); 
+                        Helpers::UpdateId("producto", $cambio, "cod = '".$datox["cod"]."' and td = ".$_SESSION["td"].""); 
                     //////////// 
                 Alerts::Alerta("success","Realizado!","Registro creado exitosamente!");
                 }
@@ -296,7 +298,7 @@ public function AgregaBusqueda($dato){ // Busqueda para compuestos
   public function DelAveria($hash, $producto){ // elimina precio
     $db = new dbConn();
     // debo actualizar el total (cantidad) de producto
-        if ($r = $db->select("cantidad", "producto", "WHERE cod = ".$producto." and td = ".$_SESSION["td"]."")) { 
+        if ($r = $db->select("cantidad", "producto", "WHERE cod = '".$producto."' and td = ".$_SESSION["td"]."")) { 
             $canti = $r["cantidad"];
         } unset($r); 
         if ($r = $db->select("cant, fecha", "producto_averias", "WHERE hash = '$hash' and td = ".$_SESSION["td"]."")) { 
@@ -310,7 +312,7 @@ public function AgregaBusqueda($dato){ // Busqueda para compuestos
           //
                 $cambio = array();
                 $cambio["cantidad"] = $canti + $cantix;
-                Helpers::UpdateId("producto", $cambio, "cod = ".$producto." and td = ".$_SESSION["td"].""); 
+                Helpers::UpdateId("producto", $cambio, "cod = '".$producto."' and td = ".$_SESSION["td"].""); 
           //
            Alerts::Alerta("success","Eliminado!","Averia eliminada correctamente!");
         } else {

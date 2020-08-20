@@ -12,10 +12,10 @@ $x = $db->query("SELECT producto, hash, existencia FROM producto_ingresado WHERE
 foreach ($x as $y) {
 
 // cantidad total de los productos que hay
-    if ($r = $db->select("sum(cantidad)", "producto", "WHERE cod = ".$y["producto"]." and td = ".$_SESSION["td"]."")) { $cantidad = $r["sum(cantidad)"]; } unset($r); 
+    if ($r = $db->select("sum(cantidad)", "producto", "WHERE cod = '".$y["producto"]."' and td = ".$_SESSION["td"]."")) { $cantidad = $r["sum(cantidad)"]; } unset($r); 
 
 // cantidad total de las existencia
-    if ($r = $db->select("sum(existencia)", "producto_ingresado", "WHERE producto = ".$y["producto"]." and td = ".$_SESSION["td"]."")) { $canti = $r["sum(existencia)"]; } unset($r); 
+    if ($r = $db->select("sum(existencia)", "producto_ingresado", "WHERE producto = '".$y["producto"]."' and td = ".$_SESSION["td"]."")) { $canti = $r["sum(existencia)"]; } unset($r); 
 
 // existencia actual del registro
 $existencia = $y["existencia"];

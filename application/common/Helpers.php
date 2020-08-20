@@ -381,7 +381,7 @@ public static function UpdateId($tabla, $dato, $condicion){
               $x = $db->query("SELECT $iden2, $nombre2 FROM $tabla2 WHERE $campo = '".$b[$iden]."' and td = ".$_SESSION["td"]."");
               foreach ($x as $y) {
 
-                  if($selected != NULL and $selected == $y[$iden2]){
+                  if($selected != NULL and $selected == $y[$nombre2]){
                       echo '<option value="'. $y[$iden2] .'" selected >'. $y[$nombre2] .'</option>'; 
                   } else {
                       echo '<option value="'. $y[$iden2] .'">'. $y[$nombre2] .'</option>'; 

@@ -172,7 +172,7 @@ $a = $db->query("select cod, cant, producto, pv, total, fecha, hora from ticket 
 
  if($tipo==1){
 /// para hacer las sumas
-if ($s = $db->select("sum(cant), sum(total)", "ticket", "WHERE cod = ".$b["cod"]." and mesa = '$numero' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."")) { 
+if ($s = $db->select("sum(cant), sum(total)", "ticket", "WHERE cod = '".$b["cod"]."' and mesa = '$numero' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."")) { 
         $scant=$s["sum(cant)"]; $stotal=$s["sum(total)"];
     } unset($s); 
 
@@ -196,7 +196,7 @@ if ($sx = $db->select("sum(total)", "ticket", "WHERE num_fac = '$numero' and tx 
 
   if($tipo==3) {
 /// para hacer las sumas
-if ($s = $db->select("sum(cant), sum(total)", "ticket", "WHERE cod = ".$b["cod"]." and cancela = '$numero' and mesa='$dato' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."")) { 
+if ($s = $db->select("sum(cant), sum(total)", "ticket", "WHERE cod = '".$b["cod"]."' and cancela = '$numero' and mesa='$dato' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."")) { 
         $scant=$s["sum(cant)"]; $stotal=$s["sum(total)"];
     } unset($s); 
 //////
@@ -629,7 +629,7 @@ $a = $db->query("select cod, cant, producto, pv, total, fecha, hora from ticket 
 
  if($tipo==1){
 /// para hacer las sumas
-if ($s = $db->select("sum(cant), sum(total)", "ticket", "WHERE cod = ".$b["cod"]." and mesa = '$numero' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."")) { 
+if ($s = $db->select("sum(cant), sum(total)", "ticket", "WHERE cod = '".$b["cod"]."' and mesa = '$numero' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."")) { 
         $scant=$s["sum(cant)"]; $stotal=$s["sum(total)"];
     } unset($s); 
 
@@ -641,7 +641,7 @@ if ($sx = $db->select("sum(total)", "ticket", "WHERE mesa = '$numero' and tx = "
  }
  if($tipo==2) {
 /// para hacer las sumas
-if ($s = $db->select("sum(cant), sum(total)", "ticket", "WHERE cod = ".$b["cod"]." and num_fac = '$numero' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."")) { 
+if ($s = $db->select("sum(cant), sum(total)", "ticket", "WHERE cod = '".$b["cod"]."' and num_fac = '$numero' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."")) { 
         $scant=$s["sum(cant)"]; $stotal=$s["sum(total)"];
     } unset($s); 
 //////
@@ -653,7 +653,7 @@ if ($sx = $db->select("sum(total)", "ticket", "WHERE num_fac = '$numero' and tx 
 
   if($tipo==3) {
 /// para hacer las sumas
-if ($s = $db->select("sum(cant), sum(total)", "ticket", "WHERE cod = ".$b["cod"]." and cancela = '$numero' and mesa='$dato' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."")) { 
+if ($s = $db->select("sum(cant), sum(total)", "ticket", "WHERE cod = '".$b["cod"]."' and cancela = '$numero' and mesa='$dato' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."")) { 
         $scant=$s["sum(cant)"]; $stotal=$s["sum(total)"];
     } unset($s); 
 //////
@@ -939,7 +939,7 @@ $a = $db->query("select cod, cant, producto, pv, total, fecha, hora from ticket 
 
  if($tipo==1){
 /// para hacer las sumas
-if ($s = $db->select("sum(cant), sum(total)", "ticket", "WHERE cod = ".$b["cod"]." and mesa = '$numero' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."")) { 
+if ($s = $db->select("sum(cant), sum(total)", "ticket", "WHERE cod = '".$b["cod"]."' and mesa = '$numero' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."")) { 
         $scant=$s["sum(cant)"]; $stotal=$s["sum(total)"];
     } unset($s); 
 
@@ -951,7 +951,7 @@ if ($sx = $db->select("sum(total)", "ticket", "WHERE mesa = '$numero' and tx = "
  }
  if($tipo==2) {
 /// para hacer las sumas
-if ($s = $db->select("sum(cant), sum(total)", "ticket", "WHERE cod = ".$b["cod"]." and num_fac = '$numero' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."")) { 
+if ($s = $db->select("sum(cant), sum(total)", "ticket", "WHERE cod = '".$b["cod"]."' and num_fac = '$numero' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."")) { 
         $scant=$s["sum(cant)"]; $stotal=$s["sum(total)"];
     } unset($s); 
 //////
@@ -963,7 +963,7 @@ if ($sx = $db->select("sum(total)", "ticket", "WHERE num_fac = '$numero' and tx 
 
   if($tipo==3) {
 /// para hacer las sumas
-if ($s = $db->select("sum(cant), sum(total)", "ticket", "WHERE cod = ".$b["cod"]." and cancela = '$numero' and mesa='$dato' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."")) { 
+if ($s = $db->select("sum(cant), sum(total)", "ticket", "WHERE cod = '".$b["cod"]."' and cancela = '$numero' and mesa='$dato' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."")) { 
         $scant=$s["sum(cant)"]; $stotal=$s["sum(total)"];
     } unset($s); 
 //////

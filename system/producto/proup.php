@@ -16,7 +16,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 <div id="contenido">
 <?php if($_REQUEST["key"] != NULL){ 
-  if ($r = $db->select("*", "producto", "WHERE cod = ".$_REQUEST["key"]." and td = ".$_SESSION["td"]."")) { 
+  if ($r = $db->select("*", "producto", "WHERE cod = '".$_REQUEST["key"]."' and td = ".$_SESSION["td"]."")) { 
 
 $cod = $r["cod"];
 $descripcion = $r["descripcion"];  
@@ -38,6 +38,7 @@ $verecommerce = $r["verecommerce"];
 
   
 if($cod != NULL){
+
   ?>
   <div id="msj"></div>
 
@@ -46,7 +47,7 @@ if($cod != NULL){
   <div class="form-row">
     <div class="col-md-4 mb-2 md-form">
       <label for="cod">* Codigo Producto</label>
-      <input type="number" class="form-control" id="cod" name="cod" readonly value="<?php echo $cod; ?>">
+      <input type="text" class="form-control" id="cod" name="cod" readonly value="<?php echo $cod; ?>">
     </div>
 
   <div class="col-md-8 mb-2 md-form">

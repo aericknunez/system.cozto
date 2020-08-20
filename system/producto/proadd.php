@@ -16,7 +16,7 @@ include_once 'application/common/Alerts.php';
   <div class="form-row">
     <div class="col-md-4 mb-2 md-form">
       <label for="cod">* Codigo Producto</label>
-      <input type="number" class="form-control" id="cod" name="cod" value="<?= $codigox ?>" required>
+      <input type="text" class="form-control" id="cod" name="cod" value="<?= $codigox ?>" required>
     </div>
 
   <div class="col-md-8 mb-2 md-form">
