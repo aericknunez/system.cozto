@@ -104,7 +104,7 @@ public function DetallesProducto($data){
     if ($r = $db->select("imagen", "producto_imagenes", "WHERE producto = '".$data["key"]."' AND td = ".$_SESSION["td"]." limit 1")) { 
         $img = $r["imagen"];
     } unset($r); 
-    if($img == NULL) { $img = "default.jpg"; } else { $img = $_SESSION["td"] . '/' .$img; } 
+    if($img == NULL) { $img = "assets/img/logo/" . $_SESSION["config_imagen"]; } else { $img = "assets/img/productos/".$_SESSION["td"] . '/' .$img; } 
 
 
     $a = $db->query("SELECT producto.cod, producto.informacion, producto.descripcion, producto.cantidad, producto.existencia_minima, producto.caduca, producto.compuesto, producto.gravado, producto.receta, producto.dependiente, producto.servicio, producto_categoria_sub.subcategoria, producto_unidades.nombre, proveedores.nombre as proveedores FROM producto INNER JOIN producto_categoria_sub ON producto.categoria = producto_categoria_sub.hash INNER JOIN producto_unidades ON producto.medida = producto_unidades.hash INNER JOIN proveedores ON producto.proveedor = proveedores.hash WHERE producto.cod = '".$data["key"]."' AND producto.td = ".$_SESSION["td"]."");
@@ -115,7 +115,7 @@ public function DetallesProducto($data){
 <h4 class="card-title"><strong>'. $b["cod"] .' || '. $b["descripcion"].'</strong></h4>
 
   <div class="view view-cascade overlay">
-    <img  class="card-img-top" src="assets/img/productos/' . $img .'" alt="Card image cap">
+    <img  class="img-fluid card-img-top" src="' . $img .'" alt="'. $b["informacion"] .'">
   </div>
 
 

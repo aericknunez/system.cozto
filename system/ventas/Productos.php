@@ -55,7 +55,7 @@ class Productos{
   if ($img = $db->select("imagen", "producto_imagenes", "WHERE producto = '". $dato["cod"] ."' and td = ".$_SESSION["td"]." limit 1")) { 
     $Imagen = $img["imagen"];
   } unset($img); 
-if($Imagen == NULL) { $Imagen = "default.jpg"; } else { $Imagen = $_SESSION["td"] . '/' . $Imagen; }
+if($Imagen == NULL) { $Imagen = "assets/img/logo/" . $_SESSION["config_imagen"]; } else { $Imagen = "assets/img/productos/". $_SESSION["td"] . '/' . $Imagen; }
 
 
          echo '<section class="my-2">
@@ -63,7 +63,7 @@ if($Imagen == NULL) { $Imagen = "default.jpg"; } else { $Imagen = $_SESSION["td"
     <div class="col-lg-5 col-xl-4">
 
       <div class="view overlay rounded z-depth-1-half mb-lg-0 mb-1">
-        <img class="img-fluid" src="assets/img/productos/' .$Imagen.'" alt="Titulo del producto">
+        <img class="img-fluid" src="' .$Imagen.'" alt="Titulo del producto">
         <a>
           <div class="mask rgba-white-slight"></div>
         </a>
