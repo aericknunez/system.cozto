@@ -131,6 +131,7 @@ class Ventas{
 	       $this->AgregaCaracteristicas($datos, $hash);
 	       $this->AgregaUbicacion($datos, $hash);
 	       $this->ActualizaProducto($datos["cod"], $datos["cantidad"], NULL);
+
 	    } 
 
 	}

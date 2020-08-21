@@ -10,7 +10,7 @@ $cut = new Corte();
 $datalive = TRUE; /// para saber que estoy en index
 
 if($_SESSION["cotizacion"]){
-Alerts::Mensajex("ADVERTENCIA! Se detecto una cotizaci&oacuten sin concluir.", "danger", '<a href="?cotizar" class="btn btn-danger">ir a Cotizaciones</a>');
+Alerts::Mensajex("ADVERTENCIA! Se detecto una cotizaci&oacuten sin concluir. Debe guardarla o eliminarla antes de continuar", "danger", '<a href="?cotizar" class="btn btn-danger">ir a Cotizaciones</a>');
 }
 
 echo '<div id="ventana"></div>';
@@ -22,5 +22,5 @@ if($cut->UltimaFecha() != date("d-m-Y")){ // comprobacion de corte
 } else { /// termina comprobacion de corte
 	Alerts::CorteEcho("ventas");
 }
-// var_dump($_SESSION);
+ // print_r($_SESSION);
 ?>

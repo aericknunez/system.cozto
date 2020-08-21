@@ -666,6 +666,11 @@ $_SESSION["cambio_actual_print"] = $cambio; // solo para imprimir la factura cor
   		$texto = 'Cliente asignado para credito: ' . $_SESSION['cliente_credito']. ".";
 		Alerts::Mensajex($texto,"danger",'<a id="quitar-cliente" op="99" class="btn btn-danger btn-rounded">Quitar Cliente</a>',$boton2);
 
+
+		$cambio = array();
+	    $cambio["nombre"] = $_SESSION["cliente_asig"];
+	    Helpers::UpdateId("ticket_orden", $cambio, "correlativo = '".$_SESSION["orden"]."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."");  
+
   }
 
 
@@ -704,6 +709,11 @@ $_SESSION["cambio_actual_print"] = $cambio; // solo para imprimir la factura cor
 
   		$texto = 'Cliente asignado para la Factura: ' . $_SESSION['cliente_asig']. ".";
 		Alerts::Mensajex($texto,"danger",'<a id="quitar-clienteA" op="89" class="btn btn-danger btn-rounded">Quitar Cliente</a>',$boton2);
+
+
+		$cambio = array();
+	    $cambio["nombre"] = $_SESSION["cliente_asig"];
+	    Helpers::UpdateId("ticket_orden", $cambio, "correlativo = '".$_SESSION["orden"]."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."");   
 
   }
 

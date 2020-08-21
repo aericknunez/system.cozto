@@ -610,7 +610,7 @@ echo '<div class="row">
       </div>
 
         <div class="col-4 text-right">
-        <img alt="" src="http://localhost/cozto/assets/img/logo/'.$_SESSION['config_imagen'].'" height="200" id="logo-neg"/>
+        <img alt="" src="'.XSERV.'assets/img/logo/'.$_SESSION['config_imagen'].'" height="200" id="logo-neg" class="img-fluid" />
         </div>
 </div>
 

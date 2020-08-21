@@ -1246,6 +1246,11 @@ case "162": /// para pasar afacturar una cotizacion
 		$ventax = new Ventas();
 		$ventax->GuardarOrden();
 		unset($ventax);
+
+			if(isset($_SESSION["cliente_cli"])) unset($_SESSION["cliente_cli"]);
+			if(isset($_SESSION["cliente_asig"])) unset($_SESSION["cliente_asig"]);
+ 			if(isset($_SESSION["cliente_c"])) unset($_SESSION["cliente_c"]);
+			if(isset($_SESSION["cliente_credito"])) unset($_SESSION["cliente_credito"]);		
 	}
 /////////// 
 	if($_SESSION["tipo_inicio"] == 1){
