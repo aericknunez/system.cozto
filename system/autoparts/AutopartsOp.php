@@ -372,6 +372,76 @@ if ($r = $db->select("precio", "producto_precio", "WHERE producto = '".$b["produ
 
 
 
+
+
+
+
+
+
+  public function TodosLosProductos(){
+      $db = new dbConn();
+
+
+ $a = $db->query("SELECT * FROM autoparts_busqueda_producto WHERE td = ".$_SESSION["td"]);
+      
+      if($a->num_rows > 0){
+          echo '<div class="table-responsive">
+          <table class="table table-sm table-striped">
+        <thead>
+          <tr>
+            <th class="th-sm">Cod</th>
+            <th class="th-sm">Producto</th>
+            <th class="th-sm">Cantidad</th>
+            <th class="th-sm">Precio</th>
+            <th class="th-sm">Opciones</th>
+          </tr>
+        </thead>
+        <tbody>';
+        foreach ($a as $b) {
+        // obtener el nombre y detalles del producto
+if ($r = $db->select("*", "producto", "WHERE cod = '".$b["producto"]."' and td = ". $_SESSION["td"] ."")) { 
+        $nombre = $r["descripcion"];
+        $cantidad = $r["cantidad"];  } unset($r); 
+
+
+if ($r = $db->select("precio", "producto_precio", "WHERE producto = '".$b["producto"]."' and td = ". $_SESSION["td"] ." order by id asc limit 1")) { $precio = $r["precio"]; } unset($r); 
+          echo '<tr>
+                      <td>'.$b["producto"].'</td>
+                      <td>'.$nombre.'</td>
+                      <td><div id="cant-'.$b["producto"].'">'.$cantidad.'</div></td>
+                      <td><div id="precio-'.$b["producto"].'">'.Helpers::Dinero($precio).'</div></td>
+                      <td><a id="xver" op="55" key="'.$b["producto"].'" title="Ver Detalles"><i class="fas fa-search fa-lg green-text"></i></a>
+
+                      <a id="addproducto" op="538" key="'.$b["producto"].'" title="Agregar mas producto"><i class="fas fa-plus-circle fa-lg blue-text"></i></a>
+
+                      <a id="cambiarprecio" op="541" key="'.$b["producto"].'" title="Cambiar Precio"><i class="fas fa-money-bill-alt fa-lg black-text"></i></a>
+
+                      </td>
+                    </tr>';
+        }
+        echo '</tbody>
+        </table>
+        </div>';
+      } else {
+        Alerts::Mensajey("No se encontraron registros con estas especificaciones","danger", "verModal");
+      }
+        $a->close();
+      
+
+
+  } // termina productos
+
+
+
+
+
+
+
+
+
+
+
+
   public function AddProductos($data){
       $db = new dbConn();
 // producto

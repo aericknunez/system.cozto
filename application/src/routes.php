@@ -1784,6 +1784,15 @@ break;
 
 
 
+case "545":  /// cambiar precio
+include_once '../../system/autoparts/AutopartsOp.php';
+	$auto = new Autoparts(); 
+	echo $auto->TodosLosProductos();
+break;
+
+
+
+
 
 
 } // termina switch

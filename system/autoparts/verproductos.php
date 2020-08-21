@@ -34,8 +34,9 @@ if($_SESSION["root_autoparts"] == "on"){
       </div>
       <div class="modal-footer">
 
-        <a id="eliminardatos" op="525" class="btn-floating btn-sm btn-secondary"><i class="fas fa-trash"></i></a>
-        <a id="cerrarDetalles" class="btn btn-danger btn-rounded">Omitir Estos Datos</a>
+  <a id="todoslosproductos" class="btn btn-info btn-rounded">Todos los Productos</a>
+  <a id="eliminardatos" op="525" class="btn-floating btn-sm btn-secondary"><i class="fas fa-trash"></i></a>
+  <a id="cerrarDetalles" class="btn btn-danger btn-rounded">Omitir Estos Datos</a>
  
    
       </div>
