@@ -36,7 +36,15 @@
 <!-- ./  content -->
       </div>
       <div class="modal-footer">
-          <a href="?" class="btn btn-primary btn-rounded">Regresar</a>
+<?php 
+        if($_SERVER['HTTP_REFERER'] != XSERV . "?modal=productoBusqueda"){
+          $url = $_SERVER['HTTP_REFERER'];
+        } else{
+          $url = "?";
+        }
+
+ ?>
+          <a href="<?php echo $url; ?>" class="btn btn-primary btn-rounded">Regresar</a>
     
       </div>
     </div>

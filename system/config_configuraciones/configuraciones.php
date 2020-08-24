@@ -136,6 +136,12 @@ $r = $db->select("*", "config_master", "where td = ".$_SESSION['td']."")
        <td>Activar Sonido</td>
        <td><? if($r["sonido"] == "on") echo "Activado"; else echo "Inactivo"; ?></td>    
      </tr>  
+
+     <tr>
+       <td>Activar Modulo de Peso</td>
+       <td><? if($r["pesaje"] == "on") echo "Activado"; else echo "Inactivo"; ?></td>    
+     </tr> 
+
      <?
  unset($r);  
 

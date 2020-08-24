@@ -22,6 +22,8 @@ elseif(isset($_GET["proaverias"])) include_once 'system/producto/proaverias.php'
 elseif(isset($_GET["bajasexistencias"])) include_once 'system/producto/bajasexistencias.php'; 
 elseif(isset($_GET["vencimientos"])) include_once 'system/producto/vencimientos.php'; 
 elseif(isset($_GET["compuestos"])) include_once 'system/producto/compuestos.php'; 
+elseif(isset($_GET["pesaje"])) include_once 'system/producto/pesajes.php'; 
+
 
 
 elseif(isset($_GET["cotizar"])) include_once 'system/cotizar/cotizar.php'; 
@@ -96,6 +98,11 @@ elseif(isset($_GET["backup"])) include_once 'system/bdbackup/respaldo.php'; // b
 elseif(isset($_GET["autoopciones"])) include_once 'system/autoparts/opciones.php'; 
 elseif(isset($_GET["autoverproductos"])) include_once 'system/autoparts/verproductos.php'; 
 elseif(isset($_GET["autoproadd"])) include_once 'system/autoparts/proadd.php'; // agregar
+
+
+// ecommerce
+elseif(isset($_GET["epedidos"])) include_once 'system/ecommerce/commerce.php'; 
+
 
 
 // factura

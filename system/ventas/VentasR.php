@@ -336,7 +336,16 @@ class Ventas{
 		    $this->Sonar();
 		} else {
 			echo '<div class="text-center">Ingrese un producto</div>
-			<div align="center"><a data-toggle="modal" data-target="#ModalBusqueda" class="btn-floating btn-primary"><i class="fas fa-search"></i></a></div>';
+			<div align="center"><a data-toggle="modal" data-target="#ModalBusqueda" class="btn-floating btn-primary"><i class="fas fa-search"></i></a>';
+			
+			if($_SESSION["config_pesaje"] == "on"){ // para buscar productos pesados
+ 			echo '<a id="xbalanza" class="btn-floating btn-danger" title="Buscar Producto"><i class="fas fa-balance-scale"></i></a>';
+ 			}
+
+			echo '</div>';
+
+
+
 		}    
 	}
 

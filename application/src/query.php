@@ -169,6 +169,16 @@ elseif(isset($_GET["compuestos"])) {
 echo '<script type="text/javascript" src="assets/js/query/paginador.js?v='.$numero.'"></script>';
 echo '<script type="text/javascript" src="assets/js/query/producto_vermodal.js?v='.$numero.'"></script>';
 } 
+elseif(isset($_GET["pesaje"])) {
+echo '<script type="text/javascript" src="assets/js/query/paginador.js?v='.$numero.'"></script>';
+echo '<script type="text/javascript" src="assets/js/query/producto_pesaje.js?v='.$numero.'"></script>';
+} 
+
+
+
+
+
+
 elseif(isset($_GET["cotizar"])) {
 echo '<script type="text/javascript" src="assets/js/printThis.js?v='.$numero.'"></script>';
 echo '<script type="text/javascript" src="assets/js/query/cotizaR.js?v='.$numero.'"></script>';
@@ -334,6 +344,15 @@ elseif(isset($_GET["autoproadd"])) {
 } 
 
 
+/// ecommerce
+elseif(isset($_GET["epedidos"])) {
+echo '<script type="text/javascript" src="assets/js/query/ecommerce.js?v='.$numero.'"></script>';
+echo '<script type="text/javascript" src="assets/js/query/paginador.js?v='.$numero.'"></script>';
+} 
+
+
+
+
 
 //////////////// factura
 elseif(isset($_GET["mod_factura"])) {
@@ -383,35 +402,14 @@ else{
         $('#mdb-preloader').fadeOut('fast');
     });
 
-
-	$.fn.extend({  // evita seleccionar
-	    disableSelection: function() { 
-	        this.each(function() { 
-	            if (typeof this.onselectstart != 'undefined') {
-	                this.onselectstart = function() { return false; };
-	            } else if (typeof this.style.MozUserSelect != 'undefined') {
-	                this.style.MozUserSelect = 'none';
-	            } else {
-	                this.onmousedown = function() { return false; };
-	            }
-	        }); 
-	    } 
-	});
-
-    $(document).ready(function() {
-        $('body').disableSelection();
-
-    });
-
-    $(document).on('dragstart', 'body', function(evt) { // evita arrartrar
-      evt.preventDefault();
-    });
-
-    // $(document).ready(function(){ // evita clic derecho
-    //    $(document).bind("contextmenu",function(e){
-    //       return false;
-    //    });
-    // });
-
-
 </script>
+
+
+
+<?php // restringir Acciones
+
+if(!isset($_GET["control"])) {
+// echo '<script type="text/javascript" src="assets/js/query/restricciones.js?v='.$numero.'"></script>';
+} 
+
+?>

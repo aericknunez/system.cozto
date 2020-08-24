@@ -183,7 +183,17 @@ $r = $db->select("*", "config_master", "where td = ".$_SESSION['td']."")
   </tr>
     <tr>
 
-       <td></td>
+       <td>
+         
+         <div class="switch mt-4">
+            <label>
+             Activar Modulo de peso ||  Off
+          <input type="checkbox" <?php if($r["pesaje"] == "on") echo "checked"; ?> id="pesaje" name="pesaje" >
+              <span class="lever"></span> On 
+            </label>
+          </div>
+
+       </td>
     
     <td>
     <button class="btn btn-info my-4" type="submit" id="btn-config" name="btn-config">Realizar Cambios</button>

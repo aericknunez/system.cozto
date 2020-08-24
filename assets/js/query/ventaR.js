@@ -216,6 +216,9 @@ $('#ModalBusqueda').on('shown.bs.modal', function() { // para autofocus en el mo
 });
 
 
+$('#ModalBalanza').on('shown.bs.modal', function() { // para autofocus en el modal
+  $(this).find('[autofocus]').focus();
+});
 
 
 
@@ -281,10 +284,9 @@ $('#ModalBusqueda').on('shown.bs.modal', function() { // para autofocus en el mo
             $('#ver-descuento').html('<div class="border border-light alert alert-danger alert-dismissible"><div align="center">No se ha aplicado descuento a este producto</div></div>');
             $('#ver-btndescuento').hide();
         }
-
-        
-        
     });
+
+
 
     $('#btn-Ddescuento').click(function(e){ /// cambia la cantidad de los productos
         e.preventDefault();
@@ -319,6 +321,89 @@ $('#ModalBusqueda').on('shown.bs.modal', function() { // para autofocus en el mo
                $("#lateral").load('application/src/routes.php?op=70'); // caraga el lateral
         });
     });
+
+
+
+
+
+
+
+
+
+
+// para ModalBalanza
+
+    $("body").on("click","#xbalanza",function(){ // llamar nada mas a los productos
+        
+        $('#ModalBalanza').modal('show');
+        
+        var op = "429";
+
+        var dataString = 'op='+op;
+
+        $.ajax({
+            type: "POST",
+            url: "application/src/routes.php",
+            data: dataString,
+            beforeSend: function () {
+               $("#productos_bal").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt=""></div>');
+            },
+            success: function(data) {            
+                $("#productos_bal").html(data); // lo que regresa de la busquea 
+            }
+        }); 
+    });
+
+
+
+    $("body").on("click","#xfacturar",function(){ // llamar nada mas a los productos
+
+        var op = "428";
+        var probal = $(this).attr('probal');
+        var dataString = 'op='+op+'&probal='+probal;
+
+        $.ajax({
+            type: "POST",
+            url: "application/src/routes.php",
+            data: dataString,
+            beforeSend: function () {
+               $("#ver").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt=""></div>');
+            },
+            success: function(data) {            
+                $('#ModalBalanza').modal('hide');
+                $("#ver").html(data); // lo que regresa de la busquea 
+                $("#lateral").load('application/src/routes.php?op=70'); // caraga el lateral
+            }
+        }); 
+    });
+
+
+
+    $('#btn-balanza').click(function(e){ /// cambia la cantidad de los productos
+        e.preventDefault();
+        $.ajax({
+            url: "application/src/routes.php?op=428",
+            method: "POST",
+            data: $("#form-balanza").serialize(),
+            beforeSend: function () {
+                // $('#btn-balanza').html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>Loading...').addClass('disabled');
+            },
+            success: function(data){
+               // $('#btn-balanza').html('Agregar').removeClass('disabled');
+               $("#form-balanza").trigger("reset");
+               $('#ModalBalanza').modal('hide');
+               $("#ver").html(data); // lo que regresa de la busquea 
+               $("#lateral").load('application/src/routes.php?op=70'); // caraga el lateral
+            }
+        });
+    });
+
+
+
+
+
+
+
 
 
 

@@ -45,6 +45,16 @@ class Helpers{
 
 
 
+    static public function EdoEcommerce($string) {
+    if($string == "0") return '<div class="text-danger font-weight-bold">Eliminado</div>';
+    if($string == "1") return '<div class="text-secondary font-weight-bold">En Proceso</div>';
+    if($string == "2") return '<div class="text-success font-weight-bold">Activo</div>';
+    if($string == "3") return '<div class="text-primary font-weight-bold">Enviado</div>';
+    if($string == "4") return '<div class="text-info font-weight-bold">Entregado</div>';
+    if($string == "5") return '<div class="text-primary-color-dark font-weight-bold">Reemplazado</div>';
+    }
+
+
 
     static public function Gasto($string) {
     if($string == "1") return '<p class="text-danger font-weight-bold">Compra No Facturado</p>';

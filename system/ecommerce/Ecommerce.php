@@ -6,57 +6,6 @@ class EcommerceData{
 
 
 
-//   public function Destacados($limit, $td, $orderby){
-//       $db = new dbConn();
-
-
-//     $e = $db->query("SELECT cod FROM producto WHERE existencia_minima > 0 ORDER BY ".$orderby." ". $limit ."");
-//     if($e->num_rows > 0){
- 
-// $data = array();
-// $n= 0;   
-//     foreach ($e as $o) {
-
-//  $a = $db->query("SELECT producto.cod, producto.descripcion, producto.informacion, producto.cantidad, producto.existencia_minima, producto_categoria_sub.subcategoria, producto_unidades.nombre as medida FROM producto INNER JOIN producto_categoria_sub ON producto.categoria = producto_categoria_sub.hash INNER JOIN producto_unidades ON producto.medida = producto_unidades.hash and producto.td = ". $td ." and producto.cod = '".$o["cod"]."'");
-
-//       if($a->num_rows > 0){
-//         foreach ($a as $b) {
-//         // obtener el nombre y detalles del producto
-//         if ($r = $db->select("precio", "producto_precio", "WHERE producto = ".$b["cod"]." and td = ". $td ." order by id desc limit 1")) { 
-//             $precio = $r["precio"]; } unset($r); 
-
-//             // obtener las imagenes
-//           $imagenes = array();
-         
-//           $x = $db->query("SELECT imagen FROM producto_imagenes WHERE producto = '".$b["cod"]."' and td = ". $td ."");
-//             foreach ($x as $z) {
-//                  $imagenes[] = $z["imagen"];
-//             } $x->close();
-
-//         $data["productos"][] = $b;
-//         $data["productos"][$n]["imagenes"] =  $imagenes;
-//         $data["productos"][$n]["precio"] =  $precio;
-//         $n++;
-// } 
-// } $a->close();
-
-
-
-
-//     }  // foreach
-
-//     }  // num rows
-//      $e->close(); // termina primera consulta
-
-// echo json_encode($data);
-
-
-//   } // termina productos
-
-
-
-
-
 
   public function Destacados($limit, $td, $orderby){
       $db = new dbConn();
@@ -380,6 +329,31 @@ Helpers::UpdateId("ecommerce", $cambio, "usuario='".$data["user"]."' and td = ".
   } // termina total
 
 
+
+
+
+
+
+
+
+
+
+  public function FinalizarPedido($data, $td){
+      $db = new dbConn();
+
+    $datos = array();
+
+    $cambio = array();
+    $cambio["edo"] = 2;
+    if(Helpers::UpdateId("ecommerce_data", $cambio, "usuario='".$data["usr"]."' and orden='".$data["orden"]."' and td = ".$td."")){
+        $datos["mensaje"] =  "Realizado";
+    } else {
+        $datos["mensaje"] =  "Fallido";
+    }
+
+  echo json_encode($datos);
+
+  } // termina total
 
 
 

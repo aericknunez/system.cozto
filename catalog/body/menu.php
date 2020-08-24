@@ -123,9 +123,41 @@ if($_SESSION["root_autoparts"] != "on"){
  ?>
 <li><a href="?vencimientos" class="waves-effect"><i class="fas fa-address-book"></i> Proximos Vencimientos</a></li>
 <?php } ?>
+
+
+<?php 
+if($_SESSION["config_pesaje"] == "on"){
+ ?>
+<li><a href="?pesaje" class="waves-effect"><i class="fas fa-plus"></i> Pesar Productos</a></li>
+ <?php }   ?>
 </ul>
 </div>
 </li>
+
+
+
+
+
+
+
+<?php if($_SESSION["root_ecommerce"] == "on") { 
+?>
+
+
+<li><a class="collapsible-header waves-effect arrow-r"><i class="fas fa-truck"></i> ECOMMERCE <i class="fa fa-angle-down rotate-icon"></i></a>
+<div class="collapsible-body">
+<ul class="list-unstyled">
+
+<li><a href="?epedidos" class="waves-effect"><i class="fas fa-truck"></i> Pedidos</a></li>
+<!-- <li><a href="?entradas" class="waves-effect"><i class="fas fa-cogs"></i> Entrada de Efectivo</a></li> -->
+
+</ul>
+</div>
+</li>
+
+<?php  } ?>
+
+
 
 
 
@@ -137,6 +169,9 @@ if($_SESSION["root_autoparts"] != "on"){
 </ul>
 </div>
 </li>
+
+
+
 
 
 

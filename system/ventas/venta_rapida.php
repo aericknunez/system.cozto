@@ -151,3 +151,53 @@ $ventas->VerProducto();
     </div>
   </div>
 </div>
+
+
+
+
+<?php 
+
+if($_SESSION["config_pesaje"] == "on"){
+ ?>
+
+
+<!-- Modal -->
+<div class="modal bounceIn" id="ModalBalanza" tabindex="-1" role="dialog" aria-labelledby="ModalBusqueda"
+  aria-hidden="true" data-backdrop="false">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">BUSCAR PRODUCTO</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+<!-- CONTENIDO -->
+<div align="center">
+  <div class="col-md-12 z-depth-2 justify-content-center">
+      <div class="md-form mt-0">
+        <form id="form-balanza">
+        <input class="form-control" type="text" placeholder="Buscar Producto" aria-label="Search" id="probal" name="probal" autofocus>
+
+<button class="btn aqua-gradient btn-rounded btn-sm waves-effect waves-light" type="submit" id="btn-balanza" name="btn-balanza">Buscar</button>
+        </form>
+      </div>
+  </div>
+</div>
+
+<div id="productos_bal"></div>
+
+<!-- CONTENIDO -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+ <?php } ?>

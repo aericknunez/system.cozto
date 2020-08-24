@@ -1,4 +1,4 @@
-// $(document).ready(function()
+$(document).ready(function()
 {
 
 	$("body").on("click","#ax0",function(){ /// para el los botones de opciones

@@ -94,6 +94,15 @@ case "24":
 break;
 
 
+
+case "26":
+	include_once '../../system/ecommerce/Ecommerce.php';
+	$data = new EcommerceData();
+	$data->FinalizarPedido($_REQUEST, $_REQUEST["td"]); 
+break;
+
+
+
 case "30": /// remplazo el user temporal por el usuario registrado
 	include_once '../../system/ecommerce/Ecommerce.php';
 	$data = new EcommerceData();

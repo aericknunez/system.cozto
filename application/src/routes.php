@@ -1107,7 +1107,6 @@ break;
 
 
 case "131": // validar codigo de sistema
-include_once '../common/Encrypt.php';
 include_once '../../system/index/Inicio.php';
 $inicio = new Inicio;
 $inicio->Validar($_POST["fecha_submit"], $_POST["codigo"]);
@@ -1508,6 +1507,22 @@ break;
 
 
 
+case "375": // listado de ordenes Ecommerce
+include_once '../../system/ecommerce/Movimientos.php';
+	$ecommerce = new Movimientos();
+	$ecommerce->VerTodosLosPedidos($_POST["iden"], $_POST["orden"], $_POST["dir"]);
+break;
+
+
+
+case "376": // detalles productos
+include_once '../../system/ecommerce/Movimientos.php';
+	$ecommerce = new Movimientos();
+	$ecommerce->ProductosOrden($_POST["orden"]);
+break;
+
+
+
 case "400": // busqueda de proveedores
 include_once '../../system/cuentas/Cuentas.php';
 	$cuenta = new Cuentas();
@@ -1569,6 +1584,87 @@ include_once '../../system/cuentas/Cuentas.php';
 	$cuenta = new Cuentas(); 
 	$cuenta->DelCuenta($_POST["iden"]);
 break;
+
+
+
+case "425": // busca para pesaje de productos
+include_once '../../system/producto/Pesaje.php';
+	$pesaje = new Pesaje(); 
+	$pesaje->BusquedaProducto($_POST["key"]);
+break;
+
+
+
+case "426": // busca para pesaje de productos
+include_once '../../system/producto/Pesaje.php';
+	$pesaje = new Pesaje(); 
+	$pesaje->AddProducto($_POST);
+break;
+
+
+
+case "427": // paginar productos pesados
+include_once '../../system/producto/Pesaje.php';
+	$pesaje = new Pesaje(); 
+	$pesaje->VerPesos($_POST["iden"], $_POST["orden"], $_POST["dir"]);
+break;
+
+
+
+case "428": // agrega a la factura el producto en venta rapida
+include_once '../../system/producto/Pesaje.php';
+	$pesaje = new Pesaje(); 
+include_once '../../system/ventas/VentasR.php';
+	$venta = new Ventas();
+
+	if($pesaje->facturar($_POST["probal"]) == TRUE){
+
+	$cantidad = $pesaje->ObtenerCantidad($_POST["probal"]);
+	$cod = $pesaje->ObtenerCod($_POST["probal"]);
+
+	$data = array();
+	$data["cod"] = $cod;
+	$data["cantidad"] = $cantidad;
+
+		$venta->SumaVenta($data); // incluir cod y cantidad		
+	} else {
+		Alerts::Alerta("error","Error!","Codigo Inválido!");
+		$venta->VerProducto();
+	}
+break;
+
+
+
+case "429": // agrega a la factura el producto
+include_once '../../system/producto/Pesaje.php';
+	$pesaje = new Pesaje(); 
+	$pesaje->MostrarPesos();
+break;
+
+
+
+case "430": // agrega la venta lenta
+include_once '../../system/producto/Pesaje.php';
+	$pesaje = new Pesaje(); 
+include_once '../../system/ventas/VentasL.php';
+	$venta = new Ventas();
+
+	if($pesaje->facturar($_POST["probal"]) == TRUE){
+
+	$cantidad = $pesaje->ObtenerCantidad($_POST["probal"]);
+	$cod = $pesaje->ObtenerCod($_POST["probal"]);
+
+	$data = array();
+	$data["cod"] = $cod;
+	$data["cantidad"] = $cantidad;
+
+		$venta->AddVenta($data); // incluir cod y cantidad		
+	} else {
+		Alerts::Alerta("error","Error!","Codigo Inválido!");
+		$venta->VerProducto();
+	}
+break;
+
 
 
 case "450": /// comienza lo de las facturas
