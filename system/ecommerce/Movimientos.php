@@ -373,7 +373,7 @@ if($edo == 4){ $edo = "El pedido ha sido entregado correctamente"; }
 Alerts::Mensajex($edo,"success");
 
 
-$url = "http://localhost/justomarket/application/src/api.php?op=1&user=".$usuario."&secret=" . 
+$url = "https://justomarket.com/application/src/api.php?op=1&user=".$usuario."&secret=" . 
 Encrypt::Encrypt($_SESSION['td'],$_SESSION['secret_key']);
 
   $this->DatosUsuario($url);
@@ -611,7 +611,7 @@ mail($destinatario,$asunto,$cuerpo,$headers);
 
 public function ListarUsuarios(){
 
-$url = "http://localhost/justomarket/application/src/api.php?op=2&secret=" . 
+$url = "https://justomarket.com/application/src/api.php?op=2&secret=" . 
 Encrypt::Encrypt($_SESSION['td'],$_SESSION['secret_key']);
 
   $jsondata = $this->ObtenerData($url);
