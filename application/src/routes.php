@@ -1523,6 +1523,75 @@ break;
 
 
 
+case "377": // estado de la orden
+include_once '../../system/ecommerce/Movimientos.php';
+	$ecommerce = new Movimientos();
+	$ecommerce->EdoOrden($_POST);
+break;
+
+
+case "378": // estado de la orden
+include_once '../../system/ecommerce/Movimientos.php';
+	$ecommerce = new Movimientos();
+	$ecommerce->EdoCambia($_POST);
+break;
+
+
+case "379": // estado de la orden
+include_once '../../system/ecommerce/Movimientos.php';
+	$ecommerce = new Movimientos();
+	$ecommerce->MuestraEdo($_GET);
+break;
+
+
+case "380": // estado de la orden
+include_once '../../system/ecommerce/Movimientos.php';
+	$ecommerce = new Movimientos();
+	$ecommerce->MuestraEdoBotones($_GET);
+break;
+
+
+
+case "381": /// para pasar afacturar una orden de ecommerce
+	include_once '../../system/ventas/Opciones.php';
+// //// guardar la orden activa si hay
+	if($_SESSION["orden"] != NULL){
+	include_once '../../system/ventas/VentasL.php';
+		$ventax = new Ventas();
+		$ventax->GuardarOrden();
+		unset($ventax);
+
+			if(isset($_SESSION["cliente_cli"])) unset($_SESSION["cliente_cli"]);
+			if(isset($_SESSION["cliente_asig"])) unset($_SESSION["cliente_asig"]);
+ 			if(isset($_SESSION["cliente_c"])) unset($_SESSION["cliente_c"]);
+			if(isset($_SESSION["cliente_credito"])) unset($_SESSION["cliente_credito"]);		
+	}
+/////////// 
+	if($_SESSION["tipo_inicio"] == 1){
+	include_once '../../system/ventas/VentasR.php';
+		$venta = new Ventas();
+	} else {
+	include_once '../../system/ventas/VentasL.php';
+		$venta = new Ventas();
+	}
+// 
+
+if($_SESSION["orden"] == NULL){ $venta->AddOrden(); }
+
+include_once '../../system/ecommerce/Movimientos.php';
+	$ecommerce = new Movimientos();
+	$ecommerce->Facturar($_POST["orden"], $_POST["user"]);
+break;
+
+
+
+case "382": // estado de la orden
+include_once '../../system/ecommerce/Movimientos.php';
+	$ecommerce = new Movimientos();
+	$ecommerce->MuestraEdoBotones($_GET);
+break;
+
+
 case "400": // busqueda de proveedores
 include_once '../../system/cuentas/Cuentas.php';
 	$cuenta = new Cuentas();

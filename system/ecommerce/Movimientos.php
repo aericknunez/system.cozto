@@ -228,17 +228,17 @@ echo '<div class="table-responsive">
    echo '<tr>
           <td>'.$b["orden"].'</td>
           <td>'.$b["fecha"].' - '. $b["hora"] . '</td>
-          <td>'.Helpers::Edoecommerce($b["edo"]).'</td>
+          <td id="'.$b["orden"].''.$b["usuario"].'">'.Helpers::Edoecommerce($b["edo"]).'</td>
           <td>'.Helpers::Entero($cantidad).'</td>
           <td>'.Helpers::Dinero($total).'</td>
-          <td>
+          <td id="btn'.$b["orden"].''.$b["usuario"].'">
           <a id="xver" op="376" orden="'.$b["orden"].'"><i class="fas fa-search fa-lg green-text"></i></a>';
 
           if($b["edo"] == 2 or $b["edo"] == 3){
 
-    echo '<a id="xprint" op="55" key="'.$b["hash"].'"><i class="fas fa-print fa-lg red-text"></i></a>
-          <a id="xprint" op="55" key="'.$b["hash"].'"><i class="fas fa-ad fa-lg green-text"></i></a>
-          <a id="xprint" op="55" key="'.$b["hash"].'"><i class="fas fa-cogs fa-lg blue-text"></i></a>';
+    echo '<a href="system/facturar/ticket_ecommerce.php?orden='.$b["orden"].'&usr='.$b["usuario"].'" target="_blank"><i class="fas fa-print fa-lg red-text"></i></a>
+          <a id="facturar" op="381" orden="'.$b["orden"].'" user="'.$b["usuario"].'"><i class="fas fa-ad fa-lg green-text"></i></a>
+          <a id="op-edo" orden="'.$b["orden"].'" user="'.$b["usuario"].'"><i class="fas fa-cogs fa-lg blue-text"></i></a>';
           }
 
           
@@ -361,8 +361,19 @@ $usuario = $b["usuario"];
       }
         $a->close();
 
+    if ($r = $db->select("edo", "ecommerce_data", "WHERE orden = '".$b["orden"]."' and td = ".$_SESSION["td"]."")) { 
+        $edo = $r["edo"];
+    } unset($r);  
 
-$url = "https://justomarket.com/application/src/api.php?op=1&user=".$usuario."&secret=" . 
+if($edo == 1){ $edo = "En pedido se encuentra en proceso de compra por el usuario"; }
+if($edo == 2){ $edo = "El pedido está Activo, listo para enviarse"; }
+if($edo == 3){ $edo = "Ha sido enviado el pedido y se encuenta en camino"; }
+if($edo == 4){ $edo = "El pedido ha sido entregado correctamente"; }
+
+Alerts::Mensajex($edo,"success");
+
+
+$url = "http://localhost/justomarket/application/src/api.php?op=1&user=".$usuario."&secret=" . 
 Encrypt::Encrypt($_SESSION['td'],$_SESSION['secret_key']);
 
   $this->DatosUsuario($url);
@@ -439,6 +450,210 @@ if($datos["direccion"]["puntoreferencia"] != NULL){
 
 
 }
+
+
+
+
+
+
+
+
+public function EdoOrden($data){
+  $db = new dbConn();
+
+    if ($r = $db->select("edo", "ecommerce_data", "WHERE orden = '".$data["orden"]."' and usuario = '".$data["user"]."' and td = ".$_SESSION["td"]."")) { 
+        $edo = $r["edo"];
+    } unset($r);  
+
+if($edo != 4){
+echo '
+<input type="hidden" name="user" value="'.$data["user"].'">
+<input type="hidden" name="orden" value="'.$data["orden"].'">
+
+  <select class="browser-default custom-select" id="edocambiar" name="edocambiar" aria-label="Cambiar el estado">';
+
+if($edo == 2){
+  echo '<option value="3"'; if($edo == 3) echo "selected"; echo '>Enviado</option>
+        <option value="4"'; if($edo == 4) echo "selected"; echo '>Entregado</option>';
+}
+if($edo == 3){
+  echo '<option value="4"'; if($edo == 4) echo "selected"; echo '>Entregado</option>';
+}
+ echo '</select>';
+
+} else {
+  Alerts::Mensajex("Orden entregada satisfactoriamente","info");
+
+}
+
+}
+
+
+
+
+public function EdoCambia($data){
+  $db = new dbConn();
+
+    $cambio = array();
+    $cambio["edo"] = $data["edocambiar"];
+    if(Helpers::UpdateId("ecommerce_data", $cambio, "usuario='".$data["user"]."' and orden = ".$data["orden"]." and td = ".$_SESSION["td"]."")){
+        Alerts::Alerta("success","Realizado!","Cambio Realizado correctamente");
+
+        $this->EnviarEmail();
+    } else {
+        Alerts::Alerta("error","Error!!","No se realizo el cambio");
+    }
+
+}
+
+
+public function MuestraEdo($data){
+  $db = new dbConn();
+
+    if ($r = $db->select("edo", "ecommerce_data", "WHERE orden = '".$data["orden"]."' and usuario = '".$data["user"]."' and td = ".$_SESSION["td"]."")) { 
+        $edo = $r["edo"];
+    } unset($r);  
+
+
+   echo Helpers::Edoecommerce($edo);
+}
+
+
+public function MuestraEdoBotones($data){
+  $db = new dbConn();
+
+    if ($r = $db->select("edo", "ecommerce_data", "WHERE orden = '".$data["orden"]."' and usuario = '".$data["user"]."' and td = ".$_SESSION["td"]."")) { 
+        $edo = $r["edo"];
+    } unset($r);  
+
+  echo '<a id="xver" op="376" orden="'.$data["orden"].'"><i class="fas fa-search fa-lg green-text"></i></a>';
+
+          if($edo == 2 or $edo == 3){
+
+    echo '<a href="system/facturar/ticket_ecommerce.php?orden='.$data["orden"].'&usr='.$data["user"].'" target="_blank"><i class="fas fa-print fa-lg red-text"></i></a>
+          <a id="facturar" op="381" orden="'.$data["orden"].'" user="'.$data["user"].'"><i class="fas fa-ad fa-lg green-text"></i></a>
+          <a id="op-edo" orden="'.$data["orden"].'" user="'.$data["user"].'"><i class="fas fa-cogs fa-lg blue-text"></i></a>';
+    }
+
+}
+
+
+
+
+
+public function EnviarEmail(){
+
+$destinatario = "aerick.nunez@gmail.com"; 
+$asunto = "Este mensaje es de prueba"; 
+$cuerpo = ' 
+<html> 
+<head> 
+   <title>Gracias por su compra</title> 
+</head> 
+<body> 
+<h1>Gracias por su compra!</h1> 
+<p> 
+<b>
+Gracias por su compra, en este momento estamos realizando pruebas de envio de email 
+</p> 
+</body> 
+</html> 
+'; 
+
+//para el envío en formato HTML 
+$headers = "MIME-Version: 1.0\r\n"; 
+$headers .= "Content-type: text/html; charset=iso-8859-1\r\n"; 
+
+//dirección del remitente 
+$headers .= "From: Erick Nunez <aerick.nunez@gmail.com>\r\n"; 
+
+//dirección de respuesta, si queremos que sea distinta que la del remitente 
+$headers .= "Reply-To: info@justomarket.com\r\n"; 
+
+//ruta del mensaje desde origen a destino 
+$headers .= "Return-path: info@justomarket.com\r\n"; 
+
+//direcciones que recibián copia 
+// $headers .= "Cc: maria@desarrolloweb.com\r\n"; 
+
+//direcciones que recibirán copia oculta 
+// $headers .= "Bcc: pepe@pepe.com,juan@juan.com\r\n"; 
+
+mail($destinatario,$asunto,$cuerpo,$headers);
+
+}
+
+
+
+
+
+
+
+  public function Facturar($orden, $user){
+       $db = new dbConn();
+       $venta = new Ventas();
+
+      $a = $db->query("SELECT * FROM ecommerce WHERE orden = '".$orden."' and usuario = '".$user."' and td = ".$_SESSION["td"]."");
+      foreach ($a as $b) {
+        $b["cantidad"] = $b["cant"];
+          
+
+      $venta->AgregarDesdeEcommerce($b);
+      } $a->close();
+
+
+   }
+
+
+
+
+
+
+public function ListarUsuarios(){
+
+$url = "http://localhost/justomarket/application/src/api.php?op=2&secret=" . 
+Encrypt::Encrypt($_SESSION['td'],$_SESSION['secret_key']);
+
+  $jsondata = $this->ObtenerData($url);
+  $datos = json_decode($jsondata, true); 
+
+echo '<h2 class="h2-responsive">LISTADO DE USUARIOS</h2>
+
+<div class="table-responsive">
+          <table class="table table-sm table-striped">
+        <thead>
+<tr>
+<th>Nombre</th>
+<th class="th-sm">Email</th>
+<th class="th-sm">Dirección</th>
+<th>Municipio</th>
+<th>Telefono</th>
+<th>Ver</th>
+</tr>
+        </thead>
+        <tbody>';
+
+for ($i=0; $i < count($datos); $i++) { 
+   echo '<tr>
+          <td>'.$datos[$i]["nombre"].'</td>
+          <td>'.$datos[$i]["email"].'</td>
+          <td>'.$datos[$i]["usr_direccion"].'</td>
+          <td>'.$datos[$i]["usr_municipio"].'</td>
+          <td>'.$datos[$i]["usr_telefono"].'</td>
+          <td><a id="xver" op="382"><i class="fas fa-search fa-lg green-text"></i></a></td>
+        </tr>';
+        }
+        echo '</tbody>
+        </table>
+        </div>';
+
+
+
+
+
+
+}
+
 
 
 

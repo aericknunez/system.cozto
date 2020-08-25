@@ -168,6 +168,43 @@ class Ventas{
 
 
 
+	public function AgregarDesdeEcommerce($datos) { // agrega el producto
+		$db = new dbConn();
+
+		$datox = array();
+	    $datox["cod"] = $datos["cod"];
+	    $datox["cant"] = $datos["cantidad"];
+	    $datox["producto"] = $datos["producto"];
+	    $datox["pv"] = $datos["pv"]; 				   
+	    $datox["stotal"] = $datos["stotal"];    				   
+	    $datox["imp"] = $datos["imp"];
+	    $datox["total"] = $datos["total"];
+	    $datox["descuento"] =$datos["descuento"];
+	    $datox["num_fac"] = 0;
+	    $datox["fecha"] = date("d-m-Y");
+	    $datox["hora"] = date("H:i:s");
+	    $datox["orden"] = $_SESSION["orden"];
+	    $datox["cajero"] = $_SESSION['nombre'];
+	    $datox["tipo_pago"] = 1;
+	    $datox["user"] = $_SESSION['user'];
+	    $datox["tx"] = $_SESSION['tx'];
+	    $datox["fechaF"] = Fechas::Format(date("d-m-Y"));
+	    $datox["edo"] = 1;
+	    $hash = Helpers::HashId();
+	    $datox["hash"] = $hash;
+		$datox["time"] = Helpers::TimeId();
+	    $datox["td"] = $_SESSION["td"];
+	    $db->insert("ticket", $datox);
+
+
+
+	}
+
+
+
+
+
+
 	public function Actualiza($datos,$func) { // agrega el producto suma de uno n uno
 		$db = new dbConn();
 
