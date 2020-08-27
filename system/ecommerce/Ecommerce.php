@@ -21,6 +21,11 @@ class EcommerceData{
         if ($r = $db->select("precio", "producto_precio", "WHERE producto = ".$b["cod"]." and td = ". $td ." order by id desc limit 1")) { 
             $precio = $r["precio"]; } unset($r); 
 
+
+        if ($r = $db->select("precio", "producto_precio_promo", "WHERE producto = ".$b["cod"]." and td = ". $td ."")) { 
+            $promo = $r["precio"]; } unset($r); 
+
+
             // obtener las imagenes
           $imagenes = array();
          
@@ -34,6 +39,9 @@ class EcommerceData{
         $data["productos"][] = $b;
         $data["productos"][$n]["imagenes"] =  $imagenes;
         $data["productos"][$n]["precio"] =  $precio;
+        $data["productos"][$n]["promo"] =  $promo;
+
+        unset($promo);
 
 $n++;
 
@@ -72,8 +80,13 @@ if ($r = $db->select("hash", "producto_categoria_sub", "WHERE subcategoria = '".
       $n= 0;
         foreach ($a as $b) {
         // obtener el nombre y detalles del producto
-        if ($r = $db->select("precio", "producto_precio", "WHERE producto = ".$b["cod"]." and td = ". $td ." order by id desc limit 1")) { 
+        if ($r = $db->select("precio", "producto_precio", "WHERE producto = ".$b["cod"]." and td = ". $td ." order by id asc limit 1")) { 
             $precio = $r["precio"]; } unset($r); 
+
+
+/// precio promo
+        if ($r = $db->select("precio", "producto_precio_promo", "WHERE producto = ".$b["cod"]." and td = ". $td ."")) { 
+            $promo = $r["precio"]; } unset($r); 
 
             // obtener las imagenes
           $imagenes = array();
@@ -88,6 +101,9 @@ if ($r = $db->select("hash", "producto_categoria_sub", "WHERE subcategoria = '".
         $data["productos"][] = $b;
         $data["productos"][$n]["imagenes"] =  $imagenes;
         $data["productos"][$n]["precio"] =  $precio;
+        $data["productos"][$n]["promo"] =  $promo;
+
+        unset($promo);
 
 $n++;
 
@@ -124,8 +140,13 @@ echo json_encode($data);
       $n= 0;
         foreach ($a as $b) {
         // obtener el nombre y detalles del producto
-        if ($r = $db->select("precio", "producto_precio", "WHERE producto = ".$b["cod"]." and td = ". $td ." order by id desc limit 1")) { 
+        if ($r = $db->select("precio", "producto_precio", "WHERE producto = ".$b["cod"]." and td = ". $td ." order by id asc limit 1")) { 
             $precio = $r["precio"]; } unset($r); 
+
+
+       if ($r = $db->select("precio", "producto_precio_promo", "WHERE producto = ".$b["cod"]." and td = ". $td ."")) { 
+            $promo = $r["precio"]; } unset($r); 
+
 
             // obtener las imagenes
           $imagenes = array();
@@ -140,6 +161,9 @@ echo json_encode($data);
         $data["productos"][] = $b;
         $data["productos"][$n]["imagenes"] =  $imagenes;
         $data["productos"][$n]["precio"] =  $precio;
+        $data["productos"][$n]["promo"] =  $promo;
+
+        unset($promo);
 
 $n++;
 
@@ -175,8 +199,12 @@ echo json_encode($data);
       $n= 0;
         foreach ($a as $b) {
         // obtener el nombre y detalles del producto
-        if ($r = $db->select("precio", "producto_precio", "WHERE producto = ".$b["cod"]." and td = ". $td ." order by id desc limit 1")) { 
+        if ($r = $db->select("precio", "producto_precio", "WHERE producto = ".$b["cod"]." and td = ". $td ." order by id asc limit 1")) { 
             $precio = $r["precio"]; } unset($r); 
+
+        if ($r = $db->select("precio", "producto_precio_promo", "WHERE producto = ".$b["cod"]." and td = ". $td ."")) { 
+            $promo = $r["precio"]; } unset($r); 
+
 
             // obtener las imagenes
           $imagenes = array();
@@ -191,7 +219,9 @@ echo json_encode($data);
         $data = $b;
         $data["imagenes"] =  $imagenes;
         $data["precio"] =  $precio;
+        $data["promo"] =  $promo;
 
+        unset($promo);
 $n++;
 
         }
@@ -283,6 +313,14 @@ $n = 0;
 
   public function UserUpdate($data, $td){ // reemplazo el usuario temporal por el del  usuario registrado
       $db = new dbConn();
+// debo comprobar si  hay alguna orden sin procesar
+    if ($r = $db->select("orden", "ecommerce_data", "WHERE edo = 1 and usuario='".$data["usuario"]."' and td = ".$td."")) { 
+        $orden = $r["orden"];
+    } unset($r);  
+
+
+
+if($orden != NULL){
 
 $cambio = array();
 $cambio["usuario"] = $data["user"];
@@ -295,10 +333,10 @@ Helpers::UpdateId("ecommerce_data", $cambios, "usuario='".$data["usuario"]."' an
 
 
 /// obtener el ultimo numero de orden
-$a = $db->query("SELECT orden FROM ecommerce_data WHERE usuario='".$data["user"]."' and td = ".$td." order by id desc limit 1");
-foreach ($a as $b) {
-$orden = $b["orden"];
-} $a->close();
+// $a = $db->query("SELECT orden FROM ecommerce_data WHERE usuario='".$data["user"]."' and td = ".$td." order by id desc limit 1");
+// foreach ($a as $b) {
+// $orden = $b["orden"];
+// } $a->close();
 
 /// pasar a una sola orden todos los producto
 $a = $db->query("SELECT hash FROM ecommerce_data WHERE usuario='".$data["user"]."' and td = ".$td." and edo = 1");
@@ -310,7 +348,7 @@ Helpers::UpdateId("ecommerce_data", $cambios, "usuario='".$data["user"]."' and t
 
 $cambio = array();
 $cambio["orden"] = $orden;
-Helpers::UpdateId("ecommerce", $cambio, "usuario='".$data["user"]."' and td = ".$td."");
+Helpers::UpdateId("ecommerce", $cambio, "orden = '$orden' and usuario='".$data["user"]."' and td = ".$td."");
 
 
 } $a->close();
@@ -318,6 +356,7 @@ Helpers::UpdateId("ecommerce", $cambio, "usuario='".$data["user"]."' and td = ".
 
     Helpers::DeleteId("ecommerce_data", "usuario='".$data["user"]."' and td = ".$td." and orden != '".$orden."' and edo = 1");
 
+}// termina comprobacion si hay orden sin completar
 
 
     $datos = array();
@@ -359,6 +398,91 @@ Helpers::UpdateId("ecommerce", $cambio, "usuario='".$data["user"]."' and td = ".
 
 
 
+
+
+
+
+
+
+
+  public function OrdenesCliente($usuario, $td){
+      $db = new dbConn();
+
+ $a = $db->query("SELECT usuario, orden, fecha, hora, fechaF, edo FROM ecommerce_data WHERE usuario = '$usuario' and td = '$td' order by id desc");
+      
+      if($a->num_rows > 0){
+
+      $data = array();
+      $n= 0;
+        foreach ($a as $b) {
+
+            // obtener los productos
+          $producto = array();
+         
+          $x = $db->query("SELECT cod, cant, producto, pv, total, orden FROM ecommerce WHERE usuario = '$usuario' and orden = '".$b["orden"]."' and td = ". $td ."");
+            foreach ($x as $z) {
+                 $producto[] = $z;
+            } $x->close();
+
+
+
+        $data["ordenes"][] = $b;
+        $data["ordenes"][$n]["producto"] =  $producto;
+
+
+$n++;
+
+        }
+
+echo json_encode($data);
+
+  }
+
+
+  $a->close();
+
+
+  } // termina productos
+
+
+
+
+ public function TotalProductosCliente($usuario, $td){
+      $db = new dbConn();
+
+      $a = $db->query("SELECT sum(cant) FROM ecommerce WHERE usuario = '".$usuario."' and  td = ".$td."");
+        foreach ($a as $b) {
+         $total = $b["sum(cant)"];
+        } $a->close();
+
+
+    $datos = array();
+    $datos["total"] =  $total;
+
+  echo json_encode($datos);
+
+
+  } // termina total
+
+
+
+
+
+ public function TotalOrdenesCliente($usuario, $td){
+      $db = new dbConn();
+
+      $a = $db->query("SELECT * FROM ecommerce_data WHERE usuario = '".$usuario."' and  td = ".$td."");
+         $total = $a->num_rows;
+         $a->close();
+
+
+    $datos = array();
+    $datos["total"] =  $total;
+
+  echo json_encode($datos);
+
+
+  } // termina total
 
 
 

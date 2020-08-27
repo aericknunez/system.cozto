@@ -8,8 +8,9 @@ $cad = $_REQUEST["cad"];
 $com = $_REQUEST["com"];
 $dep = $_REQUEST["dep"];
 
-    if ($r = $db->select("descripcion", "producto", "WHERE cod = '$key' and td = ".$_SESSION["td"]."")) { 
+    if ($r = $db->select("descripcion, promocion", "producto", "WHERE cod = '$key' and td = ".$_SESSION["td"]."")) { 
         $prod = $r["descripcion"];
+        $promo = $r["promocion"];
     } unset($r);  
 
  ?>
@@ -131,10 +132,19 @@ $dep = $_REQUEST["dep"];
               if(isset($_GET["msj"])) Alerts::Mensaje("Debe agregar un precio del producto","danger",$boton,$boton2);
              $productos->VerPrecios($_REQUEST["key"]); 
               ?></div>
+
+
+     <?php 
+            if($promo == "on"){
+             Alerts::Mensajex("El precio de promoción es: " . Helpers::Dinero($productos->VerPrecioPromox($_REQUEST["key"])) ,"success",'<a id="promo" class="btn btn-success my-1 btn-sm btn-rounded" type="submit" id="btn-preciosdone"><i class="fa fa-plus mr-1"></i>Promo</a>');
+            }
+    ?>
               
               <?php $url = "application/src/routes.php?op=47&key=$key&step=2&cad=$cad&com=$com&dep=$dep"; ?>
               
-              <?php if($_SESSION["config_mayorista"] == "on"){
+              <?php 
+           
+              if($_SESSION["config_mayorista"] == "on"){
                 echo '<a id="llamarmayorista" class="btn btn-danger my-1 btn-sm btn-rounded" type="submit" id="btn-preciosdone"><i class="fa fa-plus mr-1"></i> Precios Mayoristas</a>';
               } ?>
               
@@ -616,3 +626,53 @@ $imgs->VerProducto($_REQUEST["key"], "assets/img/productos/" . $_SESSION["td"] .
 
 
 
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="ModalPromo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">PRECIO DE PROMOCIÓN</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+<!-- contenido -->
+
+                <form id="form-preciopromo">
+  
+                  <div class="form-row">
+                    <div class="col-md-8 mb-2 md-form">
+                      <label for="cod">Precio</label>
+                      <input type="number" step="any" class="form-control" id="preciopromo" name="preciopromo" required>
+                    </div>
+
+                  <div class="col-md-4 mb-4 md-form">
+                      <button class="btn-floating btn-sm btn-secondary" type="submit" id="btn-preciopromo"><i class="fa fa-plus"></i></button>
+                    </div>
+
+                  </div>
+                      <input type="hidden" id="pro_promo" name="pro_promo" value="<?php echo $_REQUEST["key"] ?>" >
+              </form>
+
+
+              <div id="muestrapreciopromo"><?php 
+             $productos->VerPrecioPromo($_REQUEST["key"]); 
+              ?></div>
+
+<!-- contenido -->
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- modal -->

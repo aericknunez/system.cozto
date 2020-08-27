@@ -275,6 +275,21 @@ break;
 
 
 
+case "30y": // agrega los precios de promo
+include_once '../../system/producto/Productos.php';
+	$productos = new Productos;
+	$productos->AddPrecioPromo($_POST);
+break;
+
+
+
+case "31y": // elimina los precios de promo
+include_once '../../system/producto/Productos.php';
+	$productos = new Productos;
+	$productos->DelPrecioPromo($_REQUEST["hash"], $_REQUEST["producto"]);
+break;
+
+
 case "32": // busqueda de productos para compuestos
 include_once '../../system/producto/Productos.php';
 	$productos = new Productos;

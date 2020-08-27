@@ -522,6 +522,54 @@ $(document).ready(function(){
 
 
 
+//// promo
+	$("body").on("click","#promo",function(){ 
+		
+		$('#ModalPromo').modal('show');	
+	});
+
+
+
+	$('#btn-preciopromo').click(function(e){ /// para el formulario
+
+	e.preventDefault();
+	$.ajax({
+			url: "application/src/routes.php?op=30y",
+			method: "POST",
+			data: $("#form-preciopromo").serialize(),
+			success: function(data){
+				$("#form-preciopromo").trigger("reset");
+				$("#muestrapreciopromo").html(data);			
+			}
+		})
+	});
+    
+
+
+
+	$("#form-preciopromo").keypress(function(e) {//Para deshabilitar el uso de la tecla "Enter"
+	if (e.which == 13) {
+	return false;
+	}
+	});
+
+
+// borrar un precio de producto
+	$("body").on("click","#delpreciopromo",function(){
+		var op = $(this).attr('op');
+		var hash = $(this).attr('hash');
+		var producto = $(this).attr('producto');
+	    $.post("application/src/routes.php", {op:op, hash:hash, producto:producto}, function(data){
+		$("#muestrapreciopromo").html(data);
+	   	 });
+	});
+
+
+
+
+
+
+
 /// salir del modal
     $("body").on("click","#modalOut",function(){
         var op = "501";
@@ -541,6 +589,7 @@ $(document).ready(function(){
         });
     });   
     
+
 
 
 

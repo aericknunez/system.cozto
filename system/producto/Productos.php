@@ -1495,6 +1495,111 @@ $page <= 1 ? $enable = 'disabled' : $enable = '';
 
 
 
+
+
+
+
+
+
+
+
+
+  public function AddPrecioPromo($datox){ // ingresa un nuevo lote de productos
+      $db = new dbConn();
+          if($datox["preciopromo"] != NULL){
+
+/// reviso si tiene precio, sino tiene agrego sino acualizo
+$a = $db->query("SELECT * FROM producto_precio_promo WHERE producto = '".$datox["pro_promo"]."' and td = ".$_SESSION["td"]."");
+$registros = $a->num_rows;
+$a->close();
+      if($registros == 0){
+
+              $datos = array();
+              $datos["producto"] = $datox["pro_promo"];
+              $datos["precio"] = $datox["preciopromo"];
+              $datos["td"] = $_SESSION["td"];
+              $datos["hash"] = Helpers::HashId();
+              $datos["time"] = Helpers::TimeId();
+              if ($db->insert("producto_precio_promo", $datos)) {
+
+                 Alerts::Alerta("success","Realizado!","Precio agregado correctamente!");
+                
+              }
+        } else {
+
+          $cambio = array();
+          $cambio["precio"] = $datox["preciopromo"];
+          if(Helpers::UpdateId("producto_precio_promo", $cambio, "producto = '".$datox["pro_promo"]."' and td = ".$_SESSION["td"]."")){
+            Alerts::Alerta("success","Realizado!","Precio agregado correctamente!");
+          }
+
+        }
+
+
+          } else {
+              Alerts::Alerta("error","Error!","Faltan Datos!");
+          }
+          $this->VerPrecioPromo($datox["pro_promo"]);
+
+  }
+
+
+
+  public function VerPrecioPromo($producto){
+      $db = new dbConn();
+          $a = $db->query("SELECT * FROM producto_precio_promo WHERE producto = '$producto' and td = ".$_SESSION["td"]."");
+          if($a->num_rows > 0){
+        echo '<table class="table table-sm table-hover">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Precio</th>
+              <th scope="col">Eliminar</th>
+            </tr>
+          </thead>
+          <tbody>';
+          $n = 1;
+              foreach ($a as $b) { ;
+                echo '<tr>
+                      <th scope="row">'. $n ++ .'</th>
+                      <td>'.$b["precio"].'</td>
+                      <td><a id="delpreciopromo" hash="'.$b["hash"].'" op="31y" producto="'.$producto.'" ><i class="fa fa-minus-circle fa-lg red-text"></i></a></td>
+                    </tr>';          
+              }
+        echo '</tbody>
+        </table>';
+
+          } $a->close();  
+  }
+
+
+
+  public function DelPrecioPromo($hash, $producto){ // elimina precio
+    $db = new dbConn();
+        if (Helpers::DeleteId("producto_precio_promo", "hash='$hash'")) {
+           Alerts::Alerta("success","Eliminado!","Precio eliminado correctamente!");
+        } else {
+            Alerts::Alerta("error","Error!","Algo Ocurrio!");
+        } 
+      $this->VerPrecioPromo($producto);
+  }
+
+
+  public function VerPrecioPromox($producto){
+      $db = new dbConn();
+    if ($r = $db->select("precio", "producto_precio_promo", "WHERE producto = '$producto' and td = ".$_SESSION["td"]."")) { 
+        return $r["precio"];
+    } unset($r);  
+
+  }
+
+
+
+
+
+
+
+
 } // Termina la lcase
 
 ?>

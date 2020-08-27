@@ -22,7 +22,6 @@ include_once '../common/Dinero.php';
 // carrito // productos que ha agregado
 
 
-
 if($_REQUEST["cantidad"] != NULL){
 	$limit = "limit " . $_REQUEST["cantidad"];
 } else {
@@ -111,7 +110,27 @@ break;
 
 
 
+case "31": /// las sordenes de cada cliente
+	include_once '../../system/ecommerce/Ecommerce.php';
+	$data = new EcommerceData();
+	$data->OrdenesCliente($_REQUEST["user"], $_REQUEST["td"]); 
+break;
 
+
+
+case "32": /// total de productos del cliente
+	include_once '../../system/ecommerce/Ecommerce.php';
+	$data = new EcommerceData();
+	$data->TotalProductosCliente($_REQUEST["user"], $_REQUEST["td"]); 
+break;
+
+
+
+case "33": /// total de productos del cliente
+	include_once '../../system/ecommerce/Ecommerce.php';
+	$data = new EcommerceData();
+	$data->TotalOrdenesCliente($_REQUEST["user"], $_REQUEST["td"]); 
+break;
 
 
 
