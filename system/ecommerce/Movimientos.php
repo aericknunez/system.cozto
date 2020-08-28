@@ -499,7 +499,7 @@ public function EdoCambia($data){
     if(Helpers::UpdateId("ecommerce_data", $cambio, "usuario='".$data["user"]."' and orden = ".$data["orden"]." and td = ".$_SESSION["td"]."")){
         Alerts::Alerta("success","Realizado!","Cambio Realizado correctamente");
 
-        $this->EnviarEmail();
+        Email::EnviarEmail("aerick.nunez@gmail.com", "Erick Nunez", "aerick.nunez@gmail.com", "Justo Market", "Esta es una prueba de envio de email", $plantilla);
     } else {
         Alerts::Alerta("error","Error!!","No se realizo el cambio");
     }
@@ -536,53 +536,6 @@ public function MuestraEdoBotones($data){
     }
 
 }
-
-
-
-
-
-public function EnviarEmail(){
-
-$destinatario = "aerick.nunez@gmail.com"; 
-$asunto = "Este mensaje es de prueba"; 
-$cuerpo = ' 
-<html> 
-<head> 
-   <title>Gracias por su compra</title> 
-</head> 
-<body> 
-<h1>Gracias por su compra!</h1> 
-<p> 
-<b>
-Gracias por su compra, en este momento estamos realizando pruebas de envio de email 
-</p> 
-</body> 
-</html> 
-'; 
-
-//para el envío en formato HTML 
-$headers = "MIME-Version: 1.0\r\n"; 
-$headers .= "Content-type: text/html; charset=iso-8859-1\r\n"; 
-
-//dirección del remitente 
-$headers .= "From: Erick Nunez <aerick.nunez@gmail.com>\r\n"; 
-
-//dirección de respuesta, si queremos que sea distinta que la del remitente 
-$headers .= "Reply-To: info@justomarket.com\r\n"; 
-
-//ruta del mensaje desde origen a destino 
-$headers .= "Return-path: info@justomarket.com\r\n"; 
-
-//direcciones que recibián copia 
-// $headers .= "Cc: maria@desarrolloweb.com\r\n"; 
-
-//direcciones que recibirán copia oculta 
-// $headers .= "Bcc: pepe@pepe.com,juan@juan.com\r\n"; 
-
-mail($destinatario,$asunto,$cuerpo,$headers);
-
-}
-
 
 
 

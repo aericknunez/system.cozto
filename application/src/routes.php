@@ -1547,6 +1547,7 @@ break;
 
 case "378": // estado de la orden
 include_once '../../system/ecommerce/Movimientos.php';
+include_once '../common/Email.php';
 	$ecommerce = new Movimientos();
 	$ecommerce->EdoCambia($_POST);
 break;

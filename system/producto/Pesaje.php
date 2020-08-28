@@ -201,7 +201,7 @@ $op = "427";
                       <td>'.$b["producto"].'</td>
                       <td>'.$b["pv"].'</td>
                       <td>'.$b["total"].'</td>
-                      <td><a id="xprint" op="55" key="'.$b["cod"].'"><i class="fas fa-print fa-lg green-text"></i></a></td>
+                      <td><a href="system/facturar/pesoBarcode.php?cod='.$b["hash"].'" rel="pop-up"><i class="fas fa-print fa-lg green-text"></i></a></td>
                     </tr>';
         }
         echo '</tbody>
@@ -277,34 +277,6 @@ $page <= 1 ? $enable = 'disabled' : $enable = '';
 
 
 
-
-public function GenerarBarcode($code){
-    $db = new dbConn();
-
-
-    if ($r = $db->select("*", "pesaje", "WHERE hash = '".$code."' and td = ".$_SESSION["td"]."")) { 
-        $producto = $r["producto"];
-        $cant = $r["cant"];
-        $pv = $r["pv"];
-        $total = $r["total"];
-    } unset($r);  
-
-
-
-echo '<div class="row" align="center">';
-
-echo '<div class="justify-content-center border border-dark">';
-
-echo '<img src="application/common/barcode.php?text='.$code.'&size=50" alt="'.$producto.'" />
-<br>
-'.$producto.' <br>
-<h4 class="font-weight-bold">Total: ' . Helpers::Dinero($total) .'</h4>
-Precio: '.$pv.' Peso: '.$cant.'
-';
-
-echo '</div>';
-echo '</div>';
-}
 
 
 

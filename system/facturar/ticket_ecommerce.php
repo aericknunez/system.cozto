@@ -17,9 +17,17 @@ if ($seslog->login_check() == TRUE) {
         $datos = "";
    
     foreach ($a as $b) { 
-       
+ 
+
+     $x = $db->query("SELECT producto_unidades.abreviacion as unidad FROM producto INNER JOIN producto_unidades on producto.medida = producto_unidades.hash WHERE producto.td = ".$_SESSION["td"]."");
+    foreach ($x as $y) {
+        $unidad = $y["unidad"];
+    } $x->close();
+
+
+
         $datos .= '<tr>
-                <td class="text-center">'. $b["cant"] .'</td>
+                <td class="text-center">'. $b["cant"] .' '.$unidad.'</td>
                 <td>'. $b["producto"] .'</td>                                
                 <td class="text-right">'. $b["pv"] .'</td>
                 <td class="text-right">'. $b["total"] .'</td>
@@ -76,7 +84,7 @@ if($totalregistros > 0){
                     <p>
                         Teléfono: <?php echo $_SESSION["config_telefono"] ?><br>
                         <?php echo $_SESSION["config_nombre_documento"] ?>: <?php echo $_SESSION["config_nit"] ?><br>
-                        Propietario: <?php echo $_SESSION["config_propietario"] ?> <br>
+                        <?php echo $_SESSION["config_propietario"] ?> <br>
                     </p>
                     <p>Factura: <strong><?php echo str_pad($_REQUEST["orden"], 8, "0", STR_PAD_LEFT); ?></strong></p>
                     <div style="clear:both;"></div>
@@ -172,6 +180,7 @@ echo '<div class="well well-sm" style="margin-top:10px;">
             });
 
             window.print();
+            // window.close();
 
         });
     </script>

@@ -405,6 +405,16 @@ else{
 </script>
 
 
+<script>
+$( document ).ready( function() {
+	$("a[rel='pop-up']").click(function () {
+      	var caracteristicas = "height=100,width=175,scrollTo,resizable=1,scrollbars=1,location=1, top=100, left=500";
+      	nueva=window.open(this.href, 'Popup', caracteristicas);
+      	return false;
+ });
+});
+</script>
+
 
 <?php // restringir Acciones
 

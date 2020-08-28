@@ -185,9 +185,9 @@ echo '<div class="well well-sm" style="margin-top:10px;">
 <span class="pull-right col-xs-12">
 <button onclick="window.print();" class="btn btn-block btn-primary">Imprimir</button></span>
 <span class="pull-left col-xs-12"><a class="btn btn-block btn-success" href="#" id="email">Email</a></span>
-<span class="col-xs-12">
+<!-- <span class="col-xs-12">
 <a class="btn btn-block btn-warning" href="../../?">Regresar</a>
-</span>
+</span> -->
 <div style="clear:both;"></div>
 </div>
             <!-- end -->
@@ -208,6 +208,7 @@ echo '<div class="well well-sm" style="margin-top:10px;">
             });
 
             window.print();
+            // window.close();
 
         });
     </script>
