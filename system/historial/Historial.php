@@ -136,7 +136,7 @@ class Historial{
 		$segundo = Fechas::Format($fin);
 					$pro=0;
 				//busqueda de usuarios
-				$a = $db->query("select * from corte_diario where fecha_format BETWEEN '$primero' AND '$segundo' and td = ".$_SESSION['td']." order by fecha_format, id asc");
+				$a = $db->query("select * from corte_diario where edo != 1 and fecha_format BETWEEN '$primero' AND '$segundo' and td = ".$_SESSION['td']." order by fecha_format, id asc");
 
 				if($a->num_rows > 0){
 					
@@ -177,7 +177,7 @@ class Historial{
 
 				    foreach ($a as $b) {
 				
-				if($b["edo"] == 1){
+				if($b["edo"] == 2){
 				$xproductos=$xproductos+$b["productos"];
 				$xclientes=$xclientes+$b["clientes"];
 				$xefectivo=$xefectivo+$b["efectivo_ingresado"];

@@ -378,8 +378,8 @@ else{
 
 
 
-	} else { // panel de control
-			/// query del panel de conttrol a implementar  para root
+	} else { // para aperturar caja
+		echo '<script type="text/javascript" src="assets/js/query/abrircaja.js?v='.$numero.'"></script>';
 	}
 
 }

@@ -7,7 +7,7 @@ $gasto = new Gastos();
 
 include_once 'system/corte/Corte.php';
 $cut = new Corte();
-if($cut->UltimaFecha() != date("d-m-Y")){ // comprobacion de corte
+if($_SESSION["caja_apertura"] != NULL){ // comprobacion de corte
 ?>
 
 <div class="row d-flex justify-content-center">

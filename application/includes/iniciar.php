@@ -12,7 +12,7 @@ include_once '../common/Alerts.php';
 include_once '../common/Fechas.php';
 include_once '../../system/index/Inicio.php';
 include_once '../../system/config_configuraciones/Config.php';
-
+include_once '../../system/corte/CorteMultiple.php';
 
 if($_SESSION['username'] == NULL){
 header("location: logout.php");
@@ -41,6 +41,14 @@ $_SESSION["ver_avatar"] = NULL;
 
         $configuracion = new Config;
         $configuracion->CrearVariables(); // creo el resto de variables del sistema
+
+        /// reviso si la caja esta aperturada
+        $corte = new Corte();
+        if($corte->ComprobarApertura() == TRUE){
+            $_SESSION["caja_apertura"] = $corte->ObtenerHash();
+        }
+
+        
 
         $inicia = new Inicio;
         $inicia->Caduca(); // revisa si ha caducado

@@ -973,43 +973,42 @@ case "115": // corte preguntar
 	if($_POST["efectivo"] ==  NULL){
 		Alerts::Alerta("error","Error!","El Formulario esta vacio");
 	} else {
-		Alerts::RealizarCorte("ejecuta-corte","116",$_POST["efectivo"]);
+		Alerts::RealizarCorte("ejecuta-corte","117",$_POST["efectivo"]);
 	}
 break;
 
 
 
 case "116": // ejecuta corte
-include_once '../../system/corte/Corte.php';
-//include_once '../../system/sync/Sync.php';
-$cortes = new Corte;
-if($_POST["fecha"] == NULL){ $fecha = date("d-m-Y"); 
-} else {
-   $fecha = $_POST["fecha"];
-}
-$cortes->Execute($_POST["efectivo"], $fecha);
+include_once '../../system/corte/CorteMultiple.php';
+$cortes = new Corte();
+
+$cortes->Apertura($_POST["efectivo"]);
 break;
 
 
 
-case "117": // ver el contenido
-	include_once '../../system/corte/Corte.php';
-	//include_once '../../system/sync/Sync.php';
-	$cortes = new Corte;
-	$cortes->Contenido(date("d-m-Y"));
+case "117": // cierre de corte
+include_once '../../system/corte/CorteMultiple.php';
+$cortes = new Corte();
+
+$cortes->Cierre($_POST["efectivo"]);
 break;
 
 
 
 case "118": // cancelar corte
-	include_once '../../system/corte/Corte.php';
-	$cortes = new Corte;
-	if($_POST["fecha"] == NULL){ $fecha = date("d-m-Y"); 
-	} else {
-	   $fecha = $_POST["fecha"];
-	}
-	$cortes->CancelarCorte($_POST["random"], $fecha);
+	include_once '../../system/corte/CorteMultiple.php';
+	$cortes = new Corte();
+	$cortes->CancelarCorte($_POST["random"]);
+break;
 
+
+
+case "119": // mosatrar detalles del corte
+	include_once '../../system/corte/CorteMultiple.php';
+	$cortes = new Corte();
+	$cortes->Contenido();
 break;
 
 

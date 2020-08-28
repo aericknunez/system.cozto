@@ -120,7 +120,7 @@ class Alerts{
       $num = rand(1,4);
       echo '<div class="alert alert-danger alert-dismissible">
 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-Existe un corte realizado este dia, ya no se puede seguir agregando '.$tipo.' a menos que elimine el corte realizado
+No se ha aperturado la caja para poder realizar transacciones de dinero como  '.$tipo.' aperture la caja o elimine el corte realizado
 <br>
 <a href="?corte" class="btn btn-danger waves-effect waves-light">Eliminar Corte</a>
 </div><div align="center"><img src="assets/img/imagenes/error'.$num.'.png" class="img-fluid" alt="Responsive image"></div>';

@@ -2,14 +2,14 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 include_once 'application/common/Alerts.php';
-include_once 'system/corte/Corte.php';
-$cortes = new Corte;
+include_once 'system/corte/CorteMultiple.php';
+$cortes = new Corte();
 ?>
 <div id="corte"></div>
 
 <div align="center" id="contenido">
 <?php 
-$cortes->Contenido(date("d-m-Y"));
+$cortes->Contenido();
 ?>
 </div>
 

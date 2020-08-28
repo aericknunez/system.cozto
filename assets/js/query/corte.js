@@ -45,7 +45,7 @@ return false;
             success: function(data) {  
             $("#contenido").show();          
                 $("#corte").html(data); 
-                $("#contenido").load('application/src/routes.php?op=117'); 
+                $("#contenido").load('application/src/routes.php?op=119'); 
             }
         });
     });       
@@ -66,7 +66,8 @@ return false;
 			success: function(data){
 				$("#corte").html(data);
 				$("#form-cancelar").trigger("reset");
-				window.location.href="?corte";
+				$("#contenido").load('application/src/routes.php?op=119');
+				$('#modalConfirmDelete').modal('hide');
 			}
 		})
 	})

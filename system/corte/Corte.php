@@ -5,60 +5,6 @@ class Corte{
      } 
 
 
-     public function Execute($efectivo, $fecha){
-     	$db = new dbConn();
-
-	     	if($this->UltimaFecha() != $fecha){
-			
-				$caja_chica=$this->GetEfectivo();
-			    
-
-			    $datos = array();
-			    $datos["fecha"] = $fecha;
-			    $datos["fecha_format"] = Fechas::Format($fecha);
-			    $datos["hora"] = date("H:i:s");
-			    $datos["productos"] = $this->ProductosHoy($fecha);
-			    $datos["clientes"] = $this->ClientesHoy($fecha);
-			    $datos["efectivo_ingresado"] = $efectivo;
-			    $datos["tx"] = $this->TotalTx($fecha);
-			    $datos["no_tx"] = $this->TotalNoTx($fecha);
-			    $datos["total"] = $this->VentaHoy($fecha);
-			    $datos["t_efectivo"] = $this->TVentasX($fecha, 1);
-			    $datos["t_tarjeta"] = $this->TVentasX($fecha, 2);
-			    $datos["t_credito"] = $this->TVentasX($fecha, 3);
-			    $datos["gastos"] = $this->GastoHoy($fecha);
-			    $datos["diferencia"] = $this->DiferenciaDinero($caja_chica, $efectivo, $fecha);
-			    $datos["user"] = $_SESSION["user"];
-			    $datos["edo"] = 1;
-			    $datos["hash"] = Helpers::HashId();
-			    $datos["time"] = Helpers::TimeId();
-			    $datos["td"] = $_SESSION["td"];
-			    if ($db->insert("corte_diario", $datos)) {
-			        
-
-			        	if(Helpers::ServerDomain() == FALSE and $_SESSION["root_plataforma"] == 0 and $_SESSION["root_tipo_sistema"] != 0){
-				   		echo '<script>
-							window.location.href="?modal=respaldar"
-						</script>';
-				   		}
-
-			    } 
-
-	     	} else { // se detecto corte
-
-	     	}
-
-     }
-
-
-
-
-
-	public function UltimaFecha(){
-		$db = new dbConn();
-	    if ($r = $db->select("fecha", "corte_diario", "where edo = 1 and td = ".$_SESSION["td"]." order by id DESC LIMIT 1")) { return $r["fecha"];
-	    } unset($r); 
-	}
 
 
 	public function VentaHoy($fecha){
@@ -183,20 +129,9 @@ class Corte{
 
 
 
-
-
-
-
-
-
-
-
-
-
-
 	public function GetEfectivo(){ // el ultimo efectivo
 		$db = new dbConn();
-	    if ($r = $db->select("efectivo_ingresado", "corte_diario", "where edo = 1 and td = ".$_SESSION["td"]." order by id DESC LIMIT 1")) {  return $r["efectivo_ingresado"];
+	    if ($r = $db->select("efectivo_ingresado", "corte_diario", "where edo = 2 and td = ".$_SESSION["td"]." order by id DESC LIMIT 1")) {  return $r["efectivo_ingresado"];
 	    } unset($r); 
 	}
 
@@ -204,7 +139,7 @@ class Corte{
 
 	public function GetDiferencia($fecha){ //para reporte nada mas
 		$db = new dbConn();
-	    if ($r = $db->select("diferencia", "corte_diario", "where edo = 1 and fecha = '$fecha' and td = ".$_SESSION["td"]." order by id DESC LIMIT 1")) { 
+	    if ($r = $db->select("diferencia", "corte_diario", "where edo = 2 and fecha = '$fecha' and td = ".$_SESSION["td"]." order by id DESC LIMIT 1")) { 
 	        $diferencia=$r["diferencia"];
 	    } 
 	    unset($r); 
@@ -215,13 +150,10 @@ class Corte{
 
 	public function EfectivoDebido($fecha){ //para reporte efectivo que debe haber
 		$db = new dbConn();
-	    if($this->UltimaFecha() != $fecha){ // si no se ha echo corte hoy
 	    $total_cc = $this->TVentasX($fecha, 1)+$this->GetEfectivo()+$this->TotalAbonos($fecha)+$this->EntradasEfectivo($fecha); //total ventas  mas caja chica de ayer
 		$total_debido = $total_cc-$this->GastoHoy($fecha); //dinero que deberia haber ()
 		return $total_debido;
-		} else { // si se realizo corte solo ver cuanto es el ultimo corte
-		return $total_debido = $this->GetEfectivo();
-		}
+	
 	}
 
 
@@ -255,110 +187,6 @@ class Corte{
 
 
 
-
-
-
-
-public function CancelarCorte($ramdom,$fecha){
-	$db = new dbConn();
-
-	$numero = sha1(Fechas::Format(date("d-m-Y")));
-	$num = substr($numero, 0, 6);
-
-		if($ramdom == $num){
-				$cambio = array();
-			    $cambio["edo"] = "2";
-			    
-			    if (Helpers::UpdateId("corte_diario", $cambio, "fecha_format=" . Fechas::Format($fecha) . " and td = " . $_SESSION["td"])) {
-
-					Alerts::Alerta("success","Exito!","Corte Anulado Correctamente");
-			    } else {
-			Alerts::Alerta("error","Error!","Codigo Invalido!!");
-			}
-		}
-
-	}
-
-
-
-
-
-
-
-////////////////////////////////// contenido //////////////////////////
-	public function Contenido($fecha){
-		if($this->UltimaFecha() == $fecha){
-				$this->Content($fecha);
-			} else {
-				$this->Form();
-			}
-	}
-	
-
-
-
-
-	public function Content($fecha){
-		//$sync = new Sync;
-
-
-		 echo '<div class="card-deck">
-			    <!--Panel-->
-			    <div class="card">
-			        <div class="card-body">
-			            <h4 class="card-title">Efectivo</h4>
-			            <p class="black-text display-4">' . Helpers::Dinero($this->GetEfectivo()) . '</p>
-			        </div>
-			    </div>
-			    <!--/.Panel-->
-
-			    <!--Panel-->
-			    <div class="card">
-			        <div class="card-body">
-			            <h4 class="card-title">Total de venta</h4>
-			            <p class="black-text display-4">' . Helpers::Dinero($this->VentaHoy($fecha)) . '</p>
-			        </div>
-			    </div>
-			    <!--/.Panel-->
-
-			    <!--Panel-->
-			    <div class="card">
-			        <div class="card-body">
-			            <h4 class="card-title">Diferencia</h4>
-			            <p class="black-text display-4">' . Helpers::Dinero($this->GetDiferencia($fecha)) . '</p>
-			        </div>
-			    </div>
-			    <!--/.Panel-->
-
-			    <!--Panel-->
-			    <div class="card">
-			        <div class="card-body">
-			            <h4 class="card-title">Gastos</h4>
-			            <p class="black-text display-4">' . Helpers::Dinero($this->GastoHoy($fecha)) . '</p>
-			        </div>
-			    </div>
-			    <!--/.Panel-->
-
-			</div>
-
-			<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalConfirmDelete">Eliminar Corte</button>';
-		
-	}
-
-	public function Form(){
-		Alerts::Mensajex("Aun no se ha realizado el corte. <br />Ingrese la cantidad de efectivo para poder continuar",'danger',$boton,$boton2);
-	echo '<form id="form-corte" name="form-corte">
-		 
-		 <div class="form-group row justify-content-center align-items-center">
-		  <div class="col-xs-2">
-		    <label for="ex1">Efectivo</label>
-		    <input name="efectivo" type="number" id="efectivo" size="8" maxlength="8" class="form-control" placeholder="0.00" step="any" required autofocus />
-		  </div>
-		</div>
-		<input type="image" src="assets/img/imagenes/print.png"  id="btn-corte" name="btn-corte" >
-		</form>';
-				
-	}
 
 
 
