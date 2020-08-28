@@ -407,8 +407,8 @@ public function ObtenerData($url){
 public function DatosUsuario($url){
   $jsondata = $this->ObtenerData($url);
   $datos = json_decode($jsondata, true); 
-echo $url;
-print_r($datos);
+// echo $url;
+// print_r($datos);
 
 if($datos["user"]["nombre"] != NULL and $datos["direccion"]["user"] != NULL){
 echo '<hr><h4>Cliente: <strong>'.$datos["user"]["nombre"].'</strong></h4>';
