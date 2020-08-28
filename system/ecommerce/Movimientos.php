@@ -407,7 +407,7 @@ public function ObtenerData($url){
 public function DatosUsuario($url){
   $jsondata = $this->ObtenerData($url);
   $datos = json_decode($jsondata, true); 
-
+echo $url;
 print_r($datos);
 
 if($datos["user"]["nombre"] != NULL and $datos["direccion"]["user"] != NULL){
