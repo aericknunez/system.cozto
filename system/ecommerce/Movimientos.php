@@ -373,7 +373,7 @@ if($edo == 4){ $edo = "El pedido ha sido entregado correctamente"; }
 Alerts::Mensajex($edo,"success");
 
 
-$url = "https://justomarket.com/application/src/api.php?op=1&user=".$usuario);
+$url = "https://justomarket.com/application/src/api.php?op=1&user=".$usuario;
 
   $this->DatosUsuario($url);
 
@@ -563,7 +563,7 @@ public function MuestraEdoBotones($data){
 
 public function ListarUsuarios(){
 
-$url = "https://justomarket.com/application/src/api.php?op=2");
+$url = "https://justomarket.com/application/src/api.php?op=2";
 
   $jsondata = $this->ObtenerData($url);
   $datos = json_decode($jsondata, true); 
