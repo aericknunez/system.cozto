@@ -201,7 +201,7 @@ $op = "427";
                       <td>'.$b["producto"].'</td>
                       <td>'.$b["pv"].'</td>
                       <td>'.$b["total"].'</td>
-                      <td><a href="system/facturar/pesoBarcode.php?cod='.$b["hash"].'" rel="pop-up"><i class="fas fa-print fa-lg green-text"></i></a></td>
+                      <td><a url="system/facturar/pesoBarcode.php?cod='.$b["hash"].'" id="pop-up"><i class="fas fa-print fa-lg green-text"></i></a></td>
                     </tr>';
         }
         echo '</tbody>

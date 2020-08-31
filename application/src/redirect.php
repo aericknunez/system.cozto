@@ -108,6 +108,9 @@ elseif(isset($_GET["eusuarios"])) include_once 'system/ecommerce/eusuarios.php';
 
 // factura
 elseif(isset($_GET["mod_factura"])) include_once 'system/facturar/mod_factura.php'; // cambia lo de la factra
+elseif(isset($_GET["search"])) include_once 'system/facturar/busqueda.php'; // search factura
+
+
 
 
 else{

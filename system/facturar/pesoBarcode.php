@@ -63,10 +63,10 @@ if ($seslog->login_check() == TRUE) {
 
 <div class="row">
 
-    <div class="text-center border border-dark">
+    <div class="text-center">
 
     <?php 
-    echo '<img src="../../application/common/barcode.php?text='.$_REQUEST["cod"].'&size=40" alt="'.$producto.'" />';
+    echo '<img src="../../application/common/Barcode.php?text='.$_REQUEST["cod"].'&size=40" alt="'.$producto.'" />';
      ?>
     <br>
     <div style="margin-top: -3px"><?php echo $producto ?></div>
