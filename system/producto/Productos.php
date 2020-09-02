@@ -7,6 +7,7 @@ class Productos{
 
 	public function AddProducto($datos){ // lo que viede del formulario principal
 		$db = new dbConn();
+    if($this->CompCod($datos["cod"]) == TRUE){
       if($this->CompruebaForm($datos) == TRUE){ // comprueba si todos los datos requeridos estan llenos
                 if($datos["gravado"] == NULL) $datos["gravado"] = 0;
                 if($datos["receta"] == NULL) $datos["receta"] = 0;
@@ -33,11 +34,37 @@ class Productos{
       } else {
         Alerts::Alerta("error","Error!","Faltan Datos!");
       }
+
+    } else {
+      Alerts::Alerta("error","Error!","El codigo del producto ya existe!");
+    }
   
 	}
 
 
+
+
+  
+
+ public function CompCod($codigo){
+$db = new dbConn();
+
+$a = $db->query("SELECT * FROM producto WHERE cod = '".$codigo."' and td = ".$_SESSION["td"]."");
+$cantcod = $a->num_rows;
+$a->close();
+
+    if($cantcod > 0){
+       return FALSE;
+    } else {
+      return TRUE;
+    }
+ }
+
+
+
+
   public function CompruebaForm($datos){
+
         if($datos["cod"] == NULL or
           $datos["descripcion"] == NULL or
           $datos["cantidad"] == NULL or
@@ -45,13 +72,13 @@ class Productos{
           $datos["categoria"] == NULL or
           $datos["medida"] == NULL){
           return FALSE;
-        }
-        elseif($_SESSION["root_autoparts"] != "on" and $datos["proveedor"] == NULL){  
+        } elseif($_SESSION["root_autoparts"] != "on" and $datos["proveedor"] == NULL){  
          return FALSE;
         } else {
          return TRUE;
         }
   }
+
 
   public function Redirect($datos){
       if($datos["servicio"] === "on"){

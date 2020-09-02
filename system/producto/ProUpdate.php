@@ -36,6 +36,8 @@ class ProUpdate{
           $datos["categoria"] == NULL or
           $datos["medida"] == NULL){
           return FALSE;
+        } elseif($_SESSION["root_autoparts"] != "on" and $datos["proveedor"] == NULL){  
+         return FALSE;
         } else {
          return TRUE;
         }
