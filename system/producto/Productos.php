@@ -39,17 +39,15 @@ class Productos{
 
   public function CompruebaForm($datos){
         if($datos["cod"] == NULL or
-
-        if($_SESSION["root_autoparts"] != "on"){ // si no es autopartrs  lo agrego datos
-          $datos["proveedor"] == NULL or
-        }
-
           $datos["descripcion"] == NULL or
           $datos["cantidad"] == NULL or
           $datos["existencia_minima"] == NULL or
           $datos["categoria"] == NULL or
           $datos["medida"] == NULL){
           return FALSE;
+        }
+        elseif($_SESSION["root_autoparts"] != "on" and $datos["proveedor"] == NULL){  
+         return FALSE;
         } else {
          return TRUE;
         }
