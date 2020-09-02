@@ -38,6 +38,9 @@ class EcommerceData{
 
         $data["productos"][] = $b;
         $data["productos"][$n]["imagenes"] =  $imagenes;
+        if($data["productos"][$n]["imagenes"] == NULL){
+          $data["productos"][$n]["imagenes"] = ["default.png"];
+        }
         $data["productos"][$n]["precio"] =  $precio;
         $data["productos"][$n]["promo"] =  $promo;
 
@@ -100,6 +103,9 @@ if ($r = $db->select("hash", "producto_categoria_sub", "WHERE subcategoria = '".
 
         $data["productos"][] = $b;
         $data["productos"][$n]["imagenes"] =  $imagenes;
+        if($data["productos"][$n]["imagenes"] == NULL){
+          $data["productos"][$n]["imagenes"] = ["default.png"];
+        }
         $data["productos"][$n]["precio"] =  $precio;
         $data["productos"][$n]["promo"] =  $promo;
 
@@ -160,6 +166,9 @@ echo json_encode($data);
 
         $data["productos"][] = $b;
         $data["productos"][$n]["imagenes"] =  $imagenes;
+        if($data["productos"][$n]["imagenes"] == NULL){
+          $data["productos"][$n]["imagenes"] = ["default.png"];
+        }
         $data["productos"][$n]["precio"] =  $precio;
         $data["productos"][$n]["promo"] =  $promo;
 
@@ -218,6 +227,9 @@ echo json_encode($data);
 
         $data = $b;
         $data["imagenes"] =  $imagenes;
+        if($data["imagenes"] == NULL){
+          $data["imagenes"] = ["default.png"];
+        }
         $data["precio"] =  $precio;
         $data["promo"] =  $promo;
 
