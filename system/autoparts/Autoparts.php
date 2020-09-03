@@ -91,7 +91,21 @@ public function SelectModelo($modelo){
       <p class="bq-title">Seleccione un Año inicial</p>
     </blockquote>';
 
-        for ($i = 2000; $i <= date("Y"); $i++) {
+    echo '  <div class="btn-group" role="group">
+    <button id="btnGroupDrop1" type="button" class="btn btn-info dropdown-toggle btn-rounded" data-toggle="dropdown"
+      aria-haspopup="true" aria-expanded="false">
+     Anteriores...
+    </button>
+    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">';
+
+    for ($i = 1980; $i <= 1999; $i++) {          
+        echo '<a id="selectanio" op="523" anio="'.$i.'"  class="dropdown-item">'.$i.'</a>';
+        }
+
+  echo '</div>
+  </div>';
+
+        for ($i = 2000; $i <= date("Y"); $i++) {          
         echo '<a id="selectanio" op="523" anio="'.$i.'" type="button" class="btn btn-primary btn-rounded waves-effect">'.$i.'</a>';
         }
   }
@@ -111,6 +125,22 @@ public function SelectAnio($anio){
       <p class="bq-title">Seleccione un Año final</p>
     </blockquote>';
 
+
+    echo '  <div class="btn-group" role="group">
+    <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle btn-rounded" data-toggle="dropdown"
+      aria-haspopup="true" aria-expanded="false">
+     Anteriores...
+    </button>
+    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">';
+
+    for ($i = 1980; $i <= 1999; $i++) {          
+        echo '<a id="selectanio2" op="526" anio2="'.$i.'"  class="dropdown-item">'.$i.'</a>';
+        }
+
+  echo '</div>
+  </div>';
+
+  
         for ($i = 2000; $i <= date("Y"); $i++) {
         echo '<a id="selectanio2" op="526" anio2="'.$i.'" type="button" class="btn btn-secondary btn-rounded waves-effect">'.$i.'</a>';
         }
