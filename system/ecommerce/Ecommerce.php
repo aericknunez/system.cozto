@@ -501,6 +501,27 @@ echo json_encode($data);
 
 
 
+  public function ObtenerOrdenNo($user, $td){
+      $db = new dbConn();
+
+      $a = $db->query("SELECT orden FROM ecommerce_data WHERE edo = 1 and usuario = '".$user."' and td = ".$td."");
+        foreach ($a as $b) {
+         $orden = $b["orden"];
+        } $a->close();
+
+
+    $datos = array();
+    $datos["orden"] =  $orden;
+
+  echo json_encode($datos);
+
+
+  } // termina total
+
+
+
+
+
 
 } // Termina la lcase
 ?>

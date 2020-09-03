@@ -71,6 +71,54 @@ echo json_encode($salida);
     }
 
 
+
+
+/// agregar Delivery al finalizar compra
+  public function AddDelivery($data, $td){
+      $db = new dbConn();
+
+  $this->AgregaDelivery($data, $td);
+
+$salida = array();
+$salida["usuario"] =  $data["usuario"];
+$salida["orden"] =  $data["orden"];
+$salida["mensaje"] =  "Agregado correctamente";
+echo json_encode($salida);
+
+}
+
+  public function AgregaDelivery($datos, $td) { // agrega el producto
+    $db = new dbConn();
+
+  $pv = $this->ObtenerPrecio($datos["cod"], $datos["cantidad"], $td);
+  $sumas = $datos["precio"] * $datos["cantidad"];
+
+    $stot=Helpers::STotal($sumas, $this->ObtenerImpuesto($td));
+    $im=Helpers::Impuesto($stot, $this->ObtenerImpuesto($td));
+
+    $datox = array();
+      $datox["cod"] = 9999999;
+      $datox["cant"] = $datos["cantidad"];
+      $datox["producto"] = "DELIVERY";
+      $datox["pv"] = $datos["precio"];            
+      $datox["stotal"] = $stot;                
+      $datox["imp"] = $im;
+      $datox["total"] = $stot + $im;
+      $datox["descuento"] = NULL;
+      $datox["orden"] = $datos["orden"];
+      $datox["usuario"] = $datos["usuario"];
+      $hash = Helpers::HashId();
+      $datox["hash"] = $hash;
+      $datox["time"] = Helpers::TimeId();
+      $datox["td"] = $td;
+      $db->insert("ecommerce", $datox);
+
+  }
+
+
+
+
+
   public function Agregar($datos, $td) { // agrega el producto
     $db = new dbConn();
 

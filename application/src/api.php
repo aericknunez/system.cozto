@@ -71,6 +71,15 @@ break;
 
 
 
+case "21": /// add Delivery
+	include_once '../../system/ecommerce/Movimientos.php';
+	$ecom = new Movimientos();
+	$ecom->AddDelivery($_POST, $_REQUEST["td"]); // para detalles de un producto (codigo, td]
+break;
+
+
+
+
 case "22":
 	include_once '../../system/ecommerce/Ecommerce.php';
 	$data = new EcommerceData();
@@ -98,6 +107,14 @@ case "26":
 	include_once '../../system/ecommerce/Ecommerce.php';
 	$data = new EcommerceData();
 	$data->FinalizarPedido($_REQUEST, $_REQUEST["td"]); 
+break;
+
+
+
+case "28":
+	include_once '../../system/ecommerce/Ecommerce.php';
+	$data = new EcommerceData();
+	$data->ObtenerOrdenNo($_REQUEST["usr"], $_REQUEST["td"]); 
 break;
 
 
