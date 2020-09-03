@@ -82,6 +82,29 @@ DisableBoton();
 
 
 
+// function VerificarExistencia(cod){
+
+//         var op = "540";
+//         var dataString = 'op='+op+'&cod='+cod;
+           
+//         $.ajax({
+//             type: "POST",
+//             url: "application/src/routes.php",
+//             data: dataString,
+//             success: function(data) {  
+//                 if(data == "TRUE"){
+//                 $("#verexistencia").html('<div class="border border-light alert alert-danger alert-dismissible"><div align="center">Ya se encuentra este producto agregado, por favor verifique existencias<br><a id="mostrarformulario" class="btn btn-danger btn-rounded">Aceptar</a></div></div>'); // lo que regresa de la busquea              
+//                 $('#formulariox').hide();
+//                 } else {
+//                     $('#btn-proadd').removeClass('disabled'); 
+//                 }     
+
+//             }
+//         });
+// }
+
+
+
 function VerificarExistencia(cod){
 
         var op = "540";
@@ -93,8 +116,7 @@ function VerificarExistencia(cod){
             data: dataString,
             success: function(data) {  
                 if(data == "TRUE"){
-                $("#verexistencia").html('<div class="border border-light alert alert-danger alert-dismissible"><div align="center">Ya se encuentra este producto agregado, por favor verifique existencias<br><a id="mostrarformulario" class="btn btn-danger btn-rounded">Aceptar</a></div></div>'); // lo que regresa de la busquea              
-                $('#formulariox').hide();
+                    $('#btn-proadd').removeClass('disabled'); 
                 } else {
                     $('#btn-proadd').removeClass('disabled'); 
                 }     
@@ -102,6 +124,8 @@ function VerificarExistencia(cod){
             }
         });
 }
+
+
 
     $("body").on("click","#mostrarformulario",function(){
         $('#formulariox').show();
