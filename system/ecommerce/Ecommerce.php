@@ -267,7 +267,7 @@ echo json_encode($data);
 
 
 
- $a = $db->query("SELECT producto.cod, producto.descripcion, producto.informacion, producto.cantidad, producto.existencia_minima, producto.promocion, producto_unidades.nombre as medida FROM producto INNER JOIN producto_unidades ON producto.medida = producto_unidades.hash and producto.descripcion like '%". $search ."%' and producto.verecommerce = 'on' and producto.td = ". $td ." order by ".$orderby." ". $limit ."");
+ $a = $db->query("SELECT producto.cod, producto.descripcion, producto.informacion, producto.cantidad, producto.existencia_minima, producto.promocion, producto_unidades.nombre as medida FROM producto INNER JOIN producto_unidades ON producto.medida = producto_unidades.hash and (producto.descripcion like '%". $search ."%' or producto.informacion like '%". $search ."%') and producto.verecommerce = 'on' and producto.td = ". $td ." order by ".$orderby." ". $limit ."");
       
       if($a->num_rows > 0){
 
