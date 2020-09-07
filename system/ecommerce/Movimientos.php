@@ -90,16 +90,21 @@ echo json_encode($salida);
   public function AgregaDelivery($datos, $td) { // agrega el producto
     $db = new dbConn();
 
-  $pv = $this->ObtenerPrecio($datos["cod"], $datos["cantidad"], $td);
   $sumas = $datos["precio"] * $datos["cantidad"];
 
     $stot=Helpers::STotal($sumas, $this->ObtenerImpuesto($td));
     $im=Helpers::Impuesto($stot, $this->ObtenerImpuesto($td));
 
+if($datos["precio"] == 0){
+  $pro = "RECOGER EN TIENDA";
+} else {
+  $pro = "DELIVERY";
+}
+
     $datox = array();
       $datox["cod"] = 9999999;
       $datox["cant"] = $datos["cantidad"];
-      $datox["producto"] = "DELIVERY";
+      $datox["producto"] = $pro;
       $datox["pv"] = $datos["precio"];            
       $datox["stotal"] = $stot;                
       $datox["imp"] = $im;

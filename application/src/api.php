@@ -16,10 +16,7 @@ include_once '../common/Dinero.php';
 
 
 //FALTA:
-//agregar productos al carrito
-//agregar ususarios
 //pasarela de pagos
-// carrito // productos que ha agregado
 
 
 if($_REQUEST["cantidad"] != NULL){
@@ -28,13 +25,20 @@ if($_REQUEST["cantidad"] != NULL){
 	$limit = NULL;
 }
 
+if($_REQUEST["order"] != NULL){
+	$order = "producto.id " . $_REQUEST["order"];
+} else {
+	$order = "RAND()";
+}
+
+
 switch ($_REQUEST["op"]) {
 
 
 case "11":
 	include_once '../../system/ecommerce/Ecommerce.php';
 	$data = new EcommerceData();
-	$data->Destacados($limit, $_REQUEST["td"], "RAND()"); // para destacados (Limit cantidad, td, orderby[id DESC, id ASC, RAND()]
+	$data->Destacados($limit, $_REQUEST["td"], $order); // para destacados (Limit cantidad, td, orderby[id DESC, id ASC, RAND()]
 break;
 
 
@@ -42,7 +46,7 @@ break;
 case "12":
 	include_once '../../system/ecommerce/Ecommerce.php';
 	$data = new EcommerceData();
-	$data->Categorias($limit, $_REQUEST["td"], "RAND()", $_REQUEST["categoria"]); // para destacados (limit cantidad, td, orderby[id DESC, id ASC, RAND()], categoria
+	$data->Categorias($limit, $_REQUEST["td"], $order, $_REQUEST["categoria"]); // para destacados (limit cantidad, td, orderby[id DESC, id ASC, RAND()], categoria
 break;
 
 
@@ -60,6 +64,15 @@ case "14":
 	$data = new EcommerceData();
 	$data->Producto($_REQUEST["cod"], $_REQUEST["td"]); // para detalles de un producto (codigo, td]
 break;
+
+
+
+case "15": // busqueda
+	include_once '../../system/ecommerce/Ecommerce.php';
+	$data = new EcommerceData();
+	$data->Busqueda($limit, $_REQUEST["td"], $order, $_REQUEST["search"]); // para destacados (limit cantidad, td, orderby[id DESC, id ASC, RAND()], categoria
+break;
+
 
 
 
@@ -148,6 +161,7 @@ case "33": /// total de productos del cliente
 	$data = new EcommerceData();
 	$data->TotalOrdenesCliente($_REQUEST["user"], $_REQUEST["td"]); 
 break;
+
 
 
 

@@ -256,6 +256,89 @@ echo json_encode($data);
 
 
 
+
+
+
+
+
+
+  public function Busqueda($limit, $td, $orderby, $search){
+      $db = new dbConn();
+
+
+
+ $a = $db->query("SELECT producto.cod, producto.descripcion, producto.informacion, producto.cantidad, producto.existencia_minima, producto.promocion, producto_unidades.nombre as medida FROM producto INNER JOIN producto_unidades ON producto.medida = producto_unidades.hash and producto.descripcion like '%". $search ."%' and producto.verecommerce = 'on' and producto.td = ". $td ." order by ".$orderby." ". $limit ."");
+      
+      if($a->num_rows > 0){
+
+      $data = array();
+      $n= 0;
+        foreach ($a as $b) {
+        // obtener el nombre y detalles del producto
+        if ($r = $db->select("precio", "producto_precio", "WHERE producto = ".$b["cod"]." and td = ". $td ." order by id asc limit 1")) { 
+            $precio = $r["precio"]; } unset($r); 
+
+
+/// precio promo
+        if ($r = $db->select("precio", "producto_precio_promo", "WHERE producto = ".$b["cod"]." and td = ". $td ."")) { 
+            $promo = $r["precio"]; } unset($r); 
+
+            // obtener las imagenes
+          $imagenes = array();
+         
+          $x = $db->query("SELECT imagen FROM producto_imagenes WHERE producto = '".$b["cod"]."' and td = ". $td ."");
+            foreach ($x as $z) {
+                 $imagenes[] = $z["imagen"];
+            } $x->close();
+
+
+
+        $data["productos"][] = $b;
+        $data["productos"][$n]["imagenes"] =  $imagenes;
+        if($data["productos"][$n]["imagenes"] == NULL){
+          $data["productos"][$n]["imagenes"] = ["default.png"];
+        }
+        $data["productos"][$n]["precio"] =  $precio;
+        $data["productos"][$n]["promo"] =  $promo;
+
+        unset($promo);
+
+$n++;
+
+        }
+
+echo json_encode($data);
+
+  }
+
+
+  $a->close();
+
+
+  } // termina categorias
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   public function ObtenerTotal($data, $td){
       $db = new dbConn();
 
