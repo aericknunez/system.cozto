@@ -54,7 +54,7 @@ break;
 case "13":
 	include_once '../../system/ecommerce/Ecommerce.php';
 	$data = new EcommerceData();
-	$data->Promociones($limit, $_REQUEST["td"], "RAND()"); // para promociones (Limit cantidad, td, orderby[id DESC, id ASC, RAND()]
+	$data->Promociones($limit, $_REQUEST["td"], $order); // para promociones (Limit cantidad, td, orderby[id DESC, id ASC, RAND()]
 break;
 
 
