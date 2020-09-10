@@ -67,7 +67,7 @@ if($totalregistros > 0){
             .table th { background: #f5f5f5; }
             .table th, .table td { vertical-align: middle !important; padding-bottom: 2px; padding-top: 2px;}
             h3 { margin: 2px 0; }
-            .table { font-size: 11px; }
+            .table { font-size: 9px; }
 
             @media print {
                 .no-print { display: none; }
