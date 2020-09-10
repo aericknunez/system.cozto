@@ -8,9 +8,6 @@ $seslog = new Login();
 $seslog->sec_session_start();
 
 include_once '../../../../application/common/Alerts.php';
-include_once '../../ecommerce/Movimientos.php';
-$mov = Movimientos();
-
 
 if ($seslog->login_check() == TRUE) {
 
@@ -31,11 +28,9 @@ if ($r = $db->select("medida", "producto", "WHERE cod = '".$b["cod"]."' and td =
 
 
 
-$data = $mov->ObtenerData("https://justomarket.com/application/src/api.php?op=1&user=".$b["usuario"]);
 
 
-
- $datos .= '<tr>
+        $datos .= '<tr>
                 <td class="text-left">'. Helpers::Entero($b["cant"]) .' '.$unidad.'</td>
                 <td>'. $b["producto"] .'</td>                                
                 <td class="text-right">'. $b["pv"] .'</td>
@@ -86,13 +81,17 @@ if($totalregistros > 0){
 
             <div id="receipt-data">
                 <div>
-                    <p><?php echo $data["user"]["nombre"] ?></p>
-                    <?php echo $data["direccion"]["recibe_direccion"] ?>
-                    <?php echo $data["direccion"]["recibe_municipio"] ?>
-                    <?php echo $data["direccion"]["recibe_telefono"] ?>
+                    <div style="text-align:center;">
+                        <img src="../../../../assets/img/logo/<?php echo $_SESSION["config_imagen"] ?>" alt="Factura" class="img-fluid"><p style="text-align:center;">
 
+                    <?php echo $_SESSION["config_direccion"] ?><br><?php echo Helpers::Pais($_SESSION["config_pais"]) ?></p>
+                    </div>
+                   
+                        Teléfono: <?php echo $_SESSION["config_telefono"] ?><br>
+                        <?php echo $_SESSION["config_nombre_documento"] ?>: <?php echo $_SESSION["config_nit"] ?><br>
+                        <?php echo $_SESSION["config_propietario"] ?> <br>
                     
-                    <p style="padding-top: -20px;">Orden: <strong><?php echo str_pad($_REQUEST["orden"], 8, "0", STR_PAD_LEFT); ?></strong></p>
+                    <p style="padding-top: -20px;">Factura: <strong><?php echo str_pad($_REQUEST["orden"], 8, "0", STR_PAD_LEFT); ?></strong></p>
                     <div style="clear:both;"></div>
                     <table class="table table-striped table-condensed" style="padding-top: -10px;">
                         <thead>
@@ -138,10 +137,23 @@ if($totalregistros > 0){
                         </tbody>
                     </table>
 
+<?php if($descuento != 0){
+echo '<div class="well well-sm" style="margin-top:10px;">
+<div style="text-align: center;">Esta factura posee un total de descuento de - '. Helpers::Dinero($descuento) .'</div>
+</div>';
+
+} ?>  
 
 
 <div style="text-align: right; margin-top: -20px;">
     Fecha: <?php echo date("d-m-Y") . " | " . date("H:i:s") ?></div>
+
+
+                    
+                                                                                    
+            <div class="well well-sm" style="margin-top:5px;">
+                <div style="text-align: center;">GARCIAS POR SU PREFERENCIA</div>
+            </div>
 
             
          </div>
