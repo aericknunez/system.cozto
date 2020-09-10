@@ -107,7 +107,7 @@ class Imprime {
           <table class="table table-sm table-striped">
         <thead>
           <tr>
-            <th>Producto</th>
+            <th>#</th>
             <th class="th-sm">Producto</th>
             <th class="th-sm">Cantidad</th>
             <th class="th-sm">Precio Venta</th>
