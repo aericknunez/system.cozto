@@ -1215,6 +1215,7 @@ $page <= 1 ? $enable = 'disabled' : $enable = '';
           <table class="table table-sm table-striped">
         <thead>
           <tr>
+            <th class="th-sm">#</th>
             <th class="th-sm">Producto</th>
             <th class="th-sm">Cantidad</th>
             <th class="th-sm">Precio Venta</th>
@@ -1223,6 +1224,7 @@ $page <= 1 ? $enable = 'disabled' : $enable = '';
           </tr>
         </thead>
         <tbody>';
+        $n = 0;
         foreach ($a as $b) {
         // obtener el nombre y detalles del producto
     if ($r = $db->select("precio", "producto_precio", "WHERE producto = ".$b["cod"]." and td = ". $_SESSION["td"] ." order by id desc limit 1")) { 
@@ -1234,6 +1236,7 @@ $page <= 1 ? $enable = 'disabled' : $enable = '';
     } $ax->close();
 
           echo '<tr>
+                      <td>'.$n ++.'</td>
                       <td>'.$b["descripcion"].'</td>
                       <td>'.$b["cantidad"].'</td>
                       <td>'.Helpers::Dinero($precio).'</td>
