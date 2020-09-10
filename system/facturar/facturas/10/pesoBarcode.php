@@ -73,7 +73,7 @@ if ($seslog->login_check() == TRUE) {
     <div class="font-weight-bold" style="margin-top: -10px">Total: <?php echo Helpers::Dinero($total) ?></div>
         <div style="margin-top: -10px">Precio: <?php echo $pv ?> Peso: <?php echo $cant ?>
         </div>
-        <div style="margin-top: -20px; font-size: 10px;">098908</div>
+        <div style="margin-top: -10px; font-size: 10px;">098908</div>
     </div>
 </div>
  
