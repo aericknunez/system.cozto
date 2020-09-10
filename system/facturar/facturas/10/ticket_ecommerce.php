@@ -88,12 +88,13 @@ $datax = $mov->ObtenerData("https://justomarket.com/application/src/api.php?op=1
 $data = json_decode($datax, true);
  ?>
 
-                    <strong><?php echo $data["user"]["nombre"]; ?></strong>
+                    <strong><?php echo $data["user"]["nombre"]; ?></strong><br>
 
-                    <?php echo $data["direccion"]["recibe_direccion"]; ?>
+                    <?php echo $data["direccion"]["recibe_direccion"]; ?><br>
                     <?php echo $data["direccion"]["recibe_municipio"]; ?>
+                    
+                    <?php echo $data["direccion"]["puntoreferencia"]; ?><br>
                     <strong><?php echo $data["direccion"]["recibe_telefono"]; ?></strong>
-                    <?php echo $data["direccion"]["puntoreferencia"]; ?>
 
                     
                     <p style="padding-top: -20px;">Orden: <strong><?php echo str_pad($_REQUEST["orden"], 8, "0", STR_PAD_LEFT); ?></strong></p>
