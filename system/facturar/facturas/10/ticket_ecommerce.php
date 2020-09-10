@@ -9,7 +9,7 @@ $seslog->sec_session_start();
 
 include_once '../../../../application/common/Alerts.php';
 include_once '../../../ecommerce/Movimientos.php';
-$mov = Movimientos();
+$mov = new Movimientos();
 
 
 if ($seslog->login_check() == TRUE) {
