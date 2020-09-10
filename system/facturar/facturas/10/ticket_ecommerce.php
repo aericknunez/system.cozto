@@ -86,10 +86,10 @@ if($totalregistros > 0){
 
             <div id="receipt-data">
                 <div>
-                    <p><?php echo $data["user"]["nombre"] ?></p>
-                    <?php echo $data["direccion"]["recibe_direccion"] ?>
-                    <?php echo $data["direccion"]["recibe_municipio"] ?>
-                    <?php echo $data["direccion"]["recibe_telefono"] ?>
+                    <p><?php echo $data["user"]["nombre"]; ?></p>
+                    <?php echo $data["direccion"]["recibe_direccion"]; ?>
+                    <?php echo $data["direccion"]["recibe_municipio"]; ?>
+                    <?php echo $data["direccion"]["recibe_telefono"]; ?>
 
                     
                     <p style="padding-top: -20px;">Orden: <strong><?php echo str_pad($_REQUEST["orden"], 8, "0", STR_PAD_LEFT); ?></strong></p>
