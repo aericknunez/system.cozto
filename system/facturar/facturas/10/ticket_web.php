@@ -67,6 +67,7 @@ if($totalregistros > 0){
             .table th, .table td { vertical-align: middle !important; }
             .table { font-size: 9px; }
             h3 { margin: 5px 0; }
+            .letras { font-size: 11px; }
 
             @media print {
                 .no-print { display: none; }
@@ -82,16 +83,16 @@ if($totalregistros > 0){
             <div id="receipt-data">
                 <div>
                     <div style="text-align:center;">
-                        <img src="../../../../assets/img/logo/<?php echo $_SESSION["config_imagen"] ?>" alt="Factura"><p style="text-align:center;"><strong><?php echo $_SESSION["config_cliente"] ?></strong>
+                        <img src="../../../../assets/img/logo/<?php echo $_SESSION["config_imagen"] ?>" alt="Factura"><p class="letras" style="text-align:center;">
 
                         <br><?php echo $_SESSION["config_direccion"] ?><br><?php echo Helpers::Pais($_SESSION["config_pais"]) ?></p>
                     </div>
-                    <p>
+                    <p class="letras">
                         Teléfono: <?php echo $_SESSION["config_telefono"] ?><br>
                         <?php echo $_SESSION["config_nombre_documento"] ?>: <?php echo $_SESSION["config_nit"] ?><br>
                         Propietario: <?php echo $_SESSION["config_propietario"] ?> <br>
                     </p>
-                    <p>Factura: <strong><?php echo str_pad($_REQUEST["factura"], 8, "0", STR_PAD_LEFT); ?></strong></p>
+                    <p class="letras">Factura: <strong><?php echo str_pad($_REQUEST["factura"], 8, "0", STR_PAD_LEFT); ?></strong></p>
                     <div style="clear:both;"></div>
                     <table class="table table-striped table-condensed">
                         <thead>
@@ -158,7 +159,7 @@ echo '<div class="well well-sm" style="margin-top:10px;">
 } ?>  
 
 
-<div style="text-align: right;">
+<div class="letras" style="text-align: right;">
     Fecha: <?php echo $fecha . " | " . $hora ?></div>
 
         <?php if($cliente != NULL and $documento != NULL){
@@ -171,7 +172,7 @@ echo '<div class="well well-sm" style="margin-top:10px;">
 
                     
                                                                                     
-            <div class="well well-sm" style="margin-top:10px;">
+            <div class="letras" class="well well-sm" style="margin-top:10px;">
                 <div style="text-align: center;">GARCIAS POR SU COMPRA. VUELVA PRONTO</div>
             </div>
 
