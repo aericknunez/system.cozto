@@ -70,6 +70,7 @@ class Success {
        if (Helpers::DeleteId("producto_imagenes", "imagen='$img' and td=".$_SESSION["td"]."")) {
             if (file_exists($src . $img)) {
                 unlink($src . $img);
+                unlink($src ."/tmb/tmb_". $img);
              Alerts::Alerta("success","Eliminado!","Imagen Eliminada!");   
             }
             Alerts::Alerta("danger","Advertencia!","Eliminada del registro!");

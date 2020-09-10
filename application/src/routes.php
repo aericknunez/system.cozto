@@ -117,13 +117,21 @@ $imgs = new Success();
 			$imagen->image_x              		= 800; // para el ancho a cortar
 			$imagen->image_y              		= 800; // para el alto a cortar
 		}
-		$imagen->file_new_name_body   		= Helpers::TimeId(); // agregamos un nuevo nombre
+		$name = Helpers::TimeId();
+		$imagen->file_new_name_body   			= $name; // agregamos un nuevo nombre
 		// $imagen->image_watermark      		= 'watermark.png'; // marcado de agua
 		// $imagen->image_watermark_position 	= 'BR'; // donde se ub icara el marcado de agua. Bottom Right		
 		$imagen->process('../../assets/img/productos/' . $_SESSION["td"] . '/');	
 
 		$imgs->SaveProducto($_POST['producto'], $imagen->file_dst_name, $_POST['descripcion'], $imagen->image_dst_x, $imagen->image_dst_y);
 
+
+		$imagen->image_resize          = true;
+		$imagen->image_ratio_crop      = true;
+		$imagen->image_y               = 400;
+		$imagen->image_x               = 400;
+		$imagen->file_new_name_body   			= "tmb_" .$name;
+		$imagen->process('../../assets/img/productos/' . $_SESSION["td"] . '/tmb/');
 	} // [file_dst_name] nombre de la imagen
 	else {
 	  echo 'error : ' . $imagen->error;
