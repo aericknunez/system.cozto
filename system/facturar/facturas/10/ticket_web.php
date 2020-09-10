@@ -1,13 +1,13 @@
 <?php
-include_once '../../application/common/Helpers.php'; // [Para todo]
-include_once '../../application/includes/variables_db.php';
-include_once '../../application/common/Mysqli.php';
+include_once '../../../../application/common/Helpers.php'; // [Para todo]
+include_once '../../../../application/includes/variables_db.php';
+include_once '../../../../application/common/Mysqli.php';
 $db = new dbConn();
-include_once '../../application/includes/DataLogin.php';
+include_once '../../../../application/includes/DataLogin.php';
 $seslog = new Login();
 $seslog->sec_session_start();
 
-include_once '../../application/common/Alerts.php';
+include_once '../../../../application/common/Alerts.php';
 
 if ($seslog->login_check() == TRUE) {
 
@@ -57,7 +57,7 @@ if($totalregistros > 0){
         <meta http-equiv="cache-control" content="no-cache">
         <meta http-equiv="expires" content="0">
         <meta http-equiv="pragma" content="no-cache">
-        <link href="../../assets/factura_web/styles.css" rel="stylesheet" type="text/css">
+        <link href="../../../../assets/factura_web/styles.css" rel="stylesheet" type="text/css">
         <style type="text/css" media="all">
             body { color: #000; }
             #wrapper { max-width: 520px; margin: 0 auto; padding-top: 20px; }
@@ -81,7 +81,7 @@ if($totalregistros > 0){
             <div id="receipt-data">
                 <div>
                     <div style="text-align:center;">
-                        <img src="../../assets/img/logo/<?php echo $_SESSION["config_imagen"] ?>" alt="Factura"><p style="text-align:center;"><strong><?php echo $_SESSION["config_cliente"] ?></strong>
+                        <img src="../../../../assets/img/logo/<?php echo $_SESSION["config_imagen"] ?>" alt="Factura"><p style="text-align:center;"><strong><?php echo $_SESSION["config_cliente"] ?></strong>
 
                         <br><?php echo $_SESSION["config_direccion"] ?><br><?php echo Helpers::Pais($_SESSION["config_pais"]) ?></p>
                     </div>
@@ -195,8 +195,8 @@ echo '<div class="well well-sm" style="margin-top:10px;">
     </div>
 
 
-<script type="text/javascript" src="../../assets/js/jquery-3.4.1.min.js"></script>
-    <script type="text/javascript" src="../../assets/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../../../assets/js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="../../../../assets/js/bootstrap.min.js"></script>
     
     <script type="text/javascript">
         $(document).ready(function () {
@@ -220,10 +220,10 @@ echo '<div class="well well-sm" style="margin-top:10px;">
 
 <?php 
 } else{
-    header("location: ../../error.php");
+    header("location: ../../../../error.php");
 }
 
 } else {    
-    header("location: ../../");
+    header("location: ../../../../");
 }
  ?>

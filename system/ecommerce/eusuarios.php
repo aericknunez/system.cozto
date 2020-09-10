@@ -26,11 +26,11 @@ $ecommerce = new Movimientos();
 
 <!-- Ver productos -->
 <div class="modal" id="ModalVer" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"  data-backdrop="false">
-  <div class="modal-dialog modal-lg" role="document">
+  <div class="modal-dialog modal-md" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">
-         DETALLES DE LA ORDEN</h5>
+         DATOS GENERALES DEL USUARIO</h5>
       </div>
       <div class="modal-body">
 <!-- ./  content -->

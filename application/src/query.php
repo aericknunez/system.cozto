@@ -350,6 +350,15 @@ echo '<script type="text/javascript" src="assets/js/query/ecommerce.js?v='.$nume
 echo '<script type="text/javascript" src="assets/js/query/paginador.js?v='.$numero.'"></script>';
 } 
 
+elseif(isset($_GET["eusuarios"])) {
+echo '<script type="text/javascript" src="assets/js/query/ecommerce.js?v='.$numero.'"></script>';
+echo '<script type="text/javascript" src="assets/js/query/paginador.js?v='.$numero.'"></script>';
+} 
+
+elseif(isset($_GET["eproductos"])) {
+echo '<script type="text/javascript" src="assets/js/query/ecommerce.js?v='.$numero.'"></script>';
+echo '<script type="text/javascript" src="assets/js/query/paginador.js?v='.$numero.'"></script>';
+} 
 
 
 

@@ -1,13 +1,13 @@
 <?php
-include_once '../../application/common/Helpers.php'; // [Para todo]
-include_once '../../application/includes/variables_db.php';
-include_once '../../application/common/Mysqli.php';
+include_once '../../../../application/common/Helpers.php'; // [Para todo]
+include_once '../../../../application/includes/variables_db.php';
+include_once '../../../../application/common/Mysqli.php';
 $db = new dbConn();
-include_once '../../application/includes/DataLogin.php';
+include_once '../../../../application/includes/DataLogin.php';
 $seslog = new Login();
 $seslog->sec_session_start();
 
-include_once '../../application/common/Alerts.php';
+include_once '../../../../application/common/Alerts.php';
 
 if ($seslog->login_check() == TRUE) {
 
@@ -17,17 +17,21 @@ if ($seslog->login_check() == TRUE) {
         $datos = "";
    
     foreach ($a as $b) { 
- 
 
-     $x = $db->query("SELECT producto_unidades.abreviacion as unidad FROM producto INNER JOIN producto_unidades on producto.medida = producto_unidades.hash WHERE producto.td = ".$_SESSION["td"]."");
-    foreach ($x as $y) {
-        $unidad = $y["unidad"];
-    } $x->close();
+if ($r = $db->select("medida", "producto", "WHERE cod = '".$b["cod"]."' and td = ".$_SESSION["td"]."")) { 
+    $medida = $r["medida"];
+} unset($r);  
+
+    if ($r = $db->select("abreviacion", "producto_unidades", "WHERE hash = '".$medida."' and td = ".$_SESSION["td"]."")) { 
+        $unidad = $r["abreviacion"];
+    } unset($r);  
+
+
 
 
 
         $datos .= '<tr>
-                <td class="text-center">'. $b["cant"] .' '.$unidad.'</td>
+                <td class="text-left">'. Helpers::Entero($b["cant"]) .' '.$unidad.'</td>
                 <td>'. $b["producto"] .'</td>                                
                 <td class="text-right">'. $b["pv"] .'</td>
                 <td class="text-right">'. $b["total"] .'</td>
@@ -53,15 +57,16 @@ if($totalregistros > 0){
         <meta http-equiv="cache-control" content="no-cache">
         <meta http-equiv="expires" content="0">
         <meta http-equiv="pragma" content="no-cache">
-        <link href="../../assets/factura_web/styles.css" rel="stylesheet" type="text/css">
+        <link href="../../../../assets/factura_web/styles.css" rel="stylesheet" type="text/css">
         <style type="text/css" media="all">
             body { color: #000; }
             #wrapper { max-width: 520px; margin: 0 auto; padding-top: 20px; }
-            .btn { margin-bottom: 5px; }
+            .btn { margin-bottom: 2px; }
             .table { border-radius: 3px; }
             .table th { background: #f5f5f5; }
-            .table th, .table td { vertical-align: middle !important; }
-            h3 { margin: 5px 0; }
+            .table th, .table td { vertical-align: middle !important; padding-bottom: 2px; padding-top: 2px;}
+            h3 { margin: 2px 0; }
+            .table { font-size: 11px; }
 
             @media print {
                 .no-print { display: none; }
@@ -77,18 +82,18 @@ if($totalregistros > 0){
             <div id="receipt-data">
                 <div>
                     <div style="text-align:center;">
-                        <img src="../../assets/img/logo/<?php echo $_SESSION["config_imagen"] ?>" alt="Factura" class="img-fluid"><p style="text-align:center;"><strong><?php echo $_SESSION["config_cliente"] ?></strong>
+                        <img src="../../../../assets/img/logo/<?php echo $_SESSION["config_imagen"] ?>" alt="Factura" class="img-fluid"><p style="text-align:center;">
 
-                        <br><?php echo $_SESSION["config_direccion"] ?><br><?php echo Helpers::Pais($_SESSION["config_pais"]) ?></p>
+                    <?php echo $_SESSION["config_direccion"] ?><br><?php echo Helpers::Pais($_SESSION["config_pais"]) ?></p>
                     </div>
-                    <p>
+                   
                         Teléfono: <?php echo $_SESSION["config_telefono"] ?><br>
                         <?php echo $_SESSION["config_nombre_documento"] ?>: <?php echo $_SESSION["config_nit"] ?><br>
                         <?php echo $_SESSION["config_propietario"] ?> <br>
-                    </p>
-                    <p>Factura: <strong><?php echo str_pad($_REQUEST["orden"], 8, "0", STR_PAD_LEFT); ?></strong></p>
+                    
+                    <p style="padding-top: -20px;">Factura: <strong><?php echo str_pad($_REQUEST["orden"], 8, "0", STR_PAD_LEFT); ?></strong></p>
                     <div style="clear:both;"></div>
-                    <table class="table table-striped table-condensed">
+                    <table class="table table-striped table-condensed" style="padding-top: -10px;">
                         <thead>
                             <tr>
                                 <th class="text-center">Cant</th>
@@ -140,13 +145,13 @@ echo '<div class="well well-sm" style="margin-top:10px;">
 } ?>  
 
 
-<div style="text-align: right;">
+<div style="text-align: right; margin-top: -20px;">
     Fecha: <?php echo date("d-m-Y") . " | " . date("H:i:s") ?></div>
 
 
                     
                                                                                     
-            <div class="well well-sm" style="margin-top:10px;">
+            <div class="well well-sm" style="margin-top:5px;">
                 <div style="text-align: center;">GARCIAS POR SU PREFERENCIA</div>
             </div>
 
@@ -167,8 +172,8 @@ echo '<div class="well well-sm" style="margin-top:10px;">
     </div>
 
 
-<script type="text/javascript" src="../../assets/js/jquery-3.4.1.min.js"></script>
-    <script type="text/javascript" src="../../assets/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../../../assets/js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="../../../../assets/js/bootstrap.min.js"></script>
     
     <script type="text/javascript">
         $(document).ready(function () {
@@ -192,10 +197,10 @@ echo '<div class="well well-sm" style="margin-top:10px;">
 
 <?php 
 } else{
-    header("location: ../../error.php");
+    header("location: ../../../../error.php");
 }
 
 } else {    
-    header("location: ../../");
+    header("location: ../../../../");
 }
  ?>

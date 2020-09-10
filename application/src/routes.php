@@ -1607,6 +1607,22 @@ include_once '../../system/ecommerce/Movimientos.php';
 break;
 
 
+case "383": // estado de la orden
+include_once '../../system/ecommerce/Movimientos.php';
+	$ecommerce = new Movimientos();
+	$ecommerce->DetallesUsuario($_POST["usuario"]);
+break;
+
+
+
+case "384": // estado de la orden
+include_once '../../system/ecommerce/Movimientos.php';
+	$ecommerce = new Movimientos();
+	$ecommerce->VerProductosEcommerce($_POST["iden"], $_POST["orden"], $_POST["dir"]);
+break;
+
+
+
 case "400": // busqueda de proveedores
 include_once '../../system/cuentas/Cuentas.php';
 	$cuenta = new Cuentas();

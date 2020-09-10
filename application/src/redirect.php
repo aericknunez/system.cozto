@@ -103,6 +103,7 @@ elseif(isset($_GET["autoproadd"])) include_once 'system/autoparts/proadd.php'; /
 // ecommerce
 elseif(isset($_GET["epedidos"])) include_once 'system/ecommerce/commerce.php'; 
 elseif(isset($_GET["eusuarios"])) include_once 'system/ecommerce/eusuarios.php'; 
+elseif(isset($_GET["eproductos"])) include_once 'system/ecommerce/verproductos.php'; 
 
 
 

@@ -28,7 +28,7 @@
 			</div>
 		</div>
 	</main>
-	<script src="../../assets/js/JsBarcode.all.min.js"></script>
+	<script src="../../../../assets/js/JsBarcode.all.min.js"></script>
 	<script>
 		JsBarcode(".codigo")
 			.options({

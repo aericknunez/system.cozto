@@ -1,6 +1,21 @@
 $(document).ready(function(){
 
 
+// $(function() {
+//     $('#cod').bind('blur', function(e) {
+//         if(!isValid($(this).val())) {
+//             e.preventDefault();
+//             $(this).focus();
+//         }
+//     });
+// });
+//     function isValid(str) {
+//         if(str === "hello") {
+//             return true;
+//         } else {
+//             return false;
+//         }
+//     }
 
 
     $("body").on("click","#borrar-ticket",function(){

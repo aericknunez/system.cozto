@@ -289,7 +289,7 @@ echo '<div class="table-responsive">
 
           if($b["edo"] == 2 or $b["edo"] == 3){
 
-    echo '<a href="system/facturar/ticket_ecommerce.php?orden='.$b["orden"].'&usr='.$b["usuario"].'" target="_blank"><i class="fas fa-print fa-lg red-text"></i></a>
+    echo '<a href="system/facturar/facturas/'.$_SESSION["td"].'/ticket_ecommerce.php?orden='.$b["orden"].'&usr='.$b["usuario"].'" target="_blank"><i class="fas fa-print fa-lg red-text"></i></a>
           <a id="facturar" op="381" orden="'.$b["orden"].'" user="'.$b["usuario"].'"><i class="fas fa-ad fa-lg green-text"></i></a>
           <a id="op-edo" orden="'.$b["orden"].'" user="'.$b["usuario"].'"><i class="fas fa-cogs fa-lg blue-text"></i></a>';
           }
@@ -426,7 +426,7 @@ if($edo == 4){ $edo = "El pedido ha sido entregado correctamente"; }
 Alerts::Mensajex($edo,"success");
 
 
-$url = "https://justomarket.com/application/src/api.php?op=1&user=".$usuario;
+$url = "http://localhost/justomarket/application/src/api.php?op=1&user=".$usuario;
 
   $this->DatosUsuario($url);
 
@@ -434,6 +434,13 @@ $url = "https://justomarket.com/application/src/api.php?op=1&user=".$usuario;
 
 
 
+
+
+public function DetallesUsuario($usuario){
+  $db = new dbConn();
+$url = "http://localhost/justomarket/application/src/api.php?op=1&user=".$usuario;
+$this->DatosUsuario($url);
+}
 
 
 
@@ -463,17 +470,20 @@ public function DatosUsuario($url){
 // echo $url;
 // print_r($datos);
 
-if($datos["user"]["nombre"] != NULL and $datos["direccion"]["user"] != NULL){
+if($datos["direccion"]["recibe_direccion"] != NULL and $datos["direccion"]["recibe_telefono"] != NULL){
 echo '<hr><h4>Cliente: <strong>'.$datos["user"]["nombre"].'</strong></h4>';
-
-
 
 echo '<div class="text-left">
 <h4>Informaci&oacuten General</h4>
-<ul class="pl-2">
-<li class="linopunto"><span><strong>Fecha de Nacimientos : </strong></span>'.Fechas::FechaEscrita($datos["direccion"]["f_nacimiento"]).'</li>
-<li class="linopunto"><span><strong>Dirección : </strong></span>'.$datos["direccion"]["usr_direccion"].', '.$datos["direccion"]["usr_departamento"].', '.$datos["direccion"]["usr_municipio"].', '.$datos["direccion"]["usr_pais"].'</li>
-<li class="linopunto"><span><strong>E-mail : </strong></span><a>'.$datos["email"]["email"].'</a></li>
+<ul class="pl-2">';
+
+if($datos["direccion"]["f_nacimiento"] != NULL){
+  echo '<li class="linopunto"><span><strong>Fecha de Nacimientos : </strong></span>'.Fechas::FechaEscrita($datos["direccion"]["f_nacimiento"]).'</li>';
+}
+
+
+echo '<li class="linopunto"><span><strong>Dirección : </strong></span>'.$datos["direccion"]["usr_direccion"].', '.$datos["direccion"]["usr_departamento"].', '.$datos["direccion"]["usr_municipio"].', '.$datos["direccion"]["usr_pais"].'</li>
+<li class="linopunto"><span><strong>E-mail : </strong></span><a>'.$datos["user"]["email"].'</a></li>
 <li class="linopunto"><span><strong>Teléfono : </strong></span>'.$datos["direccion"]["usr_telefono"].'</li>
 </ul>
 </div>
@@ -494,9 +504,9 @@ if($datos["direccion"]["puntoreferencia"] != NULL){
 }
 
 
-
 } else {
-  Alerts::Mensajex("Éste usuario aún no está registrado","danger");
+
+  Alerts::Mensajex("No se encuentran datos del usuario","danger");
 }
 
 
@@ -616,7 +626,7 @@ public function MuestraEdoBotones($data){
 
 public function ListarUsuarios(){
 
-$url = "https://justomarket.com/application/src/api.php?op=2";
+$url = "http://localhost/justomarket/application/src/api.php?op=2";
 
   $jsondata = $this->ObtenerData($url);
   $datos = json_decode($jsondata, true); 
@@ -644,7 +654,7 @@ for ($i=0; $i < count($datos); $i++) {
           <td>'.$datos[$i]["usr_direccion"].'</td>
           <td>'.$datos[$i]["usr_municipio"].'</td>
           <td>'.$datos[$i]["usr_telefono"].'</td>
-          <td><a id="xver" op="382"><i class="fas fa-search fa-lg green-text"></i></a></td>
+          <td><a id="veruser" op="383" usuario="'.$datos[$i]["user"].'"><i class="fas fa-search fa-lg green-text"></i></a></td>
         </tr>';
         }
         echo '</tbody>
@@ -659,6 +669,139 @@ for ($i=0; $i < count($datos); $i++) {
 }
 
 
+
+
+
+
+
+
+
+
+
+  public function VerProductosEcommerce($npagina, $orden, $dir){
+      $db = new dbConn();
+
+  $limit = 12;
+  $adjacents = 2;
+  if($npagina == NULL) $npagina = 1;
+  $a = $db->query("SELECT * FROM producto WHERE td = ". $_SESSION['td'] ."");
+  $total_rows = $a->num_rows;
+  $a->close();
+
+  $total_pages = ceil($total_rows / $limit);
+  
+  if(isset($npagina) && $npagina != NULL) {
+    $page = $npagina;
+    $offset = $limit * ($page-1);
+  } else {
+    $page = 1;
+    $offset = 0;
+  }
+
+if($dir == "desc") $dir2 = "asc";
+if($dir == "asc") $dir2 = "desc";
+
+$opx = "384";
+
+ $a = $db->query("SELECT producto.cod, producto.descripcion, producto.cantidad, producto.verecommerce FROM producto WHERE producto.td = ".$_SESSION["td"]." order by ".$orden." ".$dir." limit $offset, $limit");
+      
+      if($a->num_rows > 0){
+          echo '<div class="table-responsive">
+          <table class="table table-sm table-striped">
+        <thead>
+          <tr>
+            <th class="th-sm"><a id="paginador" op="'.$opx.'" iden="1" orden="producto.cod" dir="'.$dir2.'">Cod</a></th>
+            <th class="th-sm"><a id="paginador" op="'.$opx.'" iden="1" orden="producto.descripcion" dir="'.$dir2.'">Producto</a></th>
+            <th class="th-sm"><a id="paginador" op="'.$opx.'" iden="1" orden="producto.cantidad" dir="'.$dir2.'">Cantidad</a></th>
+            <th class="th-sm"><a id="paginador" op="'.$opx.'" iden="1" orden="producto.verecommerce" dir="'.$dir2.'">Ecommerce</a></th>
+            <th class="th-sm"><a id="paginador" op="'.$opx.'" iden="1" orden="producto.existencia_minima" dir="'.$dir2.'">Imagenes</a></th>
+            <th class="th-sm">Ver</th>
+          </tr>
+        </thead>
+        <tbody>';
+        foreach ($a as $b) {
+        // obtener el nombre y detalles del producto
+    if ($r = $db->select("*", "pro_dependiente", "WHERE iden = ".$b["producto"]." and td = ". $_SESSION["td"] ."")) { 
+        $producto = $r["nombre"]; } unset($r); 
+
+
+$ax = $db->query("SELECT imagen FROM producto_imagenes 
+  WHERE producto = '".$b["cod"]."' and td = ". $_SESSION["td"] ."");
+$img = $ax->num_rows;
+$ax->close();
+
+if($b["verecommerce"] == "on"){ $ecoomerce = '<div class="text-success font-weight-bold">Activo</div>'; } else { $ecoomerce = '<div class="text-danger font-weight-bold">Inactivo</div>';}
+
+if($img > 0){ $imgx = '<div class="text-success font-weight-bold">'.$img.' Imagenes</div>'; } else { $imgx = '<div class="text-danger font-weight-bold">Sin Imagenes</div>';}
+
+
+          echo '<tr>
+                      <td>'.$b["cod"].'</td>
+                      <td>'.$b["descripcion"].'</td>
+                      <td>'.$b["cantidad"].'</td>
+                      <td>'.$ecoomerce.'</td>
+                      <td>'.$imgx.'</td>
+                      <td><a id="xverproducto" op="55" key="'.$b["cod"].'"><i class="fas fa-search fa-lg green-text"></i></a></td>
+                    </tr>';
+        }
+        echo '</tbody>
+        </table>
+        </div>';
+      }
+        $a->close();
+
+  if($total_pages <= (1+($adjacents * 2))) {
+    $start = 1;
+    $end   = $total_pages;
+  } else {
+    if(($page - $adjacents) > 1) {  
+      if(($page + $adjacents) < $total_pages) {  
+        $start = ($page - $adjacents); 
+        $end   = ($page + $adjacents); 
+      } else {              
+        $start = ($total_pages - (1+($adjacents*2))); 
+        $end   = $total_pages; 
+      }
+    } else {
+      $start = 1; 
+      $end   = (1+($adjacents * 2));
+    }
+  }
+echo $total_rows . " Registros encontrados";
+   if($total_pages > 1) { 
+
+$page <= 1 ? $enable = 'disabled' : $enable = '';
+    echo '<ul class="pagination pagination-sm justify-content-center">
+    <li class="page-item '.$enable.'">
+        <a class="page-link" id="paginador" op="'.$opx.'" iden="1" orden="'.$orden.'" dir="'.$dir.'">&lt;&lt;</a>
+      </li>';
+    
+    $page>1 ? $pagina = $page-1 : $pagina = 1;
+    echo '<li class="page-item '.$enable.'">
+        <a class="page-link" id="paginador" op="'.$opx.'" iden="'.$pagina.'" orden="'.$orden.'" dir="'.$dir.'">&lt;</a>
+      </li>';
+
+    for($i=$start; $i<=$end; $i++) {
+      $i == $page ? $pagina =  'active' : $pagina = '';
+      echo '<li class="page-item '.$pagina.'">
+        <a class="page-link" id="paginador" op="'.$opx.'" iden="'.$i.'" orden="'.$orden.'" dir="'.$dir.'">'.$i.'</a>
+      </li>';
+    }
+
+    $page >= $total_pages ? $enable = 'disabled' : $enable = '';
+    $page < $total_pages ? $pagina = ($page+1) : $pagina = $total_pages;
+    echo '<li class="page-item '.$enable.'">
+        <a class="page-link" id="paginador" op="'.$opx.'" iden="'.$pagina.'" orden="'.$orden.'" dir="'.$dir.'">&gt;</a>
+      </li>';
+
+    echo '<li class="page-item '.$enable.'">
+        <a class="page-link" id="paginador" op="'.$opx.'" iden="'.$total_pages.'" orden="'.$orden.'" dir="'.$dir.'">&gt;&gt;</a>
+      </li>
+
+      </ul>';
+     }  // end pagination 
+
+  } // termina productos
 
 
 

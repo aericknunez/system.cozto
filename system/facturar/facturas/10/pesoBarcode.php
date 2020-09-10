@@ -24,16 +24,16 @@ if ($seslog->login_check() == TRUE) {
 
 
    <!--  <link rel="stylesheet" href="assets/css/font-awesome.css"> -->
-    <link rel="stylesheet" href="../../assets/css/font-awesome-582.css">
-    <link href="../../assets/css/bootstrap.min.css" rel="stylesheet">
-    <link href="../../assets/css/mdb.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../../assets/css/font-awesome-582.css">
+    <link href="../../../../assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../../../assets/css/mdb.min.css" rel="stylesheet">
         <style>
         a:active {
              position: relative;
              top: 5px;
         }
     </style>
-    <link href="../../assets/css/galeria.css" rel="stylesheet">
+    <link href="../../../../assets/css/galeria.css" rel="stylesheet">
 
 
        <style type="text/css" media="all">
@@ -66,7 +66,7 @@ if ($seslog->login_check() == TRUE) {
     <div class="text-center">
 
     <?php 
-    echo '<img src="../../application/common/Barcode.php?text='.$_REQUEST["cod"].'&size=40" alt="'.$producto.'" />';
+    echo '<img src="../../../../application/common/Barcode.php?text='.$_REQUEST["cod"].'&size=40" alt="'.$producto.'" />';
      ?>
     <br>
     <div style="margin-top: -3px"><?php echo $producto ?></div>
@@ -85,15 +85,15 @@ if ($seslog->login_check() == TRUE) {
 
 
 
-    <script type="text/javascript" src="../../assets/js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="../../../../assets/js/jquery-3.4.1.min.js"></script>
 
-    <script type="text/javascript" src="../../assets/js/popper.min.js"></script>
+    <script type="text/javascript" src="../../../../assets/js/popper.min.js"></script>
 
-    <script type="text/javascript" src="../../assets/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../../../assets/js/bootstrap.min.js"></script>
 
-    <script type="text/javascript" src="../../assets/js/mdb.min.js"></script>
+    <script type="text/javascript" src="../../../../assets/js/mdb.min.js"></script>
     
-    <script type="text/javascript" src="../../assets/js/scrollbar.js"></script>
+    <script type="text/javascript" src="../../../../assets/js/scrollbar.js"></script>
 
     <script>
         // SideNav Initialization
@@ -127,6 +127,6 @@ if ($seslog->login_check() == TRUE) {
 <?php 
 
 } else {    
-    header("location: ../../");
+    header("location: ../../../../");
 }
  ?>
