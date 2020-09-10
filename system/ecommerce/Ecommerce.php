@@ -71,11 +71,10 @@ echo json_encode($data);
   public function Categorias($limit, $td, $orderby, $categoria){
       $db = new dbConn();
 
-$catx = strtoupper($categoria);
         // obtener el detalle de la categoria
-if ($r = $db->select("hash", "producto_categoria_sub", "WHERE subcategoria = '".$catx."' and td = ". $td ."")) { $categoria = $r["hash"]; } unset($r); 
+if ($r = $db->select("hash", "producto_categoria_sub", "WHERE pronombre = '".$categoria."' and td = ". $td ."")) { $categoriax = $r["hash"]; } unset($r); 
 
- $a = $db->query("SELECT producto.cod, producto.descripcion, producto.informacion, producto.cantidad, producto.existencia_minima, producto_categoria_sub.subcategoria, producto.promocion, producto_unidades.nombre as medida FROM producto INNER JOIN producto_categoria_sub ON producto.categoria = producto_categoria_sub.hash INNER JOIN producto_unidades ON producto.medida = producto_unidades.hash and producto.categoria = '". $categoria ."' and producto.verecommerce = 'on' and producto.td = ". $td ." order by ".$orderby." ". $limit ."");
+ $a = $db->query("SELECT producto.cod, producto.descripcion, producto.informacion, producto.cantidad, producto.existencia_minima, producto_categoria_sub.subcategoria, producto.promocion, producto_unidades.nombre as medida FROM producto INNER JOIN producto_categoria_sub ON producto.categoria = producto_categoria_sub.hash INNER JOIN producto_unidades ON producto.medida = producto_unidades.hash and producto.categoria = '". $categoriax ."' and producto.verecommerce = 'on' and producto.td = ". $td ." order by ".$orderby." ". $limit ."");
       
       if($a->num_rows > 0){
 
