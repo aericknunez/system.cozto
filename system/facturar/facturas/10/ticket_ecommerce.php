@@ -31,10 +31,6 @@ if ($r = $db->select("medida", "producto", "WHERE cod = '".$b["cod"]."' and td =
 
 
 
-$data = $mov->ObtenerData("https://justomarket.com/application/src/api.php?op=1&user=".$b["usuario"]);
-
-
-
  $datos .= '<tr>
                 <td class="text-left">'. Helpers::Entero($b["cant"]) .' '.$unidad.'</td>
                 <td>'. $b["producto"] .'</td>                                
@@ -86,7 +82,14 @@ if($totalregistros > 0){
 
             <div id="receipt-data">
                 <div>
+
+<?php 
+$data = $mov->ObtenerData("https://justomarket.com/application/src/api.php?op=1&user=".$_REQUEST["usr"]);
+
+ ?>
+
                     <p><?php echo $data["user"]["nombre"]; ?></p>
+
                     <?php echo $data["direccion"]["recibe_direccion"]; ?>
                     <?php echo $data["direccion"]["recibe_municipio"]; ?>
                     <?php echo $data["direccion"]["recibe_telefono"]; ?>
