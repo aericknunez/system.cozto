@@ -130,6 +130,8 @@ if($_SESSION["config_pesaje"] == "on"){
  ?>
 <li><a href="?pesaje" class="waves-effect"><i class="fas fa-plus"></i> Pesar Productos</a></li>
  <?php }   ?>
+
+ <li><a href="?listadoproductos" class="waves-effect"><i class="fas fa-address-book"></i> Productos Vendidos</a></li>
 </ul>
 </div>
 </li>

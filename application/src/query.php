@@ -173,7 +173,9 @@ elseif(isset($_GET["pesaje"])) {
 echo '<script type="text/javascript" src="assets/js/query/paginador.js?v='.$numero.'"></script>';
 echo '<script type="text/javascript" src="assets/js/query/producto_pesaje.js?v='.$numero.'"></script>';
 } 
-
+elseif(isset($_GET["listadoproductos"])) {
+echo '<script type="text/javascript" src="assets/js/query/producto_vermodal.js?v='.$numero.'"></script>';
+} 
 
 
 

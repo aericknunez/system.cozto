@@ -23,6 +23,8 @@ elseif(isset($_GET["bajasexistencias"])) include_once 'system/producto/bajasexis
 elseif(isset($_GET["vencimientos"])) include_once 'system/producto/vencimientos.php'; 
 elseif(isset($_GET["compuestos"])) include_once 'system/producto/compuestos.php'; 
 elseif(isset($_GET["pesaje"])) include_once 'system/producto/pesajes.php'; 
+elseif(isset($_GET["listadoproductos"])) include_once 'system/producto/productoresumen.php'; 
+
 
 
 

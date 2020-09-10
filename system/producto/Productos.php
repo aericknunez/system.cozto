@@ -1198,6 +1198,67 @@ $page <= 1 ? $enable = 'disabled' : $enable = '';
 
 
 
+
+
+
+
+
+
+  public function ProductosResumen(){
+      $db = new dbConn();
+
+
+ $a = $db->query("SELECT producto.cod, producto.descripcion, producto.cantidad, producto.existencia_minima, producto_categoria_sub.subcategoria FROM producto INNER JOIN producto_categoria_sub ON producto.categoria = producto_categoria_sub.hash and producto.td = ".$_SESSION["td"]."");
+      
+      if($a->num_rows > 0){
+          echo '<div class="table-responsive">
+          <table class="table table-sm table-striped">
+        <thead>
+          <tr>
+            <th class="th-sm">Producto</th>
+            <th class="th-sm">Cantidad</th>
+            <th class="th-sm">Precio Venta</th>
+            <th class="th-sm ">Vendidos</th>
+            <th class="th-sm">Ver</th>
+          </tr>
+        </thead>
+        <tbody>';
+        foreach ($a as $b) {
+        // obtener el nombre y detalles del producto
+    if ($r = $db->select("precio", "producto_precio", "WHERE producto = ".$b["cod"]." and td = ". $_SESSION["td"] ." order by id desc limit 1")) { 
+        $precio = $r["precio"]; } unset($r); 
+
+    $ax = $db->query("SELECT count(cant) FROM ticket WHERE cod = '".$b["cod"]."' and td = ". $_SESSION["td"] ."");
+    foreach ($ax as $bx) {
+        $vendidos=$bx["count(cant)"];
+    } $ax->close();
+
+          echo '<tr>
+                      <td>'.$b["descripcion"].'</td>
+                      <td>'.$b["cantidad"].'</td>
+                      <td>'.Helpers::Dinero($precio).'</td>
+                      <td>'.$vendidos.'</td>
+                      <td><a id="xver" op="55" key="'.$b["cod"].'"><i class="fas fa-search fa-lg green-text"></i></a></td>
+                    </tr>';
+        }
+        echo '</tbody>
+        </table>
+        </div>';
+      }
+        $a->close();
+
+
+  } // termina productos
+
+
+
+
+
+
+
+
+
+
   public function DetallesProducto($data){
       $db = new dbConn();
 
