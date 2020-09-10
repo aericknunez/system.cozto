@@ -152,6 +152,7 @@ if($_SESSION["config_pesaje"] == "on"){
 
 <li><a href="?epedidos" class="waves-effect"><i class="fas fa-truck"></i> Pedidos</a></li>
 <li><a href="?eusuarios" class="waves-effect"><i class="fas fa-truck"></i> Usuarios</a></li>
+<li><a href="?eproductos" class="waves-effect"><i class="fas fa-truck"></i> Producto Ecommerce</a></li>
 
 </ul>
 </div>
