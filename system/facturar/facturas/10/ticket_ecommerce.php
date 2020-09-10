@@ -90,8 +90,8 @@ $data = json_decode($datax, true);
 
                     <strong><?php echo $data["user"]["nombre"]; ?></strong><br>
 
-                    <?php echo $data["direccion"]["recibe_direccion"]; ?><br>
-                    <?php echo $data["direccion"]["recibe_municipio"]; ?>
+                    <?php echo $data["direccion"]["recibe_direccion"]; ?>
+                    <?php echo $data["direccion"]["recibe_municipio"]; ?><br>
                     
                     <?php echo $data["direccion"]["puntoreferencia"]; ?><br>
                     <strong><?php echo $data["direccion"]["recibe_telefono"]; ?></strong>
