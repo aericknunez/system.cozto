@@ -90,7 +90,6 @@ if($totalregistros > 0){
                     <p class="letras">
                         Teléfono: <?php echo $_SESSION["config_telefono"] ?><br>
                         <?php echo $_SESSION["config_nombre_documento"] ?>: <?php echo $_SESSION["config_nit"] ?><br>
-                        Propietario: <?php echo $_SESSION["config_propietario"] ?> <br>
                     </p>
                     <p class="letras">Factura: <strong><?php echo str_pad($_REQUEST["factura"], 8, "0", STR_PAD_LEFT); ?></strong></p>
                     <div style="clear:both;"></div>
