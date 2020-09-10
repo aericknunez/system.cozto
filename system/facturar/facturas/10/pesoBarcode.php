@@ -66,13 +66,13 @@ if ($seslog->login_check() == TRUE) {
     <div class="text-center">
 
     <?php 
-    echo '<img src="../../../../application/common/Barcode.php?text='.$_REQUEST["cod"].'&size=40" alt="'.$producto.'" />';
+    echo '<img src="../../../../application/common/Barcode.php?text='.$_REQUEST["cod"].'&size=35" alt="'.$producto.'" />';
      ?>
     <br>
-    <div style="margin-top: -3px; font-size: 10px;"><?php echo $producto ?></div>
+    <div style="margin-top: -8px; font-size: 12px;"><?php echo $producto ?></div>
     <div class="font-weight-bold" style="margin-top: -10px">Total: <?php echo Helpers::Dinero($total) ?></div>
         <div style="margin-top: -10px">Precio: <?php echo $pv ?> Peso: <?php echo $cant ?>
-            <small>098908</small>
+            <br><small style="font-size: 10px;">098908</small>
         </div>
     </div>
 </div>
