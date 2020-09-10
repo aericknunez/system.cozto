@@ -808,6 +808,81 @@ $page <= 1 ? $enable = 'disabled' : $enable = '';
 
 
 
+public function CategoriasPronombre(){
+  $db = new dbConn();
+
+ $a = $db->query("SELECT * FROM producto_categoria_sub WHERE td = ".$_SESSION["td"]."");
+      
+      if($a->num_rows > 0){
+
+echo '<div class="table-responsive">
+          <table class="table table-sm table-striped">
+        <thead>
+<tr>
+<th>Categoria</th>
+<th>Pronombre</th>
+<th>Img</th>
+<th>Ver</th>
+</tr>
+        </thead>
+        <tbody>';
+        foreach ($a as $b) {
+        // obtener el nombre y detalles del producto
+$usuario = $b["usuario"];
+
+  if ($r = $db->select("sum(cant) as cantidad, sum(total) as total", "ecommerce", "WHERE orden = '".$b["orden"]."' and td = ".$_SESSION["td"]."")){ 
+        $cantidad = $r["cantidad"];
+        $total = $r["total"];
+      } unset($r); 
+
+   echo '<tr>
+          <td>'.$b["subcategoria"].'</td>
+          <td>'.$b["pronombre"].'</td>
+          <td>'.$b["img"].'</td>
+          <td><a id="c_pronombre" hash="'.$b["hash"].'" cat="'.$b["subcategoria"].'"><i class="fas fa-cogs fa-lg blue-text"></i></a></td>
+        </tr>';
+        }
+        echo '</tbody>
+        </table>
+        </div>';
+      }
+        $a->close();
+
+}
+
+
+
+
+
+public function UpdateCat($data){
+  $db = new dbConn();
+
+  $cambio = array();
+  $cambio["pronombre"] = $data["pronombre"];
+  if(Helpers::UpdateId("producto_categoria_sub", 
+    $cambio, "hash='".$data["hash"]."' and td = ".$_SESSION["td"]."")){
+    Alerts::Alerta("success","Realizado","Cambio Realizado Correctamente");
+  } else {
+    Alerts::Alerta("error","Error!","Ocurrió un error!");
+  }
+
+  $this->CategoriasPronombre();
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 } // Termina la clase

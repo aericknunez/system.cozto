@@ -362,6 +362,10 @@ echo '<script type="text/javascript" src="assets/js/query/ecommerce.js?v='.$nume
 echo '<script type="text/javascript" src="assets/js/query/paginador.js?v='.$numero.'"></script>';
 } 
 
+elseif(isset($_GET["ecategorias"])) {
+echo '<script type="text/javascript" src="assets/js/query/ecommerce.js?v='.$numero.'"></script>';
+} 
+
 
 
 

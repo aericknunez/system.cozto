@@ -1631,6 +1631,14 @@ break;
 
 
 
+case "385": // estado de la orden
+include_once '../../system/ecommerce/Movimientos.php';
+	$ecommerce = new Movimientos();
+	$ecommerce->UpdateCat($_POST);
+break;
+
+
+
 case "400": // busqueda de proveedores
 include_once '../../system/cuentas/Cuentas.php';
 	$cuenta = new Cuentas();

@@ -190,5 +190,56 @@ $("#mdb-lightbox-ui").load("assets/mdb-addons/mdb-lightbox-ui.html");
 
 
 
+//// precios
+    $("body").on("click","#c_pronombre",function(){ 
+
+            var cod = $(this).attr('cod');
+            var hash = $(this).attr('hash');
+            var cat = $(this).attr('cat');
+        
+        $('#ModalCambiarPronombre').modal('show');
+        $('#cod').attr("value",cod);
+        $('#hash').attr("value",hash);
+        $("#cat").html('<h3 class="row justify-content-md-center" >'+cat+'</h3>');
+            
+    });
+
+/// cambia precio
+    $('#btn-pronombre').click(function(e){ /// para el formulario
+        e.preventDefault();
+        $.ajax({
+            url: "application/src/routes.php?op=385",
+            method: "POST",
+            data: $("#form-pronombre").serialize(),
+            beforeSend: function () {
+            $('#btn-pronombre').html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>Loading...').addClass('disabled');
+            },
+            success: function(data){
+                $('#btn-pronombre').html('Registrar').removeClass('disabled');
+                $("#contenido").html(data);
+                $("#form-pronombre").trigger("reset");
+                $('#ModalCambiarPronombre').modal('hide');
+            }
+        })
+    })
+$("#form-pronombre").keypress(function(e) {//Para deshabilitar el uso de la tecla "Enter"
+if (e.which == 13) {
+return false;
+}
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 });  // fin del jquery
