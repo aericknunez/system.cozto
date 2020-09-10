@@ -1215,7 +1215,7 @@ $page <= 1 ? $enable = 'disabled' : $enable = '';
           <table class="table table-sm table-striped">
         <thead>
           <tr>
-            <th class="th-sm">#</th>
+            <th>#</th>
             <th class="th-sm">Producto</th>
             <th class="th-sm">Cantidad</th>
             <th class="th-sm">Precio Venta</th>
