@@ -1639,6 +1639,14 @@ break;
 
 
 
+case "386": // eliminar la orden
+include_once '../../system/ecommerce/Movimientos.php';
+	$ecommerce = new Movimientos();
+	$ecommerce->DelOrden($_POST["hash"]);
+break;
+
+
+
 case "400": // busqueda de proveedores
 include_once '../../system/cuentas/Cuentas.php';
 	$cuenta = new Cuentas();

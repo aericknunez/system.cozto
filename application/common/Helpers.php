@@ -46,22 +46,22 @@ class Helpers{
 
 
     static public function EdoEcommerce($string) {
-    if($string == "0") return '<div class="text-danger font-weight-bold">Eliminado</div>';
+    if($string == "0") return '<div class="text-danger font-weight-bold">Anulado</div>';
     if($string == "1") return '<div class="text-secondary font-weight-bold">En Proceso</div>';
     if($string == "2") return '<div class="text-success font-weight-bold">Activo</div>';
     if($string == "3") return '<div class="text-primary font-weight-bold">Enviado</div>';
     if($string == "4") return '<div class="text-info font-weight-bold">Entregado</div>';
-    if($string == "5") return '<div class="text-primary-color-dark font-weight-bold">Reemplazado</div>';
+    if($string == "5") return '<div class="text-primary-color-dark font-weight-bold">Incompleto</div>';
     }
 
 
 
     static public function Gasto($string) {
-    if($string == "1") return '<p class="text-danger font-weight-bold">Compra No Facturado</p>';
-    if($string == "2") return '<p class="text-success font-weight-bold">Compra con Factura</p>';
-    if($string == "3") return '<p class="text-info font-weight-bold">Remesas</p>';
-    if($string == "4") return '<p class="text-primary font-weight-bold">Adelanto a personal</p>';
-    if($string == "5") return '<p class="text-warning font-weight-bold">Cheques</p>';
+    if($string == "1") return '<div class="text-danger font-weight-bold">Compra No Facturado</div>';
+    if($string == "2") return '<div class="text-success font-weight-bold">Compra con Factura</div>';
+    if($string == "3") return '<div class="text-info font-weight-bold">Remesas</div>';
+    if($string == "4") return '<div class="text-primary font-weight-bold">Adelanto a personal</div>';
+    if($string == "5") return '<div class="text-warning font-weight-bold">Cheques</div>';
     }
 
 
@@ -90,8 +90,8 @@ class Helpers{
 
 
         static public function InOut($string) {
-    if($string == "1") return '<p class="text-success font-weight-bold">Entrada</p>';
-    if($string == "2") return '<p class="text-danger font-weight-bold">Salida</p>';
+    if($string == "1") return '<div class="text-success font-weight-bold">Entrada</div>';
+    if($string == "2") return '<div class="text-danger font-weight-bold">Salida</div>';
     }
 
 

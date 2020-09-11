@@ -148,3 +148,6 @@ if($_SESSION["tx"] == 0){
 } // fin de la clase
 
  ?>
+
+
+ 

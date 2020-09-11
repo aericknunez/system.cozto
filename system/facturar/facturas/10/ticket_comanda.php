@@ -8,13 +8,12 @@ $seslog = new Login();
 $seslog->sec_session_start();
 
 include_once '../../../../application/common/Alerts.php';
-include_once '../../../ecommerce/Movimientos.php';
-$mov = new Movimientos();
 
 
 if ($seslog->login_check() == TRUE) {
 
-   $a = $db->query("SELECT * FROM ecommerce WHERE orden = '".$_REQUEST["orden"]."' and usuario = '".$_REQUEST["usr"]."' and td = ".$_SESSION["td"]."");
+
+   $a = $db->query("SELECT * FROM ticket WHERE orden = '".$_REQUEST["orden"]."' and tx = '".$_SESSION["tx"]."' and td = ".$_SESSION["td"]."");
 
         $totalregistros =$a->num_rows;
         $datos = "";
@@ -40,7 +39,7 @@ if ($r = $db->select("medida", "producto", "WHERE cod = '".$b["cod"]."' and td =
     } $a->close();
 
 // datos generales de la factura
-    if ($r = $db->select("sum(stotal) as stotal, sum(descuento) as descuento, sum(imp) as imp, sum(total) as total", "ecommerce", "WHERE orden = '".$_REQUEST["orden"]."' and usuario = '".$_REQUEST["usr"]."' and td = ".$_SESSION["td"]."")) { 
+    if ($r = $db->select("sum(stotal) as stotal, sum(descuento) as descuento, sum(imp) as imp, sum(total) as total", "ticket", "WHERE orden = '".$_REQUEST["orden"]."' and tx = '".$_SESSION["tx"]."' and td = ".$_SESSION["td"]."")) { 
         $stotal = $r["stotal"];
         $total = $r["total"];
         $imp = $r["imp"];
@@ -83,18 +82,28 @@ if($totalregistros > 0){
             <div id="receipt-data">
                 <div>
 
-<?php 
-$datax = $mov->ObtenerData("https://justomarket.com/application/src/api.php?op=1&user=".$_REQUEST["usr"]);
-$data = json_decode($datax, true);
- ?>
 
-                    <strong><?php echo $data["user"]["nombre"]; ?></strong><br>
+<?php //datos del cliente 
+    if ($r = $db->select("cliente", "ticket_cliente", "WHERE orden = '".$_REQUEST["orden"]."' and tx = '".$_SESSION["tx"]."' and td = ".$_SESSION["td"]."")) { 
+        $cliente = $r["cliente"];
+    } unset($r);  
 
-                    <?php echo $data["direccion"]["recibe_direccion"]; ?>
-                    <?php echo $data["direccion"]["recibe_municipio"]; ?><br>
+    if ($r = $db->select("nombre, direccion, municipio, telefono, comentarios", "clientes", "WHERE hash = '".$cliente."' and td = ".$_SESSION["td"]."")) { 
+            $nombre = $r["nombre"];
+            $direccion = $r["direccion"];
+            $municipio = $r["municipio"];
+            $telefono = $r["telefono"];
+            $comentarios = $r["comentarios"];
+    } unset($r);  
+?>
+
+                    <strong><?php echo $nombre; ?></strong><br>
+
+                    <?php echo $direccion; ?>
+                    <?php echo $municipio; ?><br>
                     
-                    <?php echo $data["direccion"]["puntoreferencia"]; ?><br>
-                    <strong><?php echo $data["direccion"]["recibe_telefono"]; ?></strong>
+                    <?php echo $comentarios; ?><br>
+                    <strong><?php echo $telefono; ?></strong>
 
                     
                     <p style="padding-top: -20px;">Orden: <strong><?php echo str_pad($_REQUEST["orden"], 8, "0", STR_PAD_LEFT); ?></strong></p>

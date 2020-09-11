@@ -231,6 +231,43 @@ return false;
 
 
 
+// eliminar Orden
+    $("body").on("click","#xdelete",function(){ 
+        
+        var op = $(this).attr('op');
+        var hash = $(this).attr('hash');
+        
+        $('#edelorden').attr("op",op).attr("hash",hash);
+        $('#ConfirmDelete').modal('show');
+    });
+
+
+
+    $("body").on("click","#edelorden",function(){ 
+        
+        var usuario = $(this).attr('usuario');
+        var hash = $(this).attr('hash');
+        var op = $(this).attr('op');
+        var dataString = 'op='+op+'&hash='+hash;
+
+        $.ajax({
+            type: "POST",
+            url: "application/src/routes.php",
+            data: dataString,
+            beforeSend: function () {
+               $("#contenido").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt=""></div>');
+            },
+            success: function(data) {            
+                $("#contenido").html(data); // lo que regresa de la busquea     
+                $('#ConfirmDelete').modal('hide');    
+            }
+        });
+        
+    });
+
+
+
+
 
 
 

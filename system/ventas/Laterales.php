@@ -137,22 +137,29 @@ class Laterales{
 
 	 		    if($a->num_rows > 0){
 	 		    	echo '<ul class="list-group">
-					  <li class="list-group-item d-flex justify-content-between align-items-center active">
+					  <li class="list-group-item d-flex justify-content-between active">
 					    ORDENES GUARDADAS
 					    <span class="badge badge-danger badge-pill">'.$a->num_rows.'</span>
 					  </li>';
 	 		    	foreach ($a as $b) {
-	 		    	echo '<a id="select-orden" orden="'. $b["correlativo"].'" op="83" class="list-group-item list-group-item-action"> <span class="badge badge-danger badge-pill"><i class="fas fa-reply"></i></span> ';
+	 		    	echo '<li class="list-group-item list-group-item-action d-flex justify-content-between">
+
+	 		    	<a id="select-orden" orden="'. $b["correlativo"].'" op="83"> <span class="badge badge-danger badge-pill"><i class="fas fa-reply"></i></span> ';
 	 		    		if($b["nombre"] != NULL){
 	 		    			echo 'Cliente: <strong>' . $b["nombre"] . '</strong>';
 	 		    		} else {
 	 		    			echo 'Usuario: ' . $b["empleado"];
 	 		    		}
 
-	 		    	echo ' | '. $b["fecha"].' '. $b["hora"].'</a>';
+	 		    	echo ' | '. $b["fecha"].' '. $b["hora"].'</a>
+
+	 		    	<a href="system/facturar/facturas/'.$_SESSION["td"].'/ticket_comanda.php?orden='.$b["correlativo"].'" target="_blank"> <span class="badge badge-success badge-pill"><i class="fas fa-print fa-lg pt-1 pb-1"></i></span></a>
+	 		    	</li>';
 			    }
 			    	echo '</ul>';
  		    } $a->close();
+
+
  
   		    $a = $db->query("SELECT * FROM ticket_orden WHERE estado = 1 and td = ".$_SESSION["td"]."");
 

@@ -291,7 +291,8 @@ echo '<div class="table-responsive">
 
     echo '<a href="system/facturar/facturas/'.$_SESSION["td"].'/ticket_ecommerce.php?orden='.$b["orden"].'&usr='.$b["usuario"].'" target="_blank"><i class="fas fa-print fa-lg red-text"></i></a>
           <a id="facturar" op="381" orden="'.$b["orden"].'" user="'.$b["usuario"].'"><i class="fas fa-ad fa-lg green-text"></i></a>
-          <a id="op-edo" orden="'.$b["orden"].'" user="'.$b["usuario"].'"><i class="fas fa-cogs fa-lg blue-text"></i></a>';
+          <a id="op-edo" orden="'.$b["orden"].'" user="'.$b["usuario"].'"><i class="fas fa-cogs fa-lg blue-text"></i></a>
+          <a id="xdelete" op="386" hash="'.$b["hash"].'"><i class="fas fa-trash fa-lg red-text"></i></a>';
           }
 
           
@@ -567,6 +568,23 @@ public function EdoCambia($data){
     }
 
 }
+
+
+
+public function DelOrden($hash){
+  $db = new dbConn();
+
+    $cambio = array();
+    $cambio["edo"] = 0;
+    if(Helpers::UpdateId("ecommerce_data", $cambio, "hash = '".$hash."' and td = ".$_SESSION["td"]."")){
+        Alerts::Alerta("success","Realizado!","Orden Eliminada correctamente");
+    } else {
+        Alerts::Alerta("error","Error!!","No se realizo el cambio");
+    }
+
+    $this->VerTodosLosPedidos(1, "id", "desc");
+}
+
 
 
 public function MuestraEdo($data){
