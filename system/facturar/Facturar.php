@@ -77,7 +77,7 @@ if($_SESSION["tx"] == 0){
 	         //(tipo,numero,cambio,impresor,mesa,factura_o_tiket)
 	      		} else {
 	      			// aqui va el vinculo a web
-	      			echo '<a href="system/facturar/facturas/'.$_SESSION["td"].'/ticket_web.php?factura='.$factura.'" class="btn-floating btn-sm btn-info" target="_blank"><i class="fas fa-print"></i></a>xx';
+	      			echo '<a href="system/facturar/facturas/'.$_SESSION["td"].'/ticket_web.php?factura='.$factura.'" class="btn-floating btn-sm btn-info" target="_blank"><i class="fas fa-print"></i></a>';
 	      			// echo "Ticket tx0 y Web";
 	      		}        
 	      }
@@ -88,7 +88,7 @@ if($_SESSION["tx"] == 0){
 	         //(tipo,numero,cambio,impresor,mesa,factura_o_tiket)
 	      		} else {
 	      			// aqui va el vinculo a web
-	      			echo '<a href="system/facturar/facturas/'.$_SESSION["td"].'/ticket_web.php?factura='.$factura.'" class="btn-floating btn-sm btn-info" target="_blank"><i class="fas fa-print"></i></a>xx';
+	      			echo '<a href="system/facturar/facturas/'.$_SESSION["td"].'/ticket_web.php?factura='.$factura.'" class="btn-floating btn-sm btn-info" target="_blank"><i class="fas fa-print"></i></a>';
 	      			// echo "Factura tx0 y Web";
 	      		}
 	      }
@@ -112,7 +112,7 @@ if($_SESSION["tx"] == 0){
 	         //(tipo,numero,cambio,impresor,mesa,factura_o_tiket)
 	      		} else {
 	      			// aqui va el vinculo a web
-	      			echo '<a href="system/facturar/facturas/'.$_SESSION["td"].'/ticket_web.php?factura='.$factura.'" class="btn-floating btn-sm btn-info" target="_blank"><i class="fas fa-print"></i></a>xx';
+	      			echo '<a href="system/facturar/facturas/'.$_SESSION["td"].'/ticket_web.php?factura='.$factura.'" class="btn-floating btn-sm btn-info" target="_blank"><i class="fas fa-print"></i></a>';
 	      			// echo "Ticekt tx1 y Web";
 	      		}
            
@@ -125,7 +125,7 @@ if($_SESSION["tx"] == 0){
 	         //(tipo,numero,cambio,impresor,mesa,factura_o_tiket)
 	      		} else {
 	      			// aqui va el vinculo a web
-	      			echo '<a href="system/facturar/facturas/'.$_SESSION["td"].'/ticket_web.php?factura='.$factura.'" class="btn-floating btn-sm btn-info" target="_blank"><i class="fas fa-print"></i></a>xx';
+	      			echo '<a href="system/facturar/facturas/'.$_SESSION["td"].'/ticket_web.php?factura='.$factura.'" class="btn-floating btn-sm btn-info" target="_blank"><i class="fas fa-print"></i></a>';
 	      			// echo "Factura tx1 y Web";
 	      		}        	
            
