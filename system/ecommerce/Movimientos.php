@@ -278,6 +278,7 @@ echo '<div class="table-responsive">
         $total = $r["total"];
       } unset($r); 
 
+if($cantidad != 0){
    echo '<tr>
           <td>'.$b["orden"].'</td>
           <td>'.$b["fecha"].' - '. $b["hora"] . '</td>
@@ -298,7 +299,9 @@ echo '<div class="table-responsive">
           
    echo '</td>
         </tr>';
-        }
+        } // foreach
+} // // cantidad
+
         echo '</tbody>
         </table>
         </div>';
