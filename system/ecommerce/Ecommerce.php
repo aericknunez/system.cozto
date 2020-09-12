@@ -399,6 +399,20 @@ $n = 0;
       $db = new dbConn();
 
     Helpers::DeleteId("ecommerce", "usuario='".$data["usuario"]."' and orden='".$data["orden"]."' and td = ".$td." and id = '".$iden."'");
+
+    if($this->CantidadProductos($data["orden"], $data["usuario"], $td) == 0){
+
+      Helpers::DeleteId("ecommerce_data", "usuario='".$data["usuario"]."' and orden='".$data["orden"]."' and td = ".$td."");
+    }
+}
+
+
+  public function CantidadProductos($orden, $usuario, $td) { // obtine cantiad de productos
+    $db = new dbConn();
+
+  if ($r = $db->select("COUNT(*)", "ecommerce", "WHERE usuario = ".$usuario." and orden = ".$orden." and td = ".$td."")){ 
+        return $r["COUNT(*)"];
+      } unset($r); 
 }
 
 
