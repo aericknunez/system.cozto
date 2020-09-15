@@ -1650,7 +1650,46 @@ break;
 case "387": // verimagen de la categoria
 include_once '../../system/ecommerce/Movimientos.php';
 	$ecommerce = new Movimientos();
-	$ecommerce->VerImagenCategoria($_POST);
+	$ecommerce->VerImagenCategoria($_POST["hash"], 'assets/img/imgcategorias/' . $_SESSION["td"] . '/');
+break;
+
+
+
+case "388": // verimagen de la categoria
+include_once '../../system/ecommerce/Movimientos.php';
+	$ecommerce = new Movimientos();
+
+include("../common/Imagenes.php");
+	$imagen = new upload($_FILES['archivo']);
+
+
+	if($imagen->uploaded) {
+		if($imagen->image_src_y > 800 or $imagen->image_src_x > 800){ // si ancho o alto es mayir a 800
+			$imagen->image_resize         		= true; // default is true
+			$imagen->image_ratio        		= true; // para que se ajuste dependiendo del ancho definido
+			$imagen->image_x              		= 800; // para el ancho a cortar
+			$imagen->image_y              		= 800; // para el alto a cortar
+		}
+		$name = Helpers::TimeId();
+		$imagen->file_new_name_body   			= $name; // agregamos un nuevo nombre
+		// $imagen->image_watermark      		= 'watermark.png'; // marcado de agua
+		// $imagen->image_watermark_position 	= 'BR'; // donde se ub icara el marcado de agua. Bottom Right		
+		$imagen->process('../../assets/img/imgcategorias/' . $_SESSION["td"] . '/');	
+
+		$ecommerce->SaveImg($_POST['hash_cat'], $imagen->file_dst_name, 'assets/img/imgcategorias/' . $_SESSION["td"] . '/');
+	} // [file_dst_name] nombre de la imagen
+	else {
+	  echo 'error : ' . $imagen->error;
+	  $ecommerce->VerImagenCategoria($_POST['hash'], '../../assets/img/imgcategorias/' . $_SESSION["td"] . '/');
+	}	
+break;
+
+
+
+case "389": // Eliminar propiedades de categoria
+include_once '../../system/ecommerce/Movimientos.php';
+	$ecommerce = new Movimientos();
+	$ecommerce->BorrarPropiedades($_POST["hash"]);
 break;
 
 

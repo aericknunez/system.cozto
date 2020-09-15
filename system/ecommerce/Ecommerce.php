@@ -604,5 +604,43 @@ echo json_encode($data);
 
 
 
+
+
+
+
+
+
+
+
+
+  public function GetCategorias($td){
+      $db = new dbConn();
+
+ $a = $db->query("SELECT subcategoria, pronombre, img FROM producto_categoria_sub WHERE img != '' or pronombre != '' and td = '$td' order by id asc");  
+      
+      if($a->num_rows > 0){
+
+    $data = array();
+    $n= 0;
+        foreach ($a as $b) {
+
+        $data[] = $b;
+   $n++;
+
+        }
+
+echo json_encode($data);
+
+  }
+
+
+  $a->close();
+
+
+  } // termina total
+
+
+
+
 } // Termina la lcase
 ?>

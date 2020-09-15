@@ -725,7 +725,7 @@ if($exispredet == 0){
       $datos["categoria"] = $datos["categoriax"]; unset($datos["categoriax"]);
  
       if($datos["categoria"] != NULL and $datos["subcategoria"] != NULL){
-              $datos["subcategoria"] = strtoupper($datos["subcategoria"]);
+              $datos["subcategoria"] = $datos["subcategoria"];
               $datos["hash"] = Helpers::HashId();
               $datos["time"] = Helpers::TimeId();
               $datos["td"] = $_SESSION["td"];

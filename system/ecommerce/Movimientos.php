@@ -844,6 +844,7 @@ echo '<div class="table-responsive">
 <th>Pronombre</th>
 <th>Img</th>
 <th>Ver</th>
+<th>Eliminar</th>
 </tr>
         </thead>
         <tbody>';
@@ -857,9 +858,9 @@ $usuario = $b["usuario"];
       } unset($r); 
 
 if($b["img"] == NULL){
-  $img = '<a id="addimg" hash="'.$b["hash"].'" op="387"><i class="fas fa-plus fa-lg blue-text"></i></a>';
+$img = '<a id="addimg" hash="'.$b["hash"].'" op="387"><i class="fas fa-plus fa-lg blue-text"></i></a>';
 } else {
-    $img = '<a id="c_pronombre" hash="'.$b["hash"].'" cat="'.$b["subcategoria"].'"><i class="fas fa-refresh fa-lg green-text"></i></a>';
+$img = '<a id="addimg" hash="'.$b["hash"].'" op="387"><i class="fas fa-sync fa-lg green-text"></i></a>';
 }
 
 
@@ -868,6 +869,7 @@ if($b["img"] == NULL){
           <td>'.$b["pronombre"].'</td>
           <td>'.$img.'</td>
           <td><a id="c_pronombre" hash="'.$b["hash"].'" cat="'.$b["subcategoria"].'"><i class="fas fa-cogs fa-lg blue-text"></i></a></td>
+          <td><a id="xdelete" hash="'.$b["hash"].'" op="389"><i class="fas fa-trash fa-lg red-text"></i></a></td>
         </tr>';
         }
         echo '</tbody>
@@ -900,16 +902,64 @@ public function UpdateCat($data){
 
 
 
-public function VerImagenCategoria($data){
+public function VerImagenCategoria($hash, $src){
   $db = new dbConn();
 
-print_r($data);
+    if ($r = $db->select("img", "producto_categoria_sub", "WHERE hash = '".$hash."' and td = ".$_SESSION["td"]."")) { 
+        $img = $r["img"];
+    } unset($r);  
+
+    if($img != NULL){
+    echo '<img src="'.$src.''. $img.'" alt="Categoria" class="img-fluid">';
+    } else {
+      echo "No hay imagen para mostrar";
+    }
 
 }
 
 
 
 
+public function SaveImg($hash, $img, $src){
+  $db = new dbConn();
+
+    if ($r = $db->select("img", "producto_categoria_sub", "WHERE hash = '".$hash."' and td = ".$_SESSION["td"]."")) { 
+        $imagen_existente = $r["img"];
+    } unset($r);  
+
+    if($imagen_existente != NULL){
+        @unlink("../../" . $src . $imagen_existente);
+    }
+
+
+
+    $cambio = array();
+    $cambio["img"] = $img;
+    Helpers::UpdateId("producto_categoria_sub", $cambio, "hash='".$hash."' and td = ".$_SESSION["td"]."");
+
+    $this->VerImagenCategoria($hash, $src);
+}
+
+
+
+
+
+public function BorrarPropiedades($hash){
+  $db = new dbConn();
+
+  $cambio = array();
+  $cambio["pronombre"] = "";
+  $cambio["img"] = "";
+  if(Helpers::UpdateId("producto_categoria_sub", 
+    $cambio, "hash='".$hash."' and td = ".$_SESSION["td"]."")){
+    Alerts::Alerta("success","Realizado","Cambio Realizado Correctamente");
+  } else {
+    Alerts::Alerta("error","Error!","Ocurrió un error!");
+  }
+
+  $this->CategoriasPronombre();
+
+}
 
 
 

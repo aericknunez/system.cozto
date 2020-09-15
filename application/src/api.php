@@ -163,6 +163,12 @@ case "33": /// total de productos del cliente
 break;
 
 
+case "35": /// obtiene todas la categorias con su imagen
+	include_once '../../system/ecommerce/Ecommerce.php';
+	$data = new EcommerceData();
+	$data->GetCategorias($_REQUEST["td"]); 
+break;
+
 
 
 
