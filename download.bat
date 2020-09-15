@@ -1,10 +1,10 @@
 @echo off
 cd\
-cd C:\AppServ\www\pizto
+cd C:\AppServ\www\cozto
 git reset --hard
-git pull https://github.com/aericknunez/pizto.git
+git pull https://github.com/aericknunez/cozto_encrypt.git
 
 cd\
-cd C:\AppServ\www\pizto\sync
-call C:\AppServ\www\pizto\sync\sync_json.bat
+cd C:\AppServ\www\cozto\sync
+call C:\AppServ\www\cozto\sync\sync_json.bat
 exit

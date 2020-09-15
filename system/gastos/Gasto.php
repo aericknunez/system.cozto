@@ -86,7 +86,7 @@ class Gastos {
 			      <a id="xdelete" op="171" iden="'. $b["id"] .'">
 				      <span class="badge red"><i class="fas fa-trash-alt" aria-hidden="true"></i></span>
 				      </a>';
-			      } if($b["edo"] == 2 and $g == NULL){
+			      } if($b["edo"] == 2){
 			      	echo '<span class="badge red"><i class="fas fa-ban" aria-hidden="true"></i></span>';
 			      }
 			      echo '</td>

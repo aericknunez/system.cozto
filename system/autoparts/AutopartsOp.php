@@ -180,6 +180,7 @@ public function AddItem($data){
 
         $datos = array();
         $datos["cod"] = $cod;
+        $datos["categoria"] = $data["categoria"];
         $datos["item"] = strtoupper($data["item"]);
         $datos["hash"] = Helpers::HashId();
         $datos["time"] = Helpers::TimeId();
@@ -577,7 +578,9 @@ Alerts::Mensajey("Seleccione Marca y Modelo para agregar un nuevo producto", "da
                     echo '<table class="table table-striped table-sm table-hover">';
             foreach ($a as $b) {
                        echo '<tr>
-                              <td scope="row"><a id="select-p" cod="'. $b["cod"] . '-'.$_SESSION["detallesAtoparts"]["marcacod"].'-'.$_SESSION["detallesAtoparts"]["modelocod"].'-'.substr($_SESSION["detallesAtoparts"]["anio"], -2).''.substr($_SESSION["detallesAtoparts"]["anio2"], -2).'" categoria="'. $b["categoria"] .'" 
+                              <td scope="row"><a id="select-p" 
+                              cod="'. $b["cod"] . '-'.$_SESSION["detallesAtoparts"]["marcacod"].'-'.$_SESSION["detallesAtoparts"]["modelocod"].'-'.substr($_SESSION["detallesAtoparts"]["anio"], -2).''.substr($_SESSION["detallesAtoparts"]["anio2"], -2).'" 
+                              categoria="'. $b["categoria"] .'" 
                               item="'. $b["item"] . ' - '. $_SESSION["detallesAtoparts"]["marcatxt"] .' '. $_SESSION["detallesAtoparts"]["modelotxt"] .', '. $_SESSION["detallesAtoparts"]["anio"] .' - '. $_SESSION["detallesAtoparts"]["anio2"] .'"
                               ><div>
                               '. $b["cod"] .'  || '. $b["item"] .'</div></a></td>
