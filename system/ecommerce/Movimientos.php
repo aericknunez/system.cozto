@@ -724,7 +724,7 @@ if($dir == "asc") $dir2 = "desc";
 
 $opx = "384";
 
- $a = $db->query("SELECT producto.cod, producto.descripcion, producto.cantidad, producto.verecommerce FROM producto WHERE producto.td = ".$_SESSION["td"]." order by ".$orden." ".$dir." limit $offset, $limit");
+ $a = $db->query("SELECT producto.ilimitado, producto.cod, producto.descripcion, producto.cantidad, producto.verecommerce FROM producto WHERE producto.td = ".$_SESSION["td"]." order by ".$orden." ".$dir." limit $offset, $limit");
       
       if($a->num_rows > 0){
           echo '<div class="table-responsive">
@@ -736,6 +736,7 @@ $opx = "384";
             <th class="th-sm"><a id="paginador" op="'.$opx.'" iden="1" orden="producto.cantidad" dir="'.$dir2.'">Cantidad</a></th>
             <th class="th-sm"><a id="paginador" op="'.$opx.'" iden="1" orden="producto.verecommerce" dir="'.$dir2.'">Ecommerce</a></th>
             <th class="th-sm"><a id="paginador" op="'.$opx.'" iden="1" orden="producto.existencia_minima" dir="'.$dir2.'">Imagenes</a></th>
+            <th class="th-sm"><a id="paginador" op="'.$opx.'" iden="1" orden="producto.ilimitado" dir="'.$dir2.'">Ilimitado</a></th>
             <th class="th-sm">Ver</th>
           </tr>
         </thead>
@@ -755,13 +756,14 @@ if($b["verecommerce"] == "on"){ $ecoomerce = '<div class="text-success font-weig
 
 if($img > 0){ $imgx = '<div class="text-success font-weight-bold">'.$img.' Imagenes</div>'; } else { $imgx = '<div class="text-danger font-weight-bold">Sin Imagenes</div>';}
 
-
+if($b["ilimitado"] == "on"){ $ilimitado = '<div class="text-success font-weight-bold">Activo</div>'; } else { $ilimitado = '<div class="text-danger font-weight-bold">Inactivo</div>';}
           echo '<tr>
                       <td>'.$b["cod"].'</td>
                       <td>'.$b["descripcion"].'</td>
                       <td>'.$b["cantidad"].'</td>
                       <td>'.$ecoomerce.'</td>
                       <td>'.$imgx.'</td>
+                      <td>'.$ilimitado.'</td>
                       <td><a id="xverproducto" op="55" key="'.$b["cod"].'"><i class="fas fa-search fa-lg green-text"></i></a></td>
                     </tr>';
         }
