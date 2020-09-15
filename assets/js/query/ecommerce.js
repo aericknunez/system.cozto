@@ -270,7 +270,45 @@ return false;
 
 
 
+/// llamar modal ver
+    $("body").on("click","#addimg",function(){ 
+        
+        $('#ModalImagen').modal('show');
+        $('#verformularioimg').hide();
+        $('#verbtnimg').show();
+        $('#mostrarvinculo').hide();
+        
+        var hash = $(this).attr('hash');
+        var op = $(this).attr('op');
+        var dataString = 'hash='+hash+'&op='+op;
 
+        $.ajax({
+            type: "POST",
+            url: "application/src/routes.php",
+            data: dataString,
+            beforeSend: function () {
+               $("#verimg").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt=""></div>');
+            },
+            success: function(data) {            
+                $("#verimg").html(data); // lo que regresa de la busquea         
+            }
+        });
+        
+    });
+
+
+    $("body").on("click","#mostraradd",function(){ 
+        $('#verformularioimg').show();
+        $('#verbtnimg').hide();
+        $('#mostrarvinculo').show();
+    });
+
+    $("body").on("click","#ocultaradd",function(){ 
+        
+        $('#verformularioimg').hide();
+        $('#verbtnimg').show();
+        $('#mostrarvinculo').hide();
+    });
 
 
 

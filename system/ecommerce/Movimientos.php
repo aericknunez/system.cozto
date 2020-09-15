@@ -856,10 +856,17 @@ $usuario = $b["usuario"];
         $total = $r["total"];
       } unset($r); 
 
+if($b["img"] == NULL){
+  $img = '<a id="addimg" hash="'.$b["hash"].'" op="387"><i class="fas fa-plus fa-lg blue-text"></i></a>';
+} else {
+    $img = '<a id="c_pronombre" hash="'.$b["hash"].'" cat="'.$b["subcategoria"].'"><i class="fas fa-refresh fa-lg green-text"></i></a>';
+}
+
+
    echo '<tr>
           <td>'.$b["subcategoria"].'</td>
           <td>'.$b["pronombre"].'</td>
-          <td>'.$b["img"].'</td>
+          <td>'.$img.'</td>
           <td><a id="c_pronombre" hash="'.$b["hash"].'" cat="'.$b["subcategoria"].'"><i class="fas fa-cogs fa-lg blue-text"></i></a></td>
         </tr>';
         }
@@ -893,7 +900,12 @@ public function UpdateCat($data){
 
 
 
+public function VerImagenCategoria($data){
+  $db = new dbConn();
 
+print_r($data);
+
+}
 
 
 

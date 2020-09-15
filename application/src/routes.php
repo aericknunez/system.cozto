@@ -1647,6 +1647,14 @@ break;
 
 
 
+case "387": // verimagen de la categoria
+include_once '../../system/ecommerce/Movimientos.php';
+	$ecommerce = new Movimientos();
+	$ecommerce->VerImagenCategoria($_POST);
+break;
+
+
+
 case "400": // busqueda de proveedores
 include_once '../../system/cuentas/Cuentas.php';
 	$cuenta = new Cuentas();
