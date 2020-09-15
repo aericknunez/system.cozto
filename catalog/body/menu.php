@@ -319,6 +319,7 @@ if((Helpers::ServerDomain() == FALSE and $_SESSION["root_plataforma"] == 0) or (
 <?php if($_SESSION["tipo_cuenta"] == 1) { ?>
 <li><a href="?mod_factura" class="waves-effect"><i class="fas fa-cogs"></i> Configuraciones Facturas</a></li>
 <li><a href="?root" class="waves-effect"><i class="fas fa-cogs"></i> Configuraciones Root</a></li>
+<li><a href="?ctc" class="waves-effect"><i class="fas fa-cogs"></i> Cambiar Cuenta</a></li>
 <?php } ?>
 </ul>
 </div>
