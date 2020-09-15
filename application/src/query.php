@@ -128,7 +128,9 @@ echo '<script type="text/javascript" src="assets/js/query/noacceso.js?v='.$numer
 elseif(isset($_GET["tablas"])) {
 echo '<script type="text/javascript" src="assets/js/query/conf_config.js?v='.$numero.'"></script>';
 } 
-
+elseif(isset($_GET["ctc"])) {
+echo '<script type="text/javascript" src="assets/js/query/conf_config.js?v='.$numero.'"></script>';
+}
 
 elseif(isset($_GET["user"])) {
 echo '<script type="text/javascript" src="system/user/login.js?v='.$numero.'"></script>';

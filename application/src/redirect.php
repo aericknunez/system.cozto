@@ -12,6 +12,9 @@ elseif(isset($_GET["configuraciones"])) include_once 'system/config_configuracio
 elseif(isset($_GET["root"])  and $_SESSION['tipo_cuenta'] == "1") include_once 'system/config_configuraciones/root.php';
 elseif(isset($_GET["tablas"])) include_once 'system/config_configuraciones/tablas.php';
 
+elseif(isset($_GET["ctc"])) include_once 'system/config_configuraciones/cambio_tipo_cuenta.php';
+
+
 // producto
 elseif(isset($_GET["proadd"])) include_once 'system/producto/proadd.php'; // agregar
 elseif(isset($_GET["proopciones"])) include_once 'system/producto/proopciones.php'; //opciones

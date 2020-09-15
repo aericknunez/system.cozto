@@ -199,8 +199,6 @@ class Config{
 			      <th scope="col">Nombre del Sistema</th>
 			      <th scope="col">Pais</th>
 			      <th scope="col">Corte</th>
-			      <th scope="col">Venta Hoy</th>
-			      <th scope="col">Ultima Actualizacion</th>
 			      <th scope="col">Cambiar</th>
 			    </tr>
 			  </thead>
@@ -232,13 +230,11 @@ class Config{
 			      <th scope="col">'.$r["cliente"].'</th>
 			      <th scope="col">'.Helpers::Pais($r["pais"]).'</th>			      
 			      <th scope="col">'. $corte .'</th>
-			      <th scope="col">'. $r["moneda_simbolo"] . $totalventa .'</th>
-			      <th scope="col">'.$update.'</th>
 			      <th scope="col">';
 				if($b["sucursal"] == $_SESSION['td']){
-					echo '<a id="predeterminar" op="131" iden="'.$b["sucursal"].'" class="btn-sm">Predeterminar  <i class="fa fa-play red-text"></i></a>';
+					echo '<a id="predeterminar" op="431" iden="'.$b["sucursal"].'" class="btn-sm">Predeterminar  <i class="fa fa-play red-text"></i></a>';
 				} else {
-					echo '<a id="irlocal" op="129" iden="'.$b["sucursal"].'" class="btn-sm">Seleccionar  <i class="fa fa-play blue-text"></i></a>';
+					echo '<a id="irlocal" op="429" iden="'.$b["sucursal"].'" class="btn-sm">Seleccionar  <i class="fa fa-play blue-text"></i></a>';
 				}
 			echo '</th>
 			    </tr>';

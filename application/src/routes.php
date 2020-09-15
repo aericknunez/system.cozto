@@ -1758,6 +1758,38 @@ break;
 
 
 
+case  "428": // validar cuentas
+include_once '../../system/config_configuraciones/Config.php';
+	$configuracion = new Config;
+	$configuracion->AddSucursal($_POST["user"],$_POST["sistema"]);
+break; 
+
+
+
+case  "429": // cambiar local
+include_once '../../system/config_configuraciones/Config.php';
+	$configuracion = new Config; 
+  	$_SESSION['td'] = $_POST["iden"];
+
+  $_SESSION['secret_key'] = md5($_SESSION['td']);
+  $configuracion->CrearVariables();
+  echo '<script>
+	window.location.href="?"
+	</script>';
+break; 
+
+
+
+
+case  "431": // cambiar local predeterminado
+include_once '../../system/config_configuraciones/Config.php';
+	$configuracion = new Config; 
+	$configuracion->DefineSucursal($_SESSION["user"],$_REQUEST["iden"]);
+break; 
+
+
+
+
 case "425": // busca para pesaje de productos
 include_once '../../system/producto/Pesaje.php';
 	$pesaje = new Pesaje(); 

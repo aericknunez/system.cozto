@@ -71,5 +71,57 @@ return false;
 
 
 
+	$('#btn-cuentas').click(function(e){ /// para el formulario
+		e.preventDefault();
+		$.ajax({
+			url: "application/src/routes.php?op=428",
+			method: "POST",
+			data: $("#form-cuentas").serialize(),
+			success: function(data){
+				$("#cuentas").html(data);
+				$("#form-cuentas").trigger("reset");
+			}
+		})
+	})
+$("#form-cuentas").keypress(function(e) {//Para deshabilitar el uso de la tecla "Enter"
+if (e.which == 13) {
+return false;
+}
+});
+
+
+////////////////////////cambiar de sistema
+	$("body").on("click","#irlocal",function(){
+	var op = $(this).attr('op');
+	var iden = $(this).attr('iden');
+    $.post("application/src/routes.php", {op:op, iden:iden}, function(htmlexterno){
+	$("#cuentas").html(htmlexterno);
+   	 });
+});
+
+
+////////////////////////cambiar de sistema
+	$("body").on("click","#predeterminar",function(){
+	var op = $(this).attr('op');
+	var iden = $(this).attr('iden');
+    $.post("application/src/routes.php", {op:op, iden:iden}, function(htmlexterno){
+	$("#cuentas").html(htmlexterno);
+   	 });
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 });
