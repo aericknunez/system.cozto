@@ -198,7 +198,6 @@ class Config{
 			    <th scope="col">Usuario</th>
 			      <th scope="col">Nombre del Sistema</th>
 			      <th scope="col">Pais</th>
-			      <th scope="col">Corte</th>
 			      <th scope="col">Cambiar</th>
 			    </tr>
 			  </thead>
@@ -206,21 +205,6 @@ class Config{
 	    foreach ($a as $b) {  
 		    $r = $db->select("cliente, pais", "config_master", "WHERE td = ".$b["sucursal"]."");
 
-		    // ultima actualizacion
-	    		if ($rx = $db->select("*", "login_sync", "WHERE td = ".$b["sucursal"]." and edo = 1 order by id desc")) {
-		    		$update = $rx["fecha"] . " | " . $rx["hora"];		        
-		    	} unset($rx);
-
-		    	// total venta por sucursal
-		    	$fechax = date("d-m-Y");
-		    $ax = $db->query("SELECT sum(total) FROM ticket WHERE edo = 1 and td = ".$b["sucursal"]." and fecha = '$fechax'");
-		    foreach ($ax as $bx) {
-		     $totalventa=$bx["sum(total)"]; } $ax->close();  
-
-		     // busco si hubo corte
-		     if ($ra = $db->select("fecha", "corte_diario", "where edo = 1 and td = ".$b["sucursal"]." order by id DESC LIMIT 1")) { $fechaultima=$ra["fecha"]; } unset($ra); 
-		     if($fechaultima == date("d-m-Y")) $corte = "Realizado";
-		     else $corte = "Sin corte";
 
 
 	    	$userx = $b["user"];
@@ -229,7 +213,6 @@ class Config{
 		    	  <th scope="col">'.$x["nombre"].'</th>
 			      <th scope="col">'.$r["cliente"].'</th>
 			      <th scope="col">'.Helpers::Pais($r["pais"]).'</th>			      
-			      <th scope="col">'. $corte .'</th>
 			      <th scope="col">';
 				if($b["sucursal"] == $_SESSION['td']){
 					echo '<a id="predeterminar" op="431" iden="'.$b["sucursal"].'" class="btn-sm">Predeterminar  <i class="fa fa-play red-text"></i></a>';
@@ -244,7 +227,7 @@ class Config{
 	    echo '</tbody>
 		    </table>';
 		} else {
-			echo '<h1 class="text-danger text-center">No tiene mas sucursales vinculados a su cuenta</h1>';
+			Alerts::Mensajex("No tienes sucuarsales vinculadas a tu cuenta","danger");
 		}
 		$a->close();
 
@@ -259,7 +242,7 @@ class Config{
 
 		    $cambio = array();
 		    $cambio["td"] = $td;
-		    if ($db->update("login_userdata", $cambio, "WHERE user = '$user'")) {
+		    if ($db->update("login_userdata", $cambio, "WHERE user = '".$user."'")) {
 			    
 		   		$_SESSION['td'] = $td;
 		      	$_SESSION['secret_key'] = md5($_SESSION['td']);
