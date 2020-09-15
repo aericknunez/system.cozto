@@ -177,7 +177,7 @@ if($_SESSION['root_ecommerce'] == "on"){
 ?>
   <div class="form-row mt-5">
   
-  <div class="col-6 col-md-6 mb-1 md-form">
+  <div class="col-4 col-md-4 mb-1 md-form">
         <div class="switch">
             <label>
              Ver en Ecommerce ||  Off
@@ -187,7 +187,7 @@ if($_SESSION['root_ecommerce'] == "on"){
           </div>
     </div>
 
-  <div class="col-6 col-md-6 mb-1 md-form">
+  <div class="col-4 col-md-4 mb-1 md-form">
         <div class="switch">
             <label>
              Mostrar Promoción ||  Off
@@ -196,6 +196,18 @@ if($_SESSION['root_ecommerce'] == "on"){
             </label>
           </div>
     </div>
+
+
+  <div class="col-4 col-md-4 mb-1 md-form">
+        <div class="switch">
+            <label>
+             Mostrar Ilimitado ||  Off
+              <input type="checkbox" id="ilimitado" name="ilimitado">
+              <span class="lever"></span> On 
+            </label>
+          </div>
+    </div>
+
 
   </div>
 

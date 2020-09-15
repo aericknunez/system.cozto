@@ -10,7 +10,7 @@ class EcommerceData{
   public function Destacados($limit, $td, $orderby){
       $db = new dbConn();
 
- $a = $db->query("SELECT producto.cod, producto.descripcion, producto.informacion, producto.cantidad, producto.existencia_minima, producto_categoria_sub.subcategoria, producto.promocion, producto_unidades.nombre as medida FROM producto INNER JOIN producto_categoria_sub ON producto.categoria = producto_categoria_sub.hash INNER JOIN producto_unidades ON producto.medida = producto_unidades.hash and producto.td = ". $td ." and producto.verecommerce = 'on' order by ".$orderby." ". $limit ."");
+ $a = $db->query("SELECT producto.ilimitado, producto.cod, producto.descripcion, producto.informacion, producto.cantidad, producto.existencia_minima, producto_categoria_sub.subcategoria, producto.promocion, producto_unidades.nombre as medida FROM producto INNER JOIN producto_categoria_sub ON producto.categoria = producto_categoria_sub.hash INNER JOIN producto_unidades ON producto.medida = producto_unidades.hash and producto.td = ". $td ." and producto.verecommerce = 'on' order by ".$orderby." ". $limit ."");
       
       if($a->num_rows > 0){
 
@@ -74,7 +74,7 @@ echo json_encode($data);
         // obtener el detalle de la categoria
 if ($r = $db->select("hash", "producto_categoria_sub", "WHERE pronombre = '".$categoria."' and td = ". $td ."")) { $categoriax = $r["hash"]; } unset($r); 
 
- $a = $db->query("SELECT producto.cod, producto.descripcion, producto.informacion, producto.cantidad, producto.existencia_minima, producto_categoria_sub.subcategoria, producto.promocion, producto_unidades.nombre as medida FROM producto INNER JOIN producto_categoria_sub ON producto.categoria = producto_categoria_sub.hash INNER JOIN producto_unidades ON producto.medida = producto_unidades.hash and producto.categoria = '". $categoriax ."' and producto.verecommerce = 'on' and producto.td = ". $td ." order by ".$orderby." ". $limit ."");
+ $a = $db->query("SELECT producto.ilimitado, producto.cod, producto.descripcion, producto.informacion, producto.cantidad, producto.existencia_minima, producto_categoria_sub.subcategoria, producto.promocion, producto_unidades.nombre as medida FROM producto INNER JOIN producto_categoria_sub ON producto.categoria = producto_categoria_sub.hash INNER JOIN producto_unidades ON producto.medida = producto_unidades.hash and producto.categoria = '". $categoriax ."' and producto.verecommerce = 'on' and producto.td = ". $td ." order by ".$orderby." ". $limit ."");
       
       if($a->num_rows > 0){
 
@@ -137,7 +137,7 @@ echo json_encode($data);
       $db = new dbConn();
 
 
- $a = $db->query("SELECT producto.cod, producto.descripcion, producto.informacion, producto.cantidad, producto.existencia_minima, producto_categoria_sub.subcategoria, producto.promocion, producto_unidades.nombre as medida FROM producto INNER JOIN producto_categoria_sub ON producto.categoria = producto_categoria_sub.hash INNER JOIN producto_unidades ON producto.medida = producto_unidades.hash and producto.promocion = 'on' and producto.verecommerce = 'on' and producto.td = ". $td ." order by ".$orderby." ". $limit ."");
+ $a = $db->query("SELECT producto.ilimitado, producto.cod, producto.descripcion, producto.informacion, producto.cantidad, producto.existencia_minima, producto_categoria_sub.subcategoria, producto.promocion, producto_unidades.nombre as medida FROM producto INNER JOIN producto_categoria_sub ON producto.categoria = producto_categoria_sub.hash INNER JOIN producto_unidades ON producto.medida = producto_unidades.hash and producto.promocion = 'on' and producto.verecommerce = 'on' and producto.td = ". $td ." order by ".$orderby." ". $limit ."");
       
       if($a->num_rows > 0){
 
@@ -199,7 +199,7 @@ echo json_encode($data);
       $db = new dbConn();
 
 
- $a = $db->query("SELECT producto.cod, producto.descripcion, producto.informacion, producto.cantidad, producto.existencia_minima, producto_categoria_sub.subcategoria, producto.promocion, producto_unidades.nombre as medida FROM producto INNER JOIN producto_categoria_sub ON producto.categoria = producto_categoria_sub.hash INNER JOIN producto_unidades ON producto.medida = producto_unidades.hash and producto.verecommerce = 'on' and producto.cod = '".$cod."' and producto.td = ". $td ."");
+ $a = $db->query("SELECT producto.ilimitado, producto.cod, producto.descripcion, producto.informacion, producto.cantidad, producto.existencia_minima, producto_categoria_sub.subcategoria, producto.promocion, producto_unidades.nombre as medida FROM producto INNER JOIN producto_categoria_sub ON producto.categoria = producto_categoria_sub.hash INNER JOIN producto_unidades ON producto.medida = producto_unidades.hash and producto.verecommerce = 'on' and producto.cod = '".$cod."' and producto.td = ". $td ."");
       
       if($a->num_rows > 0){
 
@@ -266,7 +266,7 @@ echo json_encode($data);
 
 
 
- $a = $db->query("SELECT producto.cod, producto.descripcion, producto.informacion, producto.cantidad, producto.existencia_minima, producto.promocion, producto_unidades.nombre as medida FROM producto INNER JOIN producto_unidades ON producto.medida = producto_unidades.hash and (producto.descripcion like '%". $search ."%' or producto.informacion like '%". $search ."%') and producto.verecommerce = 'on' and producto.td = ". $td ." order by ".$orderby." ". $limit ."");
+ $a = $db->query("SELECT producto.ilimitado, producto.cod, producto.descripcion, producto.informacion, producto.cantidad, producto.existencia_minima, producto.promocion, producto_unidades.nombre as medida FROM producto INNER JOIN producto_unidades ON producto.medida = producto_unidades.hash and (producto.descripcion like '%". $search ."%' or producto.informacion like '%". $search ."%') and producto.verecommerce = 'on' and producto.td = ". $td ." order by ".$orderby." ". $limit ."");
       
       if($a->num_rows > 0){
 
