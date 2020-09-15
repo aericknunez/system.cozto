@@ -769,7 +769,11 @@ if($exispredet == 0){
                     echo '<tr class="blue lighten-5">
                           <th scope="row"> -- </th>
                           <td>'.$y["subcategoria"].'</td>
-                          <td><a id="xdelete" valor="1" tipo="2" hash="'.$y["hash"].'" op="23" ><i class="fa fa-minus-circle fa-lg red-text"></i></a></td>
+                          <td><a id="xdelete" valor="1" tipo="2" hash="'.$y["hash"].'" op="23" ><i class="fa fa-minus-circle fa-lg red-text"></i></a>
+
+                          <a id="cedit" hash="'.$y["hash"].'" op="23z" ><i class="fa fa-edit fa-lg green-text ml-4"></i></a>
+
+                          </td>
                         </tr>';                            
                   }  $x->close();
       
@@ -780,6 +784,34 @@ if($exispredet == 0){
 
       } $a->close();
   }
+
+
+
+  public function NombreCat($hash){ // nombre de categorias
+    $db = new dbConn();
+    if ($r = $db->select("subcategoria", "producto_categoria_sub", "WHERE hash = '".$hash."' and td = ".$_SESSION["td"]."")) { 
+        echo $r["subcategoria"];
+    } unset($r);  
+  }
+
+
+
+  public function RenameCat($data){ //cambia nombre
+    $db = new dbConn();
+
+      $cambio = array();
+      $cambio["subcategoria"] = $data["ncategoria"];
+      if(Helpers::UpdateId("producto_categoria_sub", $cambio, "hash='".$data["hash"]."' 
+        and td = ".$_SESSION["td"]."")){
+        Alerts::Alerta("success","Renombrada!","Categoria Renombrada correctamente!");
+      }  else {
+            Alerts::Alerta("error","Error!","Algo Ocurrio!");
+        }
+
+      $this->VerCategoria();
+  }
+
+
 
 
 
@@ -1014,9 +1046,14 @@ if($a->num_rows == 0){
                   <td><a id="xdelete" valor="4" hash="'.$b["hash"].'" op="29"><i class="fa fa-minus-circle fa-lg red-text"></i></a></td>
                   <td>';
                   if($b["predeterminada"] == 1){
-                    echo '<i class="fa fa-check-circle fa-lg green-text"></i>';
+                    echo '<i class="fas fa-check-circle fa-lg green-text"></i>';
+                  } else {
+                    echo '<i class="fas fa-ban fa-lg red-text"></i>';
                   }                  
-                  echo '</td>
+                  echo '
+
+                  <a id="uedit" hash="'.$b["hash"].'" op="28z" ><i class="fa fa-edit fa-lg green-text ml-4"></i></a>
+                  </td>
                 </tr>';          
           }
     echo '</tbody>
@@ -1024,6 +1061,34 @@ if($a->num_rows == 0){
 
       } $a->close();
   }
+
+
+  public function NombreUbi($hash){ // nombre de categorias
+    $db = new dbConn();
+    if ($r = $db->select("ubicacion", "ubicacion", "WHERE hash = '".$hash."' and td = ".$_SESSION["td"]."")) { 
+        echo $r["ubicacion"];
+    } unset($r);  
+  }
+
+
+
+  public function RenameUbi($data){ //cambia nombre
+    $db = new dbConn();
+
+      $cambio = array();
+      $cambio["ubicacion"] = $data["nubicacion"];
+      if(Helpers::UpdateId("ubicacion", $cambio, "hash='".$data["uhash"]."' 
+        and td = ".$_SESSION["td"]."")){
+        Alerts::Alerta("success","Renombrada!","Ubicación Renombrada correctamente!");
+      }  else {
+            Alerts::Alerta("error","Error!","Algo Ocurrio!");
+        }
+
+      $this->VerUbicacion();
+  }
+
+
+
 
 
 

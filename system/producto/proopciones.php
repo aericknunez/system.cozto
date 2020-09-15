@@ -243,3 +243,92 @@ $producto = new Productos();
   </div>
 </div>
 <!--Modal: modalConfirmDelete-->
+
+
+
+
+
+
+
+<!-- Ver cambiar nombre de categoria -->
+<div class="modal" id="ModalCambiarNombre" tabindex="-1" role="dialog" aria-labelledby="ModalCambiarNombre" aria-hidden="true"  data-backdrop="false">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">
+         CAMBIAR NOMBRE</h5>
+      </div>
+      <div class="modal-body">
+<!-- ./  content -->
+
+<div id="vercat" class="h5"></div>
+<hr>
+<div id="vista_pronombre">
+       
+<form id="form-ncategoria" name="form-ncategoria">
+<input type="hidden" name="hash" id="hash" />
+<input type="text" step="any" name="ncategoria" id="ncategoria" class="my-2 form-control" placeholder="Nuevo Nombre"/>
+
+<div align="center"><button class="btn btn-outline-info btn-rounded z-depth-0 my-4 waves-effect" type="submit" id="btn-ncategoria" name="btn-ncategoria">Cambiar</button> </div>
+</form>
+
+
+</div>
+
+<!-- ./  content -->
+      </div>
+      <div class="modal-footer">
+
+<a id="cerrarmodal" class="btn btn-primary btn-rounded" data-dismiss="modal">Regresar</a>
+         
+    
+      </div>
+    </div>
+  </div>
+</div>
+<!-- ./  Modal -->
+
+
+
+
+
+
+
+
+<!-- Ver cambiar nombre de ubicacion -->
+<div class="modal" id="ModalCambiarU" tabindex="-1" role="dialog" aria-labelledby="ModalCambiarU" aria-hidden="true"  data-backdrop="false">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">
+         CAMBIAR NOMBRE</h5>
+      </div>
+      <div class="modal-body">
+<!-- ./  content -->
+
+<div id="veru" class="h5"></div>
+<hr>
+<div id="vista_nubicacion">
+       
+<form id="form-nubicacion" name="form-nubicacion">
+<input type="hidden" name="uhash" id="uhash" />
+<input type="text" step="any" name="nubicacion" id="nubicacion" class="my-2 form-control" placeholder="Nuevo Nombre"/>
+
+<div align="center"><button class="btn btn-outline-info btn-rounded z-depth-0 my-4 waves-effect" type="submit" id="btn-nubicacion" name="btn-nubicacion">Cambiar</button> </div>
+</form>
+
+
+</div>
+
+<!-- ./  content -->
+      </div>
+      <div class="modal-footer">
+
+<a id="cerrarmodal" class="btn btn-primary btn-rounded" data-dismiss="modal">Regresar</a>
+         
+    
+      </div>
+    </div>
+  </div>
+</div>
+<!-- ./  Modal -->

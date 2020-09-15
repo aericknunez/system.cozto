@@ -188,7 +188,6 @@ case "22": // formulario add categoria
 include_once '../../system/producto/Productos.php';
 	$productos = new Productos;
 	$productos->AddCategoria($_POST);
-
 break;
 
 
@@ -201,11 +200,26 @@ break;
 
 
 
+case "23z": // borrar categoria y sub categoria
+include_once '../../system/producto/Productos.php';
+	$productos = new Productos;
+	$productos->NombreCat($_POST["hash"]);
+break;
+
+
+
+case "23x": // borrar categoria y sub categoria
+include_once '../../system/producto/Productos.php';
+	$productos = new Productos;
+	$productos->RenameCat($_POST);
+break;
+
+
+
 case "24": // formulario Unidad de medida
 include_once '../../system/producto/Productos.php';
 	$productos = new Productos;
 	$productos->AddUnidad($_POST);
-
 break;
 
 
@@ -240,6 +254,22 @@ include_once '../../system/producto/Productos.php';
 	$productos = new Productos;
 	$productos->AddUbicacion($_POST);
 
+break;
+
+
+
+case "28z": // borrar categoria y sub categoria
+include_once '../../system/producto/Productos.php';
+	$productos = new Productos;
+	$productos->NombreUbi($_POST["hash"]);
+break;
+
+
+
+case "28x": // borrar categoria y sub categoria
+include_once '../../system/producto/Productos.php';
+	$productos = new Productos;
+	$productos->RenameUbi($_POST);
 break;
 
 

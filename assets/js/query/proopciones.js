@@ -170,6 +170,120 @@ $(document).ready(function(){
 
 
 
+/// modal para cambiar nombre de categoria
+    $("body").on("click","#cedit",function(){ 
+        
+        $('#ModalCambiarNombre').modal('show');
+
+        var hash = $(this).attr('hash');
+        var op = $(this).attr('op');
+        var dataString = 'hash='+hash+'&op='+op;
+
+        $('#hash').attr("value",hash);
+
+        $.ajax({
+            type: "POST",
+            url: "application/src/routes.php",
+            data: dataString,
+            beforeSend: function () {
+               $("#vercat").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt=""></div>');
+            },
+            success: function(data) {            
+                $("#vercat").html(data); // lo que regresa de la busquea         
+            }
+        });
+        
+    });
+
+
+
+
+	$('#btn-ncategoria').click(function(e){ /// para agregar ubicacion
+	e.preventDefault();
+	$.ajax({
+			url: "application/src/routes.php?op=23x",
+			method: "POST",
+			data: $("#form-ncategoria").serialize(),
+			success: function(data){
+				$("#form-ncategoria").trigger("reset");
+				$("#destinocategoria").html(data);	
+				$('#ModalCambiarNombre').modal('hide');		
+			}
+		})
+	})
+    
+
+	$("#form-ncategoria").keypress(function(e) {//Para deshabilitar el uso de la tecla "Enter"
+	if (e.which == 13) {
+	return false;
+	}
+	});
+
+
+
+
+
+
+
+
+/// modal para cambiar nombre de categoria
+    $("body").on("click","#uedit",function(){ 
+        
+        $('#ModalCambiarU').modal('show');
+
+        var hash = $(this).attr('hash');
+        var op = $(this).attr('op');
+        var dataString = 'hash='+hash+'&op='+op;
+
+        $('#uhash').attr("value",hash);
+
+        $.ajax({
+            type: "POST",
+            url: "application/src/routes.php",
+            data: dataString,
+            beforeSend: function () {
+               $("#veru").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt=""></div>');
+            },
+            success: function(data) {            
+                $("#veru").html(data); // lo que regresa de la busquea         
+            }
+        });
+        
+    });
+
+
+
+
+	$('#btn-nubicacion').click(function(e){ /// para agregar ubicacion
+	e.preventDefault();
+	$.ajax({
+			url: "application/src/routes.php?op=28x",
+			method: "POST",
+			data: $("#form-nubicacion").serialize(),
+			success: function(data){
+				$("#form-nubicacion").trigger("reset");
+				$("#destinoubicacion").html(data);	
+				$('#ModalCambiarU').modal('hide');		
+			}
+		})
+	})
+    
+
+	$("#form-nubicacion").keypress(function(e) {//Para deshabilitar el uso de la tecla "Enter"
+	if (e.which == 13) {
+	return false;
+	}
+	});
+
+
+
+
+
+
+
+
+
+
 
 
 }); // termina query
