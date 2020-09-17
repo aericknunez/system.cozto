@@ -1273,7 +1273,7 @@ $page <= 1 ? $enable = 'disabled' : $enable = '';
       $db = new dbConn();
 
 
- $a = $db->query("SELECT cod, descripcion, cantidad, FROM producto WHERE td = ".$_SESSION["td"]."");
+ $a = $db->query("SELECT cod, descripcion, cantidad FROM producto WHERE td = ".$_SESSION["td"]."");
       
       if($a->num_rows > 0){
           echo '<div class="table-responsive">
