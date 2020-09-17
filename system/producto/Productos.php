@@ -1273,7 +1273,7 @@ $page <= 1 ? $enable = 'disabled' : $enable = '';
       $db = new dbConn();
 
 
- $a = $db->query("SELECT producto.cod, producto.descripcion, producto.cantidad, producto.existencia_minima, producto_categoria_sub.subcategoria FROM producto INNER JOIN producto_categoria_sub ON producto.categoria = producto_categoria_sub.hash and producto.td = ".$_SESSION["td"]."");
+ $a = $db->query("SELECT cod, descripcion, cantidad, FROM producto WHERE td = ".$_SESSION["td"]."");
       
       if($a->num_rows > 0){
           echo '<div class="table-responsive">
@@ -1289,7 +1289,7 @@ $page <= 1 ? $enable = 'disabled' : $enable = '';
           </tr>
         </thead>
         <tbody>';
-        $n = 0;
+        $n = 1;
         foreach ($a as $b) {
         // obtener el nombre y detalles del producto
     if ($r = $db->select("precio", "producto_precio", "WHERE cant = 1 and producto = ".$b["cod"]." and td = ". $_SESSION["td"] ."")) { 
