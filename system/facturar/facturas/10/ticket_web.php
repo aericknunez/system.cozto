@@ -117,10 +117,10 @@ if($totalregistros > 0){
                                 <th colspan="2">SubTotal</th>
                                 <th colspan="2" class="text-right"><?php echo Helpers::Dinero($stotal) ?></th>
                             </tr>
-                            <tr>
+<!--                             <tr>
                                 <th colspan="2">IVA</th>
                                 <th colspan="2" class="text-right"><?php echo Helpers::Dinero($imp) ?></th>
-                            </tr>                                          
+                            </tr>   -->                                        
                                 <tr>
                                     <th colspan="2">Total</th>
                                     <th colspan="2" class="text-right"><?php echo Helpers::Dinero($total) ?></th>
@@ -172,7 +172,7 @@ echo '<div class="well well-sm" style="margin-top:10px;">
                     
                                                                                     
             <div class="letras" class="well well-sm" style="margin-top:10px;">
-                <div style="text-align: center;">GARCIAS POR SU COMPRA. VUELVA PRONTO</div>
+                <div style="text-align: center;">GRACIAS POR SU COMPRA. VUELVA PRONTO</div>
             </div>
 
             

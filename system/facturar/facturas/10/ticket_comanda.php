@@ -132,10 +132,10 @@ if($totalregistros > 0){
                                 <th colspan="2">SubTotal</th>
                                 <th colspan="2" class="text-right"><?php echo Helpers::Dinero($stotal) ?></th>
                             </tr>
-                            <tr>
+<!--                             <tr>
                                 <th colspan="2">IVA</th>
                                 <th colspan="2" class="text-right"><?php echo Helpers::Dinero($imp) ?></th>
-                            </tr>                                          
+                            </tr>   -->                                        
                                 <tr>
                                     <th colspan="2">Total</th>
                                     <th colspan="2" class="text-right"><?php echo Helpers::Dinero($total) ?></th>
