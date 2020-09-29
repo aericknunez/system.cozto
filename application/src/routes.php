@@ -1788,7 +1788,7 @@ break;
 
 
 
-case  "428": // validar cuentas
+case  "418": // validar cuentas
 include_once '../../system/config_configuraciones/Config.php';
 	$configuracion = new Config;
 	$configuracion->AddSucursal($_POST["user"],$_POST["sistema"]);
@@ -1796,7 +1796,7 @@ break;
 
 
 
-case  "429": // cambiar local
+case  "419": // cambiar local
 include_once '../../system/config_configuraciones/Config.php';
 	$configuracion = new Config; 
   	$_SESSION['td'] = $_POST["iden"];

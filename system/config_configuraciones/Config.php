@@ -217,7 +217,7 @@ class Config{
 				if($b["sucursal"] == $_SESSION['td']){
 					echo '<a id="predeterminar" op="431" iden="'.$b["sucursal"].'" class="btn-sm">Predeterminar  <i class="fa fa-play red-text"></i></a>';
 				} else {
-					echo '<a id="irlocal" op="429" iden="'.$b["sucursal"].'" class="btn-sm">Seleccionar  <i class="fa fa-play blue-text"></i></a>';
+					echo '<a id="irlocal" op="419" iden="'.$b["sucursal"].'" class="btn-sm">Seleccionar  <i class="fa fa-play blue-text"></i></a>';
 				}
 			echo '</th>
 			    </tr>';

@@ -74,7 +74,7 @@ return false;
 	$('#btn-cuentas').click(function(e){ /// para el formulario
 		e.preventDefault();
 		$.ajax({
-			url: "application/src/routes.php?op=428",
+			url: "application/src/routes.php?op=418",
 			method: "POST",
 			data: $("#form-cuentas").serialize(),
 			success: function(data){

@@ -352,21 +352,21 @@ $('#ModalBalanza').on('shown.bs.modal', function() { // para autofocus en el mod
         
         $('#ModalBalanza').modal('show');
         
-        var op = "429";
+        // var op = "429";
 
-        var dataString = 'op='+op;
+        // var dataString = 'op='+op;
 
-        $.ajax({
-            type: "POST",
-            url: "application/src/routes.php",
-            data: dataString,
-            beforeSend: function () {
-               $("#productos_bal").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt=""></div>');
-            },
-            success: function(data) {            
-                $("#productos_bal").html(data); // lo que regresa de la busquea 
-            }
-        }); 
+        // $.ajax({
+        //     type: "POST",
+        //     url: "application/src/routes.php",
+        //     data: dataString,
+        //     beforeSend: function () {
+        //        $("#productos_bal").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt=""></div>');
+        //     },
+        //     success: function(data) {            
+        //         $("#productos_bal").html(data); // lo que regresa de la busquea 
+        //     }
+        // }); 
     });
 
 
