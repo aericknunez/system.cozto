@@ -56,7 +56,7 @@ $control = new Controles();
 <!-- Division -->
 
 
-    <div class="row">
+  <div class="row">
 
     <div class="col-xl-3 col-md-6 mb-4  col-sm-6 col-6">
       <div class="card-counter info">
@@ -96,7 +96,7 @@ $control = new Controles();
 
 <!-- Division -->
 
-    <div class="row">
+  <div class="row">
 
     <div class="col-xl-3 col-md-6 mb-4  col-sm-6 col-6">
       <div class="card-counter primary">
@@ -139,10 +139,4 @@ $control = new Controles();
 
 
 
-
-
 <canvas id="barChart" class="mb-4"></canvas>
-
-
-
-
