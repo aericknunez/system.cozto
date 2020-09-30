@@ -179,6 +179,18 @@ if($datos["precio"] == 0){
 
   public function ObtenerPrecio($cod, $cant, $td){ // obtiene el precio independientemente la cantidad
     $db = new dbConn();
+ 
+ // verifico si tiene precio de promo
+   $a = $db->query("SELECT * FROM producto_precio_promo WHERE producto = '$cod' and td = ".$td."");
+    $pp = $a->num_rows; $a->close();
+
+if($pp > 0){
+
+      if ($r = $db->select("precio", "producto_precio_promo", "WHERE producto = '$cod' and td = ".$td."")) {
+          $precio = $r["precio"];
+      } unset($r);  
+
+} else { // si no es precio promo
     // cuento si hay varias fechas
   $a = $db->query("SELECT * FROM producto_precio WHERE producto = '$cod' and td = ".$td."");
     $precios = $a->num_rows; $a->close();
@@ -195,8 +207,13 @@ if($datos["precio"] == 0){
                 $precio = $r["precio"];
             } unset($r);  
       }
-        return $precio;
+
+} // precio promo
+
+    return $precio;
   }
+
+
 
 
   public function ObtenerNombre($cod, $td){

@@ -477,6 +477,9 @@ Helpers::UpdateId("ecommerce", $cambio, "orden = '$orden' and usuario='".$data["
 
     $cambio = array();
     $cambio["edo"] = 2;
+    $cambio["fecha"] = date("d-m-Y");
+    $cambio["hora"] = date("d-m-Y");
+    $cambio["fechaF"] = Fechas::Format(date("d-m-Y"));
     if(Helpers::UpdateId("ecommerce_data", $cambio, "usuario='".$data["usr"]."' and orden='".$data["orden"]."' and td = ".$td."")){
         $datos["mensaje"] =  "Realizado";
     } else {
