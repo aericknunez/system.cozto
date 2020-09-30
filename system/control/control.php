@@ -45,7 +45,7 @@ $control = new Controles();
       <div class="card-counter light">
         <i class="fa fa-users"></i>
         <span class="count-numbers"><h5 class="font-weight-bold"><?php echo Helpers::Dinero($cut->EfectivoDebido(date("d-m-Y"))); ?></h5></span>
-        <span class="count-name">Efectivo caja Chica</span>
+        <span class="count-name">Efectivo Ingresado</span>
       </div>
     </div>
 

@@ -152,7 +152,7 @@ class Corte{
 		$db = new dbConn();
 	   
 		//sumas
-	    $total_cc = $this->TVentasX($fecha, 1)+$this->GetEfectivo()+$this->TotalAbonos($fecha)+$this->EntradasEfectivo($fecha); //total ventas  mas caja chica de ayer
+	    $total_cc = $this->TVentasX($fecha, 1)+$this->TotalAbonos($fecha)+$this->EntradasEfectivo($fecha); //total ventas  mas caja chica de ayer
 	    // restas
 		$total_debido = $total_cc-$this->GastoHoy($fecha); //dinero que deberia haber ()
 		// total

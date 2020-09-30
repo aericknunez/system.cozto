@@ -591,10 +591,12 @@ class Ventas{
 	    $cambio = array();
 	   	$cambio["num_fac"] = $factura;
 	   	$cambio["tipo_pago"] = $tpago;
+	   	$cambio["cajero"] = $_SESSION["user"];
 	   	Helpers::UpdateId("ticket", $cambio, "orden = ".$_SESSION["orden"]." and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."");  
 
 	   	$cambios = array();
 	   	$cambios["estado"] = 2;
+	   	$cambios["cajero"] = $_SESSION["user"];
 	   	Helpers::UpdateId("ticket_orden", $cambios, "correlativo = ".$_SESSION["orden"]." and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."");  
 
 	   	$this->DescontarProducto($factura);

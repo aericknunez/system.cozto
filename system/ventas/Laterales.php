@@ -71,7 +71,7 @@ class Laterales{
  	public function MostrarBotones($orden){ // botones de funcion para la venta
  		echo '<div align="center" class="justify-content-center">';
  		echo '<button id="guardar" orden="'.$orden.'" op="82" class="btn btn-outline-primary btn-rounded waves-effect"><i class="fas fa-save mr-1"></i> Guardar</button>';
- 		if($_SESSION['tipo_cuenta'] != 4){
+ 		if($_SESSION['tipo_cuenta'] != 4 and $_SESSION["caja_apertura"] != NULL){
  			echo '<a href="?modal=facturar" class="btn btn-outline-secondary btn-rounded waves-effect"><i class="fas fa-money-bill-alt mr-1"></i> Cobrar</a>';
  		}
  		//echo '<button class="btn btn-outline-danger btn-rounded waves-effect"><i class="fas fa-ban mr-1"></i> Cancelar</button>';
@@ -116,6 +116,9 @@ class Laterales{
 			 $textos = 'Cliente asignado para la Factura: ' . $_SESSION['cliente_asig']. ".";
 			Alerts::Mensajex($textos,"info",NULL,NULL);
 		}
+
+
+
  	}
 
 

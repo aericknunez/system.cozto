@@ -391,13 +391,12 @@ else{
 		}
 
 	/// para actualizar automaticamente el lateral cada 3 seg
-	if($_SESSION['root_multiusuario'] == "on"){
-	echo '<script type="text/javascript" src="assets/js/query/venta_getlateral.js?v='.$numero.'"></script>';		
-	}
+		if($_SESSION['root_multiusuario'] == "on"){
+		echo '<script type="text/javascript" src="assets/js/query/venta_getlateral.js?v='.$numero.'"></script>';		
+		}
+	} 
 
-
-
-	} else { // para aperturar caja
+	if($_SESSION["caja_apertura"] == NULL){ // para aperturar caja
 		echo '<script type="text/javascript" src="assets/js/query/abrircaja.js?v='.$numero.'"></script>';
 	}
 

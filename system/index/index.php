@@ -15,13 +15,22 @@ Alerts::Mensajex("ADVERTENCIA! Se detecto una cotizaci&oacuten sin concluir. Deb
 
 echo '<div id="ventana"></div>';
 
-if($_SESSION["caja_apertura"] != NULL){ // apertura de caja
+if($_SESSION["caja_apertura"] != NULL or $_SESSION["caja_soloagregar"] != NULL){ // apertura de caja
 	if($_SESSION["tipo_inicio"] == 2){ 	include_once 'system/ventas/venta_lenta.php'; } 
 	else { include_once 'system/ventas/venta_rapida.php'; }
 
 } else { /// termina comprobacion de corte
-	Alerts::Mensajex("Para poder realizar ventas debe aperturar la caja", "danger", '<a id="abrirCaja" class="btn btn-info my-4" ><i class="fas fa-donate mr-1"></i> Abrir Caja</a>');
+	Alerts::Mensajex("Para poder realizar ventas debe aperturar la caja", "danger", 
+    '<a id="abrirCaja" class="btn btn-info my-4" ><i class="fas fa-donate mr-1"></i> Abrir Caja</a>', 
+    '<a id="cambiar" op="74" class="small" ><i class="fas fa-chalkboard mr-1"></i> Generar Ordenes</a>');
+}
+
+
+
+
+if($_SESSION["caja_apertura"] == NULL){
 ?>
+
 
 
 <!-- Ver modal -->
@@ -60,7 +69,7 @@ if($_SESSION["caja_apertura"] != NULL){ // apertura de caja
       </div>
       <div class="modal-footer">
 
-		<a id="cerrar" class="btn btn-primary btn-rounded" data-dismiss="modal">Regresar</a>
+    <a id="cerrar" class="btn btn-primary btn-rounded" data-dismiss="modal">Regresar</a>
 
       </div>
     </div>
@@ -93,9 +102,4 @@ Alerts::Mensajex("CAJA APERTURADA CORRECTAMENTE","success", '<a href="?" class="
 </div>
 <!-- ./  Modal -->
 
-
-
-<?
-}
- // print_r($_SESSION);
-?>
+<?php } ?>

@@ -658,18 +658,33 @@ if($datos["precio"] != NULL and $datos["producto"] != NULL){
 		unset($_SESSION["orden"]);
 	}
 
+
+
+
+
+
 	public function SelectOrden($orden) { //Seleccioa Orden
 		$db = new dbConn();
+
+		// reviso que aun este activa sino mando mensaje
+$a = $db->query("SELECT * FROM ticket_orden WHERE correlativo = '$orden' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]." and estado = 3");
+$num = $a->num_rows;
+$a->close();
+
+	if($num > 0){
 
 		$cambios = array();
 	   	$cambios["estado"] = 1;
 	   	Helpers::UpdateId("ticket_orden", $cambios, "correlativo = '$orden' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"].""); 
 
 		$_SESSION["orden"] = $orden;
+   		$opciones = new Opciones();
+   		$opciones->VarCredito();		
+	} else {
+		Alerts::Alerta("error","Error!","El estado de la orden cambió!");
+	}
 
 
-	   		$opciones = new Opciones();
-	   		$opciones->VarCredito();
 
 	}
 ////////////////////////////////////////////
@@ -716,10 +731,12 @@ if($datos["precio"] != NULL and $datos["producto"] != NULL){
 	    $cambio = array();
 	   	$cambio["num_fac"] = $factura;
 	   	$cambio["tipo_pago"] = $tpago;
+	   	$cambio["cajero"] = $_SESSION["user"];
 	   	Helpers::UpdateId("ticket", $cambio, "orden = ".$_SESSION["orden"]." and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."");  
 
 	   	$cambios = array();
 	   	$cambios["estado"] = 2;
+	   	$cambios["cajero"] = $_SESSION["user"];
 	   	Helpers::UpdateId("ticket_orden", $cambios, "correlativo = ".$_SESSION["orden"]." and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."");  
 
 	   	$this->FacturaResult($factura, $datos["efectivo"]);

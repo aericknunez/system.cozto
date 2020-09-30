@@ -662,6 +662,11 @@ break;
 
 
 
+case "74": // agregar caja solo agregar
+	$_SESSION["caja_soloagregar"] = TRUE;
+break;
+
+
 case "75": // busca producto
 include_once '../../system/ventas/Productos.php';
 	$productos = new Productos;
@@ -1017,11 +1022,11 @@ break;
 
 
 
-case "116": // ejecuta corte
+case "116": //APERTURA DE CAJA
 include_once '../../system/corte/CorteMultiple.php';
 $cortes = new Corte();
-
 $cortes->Apertura($_POST["efectivo"]);
+unset($_SESSION["caja_soloagregar"]);
 break;
 
 

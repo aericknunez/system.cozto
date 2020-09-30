@@ -172,7 +172,8 @@ Esconder();
             beforeSend: function () {
                $("#ver").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt=""></div>');
             },
-            success: function(data) {            
+            success: function(data) { 
+                $("#ventana").html(data);           
                 $("#ver").load('application/src/routes.php?op=84'); // ver productos de la orden 
                 $("#lateral").load('application/src/routes.php?op=70'); // caraga el lateral
             }

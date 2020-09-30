@@ -117,7 +117,7 @@ public function Cierre($efectivo){
 
 	public function Productos(){
 		$db = new dbConn();
-	    $a = $db->query("SELECT sum(cant) FROM ticket WHERE edo = 1 and td = ".$_SESSION["td"]." and time BETWEEN '".$this->GetInicio()."' and '".Helpers::TimeId()."'");
+	    $a = $db->query("SELECT sum(cant) FROM ticket WHERE cajero = '".$_SESSION["user"]."' and edo = 1 and td = ".$_SESSION["td"]." and time BETWEEN '".$this->GetInicio()."' and '".Helpers::TimeId()."'");
 		    foreach ($a as $b) {
 		     return $b["sum(cant)"];
 		    } $a->close();
@@ -127,7 +127,7 @@ public function Cierre($efectivo){
 
 	public function Clientes(){
 		$db = new dbConn();
-		$a = $db->query("SELECT * FROM ticket_orden WHERE td = ".$_SESSION["td"]." and time BETWEEN '".$this->GetInicio()."' and '".Helpers::TimeId()."'");
+		$a = $db->query("SELECT * FROM ticket_orden WHERE cajero = '".$_SESSION["user"]."' and td = ".$_SESSION["td"]." and time BETWEEN '".$this->GetInicio()."' and '".Helpers::TimeId()."'");
 		return $a->num_rows;
 		$a->close();
 
@@ -136,7 +136,7 @@ public function Cierre($efectivo){
 
 	public function Tx(){
 		$db = new dbConn();
-	    $a = $db->query("SELECT sum(total) FROM ticket WHERE edo = 1 and td = ".$_SESSION["td"]." and time BETWEEN '".$this->GetInicio()."' and '".Helpers::TimeId()."' and tx = 1");
+	    $a = $db->query("SELECT sum(total) FROM ticket WHERE cajero = '".$_SESSION["user"]."' and edo = 1 and td = ".$_SESSION["td"]." and time BETWEEN '".$this->GetInicio()."' and '".Helpers::TimeId()."' and tx = 1");
 		    foreach ($a as $b) {
 		     $total=$b["sum(total)"];
 		    } $a->close();
@@ -147,7 +147,7 @@ public function Cierre($efectivo){
 
 	public function NoTx(){
 		$db = new dbConn();
-	    $a = $db->query("SELECT sum(total) FROM ticket WHERE edo = 1 and td = ".$_SESSION["td"]." and time BETWEEN '".$this->GetInicio()."' and '".Helpers::TimeId()."' and tx = 0");
+	    $a = $db->query("SELECT sum(total) FROM ticket WHERE cajero = '".$_SESSION["user"]."' and edo = 1 and td = ".$_SESSION["td"]." and time BETWEEN '".$this->GetInicio()."' and '".Helpers::TimeId()."' and tx = 0");
 		    foreach ($a as $b) {
 		     $total=$b["sum(total)"];
 		    } $a->close();
@@ -158,7 +158,7 @@ public function Cierre($efectivo){
 
 	public function Total(){
 		$db = new dbConn();
-	    $a = $db->query("SELECT sum(total) FROM ticket WHERE edo = 1 and td = ".$_SESSION["td"]." and time BETWEEN '".$this->GetInicio()."' and '".Helpers::TimeId()."'");
+	    $a = $db->query("SELECT sum(total) FROM ticket WHERE cajero = '".$_SESSION["user"]."' and edo = 1 and td = ".$_SESSION["td"]." and time BETWEEN '".$this->GetInicio()."' and '".Helpers::TimeId()."'");
 		    foreach ($a as $b) {
 		     return $b["sum(total)"];
 		    } $a->close();
@@ -169,7 +169,7 @@ public function Cierre($efectivo){
 	public function TotalTipo($tipo){
 		$db = new dbConn();
 	    $a = $db->query("SELECT sum(total) FROM ticket 
-	    	WHERE edo = 1 and td = ".$_SESSION["td"]." and tipo_pago = '$tipo' and time BETWEEN '".$this->GetInicio()."' and '".Helpers::TimeId()."'");
+	    	WHERE cajero = '".$_SESSION["user"]."' and edo = 1 and td = ".$_SESSION["td"]." and tipo_pago = '$tipo' and time BETWEEN '".$this->GetInicio()."' and '".Helpers::TimeId()."'");
 		    foreach ($a as $b) {
 		     return $b["sum(total)"];
 		    } $a->close();
@@ -179,7 +179,7 @@ public function Cierre($efectivo){
 
 	public function Gastos(){
 		$db = new dbConn();
-	    $a = $db->query("SELECT sum(cantidad) FROM gastos WHERE edo != 0 and tipo != 5 and td = ".$_SESSION["td"]." and time BETWEEN '".$this->GetInicio()."' and '".Helpers::TimeId()."'");
+	    $a = $db->query("SELECT sum(cantidad) FROM gastos WHERE user = '".$_SESSION["user"]."' and edo != 0 and tipo != 5 and td = ".$_SESSION["td"]." and time BETWEEN '".$this->GetInicio()."' and '".Helpers::TimeId()."'");
 		    foreach ($a as $b) {
 		     $total=$b["sum(cantidad)"];
 		    } $a->close();
@@ -189,7 +189,7 @@ public function Cierre($efectivo){
 
 	public function Abonos(){
 		$db = new dbConn();
-	       $a = $db->query("SELECT sum(abono) FROM creditos_abonos WHERE td = ".$_SESSION["td"]." and edo = 1 and time BETWEEN '".$this->GetInicio()."' and '".Helpers::TimeId()."'");
+	       $a = $db->query("SELECT sum(abono) FROM creditos_abonos WHERE user = '".$_SESSION["user"]."' and td = ".$_SESSION["td"]." and edo = 1 and time BETWEEN '".$this->GetInicio()."' and '".Helpers::TimeId()."'");
 		    foreach ($a as $b) {
 		        $abono=$b["sum(abono)"];
 		    } $a->close();
@@ -200,7 +200,7 @@ public function Cierre($efectivo){
 
 	public function EntradasEfectivo(){
 		$db = new dbConn();
-	        $a = $db->query("SELECT sum(cantidad) FROM entradas_efectivo WHERE  edo = 1 and td = ".$_SESSION["td"]." and time BETWEEN '".$this->GetInicio()."' and '".Helpers::TimeId()."'");
+	        $a = $db->query("SELECT sum(cantidad) FROM entradas_efectivo WHERE user = '".$_SESSION["user"]."' and  edo = 1 and td = ".$_SESSION["td"]." and time BETWEEN '".$this->GetInicio()."' and '".Helpers::TimeId()."'");
 		    foreach ($a as $b) {
 		        $efectivo=$b["sum(cantidad)"];
 		    } $a->close();
