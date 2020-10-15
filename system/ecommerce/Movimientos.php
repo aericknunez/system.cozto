@@ -491,7 +491,7 @@ public function DatosUsuario($url){
 // echo $url;
 // print_r($datos);
 
-if($datos["direccion"]["recibe_direccion"] != NULL and $datos["direccion"]["recibe_telefono"] != NULL){
+if($datos!= NULL){
 echo '<hr><h4>Cliente: <strong>'.$datos["user"]["nombre"].'</strong></h4>';
 
 echo '<div class="text-left">
