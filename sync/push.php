@@ -35,7 +35,6 @@ include_once '../application/common/Fechas.php';
     $aw->close();
 
 
-
 /////////// RESPALDAR ////////
 
 include_once '../system/sync/Push.php';

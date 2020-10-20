@@ -90,7 +90,7 @@ class Push{
 	//////////////////////        
 		    $s = $db->query("SELECT * FROM $tabla WHERE time BETWEEN '$inicio' AND '$final' and td = ".$_SESSION["temporal_td"]."");
 				foreach ($s as $y){ 
-		    $archivo.= "INSERT INTO $tabla VALUES(";
+		     $archivo.= "INSERT INTO $tabla VALUES(";
 		    	// especifico los campos
 	        	   $fields = $db->listFields($tabla);
 				    $arrlength = count($fields);
@@ -98,8 +98,8 @@ class Push{
 				        $campo = $fields[$x]['name'];
 
 			if($campo == "id") $archivo.= "\"\", ";
-			elseif($campo == "time") $archivo.= "\"" .$y["$campo"] . "\"";
-			else $archivo.= "\"" . $y["$campo"] . "\", ";
+			elseif($arrlength != $x+1) $archivo.= "\"" .$y["$campo"] . "\",";
+  			else $archivo.= "\"" . $y["$campo"] . "\"";
 
 				    }
 				$archivo.= "); \n";
