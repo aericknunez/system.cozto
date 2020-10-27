@@ -174,8 +174,7 @@ echo '<div class="well well-sm" style="margin-top:10px;">
             <div class="letras" class="well well-sm" style="margin-top:10px;">
                 <div style="text-align: center;">GRACIAS POR SU COMPRA. VUELVA PRONTO</div>
             </div>
-
-            
+<br>.            
          </div>
                 <div style="clear:both;"></div>
             </div>
