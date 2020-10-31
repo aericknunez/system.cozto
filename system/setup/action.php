@@ -93,7 +93,7 @@ if($tsis == NULL){ // selecciono vatiable tipo sistema
 
 				$log2 = array();
 			    $log2["nombre"] = "Administrador del Sistema";
-			    $log2["tipo"] = 2;
+			    $log2["tipo"] = 5;
 			    $log2["user"] = "52ce5b";
 			    $log2["tkn"] = "1";
 			    $log2["avatar"] = "11.png";

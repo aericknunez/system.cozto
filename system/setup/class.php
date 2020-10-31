@@ -22,7 +22,7 @@ class Register {
 	}
 
 	function ObtenerCodigo($css, $clave, $td){ // (clave sananda) css clave sin sanar
-		$cod = Encrypt::Encrypt($clave . $this->ObtenerRand($css), $td . Fechas::Format(date("d-m-Y")));
+		$cod = Encrypt::Encrypt($clave, $td . Fechas::Format(date("d-m-Y")));
 		$codigo = substr($cod,0,4);
 		return strtoupper($codigo);
 	}

@@ -198,6 +198,8 @@ if($_SESSION["config_pesaje"] == "on"){
 <?php if($_SESSION["tipo_cuenta"] != 4) { 
 
 if((Helpers::ServerDomain() == FALSE and $_SESSION["root_plataforma"] == 0) or (Helpers::ServerDomain() == TRUE and $_SESSION["root_plataforma"] == 1)) {
+
+if($_SESSION["root_tipo_sistema"] != 1) { 
 ?>
 <li><a class="collapsible-header waves-effect arrow-r"><i class="fas fa-money-bill-alt"></i> CREDITOS<i class="fa fa-angle-down rotate-icon"></i></a>
 <div class="collapsible-body">
@@ -208,7 +210,7 @@ if((Helpers::ServerDomain() == FALSE and $_SESSION["root_plataforma"] == 0) or (
 </ul>
 </div>
 </li>
-<?php } } ?>
+<?php } } } ?>
 
 
 
@@ -219,6 +221,8 @@ if((Helpers::ServerDomain() == FALSE and $_SESSION["root_plataforma"] == 0) or (
 <?php if($_SESSION["tipo_cuenta"] != 4) { 
 
 if((Helpers::ServerDomain() == FALSE and $_SESSION["root_plataforma"] == 0) or (Helpers::ServerDomain() == TRUE and $_SESSION["root_plataforma"] == 1)) {
+
+if($_SESSION["root_tipo_sistema"] != 1) { 
 ?>
 <li><a class="collapsible-header waves-effect arrow-r"><i class="fas fa-money-bill-alt"></i> CUENTAS POR PAGAR<i class="fa fa-angle-down rotate-icon"></i></a>
 <div class="collapsible-body">
@@ -228,7 +232,7 @@ if((Helpers::ServerDomain() == FALSE and $_SESSION["root_plataforma"] == 0) or (
 </ul>
 </div>
 </li>
-<?php } } ?>
+<?php } } } ?>
 
 
 
@@ -272,7 +276,10 @@ if((Helpers::ServerDomain() == FALSE and $_SESSION["root_plataforma"] == 0) or (
 
 
 
-<?php if($_SESSION["tipo_cuenta"] != 4 and $_SESSION["root_tipo_sistema"] == 3) {  /// planilla ?>
+<?php if($_SESSION["tipo_cuenta"] != 4 and $_SESSION["root_tipo_sistema"] == 3) {  /// planilla 
+
+if($_SESSION["root_tipo_sistema"] != 1 or $_SESSION["root_tipo_sistema"] != 2) { 
+	?>
 
 <li><a class="collapsible-header waves-effect arrow-r"><i class="fas fa-user-alt"></i> PLANILLA<i class="fa fa-angle-down rotate-icon"></i></a>
 <div class="collapsible-body">
@@ -286,7 +293,7 @@ if((Helpers::ServerDomain() == FALSE and $_SESSION["root_plataforma"] == 0) or (
 </div>
 </li>
 
-<?php } ?>
+<?php } } ?>
 
 
 
