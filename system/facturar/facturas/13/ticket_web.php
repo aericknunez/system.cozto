@@ -65,9 +65,9 @@ if($totalregistros > 0){
             .table { border-radius: 3px; }
             .table th { background: #f5f5f5; }
             .table th, .table td { vertical-align: middle !important; }
-            .table { font-size: 9px; }
+            .table { font-size: 12px; }
             h3 { margin: 5px 0; }
-            .letras { font-size: 11px; }
+            .letras { font-size: 13px; }
 
             @media print {
                 .no-print { display: none; }
@@ -175,7 +175,8 @@ echo '<div class="well well-sm" style="margin-top:10px;">
                 <div style="text-align: center;">GRACIAS POR SU COMPRA. VUELVA PRONTO</div>
             </div>
 
-            
+<br>.           
+
          </div>
                 <div style="clear:both;"></div>
             </div>
