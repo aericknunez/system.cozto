@@ -101,12 +101,10 @@ if((Helpers::ServerDomain() == FALSE and $_SESSION["root_plataforma"] == 0) or (
 <?php 
 if($_SESSION["root_autoparts"] == "on"){
  ?>
-<li><a href="?autoproadd" class="waves-effect"><i class="fas fa-plus"></i> Nuevo Producto</a></li>
- <?php } else {  ?>
-<li><a href="?proadd" class="waves-effect"><i class="fas fa-plus"></i> Nuevo Producto</a></li> 	
+<li><a href="?autoproadd" class="waves-effect"><i class="fas fa-plus"></i> Nuevo Repuesto</a></li>
 <?php
  } ?>
-
+<li><a href="?proadd" class="waves-effect"><i class="fas fa-plus"></i> Nuevo Producto</a></li> 
 <li><a href="?proup" class="waves-effect"><i class="fas fa-pencil-alt"></i> Actualizar Producto</a></li>
 <li><a href="?proagregar" class="waves-effect"><i class="fas fa-columns"></i> Agregar Productos</a></li>
 <li><a href="?proaverias" class="waves-effect"><i class="fas fa-database"></i> Descontar Averias</a></li>
