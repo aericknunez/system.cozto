@@ -23,7 +23,7 @@ $proveedor = new Proveedores();
     </div>
 
     <div class="col-md-4 mb-2 md-form">
-      <label for="documento">* Documento</label>
+      <label for="documento">Documento</label>
       <input type="text" class="form-control" id="documento" name="documento">
     </div>
 

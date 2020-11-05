@@ -113,6 +113,16 @@ class ProUpdate{
                         $cambio = array();
                         $cambio["cantidad"] = $datox["cantidad"] + $canti;
                         Helpers::UpdateId("producto", $cambio, "cod = '".$datox["cod"]."' and td = ".$_SESSION["td"].""); 
+
+  // ubicacion predeterminada
+if ($r = $db->select("hash", "ubicacion", "WHERE predeterminada = '1' and td = ".$_SESSION["td"]."")) { 
+$predet = $r["hash"];
+} unset($r);  
+
+$cambiox = array();
+$cambiox["cant"] = $datox["cantidad"] + $canti;
+Helpers::UpdateId("ubicacion_asig", $cambiox, "ubicacion = '".$predet."' and producto = '".$datox["cod"]."' and td = ".$_SESSION["td"]."");   
+
                     //////////// 
                 Alerts::Alerta("success","Realizado!","Registro creado exitosamente!");
                 }
@@ -244,6 +254,15 @@ public function AgregaBusqueda($dato){ // Busqueda para compuestos
                         $cambio = array();
                         $cambio["cantidad"] = $canti - $datox["cantidad"];
                         Helpers::UpdateId("producto", $cambio, "cod = '".$datox["cod"]."' and td = ".$_SESSION["td"].""); 
+
+  // ubicacion predeterminada
+if ($r = $db->select("hash", "ubicacion", "WHERE predeterminada = '1' and td = ".$_SESSION["td"]."")) { 
+$predet = $r["hash"];
+} unset($r);  
+
+$cambiox = array();
+$cambiox["cant"] = $canti - $datox["cantidad"];
+Helpers::UpdateId("ubicacion_asig", $cambiox, "ubicacion = '".$predet."' and producto = '".$datox["cod"]."' and td = ".$_SESSION["td"].""); 
                     //////////// 
                 Alerts::Alerta("success","Realizado!","Registro creado exitosamente!");
                 }

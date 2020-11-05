@@ -23,7 +23,7 @@ $cliente = new Clientes();
     </div>
 
     <div class="col-md-4 mb-2 md-form">
-      <label for="cod">* Documento</label>
+      <label for="cod">Documento</label>
       <input type="text" class="form-control" id="documento" name="documento">
     </div>
 
