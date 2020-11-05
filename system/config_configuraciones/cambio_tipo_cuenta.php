@@ -1,6 +1,7 @@
 <?php 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+include_once 'application/common/Alerts.php';
 include_once 'system/index/Inicio.php';
 include_once 'system/config_configuraciones/Config.php';
 $configuracion = new Config;
@@ -42,7 +43,7 @@ $configuracion = new Config;
     <?php 
     $a = $db->query("SELECT * FROM config_master");
     foreach ($a as $b) {
-    	echo '<option value="'. $b["td"].'">'. $b["cliente"].'</option>';
+    	echo '<option value="'. $b["td"].'">'. $b["td"].' - '. $b["cliente"].'</option>';
     } $a->close();
  	?>	
 	</select>

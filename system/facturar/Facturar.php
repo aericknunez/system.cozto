@@ -40,14 +40,14 @@ class Facturar{
 		$a = $db->query("SELECT * FROM facturar_opciones WHERE td = ".$_SESSION["td"]."");
 		if($a->num_rows > 0){    
 		    if (Helpers::UpdateId("facturar_opciones", $cambio, "td = ".$_SESSION["td"]."")) {
-		        Alerts::Alerta("success","Echo!","Registros actualizados correctamente");
+		        Alerts::Alerta("success","Realizado!","Registros actualizados correctamente");
 		    }		
 		} else {
 		    $cambio["td"] = $_SESSION["td"];
 			$cambio["hash"] = Helpers::HashId();
 			$cambio["time"] = Helpers::TimeId();
 		    if ($db->insert("facturar_opciones", $cambio)) {
-		    	Alerts::Alerta("success","Echo!","Registros actualizados correctamente");
+		    	Alerts::Alerta("success","Realizado!","Registros actualizados correctamente");
 		    } 			
 		}
 

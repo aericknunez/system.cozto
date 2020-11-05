@@ -1068,6 +1068,20 @@ unset($_SESSION["factura_actual_print"], $_SESSION["cambio_actual_print"]);
 break;
 
 
+case "121": // historial de  utilidades
+	include_once '../../system/historial/Historial.php';
+	$historial = new Historial;
+	if($_POST["fecha1_submit"]){
+		$inicio = $_POST["fecha1_submit"]; $fin=$_POST["fecha2_submit"];
+	} else {
+		$inicio = date("01-m-Y"); $fin=date("31-m-Y");
+	}
+	
+	$historial->HistorialUtilidades($inicio, $fin);
+break;
+
+
+
 
 case "123": // historial descuentos
 	include_once '../../system/historial/Historial.php';

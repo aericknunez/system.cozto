@@ -46,7 +46,7 @@ class Config{
 	    $cambio["time"] = Helpers::TimeId();
 	    if (Helpers::UpdateId("config_master", $cambio, "td = ".$_SESSION["td"]."")) {
 	    	$this->CrearVariables();
-	        Alerts::Alerta("success","Echo!","Registros actualizados correctamente");
+	        Alerts::Alerta("success","Realizado!","Registros actualizados correctamente");
 	    } else {
 	       Alerts::Alerta("error","Error!","Ocurrio un error desconocido!");   
 	    }
@@ -76,7 +76,7 @@ class Config{
 	    $cambio["time"] = Helpers::TimeId();
 	    if (Helpers::UpdateId("config_root", $cambio, "td = ".$_SESSION["td"]."")) {
 	    	$this->CrearVariables();
-	        Alerts::Alerta("success","Echo!","Registros actualizados correctamente");
+	        Alerts::Alerta("success","Realizado!","Registros actualizados correctamente");
 	    } else {
 	       Alerts::Alerta("error","Error!","Ocurrio un error desconocido!");   
 	    }
@@ -203,7 +203,7 @@ class Config{
 			  </thead>
 			  <tbody>';
 	    foreach ($a as $b) {  
-		    $r = $db->select("cliente, pais", "config_master", "WHERE td = ".$b["sucursal"]."");
+		    $r = $db->select("cliente, pais, td", "config_master", "WHERE td = ".$b["sucursal"]."");
 
 
 
@@ -211,7 +211,7 @@ class Config{
 	    	$x = $db->select("nombre", "login_userdata", "WHERE user = '$userx'");
 		    echo '<tr>
 		    	  <th scope="col">'.$x["nombre"].'</th>
-			      <th scope="col">'.$r["cliente"].'</th>
+			      <th scope="col">'.$r["td"].' - '.$r["cliente"].'</th>
 			      <th scope="col">'.Helpers::Pais($r["pais"]).'</th>			      
 			      <th scope="col">';
 				if($b["sucursal"] == $_SESSION['td']){
