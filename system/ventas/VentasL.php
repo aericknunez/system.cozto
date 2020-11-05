@@ -309,8 +309,10 @@ if($datos["precio"] != NULL and $datos["producto"] != NULL){
 		$db = new dbConn();
 		// primero verifico si el producto es un compuesto. si es compuesto o dependiente actualizo todos los productos que este conlleva . si es un servicio no se hace nada
 		// 
-		    if ($r = $db->select("compuesto, dependiente, servicio", "producto", "WHERE cod = '$cod' and td = ".$_SESSION["td"]."")) { 
-		        $compuesto = $r["compuesto"]; $dependiente = $r["dependiente"]; $servicio = $r["servicio"];
+		    if ($r = $db->select("compuesto, dependiente, servicio", "producto", "WHERE cod = '".$cod."' and td = ".$_SESSION["td"]."")) { 
+		        $compuesto = $r["compuesto"]; 
+		        $dependiente = $r["dependiente"]; 
+		        $servicio = $r["servicio"];
 		    }  unset($r);  
 
 			if($compuesto == "on"){ // aqui veo que productos lleva el producto comp
@@ -367,6 +369,14 @@ if($datos["precio"] != NULL and $datos["producto"] != NULL){
 
 	public function AgregaCaracteristicas($datos, $hash){
 		$db = new dbConn();
+
+ if ($r = $db->select("*", "producto", "WHERE cod = '".$datos["cod"]."' and td = ".$_SESSION["td"]."")) { 
+$servicio_p = $r["servicio"];
+}  unset($r);  
+
+if($servicio_p != "on"){
+
+
 		// cuento el producto tiene varias caracteristicas
 		    $a = $db->query("SELECT * FROM caracteristicas_asig WHERE producto =  '".$datos["cod"]."' and td = ".$_SESSION["td"]."");
 
@@ -400,38 +410,48 @@ if($datos["precio"] != NULL and $datos["producto"] != NULL){
 		        		}
 		    	}
 		    } $a->close();
-
-	}
+  } // servicio
+}
 
 
 
 	public function AgregaUbicacion($datos, $hash){  // agrega las ubicaciones
 		$db = new dbConn();
 		
-		if($datos["ubicacion"] != NULL){ // si no esta vacia se inserta				    
-			    $datox = array();
-			    $datox["orden"] = $_SESSION["orden"];
-			    $datox["producto"] = $datos["cod"];
-			    $datox["producto_hash"] = $hash;
-			    $datox["descuenta"] = 2;
-			    $datox["codigo"] = $datos["ubicacion"];
-			    $datox["cant"] = $datos["cantidad"];
-			    $datox["hash"] = Helpers::HashId();
-			    $datox["time"] = Helpers::TimeId();
-			    $datox["tx"] = $_SESSION["tx"];
-			    $datox["td"] = $_SESSION["td"];
-			    $db->insert("ticket_descuenta", $datox);
+		if($datos["ubicacion"] != NULL){ // si no esta vacia se inserta			
 
-			//// aqui descuento la cantidad de caracteristica
-	     if ($r = $db->select("cant", "ubicacion_asig", "WHERE ubicacion = '".$datos["ubicacion"]."' and producto = '".$datos["cod"]."' and td = ".$_SESSION["td"]."")) { 
-	        $cubic = $r["cant"];
-	    } unset($r); 
-	    // descuento
-	   $cambio = array();
-	   $cambio["cant"] = $cubic - $datos["cantidad"];
-	   Helpers::UpdateId("ubicacion_asig", $cambio, "ubicacion = '".$datos["ubicacion"]."' and producto = '".$datos["cod"]."' and td = ".$_SESSION["td"]."");
+ if ($r = $db->select("*", "producto", "WHERE cod = '".$datos["cod"]."' and td = ".$_SESSION["td"]."")) { 
+$servicio_p = $r["servicio"];
+}  unset($r);  
+
+if($servicio_p != "on"){
+
+	    $datox = array();
+	    $datox["orden"] = $_SESSION["orden"];
+	    $datox["producto"] = $datos["cod"];
+	    $datox["producto_hash"] = $hash;
+	    $datox["descuenta"] = 2;
+	    $datox["codigo"] = $datos["ubicacion"];
+	    $datox["cant"] = $datos["cantidad"];
+	    $datox["hash"] = Helpers::HashId();
+	    $datox["time"] = Helpers::TimeId();
+	    $datox["tx"] = $_SESSION["tx"];
+	    $datox["td"] = $_SESSION["td"];
+	    $db->insert("ticket_descuenta", $datox);
+
+	//// aqui descuento la cantidad de caracteristica
+ if ($r = $db->select("cant", "ubicacion_asig", "WHERE ubicacion = '".$datos["ubicacion"]."' and producto = '".$datos["cod"]."' and td = ".$_SESSION["td"]."")) { 
+    $cubic = $r["cant"];
+} unset($r); 
+// descuento
+$cambio = array();
+$cambio["cant"] = $cubic - $datos["cantidad"];
+Helpers::UpdateId("ubicacion_asig", $cambio, "ubicacion = '".$datos["ubicacion"]."' and producto = '".$datos["cod"]."' and td = ".$_SESSION["td"]."");
 
 		}
+
+}// servicio
+
 
 	}
 
@@ -566,14 +586,20 @@ if($datos["precio"] != NULL and $datos["producto"] != NULL){
 
    	    if ($r = $db->select("*", "producto", "WHERE cod = '$cod' and td = ".$_SESSION["td"]."")) { 
 		$cant_p = $r["cantidad"];
+		$servicio_p = $r["servicio"];
 		}  unset($r);  
    	// regreso los valores a los productos
-   $cambio = array();
-   $cambio["cantidad"] = $cant_p + $cant_t;
-   Helpers::UpdateId("producto", $cambio, "cod = '$cod' and td = ".$_SESSION["td"]."");
-  	// borro el registro de ticket
+
+	// borro el registro de ticket
   	Helpers::DeleteId("ticket", "hash = '$hash' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."");
-  	// regreso los valores de caracteristica y ubicacion
+  	
+if($servicio_p != "on"){
+    $cambio = array();
+   	$cambio["cantidad"] = $cant_p + $cant_t;
+   	Helpers::UpdateId("producto", $cambio, "cod = '$cod' and td = ".$_SESSION["td"]."");  		
+   	
+
+  // regreso los valores de caracteristica y ubicacion
   	$a = $db->query("SELECT * FROM ticket_descuenta WHERE producto_hash = '$hash' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."");
   	if($a->num_rows > 0){
   			foreach ($a as $b) {
@@ -600,7 +626,9 @@ if($datos["precio"] != NULL and $datos["producto"] != NULL){
   	// borro caracteristica y ubicacion 
   	Helpers::DeleteId("ticket_descuenta", "producto_hash = '$hash' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."");
   	// compruebo si hay mas productos sino elimino orden
-	  	
+
+} // si no es servicio
+
 	  	if($this->CuentaProductos($_SESSION["orden"]) == 0){
 	  		$this->DelOrden($_SESSION["orden"]);
 	  	}
