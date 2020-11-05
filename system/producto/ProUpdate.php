@@ -117,10 +117,14 @@ class ProUpdate{
   // ubicacion predeterminada
 if ($r = $db->select("hash", "ubicacion", "WHERE predeterminada = '1' and td = ".$_SESSION["td"]."")) { 
 $predet = $r["hash"];
-} unset($r);  
+} unset($r); 
+
+if ($r = $db->select("cant", "ubicacion_asig", "WHERE ubicacion = '".$predet."' and producto = '".$datox["cod"]."' and td = ".$_SESSION["td"]."")) { 
+$cantu = $r["cant"];
+} unset($r);   
 
 $cambiox = array();
-$cambiox["cant"] = $datox["cantidad"] + $canti;
+$cambiox["cant"] = $datox["cantidad"] + $cantu;
 Helpers::UpdateId("ubicacion_asig", $cambiox, "ubicacion = '".$predet."' and producto = '".$datox["cod"]."' and td = ".$_SESSION["td"]."");   
 
                     //////////// 
@@ -189,14 +193,32 @@ Helpers::UpdateId("ubicacion_asig", $cambiox, "ubicacion = '".$predet."' and pro
           $cantix = $r["cant"];
           $fechai = $r["fecha"];
       } unset($r);
-                        
+
+
+  // ubicacion predeterminada
+if ($r = $db->select("hash", "ubicacion", "WHERE predeterminada = '1' and td = ".$_SESSION["td"]."")) { 
+$predet = $r["hash"];
+} unset($r);  
+
+if ($r = $db->select("cant", "ubicacion_asig", "WHERE ubicacion = '".$predet."' and producto = '".$datox["cod"]."' and td = ".$_SESSION["td"]."")) { 
+$cantu = $r["cant"];
+} unset($r);   
+
+
+
+
                     //////////// 
       if($fechai == date("d-m-Y")){
         if (Helpers::DeleteId("producto_ingresado", "hash='$hash'")) {
           //
                 $cambio = array();
                 $cambio["cantidad"] = $canti - $cantix;
-                Helpers::UpdateId("producto", $cambio, "cod = '$producto' and td = ".$_SESSION["td"].""); 
+                Helpers::UpdateId("producto", $cambio, "cod = '".$producto."' and td = ".$_SESSION["td"].""); 
+
+              $cambiox = array();
+              $cambiox["cant"] = $cantu - $cantix;
+              Helpers::UpdateId("ubicacion_asig", $cambiox, "ubicacion = '".$predet."' and producto = '".$producto."' and td = ".$_SESSION["td"].""); 
+
           //
            Alerts::Alerta("success","Eliminado!","Productos eliminados correctamente!");
         } else {
@@ -260,8 +282,12 @@ if ($r = $db->select("hash", "ubicacion", "WHERE predeterminada = '1' and td = "
 $predet = $r["hash"];
 } unset($r);  
 
+if ($r = $db->select("cant", "ubicacion_asig", "WHERE ubicacion = '".$predet."' and producto = '".$datox["cod"]."' and td = ".$_SESSION["td"]."")) { 
+$cantu = $r["cant"];
+} unset($r);   
+
 $cambiox = array();
-$cambiox["cant"] = $canti - $datox["cantidad"];
+$cambiox["cant"] = $cantu - $datox["cantidad"];
 Helpers::UpdateId("ubicacion_asig", $cambiox, "ubicacion = '".$predet."' and producto = '".$datox["cod"]."' and td = ".$_SESSION["td"].""); 
                     //////////// 
                 Alerts::Alerta("success","Realizado!","Registro creado exitosamente!");
@@ -326,14 +352,28 @@ Helpers::UpdateId("ubicacion_asig", $cambiox, "ubicacion = '".$predet."' and pro
             $cantix = $r["cant"];
             $fechai = $r["fecha"];
         } unset($r);
-                        
+  
+  // ubicacion predeterminada
+if ($r = $db->select("hash", "ubicacion", "WHERE predeterminada = '1' and td = ".$_SESSION["td"]."")) { 
+$predet = $r["hash"];
+} unset($r);  
+
+if ($r = $db->select("cant", "ubicacion_asig", "WHERE ubicacion = '".$predet."' and producto = '".$datox["cod"]."' and td = ".$_SESSION["td"]."")) { 
+$cantu = $r["cant"];
+} unset($r);   
+
                     //////////// 
       if($fechai == date("d-m-Y")){
         if (Helpers::DeleteId("producto_averias", "hash='$hash'")) {
           //
-                $cambio = array();
-                $cambio["cantidad"] = $canti + $cantix;
-                Helpers::UpdateId("producto", $cambio, "cod = '".$producto."' and td = ".$_SESSION["td"].""); 
+              $cambio = array();
+              $cambio["cantidad"] = $canti + $cantix;
+              Helpers::UpdateId("producto", $cambio, "cod = '".$producto."' and td = ".$_SESSION["td"].""); 
+
+              $cambiox = array();
+              $cambiox["cant"] = $cantu + $cantix;
+              Helpers::UpdateId("ubicacion_asig", $cambiox, "ubicacion = '".$predet."' and producto = '".$producto."' and td = ".$_SESSION["td"].""); 
+
           //
            Alerts::Alerta("success","Eliminado!","Averia eliminada correctamente!");
         } else {
