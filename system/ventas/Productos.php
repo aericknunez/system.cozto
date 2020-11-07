@@ -84,11 +84,12 @@ if($Imagen == NULL) { $Imagen = "assets/img/logo/" . $_SESSION["config_imagen"];
 
     ($cantidad > 0) ? $value = 1 : $value = 0;
 
-      echo '<div class="md-form md-outline form-sm col-md-2">
-      <label for="cantidad">Cantidad</label>
-      <input id="cantidad" name="cantidad" class="form-control form-control-sm" type="number" value="'.$value.'" step="any" max="'. $cantidad .'" min="1">
+    echo '<div class="md-form md-outline form-sm col-md-2">';
+
+      echo '<label for="cantidad">Cantidad</label>
+      <input id="cantidad" name="cantidad" class="form-control form-control-sm" type="number" value="'.$value.'" step="any" max="'. $cantidad .'" min="1">';
       
-    </div>';
+    echo '</div>';
 
     $this->CompruebaCaracteristicas($dato["cod"]);
     $this->CompruebaUbicaciones($dato["cod"]);

@@ -37,6 +37,11 @@ $_SESSION["ver_avatar"] = NULL;
 
             } unset($r);
 
+            if(VerificaUbicacion() == FALSE){
+                    // inserto ubicacion predeterminada
+                    AddUbicacion();
+            }
+
             BuscaDatosSistema();
 
         $configuracion = new Config;
@@ -63,9 +68,6 @@ $_SESSION["ver_avatar"] = NULL;
             if ($r = $db->select("*", "config_master", "WHERE td = " . $_SESSION['td'])) { 
                 if($r["cliente"] == NULL or $r["moneda"] == NULL){
 
-                    // inserto ubicacion predeterminada
-                    AddUbicacion();
-
                         $_SESSION['nodatainicial'] = md5($_SESSION['td']); // es para los que no llena datos 
                       header("location: ../../?modal=conf_config&inicio");
                        exit();
@@ -73,6 +75,20 @@ $_SESSION["ver_avatar"] = NULL;
             } unset($r); 
     }
 
+
+    function VerificaUbicacion(){
+        $db = new dbConn();
+
+        $a = $db->query("SELECT * FROM ubicacion WHERE td = " . $_SESSION['td']);
+        $num = $a->num_rows;
+        $a->close();
+        if($num > 0){
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+
+    }
 
 
     function AddUbicacion(){ // ubicaion predeterminada para cuando no hay datos
