@@ -58,14 +58,25 @@ class Laterales{
  	public function MostrarOrdenes(){ // listado de ordenes pendientes
  		$db = new dbConn();
 
- 		    if ($r = $db->select("count(correlativo)", "ticket_orden", "WHERE estado = 3 and td = ".$_SESSION["td"]."")) {if($r["count(correlativo)"] > 0){
- 		    		$this->ObtenerOrdenes();
-	 		    } else {
+
+ 			/// ordenes activas pero del mismo usuario
+			if ($x = $db->select("count(correlativo)", "ticket_orden", "WHERE estado = 1 and user = '".$_SESSION["user"]."' and td = ".$_SESSION["td"]."")) { 
+				$usercount = $x["count(correlativo)"];
+	 		} unset($x); 
+
+			// ordenes guardadas
+			if ($r = $db->select("count(correlativo)", "ticket_orden", "WHERE estado = 3 and td = ".$_SESSION["td"]."")) { 
+				$usercountx = $r["count(correlativo)"];
+	 		} unset($r); 
+
+	 		if($usercountx > 0 or $usercount > 0){
+	 			$this->ObtenerOrdenes();
+	 		} else {
 	 		    	echo '<div class="text-center"><img src="assets/img/logo/'.$_SESSION['config_imagen'].'" class="img-fluid responsive" alt="Responsive image"></div>';
-	 		    }
-		    }  unset($r);  
+	 		} 
  		
  	}
+
 
 
  	public function MostrarBotones($orden){ // botones de funcion para la venta

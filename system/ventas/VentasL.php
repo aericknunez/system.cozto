@@ -699,7 +699,13 @@ $a = $db->query("SELECT * FROM ticket_orden WHERE correlativo = '$orden' and tx 
 $num = $a->num_rows;
 $a->close();
 
-	if($num > 0){
+// para ordenes activas pero del usuario activo
+$a = $db->query("SELECT * FROM ticket_orden WHERE correlativo = '$orden' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]." and estado = 1 and user = '".$_SESSION["user"]."'");
+$numu = $a->num_rows;
+$a->close();
+
+
+	if($num > 0 or $numu > 0){
 
 		$cambios = array();
 	   	$cambios["estado"] = 1;
