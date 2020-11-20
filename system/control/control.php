@@ -21,7 +21,13 @@ $control = new Controles();
       <div class="card-counter light">
         <i class="fas fa-barcode"></i>
         <span class="count-numbers"><h5 class="font-weight-bold"><?php echo $control->Clave(); ?></h5></span>
-        <span class="count-name">Codigo</span>
+        <span class="count-name">
+          <?php if($_SESSION["user"] == "Erick"){
+            echo Helpers::CodigoValidacionHora(); 
+          } else {
+            echo "Codigo";
+          } ?>
+        </span>
       </div>
     </div>
 

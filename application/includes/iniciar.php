@@ -19,6 +19,10 @@ header("location: logout.php");
 exit();
 }
 
+// para eliminar las variables de login admin
+unset($_SESSION["session_unluck"], $_SESSION["login_admin"]);
+
+
 if ($seslog->login_check() == TRUE) {
 
 $user=$_SESSION['username'];

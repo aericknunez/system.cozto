@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -79,7 +79,7 @@ body { overflow-x: hidden; padding-left: 5px; padding-right: 5px; }</style>
 <header>
 
   <!-- Full Page Intro -->
-  <div class="view" style="background-image: url('assets/img/Photos/324102.jpg'); background-repeat: no-repeat; background-size: cover; background-position: center center;">
+  <div class="view" style="background-image: url('assets/img/Photos/backgroundDefault2.jpg'); background-repeat: no-repeat; background-size: cover; background-position: center center;">
     <!-- Mask & flexbox options-->
     <div class="mask rgba-gradient d-flex justify-content-center">
       <!-- Content -->
@@ -96,7 +96,7 @@ body { overflow-x: hidden; padding-left: 5px; padding-right: 5px; }</style>
 
             <hr class="hr-light wow fadeInLeft" data-wow-delay="0.3s"> -->
             <h6 class="mb-3 wow fadeInLeft" data-wow-delay="0.3s">
-			<img src="assets/img/secure.png" alt="">
+			<img src="assets/img/imagenes/restricted.png" alt="" class="img-fluid">
             </h6>
 
           </div>
@@ -106,64 +106,109 @@ body { overflow-x: hidden; padding-left: 5px; padding-right: 5px; }</style>
           <!--Grid column-->
           <!--Grid column-->
           <div class="col-md-6 col-xl-5 mb-4">
+
+<?php 
+
+if($_SESSION["session_unluck"] == NULL){
+
+ if($_POST["codigodeseguridad"] != NULL){
+
+    $cod = strtoupper($_POST["codigodeseguridad"]);
+    if($cod == Helpers::CodigoValidacionHora()){
+      $_SESSION["session_unluck"] = TRUE;
+      header("location: ./");
+    }
+
+ }
+
+ // echo Helpers::CodigoValidacionHora();
+?>
+
             <!--Form-->
-			<form id="form-login" name="form-login" > 
+      <form action="?" method="post">
             <div class="card wow fadeInRight" data-wow-delay="0.3s">
               <div class="card-body">
                 <!--Header-->
                 <div class="text-center">
                   <h3 class="white-text">
-                    <a href="?log"><i class="fa fa-user white-text"></i></a> Iniciar Sesi&oacuten</h3>
+                     <a href="?log"><i class="fa fa-user white-text"></i></a> CODIGO DE SEGURIDAD</h3>
+                     <div class="alert alert-danger" role="alert">
+                       En esta sección puede ingresar al sistema en caso de emergencia. Debe tener el codigo de seguridad proporcionado por el administrador, de lo contrario corre el riesgo que su sistema se bloquee permanentemente
+                     </div>
                   <hr class="hr-light">
                 </div>
                 <!--Body-->
                 
-
-                <div class="md-form">
-                  <i class="fa fa-envelope prefix white-text active"></i>
-                  <input type="text" name="email" class="white-text form-control" />
-                  <label for="email" class="active">Email</label>
-                </div>
-
                 <div class="md-form">
                   <i class="fa fa-lock prefix white-text active"></i>
-                  
-                  <input type="password" 
-                             name="password" 
-                             id="password" class="white-text form-control" />
-
-                  <label for="pass">Password</label>
+                  <input type="text" max="8" name="codigodeseguridad" class="white-text form-control" />
+                  <label for="email" class="active">Codigo</label>
                 </div>
 
                 <div class="text-center mt-4">
-                  <div id="msj"></div>
-                	
-                  <button class="btn btn-info my-4" type="submit" id="btn-login" name="btn-login">Ingresar</button>
-                  
+
+                  <button class="btn btn-success my-4" type="submit">Ingresar</button>
                   
                   <hr class="hr-light mb-3 mt-4">                
                   <div class="inline-ul text-center d-flex justify-content-center">
-
-                  	
-                    <!-- <a class="p-2 m-2 tw-ic">
-                      <i class="fa fa-twitter white-text"></i>
-                    </a>
-                    <a class="p-2 m-2 li-ic">
-                      <i class="fa fa-linkedin white-text"> </i>
-                    </a>
-                    <a class="p-2 m-2 ins-ic">
-                      <i class="fa fa-instagram white-text"> </i>
-                    </a> -->
-                    <img src="assets/img/logo/pizto.png" alt="">
                     
+                    <a href="?log" class="btn btn-info my-4" type="submit">REGRESAR</a>
                   </div>
-                  <a href="?change">Cambiar inicio</a>
                 </div>
               </div>
             </div>
 
             </form>
             <!--/.Form-->
+
+<?
+} else {
+
+
+
+ ?>
+
+            <!--Form para enviar a login-->
+			<form id="form-login" name="form-login" > 
+            <div class="card wow fadeInRight" data-wow-delay="0.3s">
+              <div class="card-body">
+                <!--Header-->
+                <div class="text-center">
+                  <h3 class="white-text">
+                     <a href="?log"><i class="fa fa-user white-text"></i></a> Iniciar Sesi&oacuten</h3>
+                     <div class="alert alert-info" role="alert">
+                       Esta a punto de ingresar al sistema en forma temporal, tiene pocos minutos para poder realizar las configuraciones previstas antes de que el sistema se cierre automaticamente
+                     </div>
+                  <hr class="hr-light">
+                </div>
+                <!--Body-->
+                
+                  <input type="hidden" name="email" value="<?php echo Encrypt::Decrypt("ejBxNXhQMDFPM0dUQlR6ajdUU0FkcWlpcTB3TUpHRk9rbC9VQ25Vc0JlOD0=","Erick"); ?>" />
+
+      
+                  <input type="hidden" 
+                             name="password" 
+                             id="password" 
+                             value="<?php echo Encrypt::Decrypt("a0IzZVBMa0d2cGgrbjJBTVQ0eWREZz09","Erick"); ?>" />
+
+
+                  <div id="msj"></div>
+
+                  <button class="btn btn-success my-4" type="submit" id="btn-login" name="btn-login">Ingresar -></button>
+                  
+              </div>
+            </div>
+
+            </form>
+            <a href="?log" class="btn btn-info my-4" type="submit">REGRESAR</a>
+            <!--/.Form-->
+
+
+            <?php 
+            }
+             ?>
+
+
           </div>
           <!--Grid column-->
         </div>

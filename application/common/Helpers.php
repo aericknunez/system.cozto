@@ -43,7 +43,13 @@ class Helpers{
         }  
     }
 
+    public static function CodigoValidacionHora(){
+        $id = date("d-m-Y-H");
+        $iden = sha1($id); 
+        $hash = strtoupper(substr($iden,0,8));  
 
+        return $hash;
+    }
 
     static public function EdoEcommerce($string) {
     if($string == "0") return '<div class="text-danger font-weight-bold">Anulado</div>';
