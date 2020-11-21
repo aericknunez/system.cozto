@@ -2,7 +2,7 @@
 cd\
 cd C:\AppServ\www\cozto
 git reset --hard
-git pull https://github.com/aericknunez/cozto_encrypt.git
+git pull https://github.com/aericknunez/system.cozto.git
 
 cd\
 cd C:\AppServ\www\cozto\sync
