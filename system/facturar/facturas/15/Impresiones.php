@@ -25,7 +25,7 @@ $col3 = 340;
 $col4 = 440;
 $col5 = 500;
 // $print
-$print = "EPSON TM-T20II";
+$print = "LR2000";
 $logo_imagen="C:/AppServ/www/cozto/assets/img/logo_factura/". $img;
 
 
