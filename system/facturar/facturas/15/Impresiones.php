@@ -54,9 +54,6 @@ printer_draw_text($handle, "Bo El Angel, 6ta Av. Norte #3-11 y 5", 5, $oi);
 $oi=$oi+$n1;
 printer_draw_text($handle, "Sonsonate", 200, $oi);
 
-$oi=$oi+$n1;
-printer_draw_text($handle, "No DE INSCRIPCION JVPLC 2119", 200, $oi);
-
 // $oi=$oi+$n1;
 // printer_draw_text($handle, Helpers::Pais($_SESSION['config_pais']), 0, $oi);
 // $oi=$oi+$n1;
