@@ -25,8 +25,8 @@ $col3 = 340;
 $col4 = 440;
 $col5 = 500;
 // $print
-$print = "LR2000";
-$logo_imagen="C:/AppServ/www/pizto/assets/img/logo_factura/". $img;
+$print = "EPSON TM-T20II";
+$logo_imagen="C:/AppServ/www/cozto/assets/img/logo_factura/". $img;
 
 
 
@@ -46,9 +46,9 @@ printer_select_font($handle, $font);
 $oi=350;
 //// comienza la factura
 
-printer_draw_text($handle, "GERENTE: YANERI ABIGAIL FLAMENCO GUERRA", 200, $oi);
+printer_draw_text($handle, "GERENTE: YANERI ABIGAIL FLAMENCO GUERRA", 5, $oi);
 $oi=$oi+$n1;
-printer_draw_text($handle, "No DE INSCRIPCION JVPLC 2119", 200, $oi);
+printer_draw_text($handle, "No DE INSCRIPCION JVPLC 2119", 5, $oi);
 $oi=$oi+$n1;
 printer_draw_text($handle, "Bo El Angel, 6ta Av. Norte #3-11 y 5", 5, $oi);
 $oi=$oi+$n1;
@@ -73,7 +73,6 @@ printer_draw_text($handle, "____________________________________", 0, $oi);
 $oi=$oi+$n1;
 printer_draw_text($handle, "Cant.", 55, $oi);
 printer_draw_text($handle, "Descripcion", $col2, $oi);
-printer_draw_text($handle, "P/U", $col3, $oi);
 printer_draw_text($handle, "Total", $col4, $oi);
 
 $oi=$oi+25;
@@ -87,7 +86,7 @@ $subtotalf = 0;
 
 
 
-$a = $db->query("select cod, cant, producto, pv, total, fecha, hora, num_fac from ticket_temp where num_fac = '".$numero."' $cancelar and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]." group by cod");
+$a = $db->query("select cod, cant, producto, pv, total, fecha, hora, num_fac from ticket where num_fac = '".$numero."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]." group by cod");
   
     foreach ($a as $b) {
  
@@ -95,22 +94,10 @@ $a = $db->query("select cod, cant, producto, pv, total, fecha, hora, num_fac fro
  $horaf=$b["hora"];
  $num_fac=$b["num_fac"];
 
-
-/// para hacer las sumas
-if ($s = $db->select("sum(cant), sum(total)", "ticket_temp", "WHERE cod = ".$b["cod"]." and mesa = '".$numero."'  $cancelar and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."")) { 
-        $scant=$s["sum(cant)"]; $stotal=$s["sum(total)"];
-    } unset($s); 
-//////
-if ($sx = $db->select("sum(total)", "ticket_temp", "WHERE mesa = '".$numero."'  $cancelar and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."")) { 
-       $stotalx=$sx["sum(total)"];
-    } unset($sx); 
- 
-
           $oi=$oi+$n1;
-          printer_draw_text($handle, $scant, $col1, $oi);
+          printer_draw_text($handle, $b["cant"], $col1, $oi);
           printer_draw_text($handle, $b["producto"], $col2, $oi);
-          printer_draw_text($handle, $b["pv"], $col3, $oi);
-          printer_draw_text($handle, $stotal, $col4, $oi);
+          printer_draw_text($handle, $b["total"], $col4, $oi);
 
 
 ////
@@ -120,31 +107,28 @@ $subtotalf = $subtotalf + $stotal;
     }    $a->close();
 
 
-
-if($_SESSION['config_propina'] != 0.00){ ///  prara agregarle la propina -- sino borrar
-$oi=$oi+$n2;
-printer_draw_text($handle, "Propina:", 232, $oi);
-printer_draw_text($handle, Helpers::Format(Helpers::Propina($subtotalf)),$col4, $oi);
-$subtotalf = Helpers::PropinaTotal($subtotalf);
-}
+if ($sx = $db->select("sum(total)", "ticket", "WHERE num_fac = '".$numero."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."")) { 
+       $stotalx=$sx["sum(total)"];
+    } unset($sx); 
+ 
 
 $oi=$oi+$n1;
 printer_draw_text($handle, "Total " . $_SESSION['config_moneda_simbolo'] . ":", 232, $oi);
-printer_draw_text($handle, Helpers::Format($subtotalf), $col4, $oi);
+printer_draw_text($handle, Helpers::Format($stotalx), $col4, $oi);
 
 $oi=$oi+$n2;
 printer_draw_text($handle, "____________________________________", 0, $oi);
 
 //efectivo
 if($efectivo == NULL){
-  $efectivo = $subtotalf;
+  $efectivo = $stotalx;
 }
 $oi=$oi+$n1;
 printer_draw_text($handle, "Efectivo " . $_SESSION['config_moneda_simbolo'] . ":", 160, $oi);
 printer_draw_text($handle, Helpers::Format($efectivo), $col4, $oi);
 
 //cambio
-$cambios = $efectivo - $subtotalf;
+$cambios = $efectivo - $stotalx;
 $oi=$oi+$n1;
 printer_draw_text($handle, "Cambio " . $_SESSION['config_moneda_simbolo'] . ":", 162, $oi);
 printer_draw_text($handle, Helpers::Format($cambios), $col4, $oi);

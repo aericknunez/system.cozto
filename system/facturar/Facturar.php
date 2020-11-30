@@ -72,7 +72,7 @@ if($_SESSION["tx"] == 0){
 	      if($ax0 == 1){  // tx0 ticket
 
 	      		if($_SESSION["root_plataforma"] == 0){ // si es local
-	      			// $imprimir->Ticket($efectivo, $factura);
+	      			$imprimir->Ticket($efectivo, $factura);
 	      			// echo "Ticket tx0 y local";
 	         //(tipo,numero,cambio,impresor,mesa,factura_o_tiket)
 	      		} else {
@@ -83,7 +83,7 @@ if($_SESSION["tx"] == 0){
 	      }
 	      if($bx0 == 1){ // tx0 factura
 	      		if($_SESSION["root_plataforma"] == 0){ // si es local
-	      			// $imprimir->Factura($efectivo, $factura);
+	      			$imprimir->Factura($efectivo, $factura);
 	      			// echo "Factura tx0 y local";
 	         //(tipo,numero,cambio,impresor,mesa,factura_o_tiket)
 	      		} else {
@@ -106,7 +106,7 @@ if($_SESSION["tx"] == 0){
 
         if($ax1 == 1){ // tx1 ticket
         		if($_SESSION["root_plataforma"] == 0){ // si es local
-	      			// $imprimir->Ticket($efectivo, $factura);
+	      			$imprimir->Ticket($efectivo, $factura);
 	      			// echo '<a href="system/facturar/ticket_web.php?factura='.$factura.'" class="btn-floating btn-sm btn-success"><i class="fas fa-print"></i></a>';
 	      			// echo "Ticket tx1 y local";
 	         //(tipo,numero,cambio,impresor,mesa,factura_o_tiket)
@@ -119,7 +119,7 @@ if($_SESSION["tx"] == 0){
         }
         if($bx1 == 1){ // tx1 Factura
         		if($_SESSION["root_plataforma"] == 0){ // si es local
-	      			// $imprimir->Factura($efectivo, $factura);
+	      			$imprimir->Factura($efectivo, $factura);
 	      			// echo '<a href="system/facturar/ticket_web.php?factura='.$factura.'" class="btn-floating btn-sm btn-info"><i class="fas fa-print"></i></a>';
 	      			// echo "Factura tx1 y local";
 	         //(tipo,numero,cambio,impresor,mesa,factura_o_tiket)
