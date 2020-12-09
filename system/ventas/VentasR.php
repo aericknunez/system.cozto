@@ -647,7 +647,7 @@ echo '<p class="text-center font-weight-bold">CAMBIO:</p>';
 echo '<div class="display-4 text-center font-weight-bold">'. Helpers::Dinero($cambio) . '</div>'; 
 
 $_SESSION["factura_actual_print"] = $factura; // solo para imprimir la factura correcta
-$_SESSION["cambio_actual_print"] = $cambio; // solo para imprimir la factura correcta
+$_SESSION["cambio_actual_print"] = $efectivo; // solo para imprimir la factura correcta
 
 
 // echo '<hr>
