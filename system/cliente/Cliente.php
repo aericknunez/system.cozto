@@ -170,6 +170,9 @@ class Clientes {
 
         $datos["cliente"] = strtoupper($datos["cliente"]); // paso a mayusculas
 
+        $datos["giro"] = $datos["giro"];
+        $datos["registro"] = $datos["registro"];
+
                 $datos["hash"] = Helpers::HashId();
                 $datos["time"] = Helpers::TimeId();
                 $datos["td"] = $_SESSION["td"];
