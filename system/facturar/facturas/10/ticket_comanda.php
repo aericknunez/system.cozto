@@ -31,7 +31,7 @@ if ($r = $db->select("medida", "producto", "WHERE cod = '".$b["cod"]."' and td =
 
 
  $datos .= '<tr>
-                <td class="text-left">'. Helpers::Entero($b["cant"]) .' '.$unidad.'</td>
+                <td class="text-left">'. $b["cant"] .' '.$unidad.'</td>
                 <td>'. $b["producto"] .'</td>                                
                 <td class="text-right">'. $b["pv"] .'</td>
                 <td class="text-right">'. $b["total"] .'</td>

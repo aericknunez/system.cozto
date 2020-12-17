@@ -303,6 +303,11 @@ if($_SESSION["root_tipo_sistema"] != 1 or $_SESSION["root_tipo_sistema"] != 2) {
 <div class="collapsible-body">
 <ul class="list-unstyled">
 
+<?php if($_SESSION["config_mayorista"] == "on"){
+	if($_SESSION["precio_mayorista_activo"] == TRUE){ $text_may = "Desactivar precio Mayoreo"; } else { $text_may = "Activar precio Mayoreo"; }
+echo '<li><a href="application/src/routes.php?op=510"  class="waves-effect"><i class="fas fa-cog"></i> '.$text_may.'</a></li>';
+} ?>
+
 <li><a  class="waves-effect"><i class="fas fa-cog"></i> Opciones</a></li>
 <li><a  class="waves-effect"><i class="fas fa-cogs"></i> Imprimir Facturas</a></li>
 

@@ -1943,6 +1943,18 @@ break;
 
 
 
+case "510": // activa precio de mayoreo
+	
+	if($_SESSION["precio_mayorista_activo"] == TRUE){
+		unset($_SESSION["precio_mayorista_activo"]);
+	} else {
+		$_SESSION["precio_mayorista_activo"] = TRUE;
+	}
+	header("location: ../../?");
+break;
+
+
+
 case "520": // autoparts select
 include_once '../../system/autoparts/Autoparts.php';
 	$auto = new Autoparts(); 

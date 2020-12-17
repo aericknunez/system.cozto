@@ -7,10 +7,16 @@ include_once 'system/index/Inicio.php';
 include_once 'system/corte/Corte.php';
 $cut = new Corte();
 
+
+
 $datalive = TRUE; /// para saber que estoy en index
 
 if($_SESSION["cotizacion"]){
 Alerts::Mensajex("ADVERTENCIA! Se detecto una cotizaci&oacuten sin concluir. Debe guardarla o eliminarla antes de continuar", "danger", '<a href="?cotizar" class="btn btn-danger">ir a Cotizaciones</a>');
+}
+
+if($_SESSION["precio_mayorista_activo"] == TRUE){
+Alerts::Mensajex("ADVERTENCIA! Esta activado el precio de mayoreo", "success");
 }
 
 echo '<div id="ventana"></div>';
@@ -30,6 +36,9 @@ if($_SESSION["caja_apertura"] != NULL or $_SESSION["caja_soloagregar"] != NULL){
 
 if($_SESSION["caja_apertura"] == NULL){
 ?>
+
+
+
 
 
 

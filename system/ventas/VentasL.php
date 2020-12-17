@@ -263,7 +263,25 @@ if($datos["precio"] != NULL and $datos["producto"] != NULL){
     }
 
 
+
+
 	public function ObtenerPrecio($cod, $cant){ // obtiene el precio independientemente la cantidad
+		$db = new dbConn();
+		// busco el precio que le corresponde
+		
+		if($this->ObtenerPrecioPromo($cod, $cant) != NULL){
+			return $this->ObtenerPrecioPromo($cod, $cant);
+		} elseif($_SESSION["config_mayorista"] == "on" and $this->ObtenerPrecioMayorista($cod, $cant) != NULL and $_SESSION["precio_mayorista_activo"] == TRUE){
+			return $this->ObtenerPrecioMayorista($cod, $cant);
+		} else {
+			return $this->ObtenerPrecioNormal($cod, $cant);
+		}	
+	}
+
+
+
+
+	public function ObtenerPrecioNormal($cod, $cant){ // obtiene el precio independientemente la cantidad
 		$db = new dbConn();
 		// cuento si hay varias fechas
 	$a = $db->query("SELECT * FROM producto_precio WHERE producto = '$cod' and td = ".$_SESSION["td"]."");
@@ -281,9 +299,42 @@ if($datos["precio"] != NULL and $datos["producto"] != NULL){
 				        $precio = $r["precio"];
 				    } unset($r); 	
 			}
-				return $precio;
+		return $precio;
 	}
 
+
+	public function ObtenerPrecioMayorista($cod, $cant){ // obtiene el precio independientemente la cantidad
+		$db = new dbConn();
+		// cuento si hay varias fechas
+	$a = $db->query("SELECT * FROM producto_precio_mayorista WHERE producto = '$cod' and td = ".$_SESSION["td"]."");
+		$precios = $a->num_rows; $a->close();
+
+			if($precios > 1){ // si hay mas de un precio
+					
+					if ($r = $db->select("precio", "producto_precio_mayorista", "WHERE cant <= '$cant' and producto = '$cod' and td = ".$_SESSION["td"]." order by cant desc limit 1")) { 
+				        $precio = $r["precio"];
+				    } unset($r);
+
+			} else { // si solo hay un precio
+				   
+				    if ($r = $db->select("precio", "producto_precio_mayorista", "WHERE producto = '$cod' and td = ".$_SESSION["td"]."")) { 
+				        $precio = $r["precio"];
+				    } unset($r); 	
+			}
+		return $precio;
+	}
+
+
+
+	public function ObtenerPrecioPromo($cod, $cant){ // obtiene el precio independientemente la cantidad
+		$db = new dbConn();
+		// cuento si hay varias fechas
+			if ($r = $db->select("precio", "producto_precio_promo", "WHERE producto = '$cod' and td = ".$_SESSION["td"]."")) { 
+			        $precio = $r["precio"];
+			    } unset($r);
+
+			return $precio;
+	}
 
 
 
