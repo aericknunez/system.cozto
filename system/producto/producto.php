@@ -14,9 +14,7 @@ $producto = new Productos();
    <?php $producto->VerTodosProductos(1, "producto.id", "asc"); ?>
 </div>
 
-<div class="row justify-content-center">
-  <a href="system/imprimir/imprimir.php?op=10" class="btn btn-info my-2 btn-rounded btn-sm waves-effect" title="Imprimir todos los productos">Imprimir Todo</a>
-</div>
+
 
 <!-- Ver producto -->
 <div class="modal" id="ModalVer" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"  data-backdrop="false">
@@ -55,3 +53,40 @@ $producto = new Productos();
   </div>
 </div>
 <!-- ./  Modal -->
+
+
+
+
+
+
+
+
+<!-- MODAL PARA CONFIRMAR ELIMINACION -->
+
+<div class="modal fade" id="ConfirmDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-sm modal-notify modal-danger" role="document">
+    <!--Content-->
+    <div class="modal-content text-center">
+      <!--Header-->
+      <div class="modal-header d-flex justify-content-center">
+        <p class="heading">Seguro que desea eliminar este producto?</p>
+      </div>
+
+      <!--Body-->
+      <div class="modal-body">
+
+        <i class="fas fa-times fa-4x animated rotateIn"></i>
+<p><strong>Advertencia: </strong> Si continúa se borrará permanentemente todo lo relacionado al producto</p>
+      </div>
+
+      <!--Footer-->
+      <div class="modal-footer flex-center">
+        <a id="borrar-producto" class="btn  btn-outline-danger">Eliminar</a>
+        <a type="button" class="btn  btn-danger waves-effect" data-dismiss="modal">No</a>
+      </div>
+    </div>
+    <!--/.Content-->
+  </div>
+</div>
+<!--Modal: modalConfirmDelete-->

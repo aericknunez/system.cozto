@@ -77,4 +77,43 @@ $("#mdb-lightbox-ui").load("assets/mdb-addons/mdb-lightbox-ui.html");
 
 
 
+
+
+///////////// llamar modal para eliminar elemento
+    $("body").on("click","#delpro",function(){ 
+        
+        $('#ConfirmDelete').modal('show');
+        var op = $(this).attr('op');
+        var iden = $(this).attr('iden');
+         
+        $('#borrar-producto').attr("op",op).attr("iden",iden);
+        
+    });
+
+
+
+    $("body").on("click","#borrar-producto",function(){
+        var op = $(this).attr('op');
+        var iden = $(this).attr('iden');
+        var dataString = 'op='+op+'&iden='+iden;
+
+        $('#ConfirmDelete').modal('hide');
+
+        $.ajax({
+            type: "POST",
+            url: "application/src/routes.php",
+            data: dataString,
+            beforeSend: function () {
+               $("#contenido").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt=""></div>');
+            },
+            success: function(data) {            
+                $("#contenido").html(data); // lo que regresa de la busquea 
+            }
+        });
+    });                 
+
+
+
+
+
 });

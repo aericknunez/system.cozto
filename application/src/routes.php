@@ -2152,6 +2152,19 @@ break;
 
 
 
+case "550":  /// borrar producto
+include_once '../../system/producto/Productos.php';
+	$prod = new Productos(); 
+	$prod->DelProducto($_POST["iden"]);
+break;
+
+
+
+
+
+
+
+
 
 
 

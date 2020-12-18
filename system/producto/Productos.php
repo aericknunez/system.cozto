@@ -1151,7 +1151,7 @@ if($predeterminada != "1"){
   public function VerTodosProductos($npagina, $orden, $dir){
       $db = new dbConn();
 
-  $limit = 12;
+  $limit = 25;
   $adjacents = 2;
   if($npagina == NULL) $npagina = 1;
   $a = $db->query("SELECT * FROM producto WHERE td = ". $_SESSION['td'] ."");
@@ -1198,12 +1198,22 @@ if($dir == "asc") $dir2 = "desc";
                       <td>'.$b["cantidad"].'</td>
                       <td>'.$b["subcategoria"].'</td>
                       <td class="d-none d-md-block">'.$b["existencia_minima"].'</td>
-                      <td><a id="xver" op="55" key="'.$b["cod"].'"><i class="fas fa-search fa-lg green-text"></i></a></td>
+                      <td><a id="xver" op="55" key="'.$b["cod"].'"><i class="fas fa-search fa-lg green-text"></i></a>';
+
+// aqui iria el  de borrar producto
+if($_SESSION["tipo_cuenta"] == 1 or $_SESSION["tipo_cuenta"] == 5){
+    echo '<a id="delpro" op="550" iden="'.$b["cod"].'"> <i class="fas fa-trash fa-lg red-text ml-3"></i></a>';
+}
+
+
+                      echo '</td>
                     </tr>';
         }
         echo '</tbody>
         </table>
         </div>';
+
+
       }
         $a->close();
 
@@ -1257,6 +1267,12 @@ $page <= 1 ? $enable = 'disabled' : $enable = '';
 
       </ul>';
      }  // end pagination 
+
+
+// boton de imprimir
+echo '<div class="row justify-content-center">
+          <a href="system/imprimir/imprimir.php?op=10" class="btn btn-info my-2 btn-rounded btn-sm waves-effect" title="Imprimir todos los productos">Imprimir Todo</a>
+        </div>';
 
   } // termina productos
 
@@ -1753,6 +1769,40 @@ $a->close();
     if ($r = $db->select("precio", "producto_precio_promo", "WHERE producto = '$producto' and td = ".$_SESSION["td"]."")) { 
         return $r["precio"];
     } unset($r);  
+
+  }
+
+
+
+  public function DelProducto($cod){ // esta funcion elimina permanentemente el producto
+      $db = new dbConn();
+        if (Helpers::DeleteId("producto", "cod='$cod'")) {
+
+          Helpers::DeleteId("caracteristicas_asig", "producto='$cod' and td = ". $_SESSION["td"] ."");
+          Helpers::DeleteId("producto_averias", "producto='$cod' and td = ". $_SESSION["td"] ."");
+          Helpers::DeleteId("producto_compuestos", "producto='$cod' and td = ". $_SESSION["td"] ."");
+          Helpers::DeleteId("producto_dependiente", "producto='$cod' and td = ". $_SESSION["td"] ."");
+          Helpers::DeleteId("producto_ingresado", "producto='$cod' and td = ". $_SESSION["td"] ."");
+          Helpers::DeleteId("producto_precio", "producto='$cod' and td = ". $_SESSION["td"] ."");
+          Helpers::DeleteId("producto_precio_mayorista", "producto='$cod' and td = ". $_SESSION["td"] ."");
+          Helpers::DeleteId("producto_precio_promo", "producto='$cod' and td = ". $_SESSION["td"] ."");
+          Helpers::DeleteId("producto_tags", "producto='$cod' and td = ". $_SESSION["td"] ."");
+          Helpers::DeleteId("ubicacion_asig", "producto='$cod' and td = ". $_SESSION["td"] ."");
+
+
+      $a = $db->query("SELECT imagen FROM producto_imagenes WHERE producto='$cod' and td = ". $_SESSION["td"] ."");
+      foreach ($a as $b) {
+          if(Helpers::DeleteId("producto_imagenes", "producto='$cod' and td = ". $_SESSION["td"] ."")){
+              if (file_exists("../../assets/img/productos/" . $_SESSION["td"] . "/" . $b["imagen"])) { unlink("../../assets/img/productos/" . $_SESSION["td"] . "/" . $b["imagen"]); }
+          }
+      } $a->close();
+
+           Alerts::Alerta("success","Eliminado!","Precio eliminado correctamente!");
+        } else {
+            Alerts::Alerta("error","Error!","Algo Ocurrio!");
+        } 
+
+      $this->VerTodosProductos(1, "producto.id", "asc");
 
   }
 
