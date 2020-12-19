@@ -3,6 +3,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 include_once 'application/common/Alerts.php';
 include_once 'system/producto/IngresoRapido.php';
 $producto = new Rapido(); 
+
+Alerts::Mensajex("El ingreso de productos no es recomentado, no olvide posteriormente actualizar los datos del producto","warning");
 ?>
 
 
@@ -32,12 +34,12 @@ $producto = new Rapido();
 
 
     <div class="col-md-3 mb-1 md-form">
-      <label for="cantidad">* Cantidad</label>
+      <label for="cantidad">Cantidad</label>
       <input type="number" step="any" class="form-control" id="cantidad" name="cantidad" required>
     </div>
 
     <div class="col-md-3 mb-1 md-form">
-      <label for="precio_costo">* Precio Costo</label>
+      <label for="precio_costo">Precio Costo</label>
       <input type="number" step="any" class="form-control" id="precio_costo" name="precio_costo" required>
     </div>
 
