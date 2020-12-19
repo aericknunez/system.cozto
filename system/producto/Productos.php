@@ -1274,6 +1274,9 @@ echo '<div class="row justify-content-center">
           <a href="system/imprimir/imprimir.php?op=10" class="btn btn-info my-2 btn-rounded btn-sm waves-effect" title="Imprimir todos los productos">Imprimir Todo</a>
         </div>';
 
+
+         echo '<div class="text-right"><a href="system/documentos/inventario.php" >Descargar Excel</a></div>';      
+
   } // termina productos
 
 

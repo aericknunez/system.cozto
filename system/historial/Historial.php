@@ -60,9 +60,11 @@ class Historial{
 		        echo "Total Vendido: ". Helpers::Dinero($bg["sum(total)"]) . "<br>";
 		    } $ag->close();
 
-		    $ap = $db->query("SELECT sum(total) FROM ticket_propina where fecha = '$fecha' and td = ".$_SESSION['td']."");
 
-		     echo "Total Agrupado: ". Helpers::Dinero($prop + $tot) . "<br>";
+		     echo "Total Agrupado: ". Helpers::Dinero($tot) . "<br>";
+
+		     echo '<div class="text-right"><a href="system/documentos/ventadiaria.php?fecha='.$fecha.'" >Descargar Excel</a></div>';
+
 			} else {
 				Alerts::Mensajex("No se encontraron productos para este dia","danger",$boton,$boton2);
 			}
@@ -109,17 +111,20 @@ class Historial{
 			    echo '</tbody>
 				</table></div>';
 
-			$ar = $db->query("SELECT sum(cant) FROM ticket where edo = 1 and fecha like '%$fechax' and td = ".$_SESSION['td']."");
+			$ar = $db->query("SELECT sum(cant) FROM ticket where cod != 8888 and edo = 1 and fecha like '%$fechax' and td = ".$_SESSION['td']."");
 		    foreach ($ar as $br) {
 		     echo "Cantidad de Productos: ". $br["sum(cant)"] . "<br>";
 		    } $ar->close();
 
-		    $ag = $db->query("SELECT sum(total) FROM ticket where edo = 1 and fecha like '%$fechax' and td = ".$_SESSION['td']."");
+
+		    $ag = $db->query("SELECT sum(total) FROM ticket where cod != 8888 and edo = 1 and fecha like '%$fechax' and td = ".$_SESSION['td']."");
 		    foreach ($ag as $bg) { $tot = $bg["sum(total)"];
 		        echo "Total Vendido: ". Helpers::Dinero($bg["sum(total)"]) . "<br>";
 		    } $ag->close();
 
-		    echo "Total Agrupado: ". Helpers::Dinero($prop + $tot) . "<br>";
+
+		     echo '<div class="text-right"><a href="system/documentos/ventamensual.php?fecha='.$fechax.'">Descargar Excel</a></div>';
+
 		} else {
 			Alerts::Mensajex("No se encontraron registros de ventas en este mes","danger",$boton,$boton2);
 		}		    
@@ -435,9 +440,10 @@ echo '<tr>
 
 		   $as = $db->query("SELECT sum(cantidad) FROM gastos where tipo = 5 and edo != 0 and  fecha = '$fecha' and td = ".$_SESSION['td']."");
 		    foreach ($as as $bs) {
-		        echo "Cheques emitidos: ". Helpers::Dinero($bs["sum(cantidad)"]) . "<br>";
+		        echo "Cheques y transferencias: ". Helpers::Dinero($bs["sum(cantidad)"]) . "<br>";
 		    } $as->close();
 
+		     echo '<div class="text-right"><a href="system/documentos/gastodiario.php?fecha='.$fecha.'">Descargar Excel</a></div>';
 
 			} // num rows
 			else {
@@ -520,9 +526,11 @@ echo '<tr>
 
 		   $as = $db->query("SELECT sum(cantidad) FROM gastos where tipo = 5 and edo != 0 and  fecha like '%$fechax' and td = ".$_SESSION['td']."");
 		    foreach ($as as $bs) {
-		        echo "Cheques emitidos: ". Helpers::Dinero($bs["sum(cantidad)"]) . "<br>";
+		        echo "Cheques y transferencias: ". Helpers::Dinero($bs["sum(cantidad)"]) . "<br>";
 		    } $as->close();
 
+
+		     echo '<div class="text-right"><a href="system/documentos/gastomensual.php?fecha='.$fechax.'">Descargar Excel</a></div>';
 
 			} else {
 			Alerts::Mensajex("No se encontraron registros de gastos en este mes","danger",$boton,$boton2);
