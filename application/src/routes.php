@@ -2160,6 +2160,23 @@ break;
 
 
 
+case "551":  /// seleccionar opcion de ticket (ticket, factura, credito fiscal, ninguno)
+include_once '../../system/ventas/Laterales.php';
+	$lat = new Laterales(); 
+	$lat->TipoTicket($_POST["tipo"]);
+break;
+
+
+
+
+
+
+case "560":  /// agragar producto rapido
+include_once '../../system/producto/IngresoRapido.php';
+	$fast = new Rapido(); 
+	$fast->AddProducto($_POST);
+break;
+
 
 
 

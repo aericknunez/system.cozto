@@ -350,4 +350,31 @@ Esconder();
 
 
 
+// lamar modal ticket
+    $("body").on("click","#mticket",function(){ 
+        $('#ModalTicket').modal('show');
+    });
+
+    $("body").on("click","#opticket",function(){ // llamar nada mas a los productos
+
+        var op = "551";
+        var tipo = $(this).attr('tipo');
+        var dataString = 'op='+op+'&tipo='+tipo;
+
+        $.ajax({
+            type: "POST",
+            url: "application/src/routes.php",
+            data: dataString,
+            success: function(data) {            
+                $('#ModalTicket').modal('hide');
+                $("#vticket").html(data); // lo que regresa de la busquea 
+            }
+        }); 
+    });
+
+
+
+
+
+
 }); // termina query

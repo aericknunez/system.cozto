@@ -32,7 +32,7 @@ if($_SESSION["caja_apertura"] != NULL or $_SESSION["caja_soloagregar"] != NULL){
 }
 
 
-// print_r($_SESSION);
+print_r($_SESSION);
 
 if($_SESSION["caja_apertura"] == NULL){
 ?>
@@ -112,3 +112,33 @@ Alerts::Mensajex("CAJA APERTURADA CORRECTAMENTE","success", '<a href="?" class="
 <!-- ./  Modal -->
 
 <?php } ?>
+
+
+<div class="modal" id="ModalTicket" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"  data-backdrop="true">
+  <div class="modal-dialog modal-md" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">
+         SELECCIONE TIPO DE DOCUMENTO</h5>
+         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" align="center">
+<!-- ./  content -->
+<a id="opticket" tipo="1" class="btn btn-cyan">Ticket</a>
+<a id="opticket" tipo="3" class="btn btn-brown">Credito Fiscal</a>
+<a id="opticket" tipo="2" class="btn btn-indigo">Factura</a>
+
+<a id="opticket" tipo="0" class="btn btn-elegant">Ninguno</a>
+<!-- ./  content -->
+      </div>
+
+<div class="modal-footer">
+<a id="cerrarmodal" class="btn btn-primary btn-rounded" data-dismiss="modal">Regresar</a>
+</div>
+
+    </div>
+  </div>
+</div>
+<!-- ./  Modal -->

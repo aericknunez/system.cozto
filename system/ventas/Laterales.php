@@ -46,13 +46,44 @@ class Laterales{
 			        <div class="card-body">
 			            <h4 class="card-title">TOTAL '. $_SESSION['config_moneda_simbolo'] .'</h4>
 			            <p class="black-text display-3"> '. $this->ObtenerTotal($orden) .'</p>
+			            <div id="vticket">'. $this->NombreTicket() .'</div>
 			        </div>
 			    </div>
 			</div>';
 			echo '<hr>';
-
-
  	}
+
+
+ 	public function TipoTicket($tipo = null){ // selecciona el tipo de documento a emitir
+ 		$db = new dbConn();
+		
+		if($tipo == NULL){
+ 		    if ($r = $db->select("predeterminado", "facturar_opciones", "WHERE td = ".$_SESSION["td"]."")) { 
+		        $preder = $r["predeterminado"];
+		    }  unset($r);  
+		    $_SESSION["tipoticket"] = $preder;
+
+		    return  $this->NombreTicket();
+		} else {
+			$_SESSION["tipoticket"] = $tipo;
+
+	if($_SESSION["tipoticket"] == 1){ echo '<a id="mticket">TICKET</a>'; }
+	elseif($_SESSION["tipoticket"] == 2){ echo '<a id="mticket">FACTURA</a>'; }
+	elseif($_SESSION["tipoticket"] == 3){ echo '<a id="mticket">CREDITO FISCAL</a>'; }
+	else { echo '<a id="mticket">N/A</a>'; }
+
+		}
+
+}
+
+
+public function NombreTicket(){ // selecciona el tipo de documento a emitir	
+// 0 ninguno, 1 ticket, 2 factura, 3 credito fiscal
+if($_SESSION["tipoticket"] == 1){ return '<a id="mticket">TICKET</a>'; }
+elseif($_SESSION["tipoticket"] == 2){ return '<a id="mticket">FACTURA</a>'; }
+elseif($_SESSION["tipoticket"] == 3){ return '<a id="mticket">CREDITO FISCAL</a>'; }
+else { return '<a id="mticket">N/A</a>'; }
+}
 
 
  	public function MostrarOrdenes(){ // listado de ordenes pendientes

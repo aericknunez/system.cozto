@@ -103,7 +103,7 @@ class Opciones{
  	public function DelCliente(){
  		$db = new dbConn();
 
-		Helpers::DeleteId("ticket_cliente", "orden = ".$_SESSION["orden"]." and cliente = '".$_SESSION["cliente_c"]."' and td = ".$_SESSION["td"]."");
+		Helpers::DeleteId("ticket_cliente", "orden = ".$_SESSION["orden"]." and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."");
 		$this->UnsetCliente();
 
 		$cambio = array();

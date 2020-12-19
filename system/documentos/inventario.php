@@ -48,14 +48,17 @@ $objPHPExcel->setActiveSheetIndex(0)
             ->setCellValue('B1', 'DESCRIPCION')
             ->setCellValue('C1', 'CANTIDAD')
             ->setCellValue('D1', 'CATEGORIA')
-            ->setCellValue('E1', 'EXISTENCIA MINIMA');
+            ->setCellValue('E1', 'PRECIO')
+            ->setCellValue('F1', 'EXISTENCIA MINIMA');
  
 
 
 $fila = 1;   
    foreach ($a as $b) {
-    if ($r = $db->select("*", "pro_dependiente", "WHERE iden = ".$b["producto"]." and td = ". $_SESSION["td"] ."")) { 
-        $producto = $r["nombre"]; } unset($r); 
+ 
+ if ($r = $db->select("precio", "producto_precio", "WHERE producto = ".$b["cod"]." and td = ". $_SESSION["td"] ."")) { 
+        $precio = $r["precio"]; } unset($r); 
+
 
 
 $fila = $fila + 1; 
@@ -64,7 +67,8 @@ $objPHPExcel->setActiveSheetIndex(0)
           ->setCellValue('B' . $fila, $b["descripcion"])
           ->setCellValue('C' . $fila, $b["cantidad"])
           ->setCellValue('D' . $fila, $b["subcategoria"])
-          ->setCellValue('E' . $fila, $b["existencia_minima"]);
+          ->setCellValue('E' . $fila, $precio)
+          ->setCellValue('F' . $fila, $b["existencia_minima"]);
  
 
         } 
@@ -72,17 +76,17 @@ $objPHPExcel->setActiveSheetIndex(0)
 
 
 
-$columnas = array('A','B','C','D','E');
-$numeros = array('D','E');
+$columnas = array('A','B','C','D','E','F');
+$numeros = array('E');
 
 // establece ceros numerocico las filas numerocas
-// foreach($numeros as $columnID) {
-// $objPHPExcel->getActiveSheet()->getStyle($columnID . '2:' . $columnID.$fila)
-//     ->getNumberFormat()
-//     ->setFormatCode(
-//         '$0.00'
-//     );
-// }
+foreach($numeros as $columnID) {
+$objPHPExcel->getActiveSheet()->getStyle($columnID . '2:' . $columnID.$fila)
+    ->getNumberFormat()
+    ->setFormatCode(
+        '$0.00'
+    );
+}
 
 // establece auto dimension a las columnas
 foreach($columnas as $columnID) {
@@ -122,7 +126,7 @@ $objPHPExcel->getActiveSheet()->setTitle('Inventario');
 $objPHPExcel->setActiveSheetIndex(0);
 
 
-$objPHPExcel->getActiveSheet()->getStyle("A1:E1")->getFont()->setBold(true);
+$objPHPExcel->getActiveSheet()->getStyle("A1:F1")->getFont()->setBold(true);
 // Redirect output to a client’s web browser (Excel2007)
 header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 header('Content-Disposition: attachment;filename="Inventario-'.date("d-m-Y-H_i_s").'.xlsx"');

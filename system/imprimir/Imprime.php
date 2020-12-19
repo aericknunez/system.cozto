@@ -20,6 +20,7 @@ class Imprime {
             <th class="th-sm">Producto</th>
             <th class="th-sm">Cantidad</th>
             <th class="th-sm">Categoria</th>
+            <th class="th-sm">Precio</th>
             <th class="th-sm d-none d-md-block">Minimo</th>
           </tr>
         </thead>
@@ -29,11 +30,16 @@ class Imprime {
     if ($r = $db->select("*", "pro_dependiente", "WHERE iden = ".$b["producto"]." and td = ". $_SESSION["td"] ."")) { 
         $producto = $r["nombre"]; } unset($r); 
 
+ if ($r = $db->select("precio", "producto_precio", "WHERE producto = ".$b["cod"]." and td = ". $_SESSION["td"] ."")) { 
+        $precio = $r["precio"]; } unset($r); 
+
+
           echo '<tr>
                       <td>'.$b["cod"].'</td>
                       <td>'.$b["descripcion"].'</td>
                       <td>'.$b["cantidad"].'</td>
                       <td>'.$b["subcategoria"].'</td>
+                      <td>'.$precio.'</td>
                       <td class="d-none d-md-block">'.$b["existencia_minima"].'</td>
                     </tr>';
         }

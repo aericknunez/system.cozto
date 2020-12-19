@@ -27,6 +27,8 @@ elseif(isset($_GET["vencimientos"])) include_once 'system/producto/vencimientos.
 elseif(isset($_GET["compuestos"])) include_once 'system/producto/compuestos.php'; 
 elseif(isset($_GET["pesaje"])) include_once 'system/producto/pesajes.php'; 
 elseif(isset($_GET["listadoproductos"])) include_once 'system/producto/productoresumen.php'; 
+// rapido
+elseif(isset($_GET["ingresorapido"])) include_once 'system/producto/ingresarrapido.php'; 
 
 
 
