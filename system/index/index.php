@@ -32,7 +32,7 @@ if($_SESSION["caja_apertura"] != NULL or $_SESSION["caja_soloagregar"] != NULL){
 }
 
 
-print_r($_SESSION);
+// print_r($_SESSION);
 
 if($_SESSION["caja_apertura"] == NULL){
 ?>
