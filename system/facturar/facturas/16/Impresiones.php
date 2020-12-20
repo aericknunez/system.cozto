@@ -8,9 +8,9 @@ class Impresiones{
   public function Ticket($efectivo, $numero){
   $db = new dbConn();
 
-$img  = "bioanalisis.bmp";
-$txt1   = "31"; 
-$txt2   = "11";
+// $img  = "bbtotra.bmp";
+$txt1   = "35"; 
+$txt2   = "15";
 $txt3   = "0";
 $txt4   = "0";
 $n1   = "40";
@@ -18,15 +18,15 @@ $n2   = "60";
 $n3   = "0";
 $n4   = "0";
 
-
 $col1 = 0;
 $col2 = 30;
-$col3 = 340;
-$col4 = 440;
-$col5 = 500;
+$col3 = 50;
+$col4 = 400;
+$col5 = 490;
+
 // $print
-$print = "LR2000";
-$logo_imagen="C:/AppServ/www/cozto/assets/img/logo_factura/". $img;
+$print = "EPSON2";
+// $logo_imagen="C:/AppServ/www/cozto/assets/img/logo_factura/". $img;
 
 
 
@@ -36,23 +36,29 @@ printer_set_option($handle, PRINTER_MODE, "RAW");
 printer_start_doc($handle, "Mi Documento");
 printer_start_page($handle);
 
-printer_draw_bmp($handle, $logo_imagen, 35, 1, 450, 300);
+// printer_draw_bmp($handle, $logo_imagen, 35, 1, 450, 300);
 
 $font = printer_create_font("Arial", $txt1, $txt2, PRINTER_FW_NORMAL, false, false, false, 0);
 printer_select_font($handle, $font);
 
 
 
-$oi=350;
+$oi=20;
 //// comienza la factura
 
-printer_draw_text($handle, "GERENTE: YANERI ABIGAIL FLAMENCO GUERRA", 5, $oi);
+printer_draw_text($handle, "SERVI AGRO VICENTINO", 5, $oi);
 $oi=$oi+$n1;
-printer_draw_text($handle, "No DE INSCRIPCION JVPLC 2119", 5, $oi);
+printer_draw_text($handle, "Clinica Veterinaria y venta de productos Agropecuarios", 5, $oi);
 $oi=$oi+$n1;
-printer_draw_text($handle, "Bo El Angel, 6ta Av. Norte #3-11 y 5", 5, $oi);
+printer_draw_text($handle, "Dr. Ulises Napoleon Rivas Martinez", 5, $oi);
 $oi=$oi+$n1;
-printer_draw_text($handle, "Sonsonate", 200, $oi);
+printer_draw_text($handle, "Calle Quinones de Osorio # 35", 5, $oi);
+$oi=$oi+$n1;
+printer_draw_text($handle, "Bo. El Calvario, San Vicente", 200, $oi);
+
+$oi=$oi+$n1;
+printer_draw_text($handle, "Tel: 2393-0845", 200, $oi);
+
 
 // $oi=$oi+$n1;
 // printer_draw_text($handle, Helpers::Pais($_SESSION['config_pais']), 0, $oi);
@@ -60,13 +66,6 @@ printer_draw_text($handle, "Sonsonate", 200, $oi);
 // printer_draw_text($handle, "Propietario: " . $_SESSION['config_propietario'], 0, $oi);
 // $oi=$oi+$n1;
 // printer_draw_text($handle, $_SESSION['config_nombre_documento'] . ": " . $_SESSION['config_nit'], 0, $oi);
-$oi=$oi+$n1;
-printer_draw_text($handle, "Tel: 2486-5515", 0, $oi);
-
-$oi=$oi+$n1;
-printer_draw_text($handle, "Email: bioanalisis.sonsonate@gmail.com", 0, $oi);
-
-
 
 $oi=$oi+$n2;
 printer_draw_text($handle, "____________________________________", 0, $oi);
@@ -83,8 +82,6 @@ printer_draw_text($handle, "____________________________________", 0, $oi);
 ///
 $subtotalf = 0;
 ///
-
-
 
 $a = $db->query("select cod, cant, producto, pv, total, fecha, hora, num_fac from ticket where num_fac = '".$numero."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]." group by cod");
   
