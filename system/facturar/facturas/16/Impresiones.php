@@ -127,19 +127,19 @@ printer_draw_text($handle, "____________________________________", 0, $oi);
 
 $oi=$oi+$n3+$n1;
 printer_draw_text($handle, "Sub Total: " . $_SESSION['config_moneda_simbolo'] . ":", 175, $oi);
-printer_draw_text($handle, Helpers::Format(Helpers::STotal($subtotalf, $_SESSION['config_imp'])), $col4, $oi);
+printer_draw_text($handle, Helpers::Format(Helpers::STotal($subtotalf, $_SESSION['config_imp'])), $col5, $oi);
 
 
 $oi=$oi+$n1;
-printer_draw_text($handle, "IVA: " . $_SESSION['config_moneda_simbolo'] . ":", 250, $oi);
-printer_draw_text($handle, Helpers::Format(Helpers::Impuesto(Helpers::STotal($subtotalf, $_SESSION['config_imp']), $_SESSION['config_imp'])), $col4, $oi);
+printer_draw_text($handle, "IVA: " . $_SESSION['config_moneda_simbolo'] . ":", 260, $oi);
+printer_draw_text($handle, Helpers::Format(Helpers::Impuesto(Helpers::STotal($subtotalf, $_SESSION['config_imp']), $_SESSION['config_imp'])), $col5, $oi);
 
 
 
 
 $oi=$oi+$n1;
 printer_draw_text($handle, "Total: " . $_SESSION['config_moneda_simbolo'] . ":", 240, $oi);
-printer_draw_text($handle, Helpers::Format($subtotalf), $col4, $oi);
+printer_draw_text($handle, Helpers::Format($subtotalf), $col5, $oi);
 
 
 
@@ -152,14 +152,14 @@ if($efectivo == NULL){
   $efectivo = $stotalx;
 }
 $oi=$oi+$n1;
-printer_draw_text($handle, "Efectivo " . $_SESSION['config_moneda_simbolo'] . ":", 160, $oi);
-printer_draw_text($handle, Helpers::Format($efectivo), $col4, $oi);
+printer_draw_text($handle, "Efectivo " . $_SESSION['config_moneda_simbolo'] . ":", 200, $oi);
+printer_draw_text($handle, Helpers::Format($efectivo), $col5, $oi);
 
 //cambio
 $cambios = $efectivo - $stotalx;
 $oi=$oi+$n1;
-printer_draw_text($handle, "Cambio " . $_SESSION['config_moneda_simbolo'] . ":", 162, $oi);
-printer_draw_text($handle, Helpers::Format($cambios), $col4, $oi);
+printer_draw_text($handle, "Cambio " . $_SESSION['config_moneda_simbolo'] . ":", 202, $oi);
+printer_draw_text($handle, Helpers::Format($cambios), $col5, $oi);
 
 $oi=$oi+$n2;
 printer_draw_text($handle, "___________________________________", 0, $oi);
