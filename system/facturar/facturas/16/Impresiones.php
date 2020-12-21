@@ -19,7 +19,7 @@ $n3   = "0";
 $n4   = "0";
 
 $col1 = 0;
-$col2 = 30;
+$col2 = 35;
 $col3 = 50;
 $col4 = 400;
 $col5 = 490;
@@ -46,18 +46,21 @@ printer_select_font($handle, $font);
 $oi=20;
 //// comienza la factura
 
-printer_draw_text($handle, "SERVI AGRO VICENTINO", 5, $oi);
+printer_draw_text($handle, "SERVI AGRO VICENTINO", 100, $oi);
 $oi=$oi+$n1;
-printer_draw_text($handle, "Clinica Veterinaria y venta de productos Agropecuarios", 5, $oi);
+printer_draw_text($handle, "Clinica Veterinaria y venta de productos", 5, $oi);
+$oi=$oi+$n1;
+printer_draw_text($handle, "Agropecuarios", 200, $oi);
+
 $oi=$oi+$n1;
 printer_draw_text($handle, "Dr. Ulises Napoleon Rivas Martinez", 5, $oi);
 $oi=$oi+$n1;
 printer_draw_text($handle, "Calle Quinones de Osorio # 35", 5, $oi);
 $oi=$oi+$n1;
-printer_draw_text($handle, "Bo. El Calvario, San Vicente", 200, $oi);
+printer_draw_text($handle, "Bo. El Calvario, San Vicente", 5, $oi);
 
 $oi=$oi+$n1;
-printer_draw_text($handle, "Tel: 2393-0845", 200, $oi);
+printer_draw_text($handle, "Tel: 2393-0845", 5, $oi);
 
 
 // $oi=$oi+$n1;
@@ -72,9 +75,10 @@ printer_draw_text($handle, "____________________________________", 0, $oi);
 $oi=$oi+$n1;
 printer_draw_text($handle, "Cant.", 55, $oi);
 printer_draw_text($handle, "Descripcion", $col2, $oi);
-printer_draw_text($handle, "Total", $col4, $oi);
+printer_draw_text($handle, "P/U", $col4, $oi);
+printer_draw_text($handle, "Total", $col5, $oi);
 
-$oi=$oi+25;
+$oi=$oi+30;
 printer_draw_text($handle, "____________________________________", 0, $oi);
 
 
@@ -94,7 +98,8 @@ $a = $db->query("select cod, cant, producto, pv, total, fecha, hora, num_fac fro
           $oi=$oi+$n1;
           printer_draw_text($handle, $b["cant"], $col1, $oi);
           printer_draw_text($handle, $b["producto"], $col2, $oi);
-          printer_draw_text($handle, $b["total"], $col4, $oi);
+          printer_draw_text($handle, $b["pv"], $col4, $oi);
+          printer_draw_text($handle, $b["total"], $col5, $oi);
 
 
 ////
@@ -109,9 +114,24 @@ if ($sx = $db->select("sum(total)", "ticket", "WHERE num_fac = '".$numero."' and
     } unset($sx); 
  
 
+$oi=$oi+$n3+$n1;
+printer_draw_text($handle, "Sub Total: " . $_SESSION['config_moneda_simbolo'] . ":", 185, $oi);
+printer_draw_text($handle, Helpers::Format(Helpers::STotal($subtotalf, $_SESSION['config_imp'])), 320, $oi);
+
+
 $oi=$oi+$n1;
-printer_draw_text($handle, "Total " . $_SESSION['config_moneda_simbolo'] . ":", 232, $oi);
+printer_draw_text($handle, "IVA: " . $_SESSION['config_moneda_simbolo'] . ":", 175, $oi);
+printer_draw_text($handle, Helpers::Format(Helpers::Impuesto(Helpers::STotal($subtotalf, $_SESSION['config_imp']), $_SESSION['config_imp'])), 320, $oi);
+
+
+
+
+$oi=$oi+$n1;
+printer_draw_text($handle, "Total: " . $_SESSION['config_moneda_simbolo'] . ":", 232, $oi);
 printer_draw_text($handle, Helpers::Format($stotalx), $col4, $oi);
+
+
+
 
 $oi=$oi+$n2;
 printer_draw_text($handle, "____________________________________", 0, $oi);
