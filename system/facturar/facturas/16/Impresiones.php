@@ -82,8 +82,10 @@ $oi=$oi+30;
 printer_draw_text($handle, "____________________________________", 0, $oi);
 
 
-///////////////
-///
+$font = printer_create_font("Arial", 30, 12, PRINTER_FW_NORMAL, false, false, false, 0);
+printer_select_font($handle, $font);
+
+
 $subtotalf = 0;
 ///
 
@@ -106,6 +108,11 @@ $a = $db->query("select cod, cant, producto, pv, total, fecha, hora, num_fac fro
 $subtotalf = $subtotalf + $b["total"];
 ///
 
+
+$font = printer_create_font("Arial", $txt1, $txt2, PRINTER_FW_NORMAL, false, false, false, 0);
+printer_select_font($handle, $font);
+
+
     }    $a->close();
 
 
@@ -114,20 +121,24 @@ if ($sx = $db->select("sum(total)", "ticket", "WHERE num_fac = '".$numero."' and
     } unset($sx); 
  
 
+$oi=$oi+$n1;
+printer_draw_text($handle, "____________________________________", 0, $oi);
+
+
 $oi=$oi+$n3+$n1;
 printer_draw_text($handle, "Sub Total: " . $_SESSION['config_moneda_simbolo'] . ":", 175, $oi);
 printer_draw_text($handle, Helpers::Format(Helpers::STotal($subtotalf, $_SESSION['config_imp'])), $col4, $oi);
 
 
 $oi=$oi+$n1;
-printer_draw_text($handle, "IVA: " . $_SESSION['config_moneda_simbolo'] . ":", 232, $oi);
+printer_draw_text($handle, "IVA: " . $_SESSION['config_moneda_simbolo'] . ":", 250, $oi);
 printer_draw_text($handle, Helpers::Format(Helpers::Impuesto(Helpers::STotal($subtotalf, $_SESSION['config_imp']), $_SESSION['config_imp'])), $col4, $oi);
 
 
 
 
 $oi=$oi+$n1;
-printer_draw_text($handle, "Total: " . $_SESSION['config_moneda_simbolo'] . ":", 232, $oi);
+printer_draw_text($handle, "Total: " . $_SESSION['config_moneda_simbolo'] . ":", 240, $oi);
 printer_draw_text($handle, Helpers::Format($subtotalf), $col4, $oi);
 
 
