@@ -108,12 +108,14 @@ $a = $db->query("select cod, cant, producto, pv, total, fecha, hora, num_fac fro
 $subtotalf = $subtotalf + $b["total"];
 ///
 
+    }    $a->close();
+
+
 
 $font = printer_create_font("Arial", $txt1, $txt2, PRINTER_FW_NORMAL, false, false, false, 0);
 printer_select_font($handle, $font);
 
 
-    }    $a->close();
 
 
 if ($sx = $db->select("sum(total)", "ticket", "WHERE num_fac = '".$numero."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."")) { 
