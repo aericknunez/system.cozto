@@ -103,7 +103,7 @@ $a = $db->query("select cod, cant, producto, pv, total, fecha, hora, num_fac fro
 
 
 ////
-$subtotalf = $subtotalf + $stotal;
+$subtotalf = $subtotalf + $b["total"];
 ///
 
     }    $a->close();
@@ -115,20 +115,20 @@ if ($sx = $db->select("sum(total)", "ticket", "WHERE num_fac = '".$numero."' and
  
 
 $oi=$oi+$n3+$n1;
-printer_draw_text($handle, "Sub Total: " . $_SESSION['config_moneda_simbolo'] . ":", 185, $oi);
-printer_draw_text($handle, Helpers::Format(Helpers::STotal($subtotalf, $_SESSION['config_imp'])), 320, $oi);
+printer_draw_text($handle, "Sub Total: " . $_SESSION['config_moneda_simbolo'] . ":", 175, $oi);
+printer_draw_text($handle, Helpers::Format(Helpers::STotal($subtotalf, $_SESSION['config_imp'])), $col4, $oi);
 
 
 $oi=$oi+$n1;
-printer_draw_text($handle, "IVA: " . $_SESSION['config_moneda_simbolo'] . ":", 175, $oi);
-printer_draw_text($handle, Helpers::Format(Helpers::Impuesto(Helpers::STotal($subtotalf, $_SESSION['config_imp']), $_SESSION['config_imp'])), 320, $oi);
+printer_draw_text($handle, "IVA: " . $_SESSION['config_moneda_simbolo'] . ":", 232, $oi);
+printer_draw_text($handle, Helpers::Format(Helpers::Impuesto(Helpers::STotal($subtotalf, $_SESSION['config_imp']), $_SESSION['config_imp'])), $col4, $oi);
 
 
 
 
 $oi=$oi+$n1;
 printer_draw_text($handle, "Total: " . $_SESSION['config_moneda_simbolo'] . ":", 232, $oi);
-printer_draw_text($handle, Helpers::Format($stotalx), $col4, $oi);
+printer_draw_text($handle, Helpers::Format($subtotalf), $col4, $oi);
 
 
 
