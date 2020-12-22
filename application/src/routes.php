@@ -2179,6 +2179,13 @@ break;
 
 
 
+case "561":  /// borrar producto
+include_once '../../system/herramientas/Herramientas.php';
+	$prod = new Herramientas(); 
+	$prod->DelProducto($_POST["iden"]);
+break;
+
+
 
 
 

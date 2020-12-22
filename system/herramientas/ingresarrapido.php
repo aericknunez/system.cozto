@@ -4,7 +4,7 @@ include_once 'application/common/Alerts.php';
 include_once 'system/herramientas/Herramientas.php';
 $producto = new Herramientas(); 
 
-Alerts::Mensajex("El ingreso de productos no es recomentado, no olvide posteriormente actualizar los datos del producto","warning");
+Alerts::Mensajex("El ingreso de productos no es recomentado ya que sólo se registran los datos mas importantes, no olvide posteriormente actualizar los datos del producto","warning");
 ?>
 
 
@@ -75,3 +75,48 @@ Alerts::Mensajex("El ingreso de productos no es recomentado, no olvide posterior
 $producto->UltimosProductos();
  ?>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- MODAL PARA CONFIRMAR ELIMINACION -->
+
+<div class="modal fade" id="ConfirmDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-sm modal-notify modal-danger" role="document">
+    <!--Content-->
+    <div class="modal-content text-center">
+      <!--Header-->
+      <div class="modal-header d-flex justify-content-center">
+        <p class="heading">Seguro que desea eliminar este producto?</p>
+      </div>
+
+      <!--Body-->
+      <div class="modal-body">
+
+        <i class="fas fa-times fa-4x animated rotateIn"></i>
+<p><strong>Advertencia: </strong> Si continúa se borrará permanentemente todo lo relacionado al producto</p>
+      </div>
+
+      <!--Footer-->
+      <div class="modal-footer flex-center">
+        <a id="borrar-producto" class="btn  btn-outline-danger">Eliminar</a>
+        <a type="button" class="btn  btn-danger waves-effect" data-dismiss="modal">No</a>
+      </div>
+    </div>
+    <!--/.Content-->
+  </div>
+</div>
+<!--Modal: modalConfirmDelete-->

@@ -79,7 +79,7 @@ class Herramientas {
     } else {
       Alerts::Alerta("error","Error!","El codigo del producto ya existe!");
     }
-    
+
    $this->UltimosProductos();
 
   }
@@ -182,6 +182,7 @@ $a->close();
             <th>Precio Costo</a></th>
             <th>Precio Venta</th>
             <th>Caducidad</th>
+            <th>Eliminar</th>
           </tr>
         </thead>
         <tbody>';
@@ -201,6 +202,7 @@ $a->close();
                       <td>'.$precio_costo.'</td>
                       <td>'.$precio.'</td>
                       <td>'.$caduca.'</td>
+                      <td><a id="delpro" op="561" iden="'.$b["cod"].'"> <i class="fas fa-trash fa-lg red-text ml-3"></i></a></td>
                     </tr>';
         }
         echo '</tbody>
@@ -218,6 +220,48 @@ $a->close();
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+  public function DelProducto($cod){ // esta funcion elimina permanentemente el producto
+      $db = new dbConn();
+        if (Helpers::DeleteId("producto", "cod='$cod'")) {
+
+          Helpers::DeleteId("caracteristicas_asig", "producto='$cod' and td = ". $_SESSION["td"] ."");
+          Helpers::DeleteId("producto_averias", "producto='$cod' and td = ". $_SESSION["td"] ."");
+          Helpers::DeleteId("producto_compuestos", "producto='$cod' and td = ". $_SESSION["td"] ."");
+          Helpers::DeleteId("producto_dependiente", "producto='$cod' and td = ". $_SESSION["td"] ."");
+          Helpers::DeleteId("producto_ingresado", "producto='$cod' and td = ". $_SESSION["td"] ."");
+          Helpers::DeleteId("producto_precio", "producto='$cod' and td = ". $_SESSION["td"] ."");
+          Helpers::DeleteId("producto_precio_mayorista", "producto='$cod' and td = ". $_SESSION["td"] ."");
+          Helpers::DeleteId("producto_precio_promo", "producto='$cod' and td = ". $_SESSION["td"] ."");
+          Helpers::DeleteId("producto_tags", "producto='$cod' and td = ". $_SESSION["td"] ."");
+          Helpers::DeleteId("ubicacion_asig", "producto='$cod' and td = ". $_SESSION["td"] ."");
+
+
+      $a = $db->query("SELECT imagen FROM producto_imagenes WHERE producto='$cod' and td = ". $_SESSION["td"] ."");
+      foreach ($a as $b) {
+          if(Helpers::DeleteId("producto_imagenes", "producto='$cod' and td = ". $_SESSION["td"] ."")){
+              if (file_exists("../../assets/img/productos/" . $_SESSION["td"] . "/" . $b["imagen"])) { unlink("../../assets/img/productos/" . $_SESSION["td"] . "/" . $b["imagen"]); }
+          }
+      } $a->close();
+
+           Alerts::Alerta("success","Eliminado!","Precio eliminado correctamente!");
+        } else {
+            Alerts::Alerta("error","Error!","Algo Ocurrio!");
+        } 
+
+      $this->UltimosProductos();
+
+  }
 
 
 
