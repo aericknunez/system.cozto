@@ -2172,8 +2172,8 @@ break;
 
 
 case "560":  /// agragar producto rapido
-include_once '../../system/producto/IngresoRapido.php';
-	$fast = new Rapido(); 
+include_once '../../system/herramientas/Herramientas.php';
+	$fast = new Herramientas(); 
 	$fast->AddProducto($_POST);
 break;
 

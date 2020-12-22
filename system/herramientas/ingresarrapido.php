@@ -1,8 +1,8 @@
 <?php 
 defined('BASEPATH') OR exit('No direct script access allowed');
 include_once 'application/common/Alerts.php';
-include_once 'system/producto/IngresoRapido.php';
-$producto = new Rapido(); 
+include_once 'system/herramientas/Herramientas.php';
+$producto = new Herramientas(); 
 
 Alerts::Mensajex("El ingreso de productos no es recomentado, no olvide posteriormente actualizar los datos del producto","warning");
 ?>
