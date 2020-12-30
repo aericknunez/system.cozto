@@ -2151,6 +2151,13 @@ include_once '../../system/autoparts/AutopartsOp.php';
 break;
 
 
+case "546":  /// Load data para facturar web
+include_once '../../system/facturar/Facturar.php';
+	$data = new Facturar(); 
+	$data->ObtenerDatosfacturaWeb();
+break;
+
+
 
 case "550":  /// borrar producto
 include_once '../../system/producto/Productos.php';
