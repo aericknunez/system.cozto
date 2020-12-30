@@ -22,6 +22,9 @@ if(isset($_REQUEST["add"])){
 <input type="text" id="giro" name="giro" autocomplete="off" class="form-control mb-3" placeholder="Giro"> 
 <input type="text" id="registro" name="registro" autocomplete="off" class="form-control mb-3" placeholder="Registro"> 
 
+<input type="text" id="direccion" name="direccion" autocomplete="off" class="form-control mb-3" placeholder="Direccion"> 
+<input type="text" id="departamento" name="departamento" autocomplete="off" class="form-control mb-3" placeholder="Departamento"> 
+
 <button class="btn btn-info btn-block my-4" type="submit" id="btn-documento" name="btn-documento"><?php echo "Agregar " . $_SESSION['config_nombre_documento']; ?></button>
 </form>
 

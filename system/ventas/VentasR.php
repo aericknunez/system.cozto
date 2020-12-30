@@ -860,7 +860,7 @@ $_SESSION["cambio_actual_print"] = $efectivo; // solo para imprimir la factura c
   }
 
 
-  public function RegistroDocumento($factura){ // registra el documento al facturar
+  public function RegistroDocumento($factura){ // registra el documento al facturar (credito fiscal)
     $db = new dbConn();
 
 	if($_SESSION["factura_cliente"] != NULL and $_SESSION["factura_documento"] != NULL){
