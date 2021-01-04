@@ -28,12 +28,12 @@ $.ajax({
 </script>
 
 
-<?php } else {
-/// si es version web
+<?php } else {  /// si es version web
+
+
 if(isset($_SESSION["orden"])){
     $_SESSION["orden_print"] = $_SESSION["orden"];
-}
-?>
+}?>
 
 <script>
 $('#btn-facturar').click(function(e){ /// agregar un producto 
@@ -102,5 +102,4 @@ function LoadImprimir(parametros){
 
 
 
-<?
-} ?>
+<? } ?>

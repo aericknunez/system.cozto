@@ -2159,6 +2159,14 @@ break;
 
 
 
+case "547": // mostar los botones para seleccionar el tipo de ticket
+	include_once '../../system/facturar/Facturar.php'; 
+	$fac = new Facturar();
+	$fac->TiposTicketActivos();
+break;
+
+
+
 case "550":  /// borrar producto
 include_once '../../system/producto/Productos.php';
 	$prod = new Productos(); 

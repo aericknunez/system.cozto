@@ -32,7 +32,7 @@ if($_SESSION["caja_apertura"] != NULL or $_SESSION["caja_soloagregar"] != NULL){
 }
 
 
-// print_r($_SESSION);
+print_r($_SESSION);
 
 if($_SESSION["caja_apertura"] == NULL){
 ?>
@@ -126,11 +126,8 @@ Alerts::Mensajex("CAJA APERTURADA CORRECTAMENTE","success", '<a href="?" class="
       </div>
       <div class="modal-body" align="center">
 <!-- ./  content -->
-<a id="opticket" tipo="1" class="btn btn-cyan">Ticket</a>
-<a id="opticket" tipo="3" class="btn btn-brown">Credito Fiscal</a>
-<a id="opticket" tipo="2" class="btn btn-indigo">Factura</a>
-
-<a id="opticket" tipo="0" class="btn btn-elegant">Ninguno</a>
+<div id="contenidomticket">
+</div>
 <!-- ./  content -->
       </div>
 
