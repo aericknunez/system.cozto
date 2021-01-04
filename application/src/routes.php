@@ -1059,7 +1059,8 @@ break;
 case "120": // mostar los botones imprimir factura
 	include_once '../../system/facturar/Facturar.php'; // obtiene el estado de la factura tx, local o web
 	include_once '../../system/facturar/facturas/'.$_SESSION["td"].'/Impresiones.php'; // tiene las 
-	
+	require_once ('../ticket/autoload.php'); 
+
 	$fac = new Facturar();
 	$fac->ObtenerEstadoFactura($_SESSION["cambio_actual_print"], $_SESSION["factura_actual_print"]);
 
@@ -1078,6 +1079,17 @@ case "121": // historial de  utilidades
 	}
 	
 	$historial->HistorialUtilidades($inicio, $fin);
+break;
+
+
+
+case "122": // imprimir barcode de producto
+	include_once '../../system/facturar/facturas/'.$_SESSION["td"].'/Impresiones.php'; // tiene las 
+	require_once ('../ticket/autoload.php'); 
+
+	$fac = new Impresiones();
+	$fac->Barcode($_POST["iden"]);
+	Alerts::Alerta("success","Imprimiendo!","Imprimiendo código de barras");
 break;
 
 

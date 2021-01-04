@@ -116,4 +116,26 @@ $("#mdb-lightbox-ui").load("assets/mdb-addons/mdb-lightbox-ui.html");
 
 
 
+
+
+
+    $("body").on("click","#barcode",function(){
+        var op = $(this).attr('op');
+        var iden = $(this).attr('iden');
+        var dataString = 'op='+op+'&iden='+iden;
+        $.ajax({
+            type: "POST",
+            url: "application/src/routes.php",
+            data: dataString,
+            success: function(data) {            
+                $("#msj").html(data); // lo que regresa de la busquea 
+            }
+        });
+    });                 
+
+
+
+
+
+
 });
