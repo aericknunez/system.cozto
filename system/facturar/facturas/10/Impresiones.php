@@ -259,6 +259,7 @@ $printer -> initialize();
 $a = "{A" . $numero;
 
 $printer -> setJustification(Printer::JUSTIFY_CENTER);
+$printer->setBarcodeWidth(3);
 $printer -> setBarcodeHeight(100);
 $printer->setBarcodeTextPosition(Printer::BARCODE_TEXT_BELOW);
     $printer -> barcode($a, Printer::BARCODE_CODE128);
