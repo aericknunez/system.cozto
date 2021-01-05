@@ -86,6 +86,8 @@ else { return '<a id="mticket">N/A</a>'; }
 }
 
 
+
+
  	public function MostrarOrdenes(){ // listado de ordenes pendientes
  		$db = new dbConn();
 

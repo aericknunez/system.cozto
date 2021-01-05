@@ -780,7 +780,7 @@ $a->close();
 	public function AddTicketNum($efectivo) { //leva el control del autoincremento de los clientes
 		$db = new dbConn();
 
-	    if ($r = $db->select("num_fac", "ticket_num", "WHERE td = ".$_SESSION["td"]." and tx = ".$_SESSION["tx"]." order by num_fac desc limit 1")) { 
+	    if ($r = $db->select("num_fac", "ticket_num", "WHERE tipo = ".$_SESSION["tipoticket"]." and td = ".$_SESSION["td"]." and tx = ".$_SESSION["tx"]." order by num_fac desc limit 1")) { 
 	        $ultimoorden = $r["num_fac"];
 	    } unset($r);  
 
@@ -792,6 +792,7 @@ $a->close();
 		    $datos["efectivo"] = $efectivo;
 		    $datos["edo"] = 1;
 		    $datos["tx"] = $_SESSION["tx"];
+		    $datos["tipo"] = $_SESSION["tipoticket"];
 		    $datos["hash"] = Helpers::HashId();
 		    $datos["time"] = Helpers::TimeId();
 		    $datos["td"] = $_SESSION["td"];

@@ -51,7 +51,8 @@ echo '
 
 	/// facturar
 	if($_GET["modal"] == "facturar"){
-	echo '<script type="text/javascript" src="assets/js/query/facturar.js?v='.$numero.'"></script>';
+	// echo '<script type="text/javascript" src="assets/js/query/facturar.js?v='.$numero.'"></script>';
+	include_once 'assets/js/query/facturar.php';
 	}
 
 
