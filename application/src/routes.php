@@ -2164,9 +2164,9 @@ break;
 
 
 case "546":  /// Load data para facturar web
-include_once '../../system/facturar/Facturar.php';
-	$data = new Facturar(); 
-	$data->ObtenerDatosfacturaWeb();
+include_once '../../system/facturar/FacturarWeb.php';
+	$data = new FacturarWeb(); 
+	$data->TicketWeb();
 break;
 
 
