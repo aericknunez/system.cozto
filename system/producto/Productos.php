@@ -1210,6 +1210,7 @@ if($dir == "asc") $dir2 = "desc";
 // aqui iria el  de borrar producto
 if($_SESSION["tipo_cuenta"] == 1 or $_SESSION["tipo_cuenta"] == 5){
     echo '<a id="delpro" op="550" iden="'.$b["cod"].'"> <i class="fas fa-trash fa-lg red-text ml-3"></i></a>';
+    echo '<a id="barcode" op="122" iden="'.$b["cod"].'"> <i class="fas fa-barcode fa-lg back-text ml-3"></i></a>';
 }
 
 

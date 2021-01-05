@@ -1059,7 +1059,8 @@ break;
 case "120": // mostar los botones imprimir factura
 	include_once '../../system/facturar/Facturar.php'; // obtiene el estado de la factura tx, local o web
 	include_once '../../system/facturar/facturas/'.$_SESSION["td"].'/Impresiones.php'; // tiene las 
-	
+	require_once ('../ticket/autoload.php'); 
+
 	$fac = new Facturar();
 	$fac->ObtenerEstadoFactura($_SESSION["cambio_actual_print"], $_SESSION["factura_actual_print"]);
 
@@ -1078,6 +1079,17 @@ case "121": // historial de  utilidades
 	}
 	
 	$historial->HistorialUtilidades($inicio, $fin);
+break;
+
+
+
+case "122": // imprimir barcode de producto
+	include_once '../../system/facturar/facturas/'.$_SESSION["td"].'/Impresiones.php'; // tiene las 
+	require_once ('../ticket/autoload.php'); 
+
+	$fac = new Impresiones();
+	$fac->Barcode($_POST["iden"]);
+	Alerts::Alerta("success","Imprimiendo!","Imprimiendo código de barras");
 break;
 
 
@@ -2151,6 +2163,21 @@ include_once '../../system/autoparts/AutopartsOp.php';
 break;
 
 
+case "546":  /// Load data para facturar web
+include_once '../../system/facturar/Facturar.php';
+	$data = new Facturar(); 
+	$data->ObtenerDatosfacturaWeb();
+break;
+
+
+
+case "547": // mostar los botones para seleccionar el tipo de ticket
+	include_once '../../system/facturar/Facturar.php'; 
+	$fac = new Facturar();
+	$fac->TiposTicketActivos();
+break;
+
+
 
 case "550":  /// borrar producto
 include_once '../../system/producto/Productos.php';
@@ -2168,15 +2195,19 @@ break;
 
 
 
-
-
-
 case "560":  /// agragar producto rapido
-include_once '../../system/producto/IngresoRapido.php';
-	$fast = new Rapido(); 
+include_once '../../system/herramientas/Herramientas.php';
+	$fast = new Herramientas(); 
 	$fast->AddProducto($_POST);
 break;
 
+
+
+case "561":  /// borrar producto
+include_once '../../system/herramientas/Herramientas.php';
+	$prod = new Herramientas(); 
+	$prod->DelProducto($_POST["iden"]);
+break;
 
 
 

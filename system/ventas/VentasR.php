@@ -535,7 +535,7 @@ class Ventas{
 	public function AddTicketNum($efectivo) { //leva el control del autoincremento de los clientes
 		$db = new dbConn();
 
-	    if ($r = $db->select("num_fac", "ticket_num", "WHERE td = ".$_SESSION["td"]." and tx = ".$_SESSION["tx"]." order by num_fac desc limit 1")) { 
+	    if ($r = $db->select("num_fac", "ticket_num", "WHERE tipo = ".$_SESSION["tipoticket"]." and td = ".$_SESSION["td"]." and tx = ".$_SESSION["tx"]." order by num_fac desc limit 1")) { 
 	        $ultimoorden = $r["num_fac"];
 	    } unset($r);  
 
@@ -547,6 +547,7 @@ class Ventas{
 		    $datos["efectivo"] = $efectivo;
 		    $datos["edo"] = 1;
 		    $datos["tx"] = $_SESSION["tx"];
+		    $datos["tipo"] = $_SESSION["tipoticket"];
 		    $datos["hash"] = Helpers::HashId();
 		    $datos["time"] = Helpers::TimeId();
 		    $datos["td"] = $_SESSION["td"];
@@ -859,7 +860,7 @@ $_SESSION["cambio_actual_print"] = $efectivo; // solo para imprimir la factura c
   }
 
 
-  public function RegistroDocumento($factura){ // registra el documento al facturar
+  public function RegistroDocumento($factura){ // registra el documento al facturar (credito fiscal)
     $db = new dbConn();
 
 	if($_SESSION["factura_cliente"] != NULL and $_SESSION["factura_documento"] != NULL){

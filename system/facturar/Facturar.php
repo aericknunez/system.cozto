@@ -60,83 +60,91 @@ class Facturar{
 public function ObtenerEstadoFactura($efectivo, $factura){ // esta funcion obtiene el estado de la factura, el tx o si es local o web para decidir cual factura mostrar
 		$db = new dbConn();
 		$imprimir = new Impresiones(); 
-		
+
+	if($_SESSION["tipoticket"] == 1){
+		$imprimir->Ticket($efectivo, $factura);
+	}
+	if($_SESSION["tipoticket"] == 2){
+		$imprimir->Factura($efectivo, $factura);
+	}
+	if($_SESSION["tipoticket"] == 3){
+		$imprimir->CreditoFiscal($efectivo, $factura);
+	}
+
+}// termina le funcion
+
+
+
+
+
+
+
+
+
+public function TiposTicketActivos(){ // esta funcion obtiene los ticket activos para mostrarlos como oopciones
+		$db = new dbConn();
+// a =  ticket. b =  factura, e = Credito fiscal
+
 if($_SESSION["tx"] == 0){
 
-    if ($r = $db->select("ax0, bx0", "facturar_opciones", "WHERE td = ".$_SESSION["td"]."")) { 
-        $ax0 = $r["ax0"]; $bx0 = $r["bx0"];
+    if ($r = $db->select("ax0, bx0, ex0", "facturar_opciones", "WHERE td = ".$_SESSION["td"]."")) { 
+        $ax = $r["ax0"]; $bx = $r["bx0"]; $ex = $r["bx0"];
     } unset($r);  
-
-	if($ax0 == 1 or $bx0 == 1){
-
-	      if($ax0 == 1){  // tx0 ticket
-
-	      		if($_SESSION["root_plataforma"] == 0){ // si es local
-	      			$imprimir->Ticket($efectivo, $factura);
-	      			// echo "Ticket tx0 y local";
-	         //(tipo,numero,cambio,impresor,mesa,factura_o_tiket)
-	      		} else {
-	      			// aqui va el vinculo a web
-	      			echo '<a href="system/facturar/facturas/'.$_SESSION["td"].'/ticket_web.php?factura='.$factura.'" class="btn-floating btn-sm btn-info" target="_blank"><i class="fas fa-print"></i></a>';
-	      			// echo "Ticket tx0 y Web";
-	      		}        
-	      }
-	      if($bx0 == 1){ // tx0 factura
-	      		if($_SESSION["root_plataforma"] == 0){ // si es local
-	      			$imprimir->Factura($efectivo, $factura);
-	      			// echo "Factura tx0 y local";
-	         //(tipo,numero,cambio,impresor,mesa,factura_o_tiket)
-	      		} else {
-	      			// aqui va el vinculo a web
-	      			echo '<a href="system/facturar/facturas/'.$_SESSION["td"].'/ticket_web.php?factura='.$factura.'" class="btn-floating btn-sm btn-info" target="_blank"><i class="fas fa-print"></i></a>';
-	      			// echo "Factura tx0 y Web";
-	      		}
-	      }
-
-
-	}
 
 } else {
     
-    if ($r = $db->select("ax1, bx1", "facturar_opciones", "WHERE td = ".$_SESSION["td"]."")) { 
-        $ax1 = $r["ax1"]; $bx1 = $r["bx1"];
+    if ($r = $db->select("ax1, bx1, ex1", "facturar_opciones", "WHERE td = ".$_SESSION["td"]."")) { 
+        $ax = $r["ax1"]; $bx = $r["bx1"]; $ex = $r["ex1"];
     } unset($r);  
- 
-     if($bx1 == 1 or $bx1 == 1){ 
-
-        if($ax1 == 1){ // tx1 ticket
-        		if($_SESSION["root_plataforma"] == 0){ // si es local
-	      			$imprimir->Ticket($efectivo, $factura);
-	      			// echo '<a href="system/facturar/ticket_web.php?factura='.$factura.'" class="btn-floating btn-sm btn-success"><i class="fas fa-print"></i></a>';
-	      			// echo "Ticket tx1 y local";
-	         //(tipo,numero,cambio,impresor,mesa,factura_o_tiket)
-	      		} else {
-	      			// aqui va el vinculo a web
-	      			echo '<a href="system/facturar/facturas/'.$_SESSION["td"].'/ticket_web.php?factura='.$factura.'" class="btn-floating btn-sm btn-info" target="_blank"><i class="fas fa-print"></i></a>';
-	      			// echo "Ticekt tx1 y Web";
-	      		}
-           
-        }
-        if($bx1 == 1){ // tx1 Factura
-        		if($_SESSION["root_plataforma"] == 0){ // si es local
-	      			$imprimir->Factura($efectivo, $factura);
-	      			// echo '<a href="system/facturar/ticket_web.php?factura='.$factura.'" class="btn-floating btn-sm btn-info"><i class="fas fa-print"></i></a>';
-	      			// echo "Factura tx1 y local";
-	         //(tipo,numero,cambio,impresor,mesa,factura_o_tiket)
-	      		} else {
-	      			// aqui va el vinculo a web
-	      			echo '<a href="system/facturar/facturas/'.$_SESSION["td"].'/ticket_web.php?factura='.$factura.'" class="btn-floating btn-sm btn-info" target="_blank"><i class="fas fa-print"></i></a>';
-	      			// echo "Factura tx1 y Web";
-	      		}        	
-           
-        }
-
-    } 
-
-
 }
 
+if($ax == 1){
+echo '<a id="opticket" tipo="1" class="btn btn-cyan">Ticket</a>';
+}
+if($ex == 1){
+echo '<a id="opticket" tipo="3" class="btn btn-brown">Credito Fiscal</a>';
+}
+if($bx == 1){
+echo '<a id="opticket" tipo="2" class="btn btn-indigo">Factura</a>';
+}
+echo '<a id="opticket" tipo="0" class="btn btn-elegant">Ninguno</a>';
+
+
+
 }// termina le funcion
+
+
+
+
+
+
+
+
+
+public function ObtenerDatosfacturaWeb(){ /// obtiene el json que se envia a la impresora local
+		$db = new dbConn();
+
+$parametros = array();
+$a = $db->query("SELECT * FROM ticket_num WHERE orden = '".$_SESSION["orden_print"]."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."");
+foreach ($a as $b) {
+        $parametros = $b;
+} $a->close();
+     
+$productos = array();
+$x = $db->query("SELECT * FROM ticket WHERE num_fac = '".$b["num_fac"]."' and orden = '".$b["orden"]."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."");
+foreach ($x as $z) {
+     $productos[] = $z;
+} $x->close();
+
+
+$parametros["productos"] = $productos;
+$parametros["tipoticket"] = $_SESSION["tipoticket"];
+
+echo json_encode($parametros);
+		
+
+}// termina le funcion
+
 
 
 

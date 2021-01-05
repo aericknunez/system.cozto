@@ -144,13 +144,34 @@ if($_SESSION["config_pesaje"] == "on"){
 
  <li><a href="?listadoproductos" class="waves-effect"><i class="fas fa-address-book"></i> Productos Vendidos</a></li>
 
-
-<?php if($_SESSION["tipo_cuenta"] == 1 or $_SESSION["tipo_cuenta"] == 5) { ?>
-<li><a href="?ingresorapido" class="waves-effect"><i class="fas fa-plus"></i> Ingreso Rápido</a></li>
- <?php }   ?>
 </ul>
 </div>
 </li>
+
+
+
+
+
+
+<?php if($_SESSION["tipo_cuenta"] == 1 or $_SESSION["tipo_cuenta"] == 5) { ?>
+
+<li><a class="collapsible-header waves-effect arrow-r"><i class="fas fa-calculator"></i> HERRAMIENTAS<i class="fa fa-angle-down rotate-icon"></i></a>
+<div class="collapsible-body">
+<ul class="list-unstyled">
+
+<li><a href="?ingresorapido" class="waves-effect"><i class="fas fa-plus"></i> Ingreso Rápido</a></li>
+
+</ul>
+</div>
+</li>
+
+
+
+
+ <?php }   ?>
+
+
+
 
 
 
