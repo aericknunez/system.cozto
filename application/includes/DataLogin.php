@@ -215,13 +215,13 @@ public function VerificarEmail($email){
 
     $now = time();
 
-    // verifico en 2 horas
-    $valid_attempts = $now - (2 * 60 * 60);
+    // verifico en 2 horas (2 * 60 * 60)
+    $valid_attempts = $now - (2 * 60);
 
     $a = $db->query("SELECT time FROM login_attempts WHERE user_id = '$user_id' AND time > '$valid_attempts'");
 	$intentos = $a->num_rows;
 
-	    if ($intentos > 5) {
+	    if ($intentos > 10) {
             return FALSE; // hay fuerza
         } else {
             return TRUE; // no hay fuerza
