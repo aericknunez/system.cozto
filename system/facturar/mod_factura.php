@@ -114,7 +114,29 @@ $r = $db->select("*", "facturar_opciones", "where td = ".$_SESSION['td']."");
           </div>
        </td> 
      </tr>
-
+      <tr>
+       <td>Credito Fiscal</td>
+       <td>
+          <div class="switch">
+            <label>
+             Off
+              <input type="checkbox" <?php if($r["ex0"] == "1") echo 'checked = "checked"'; ?> id="ex0" name="ex0" >
+              <span class="lever"></span> 
+             On 
+            </label>
+          </div>
+       </td>
+       <td>
+          <div class="switch">
+            <label>
+             Off
+              <input type="checkbox" <?php if($r["ex1"] == "1") echo 'checked = "checked"'; ?> id="ex1" name="ex1" >
+              <span class="lever"></span> 
+             On 
+            </label>
+          </div>
+       </td> 
+     </tr>
 <?
  unset($r);  
    ?>

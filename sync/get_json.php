@@ -18,31 +18,24 @@ $hora = date("H:i:s");
 
 
 
-$data =  file_get_contents('http://localhost/app/api/bd_remota.php?x=' . $_SESSION["temporal_td"] . '&type=2');  
+$data =  file_get_contents('https://hibridosv.com/app/api/bd_remota.php?x=' . $_SESSION["temporal_td"] . '&type=2');  
 $datos = json_decode($data, true);
+
 
 foreach ($datos as $valores) { // vamos hacer un archivo por cada hash
 	$sync = $valores["hash"];
-
+echo $sync;
 $a = $db->query("SELECT * FROM login_db_sync WHERE hash = '$sync'");
 if($a->num_rows == 0){
 
 
-      $updata = array('validate'=>  1,
-      				  'hash'   	=>  $sync,
-				      'type' 	=>  2,
-				  	  'x'   	=>  $_SESSION["temporal_td"]);
+$data =  file_get_contents('https://hibridosv.com/app/api/bd_remota.php?validate=1&hash='.$sync.'&x='.$_SESSION["temporal_td"].'&type=2');  
+$result = json_decode($data, true);
 
-    $api_url = "http://localhost/app/api/bd_remota.php";
-    $client = curl_init($api_url);
-    curl_setopt($client, CURLOPT_POST, true);
-    curl_setopt($client, CURLOPT_POSTFIELDS, $updata);
-    curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
-    $response = curl_exec($client);
-    curl_close($client);
-    $result = json_decode($response, true);
 
-	// print_r($result);
+	print_r($result);
+
+if($result != NULL){
     foreach($result as $keys => $values){
 	      if($result[$keys]['success'] == '1'){
 	      		$dato = array();
@@ -63,7 +56,7 @@ if($a->num_rows == 0){
 				//
 	     }
     }
-
+}
 
 
 	} $a->close();

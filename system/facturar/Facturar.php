@@ -33,7 +33,12 @@ class Facturar{
 			case "dx1":
 				$cambio["dx1"] = $data["edo"];
 				break;
-
+			case "ex0":
+				$cambio["ex0"] = $data["edo"];
+				break;
+			case "ex1":
+				$cambio["ex1"] = $data["edo"];
+				break;
 		}
 
 

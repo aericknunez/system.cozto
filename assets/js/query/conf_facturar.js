@@ -136,6 +136,41 @@ $(document).ready(function()
 
 
 
+
+	$("body").on("click","#ex0",function(){ /// para el los botones de opciones
+
+		if($(this).attr('checked')){ // es por que estaba activo
+			$('#ex0').removeAttr("checked","checked");
+			var dir = 'op=450&iden=ex0&edo=0';
+		} 
+		else {
+			$('#ex0').attr("checked","checked");
+			var dir = 'op=450&iden=ex0&edo=1';
+		}
+	
+	QueryGo(dir);	
+	
+	});
+
+
+	$("body").on("click","#ex1",function(){ /// para el los botones de opciones
+
+		if($(this).attr('checked')){ // es por que estaba activo
+			$('#ex1').removeAttr("checked","checked");
+			var dir = 'op=450&iden=ex1&edo=0';
+		} 
+		else {
+			$('#ex1').attr("checked","checked");
+			var dir = 'op=450&iden=ex1&edo=1';
+		}
+	
+	QueryGo(dir);	
+	
+	});
+
+
+
+
 function QueryGo(dir){
 
         var dataString = dir;
