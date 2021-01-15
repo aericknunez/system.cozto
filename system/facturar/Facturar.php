@@ -75,6 +75,9 @@ public function ObtenerEstadoFactura($efectivo, $factura){ // esta funcion obtie
 	if($_SESSION["tipoticket"] == 3){
 		$imprimir->CreditoFiscal($efectivo, $factura);
 	}
+	if($_SESSION["tipoticket"] == 0){
+		$imprimir->Ninguno();
+	}
 
 }// termina le funcion
 
