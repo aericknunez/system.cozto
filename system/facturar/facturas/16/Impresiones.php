@@ -198,6 +198,18 @@ $printer->close();
 
 
 
+ public function Ninguno(){
+
+$nombre_impresora = "EPSON2";
+
+$connector = new WindowsPrintConnector($nombre_impresora);
+$printer = new Printer($connector);
+$printer->pulse();
+$printer->close();
+
+
+}   /// termina /.;ninguno
+
 
 
 
