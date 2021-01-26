@@ -108,6 +108,13 @@ class Helpers{
     }
 
 
+ static public function TipoPago($string) {
+    if($string == "1") return 'Efectivo';
+    if($string == "2") return 'Tarjeta';
+    if($string == "3") return 'Credito';
+    }
+
+
 
     static public function UserName($tipo){
         if($tipo == 1) return "Root";

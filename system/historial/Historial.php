@@ -776,6 +776,87 @@ public function VerAbonosCuentas($fecha) { //leva el control del autoincremento 
 
 
 
+
+
+	public function ListaVenta($fecha, $type = NULL) {
+		$db = new dbConn();
+
+        $a = $db->query("SELECT * FROM ticket WHERE fecha = '$fecha' and td = ".$_SESSION["td"]." order by time desc");
+
+			if($a->num_rows > 0){
+				
+				if($type == NULL){
+					echo '<h3 class="h3-responsive">PRODUCTOS VENDIDOS DEL DIA :: '.$fecha.'</h3>';
+				} else {
+					echo '<h3 class="h3-responsive">PRODUCTOS VENDIDOS</h3>';
+				}
+				    
+				echo '<div class="table-responsive">
+				<table class="table table-striped table-sm">
+						<thead>
+					     <tr>
+					       <th>Cant</th>
+					       <th>Producto</th>
+					       <th>Factura</th>
+					       <th>Fecha</th>
+					       <th>Pago</th>
+					       <th>Precio</th>
+					       <th>Total</th>
+					     </tr>
+					   </thead>
+
+						<tbody>';
+
+			    foreach ($a as $b) {
+		    
+			   echo '<tr>
+			       <th scope="row">'. $b["cant"] . '</th>
+			       <td>'. $b["producto"] . '</td>
+			       <td>'. $b["num_fac"] . '</td>
+			       <td>'. $b["fecha"] . ' - '. $b["hora"] . '</td>
+			       <td>'. Helpers::TipoPago($b["tipo_pago"]) . '</td>
+			       <td>'. Helpers::Dinero($b["pv"]) . '</td>
+			       <td>'. Helpers::Dinero($b["total"]) . '</td>
+			     </tr>';
+			    } 
+
+			    $a->close();
+
+			echo '</tbody>
+				</table></div>';
+			
+
+			$ar = $db->query("SELECT sum(cant) FROM ticket where edo = 1 and fecha = '$fecha' and td = ".$_SESSION['td']."");
+		    foreach ($ar as $br) {
+		     echo "Cantidad de Productos: ". $br["sum(cant)"] . "<br>";
+		    } $ar->close();
+
+		    $ag = $db->query("SELECT sum(total) FROM ticket where edo = 1 and fecha = '$fecha' and td = ".$_SESSION['td']."");
+		    foreach ($ag as $bg) { $tot = $bg["sum(total)"];
+		        echo "Total Vendido: ". Helpers::Dinero($bg["sum(total)"]) . "<br>";
+		    } $ag->close();
+
+
+		     echo "Total Agrupado: ". Helpers::Dinero($tot) . "<br>";
+
+		     echo '<div class="text-right"><a href="system/documentos/listaventa.php?fecha='.$fecha.'" >Descargar Excel</a></div>';
+
+			} else {
+				Alerts::Mensajex("No se encontraron productos para este dia","danger",$boton,$boton2);
+			}
+					    
+					
+
+	}
+
+
+
+
+
+
+
+
+
 ////////////consolidado diario
 	public function ConsolidadoDiario($fecha) {
 		$db = new dbConn();

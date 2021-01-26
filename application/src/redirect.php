@@ -78,6 +78,8 @@ elseif(isset($_GET["gdiario"])) include_once 'system/historial/gdiario.php';
 elseif(isset($_GET["gmensual"])) include_once 'system/historial/gmensual.php'; 
 elseif(isset($_GET["descuentos"])) include_once 'system/historial/descuentos.php'; 
 elseif(isset($_GET["utilidades"])) include_once 'system/historial/utilidades.php'; 
+elseif(isset($_GET["listaventa"])) include_once 'system/historial/listaventa.php'; 
+
 
 
 // graficos;

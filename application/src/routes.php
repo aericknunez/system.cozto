@@ -1198,6 +1198,18 @@ break;
 
 
 
+case "132": // venta diario listado
+	include_once '../../system/historial/Historial.php';
+	$historial = new Historial;
+	
+	if($_POST["fecha_submit"] == NULL){ $fecha = date("d-m-Y"); 
+	} else { $fecha = $_POST["fecha_submit"]; }
+	
+	$historial->ListaVenta($fecha);
+break;
+
+
+
 case "146": // lateral
 include_once '../../system/cotizar/Laterales.php';
 	$lateral = new Laterales;

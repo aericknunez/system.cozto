@@ -50,6 +50,8 @@ if($_SESSION["caja_apertura"] == NULL){ ?>
 <li><a href="?descuentos" class="waves-effect"><i class="fas fa-cogs"></i> Descuentos Diarios</a></li>
 <li><a href="?utilidades" class="waves-effect"><i class="fas fa-cogs"></i> Utilidades</a></li>
 
+<li><a href="?listaventa" class="waves-effect"><i class="fas fa-cogs"></i> Listado de ventas</a></li>
+
 
 <li><a href="?gra_semanal" class="waves-effect"><i class="fas fa-cog"></i> Grafico Semanal</a></li>
 <li><a href="?gra_mensual" class="waves-effect"><i class="fas fa-cogs"></i> Grafico Mensual</a></li>

@@ -8,6 +8,13 @@ $seslog = new Login();
 $seslog->sec_session_start();
 
 
+if($_REQUEST["fecha"] != NULL){
+  $fecha = $_REQUEST["fecha"];
+} else {
+  $fecha = date("d-m-Y");
+}
+
+
 
 if ($seslog->login_check() == TRUE) {
 
@@ -15,11 +22,14 @@ include_once '../../application/common/Fechas.php';
 include_once '../../application/common/Alerts.php';
 
 
+if($fecha != NULL){
+
 
 // $objPHPExcel->getColumnDimension('C')->setAutoSize(true);
 
 
- $a = $db->query("SELECT producto.cod, producto.descripcion, producto.cantidad, producto.existencia_minima, producto_categoria_sub.subcategoria FROM producto INNER JOIN producto_categoria_sub ON producto.categoria = producto_categoria_sub.hash and producto.td = ".$_SESSION["td"]."");
+$a = $db->query("SELECT * FROM ticket WHERE fecha = '$fecha' and td = ".$_SESSION["td"]." order by time desc");
+
 
     if($a->num_rows > 0){
 
@@ -44,40 +54,28 @@ $objPHPExcel->getDefaultStyle()->getFont()->setName('Arial')
 
 // Add encabezado
 $objPHPExcel->setActiveSheetIndex(0)
-            ->setCellValue('A1', 'CODIGO')
-            ->setCellValue('B1', 'DESCRIPCION')
-            ->setCellValue('C1', 'CANTIDAD')
-            ->setCellValue('D1', 'CATEGORIA')
-            ->setCellValue('E1', 'PRECIO')
-            ->setCellValue('F1', 'EXISTENCIA MINIMA')
-            ->setCellValue('G1', 'MARCA')
-            ->setCellValue('H1', 'CANTIDAD VENDIDO');
+            ->setCellValue('A1', 'CANTIDAD')
+            ->setCellValue('B1', 'PRODUCTO')
+            ->setCellValue('C1', 'FACTURA')
+            ->setCellValue('D1', 'FECHA')
+            ->setCellValue('E1', 'PAGO')
+            ->setCellValue('F1', 'PRECIO DE VENTA')
+            ->setCellValue('G1', 'TOTAL');
  
 
 
 $fila = 1;   
    foreach ($a as $b) {
- 
- if ($r = $db->select("precio", "producto_precio", "WHERE producto = ".$b["cod"]." and td = ". $_SESSION["td"] ."")) { 
-        $precio = $r["precio"]; } unset($r); 
-
-
-// productos vendidos
-if ($r = $db->select("sum(cant) as cantidad", "ticket", "WHERE cod = '".$b["cod"]."' and td = ". $_SESSION["td"] ."")) { 
-$vcantidad = $r["cantidad"];
-}  unset($r);
-
 
 $fila = $fila + 1; 
 $objPHPExcel->setActiveSheetIndex(0)
-          ->setCellValue('A' . $fila, $b["cod"])
-          ->setCellValue('B' . $fila, $b["descripcion"])
-          ->setCellValue('C' . $fila, $b["cantidad"])
-          ->setCellValue('D' . $fila, $b["subcategoria"])
-          ->setCellValue('E' . $fila, $precio)
-          ->setCellValue('F' . $fila, $b["existencia_minima"])
-          ->setCellValue('G' . $fila, NULL)
-          ->setCellValue('H' . $fila, $vcantidad);
+          ->setCellValue('A' . $fila, $b["cant"])
+          ->setCellValue('B' . $fila, $b["producto"])
+          ->setCellValue('C' . $fila, $b["num_fac"])
+          ->setCellValue('D' . $fila, $b["fecha"] . ' - '. $b["hora"])
+          ->setCellValue('E' . $fila, Helpers::TipoPago($b["tipo_pago"]))
+          ->setCellValue('F' . $fila, $b["pv"])
+          ->setCellValue('G' . $fila, $b["total"]);
  
 
         } 
@@ -85,8 +83,8 @@ $objPHPExcel->setActiveSheetIndex(0)
 
 
 
-$columnas = array('A','B','C','D','E','F','G','H');
-$numeros = array('E');
+$columnas = array('A','B','C','D','E','F','G');
+$numeros = array('F','G');
 
 // establece ceros numerocico las filas numerocas
 foreach($numeros as $columnID) {
@@ -105,40 +103,40 @@ foreach($columnas as $columnID) {
 
 
 // estableces como texto
-$range = 'A2'.':A'.$fila;
+$range = 'B2'.':B'.$fila;
 $objPHPExcel->getActiveSheet()
        ->getStyle($range)
        ->getNumberFormat()
        ->setFormatCode( PHPExcel_Style_NumberFormat::FORMAT_TEXT );
 
 // // formula de sumatoria
-// $filax = $fila + 1;
-// $objPHPExcel->setActiveSheetIndex(0)
-//             ->setCellValue('D'. $filax, "TOTAL: ");
-// $objPHPExcel->setActiveSheetIndex(0)
-//             ->setCellValue('E'. $filax, "=SUM(E2:E".$fila.")");
+$filax = $fila + 1;
+$objPHPExcel->setActiveSheetIndex(0)
+            ->setCellValue('F'. $filax, "TOTAL: ");
+$objPHPExcel->setActiveSheetIndex(0)
+            ->setCellValue('G'. $filax, "=SUM(G2:G".$fila.")");
 
-// $objPHPExcel->getActiveSheet()->getStyle('E'. $filax)
-//     ->getNumberFormat()
-//     ->setFormatCode(
-//         '$0.00'
-//     );
+$objPHPExcel->getActiveSheet()->getStyle('G'. $filax)
+    ->getNumberFormat()
+    ->setFormatCode(
+        '$0.00'
+    );
 
 
 
 
 // Rename worksheet
-$objPHPExcel->getActiveSheet()->setTitle('Inventario');
+$objPHPExcel->getActiveSheet()->setTitle('Lista de Productos Vendidos');
 
 
 // Set active sheet index to the first sheet, so Excel opens this as the first sheet
 $objPHPExcel->setActiveSheetIndex(0);
 
 
-$objPHPExcel->getActiveSheet()->getStyle("A1:H1")->getFont()->setBold(true);
+$objPHPExcel->getActiveSheet()->getStyle("A1:G1")->getFont()->setBold(true);
 // Redirect output to a client’s web browser (Excel2007)
 header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-header('Content-Disposition: attachment;filename="Inventario-'.date("d-m-Y-H_i_s").'.xlsx"');
+header('Content-Disposition: attachment;filename="ProductosVendidos-'.$fecha.'.xlsx"');
 header('Cache-Control: max-age=0');
 // If you're serving to IE 9, then the following may be needed
 header('Cache-Control: max-age=1');
@@ -162,6 +160,7 @@ exit;
    $a->close();         
 
 
+} // termina fecha
 
 
 } else {

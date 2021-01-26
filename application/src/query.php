@@ -306,6 +306,11 @@ elseif(isset($_GET["utilidades"])) {
 echo '<script type="text/javascript" src="assets/js/query/historial.js?v='.$numero.'"></script>';
 } 
 
+elseif(isset($_GET["listaventa"])) {
+echo '<script type="text/javascript" src="assets/js/query/historial.js?v='.$numero.'"></script>';
+} 
+
+
 
 
 

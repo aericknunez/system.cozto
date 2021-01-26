@@ -230,4 +230,32 @@ $(document).ready(function()
 
 
 
+
+
+
+	$('#btn-venta').click(function(e){ /// para el formulario
+		$("#form-venta").hide();
+		MuestraLoader();
+		e.preventDefault();
+		$.ajax({
+			url: "application/src/routes.php?op=132",
+			method: "POST",
+			data: $("#form-venta").serialize(),
+			success: function(data){
+				$("#contenido").html(data);
+				$("#form-venta").trigger("reset");
+				$("#form-venta").show();
+				EscondeLoader();
+			}
+		})
+	})
+	
+
+
+
+
+
+
+
+
 });
