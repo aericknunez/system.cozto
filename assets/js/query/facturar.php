@@ -54,7 +54,15 @@ $.ajax({
             $("#btn-te").hide(); // esconde boton tarjeta y efectivo
             $("#resultado").html(data);     
 
+            <?php
+            if($_SESSION["td"] == 10){
+            ?>
+            $("#botones-imprimir").load('application/src/routes.php?op=120');
+            <?
+            } else {
+            ?>
             LoadData();   
+            <?php } ?>
         }
     })
 
