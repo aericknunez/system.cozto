@@ -182,6 +182,10 @@ echo '<script type="text/javascript" src="assets/js/query/producto_vermodal.js?v
 elseif(isset($_GET["ingresorapido"])) {
 echo '<script type="text/javascript" src="assets/js/query/ingresorapido.js?v='.$numero.'"></script>';
 } 
+elseif(isset($_GET["modificarproducto"])) {
+echo '<script type="text/javascript" src="assets/js/query/paginador.js?v='.$numero.'"></script>';
+echo '<script type="text/javascript" src="assets/js/query/producto_vermodal.js?v='.$numero.'"></script>';
+} 
 
 
 

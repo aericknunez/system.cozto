@@ -63,10 +63,23 @@ $fila = 1;
 
 
 // productos vendidos
-if ($r = $db->select("sum(cant) as cantidad", "ticket", "WHERE cod = '".$b["cod"]."' and td = ". $_SESSION["td"] ."")) { 
+if ($r = $db->select("sum(cant) as cantidad", "ticket", "WHERE cod = '".$b["cod"]."' and td = ". $_SESSION["td"] ."")) {
 $vcantidad = $r["cantidad"];
 }  unset($r);
 
+//marca
+if ($r = $db->select("marca", "marca_asig", "WHERE producto = '".$b["cod"]."' and td =".$_SESSION["td"]."")) { 
+   $codigo = $r["marca"];
+} unset($r);  
+
+if($codigo != NULL){
+  if ($r = $db->select("marca", "marcas", "WHERE hash = '".$codigo."' and td =".$_SESSION["td"]."")) { 
+     $marca = $r["marca"];
+  } unset($r);  
+} else {
+    $marca = "N/A";
+}
+unset($codigo);
 
 $fila = $fila + 1; 
 $objPHPExcel->setActiveSheetIndex(0)
@@ -76,8 +89,8 @@ $objPHPExcel->setActiveSheetIndex(0)
           ->setCellValue('D' . $fila, $b["subcategoria"])
           ->setCellValue('E' . $fila, $precio)
           ->setCellValue('F' . $fila, $b["existencia_minima"])
-          ->setCellValue('G' . $fila, NULL)
-          ->setCellValue('H' . $fila, $vcantidad);
+          ->setCellValue('G' . $fila, $marca)
+          ->setCellValue('H' . $fila, Helpers::Entero($vcantidad));
  
 
         } 

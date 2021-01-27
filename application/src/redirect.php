@@ -29,6 +29,8 @@ elseif(isset($_GET["pesaje"])) include_once 'system/producto/pesajes.php';
 elseif(isset($_GET["listadoproductos"])) include_once 'system/producto/productoresumen.php'; 
 // rapido
 elseif(isset($_GET["ingresorapido"])) include_once 'system/herramientas/ingresarrapido.php'; 
+elseif(isset($_GET["modificarproducto"])) include_once 'system/herramientas/productos.php'; 
+
 
 
 

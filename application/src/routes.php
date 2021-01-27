@@ -2223,6 +2223,51 @@ break;
 
 
 
+case "562":  /// mostrar todos los productos para opciones
+include_once '../../system/herramientas/Herramientas.php';
+	$prod = new Herramientas(); 
+	$prod->TodosProductosOpciones($_POST["iden"], $_POST["orden"], $_POST["dir"]);
+break;
+
+
+
+case "563": // formulario marca
+include_once '../../system/producto/Productos.php';
+	$productos = new Productos;
+	$productos->AddMarca($_POST);
+
+break;
+
+
+
+case "564": // borrar marca
+include_once '../../system/producto/Productos.php';
+	$productos = new Productos;
+	$productos->DelMarca($_REQUEST["hash"]);
+break;
+
+
+
+case "565": // bcambiar marca
+include_once '../../system/herramientas/Herramientas.php';
+	$prod = new Herramientas(); 
+	$prod->CambiarMarca($_POST);
+break;
+
+
+
+case "566": // ver marca
+include_once '../../system/herramientas/Herramientas.php';
+	$prod = new Herramientas(); 
+	$prod->VerMarca($_POST["cod"]);
+break;
+
+
+
+
+
+
+
 
 
 

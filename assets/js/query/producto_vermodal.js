@@ -136,6 +136,59 @@ $("#mdb-lightbox-ui").load("assets/mdb-addons/mdb-lightbox-ui.html");
 
 
 
+/// llamar modal ver.
+    $(document).ready(function() {
+    $('.mdb-select').materialSelect();
+    });
+
+    $("body").on("click","#modmarca",function(){ 
+       
+        var cod = $(this).attr('iden');
+        $('#ModalMarcaAdd').modal('show');
+         $('#marca').attr("cod",cod);
+        VerMarca(cod);
+
+    });
+
+//// cambiar la marca
+    $("#marca").change(function(){
+        var id=$(this).val();
+        var cod=$(this).attr('cod');
+        var dataString = 'op=565&iden='+ id + '&cod=' + cod;
+  
+          $.ajax({
+            type: "POST",
+            url: "application/src/routes.php",
+            data: dataString,
+            beforeSend: function () {
+               $("#vistamarca").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt=""></div>');
+            },
+            success: function(data) {            
+                $("#vistamarca").html(data); // lo que regresa de la busquea 
+            }
+        });  
+
+    });
+
+
+
+
+function VerMarca(cod){
+    var dataString = 'op=566&cod='+ cod;
+    $.ajax({
+        type: "POST",
+        url: "application/src/routes.php",
+        data: dataString,
+        success: function(data) {            
+            $("#vistamarca").html(data); // lo que regresa de la busquea 
+        }
+    });  
+}
+
+
+
+
+
 
 
 });

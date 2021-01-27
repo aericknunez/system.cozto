@@ -28,6 +28,11 @@ $producto = new Productos();
         aria-controls="ubicacion-classic" aria-selected="false">UBICACIONES</a>
     </li>
 
+    <li class="nav-item">
+      <a class="nav-link waves-light" id="marca-tab-classic" data-toggle="tab" href="#marca-classic" role="tab"
+        aria-controls="marca-classic" aria-selected="false">MARCAS</a>
+    </li>
+
   </ul>
   <div class="tab-content border-right border-bottom border-left rounded-bottom" id="myClassicTabContent">
     <div class="tab-pane fade active show" id="steps-classic" role="tabpanel" aria-labelledby="steps-tab-classic">
@@ -205,6 +210,47 @@ $producto = new Productos();
 		</div>
 
     </div> <!-- termina tab -->
+
+
+
+
+    <div class="tab-pane fade" id="marca-classic" role="tabpanel" aria-labelledby="marca-tab-classic">
+      <?php Alerts::Mensaje("Ingrese las marcas de sus productos","success",$boton,$boton2); ?>
+      
+    <div class="row">
+        <div class="col-md-6 btn-outline-info z-depth-2" id="origenmarca">
+                
+        <!-- Inicia Formulario -->
+                <form id="form-addmarca">
+  
+                  <div class="form-row">
+                    <div class="col-md-8 mb-2 md-form">
+                      <label for="cod">Marcas</label>
+                      <input type="text" class="form-control" id="marca" name="marca" required>
+                    </div>
+
+                  <div class="col-md-4 mb-4 md-form">
+                      <button class="btn-floating btn-sm btn-secondary" type="submit" id="btn-addmarca"><i class="fa fa-plus"></i></button>
+                    </div>
+
+                  </div>
+
+              </form>
+        <!-- Termina Formulario -->
+
+        </div>
+        
+        <div class="col-md-6 btn-outline-danger z-depth-2" id="destinomarca">
+            <?php 
+               $producto->VerMarca();        
+             ?>
+        </div>
+       
+    </div>
+
+    </div> <!-- termina tab -->
+
+
 
 
 

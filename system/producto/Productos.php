@@ -1824,6 +1824,84 @@ $a->close();
 
 
 
+
+
+
+
+// funciones de Marca
+
+  public function AddMarca($datos){ // agrega una Marca de medida para ponersela al producto
+    $db = new dbConn();
+
+      if($datos["marca"] != NULL){
+              $datos["hash"] = Helpers::HashId();
+              $datos["time"] = Helpers::TimeId();
+              $datos["td"] = $_SESSION["td"];
+              if ($db->insert("marcas", $datos)) {
+                  
+                  Alerts::Alerta("success","Agregado!","Agregado Correctamente!");
+                  
+              }else {
+            Alerts::Alerta("error","Error!","Algo Ocurrio!");
+          }
+      } else {
+        Alerts::Alerta("error","Error!","Faltan Datos!");
+      }
+      $this->VerMarca();
+  }
+
+
+
+
+  public function VerMarca(){ // listado de Marca
+    $db = new dbConn();
+
+      $a = $db->query("SELECT * FROM marcas WHERE td = ".$_SESSION["td"]."");
+      if($a->num_rows > 0){
+    echo '<table class="table table-sm table-hover">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Marca</th>
+          <th scope="col">Eliminar</th>
+        </tr>
+      </thead>
+      <tbody>';
+      $n = 1;
+          foreach ($a as $b) { ;
+            echo '<tr>
+                  <th scope="row">'. $n ++ .'</th>
+                  <td>'.$b["marca"].'</td>
+                  <td><a id="xdelete" valor="5" hash="'.$b["hash"].'" op="564"><i class="fa fa-minus-circle fa-lg red-text"></i></a></td>
+                </tr>';          
+          }
+    echo '</tbody>
+    </table>';
+
+      } $a->close();
+  }
+
+
+
+  public function DelMarca($hash){ // elimina Marca
+    $db = new dbConn();
+        if (Helpers::DeleteId("marcas", "hash='$hash'")) {
+           Alerts::Alerta("success","Eliminado!","Categoria eliminada correctamente!");
+        } else {
+            Alerts::Alerta("error","Error!","Algo Ocurrio!");
+        } 
+      $this->VerMarca();
+  }
+
+
+
+
+
+
+
+
+
+
 } // Termina la lcase
 
 ?>

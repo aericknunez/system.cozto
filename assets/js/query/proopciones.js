@@ -130,6 +130,29 @@ $(document).ready(function(){
 
 
 
+/// marca
+	$('#btn-addmarca').click(function(e){ /// para agregar categoria
+	e.preventDefault();
+	$.ajax({
+			url: "application/src/routes.php?op=563",
+			method: "POST",
+			data: $("#form-addmarca").serialize(),
+			success: function(data){
+				$("#form-addmarca").trigger("reset");
+				$("#destinomarca").html(data);
+			}
+		})
+	})
+    
+
+	$("#form-addmarca").keypress(function(e) {//Para deshabilitar el uso de la tecla "Enter"
+	if (e.which == 13) {
+	return false;
+	}
+	});
+
+
+
 
 
 
@@ -161,6 +184,7 @@ $(document).ready(function(){
 	    	if(valor == '2'){ $("#destinounidad").html(data); }
 	    	if(valor == '3'){ $("#destinocaracteristica").html(data); }
 	    	if(valor == '4'){ $("#destinoubicacion").html(data); }
+	    	if(valor == '5'){ $("#destinomarca").html(data); }
 		
 			$('#ConfirmDelete').modal('hide');
 	   	 });
