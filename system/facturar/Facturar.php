@@ -66,6 +66,10 @@ public function ObtenerEstadoFactura($efectivo, $factura){ // esta funcion obtie
 		$db = new dbConn();
 		$imprimir = new Impresiones(); 
 
+if($_SESSION["td"] == 10){
+		echo '<a href="system/facturar/facturas/'.$_SESSION["td"].'/ticket_web.php?factura='.$factura.'" class="btn-floating btn-lg btn-mdb-color waves-effect waves-light" title="Imprimir Factura" target="_blank"><i class="fas fa-print"></i></a>';
+} else {
+
 	if($_SESSION["tipoticket"] == 1){
 		$imprimir->Ticket($efectivo, $factura);
 	}
@@ -78,6 +82,7 @@ public function ObtenerEstadoFactura($efectivo, $factura){ // esta funcion obtie
 	if($_SESSION["tipoticket"] == 0){
 		$imprimir->Ninguno();
 	}
+}
 
 }// termina le funcion
 
