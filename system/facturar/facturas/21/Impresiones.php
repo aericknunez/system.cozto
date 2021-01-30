@@ -21,7 +21,7 @@ $connector = new WindowsPrintConnector($nombre_impresora);
 $printer = new Printer($connector);
 $printer -> initialize();
 
-$printer -> setFont(Printer::FONT_B);
+$printer -> setFont(Printer::FONT_A);
 // $printer -> selectPrintMode(Printer::MODE_DOUBLE_HEIGHT);
 // $printer -> selectPrintMode(Printer::MODE_DOUBLE_WIDTH);
 
@@ -32,12 +32,22 @@ $printer -> setLineSpacing(80);
 // $printer -> setJustification(Printer::JUSTIFY_CENTER);
 // $logo = EscposImage::load($img, false);
 // $printer->bitImage($logo);
-$printer -> setJustification(Printer::JUSTIFY_LEFT);
+$printer -> setJustification(Printer::JUSTIFY_CENTER);
 
 $printer->text("MINI SUPER TRUJILLO");
 
+$printer -> setJustification(Printer::JUSTIFY_LEFT);
+
 $printer->feed();
-$printer->text("Nixon Vladimir Trujillo Martinez");
+$printer->text("Entrada Barrio el Salitre, Ojos de agua. Chalatenango");
+
+
+$printer->feed();
+$printer->text("Maria Hilda Martinez de Trujillo");
+
+$printer->feed();
+$printer->text("Compra y venta de articulos de primera necesidad");
+
 
 $printer->feed();
 $printer->text("Tel: 7561-1786");
@@ -69,6 +79,9 @@ $a = $db->query("select cod, cant, producto, pv, total, fecha, hora, num_fac fro
 $printer -> text($this->Item($b["cant"], $b["producto"], $b["pv"], $b["total"]));
 
 $subtotalf = $subtotalf + $b["total"];
+
+$fechaf = $b["fecha"];
+$fechaf = $b["hora"];
 
 }    $a->close();
 
@@ -119,7 +132,7 @@ $printer->feed();
 
 
 
-$printer -> text($this->DosCol($fechaf, 30, $horaf, 30));
+$printer -> text($this->DosCol(date("d-m-Y"), 30, date("H:i:s"), 30));
 
 
 
