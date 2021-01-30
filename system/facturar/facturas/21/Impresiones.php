@@ -21,7 +21,7 @@ $connector = new WindowsPrintConnector($nombre_impresora);
 $printer = new Printer($connector);
 $printer -> initialize();
 
-$printer -> setFont(Printer::FONT_C);
+$printer -> setFont(Printer::FONT_B);
 // $printer -> selectPrintMode(Printer::MODE_DOUBLE_HEIGHT);
 // $printer -> selectPrintMode(Printer::MODE_DOUBLE_WIDTH);
 
