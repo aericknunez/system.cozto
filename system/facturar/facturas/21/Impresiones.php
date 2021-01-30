@@ -13,7 +13,7 @@ class Impresiones{
 
  public function Ticket($efectivo, $numero){
   $db = new dbConn();
-  $nombre_impresora = "EPSON2";
+  $nombre_impresora = "POS-80C";
   // $img  = "C:/AppServ/www/pizto/assets/img/logo_factura/grosera.jpg";
 
 
@@ -166,7 +166,7 @@ $printer->close();
 
  public function Ninguno(){
 
-$nombre_impresora = "LR2000";
+$nombre_impresora = "POS-80C";
 
 $connector = new WindowsPrintConnector($nombre_impresora);
 $printer = new Printer($connector);
@@ -225,7 +225,7 @@ $printer->close();
 
  public function AbrirCaja(){
  // $print
-$nombre_impresora = "LR2000";
+$nombre_impresora = "POS-80C";
 
 $connector = new WindowsPrintConnector($nombre_impresora);
 $printer = new Printer($connector);
@@ -242,7 +242,7 @@ $printer->close();
 
  public function Barcode($numero){
   $db = new dbConn();
-  $nombre_impresora = "EPSON2";
+  $nombre_impresora = "POS-80C";
 
 
 $connector = new WindowsPrintConnector($nombre_impresora);
