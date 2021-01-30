@@ -25,7 +25,7 @@ $printer -> setFont(Printer::FONT_B);
 // $printer -> selectPrintMode(Printer::MODE_DOUBLE_HEIGHT);
 // $printer -> selectPrintMode(Printer::MODE_DOUBLE_WIDTH);
 
-$printer -> setTextSize(2, 2);
+$printer -> setTextSize(1, 1);
 $printer -> setLineSpacing(80);
 
 
