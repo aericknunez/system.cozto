@@ -231,7 +231,7 @@ $a = $db->query("select cod, cant, producto, pv, total, fecha, hora, num_fac fro
  $horaf=$b["hora"];
  $num_fac=$b["num_fac"];
 
-          $oi=$oi+68;
+          $oi=$oi+65;
           printer_draw_text($handle, $b["cant"], $col1, $oi);
           printer_draw_text($handle, $b["producto"], $col2, $oi);
           printer_draw_text($handle, $b["pv"], $col3, $oi);
@@ -254,6 +254,23 @@ $oi=$oi+$n1;
 printer_draw_text($handle, Helpers::Format($stotalx), $col4, $oi);
 
 
+
+
+// $oi=$oi+$n3+$n1;
+// printer_draw_text($handle, "Sub Total " . $_SESSION['config_moneda_simbolo'] . ":", 185, $oi);
+// printer_draw_text($handle, Helpers::Format(Helpers::STotal($subtotalf, $_SESSION['config_imp'])), 320, $oi);
+
+
+// $oi=$oi+$n1;
+// printer_draw_text($handle, "15% Impu. " . $_SESSION['config_moneda_simbolo'] . ":", 175, $oi);
+// printer_draw_text($handle, Helpers::Format(Helpers::Impuesto(Helpers::STotal($subtotalf, $_SESSION['config_imp']), $_SESSION['config_imp'])), 320, $oi);
+
+
+
+
+// $oi=$oi+$n1;
+// printer_draw_text($handle, "Total " . $_SESSION['config_moneda_simbolo'] . ":", 232, $oi);
+// printer_draw_text($handle, Helpers::Format($subtotalf), 320, $oi);
 
 
 
