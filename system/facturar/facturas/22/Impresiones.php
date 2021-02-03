@@ -160,7 +160,7 @@ $txt1   = "15";
 $txt2   = "5";
 $txt3   = "0";
 $txt4   = "0";
-$n1   = "20";
+$n1   = "17";
 $n2   = "60";
 $n3   = "30";
 $n4   = "0";
@@ -168,8 +168,8 @@ $n4   = "0";
 
 $col1 = 0;
 $col2 = 40;
-$col3 = 340;
-$col4 = 440;
+$col3 = 320;
+$col4 = 445;
 $col5 = 500;
 // $print
 $print = "EPSON LX-350";
@@ -186,7 +186,7 @@ printer_select_font($handle, $font);
 
 
 
-$oi=40;
+$oi=60;
 //// comienza la factura
 
 $oi=$oi+$n1;
