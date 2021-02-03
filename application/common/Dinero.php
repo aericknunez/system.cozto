@@ -8,9 +8,9 @@ public static function DineroEscrito($cantidad) {
 	$numero =  substr($cant, 0, -3);
 
 		if($decimales == "00"){
-		return ucfirst(self::convertir($numero) . " Dólares exactos"); 
+		return ucfirst(self::convertir($numero) . " Dolares exactos"); 
 		} else {
-		return ucfirst(self::convertir($numero) . " " . $decimales . "/100 Dólares"); 	
+		return ucfirst(self::convertir($numero) . " " . $decimales . "/100 Dolares"); 	
 		}
 
 

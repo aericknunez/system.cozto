@@ -248,16 +248,23 @@ if ($sx = $db->select("sum(stotal), sum(imp), sum(total)", "ticket", "WHERE num_
     } unset($sx); 
  
 /// salto de linea
-$oi=432;
+$oi=430;
 
 // valores en letras
 printer_draw_text($handle, Dinero::DineroEscrito($totalx), $col2, $oi);
 
+
+
 // volores numericos
-printer_draw_text($handle, Helpers::Format($stotalx), $col4, $oi);
+// printer_draw_text($handle, Helpers::Format($stotalx), $col4, $oi);
+printer_draw_text($handle, Helpers::Format(Helpers::STotal($totalx, $_SESSION['config_imp'])),$col4, $oi);
+
+
 
 $oi=$oi+$n1;
-printer_draw_text($handle, Helpers::Format($impx), $col4, $oi);
+// printer_draw_text($handle, Helpers::Format($impx), $col4, $oi);
+printer_draw_text($handle, Helpers::Format(Helpers::Impuesto(Helpers::STotal($subtotalf, $_SESSION['config_imp']), $_SESSION['config_imp'])), $col4, $oi);
+
 
 $oi=$oi+$n1;
 printer_draw_text($handle, Helpers::Format($totalx), $col4, $oi);
