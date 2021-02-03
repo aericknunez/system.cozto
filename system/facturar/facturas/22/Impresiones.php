@@ -263,7 +263,7 @@ printer_draw_text($handle, Helpers::Format(Helpers::STotal($totalx, $_SESSION['c
 
 $oi=$oi+$n1;
 // printer_draw_text($handle, Helpers::Format($impx), $col4, $oi);
-printer_draw_text($handle, Helpers::Format(Helpers::Impuesto(Helpers::STotal($subtotalf, $_SESSION['config_imp']), $_SESSION['config_imp'])), $col4, $oi);
+// printer_draw_text($handle, Helpers::Format(Helpers::Impuesto(Helpers::STotal($totalx, $_SESSION['config_imp']), $_SESSION['config_imp'])), $col4, $oi);
 
 
 $oi=$oi+$n1;
