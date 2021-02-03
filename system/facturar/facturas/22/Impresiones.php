@@ -247,6 +247,12 @@ if ($sx = $db->select("sum(stotal), sum(imp), sum(total)", "ticket", "WHERE num_
        $totalx=$sx["sum(total)"];
     } unset($sx); 
  
+/// cantidad en letras
+$oi=415;
+printer_draw_text($handle, Dinero::DineroEscrito($totalx), $col2, $oi);
+
+
+
 
 $oi=415;
 printer_draw_text($handle, Helpers::Format($stotalx), $col4, $oi);
