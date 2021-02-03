@@ -186,7 +186,7 @@ printer_select_font($handle, $font);
 
 
 
-$oi=350;
+$oi=40;
 //// comienza la factura
 
 $oi=$oi+$n1;
@@ -211,12 +211,12 @@ printer_draw_text($handle, date("Y"), 150, $oi);
 
 
 
-
-printer_draw_text($handle, $nombre, 80, $oi);
+$oi=$oi+$n1;
+printer_draw_text($handle, $nombre, 85, $oi);
 $oi=$oi+$n1;
 printer_draw_text($handle, $documento, 100, $oi);
 $oi=$oi+$n1;
-printer_draw_text($handle, $direccion, 5, $oi);
+printer_draw_text($handle, $direccion, 100, $oi);
 
 
 
