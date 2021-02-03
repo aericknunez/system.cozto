@@ -316,7 +316,7 @@ $txt2   = "5";
 $txt3   = "0";
 $txt4   = "0";
 $n1   = "17";
-$n2   = "60";
+$n2   = "15";
 $n3   = "30";
 $n4   = "0";
 
@@ -386,7 +386,7 @@ printer_draw_text($handle, $documento, 340, $oi);
 
 
 
-$oi=$oi+$n1+8; // salto de linea
+$oi=$oi+$n1+10; // salto de linea
 
 $a = $db->query("select cod, cant, producto, pv, stotal, total, fecha, hora, num_fac from ticket where num_fac = '".$numero."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]." group by cod");
   
@@ -396,7 +396,7 @@ $a = $db->query("select cod, cant, producto, pv, stotal, total, fecha, hora, num
  $horaf=$b["hora"];
  $num_fac=$b["num_fac"];
 
-          $oi=$oi+$n1;
+          $oi=$oi+$n2;
           printer_draw_text($handle, $b["cant"], $col1, $oi);
           printer_draw_text($handle, $b["producto"], $col2, $oi);
           printer_draw_text($handle, Helpers::Format(Helpers::STotal($b["pv"], $_SESSION['config_imp'])), $col3, $oi);
@@ -439,7 +439,7 @@ $oi=$oi+$n1;
 printer_draw_text($handle, Helpers::Format($totalx), $col4, $oi);
 
 
-$oi=$oi+$n1+$n1+$n1;
+$oi=$oi+$n1+$n1+$n1+$n1+$n1;
 printer_draw_text($handle, Helpers::Format($totalx), $col4, $oi);
 
 
