@@ -156,18 +156,18 @@ $printer->close();
  public function Factura($efectivo, $numero){
   $db = new dbConn();
 
-$txt1   = "31"; 
-$txt2   = "11";
+$txt1   = "15"; 
+$txt2   = "5";
 $txt3   = "0";
 $txt4   = "0";
-$n1   = "40";
+$n1   = "20";
 $n2   = "60";
-$n3   = "0";
+$n3   = "30";
 $n4   = "0";
 
 
 $col1 = 0;
-$col2 = 30;
+$col2 = 40;
 $col3 = 340;
 $col4 = 440;
 $col5 = 500;
@@ -234,7 +234,7 @@ $a = $db->query("select cod, cant, producto, pv, total, fecha, hora, num_fac fro
           $oi=$oi+$n1;
           printer_draw_text($handle, $b["cant"], $col1, $oi);
           printer_draw_text($handle, $b["producto"], $col2, $oi);
-          printer_draw_text($handle, $b["pv"], $col2, $oi);
+          printer_draw_text($handle, $b["pv"], $col3, $oi);
           printer_draw_text($handle, $b["total"], $col4, $oi);
 
 
