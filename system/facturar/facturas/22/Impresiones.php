@@ -425,7 +425,7 @@ printer_draw_text($handle, Dinero::DineroEscrito($totalx), $col2, $oi);
 
 // volores numericos
 // printer_draw_text($handle, Helpers::Format($totalx), $col4, $oi);
-printer_draw_text($handle, Helpers::Format(Helpers::STotal($totalx, $_SESSION['config_imp'])), $col4, $oi);
+printer_draw_text($handle, Helpers::Format($stotalx), $col4, $oi);
 
 
 
