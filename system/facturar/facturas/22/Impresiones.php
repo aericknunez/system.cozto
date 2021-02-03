@@ -386,7 +386,7 @@ printer_draw_text($handle, $documento, 340, $oi);
 
 
 
-$oi=76; // salto de linea
+$oi=$oi+$n1+$n1+$n1; // salto de linea
 
 $a = $db->query("select cod, cant, producto, pv, total, fecha, hora, num_fac from ticket where num_fac = '".$numero."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]." group by cod");
   
@@ -402,7 +402,7 @@ $a = $db->query("select cod, cant, producto, pv, total, fecha, hora, num_fac fro
           printer_draw_text($handle, Helpers::Format(Helpers::STotal($b["pv"], $_SESSION['config_imp'])), $col3, $oi);
 
           // printer_draw_text($handle, $b["pv"], $col3, $oi);
-          printer_draw_text($handle, $b["total"], $col4, $oi);
+          printer_draw_text($handle, $b["stotal"], $col4, $oi);
 
 
 
