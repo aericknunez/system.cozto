@@ -816,6 +816,7 @@ $a->close();
 
 	    $cambio = array();
 	   	$cambio["num_fac"] = $factura;
+	   	$cambio["tipo"] = $_SESSION["tipoticket"];
 	   	$cambio["tipo_pago"] = $tpago;
 	   	$cambio["cajero"] = $_SESSION["user"];
 	   	Helpers::UpdateId("ticket", $cambio, "orden = ".$_SESSION["orden"]." and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."");  

@@ -222,7 +222,7 @@ printer_draw_text($handle, $direccion, 100, $oi);
 
 $oi=$oi+42; // salto de linea
 
-$a = $db->query("select cod, cant, producto, pv, total, fecha, hora, num_fac from ticket where num_fac = '".$numero."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]." group by cod");
+$a = $db->query("select cod, cant, producto, pv, total, fecha, hora, num_fac from ticket where num_fac = '".$numero."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]." and tipo = ".$_SESSION["tipoticket"]." group by cod");
   
     foreach ($a as $b) {
  
@@ -241,7 +241,7 @@ $a = $db->query("select cod, cant, producto, pv, total, fecha, hora, num_fac fro
     }    $a->close();
 
 
-if ($sx = $db->select("sum(stotal), sum(imp), sum(total)", "ticket", "WHERE num_fac = '".$numero."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."")) { 
+if ($sx = $db->select("sum(stotal), sum(imp), sum(total)", "ticket", "WHERE num_fac = '".$numero."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]." and tipo = ".$_SESSION["tipoticket"]."")) { 
        $stotalx=$sx["sum(stotal)"];
        $impx=$sx["sum(imp)"];
        $totalx=$sx["sum(total)"];
@@ -385,10 +385,9 @@ $oi=$oi+$n1;
 printer_draw_text($handle, $documento, 340, $oi);
 
 
-
 $oi=$oi+$n1+10; // salto de linea
 
-$a = $db->query("select cod, cant, producto, pv, stotal, total, fecha, hora, num_fac from ticket where num_fac = '".$numero."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]." group by cod");
+$a = $db->query("select cod, cant, producto, pv, stotal, total, fecha, hora, num_fac from ticket where num_fac = '".$numero."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]." and tipo = ".$_SESSION["tipoticket"]." group by cod");
   
     foreach ($a as $b) {
  
@@ -409,7 +408,7 @@ $a = $db->query("select cod, cant, producto, pv, stotal, total, fecha, hora, num
     }    $a->close();
 
 
-if ($sx = $db->select("sum(stotal), sum(imp), sum(total)", "ticket", "WHERE num_fac = '".$numero."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."")) { 
+if ($sx = $db->select("sum(stotal), sum(imp), sum(total)", "ticket", "WHERE num_fac = '".$numero."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]." and tipo = ".$_SESSION["tipoticket"]."")) { 
        $stotalx=$sx["sum(stotal)"];
        $impx=$sx["sum(imp)"];
        $totalx=$sx["sum(total)"];
