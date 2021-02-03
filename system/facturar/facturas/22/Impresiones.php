@@ -220,9 +220,6 @@ printer_draw_text($handle, $direccion, 100, $oi);
 
 
 
-$subtotalf = 0;
-
-
 $oi=$oi+45; // salto de linea
 
 $a = $db->query("select cod, cant, producto, pv, total, fecha, hora, num_fac from ticket where num_fac = '".$numero."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]." group by cod");
@@ -240,22 +237,29 @@ $a = $db->query("select cod, cant, producto, pv, total, fecha, hora, num_fac fro
           printer_draw_text($handle, $b["total"], $col4, $oi);
 
 
-////
-$subtotalf = $subtotalf + $stotal;
-///
 
     }    $a->close();
 
 
-if ($sx = $db->select("sum(total)", "ticket", "WHERE num_fac = '".$numero."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."")) { 
-       $stotalx=$sx["sum(total)"];
+if ($sx = $db->select("sum(stotal), sum(imp), sum(total)", "ticket", "WHERE num_fac = '".$numero."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."")) { 
+       $stotalx=$sx["sum(stotal)"];
+       $impx=$sx["sum(imp)"];
+       $totalx=$sx["sum(total)"];
     } unset($sx); 
  
 
-$oi=430;
+$oi=415;
 printer_draw_text($handle, Helpers::Format($stotalx), $col4, $oi);
 
+$oi=$oi+$n1;
+printer_draw_text($handle, Helpers::Format($impx), $col4, $oi);
 
+$oi=$oi+$n1;
+printer_draw_text($handle, Helpers::Format($totalx), $col4, $oi);
+
+
+$oi=$oi+$n1+$n1+$n1;
+printer_draw_text($handle, Helpers::Format($totalx), $col4, $oi);
 
 
 // $oi=$oi+$n3+$n1;
