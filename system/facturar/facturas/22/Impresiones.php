@@ -190,9 +190,9 @@ $oi=80;
 //// comienza la factura
 
 $oi=$oi+$n1;
-printer_draw_text($handle, date("d"), 55, $oi);
-printer_draw_text($handle, date("m"), 100, $oi);
-printer_draw_text($handle, date("Y"), 150, $oi);
+printer_draw_text($handle, date("d"), 35, $oi);
+printer_draw_text($handle, date("m"), 80, $oi);
+printer_draw_text($handle, date("Y"), 130, $oi);
 
 
 
@@ -231,7 +231,7 @@ $a = $db->query("select cod, cant, producto, pv, total, fecha, hora, num_fac fro
  $horaf=$b["hora"];
  $num_fac=$b["num_fac"];
 
-          $oi=$oi+$n1;
+          $oi=$oi+40;
           printer_draw_text($handle, $b["cant"], $col1, $oi);
           printer_draw_text($handle, $b["producto"], $col2, $oi);
           printer_draw_text($handle, $b["pv"], $col3, $oi);
