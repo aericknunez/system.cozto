@@ -168,8 +168,8 @@ $n4   = "0";
 
 $col1 = 0;
 $col2 = 40;
-$col3 = 300;
-$col4 = 445;
+$col3 = 320;
+$col4 = 485;
 $col5 = 500;
 // $print
 $print = "EPSON LX-350";
@@ -231,7 +231,7 @@ $a = $db->query("select cod, cant, producto, pv, total, fecha, hora, num_fac fro
  $horaf=$b["hora"];
  $num_fac=$b["num_fac"];
 
-          $oi=$oi+65;
+          $oi=$oi+70;
           printer_draw_text($handle, $b["cant"], $col1, $oi);
           printer_draw_text($handle, $b["producto"], $col2, $oi);
           printer_draw_text($handle, $b["pv"], $col3, $oi);
