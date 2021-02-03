@@ -192,7 +192,7 @@ $oi=80;
 $oi=$oi+$n1;
 printer_draw_text($handle, date("d"), 35, $oi);
 printer_draw_text($handle, date("m"), 80, $oi);
-printer_draw_text($handle, date("Y"), 130, $oi);
+printer_draw_text($handle, date("Y"), 180, $oi);
 
 
 
@@ -269,7 +269,7 @@ $oi=$oi+$n1;
 // printer_draw_text($handle, Helpers::Format($totalx), $col4, $oi);
 
 
-$oi=$oi+$n1+$n1+$n1+$n1;
+$oi=$oi+$n1+$n1+$n1;
 printer_draw_text($handle, Helpers::Format($totalx), $col4, $oi);
 
 
