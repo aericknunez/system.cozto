@@ -386,7 +386,7 @@ printer_draw_text($handle, $documento, 340, $oi);
 
 
 
-$oi=$oi+$n1+$n1; // salto de linea
+$oi=$oi+$n1+8; // salto de linea
 
 $a = $db->query("select cod, cant, producto, pv, stotal, total, fecha, hora, num_fac from ticket where num_fac = '".$numero."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]." group by cod");
   
@@ -416,7 +416,7 @@ if ($sx = $db->select("sum(stotal), sum(imp), sum(total)", "ticket", "WHERE num_
     } unset($sx); 
  
 /// salto de linea
-$oi=430;
+$oi=422;
 
 // valores en letras
 printer_draw_text($handle, Dinero::DineroEscrito($totalx), $col2, $oi);
