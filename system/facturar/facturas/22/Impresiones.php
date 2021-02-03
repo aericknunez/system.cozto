@@ -378,7 +378,7 @@ printer_draw_text($handle, $departamento, 340, $oi);
 $oi=$oi+$n1;
 printer_draw_text($handle, $giro, 70, $oi);
 
-$oi=$oi+15;
+$oi=$oi+$n1;
 printer_draw_text($handle, $registro, 340, $oi);
 
 $oi=$oi+$n1;
