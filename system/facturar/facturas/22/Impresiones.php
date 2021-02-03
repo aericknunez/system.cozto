@@ -308,7 +308,7 @@ printer_close($handle);
 
 
 
- public function CreditoFiscal($data){
+ public function CreditoFiscal($efectivo, $numero){
   $db = new dbConn();
 
 $txt1   = "15"; 
