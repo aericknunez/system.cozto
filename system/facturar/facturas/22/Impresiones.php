@@ -399,7 +399,9 @@ $a = $db->query("select cod, cant, producto, pv, total, fecha, hora, num_fac fro
           $oi=$oi+$n1;
           printer_draw_text($handle, $b["cant"], $col1, $oi);
           printer_draw_text($handle, $b["producto"], $col2, $oi);
-          printer_draw_text($handle, $b["pv"], $col3, $oi);
+          printer_draw_text($handle, Helpers::Format(Helpers::STotal($b["pv"], $_SESSION['config_imp'])), $col3, $oi);
+
+          // printer_draw_text($handle, $b["pv"], $col3, $oi);
           printer_draw_text($handle, $b["total"], $col4, $oi);
 
 
