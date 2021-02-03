@@ -248,7 +248,7 @@ if ($sx = $db->select("sum(stotal), sum(imp), sum(total)", "ticket", "WHERE num_
     } unset($sx); 
  
 /// salto de linea
-$oi=415;
+$oi=432;
 
 // valores en letras
 printer_draw_text($handle, Dinero::DineroEscrito($totalx), $col2, $oi);
