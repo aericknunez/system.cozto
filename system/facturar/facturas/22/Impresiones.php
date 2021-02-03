@@ -223,7 +223,7 @@ printer_draw_text($handle, $direccion, 100, $oi);
 $subtotalf = 0;
 
 
-$oi=$oi+48; // salto de linea
+$oi=$oi+45; // salto de linea
 
 $a = $db->query("select cod, cant, producto, pv, total, fecha, hora, num_fac from ticket where num_fac = '".$numero."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]." group by cod");
   
@@ -252,7 +252,7 @@ if ($sx = $db->select("sum(total)", "ticket", "WHERE num_fac = '".$numero."' and
     } unset($sx); 
  
 
-$oi=500;
+$oi=430;
 printer_draw_text($handle, Helpers::Format($stotalx), $col4, $oi);
 
 
