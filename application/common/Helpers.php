@@ -168,6 +168,13 @@ class Helpers{
         return $format;
      } 
 
+
+    public function Format4D($numero){ 
+        $format=number_format($numero,4,'.',',');
+        return $format;
+     } 
+
+
     static public function Entero($numero){ 
         $format=intval($numero);
         return $format;
