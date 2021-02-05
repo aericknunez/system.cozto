@@ -1,0 +1,1 @@
+ALTER TABLE `ticket` ADD `tipo` INT(1) NOT NULL COMMENT '0 ninguno, 1 ticket, 2 factura, 3 crédito fiscal, 4 nota de credito' AFTER `num_fac`;
