@@ -211,7 +211,7 @@ printer_draw_text($handle, $direccion, 100, $oi);
 printer_draw_text($handle, $documento, 460, $oi);
 
 
-$oi=180; // salto de linea
+$oi=165; // salto de linea
 
 $a = $db->query("select cod, cant, producto, pv, total, fecha, hora, num_fac from ticket where num_fac = '".$numero."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]." and tipo = ".$_SESSION["tipoticket"]." group by cod");
   
