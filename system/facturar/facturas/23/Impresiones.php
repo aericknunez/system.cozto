@@ -168,7 +168,7 @@ $col3 = 325;
 $col4 = 485;
 $col5 = 500;
 // $print
-$print = "EPSON LX-350";
+$print = "FACTURA";
 
 $handle = printer_open($print);
 printer_set_option($handle, PRINTER_MODE, "RAW");
@@ -323,7 +323,7 @@ $col3 = 325;
 $col4 = 485;
 $col5 = 500;
 // $print
-$print = "EPSON LX-350";
+$print = "FACTURA";
 
 $handle = printer_open($print);
 printer_set_option($handle, PRINTER_MODE, "RAW");
