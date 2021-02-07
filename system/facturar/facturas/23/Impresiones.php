@@ -36,18 +36,14 @@ $printer -> setJustification(Printer::JUSTIFY_CENTER);
 
 $printer->text("VILLA NAPOLI");
 
+$printer->text("Calle a San Salvador colonia el Mora Poste 337");
+$printer->feed();
+
+$printer->text("Santa Ana");
+$printer->feed();
+
 $printer -> setJustification(Printer::JUSTIFY_LEFT);
-
-$printer->feed();
-$printer->text("Calle a San Salvador colonia el Mora Poste 337, Santa Ana");
-
-
-$printer->feed();
-$printer->text("Guillermo Alfredo Murillo Graniello");
-
-
-$printer->feed();
-$printer->text("Tel: 79856021");
+$printer->text("Tel: 7985-6021");
 
 $printer->feed();
 $printer->text("TICKET NUMERO: " . $numero);
@@ -56,7 +52,7 @@ $printer->text("TICKET NUMERO: " . $numero);
 /* Stuff around with left margin */
 $printer->feed();
 $printer -> setJustification(Printer::JUSTIFY_CENTER);
-$printer -> text("____________________________________________________________");
+$printer -> text("_______________________________________________________");
 $printer -> setJustification(Printer::JUSTIFY_LEFT);
 $printer->feed();
 /* Items */
@@ -88,21 +84,21 @@ if ($sx = $db->select("sum(total)", "ticket", "WHERE num_fac = '".$numero."' and
 
 
 
-$printer -> text("____________________________________________________________");
+$printer -> text("_______________________________________________________");
 $printer->feed();
 
 
-$printer -> text($this->DosCol("Sub Total " . $_SESSION['config_moneda_simbolo'] . ":", 50, Helpers::Format(Helpers::STotal($subtotalf, $_SESSION['config_imp'])), 10));
+$printer -> text($this->DosCol("Sub Total " . $_SESSION['config_moneda_simbolo'] . ":", 40, Helpers::Format(Helpers::STotal($subtotalf, $_SESSION['config_imp'])), 10));
 
 
-$printer -> text($this->DosCol("IVA " . $_SESSION['config_moneda_simbolo'] . ":", 50, Helpers::Format(Helpers::Impuesto(Helpers::STotal($subtotalf, $_SESSION['config_imp']), $_SESSION['config_imp'])), 10));
+$printer -> text($this->DosCol("IVA " . $_SESSION['config_moneda_simbolo'] . ":", 40, Helpers::Format(Helpers::Impuesto(Helpers::STotal($subtotalf, $_SESSION['config_imp']), $_SESSION['config_imp'])), 10));
 
 
-$printer -> text($this->DosCol("TOTAL " . $_SESSION['config_moneda_simbolo'] . ":", 50, Helpers::Format($subtotalf), 10));
+$printer -> text($this->DosCol("TOTAL " . $_SESSION['config_moneda_simbolo'] . ":", 40, Helpers::Format($subtotalf), 10));
 
 
 
-$printer -> text("____________________________________________________________");
+$printer -> text("_______________________________________________________");
 $printer->feed();
 
 
@@ -113,20 +109,20 @@ if($efectivo == NULL){
 
 
 
-$printer -> text($this->DosCol("Efectivo " . $_SESSION['config_moneda_simbolo'] . ":", 50, Helpers::Format($efectivo), 10));
+$printer -> text($this->DosCol("Efectivo " . $_SESSION['config_moneda_simbolo'] . ":", 40, Helpers::Format($efectivo), 10));
 
 //cambio
 $cambios = $efectivo - $subtotalf;
-$printer -> text($this->DosCol("Cambio " . $_SESSION['config_moneda_simbolo'] . ":", 50, Helpers::Format($cambios), 10));
+$printer -> text($this->DosCol("Cambio " . $_SESSION['config_moneda_simbolo'] . ":", 40, Helpers::Format($cambios), 10));
 
 
-$printer -> text("____________________________________________________________");
+$printer -> text("_______________________________________________________");
 $printer->feed();
 
 
 
 
-$printer -> text($this->DosCol(date("d-m-Y"), 30, date("H:i:s"), 30));
+$printer -> text($this->DosCol(date("d-m-Y"), 30, date("H:i:s"), 20));
 
 
 
@@ -597,9 +593,12 @@ $printer -> close();
 
 
 
- public function Item($cant,  $name = '', $price = '', $total = '', $dollarSign = false){
-        $rightCols = 10;
-        $leftCols = 42;
+
+
+ public function Item($cant,  $name = '', $price = '', $total = '', $dollarSign = false)
+    {
+        $rightCols = 8;
+        $leftCols = 38;
         if ($dollarSign) {
             $leftCols = $leftCols / 2 - $rightCols / 2;
         }
@@ -614,11 +613,13 @@ $printer -> close();
 
 
 
- public function DosCol($izquierda = '', $iz, $derecha = '', $der){
+ public function DosCol($izquierda = '', $iz, $derecha = '', $der)
+    {
         $left = str_pad($izquierda, $iz, ' ', STR_PAD_LEFT) ;      
         $right = str_pad($derecha, $der, ' ', STR_PAD_LEFT);
         return "$left$right\n";
     }
+
 
 
 
