@@ -156,7 +156,7 @@ $txt1   = "15";
 $txt2   = "5";
 $txt3   = "0";
 $txt4   = "0";
-$n1   = "17";
+$n1   = "15";
 $n2   = "60";
 $n3   = "30";
 $n4   = "0";
@@ -211,7 +211,7 @@ printer_draw_text($handle, $direccion, 100, $oi);
 printer_draw_text($handle, $documento, 460, $oi);
 
 
-$oi=165; // salto de linea
+$oi=173; // salto de linea
 
 $a = $db->query("select cod, cant, producto, pv, total, fecha, hora, num_fac from ticket where num_fac = '".$numero."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]." and tipo = ".$_SESSION["tipoticket"]." group by cod");
   
