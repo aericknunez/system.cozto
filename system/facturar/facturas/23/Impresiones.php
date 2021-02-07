@@ -368,11 +368,11 @@ printer_draw_text($handle, $cliente, 85, $oi);
 $oi=$oi+$n1;
 printer_draw_text($handle, $direccion, 100, $oi);
 $oi=$oi+$n1;
-printer_draw_text($handle, $departamento, 85, $oi);
+printer_draw_text($handle, $departamento, 100, $oi);
 printer_draw_text($handle, $giro, 340, $oi);
 
 $oi=$oi+$n1;
-printer_draw_text($handle, $documento, 85, $oi);
+printer_draw_text($handle, $documento, 100, $oi);
 printer_draw_text($handle, $registro, 340, $oi);
 
 
