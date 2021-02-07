@@ -260,7 +260,7 @@ $oi=$oi+$n1;
 // printer_draw_text($handle, Helpers::Format($totalx), $col4, $oi);
 
 
-$oi=$oi+$n1+$n1+$n1;
+$oi=$oi+$n1+$n1+8;
 printer_draw_text($handle, Helpers::Format($totalx), $col4, $oi);
 
 
