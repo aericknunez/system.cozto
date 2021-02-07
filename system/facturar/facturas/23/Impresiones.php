@@ -311,7 +311,7 @@ $txt1   = "15";
 $txt2   = "5";
 $txt3   = "0";
 $txt4   = "0";
-$n1   = "17";
+$n1   = "15";
 $n2   = "15";
 $n3   = "30";
 $n4   = "0";
@@ -341,9 +341,9 @@ $oi=80;
 //// comienza la factura
 
 $oi=$oi+$n1;
-printer_draw_text($handle, date("d"), 400, $oi);
+printer_draw_text($handle, date("d"), 430, $oi);
 printer_draw_text($handle, date("m"), 480, $oi);
-printer_draw_text($handle, substr(date("Y"), -1), 540, $oi);
+printer_draw_text($handle, substr(date("Y"), -1), 460, $oi);
 
 
 
