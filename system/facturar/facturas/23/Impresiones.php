@@ -205,15 +205,13 @@ $oi=$oi+$n1;
 printer_draw_text($handle, $nombre, 85, $oi);
 printer_draw_text($handle, date("d") . " - " . Fechas::MesEscrito(date("m")) ." - " . date("Y"), 460, $oi);
 
-
-$oi=$oi+$n1;
-printer_draw_text($handle, $documento, 100, $oi);
 $oi=$oi+$n1;
 printer_draw_text($handle, $direccion, 100, $oi);
 
+printer_draw_text($handle, $documento, 460, $oi);
 
 
-$oi=$oi+42; // salto de linea
+$oi=180; // salto de linea
 
 $a = $db->query("select cod, cant, producto, pv, total, fecha, hora, num_fac from ticket where num_fac = '".$numero."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]." and tipo = ".$_SESSION["tipoticket"]." group by cod");
   
