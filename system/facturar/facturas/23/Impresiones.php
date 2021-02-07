@@ -164,8 +164,8 @@ $n4   = "0";
 
 $col1 = 30;
 $col2 = 70;
-$col3 = 400;
-$col4 = 565;
+$col3 = 385;
+$col4 = 550;
 $col5 = 500;
 // $print
 $print = "FACTURA";
