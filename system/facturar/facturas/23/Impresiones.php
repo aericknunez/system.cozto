@@ -369,11 +369,11 @@ $oi=$oi+$n1;
 printer_draw_text($handle, $direccion, 100, $oi);
 $oi=$oi+$n1;
 printer_draw_text($handle, $departamento, 100, $oi);
-printer_draw_text($handle, $giro, 340, $oi);
+printer_draw_text($handle, $giro, 390, $oi);
 
 $oi=$oi+$n1;
 printer_draw_text($handle, $documento, 100, $oi);
-printer_draw_text($handle, $registro, 340, $oi);
+printer_draw_text($handle, $registro, 390, $oi);
 
 
 
