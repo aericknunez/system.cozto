@@ -317,10 +317,10 @@ $n3   = "30";
 $n4   = "0";
 
 
-$col1 = 0;
-$col2 = 40;
-$col3 = 325;
-$col4 = 485;
+$col1 = 30;
+$col2 = 70;
+$col3 = 355;
+$col4 = 515;
 $col5 = 500;
 // $print
 $print = "FACTURA";
@@ -377,7 +377,7 @@ printer_draw_text($handle, $registro, 390, $oi);
 
 
 
-$oi=170; // salto de linea
+$oi=215; // salto de linea
 
 $a = $db->query("select cod, cant, producto, pv, stotal, total, fecha, hora, num_fac from ticket where num_fac = '".$numero."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]." and tipo = ".$_SESSION["tipoticket"]." group by cod");
   
