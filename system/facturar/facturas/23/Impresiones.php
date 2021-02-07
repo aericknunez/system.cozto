@@ -186,9 +186,9 @@ $oi=80;
 //// comienza la factura
 
 $oi=$oi+$n1;
-printer_draw_text($handle, date("d"), 35, $oi);
-printer_draw_text($handle, date("m"), 120, $oi);
-printer_draw_text($handle, substr(date("Y"), -1), 180, $oi);
+printer_draw_text($handle, date("d"), 430, $oi);
+printer_draw_text($handle, date("m"), 490, $oi);
+printer_draw_text($handle, substr(date("Y"), -1), 590, $oi);
 
 
 
