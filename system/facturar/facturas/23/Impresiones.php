@@ -188,7 +188,7 @@ $oi=80;
 $oi=$oi+$n1;
 printer_draw_text($handle, date("d"), 35, $oi);
 printer_draw_text($handle, date("m"), 120, $oi);
-printer_draw_text($handle, date("Y"), 180, $oi);
+printer_draw_text($handle, substr(date("Y"), -1);, 180, $oi);
 
 
 
@@ -341,10 +341,9 @@ $oi=80;
 //// comienza la factura
 
 $oi=$oi+$n1;
-printer_draw_text($handle, date("d"), 35, $oi);
-printer_draw_text($handle, date("m"), 120, $oi);
-printer_draw_text($handle, date("Y"), 180, $oi);
-
+printer_draw_text($handle, date("d"), 400, $oi);
+printer_draw_text($handle, date("m"), 480, $oi);
+printer_draw_text($handle, substr(date("Y"), -1);, 540, $oi);
 
 
 
@@ -369,19 +368,16 @@ printer_draw_text($handle, $cliente, 85, $oi);
 $oi=$oi+$n1;
 printer_draw_text($handle, $direccion, 100, $oi);
 $oi=$oi+$n1;
-printer_draw_text($handle, $departamento, 340, $oi);
+printer_draw_text($handle, $departamento, 85, $oi);
+printer_draw_text($handle, $giro, 340, $oi);
 
 $oi=$oi+$n1;
-printer_draw_text($handle, $giro, 70, $oi);
-
-$oi=$oi+$n1;
+printer_draw_text($handle, $documento, 85, $oi);
 printer_draw_text($handle, $registro, 340, $oi);
 
-$oi=$oi+$n1;
-printer_draw_text($handle, $documento, 340, $oi);
 
 
-$oi=$oi+$n1+10; // salto de linea
+$oi=170; // salto de linea
 
 $a = $db->query("select cod, cant, producto, pv, stotal, total, fecha, hora, num_fac from ticket where num_fac = '".$numero."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]." and tipo = ".$_SESSION["tipoticket"]." group by cod");
   
