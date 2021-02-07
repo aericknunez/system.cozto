@@ -203,7 +203,7 @@ $oi=80;
 
 $oi=$oi+$n1;
 printer_draw_text($handle, $nombre, 85, $oi);
-printer_draw_text($handle, date("d-m-Y"), 460, $oi);
+printer_draw_text($handle, date("d") . " - " . Fechas::MesEscrito(date("m")) ." - " . date("Y"), 460, $oi);
 
 
 $oi=$oi+$n1;
