@@ -182,7 +182,7 @@ printer_select_font($handle, $font);
 
 
 
-$oi=88;
+$oi=95;
 //// comienza la factura
 
 
@@ -208,7 +208,7 @@ printer_draw_text($handle, date("d") . " - " . Fechas::MesEscrito(date("m")) ." 
 $oi=$oi+$n1;
 printer_draw_text($handle, $direccion, 100, $oi);
 
-printer_draw_text($handle, $documento, 460, $oi);
+printer_draw_text($handle, $documento, 475, $oi);
 
 
 $oi=173; // salto de linea
