@@ -182,7 +182,7 @@ printer_select_font($handle, $font);
 
 
 
-$oi=80;
+$oi=88;
 //// comienza la factura
 
 
