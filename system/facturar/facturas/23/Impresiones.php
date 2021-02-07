@@ -343,7 +343,7 @@ $oi=80;
 $oi=$oi+$n1;
 printer_draw_text($handle, date("d"), 400, $oi);
 printer_draw_text($handle, date("m"), 480, $oi);
-printer_draw_text($handle, substr(date("Y"), -1);, 540, $oi);
+printer_draw_text($handle, substr(date("Y"), -1), 540, $oi);
 
 
 
