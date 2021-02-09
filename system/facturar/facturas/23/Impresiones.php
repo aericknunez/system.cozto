@@ -13,7 +13,7 @@ class Impresiones{
 
  public function Ticket($efectivo, $numero){
   $db = new dbConn();
-  $nombre_impresora = "POS-80C";
+  $nombre_impresora = "LR2000";
   // $img  = "C:/AppServ/www/pizto/assets/img/logo_factura/grosera.jpg";
 
 
@@ -25,7 +25,7 @@ $printer -> setFont(Printer::FONT_B);
 // $printer -> selectPrintMode(Printer::MODE_DOUBLE_HEIGHT);
 // $printer -> selectPrintMode(Printer::MODE_DOUBLE_WIDTH);
 
-$printer -> setTextSize(1, 1);
+$printer -> setTextSize(1, 2);
 $printer -> setLineSpacing(80);
 
 
@@ -34,8 +34,11 @@ $printer -> setLineSpacing(80);
 // $printer->bitImage($logo);
 $printer -> setJustification(Printer::JUSTIFY_CENTER);
 
+$printer -> setFont(Printer::FONT_A);
 $printer->text("VILLA NAPOLI");
+$printer->feed();
 
+$printer -> setFont(Printer::FONT_B);
 $printer->text("Calle a San Salvador colonia el Mora Poste 337");
 $printer->feed();
 
