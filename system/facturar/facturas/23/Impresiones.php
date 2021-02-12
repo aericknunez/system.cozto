@@ -35,18 +35,18 @@ $printer -> setLineSpacing(80);
 $printer -> setJustification(Printer::JUSTIFY_CENTER);
 
 $printer -> setFont(Printer::FONT_A);
-$printer->text("VILLA NAPOLI");
+$printer->text("MURSAL DISTRIBUIDORA");
 $printer->feed();
 
 $printer -> setFont(Printer::FONT_B);
-$printer->text("Calle a San Salvador colonia el Mora Poste 337");
+$printer->text("Quinta del moral km- 62 - 63 Carretera antigua a San Salvador");
 $printer->feed();
 
 $printer->text("Santa Ana");
 $printer->feed();
 
 $printer -> setJustification(Printer::JUSTIFY_LEFT);
-$printer->text("Tel: 7985-6021");
+$printer->text("Tel: 7533-3522");
 
 $printer->feed();
 $printer->text("TICKET NUMERO: " . $numero);
