@@ -14,7 +14,7 @@ foreach ($a as $b) {
 } $a->close();
      
 $productos = array();
-$x = $db->query("SELECT * FROM ticket WHERE num_fac = '".$b["num_fac"]."' and orden = '".$b["orden"]."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."");
+$x = $db->query("SELECT * FROM ticket WHERE num_fac = '".$parametros["num_fac"]."' and orden = '".$_SESSION["orden_print"]."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."");
 foreach ($x as $z) {
      $productos[] = $z;
 } $x->close();
@@ -56,7 +56,7 @@ if ($sx = $db->select("sum(stotal), sum(imp), sum(total)", "ticket", "WHERE num_
 
 if($_SESSION["tipoticket"] == 3){
 
-    if ($r = $db->select("documento", "facturar_documento_factura", "WHERE factura = '$numero' and tx = " . $_SESSION["tx"] . " and td = " .  $_SESSION["td"])) { 
+    if ($r = $db->select("documento", "facturar_documento_factura", "WHERE factura = '".$parametros["num_fac"]."' and tx = " . $_SESSION["tx"] . " and td = " .  $_SESSION["td"])) { 
         $documento = $r["documento"];
     } unset($r);  
 
