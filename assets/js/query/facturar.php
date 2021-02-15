@@ -93,10 +93,10 @@ function LoadImprimir(parametros){
 
         <?php 
         if($_SESSION["td"] == 24){ ?>
-            url: "http://192.168.0.100/impresione/index.php",
+            url: "http://192.168.0.100/impresiones/index.php",
         <?
         } else { ?>
-           url: "http://192.168.1.100/impresione/index.php",
+           url: "http://192.168.1.100/impresiones/index.php",
         <?
         } ?>
 
