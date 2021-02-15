@@ -96,7 +96,7 @@ function LoadImprimir(parametros){
             url: "http://192.168.0.100/impresiones/index.php",
         <?
         } else { ?>
-           url: "http://192.168.1.100/impresiones/index.php",
+           url: "http://localhost/impresiones/index.php",
         <?
         } ?>
 
