@@ -29,13 +29,13 @@ $parametros["config_imp"] = $_SESSION['config_imp'];
 
 if($_SESSION["tipoticket"] == 2){
 
-if ($r = $db->select("cliente", "ticket_cliente", "WHERE factura = '$numero' and tx = " . $_SESSION["tx"] . " and td = " .  $_SESSION["td"])) { 
+if ($r = $db->select("cliente", "ticket_cliente", "WHERE factura = '".$parametros["num_fac"]."' and tx = " . $_SESSION["tx"] . " and td = " .  $_SESSION["td"])) { 
 $hashcliente = $r["cliente"];
 } unset($r);  
 
 
 
-if ($r = $db->select("nombre, documento, direccion", "clientes", "WHERE hash = '$hashcliente' and td = " .  $_SESSION["td"])) { 
+if ($r = $db->select("nombre, documento, direccion", "clientes", "WHERE hash = '".$hashcliente."' and td = " .  $_SESSION["td"])) { 
 $parametros["nombre"] = $r["nombre"];
 $parametros["documento"] = $r["documento"];
 $parametros["direccion"] = $r["direccion"];
