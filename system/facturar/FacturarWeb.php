@@ -60,6 +60,8 @@ if($_SESSION["tipoticket"] == 3){
         $documento = $r["documento"];
     } unset($r);  
 
+        $parametros["documento"] = $documento;
+
     if ($r = $db->select("cliente, giro, registro, direccion, departamento", "facturar_documento", "WHERE documento = '$documento' and td = " .  $_SESSION["td"])) { 
         $parametros["cliente"] = $r["cliente"];
         $parametros["giro"] = $r["giro"];
