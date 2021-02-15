@@ -37,7 +37,7 @@ $hashcliente = $r["cliente"];
 
 if ($r = $db->select("nombre, documento, direccion", "clientes", "WHERE hash = '$hashcliente' and td = " .  $_SESSION["td"])) { 
 $parametros["nombre"] = $r["nombre"];
-$parametros["docimento"] = $r["documento"];
+$parametros["documento"] = $r["documento"];
 $parametros["direccion"] = $r["direccion"];
 } unset($r);  
 
