@@ -1,6 +1,9 @@
 <?php 
 defined('BASEPATH') OR exit('No direct script access allowed');
 include_once 'application/common/Alerts.php';
+include_once 'system/producto/Productos.php';
+$producto = new Productos(); 
+
 
     if ($r = $db->select("cod", "producto", "WHERE td = ".$_SESSION["td"]." ORDER BY id desc limit 1")) { 
         $codigox = $r["cod"] + 1;

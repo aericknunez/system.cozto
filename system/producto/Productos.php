@@ -1178,8 +1178,13 @@ if($dir == "asc") $dir2 = "desc";
           <table class="table table-sm table-striped">
         <thead>
           <tr>
-            <th class="th-sm"><a id="paginador" op="54" iden="1" orden="producto.cod" dir="'.$dir2.'">Cod</a></th>
-            <th class="th-sm"><a id="paginador" op="54" iden="1" orden="producto.descripcion" dir="'.$dir2.'">Producto</a></th>
+            <th class="th-sm"><a id="paginador" op="54" iden="1" orden="producto.cod" dir="'.$dir2.'">Cod</a></th>';
+
+            if($this->CompruebaSiMarca() == TRUE){
+              echo '<th class="th-sm"><a >Marca</a></th>';
+            }
+
+          echo '<th class="th-sm"><a id="paginador" op="54" iden="1" orden="producto.descripcion" dir="'.$dir2.'">Producto</a></th>
             <th class="th-sm"><a id="paginador" op="54" iden="1" orden="producto.cantidad" dir="'.$dir2.'">Cantidad</a></th>
             <th class="th-sm"><a id="paginador" op="54" iden="1" orden="producto.categoria" dir="'.$dir2.'">Categoria</a></th>
             <th class="th-sm">Precio</th>
@@ -1199,7 +1204,13 @@ if($dir == "asc") $dir2 = "desc";
 
 
           echo '<tr>
-                      <td>'.$b["cod"].'</td>
+                      <td>'.$b["cod"].'</td>';
+
+            if($this->CompruebaSiMarca() == TRUE){
+              echo '<th class="th-sm"><a >'.$marca.'</a></th>';
+            }
+
+          echo '
                       <td>'.$b["descripcion"].'</td>
                       <td>'.$b["cantidad"].'</td>
                       <td>'.$b["subcategoria"].'</td>
@@ -1488,6 +1499,19 @@ echo '<div class="row justify-content-center">
   }
 
 
+
+
+
+  public function CompruebaSiMarca(){
+      $db = new dbConn();
+          $a = $db->query("SELECT * FROM marcas WHERE td = ".$_SESSION["td"]."");
+          if($a->num_rows > 0){
+            return TRUE;
+          } else {
+            return FALSE;
+          }
+          $a->close();  
+  }
 
 
 
