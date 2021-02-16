@@ -82,6 +82,35 @@ if ($sx = $db->select("sum(stotal), sum(imp), sum(total)", "ticket", "WHERE num_
 
 
 
+if($_SESSION["tipoticket"] == 4){
+
+if ($r = $db->select("cliente", "ticket_cliente", "WHERE factura = '".$parametros["num_fac"]."' and tx = " . $_SESSION["tx"] . " and td = " .  $_SESSION["td"])) { 
+$hashcliente = $r["cliente"];
+} unset($r);  
+
+
+
+if ($r = $db->select("nombre, documento, direccion", "clientes", "WHERE hash = '".$hashcliente."' and td = " .  $_SESSION["td"])) { 
+$parametros["nombre"] = $r["nombre"];
+$parametros["documento"] = $r["documento"];
+$parametros["direccion"] = $r["direccion"];
+} unset($r);  
+
+
+
+if ($sx = $db->select("sum(stotal), sum(imp), sum(total)", "ticket", "WHERE num_fac = '".$parametros["num_fac"]."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]." and tipo = ".$_SESSION["tipoticket"]."")) { 
+       $parametros["stotal"]=$sx["sum(stotal)"];
+       $parametros["imp"]=$sx["sum(imp)"];
+       $parametros["total"]=$sx["sum(total)"];
+    } unset($sx); 
+ 
+
+}
+
+
+
+
+
 echo json_encode($parametros);
 		
 

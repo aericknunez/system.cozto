@@ -79,6 +79,9 @@ if($_SESSION["td"] == 10){
 	if($_SESSION["tipoticket"] == 3){
 		$imprimir->CreditoFiscal($efectivo, $factura);
 	}
+	if($_SESSION["tipoticket"] == 4){
+		$imprimir->Exportacion($efectivo, $factura);
+	}
 	if($_SESSION["tipoticket"] == 0){
 		$imprimir->Ninguno();
 	}
@@ -100,14 +103,14 @@ public function TiposTicketActivos(){ // esta funcion obtiene los ticket activos
 
 if($_SESSION["tx"] == 0){
 
-    if ($r = $db->select("ax0, bx0, ex0", "facturar_opciones", "WHERE td = ".$_SESSION["td"]."")) { 
-        $ax = $r["ax0"]; $bx = $r["bx0"]; $ex = $r["bx0"];
+    if ($r = $db->select("ax0, bx0, dx0, ex0", "facturar_opciones", "WHERE td = ".$_SESSION["td"]."")) { 
+        $ax = $r["ax0"]; $bx = $r["bx0"]; $dx = $r["dx0"]; $ex = $r["ex0"];
     } unset($r);  
 
 } else {
     
-    if ($r = $db->select("ax1, bx1, ex1", "facturar_opciones", "WHERE td = ".$_SESSION["td"]."")) { 
-        $ax = $r["ax1"]; $bx = $r["bx1"]; $ex = $r["ex1"];
+    if ($r = $db->select("ax1, bx1, dx1, ex1", "facturar_opciones", "WHERE td = ".$_SESSION["td"]."")) { 
+        $ax = $r["ax1"]; $bx = $r["bx1"]; $dx = $r["dx1"]; $ex = $r["ex1"];
     } unset($r);  
 }
 
@@ -119,6 +122,9 @@ echo '<a id="opticket" tipo="3" class="btn btn-brown">Credito Fiscal</a>';
 }
 if($bx == 1){
 echo '<a id="opticket" tipo="2" class="btn btn-indigo">Factura</a>';
+}
+if($dx == 1){
+echo '<a id="opticket" tipo="4" class="btn btn-secondary">Exportación</a>';
 }
 echo '<a id="opticket" tipo="0" class="btn btn-elegant">Ninguno</a>';
 

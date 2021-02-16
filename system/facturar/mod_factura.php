@@ -92,7 +92,7 @@ $r = $db->select("*", "facturar_opciones", "where td = ".$_SESSION['td']."");
        </td> 
      </tr>
       <tr>
-       <td>Comanda</td>
+       <td>Exportacíon</td>
        <td>
           <div class="switch">
             <label>
