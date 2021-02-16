@@ -1207,7 +1207,7 @@ if($dir == "asc") $dir2 = "desc";
                       <td>'.$b["cod"].'</td>';
 
             if($this->CompruebaSiMarca() == TRUE){
-              echo '<th class="th-sm"><a >'.$marca.'</a></th>';
+              echo '<th class="th-sm"><a >'.$this->MostrarMarca($b["cod"]).'</a></th>';
             }
 
           echo '
@@ -1511,6 +1511,19 @@ echo '<div class="row justify-content-center">
             return FALSE;
           }
           $a->close();  
+  }
+
+
+  public function MostrarMarca($producto){
+      $db = new dbConn();
+    if ($r = $db->select("marca", "marca_asig", "WHERE producto = '".$producto."' and td = ".$_SESSION["td"]."")) { 
+        $marca = $r["marca"];
+    } unset($r);  
+
+    if ($r = $db->select("marca", "marcas", "WHERE hash = '".$marca."' and td = ".$_SESSION["td"]."")) { 
+        return $r["marca"];
+    } unset($r);  
+
   }
 
 
