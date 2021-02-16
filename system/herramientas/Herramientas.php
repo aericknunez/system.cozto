@@ -310,8 +310,13 @@ $op="562";
           <table class="table table-sm table-striped">
         <thead>
           <tr>
-            <th class="th-sm"><a id="paginador" op="'.$op.'" iden="1" orden="producto.cod" dir="'.$dir2.'">Cod</a></th>
-            <th class="th-sm"><a id="paginador" op="'.$op.'" iden="1" orden="producto.descripcion" dir="'.$dir2.'">Producto</a></th>
+            <th class="th-sm"><a id="paginador" op="'.$op.'" iden="1" orden="producto.cod" dir="'.$dir2.'">Cod</a></th>';
+
+            if($this->CompruebaSiMarca() == TRUE){
+              echo '<th class="th-sm"><a >Marca</a></th>';
+            }
+
+          echo '<th class="th-sm"><a id="paginador" op="'.$op.'" iden="1" orden="producto.descripcion" dir="'.$dir2.'">Producto</a></th>
             <th class="th-sm"><a id="paginador" op="'.$op.'" iden="1" orden="producto.cantidad" dir="'.$dir2.'">Cantidad</a></th>
             <th class="th-sm"><a id="paginador" op="'.$op.'" iden="1" orden="producto.categoria" dir="'.$dir2.'">Categoria</a></th>
             <th class="th-sm">Precio</th>
@@ -330,8 +335,13 @@ $op="562";
 
 
           echo '<tr>
-                      <td>'.$b["cod"].'</td>
-                      <td>'.$b["descripcion"].'</td>
+                      <td>'.$b["cod"].'</td>';
+
+                if($this->CompruebaSiMarca() == TRUE){
+                  echo '<th class="th-sm"><a >'.$this->MostrarMarca($b["cod"]).'</a></th>';
+                }
+
+                echo '<td>'.$b["descripcion"].'</td>
                       <td>'.$b["cantidad"].'</td>
                       <td>'.$b["subcategoria"].'</td>
                       <td>'.$precio.'</td>
@@ -476,7 +486,30 @@ public function VerMarca($cod){
 
 
 
+//// codigo repetido de producto
+  public function CompruebaSiMarca(){
+      $db = new dbConn();
+          $a = $db->query("SELECT * FROM marcas WHERE td = ".$_SESSION["td"]."");
+          if($a->num_rows > 0){
+            return TRUE;
+          } else {
+            return FALSE;
+          }
+          $a->close();  
+  }
 
+
+  public function MostrarMarca($producto){
+      $db = new dbConn();
+    if ($r = $db->select("marca", "marca_asig", "WHERE producto = '".$producto."' and td = ".$_SESSION["td"]."")) { 
+        $marca = $r["marca"];
+    } unset($r);  
+
+    if ($r = $db->select("marca", "marcas", "WHERE hash = '".$marca."' and td = ".$_SESSION["td"]."")) { 
+        return $r["marca"];
+    } unset($r);  
+
+  }
 
 
 
