@@ -90,7 +90,16 @@ function LoadData(){
 function LoadImprimir(parametros){
     $.ajax({
         type: "POST",
-        url: "http://localhost/impresiones/index.php",
+
+        <?php 
+        if($_SESSION["td"] == 24){ ?>
+            url: "http://192.168.0.100/impresiones/index.php",
+        <?
+        } else { ?>
+           url: "http://192.168.1.100/impresiones/index.php",
+        <?
+        } ?>
+
         data: parametros,
         datatype: 'json',
         beforeSend: function () {
