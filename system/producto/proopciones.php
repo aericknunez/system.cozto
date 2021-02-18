@@ -242,7 +242,7 @@ $producto = new Productos();
         
         <div class="col-md-6 btn-outline-danger z-depth-2" id="destinomarca">
             <?php 
-               $producto->VerMarca();        
+               $producto->VerMarcas();        
              ?>
         </div>
        

@@ -245,6 +245,7 @@ $a->close();
           Helpers::DeleteId("producto_precio_promo", "producto='$cod' and td = ". $_SESSION["td"] ."");
           Helpers::DeleteId("producto_tags", "producto='$cod' and td = ". $_SESSION["td"] ."");
           Helpers::DeleteId("ubicacion_asig", "producto='$cod' and td = ". $_SESSION["td"] ."");
+          Helpers::DeleteId("marca_asig", "producto='$cod' and td = ". $_SESSION["td"] ."");
 
 
       $a = $db->query("SELECT imagen FROM producto_imagenes WHERE producto='$cod' and td = ". $_SESSION["td"] ."");
@@ -280,6 +281,7 @@ $a->close();
 
   public function TodosProductosOpciones($npagina, $orden, $dir){
       $db = new dbConn();
+      $producto = new Productos(); 
 
   $limit = 25;
   $adjacents = 2;
@@ -312,7 +314,7 @@ $op="562";
           <tr>
             <th class="th-sm"><a id="paginador" op="'.$op.'" iden="1" orden="producto.cod" dir="'.$dir2.'">Cod</a></th>';
 
-            if($this->CompruebaSiMarca() == TRUE){
+            if($producto->CompruebaSiMarca() == TRUE){
               echo '<th class="th-sm"><a >Marca</a></th>';
             }
 
@@ -337,8 +339,8 @@ $op="562";
           echo '<tr>
                       <td>'.$b["cod"].'</td>';
 
-                if($this->CompruebaSiMarca() == TRUE){
-                  echo '<th class="th-sm"><a >'.$this->MostrarMarca($b["cod"]).'</a></th>';
+                if($producto->CompruebaSiMarca() == TRUE){
+                  echo '<th class="th-sm"><a >'.$producto->MostrarMarca($b["cod"]).'</a></th>';
                 }
 
                 echo '<td>'.$b["descripcion"].'</td>
@@ -424,59 +426,6 @@ $page <= 1 ? $enable = 'disabled' : $enable = '';
 
 
 
-public function CambiarMarca($data){
-        $db = new dbConn();
-
-  /// reviso si tiene marca el producto
-$a = $db->query("SELECT * FROM marca_asig WHERE producto = '".$data["cod"]."' and td = ".$_SESSION["td"]."");
-$registros = $a->num_rows;
-$a->close();
-      if($registros == 0){
-
-              $datos = array();
-              $datos["marca"] = $data["iden"];
-              $datos["producto"] = $data["cod"];
-              $datos["td"] = $_SESSION["td"];
-              $datos["hash"] = Helpers::HashId();
-              $datos["time"] = Helpers::TimeId();
-              if ($db->insert("marca_asig", $datos)) {
-
-                 Alerts::Alerta("success","Realizado!","Agregado correctamente!");
-                
-              }
-        } else {
-
-          $cambio = array();
-          $cambio["marca"] = $data["iden"];
-          if(Helpers::UpdateId("marca_asig", $cambio, "producto = '".$data["cod"]."' and td = ".$_SESSION["td"]."")){
-            Alerts::Alerta("success","Realizado!","Agregado correctamente!");
-          }
-
-        }
-
-      $this->VerMarca($data["cod"]);
-}
-
-
-
-
-
-public function VerMarca($cod){
-        $db = new dbConn();
-
-    if ($r = $db->select("marca", "marca_asig", "WHERE producto = '".$cod."' and td =".$_SESSION["td"]."")) { 
-       $codigo = $r["marca"];
-    } unset($r);  
-
-    if($codigo != NULL){
-      if ($r = $db->select("marca", "marcas", "WHERE hash = '".$codigo."' and td =".$_SESSION["td"]."")) { 
-         echo '<div class="text-center text-info font-weight-bold h3">'.$r["marca"].'</div>';
-      } unset($r);  
-    } else {
-        echo '<div class="text-center text-danger font-weight-bold">No se ecncuentra marca registrada</div>';
-    }
-
-}
 
 
 
@@ -484,32 +433,6 @@ public function VerMarca($cod){
 
 
 
-
-
-//// codigo repetido de producto
-  public function CompruebaSiMarca(){
-      $db = new dbConn();
-          $a = $db->query("SELECT * FROM marcas WHERE td = ".$_SESSION["td"]."");
-          if($a->num_rows > 0){
-            return TRUE;
-          } else {
-            return FALSE;
-          }
-          $a->close();  
-  }
-
-
-  public function MostrarMarca($producto){
-      $db = new dbConn();
-    if ($r = $db->select("marca", "marca_asig", "WHERE producto = '".$producto."' and td = ".$_SESSION["td"]."")) { 
-        $marca = $r["marca"];
-    } unset($r);  
-
-    if ($r = $db->select("marca", "marcas", "WHERE hash = '".$marca."' and td = ".$_SESSION["td"]."")) { 
-        return $r["marca"];
-    } unset($r);  
-
-  }
 
 
 

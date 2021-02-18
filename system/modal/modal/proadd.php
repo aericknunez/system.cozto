@@ -31,26 +31,27 @@ $dep = $_REQUEST["dep"];
 
   <ul class="nav tabs-cyan" id="myClassicTab" role="tablist">
     <li class="nav-item">
-      <a class="nav-link  waves-light active show" id="steps-tab-classic" data-toggle="tab" href="#steps-classic"
-        role="tab" aria-controls="steps-classic" aria-selected="true">NECESARIOS</a>
+      <a class="nav-link  waves-light active show" id="steps-tab-classic" data-toggle="tab" href="#steps-classic" role="tab" aria-controls="steps-classic" aria-selected="true"><i class="fas fa-home"></i></a>
     </li>
     <li class="nav-item">
-      <a class="nav-link waves-light" id="imagenes-tab-classic" data-toggle="tab" href="#imagenes-classic" role="tab"
-        aria-controls="imagenes-classic" aria-selected="false">Imagenes</a>
+      <a class="nav-link waves-light" id="imagenes-tab-classic" data-toggle="tab" href="#imagenes-classic" role="tab" aria-controls="imagenes-classic" aria-selected="false">Imagenes</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link waves-light" id="etiquetas-tab-classic" data-toggle="tab" href="#etiquetas-classic" role="tab"
-        aria-controls="etiquetas-classic" aria-selected="false">Etiquetas</a>
+      <a class="nav-link waves-light" id="etiquetas-tab-classic" data-toggle="tab" href="#etiquetas-classic" role="tab" aria-controls="etiquetas-classic" aria-selected="false">Etiquetas</a>
     </li>
     <li class="nav-item">
       <a class="nav-link waves-light" id="ubicacion-tab-classic" data-toggle="tab" href="#ubicacion-classic" role="tab"
         aria-controls="ubicacion-classic" aria-selected="false">Ubicacion</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link waves-light" id="caracteristicas-tab-classic" data-toggle="tab" href="#caracteristicas-classic" role="tab"
-        aria-controls="caracteristicas-classic" aria-selected="false">Caracteristicas</a>
+      <a class="nav-link waves-light" id="caracteristicas-tab-classic" data-toggle="tab" href="#caracteristicas-classic" role="tab" aria-controls="caracteristicas-classic" aria-selected="false">Caracteristicas</a>
     </li>
 
+<?php if($productos->CompruebaSiMarca() == TRUE){ ?>
+    <li class="nav-item">
+      <a class="nav-link waves-light" id="marcas-tab-classic" data-toggle="tab" href="#marcas-classic" role="tab" aria-controls="marcas-classic" aria-selected="false">Marcas</a>
+    </li>
+<?php } ?>
   </ul>
   <div class="tab-content border-right border-bottom border-left rounded-bottom" id="myClassicTabContent">
     <div class="tab-pane fade active show" id="steps-classic" role="tabpanel" aria-labelledby="steps-tab-classic">
@@ -392,6 +393,48 @@ $imgs->VerProducto($_REQUEST["key"], "assets/img/productos/" . $_SESSION["td"] .
 
 
           </div> <!-- termina tab -->
+
+
+
+
+
+
+    <div class="tab-pane fade" id="marcas-classic" role="tabpanel" aria-labelledby="marcas-tab-classic">
+      <p class="note note-primary"><strong>Marcas:</strong> Seleccione la marca de su producto</p>
+            
+
+<div class="row d-flex justify-content-center text-center">
+    <select class="mdb-select md-form colorful-select dropdown-dark" id="marca" name="marca" cod="<?php echo $_REQUEST["key"] ?>">
+    <?php echo Helpers::SelectData("* Marca", "marcas", "hash", "marca"); ?>
+    </select>
+</div>
+
+<div class="row d-flex justify-content-center text-center">
+    <div id="vistamarca">
+      <?php 
+    $productos->VerMarca($_REQUEST["key"]);
+       ?>
+    </div>
+</div>
+
+
+
+    <!-- termina precios formulario -->
+
+
+          </div> <!-- termina tab -->
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -2225,6 +2225,7 @@ break;
 
 case "562":  /// mostrar todos los productos para opciones
 include_once '../../system/herramientas/Herramientas.php';
+include_once '../../system/producto/Productos.php';
 	$prod = new Herramientas(); 
 	$prod->TodosProductosOpciones($_POST["iden"], $_POST["orden"], $_POST["dir"]);
 break;
@@ -2249,17 +2250,17 @@ break;
 
 
 case "565": // bcambiar marca
-include_once '../../system/herramientas/Herramientas.php';
-	$prod = new Herramientas(); 
-	$prod->CambiarMarca($_POST);
+include_once '../../system/producto/Productos.php';
+	$productos = new Productos;
+	$productos->CambiarMarca($_POST);
 break;
 
 
 
 case "566": // ver marca
-include_once '../../system/herramientas/Herramientas.php';
-	$prod = new Herramientas(); 
-	$prod->VerMarca($_POST["cod"]);
+include_once '../../system/producto/Productos.php';
+	$productos = new Productos;
+	$productos->VerMarca($_POST["cod"]);
 break;
 
 

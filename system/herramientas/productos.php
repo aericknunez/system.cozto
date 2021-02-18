@@ -4,6 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 include_once 'application/common/Alerts.php';
 include_once 'system/herramientas/Herramientas.php';
 $herramienta = new Herramientas(); 
+include_once 'system/producto/Productos.php';
 ?>
 
 <div id="msj"></div>
@@ -109,7 +110,7 @@ $herramienta = new Herramientas();
 <!-- ./  content -->
 
 <select class="mdb-select md-form colorful-select dropdown-dark" id="marca" name="marca">
-<?php echo Helpers::SelectData("* Marca", "marcas", "hash", "marca"); echo "Hola mundo!"; ?>
+<?php echo Helpers::SelectData("* Marca", "marcas", "hash", "marca"); ?>
 </select>
 
 <div id="vistamarca">

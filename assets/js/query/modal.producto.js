@@ -597,5 +597,45 @@ $(document).ready(function(){
 
 
 
+    $(document).ready(function() {
+    $('.mdb-select').materialSelect();
+    });
+
+
+//// cambiar la marca
+    $("#marca").change(function(){
+        var id=$(this).val();
+        var cod=$(this).attr('cod');
+        var dataString = 'op=565&iden='+ id + '&cod=' + cod;
+  
+          $.ajax({
+            type: "POST",
+            url: "application/src/routes.php",
+            data: dataString,
+            beforeSend: function () {
+               $("#vistamarca").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt=""></div>');
+            },
+            success: function(data) {            
+                $("#vistamarca").html(data); // lo que regresa de la busquea 
+            }
+        });  
+
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }); // termina query
