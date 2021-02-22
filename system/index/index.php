@@ -8,6 +8,8 @@ include_once 'system/corte/Corte.php';
 $cut = new Corte();
 
 
+Alerts::Mensajex("Estimado cliente, en este momento estamos presentando problemas con nuestro proveedor de servicios y nuestro servidor principal, es posible que su sistema no funcione adecuadamente. 
+  Estamos trabajando para poder correjirlo. Disculpe las molestias", "danger");
 
 $datalive = TRUE; /// para saber que estoy en index
 
