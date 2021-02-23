@@ -6,7 +6,7 @@ class Alerts{
       }
 
 
-       public function Alerta($tipo,$encabezado,$texto){ 
+       static public function Alerta($tipo,$encabezado,$texto){ 
        //tipo = warning , success , error , info , danger
        // md-toast-top-right / md-toast-top-left / md-toast-bottom-right /md-toast-bottom-left
         echo '<script>
@@ -32,7 +32,7 @@ class Alerts{
 
 
 
-    public function Eliminado(){
+    static public function Eliminado(){
         echo '<div class="alert alert-danger ">
         <h4><i class="icon fa fa-ban"></i> Alerta!</h4>
         Se ha eliminado el registro correctamente... 
@@ -42,7 +42,7 @@ class Alerts{
 
 
 
-    public function Eliminar($id,$op,$iden,$return){
+    static public function Eliminar($id,$op,$iden,$return){
         echo '<div class="alert alert-danger alert-dismissible">
     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
     <h4><i class="icon fa fa-ban"></i> Alerta!</h4>
@@ -59,7 +59,7 @@ class Alerts{
 
 
 
-    public function EliminarUsuario($iden, $user){
+    static public function EliminarUsuario($iden, $user){
         echo '<div class="alert alert-danger alert-dismissible">
     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
     <h4><i class="icon fa fa-ban"></i> Alerta!</h4>
@@ -73,7 +73,7 @@ class Alerts{
   </div>';
     }
 
-    public function UsuarioEliminado(){
+    static public function UsuarioEliminado(){
         echo '<div class="alert alert-danger ">
     <h4><i class="icon fa fa-ban"></i> Alerta!</h4>
     Usuario Eliminado Correctamente 
@@ -86,7 +86,7 @@ class Alerts{
 
 
 
-    public function RealizarCorte($id,$op,$efectivo){
+    static public function RealizarCorte($id,$op,$efectivo){
     echo '<div class="alert alert-danger alert-dismissible">
     <h4><i class="icon fa fa-ban"></i> Alerta!</h4>
     Esta seguro que <strong>'. Helpers::Dinero($efectivo) .'</strong> es la cantidad correcta?
@@ -101,7 +101,7 @@ class Alerts{
 
 
 
-    public function AlertaCambios($id,$op,$iden,$mensaje){
+    static public function AlertaCambios($id,$op,$iden,$mensaje){
     echo '<div class="alert alert-danger alert-dismissible">
     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
     <h4><i class="icon fa fa-ban"></i> Alerta!</h4>
@@ -116,7 +116,7 @@ class Alerts{
     }
 
 
-    public function CorteEcho($tipo){
+    static public function CorteEcho($tipo){
       $num = rand(1,4);
       echo '<div class="alert alert-danger alert-dismissible">
 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
@@ -128,7 +128,7 @@ No se ha aperturado la caja para poder realizar transacciones de dinero como  '.
 
 
 
-    public function Mensaje($texto,$style,$boton = NULL,$boton2 = NULL){
+    static public function Mensaje($texto,$style,$boton = NULL,$boton2 = NULL){
       echo '<div class="border border-light alert alert-'.$style.' alert-dismissible">
       <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
       '.$texto.'
@@ -138,7 +138,7 @@ No se ha aperturado la caja para poder realizar transacciones de dinero como  '.
     }
 
 
-    public function Mensajex($texto,$style,$boton = NULL,$boton2 = NULL){ // es lo mismo pero todo va centrado y sin boton cerrar
+    static public function Mensajex($texto,$style,$boton = NULL,$boton2 = NULL){ // es lo mismo pero todo va centrado y sin boton cerrar
       echo '<div class="border border-light alert alert-'.$style.' alert-dismissible">
       <div align="center">
       '.$texto.'
@@ -152,7 +152,7 @@ No se ha aperturado la caja para poder realizar transacciones de dinero como  '.
 
 
 
-    public function Mensajey($texto,$style,$boton = NULL){ // es lo mismo pero todo va centrado y sin boton cerrar
+    static public function Mensajey($texto,$style,$boton = NULL){ // es lo mismo pero todo va centrado y sin boton cerrar
       echo '<div class="border border-light alert alert-'.$style.' alert-dismissible text-center">
       <button id="'. $boton .'" type="button" class="close">&times;</button>
       '.$texto.'
