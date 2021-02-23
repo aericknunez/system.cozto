@@ -163,13 +163,13 @@ class Helpers{
      } 
 
 
-    public function Format($numero){ 
+    static public function Format($numero){ 
         $format=number_format($numero,2,'.',',');
         return $format;
      } 
 
 
-    public function Format4D($numero){ 
+    static public function Format4D($numero){ 
         $format=number_format($numero,4,'.',',');
         return $format;
      } 
