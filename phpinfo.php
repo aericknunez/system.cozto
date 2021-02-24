@@ -1,1 +1,1 @@
-<?php phpinfo() ?>
+<?php echo $_SERVER["SERVER_NAME"] ?>
