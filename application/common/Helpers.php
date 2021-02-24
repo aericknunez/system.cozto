@@ -17,6 +17,16 @@ class Helpers{
           }
     }
 
+
+    public static function AmazonServer(){
+          or $_SERVER["SERVER_NAME"] == "3.18.81.185"){
+            return TRUE;
+          } else {
+            return FALSE;
+          }
+    }
+
+    
     public static function IsAdmin(){ // verifica si es administrador del sistema
           if($_SESSION["tipo_cuenta"] == 1 and $_SESSION["td"] == 0){
             return TRUE;
