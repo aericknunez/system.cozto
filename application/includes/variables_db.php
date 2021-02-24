@@ -24,7 +24,7 @@ define("HOST", "localhost"); 			//35.225.56.157 The host you want to connect to.
 define("USER", "root"); 			// The database username. 
 define("PASSWORD", "caca007125-"); 	// The database password. 
 define("DATABASE", "cozto_ventas"); 
-define("XSERV", "//http://3.18.81.185/cozto/");	
+define("XSERV", "http://3.18.81.185/cozto/");	
 
 } else {
 
