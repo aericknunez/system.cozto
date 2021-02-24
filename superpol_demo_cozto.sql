@@ -8580,7 +8580,7 @@ INSERT INTO `ticket_num` (`id`, `fecha`, `hora`, `num_fac`, `orden`, `efectivo`,
 INSERT INTO `ticket_num` (`id`, `fecha`, `hora`, `num_fac`, `orden`, `efectivo`, `edo`, `tx`, `tipo`, `hash`, `time`, `td`) VALUES
 (4283, '30-01-2021', '10:27:49', 3721, 4150, 0.75, 1, 1, 0, 'e9b69aa36d', 1612024069, 10);
 INSERT INTO `ticket_num` (`id`, `fecha`, `hora`, `num_fac`, `orden`, `efectivo`, `edo`, `tx`, `tipo`, `hash`, `time`, `td`) VALUES
-(4284, '30-01-2021', '11:19:38', 3722, 4151, 100000000.00, 1, 1, 0, 'b5c8267cb8', 1612027178, 10);
+(4284, '30-01-2021', '11:19:38', 3722, 4151, 10.00, 1, 1, 0, 'b5c8267cb8', 1612027178, 10);
 INSERT INTO `ticket_num` (`id`, `fecha`, `hora`, `num_fac`, `orden`, `efectivo`, `edo`, `tx`, `tipo`, `hash`, `time`, `td`) VALUES
 (4285, '30-01-2021', '11:31:52', 3723, 4152, 5.00, 1, 1, 0, '649859013e', 1612027912, 10);
 INSERT INTO `ticket_num` (`id`, `fecha`, `hora`, `num_fac`, `orden`, `efectivo`, `edo`, `tx`, `tipo`, `hash`, `time`, `td`) VALUES
