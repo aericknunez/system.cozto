@@ -18,8 +18,8 @@ class Helpers{
     }
 
 
-    public static function AmazonServer(){
-          if($_SERVER["SERVER_NAME"] == "3.18.81.185"){
+    public static function OtroServer(){
+          if($_SERVER["SERVER_NAME"] == "s862695801.onlinehome.us"){
             return TRUE;
           } else {
             return FALSE;

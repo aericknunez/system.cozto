@@ -18,13 +18,13 @@ define("PASSWORD", "caca007125-"); 	// The database password.
 	}
   
 
-} else if(Helpers::AmazonServer() == TRUE) {
+} else if(Helpers::OtroServer() == TRUE) {
 
-define("HOST", "localhost"); 			//35.225.56.157 The host you want to connect to. 
-define("USER", "root"); 			// The database username. 
-define("PASSWORD", "caca007125-"); 	// The database password. 
-define("DATABASE", "cozto_ventas"); 
-define("XSERV", "http://3.18.81.185/cozto/");	
+define("HOST", "db5001821073.hosting-data.io"); 			//35.225.56.157 The host you want to connect to. 
+define("USER", "dbu687558"); 			// The database username. 
+define("PASSWORD", "Caca007125-"); 	// The database password. 
+define("DATABASE", "dbs1499036"); 
+define("XSERV", "http://s862695801.onlinehome.us/");	
 
 } else {
 

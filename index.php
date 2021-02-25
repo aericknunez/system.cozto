@@ -36,7 +36,7 @@ if ($seslog->login_check() == TRUE) {
 
 
 			//include_once 'catalog/login.php';
-			if(Helpers::ServerDomain() == FALSE){ // si esta local
+			if(Helpers::ServerDomain() == FALSE or Helpers::OtroServer() == FALSE){ // si esta local
 			  		if($_SESSION["inicio"] == NULL){
 						include_once 'catalog/login_user.php';
 					} else {
