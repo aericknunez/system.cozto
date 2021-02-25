@@ -10,21 +10,15 @@ class Helpers{
           if($_SERVER["SERVER_NAME"] == "pizto.com" 
           or $_SERVER["SERVER_NAME"] == "www.pizto.com"
           or $_SERVER["SERVER_NAME"] == "superpollo.net"
-          or $_SERVER["SERVER_NAME"] == "www.superpollo.net"){
+          or $_SERVER["SERVER_NAME"] == "www.superpollo.net"
+          or $_SERVER["SERVER_NAME"] == "s862695801.onlinehome.us"
+          or $_SERVER["SERVER_NAME"] == "www.s862695801.onlinehome.us"){
             return TRUE;
           } else {
             return FALSE;
           }
     }
 
-
-    public static function OtroServer(){
-          if($_SERVER["SERVER_NAME"] == "s862695801.onlinehome.us"){
-            return TRUE;
-          } else {
-            return FALSE;
-          }
-    }
 
 
     public static function IsAdmin(){ // verifica si es administrador del sistema

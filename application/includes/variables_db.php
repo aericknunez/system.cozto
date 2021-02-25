@@ -3,28 +3,26 @@ date_default_timezone_set('America/El_Salvador');
 
 if(Helpers::ServerDomain() == TRUE){
 
-define("HOST", "localhost"); 			//35.225.56.157 The host you want to connect to. 
-define("USER", "superpol_erick"); 			// The database username. 
-define("PASSWORD", "caca007125-"); 	// The database password.
 	if(Helpers::ServerDemo() == TRUE){
-		define("DATABASE", "superpol_demo_cozto");
-		define("XSERV", "https://pizto.com/demo/");	
+		define("HOST", "db5001821073.hosting-data.io"); 			//35.225.56.157 The host you want to connect to. 
+		define("USER", "dbu687558"); 			// The database username. 
+		define("PASSWORD", "Caca007125-"); 	// The database password. 
+		define("DATABASE", "dbs1499036");
+		define("XSERV", "http://s862695801.onlinehome.us/demo/");	
 	} elseif(Helpers::ServerPractica() == TRUE){
-		define("DATABASE", "superpol_practica_cozto");
-		define("XSERV", "https://pizto.com/practica/");	
-	} else {
-		define("DATABASE", "superpol_cozto");
-		define("XSERV", "https://pizto.com/login/");	
+		define("HOST", "db5001821462.hosting-data.io"); 			//35.225.56.157 The host you want to connect to. 
+		define("USER", "dbu666364"); 			// The database username. 
+		define("PASSWORD", "Caca007125-"); 	// The database password. 
+		define("DATABASE", "dbs1499280");
+		define("XSERV", "http://s862695801.onlinehome.us/practica/");		
+	} else { /// para sistema normal
+		define("HOST", "db5001821416.hosting-data.io"); 			//35.225.56.157 The host you want to connect to. 
+		define("USER", "dbu690380"); 			// The database username. 
+		define("PASSWORD", "Caca007125-"); 	// The database password. 
+		define("DATABASE", "dbs1499253");
+		define("XSERV", "http://s862695801.onlinehome.us/cozto/");		
 	}
   
-
-} else if(Helpers::OtroServer() == TRUE) {
-
-define("HOST", "db5001821073.hosting-data.io"); 			//35.225.56.157 The host you want to connect to. 
-define("USER", "dbu687558"); 			// The database username. 
-define("PASSWORD", "Caca007125-"); 	// The database password. 
-define("DATABASE", "dbs1499036"); 
-define("XSERV", "http://s862695801.onlinehome.us/");	
 
 } else {
 
