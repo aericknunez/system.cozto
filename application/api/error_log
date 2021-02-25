@@ -1,0 +1,7 @@
+[21-Sep-2020 15:20:13 America/El_Salvador] PHP Warning:  mkdir(): No such file or directory in /home/superpol/public_html/pizto.com/login/system/bdbackup/Backup.php on line 95
+[21-Sep-2020 15:20:13 America/El_Salvador] PHP Warning:  fopen(../../system/bdbackup/backup/10/.gitkeep): failed to open stream: No such file or directory in /home/superpol/public_html/pizto.com/login/system/bdbackup/Backup.php on line 97
+[21-Sep-2020 15:20:13 America/El_Salvador] PHP Warning:  fwrite() expects parameter 1 to be resource, boolean given in /home/superpol/public_html/pizto.com/login/system/bdbackup/Backup.php on line 98
+[21-Sep-2020 15:20:13 America/El_Salvador] PHP Warning:  fclose() expects parameter 1 to be resource, boolean given in /home/superpol/public_html/pizto.com/login/system/bdbackup/Backup.php on line 99
+[21-Sep-2020 15:20:13 America/El_Salvador] PHP Warning:  fopen(../../system/bdbackup/backup/10/Backup-21-09-2020-152013.piz): failed to open stream: No such file or directory in /home/superpol/public_html/pizto.com/login/system/bdbackup/Backup.php on line 105
+[21-Sep-2020 15:20:13 America/El_Salvador] PHP Warning:  fwrite() expects parameter 1 to be resource, boolean given in /home/superpol/public_html/pizto.com/login/system/bdbackup/Backup.php on line 107
+[21-Sep-2020 15:20:13 America/El_Salvador] PHP Warning:  fclose() expects parameter 1 to be resource, boolean given in /home/superpol/public_html/pizto.com/login/system/bdbackup/Backup.php on line 109
