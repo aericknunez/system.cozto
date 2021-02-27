@@ -24,7 +24,7 @@ $parametros["productos"] = $productos;
 $parametros["tipoticket"] = $_SESSION["tipoticket"];
 $parametros["identidad"] = $_SESSION["td"];
 $parametros["config_imp"] = $_SESSION['config_imp'];
-
+$parametros["cajero"] = $_SESSION['nombre'];
 
 
 if($_SESSION["tipoticket"] == 1){
