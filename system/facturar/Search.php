@@ -9,7 +9,7 @@ class Search{
   public function DestalleFactura($factura){
       $db = new dbConn();
 
-$a = $db->query("SELECT * FROM ticket WHERE num_fac = '$factura' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]." order by id desc");
+$a = $db->query("SELECT * FROM ticket WHERE num_fac = '$factura' and tipo = '".$_SESSION["tipoticket"]."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]." order by id desc");
           if($a->num_rows > 0){
         echo '<table id="dtMaterialDesignExample" class="table table-striped" table-sm cellspacing="0" width="100%">
                 <thead>
@@ -67,7 +67,7 @@ $a = $db->query("SELECT * FROM ticket WHERE num_fac = '$factura' and tx = ".$_SE
   public function BotonesFactura($factura){
       $db = new dbConn();
 
-$a = $db->query("SELECT * FROM ticket WHERE num_fac = '$factura' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]." order by id desc");
+$a = $db->query("SELECT * FROM ticket WHERE num_fac = '$factura' and tipo = '".$_SESSION["tipoticket"]."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]." order by id desc");
 $cantidad = $a->num_rows;
 $a->close();  
 
