@@ -14,7 +14,7 @@ class Impresiones{
  public function Ticket($efectivo, $numero){
   $db = new dbConn();
   $nombre_impresora = "LR2000";
-  // $img  = "C:/AppServ/www/pizto/assets/img/logo_factura/grosera.jpg";
+  $img  = "C:/AppServ/www/pizto/assets/img/logo_factura/mursal.jpg";
 
 
 $connector = new WindowsPrintConnector($nombre_impresora);
@@ -29,20 +29,20 @@ $printer -> setTextSize(1, 2);
 $printer -> setLineSpacing(80);
 
 
-// $printer -> setJustification(Printer::JUSTIFY_CENTER);
-// $logo = EscposImage::load($img, false);
-// $printer->bitImage($logo);
 $printer -> setJustification(Printer::JUSTIFY_CENTER);
+$logo = EscposImage::load($img, false);
+$printer->bitImage($logo);
+// $printer -> setJustification(Printer::JUSTIFY_CENTER);
 
 $printer -> setFont(Printer::FONT_A);
-$printer->text("MURSAL DISTRIBUIDORA");
-$printer->feed();
+// $printer->text("MURSAL DISTRIBUIDORA");
+// $printer->feed();
 
 $printer -> setFont(Printer::FONT_B);
-$printer->text("Quinta del moral km- 62 - 63 Carretera antigua a San Salvador");
+$printer->text("Quinta del moral km- 62 - 63 Carretera antigua");
 $printer->feed();
 
-$printer->text("Santa Ana");
+$printer->text("a San Salvador. Santa Ana");
 $printer->feed();
 
 $printer -> setJustification(Printer::JUSTIFY_LEFT);
