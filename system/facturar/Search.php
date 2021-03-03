@@ -56,7 +56,14 @@ $a = $db->query("SELECT * FROM ticket WHERE num_fac = '$factura' and tipo = '".$
           	echo '<div align="center"><img src="assets/img/imagenes/error4.png" alt="Error" class="fluid-img"></div>';
           } $a->close();  
 
-
+echo '<div class="text-center">';
+echo "SE ENCUENTRA ACTIVA LA OPCION: ";
+  if($_SESSION["tipoticket"] == 1){ echo '<a id="mticket">TICKET</a>'; }
+  elseif($_SESSION["tipoticket"] == 2){ echo '<a id="mticket">FACTURA</a>'; }
+  elseif($_SESSION["tipoticket"] == 3){ echo '<a id="mticket">CREDITO FISCAL</a>'; }
+  elseif($_SESSION["tipoticket"] == 4){ echo '<a id="mticket">NOTA DE CREDITO</a>'; }
+  else { echo '<a id="mticket">N/A</a>'; }
+echo "</div>";
   }
 
 
@@ -86,7 +93,6 @@ $a->close();
 		Alerts::Mensajex("La factura " .$factura . " no ha sido encontrada", "danger");
 
 		}
-
 
 }
 
