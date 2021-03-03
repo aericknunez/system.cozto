@@ -58,11 +58,14 @@ $a = $db->query("SELECT * FROM ticket WHERE num_fac = '$factura' and tipo = '".$
 
 echo '<div class="text-center">';
 echo "SE ENCUENTRA ACTIVA LA OPCION: ";
+
+echo '<div id="vticket">';
   if($_SESSION["tipoticket"] == 1){ echo '<a id="mticket">TICKET</a>'; }
   elseif($_SESSION["tipoticket"] == 2){ echo '<a id="mticket">FACTURA</a>'; }
   elseif($_SESSION["tipoticket"] == 3){ echo '<a id="mticket">CREDITO FISCAL</a>'; }
   elseif($_SESSION["tipoticket"] == 4){ echo '<a id="mticket">NOTA DE CREDITO</a>'; }
   else { echo '<a id="mticket">N/A</a>'; }
+echo "</div>";
 echo "</div>";
   }
 
@@ -83,7 +86,10 @@ $a->close();
 
 		echo '<div align="center">';
 
-		echo '<a href="system/facturar/facturas/'.$_SESSION["td"].'/ticket_web.php?factura='.$factura.'" class="btn-floating btn-lg btn-mdb-color waves-effect waves-light" title="Imprimir Factura" target="_blank"><i class="fas fa-print"></i></a>';
+		// echo '<a href="system/facturar/facturas/'.$_SESSION["td"].'/ticket_web.php?factura='.$factura.'" class="btn-floating btn-lg btn-mdb-color waves-effect waves-light" title="Imprimir Factura" target="_blank"><i class="fas fa-print"></i></a>';
+
+    echo '<a id="imprimir" class="btn-floating btn-lg btn-mdb-color waves-effect waves-light" title="Imprimir Factura"><i class="fas fa-print"></i></a>';
+
 
 		echo '<a id="xdelete" class="btn-floating btn-lg btn-danger waves-effect waves-light" title="Elimiar Factura"><i class="fas fa-trash-alt"></i></a>';
 

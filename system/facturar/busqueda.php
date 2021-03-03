@@ -5,25 +5,26 @@ include_once 'application/common/Alerts.php';
 include_once 'system/facturar/Search.php';
 $busqueda = new Search();
 
+$_SESSION["search"] = $_POST["search"];
 ?>
 
-
+<div id="msjreload"></div>
 
 
 <div class="row d-flex justify-content-center">
-  <div class="col-12 col-md-8">
+  <div class="col-12 col-md-8" id="detallesf">
 
 <?php 
-$busqueda->DestalleFactura($_POST["search"]);
+$busqueda->DestalleFactura($_SESSION["search"]);
 ?>
 
   </div>
 
-  <div class="col-12 col-md-4">
+  <div class="col-12 col-md-4" id="mensajef">
 
 <?php 
 
-$busqueda->BotonesFactura($_POST["search"]);
+$busqueda->BotonesFactura($_SESSION["search"]);
  ?>
   </div>
 </div>
@@ -64,3 +65,37 @@ $busqueda->BotonesFactura($_POST["search"]);
   </div>
 </div>
 <!--Modal: modalConfirmDelete-->
+
+
+
+
+
+
+
+
+
+<div class="modal" id="ModalTicket" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"  data-backdrop="true">
+  <div class="modal-dialog modal-md" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">
+         SELECCIONE TIPO DE DOCUMENTO</h5>
+         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" align="center">
+<!-- ./  content -->
+<div id="contenidomticket">
+</div>
+<!-- ./  content -->
+      </div>
+
+<div class="modal-footer">
+<a id="cerrarmodal" class="btn btn-primary btn-rounded" data-dismiss="modal">Regresar</a>
+</div>
+
+    </div>
+  </div>
+</div>
+<!-- ./  Modal -->

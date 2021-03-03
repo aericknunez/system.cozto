@@ -2265,6 +2265,39 @@ break;
 
 
 
+case "580": // ver factura busqueda
+include_once '../../system/facturar/Search.php';
+	$busqueda = new Search();
+	$busqueda->DestalleFactura($_SESSION["search"]);
+break;
+
+
+
+case "581": // ver botones de factura
+include_once '../../system/facturar/Search.php';
+	$busqueda = new Search();
+	$busqueda->BotonesFactura($_SESSION["search"]);
+break;
+
+
+
+case "582": // borrrar factura
+// include_once '../../system/facturar/Search.php';
+// 	$busqueda = new Search();
+// 	$busqueda->BotonesFactura($_SESSION["search"]);
+break;
+
+
+
+case "583": // imprimir factura
+	include_once '../../system/facturar/Facturar.php'; // obtiene el estado de la factura tx, local o web
+	include_once '../../system/facturar/facturas/'.$_SESSION["td"].'/Impresiones.php'; // tiene las 
+	require_once ('../ticket/autoload.php'); 
+
+	$fac = new Facturar();
+	$fac->ObtenerEstadoFactura(0, $_SESSION["search"]);
+	Alerts::Alerta("success","Imprimiendo!","Imprimiendo Factura");
+break;
 
 
 
