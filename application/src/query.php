@@ -396,6 +396,7 @@ echo '<script type="text/javascript" src="assets/js/query/conf_facturar.js?v='.$
 } 
 elseif(isset($_GET["search"])) {
 echo '<script type="text/javascript" src="assets/js/query/search.js?v='.$numero.'"></script>';
+include_once 'assets/js/query/Imprimir.php';
 } 
 
 else{

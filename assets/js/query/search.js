@@ -83,29 +83,6 @@ $(document).ready(function(){
 
 
 
-/// borrar factura
-    $("body").on("click","#imprimir",function(){ 
-        var op = "583";
-        var dataString = 'op='+op;
-
-        $.ajax({
-            type: "POST",
-            url: "application/src/routes.php",
-            data: dataString,
-            beforeSend: function () {
-               	$("#detallesf").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt=""></div>');
-            },
-            success: function(data) {            
-                $("#detallesf").load('application/src/routes.php?op=580');
-                $("#msjreload").html(data);
-            }
-        }); 
-
-    });
-
-
-
-
 
 
 

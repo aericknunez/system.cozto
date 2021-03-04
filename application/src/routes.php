@@ -2179,6 +2179,9 @@ case "546":  /// Load data para facturar web
 include_once '../../system/facturar/FacturarWeb.php';
 	$data = new FacturarWeb(); 
 	$data->TicketWeb();
+
+// elimino las dos variables
+unset($_SESSION["factura_actual_print"], $_SESSION["cambio_actual_print"]);
 break;
 
 
@@ -2294,11 +2297,33 @@ case "583": // imprimir factura
 	include_once '../../system/facturar/facturas/'.$_SESSION["td"].'/Impresiones.php'; // tiene las 
 	require_once ('../ticket/autoload.php'); 
 
+if ($r = $db->select("efectivo", "ticket_num", "WHERE num_fac = '".$_SESSION["num_fac"]."' and tipo = '".$_SESSION["tipoticket"]."' and td = ".$_SESSION["td"]."")) { 
+   	$_SESSION["cambio_actual_print"] = $r["efectivo"];
+} unset($r);  
+
 	$fac = new Facturar();
-	$fac->ObtenerEstadoFactura(0, $_SESSION["search"]);
+	$fac->ObtenerEstadoFactura($_SESSION["cambio_actual_print"], $_SESSION["search"]);
 	Alerts::Alerta("success","Imprimiendo!","Imprimiendo Factura");
+
+// elimino las dos variables
+unset($_SESSION["cambio_actual_print"]);
 break;
 
+
+case "584":  /// imprimir factura Web
+include_once '../../system/facturar/FacturarWeb.php';
+
+if ($r = $db->select("orden, efectivo", "ticket_num", "WHERE num_fac = '".$_SESSION["search"]."' and tipo = '".$_SESSION["tipoticket"]."' and td = ".$_SESSION["td"]."")) { 
+   $_SESSION["orden_print"] = $r["orden"]; 
+   $_SESSION["cambio_actual_print"] = $r["efectivo"];
+} unset($r);  
+
+	$data = new FacturarWeb(); 
+	$data->TicketWeb();
+
+// elimino las dos variables
+unset($_SESSION["orden_print"], $_SESSION["cambio_actual_print"]);
+break;
 
 
 
