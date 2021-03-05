@@ -1,4 +1,7 @@
-<div class="modal" id="<? echo $_GET["modal"]; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"  data-backdrop="false">
+<?php
+    include_once 'application/common/Alerts.php'; 
+ ?>
+ <div class="modal" id="<? echo $_GET["modal"]; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"  data-backdrop="false">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -6,6 +9,26 @@
           VENTA AGRUPADA</h5>
       </div>
       <div class="modal-body">
+
+<?php  
+
+$a = $db->query("SELECT cod FROM ticket WHERE cod = '8888888' and orden = ".$_SESSION["orden"]." and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."");
+$cantidad = $a->num_rows;
+$a->close();
+
+
+if($cantidad > 0){ ?>
+
+<div class="row d-flex justify-content-center">
+  <div class="col-md-12">
+
+<?php Alerts::Mensajex("Sólo se puede agregar un producto agrupado por factura","danger") ?>
+
+  </div>
+</div>
+
+<?php } else { ?>
+
 <!-- ./  content -->
 <div class="row d-flex justify-content-center">
   <div class="col-md-12">
@@ -21,9 +44,7 @@
   </div>
 </div>
 
-PRODUCTOS AGREGADOS:
-
-
+<?php } ?>
 <div id="msj"></div>
 <!-- ./  content -->
       </div>
