@@ -11,7 +11,7 @@ $(document).ready(function(){
 /// borrar factura
     $("body").on("click","#borrar-factura",function(){ 
         $('#ConfirmDelete').modal('hide');
-        var op = "0";
+        var op = "582";
         var dataString = 'op='+op;
 
         $.ajax({

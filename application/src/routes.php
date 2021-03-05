@@ -2285,9 +2285,9 @@ break;
 
 
 case "582": // borrrar factura
-// include_once '../../system/facturar/Search.php';
-// 	$busqueda = new Search();
-// 	$busqueda->BotonesFactura($_SESSION["search"]);
+include_once '../../system/facturar/Search.php';
+	$data = new Search(); 
+	$data->BorrarFactura($_SESSION["search"]);
 break;
 
 
@@ -2297,7 +2297,7 @@ case "583": // imprimir factura
 	include_once '../../system/facturar/facturas/'.$_SESSION["td"].'/Impresiones.php'; // tiene las 
 	require_once ('../ticket/autoload.php'); 
 
-if ($r = $db->select("efectivo", "ticket_num", "WHERE num_fac = '".$_SESSION["num_fac"]."' and tipo = '".$_SESSION["tipoticket"]."' and td = ".$_SESSION["td"]."")) { 
+if ($r = $db->select("efectivo", "ticket_num", "WHERE num_fac = '".$_SESSION["search"]."' and tipo = '".$_SESSION["tipoticket"]."' and td = ".$_SESSION["td"]."")) { 
    	$_SESSION["cambio_actual_print"] = $r["efectivo"];
 } unset($r);  
 
@@ -2323,6 +2323,13 @@ if ($r = $db->select("orden, efectivo", "ticket_num", "WHERE num_fac = '".$_SESS
 
 // elimino las dos variables
 unset($_SESSION["orden_print"], $_SESSION["cambio_actual_print"]);
+break;
+
+
+
+
+case "585":  /// anular factura
+
 break;
 
 
