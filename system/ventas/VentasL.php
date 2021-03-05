@@ -64,16 +64,28 @@ class Ventas{
 	public function Agregar($datos) { // agrega el producto
 		$db = new dbConn();
 
+if($_SESSION["venta_agrupado"]){
+
+	$pv = 0;
+	$sumas = 0;
+    $stot=0;
+    $im =0;
+    $productox = "Producto_Agrupado";
+} else {
+
 	$pv = $this->ObtenerPrecio($datos["cod"], $datos["cantidad"]);
 	$sumas = $pv * $datos["cantidad"];
 
     $stot=Helpers::STotal($sumas, $_SESSION['config_imp']);
     $im=Helpers::Impuesto($stot, $_SESSION['config_imp']);
+    $productox = $this->ObtenerNombre($datos["cod"]);
+}
+
 
 		$datox = array();
 	    $datox["cod"] = $datos["cod"];
 	    $datox["cant"] = $datos["cantidad"];
-	    $datox["producto"] = $this->ObtenerNombre($datos["cod"]);
+	    $datox["producto"] = $productox;
 	    $datox["pv"] = $pv;  				   
 	    $datox["stotal"] = $stot;	    				   
 	    $datox["imp"] = $im;
@@ -210,7 +222,7 @@ class Ventas{
 
 
 
-	public function AgregarProductoEspecial($datos) { // agrega el producto Especial
+public function AgregarProductoEspecial($datos) { // agrega el producto Especial
 		$db = new dbConn();
 
 if($datos["precio"] != NULL and $datos["producto"] != NULL){
@@ -218,8 +230,15 @@ if($datos["precio"] != NULL and $datos["producto"] != NULL){
     $stot=Helpers::STotal($datos["precio"], $_SESSION['config_imp']);
     $im=Helpers::Impuesto($stot, $_SESSION['config_imp']);
 
+if($datos["agrupado"] == NULL){
+	$codigog = 9999999;
+} else {
+	$codigog = 8888888;
+	$_SESSION["venta_agrupado"] = TRUE;
+}
+
 		$datox = array();
-	    $datox["cod"] = 9999999;
+	    $datox["cod"] = $codigog;
 	    $datox["cant"] = 1;
 	    $datox["producto"] = strtoupper($datos["producto"]);
 	    $datox["pv"] = $datos["precio"];  				   
@@ -249,7 +268,7 @@ if($datos["precio"] != NULL and $datos["producto"] != NULL){
 		Alerts::Alerta("error","Error!","Los campos no pueden estar vacios!");
 	}   	
 	
-	}
+}
 
 
 
@@ -566,10 +585,29 @@ Helpers::UpdateId("ubicacion_asig", $cambio, "ubicacion = '".$datos["ubicacion"]
 					  </thead>
 					  <tbody>';
 		    		foreach ($a as $b) {
-		    			$porcentaje = (($b["descuento"] * 100) / ($b["total"] + $b["descuento"]));
-		    		   echo '<tr>
-						      <th scope="row">'.$b["cant"].'</th>
-						      <td>'.$b["producto"].'</td>
+		    			@$porcentaje = (($b["descuento"] * 100) / ($b["total"] + $b["descuento"]));
+
+
+		    		if($b["producto"] == "Producto_Agrupado"){
+		    			$productox = $this->ObtenerNombre($b["cod"]);
+		    			$color = 'class="purple lighten-5"';
+		    		} else {
+		    			$productox = $b["producto"];
+		    			$color = NULL;
+		    		}
+
+
+		    		   echo '<tr '.$color.'>
+						      <th scope="row">';
+
+						    if($b["cod"] == 8888888){
+			    				echo '<a id="agrupado""><i class="fas fa-times-circle blue-text fa-lg"></i></a>';
+			    			} else {
+			    				echo $b["cant"];
+			    			}
+
+						      echo '</th>
+						      <td>'.$productox.'</td>
 						      <td>'.$b["pv"].'</td>
 						      <td>'.$b["stotal"].'</td>
 						      <td>'.$b["imp"].'</td>

@@ -97,6 +97,15 @@ class Ventas{
 	public function Agregar($datos) { // agrega el producto
 		$db = new dbConn();
 
+if($_SESSION["venta_agrupado"]){
+
+	$pv = 0;
+	$sumas = 0;
+    $stot= 0;
+    $im = 0;
+    $nproducto = "Producto_Agrupado";
+} else {
+
 	$pv = $this->ObtenerPrecio($datos["cod"], $datos["cantidad"]);
 	$sumas = $pv * $datos["cantidad"];
 
@@ -107,11 +116,13 @@ class Ventas{
 
     $stot=Helpers::STotal($sumas, $_SESSION['config_imp']);
     $im=Helpers::Impuesto($stot, $_SESSION['config_imp']);
+    $nproducto = $this->ObtenerNombre($datos["cod"]);
+}
 
 		$datox = array();
 	    $datox["cod"] = $datos["cod"];
 	    $datox["cant"] = $datos["cantidad"];
-	    $datox["producto"] = $this->ObtenerNombre($datos["cod"]);
+	    $datox["producto"] = $nproducto;
 	    $datox["pv"] = $pv;  				   
 	    $datox["stotal"] = $stot;	    				   
 	    $datox["imp"] = $im;
@@ -207,6 +218,15 @@ class Ventas{
 
 	public function Actualiza($datos,$func) { // agrega el producto suma de uno n uno
 		$db = new dbConn();
+if($_SESSION["venta_agrupado"]){
+
+	$pv = 0;
+	$sumas = 0;
+	$descuento = NULL;
+    $stot=0;
+    $im =0;
+
+} else {
 
 	$pv = $this->ObtenerPrecio($datos["cod"], $datos["cantidad"]);
 	$sumas = $pv * $datos["cantidad"];
@@ -221,6 +241,11 @@ class Ventas{
 
     $stot=Helpers::STotal($sumas, $_SESSION['config_imp']);
     $im=Helpers::Impuesto($stot, $_SESSION['config_imp']);
+
+}
+
+
+
 
 	    $cambio = array();
 	    $cambio["cant"] = $datos["cantidad"];
@@ -407,19 +432,39 @@ class Ventas{
 					  </thead>
 					  <tbody>';
 		    		foreach ($a as $b) {
-		    		$porcentaje = (($b["descuento"] * 100) / ($b["total"] + $b["descuento"]));
-		    		   echo '<tr>
+		    		@$porcentaje = (($b["descuento"] * 100) / ($b["total"] + $b["descuento"]));
+
+
+		    		if($b["producto"] == "Producto_Agrupado"){
+		    			$productox = $this->ObtenerNombre($b["cod"]);
+		    			$color = 'class="purple lighten-5"';
+		    		} else {
+		    			$productox = $b["producto"];
+		    			$color = NULL;
+		    		}
+
+		    		   echo '<tr '.$color.'>
 						      <th scope="row">
 						      <a id="xcantidad" codigox="'.$b["cod"].'" cantidad="'.$b["cant"].'">'.$b["cant"].'</a>
 						      </th>
-						      <td>'.$b["producto"].'</td>
+						      <td>'.$productox.'</td>
 						      <td>'.$b["pv"].'</td>
 						      <td>'.$b["stotal"].'</td>
 						      <td>'.$b["imp"].'</td>
 						      <td>
 						      <a id="xdescuento" dcodigo="'.$b["cod"].'" dcantidad="'.$b["cant"].'" ddescuento="'.$b["descuento"].'" dporcentaje="'.$porcentaje.'">'.$b["total"].'</a>
 						      </td>
-			    			<td><a id="modcant" op="91" cod="'.$b["cod"].'"><i class="fas fa-minus-circle red-text fa-lg"></i></a>  <a id="modcant" op="90" cod="'.$b["cod"].'"><i class="fas fa-plus-circle green-text fa-lg"></i></a></td>
+			    			<td>';
+
+			    			if($b["cod"] == 8888888){
+			    				echo '<a id="agrupado""><i class="fas fa-times-circle blue-text fa-lg"></i></a>';
+			    			} else {
+			    				echo '<a id="modcant" op="91" cod="'.$b["cod"].'"><i class="fas fa-minus-circle red-text fa-lg"></i></a> 
+			    			<a id="modcant" op="90" cod="'.$b["cod"].'"><i class="fas fa-plus-circle green-text fa-lg"></i></a>';
+			    			}
+			    			
+
+			    			echo '</td>
 			    			<td><a id="borrar-ticket" op="92" hash="'.$b["hash"].'"><i class="fas fa-times-circle red-text fa-lg"></i></a></td>
 					</tr>';
 				    }

@@ -463,5 +463,26 @@ $('#ModalBalanza').on('shown.bs.modal', function() { // para autofocus en el mod
 
 
 
+    $("body").on("click","#agrupado",function(){
+        var op = "586";
+        var dataString = 'op='+op;
+
+        $.ajax({
+            type: "POST",
+            url: "application/src/routes.php",
+            data: dataString,
+            success: function(data) {            
+                $("#msj_agrupado").html(data);
+            }
+        });
+    });                 
+
+
+
+
+
+
+
+
 
 }); // termina query

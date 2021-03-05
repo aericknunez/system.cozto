@@ -17,6 +17,13 @@ if($_SESSION["cotizacion"]){
 Alerts::Mensajex("ADVERTENCIA! Se detecto una cotizaci&oacuten sin concluir. Debe guardarla o eliminarla antes de continuar", "danger", '<a href="?cotizar" class="btn btn-danger">ir a Cotizaciones</a>');
 }
 
+
+echo '<div id="msj_agrupado">'; if($_SESSION["venta_agrupado"]){
+Alerts::Mensajex("ADVERTENCIA! Se detecto activo la opción de producto agrupado. Todos los productos que agregue en este momento no tendran el precio establecido, sino que serán cobrados de manera especial", "danger", '<a id="agrupado" class="btn btn-danger">Desactivar</a>');
+} echo '</div>';
+
+
+
 if($_SESSION["precio_mayorista_activo"] == TRUE){
 Alerts::Mensajex("ADVERTENCIA! Esta activado el precio de mayoreo", "success");
 }
@@ -34,7 +41,7 @@ if($_SESSION["caja_apertura"] != NULL or $_SESSION["caja_soloagregar"] != NULL){
 }
 
 
-// print_r($_SESSION);
+print_r($_SESSION);
 
 if($_SESSION["caja_apertura"] == NULL){
 ?>

@@ -39,6 +39,8 @@ if($_REQUEST["modal"]=="oventas") include_once 'system/modal/modal/oventas.php';
 
 if($_REQUEST["modal"]=="cliente") include_once 'system/modal/modal/cliente.php';
 
+if($_REQUEST["modal"]=="agrupado") include_once 'system/modal/modal/agrupado.php';
+
 
 // creditos
 if($_REQUEST["modal"]=="abonos") include_once 'system/modal/modal/creditos_abonos.php';

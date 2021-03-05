@@ -248,6 +248,27 @@ $(document).ready(function(){
     })
     
 
+////////////// otras ventas ////////
+    $('#btn-agrupado').click(function(e){ /// para el formulario
+    e.preventDefault();
+    $.ajax({
+            url: "application/src/routes.php?op=79",
+            method: "POST",
+            data: $("#form-agrupado").serialize(),
+            beforeSend: function () {
+                $('#btn-agrupado').html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>Loading...').addClass('disabled');
+            },
+            success: function(data){
+                $('#btn-agrupado').html('Agregar Producto').removeClass('disabled');
+                $("#form-agrupado").trigger("reset");
+                $("#msj").html(data);           
+            }
+        })
+    })
+    
+
+
+
 
 
 

@@ -2327,9 +2327,17 @@ break;
 
 
 
+case "586":  /// activar desactivar agrupar
+if($_SESSION["venta_agrupado"]){
 
-case "585":  /// anular factura
+	unset($_SESSION["venta_agrupado"]);
+	Alerts::Alerta("success","Desactivado!","Se desactivo la opcion de productos agrupados");
+} else {
+	$_SESSION["venta_agrupado"] = TRUE;
+	
+Alerts::Mensajex("ADVERTENCIA! Se detecto activo la opción de producto agrupado. Todos los productos que agregue en este momento no tendran el precio establecido, sino que serán cobrados de manera especial", "danger", '<a id="agrupado" class="btn btn-danger">Desactivar</a>');
 
+}
 break;
 
 

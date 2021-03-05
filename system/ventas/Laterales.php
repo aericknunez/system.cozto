@@ -145,10 +145,18 @@ else { return '<a id="mticket">N/A</a>'; }
 		
 		echo '<a href="?modal=credito" class="btn-floating btn-primary" title="Asignar Credito"><i class="fab fa-cc-visa"></i></a>';
 		}
-		echo '<a href="?modal=dfactura" class="btn-floating btn-secondary" title="Datos Factura"><i class="fas fa-file-invoice-dollar"></i></a>
-		<a href="?modal=oventas" class="btn-floating btn-success" title="Venta Especial"><i class="fas fa-donate"></i></a>';
 
-		if($_SESSION['cliente_credito'] == NULL){
+
+		if($_SESSION['cliente_credito'] == NULL and $_SESSION['cliente_asig'] == NULL){
+		echo '<a href="?modal=dfactura" class="btn-floating btn-secondary" title="Datos Factura"><i class="fas fa-file-invoice-dollar"></i></a>';
+		}
+		
+		echo '<a href="?modal=oventas" class="btn-floating btn-success" title="Venta Especial"><i class="fas fa-donate"></i></a>';
+
+
+		echo '<a href="?modal=agrupado" class="btn-floating btn-info" title="Venta Agrupada"><i class="fas fa-donate"></i></a>';
+
+		if($_SESSION['cliente_credito'] == NULL and $_SESSION['factura_cliente'] == NULL){
 			echo '<a href="?modal=cliente" class="btn-floating btn-warning" title="Asignar Cliente"><i class="fas fa-user"></i></a>';
 		}
 		
@@ -165,6 +173,11 @@ else { return '<a id="mticket">N/A</a>'; }
 		}
 		if($_SESSION['cliente_asig']){
 			 $textos = 'Cliente asignado para la Factura: ' . $_SESSION['cliente_asig']. ".";
+			Alerts::Mensajex($textos,"info",NULL,NULL);
+		}
+
+		if($_SESSION['factura_cliente']){
+			 $textos = 'Cliente asignado para la Factura: ' . $_SESSION['factura_cliente']. ". Con el Documento: " . $_SESSION['factura_documento'];
 			Alerts::Mensajex($textos,"info",NULL,NULL);
 		}
 
