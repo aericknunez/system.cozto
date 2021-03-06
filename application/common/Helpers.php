@@ -71,7 +71,27 @@ class Helpers{
     if($string == "3") return '<div class="text-info font-weight-bold">Remesas</div>';
     if($string == "4") return '<div class="text-primary font-weight-bold">Adelanto a personal</div>';
     if($string == "5") return '<div class="text-warning font-weight-bold">Cheques</div>';
+    if($string == "6") return '<div class="text-cyan font-weight-bold">Tranferencias</div>';
     }
+
+
+    static public function TipoCuentaBanco($string) {
+    if($string == "2") return '<div class="text-success font-weight-bold">Chequera</div>';
+    if($string == "3") return '<div class="text-info font-weight-bold">Cuenta Bancaria</div>';
+    if($string == "4") return '<div class="text-primary font-weight-bold">Tarjeta de credito</div>';
+    }
+
+
+
+    static public function DocumentoPago($string) {
+    if($string == "1") return '<div class="text-cyan font-weight-bold">Credito Fiscal</div>';
+    if($string == "2") return '<div class="text-success font-weight-bold">Factura</div>';
+    if($string == "3") return '<div class="text-info font-weight-bold">Recibo</div>';
+    if($string == "4") return '<div class="text-primary font-weight-bold">Otros</div>';
+    }
+
+
+
 
 
     static public function EstadoCredito($string) {

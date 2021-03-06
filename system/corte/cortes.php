@@ -4,6 +4,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 include_once 'application/common/Alerts.php';
 include_once 'system/corte/CorteMultiple.php';
 $cortes = new Corte();
+
+include_once 'system/producto/ProductoOtros.php';
 ?>
 <div id="corte"></div>
 

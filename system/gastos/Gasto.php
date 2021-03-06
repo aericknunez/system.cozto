@@ -19,6 +19,11 @@ class Gastos {
 			    $datos["hora"] = date("H:i:s");
 			    $datos["user"] = $_SESSION["user"];
 			    $datos["edo"] = 1;
+			    $datos["tipo_comprobante"] = $data["tipo_comprobante"];
+			    $datos["no_factura"] = $data["nofactura"];
+			    $datos["tipo_pago"] = $data["pago"];
+			    $datos["cuenta_banco"] = $data["banco"];
+			    $datos["categoria"] = $data["categoria"];
 			    $datos["hash"] = Helpers::HashId();
 				$datos["time"] = Helpers::TimeId();
 			    $datos["td"] = $_SESSION["td"];
@@ -268,6 +273,147 @@ class Gastos {
 		    $this->VerEntradas();
 
    		}
+
+
+
+
+   static public function MostarBancos($id) { 
+    $db = new dbConn();
+
+      $a = $db->query("SELECT * FROM gastos_cuentas WHERE tipo = '$id' and td = ".$_SESSION["td"]."");
+      echo '<select class="browser-default custom-select mb-3" id="banco" name="banco">
+      <option selected disabled>* Cuenta</option>';
+      foreach ($a as $b) {  
+              echo '<option value="'. $b["hash"] .'">'. $b["cuenta"] .' - '. $b["banco"] .' ('. Helpers::Dinero($b["saldo"]) .')</option>'; 
+      } $a->close(); 
+      echo '</select>';
+    }
+
+
+
+
+
+   static public function MostarListaCategorias() { 
+    $db = new dbConn();
+
+echo '<select class="browser-default custom-select mb-3" id="categoria" name="categoria">';
+echo Helpers::SelectData("* Categoria", "gastos_categorias", "hash", "categoria");
+echo '</select>';
+    }
+
+
+
+
+
+   static public function MostarTodosBancos() { 
+    $db = new dbConn();
+
+      $a = $db->query("SELECT * FROM gastos_cuentas WHERE td = ".$_SESSION["td"]."");
+
+      echo '<table class="table table-sm">
+  <thead>
+    <tr>
+      <th scope="col">Tipo</th>
+      <th scope="col">Cuenta</th>
+      <th scope="col">Banco</th>
+      <th scope="col">Saldo</th>
+    </tr>
+  </thead>
+  <tbody>';
+      foreach ($a as $b) {  
+
+    echo '<tr>
+      <th scope="row">'. Helpers::TipoCuentaBanco($b["tipo"]) .'</th>
+      <td>'. $b["cuenta"] .'</td>
+      <td>'. $b["banco"] .'</td>
+      <td>'. Helpers::Dinero($b["saldo"]) .'</td>
+    </tr>';
+      } $a->close(); 
+      
+      echo '</tbody>
+		</table>';
+    }
+
+
+
+	public function AddBanco($data){
+	    $db = new dbConn();
+
+	    if($data["tipo"] != NULL and $data["nocuenta"] != NULL){
+	         $datos = array();
+			    $datos["tipo"] = $data["tipo"];
+			    $datos["cuenta"] = $data["nocuenta"];
+			    $datos["banco"] = $data["banco"];
+			    $datos["saldo"] = $data["saldo"];
+			    $datos["edo"] = 1;
+			    $datos["hash"] = Helpers::HashId();
+				$datos["time"] = Helpers::TimeId();
+			    $datos["td"] = $_SESSION["td"];
+			    if ($db->insert("gastos_cuentas", $datos)) {
+			        Alerts::Alerta("success","Agregado Correctamente","Banco Agregado corectamente!");
+			    } else {
+			    	Alerts::Alerta("error","Error","Error desconocido, no se agrego el registro!");
+			    }
+		} else {
+			Alerts::Alerta("error","Error","Faltan Datos!");
+		}
+			$this->MostarTodosBancos();
+
+	}
+
+
+
+
+
+
+   static public function MostrarCategorias() { 
+    $db = new dbConn();
+
+      $a = $db->query("SELECT * FROM gastos_categorias WHERE edo = 1 and td = ".$_SESSION["td"]."");
+
+echo '<table class="table table-sm">
+  <thead>
+    <tr>
+      <th scope="col">Categoria</th>
+      <th scope="col">Eliminar</th>
+    </tr>
+  </thead>
+  <tbody>';
+      foreach ($a as $b) {  
+    echo '<tr>
+      <td>'. $b["categoria"] .'</td>
+      <td><a><span class="badge red"><i class="fas fa-trash-alt" aria-hidden="true"></i></span></a></td>
+    </tr>';
+      } $a->close(); 
+      
+echo '</tbody>
+</table>';
+    }
+
+
+
+
+	public function AddCategoria($data){
+	    $db = new dbConn();
+
+	    if($data["categoria"] != NULL){
+	         $datos = array();
+			    $datos["categoria"] = $data["categoria"];
+			    $datos["edo"] = 1;
+			    $datos["hash"] = Helpers::HashId();
+				$datos["time"] = Helpers::TimeId();
+			    $datos["td"] = $_SESSION["td"];
+			    if ($db->insert("gastos_categorias", $datos)) {
+			        Alerts::Alerta("success","Agregado Correctamente","Categoria Agregado corectamente!");
+			    } else {
+			    	Alerts::Alerta("error","Error","Error desconocido, no se agrego el registro!");
+			    }
+		} else {
+			Alerts::Alerta("error","Error","Faltan Datos!");
+		}
+			$this->MostrarCategorias();
+
+	}
 
 
 

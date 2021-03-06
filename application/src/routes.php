@@ -1446,6 +1446,51 @@ break;
 
 
 
+case "177":  // entrada de efectivo
+include_once '../../system/gastos/Gasto.php';
+	$gastos = new Gastos;
+	$gastos->MostarBancos($_POST["id"]);
+break;
+
+
+
+case "178":  // todos los bancos
+include_once '../../system/gastos/Gasto.php';
+	$gastos = new Gastos;
+	$gastos->MostarTodosBancos();
+break;
+
+
+case "179": 
+include_once '../../system/gastos/Gasto.php';
+	$gastos = new Gastos;
+	$gastos->AddBanco($_POST);
+break;
+
+
+
+case "180": 
+include_once '../../system/gastos/Gasto.php';
+	$gastos = new Gastos;
+	$gastos->MostrarCategorias();
+break;
+
+
+
+case "181": 
+include_once '../../system/gastos/Gasto.php';
+	$gastos = new Gastos;
+	$gastos->AddCategoria($_POST);
+break;
+
+
+case "182":  // muestra el select de las categorias de gastos
+include_once '../../system/gastos/Gasto.php';
+	$gastos = new Gastos;
+	$gastos->MostarListaCategorias($_POST);
+break;
+
+
 case "300": // agregar empleado
 include_once '../../system/planilla/Planilla.php';
 	$plan = new planilla;
@@ -2339,6 +2384,8 @@ Alerts::Mensajex("ADVERTENCIA! Se detecto activo la opción de producto agrupado
 
 }
 break;
+
+
 
 
 

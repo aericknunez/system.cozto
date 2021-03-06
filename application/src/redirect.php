@@ -62,8 +62,9 @@ elseif(isset($_GET["cuentaspendientes"])) include_once 'system/cuenta/cuentaspen
 
 
 // Gastos y compras
-elseif(isset($_GET["gastos"])) include_once 'system/gastos/gastos.php'; 
+elseif(isset($_GET["gastos"])) include_once 'system/gastos/gastos_update.php'; 
 elseif(isset($_GET["entradas"])) include_once 'system/gastos/entradas.php'; 
+elseif(isset($_GET["remesas"])) include_once 'system/gastos/remesas.php'; 
 
 
 // Corte Diario

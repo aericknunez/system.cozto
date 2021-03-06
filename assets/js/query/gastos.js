@@ -201,7 +201,164 @@ return false;
 
 
 
+/// Commienza gastos update
+$("#tipo").change(function(){
+    var id=$(this).val();
+    if(id == 2){ // se muestra numero de factura
+        $('#nofactura').attr("type", "text");
+        $('#nofactura').attr("value", "");
+        $('#tipo_comprobante').attr("value", "");
+        $("#elcomprobante").show();
+    } else {
+        $('#nofactura').attr("value", "");
+        $('#nofactura').attr("type", "hidden");
+        $('#tipo_comprobante').attr("value", "");
+        $("#elcomprobante").hide();
+    }
+   
+});
 
+
+$("#pago").change(function(){
+    var id=$(this).val();
+    var dataString = 'id='+ id;
+
+    if(id == 1){ // se muestra numero de factura
+        $("#muestra_b").hide();
+    } else {
+        $("#muestra_b").show();
+               $.ajax({
+                type: "POST",
+                url: "application/src/routes.php?op=177", // obtengo el lsitado de bancos y cuentas
+                data: dataString,
+                cache: false,
+                success: function(html){
+                    $("#muestra_banco").html(html);
+                } 
+            });
+    }
+
+});
+
+$("#muestra_b").hide();
+// $("#elcomprobante").hide();
+
+
+    // $("#pais").change(function()
+    // {
+    //     var id=$(this).val();
+    //     var dataString = 'id='+ id;
+    
+    //     $.ajax
+    //     ({
+    //         type: "POST",
+    //         url: "application/src/routes.php?op=16", // obterngo departamento
+    //         data: dataString,
+    //         cache: false,
+    //         success: function(html)
+    //         {
+    //             $("#dep").html(html);
+    //         } 
+    //     });
+    // });
+
+
+
+
+
+
+/// llamar modal ver
+    $("body").on("click","#addbanco",function(){ 
+        
+        $('#ModalAddBanco').modal('show');
+
+        var op = "178";
+        var dataString = 'op='+op;
+
+        $.ajax({
+            type: "POST",
+            url: "application/src/routes.php",
+            data: dataString,
+            beforeSend: function () {
+               $("#vista_banco").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt=""></div>');
+            },
+            success: function(data) {            
+                $("#vista_banco").html(data); // lo que regresa de la busquea         
+            }
+        });
+
+    });
+
+
+
+    $('#btn-banco').click(function(e){ /// agregar un producto 
+    e.preventDefault();
+    $.ajax({
+            url: "application/src/routes.php?op=179",
+            method: "POST",
+            data: $("#form-banco").serialize(),
+            beforeSend: function () {
+                $('#btn-banco').html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>Loading...').addClass('disabled');
+               // $("#contenido").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt=""></div>');
+            },
+            success: function(data){
+                $('#btn-banco').html('Agregar Cuenta').removeClass('disabled');          
+                $("#form-banco").trigger("reset");
+                $("#vista_banco").html(data); 
+            }
+        })
+    });
+    
+
+
+
+
+
+
+
+/// llamar modal ver
+    $("body").on("click","#addcat",function(){ 
+        
+        $('#ModalAddCategoria').modal('show');
+
+        var op = "180";
+        var dataString = 'op='+op;
+
+        $.ajax({
+            type: "POST",
+            url: "application/src/routes.php",
+            data: dataString,
+            beforeSend: function () {
+               $("#vista_categoria").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt=""></div>');
+            },
+            success: function(data) {            
+                $("#vista_categoria").html(data); // lo que regresa de la busquea         
+            }
+        });
+
+    });
+
+
+
+    $('#btn-categoria').click(function(e){ /// agregar un producto 
+    e.preventDefault();
+    $.ajax({
+            url: "application/src/routes.php?op=181",
+            method: "POST",
+            data: $("#form-categoria").serialize(),
+            beforeSend: function () {
+                $('#btn-categoria').html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>Loading...').addClass('disabled');
+               // $("#contenido").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt=""></div>');
+            },
+            success: function(data){
+                $('#btn-categoria').html('Agregar Categoria').removeClass('disabled');          
+                $("#form-categoria").trigger("reset");
+                $("#vista_categoria").html(data); 
+                $("#muestra_categoria").load('application/src/routes.php?op=182');
+            }
+        })
+    });
+    
 
 
 

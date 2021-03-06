@@ -31,6 +31,8 @@ public function Apertura($efectivo){
 		Alerts::Alerta("error","Error!","Introduzca la cantidad de apertura de caja!");
 	}
 
+$pro = new ProductoOtros();
+$pro->EmparejaExistencias();
 
 }
 
@@ -65,6 +67,9 @@ public function Cierre($efectivo){
       } else {
       	Alerts::Alerta("error","Error!","Algo Ocurrió!");
       }          
+
+$pro = new ProductoOtros();
+$pro->EmparejaExistencias();
 
   } else {
     Alerts::Alerta("error","Error!","Faltan Datos!");
@@ -179,7 +184,7 @@ public function Cierre($efectivo){
 
 	public function Gastos(){
 		$db = new dbConn();
-	    $a = $db->query("SELECT sum(cantidad) FROM gastos WHERE user = '".$_SESSION["user"]."' and edo != 0 and tipo != 5 and td = ".$_SESSION["td"]." and time BETWEEN '".$this->GetInicio()."' and '".Helpers::TimeId()."'");
+	    $a = $db->query("SELECT sum(cantidad) FROM gastos WHERE user = '".$_SESSION["user"]."' and edo != 0 and tipo_pago = 1 and td = ".$_SESSION["td"]." and time BETWEEN '".$this->GetInicio()."' and '".Helpers::TimeId()."'");
 		    foreach ($a as $b) {
 		     $total=$b["sum(cantidad)"];
 		    } $a->close();

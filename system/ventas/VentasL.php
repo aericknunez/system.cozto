@@ -86,6 +86,7 @@ if($_SESSION["venta_agrupado"]){
 	    $datox["cod"] = $datos["cod"];
 	    $datox["cant"] = $datos["cantidad"];
 	    $datox["producto"] = $productox;
+	    $datox["pc"] = $this->ObtenerPrecioCosto($datos["cod"]);
 	    $datox["pv"] = $pv;  				   
 	    $datox["stotal"] = $stot;	    				   
 	    $datox["imp"] = $im;
@@ -120,6 +121,7 @@ if($_SESSION["venta_agrupado"]){
 	    $datox["cod"] = $datos["cod"];
 	    $datox["cant"] = $datos["cantidad"];
 	    $datox["producto"] = $datos["producto"];
+	    $datox["pc"] = $this->ObtenerPrecioCosto($datos["cod"]);
 	    $datox["pv"] = $datos["pv"]; 				   
 	    $datox["stotal"] = $datos["stotal"];    				   
 	    $datox["imp"] = $datos["imp"];
@@ -158,6 +160,7 @@ if($_SESSION["venta_agrupado"]){
 	    $datox["cod"] = $datos["cod"];
 	    $datox["cant"] = $datos["cantidad"];
 	    $datox["producto"] = $datos["producto"];
+	    $datox["pc"] = $this->ObtenerPrecioCosto($datos["cod"]);
 	    $datox["pv"] = $datos["pv"]; 				   
 	    $datox["stotal"] = $datos["stotal"];    				   
 	    $datox["imp"] = $datos["imp"];
@@ -241,6 +244,7 @@ if($datos["agrupado"] == NULL){
 	    $datox["cod"] = $codigog;
 	    $datox["cant"] = 1;
 	    $datox["producto"] = strtoupper($datos["producto"]);
+	    $datox["pc"] = $this->ObtenerPrecioCosto($datos["cod"]);
 	    $datox["pv"] = $datos["precio"];  				   
 	    $datox["stotal"] = $stot;	    				   
 	    $datox["imp"] = $im;
@@ -280,6 +284,31 @@ if($datos["agrupado"] == NULL){
         return $r["descripcion"];
     	} unset($r); 
     }
+
+
+
+public function ObtenerPrecioCosto($cod) { // obtine cantiad de productos
+	$db = new dbConn();
+
+$precio = 0;
+// cantidad de productos ingresados y precio costo
+$a = $db->query("SELECT existencia, precio_costo FROM producto_ingresado WHERE existencia > 0 and producto = '".$cod."' and td = ". $_SESSION["td"] ."");
+foreach ($a as $b) {
+    $tot = $b["existencia"] * $b["precio_costo"];
+    $precio = $precio + $tot;
+    unset($tot);
+} $a->close();
+
+ 
+
+if ($r = $db->select("sum(existencia)", "producto_ingresado", "WHERE existencia > 0 and producto = '".$cod."' and td = ". $_SESSION["td"] ."")) { 
+    $productos = $r["sum(existencia)"];
+} unset($r);  
+
+@$pc = $precio / $productos;
+
+    return $pc;
+}
 
 
 
