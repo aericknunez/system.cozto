@@ -33,9 +33,11 @@ $printer -> setLineSpacing(80);
 // $printer -> setJustification(Printer::JUSTIFY_CENTER);
 // $logo = EscposImage::load($img, false);
 // $printer->bitImage($logo);
-$printer -> setJustification(Printer::JUSTIFY_LEFT);
 
-$printer->text("SERVI AGRO VICENTINO");
+$printer -> setJustification(Printer::JUSTIFY_CENTER);
+$printer->text("ANIMAL PET'S");
+
+$printer -> setJustification(Printer::JUSTIFY_LEFT);
 
 $printer->feed();
 $printer->text("Clinica Veterinaria y venta de productos Agropecuarios");
@@ -73,7 +75,7 @@ $a = $db->query("select cod, cant, producto, pv, total, fecha, hora, num_fac fro
   
     foreach ($a as $b) {
  
-$printer -> text($this->Item($b["cant"], $b["producto"], $b["pv"], $b["total"]));
+$printer -> text($this->Item($b["cant"], substr(b["producto"], 0, 35)$, $b["pv"], $b["total"]));
 
 $subtotalf = $subtotalf + $b["total"];
 
@@ -154,8 +156,12 @@ $printer->close();
 
 
  public function Factura($efectivo, $numero){
-  $db = new dbConn();
+$nombre_impresora = "EPSON2";
 
+$connector = new WindowsPrintConnector($nombre_impresora);
+$printer = new Printer($connector);
+$printer->pulse();
+$printer->close();
 
 }   /// termina FACTURA
 
@@ -164,7 +170,12 @@ $printer->close();
 
 
  public function CreditoFiscal($data){
-  $db = new dbConn();
+$nombre_impresora = "EPSON2";
+
+$connector = new WindowsPrintConnector($nombre_impresora);
+$printer = new Printer($connector);
+$printer->pulse();
+$printer->close();
 
 }
 
