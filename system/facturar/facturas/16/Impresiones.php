@@ -266,7 +266,7 @@ $printer->close();
 
  public function Barcode($numero){
   $db = new dbConn();
-  $nombre_impresora = "ZDesigner GK420t";
+  $nombre_impresora = "EPSON2";
 
 
 $connector = new WindowsPrintConnector($nombre_impresora);
