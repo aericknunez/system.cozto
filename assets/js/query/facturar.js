@@ -1,25 +1,58 @@
 $(document).ready(function(){
 
-	$('#btn-facturar').click(function(e){ /// agregar un producto 
+		$('.datepicker').pickadate({
+		  weekdaysShort: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
+		  weekdaysFull: ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado'],
+		  monthsFull: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre',
+		  'Noviembre', 'Diciembre'],
+		  monthsShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct',
+		  'Nov', 'Dic'],
+		  showMonthsShort: true,
+		  formatSubmit: 'dd-mm-yyyy',
+		  close: 'Cancelar',
+		  clear: 'Limpiar',
+		  today: 'Hoy'
+		})
+
+
+
+	$('#btn-reportef').click(function(e){ /// historial de cortes
 	e.preventDefault();
 	$.ajax({
-			url: "application/src/routes.php?op=85",
+			url: "application/src/routes.php?op=210",
 			method: "POST",
-			data: $("#form-facturar").serialize(),
+			data: $("#form-reportef").serialize(),
 			beforeSend: function () {
-			   $("#formularios").hide();
-			   $("#btn-te").hide(); // esconde boton tarjeta y efectivo
-               $("#resultado").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt=""></div>');
-            },
+				$('#btn-reportef').html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>Loading...').addClass('disabled');
+	        },
 			success: function(data){
-				$("#form-facturar").trigger("reset");
-				$("#formularios").hide();
-				$("#btn-te").hide(); // esconde boton tarjeta y efectivo 
-				$("#resultado").html(data);		
-				$("#botones-imprimir").load('application/src/routes.php?op=120'); // caraga los botones / imprimir			
+				$('#btn-reportef').html('Mostrar Datos').removeClass('disabled');	      
+				$("#form-reportef").trigger("reset");
+				$("#contenido").html(data);	
 			}
 		})
 	});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 }); // termina query

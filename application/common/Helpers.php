@@ -66,8 +66,8 @@ class Helpers{
 
 
     static public function Gasto($string) {
-    if($string == "1") return '<div class="text-danger font-weight-bold">Compra No Facturado</div>';
-    if($string == "2") return '<div class="text-success font-weight-bold">Compra con Factura</div>';
+    if($string == "1") return '<div class="text-danger font-weight-bold">Sin Comprobante</div>';
+    if($string == "2") return '<div class="text-success font-weight-bold">Con Comprobante</div>';
     if($string == "3") return '<div class="text-info font-weight-bold">Remesas</div>';
     if($string == "4") return '<div class="text-primary font-weight-bold">Adelanto a personal</div>';
     if($string == "5") return '<div class="text-warning font-weight-bold">Cheques</div>';
@@ -83,7 +83,16 @@ class Helpers{
 
 
 
+    static public function TipoPagoGasto($string) {
+    if($string == "1") return '<div class="text-cyan font-weight-bold">Efectivo</div>';
+    if($string == "2") return '<div class="text-success font-weight-bold">Cheque</div>';
+    if($string == "3") return '<div class="text-info font-weight-bold">Transferencia</div>';
+    if($string == "4") return '<div class="text-primary font-weight-bold">Tarjeta</div>';
+    }
+
+
     static public function DocumentoPago($string) {
+    if($string == "0") return '<div class="text-danger font-weight-bold">Ninguno</div>';
     if($string == "1") return '<div class="text-cyan font-weight-bold">Credito Fiscal</div>';
     if($string == "2") return '<div class="text-success font-weight-bold">Factura</div>';
     if($string == "3") return '<div class="text-info font-weight-bold">Recibo</div>';
@@ -136,6 +145,16 @@ class Helpers{
     if($string == "2") return 'Tarjeta';
     if($string == "3") return 'Credito';
     }
+
+
+ static public function TipoFacturaVentas($string) {
+    if($string == "0") return 'Ninguno';
+    if($string == "1") return 'Ticket';
+    if($string == "2") return 'Factura';
+    if($string == "3") return 'Credito Fiscal';
+    if($string == "4") return 'Nota Exportación';
+    }
+
 
 
 

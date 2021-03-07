@@ -1024,6 +1024,7 @@ break;
 
 case "116": //APERTURA DE CAJA
 include_once '../../system/corte/CorteMultiple.php';
+include_once '../../system/producto/ProductoOtros.php';
 $cortes = new Corte();
 $cortes->Apertura($_POST["efectivo"]);
 unset($_SESSION["caja_soloagregar"]);
@@ -1033,6 +1034,7 @@ break;
 
 case "117": // cierre de corte
 include_once '../../system/corte/CorteMultiple.php';
+include_once '../../system/producto/ProductoOtros.php';
 $cortes = new Corte();
 
 $cortes->Cierre($_POST["efectivo"]);
@@ -1489,6 +1491,62 @@ include_once '../../system/gastos/Gasto.php';
 	$gastos = new Gastos;
 	$gastos->MostarListaCategorias($_POST);
 break;
+
+
+case "200": // ventas detallado
+	include_once '../../system/reportes/Reportes.php';
+	$historial = new Reportes();
+	if($_POST["fecha1_submit"]){
+		$inicio = $_POST["fecha1_submit"]; $fin=$_POST["fecha2_submit"];
+	} else {
+		$inicio = date("01-m-Y"); $fin=date("31-m-Y");
+	}
+	
+	$historial->VentasDetallado($inicio, $fin);
+break;
+
+
+
+case "201": // ventas detallado
+	include_once '../../system/reportes/Reportes.php';
+	$historial = new Reportes();
+	if($_POST["fecha1_submit"]){
+		$inicio = $_POST["fecha1_submit"]; $fin=$_POST["fecha2_submit"];
+	} else {
+		$inicio = date("01-m-Y"); $fin=date("31-m-Y");
+	}
+	
+	$historial->VentasAgrupado($inicio, $fin);
+break;
+
+
+case "202": // ventas detallado
+	include_once '../../system/reportes/Reportes.php';
+	$historial = new Reportes();
+	if($_POST["fecha1_submit"]){
+		$inicio = $_POST["fecha1_submit"]; $fin=$_POST["fecha2_submit"];
+	} else {
+		$inicio = date("01-m-Y"); $fin=date("31-m-Y");
+	}
+	
+	$historial->GastosDetallado($inicio, $fin);
+break;
+
+
+
+case "210": // ventas detallado
+	include_once '../../system/facturar/ReportesFacturas.php';
+	$historial = new ReportesFacturas();
+	if($_POST["fecha1_submit"]){
+		$inicio = $_POST["fecha1_submit"]; $fin=$_POST["fecha2_submit"];
+	} else {
+		$inicio = date("01-m-Y"); $fin=date("31-m-Y");
+	}
+	
+	$historial->ReporteF($inicio, $fin, $_POST["tipo"]);
+break;
+
+
 
 
 case "300": // agregar empleado

@@ -82,6 +82,10 @@ elseif(isset($_GET["gmensual"])) include_once 'system/historial/gmensual.php';
 elseif(isset($_GET["descuentos"])) include_once 'system/historial/descuentos.php'; 
 elseif(isset($_GET["utilidades"])) include_once 'system/historial/utilidades.php'; 
 elseif(isset($_GET["listaventa"])) include_once 'system/historial/listaventa.php'; 
+// reportes
+elseif(isset($_GET["ventadetalle"])) include_once 'system/reportes/ventasdetalle.php'; 
+elseif(isset($_GET["ventaagrupado"])) include_once 'system/reportes/ventaagrupado.php'; 
+elseif(isset($_GET["gastodetallado"])) include_once 'system/reportes/gastodetallado.php'; 
 
 
 
@@ -124,6 +128,8 @@ elseif(isset($_GET["ecategorias"])) include_once 'system/ecommerce/categoria_pro
 // factura
 elseif(isset($_GET["mod_factura"])) include_once 'system/facturar/mod_factura.php'; // cambia lo de la factra
 elseif(isset($_GET["search"])) include_once 'system/facturar/busqueda.php'; // search factura
+elseif(isset($_GET["reportef"])) include_once 'system/facturar/reportef.php'; // search factura
+
 
 
 

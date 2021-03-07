@@ -338,12 +338,37 @@ if($_SESSION["root_tipo_sistema"] != 1 or $_SESSION["root_tipo_sistema"] != 2) {
 echo '<li><a href="application/src/routes.php?op=510"  class="waves-effect"><i class="fas fa-cog"></i> '.$text_may.'</a></li>';
 } ?>
 
+<li><a href="?reportef" class="waves-effect"><i class="fas fa-cogs"></i> Facturas Emitidas</a></li>
 <li><a  class="waves-effect"><i class="fas fa-cog"></i> Opciones</a></li>
 <li><a  class="waves-effect"><i class="fas fa-cogs"></i> Imprimir Facturas</a></li>
 
 </ul>
 </div>
 </li>
+
+
+
+
+
+
+
+
+<?php if($_SESSION["tipo_cuenta"] == 1 or $_SESSION["tipo_cuenta"] == 5) { ?>
+
+<li><a class="collapsible-header waves-effect arrow-r"><i class="fas fa-cog"></i> REPORTES<i class="fa fa-angle-down rotate-icon"></i></a>
+<div class="collapsible-body">
+<ul class="list-unstyled">
+<li><a href="?ventadetalle" class="waves-effect"><i class="fas fa-cogs"></i> Detalles de ventas</a></li>
+
+<li><a href="?ventaagrupado" class="waves-effect"><i class="fas fa-cog"></i> Ventas Agrupadas</a></li>
+<li><a href="?gastodetallado" class="waves-effect"><i class="fas fa-cogs"></i> Detalle de Gastos</a></li>
+
+</ul>
+</div>
+</li>
+
+<?php } ?>
+
 
 
 

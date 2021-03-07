@@ -31,6 +31,9 @@ $cuenta->VerCuenta($_REQUEST["cuenta"]);
 
         <input type="hidden" id="cuenta" name="cuenta" value="<?php echo $_REQUEST["cuenta"]; ?>"> 
         <input type="number" step="any" id="abono" name="abono" autocomplete="off" class="form-control mb-3" placeholder="0.00">
+
+<div class="text-right"><small><a id="adddetalles">Agregar Detalles</a></small></div>
+
         <button class="btn btn-info my-2" type="submit" id="btn-abono" name="btn-abono">AGREGAR ABONO</button>
         </form>
     </div>

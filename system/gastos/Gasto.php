@@ -10,6 +10,10 @@ class Gastos {
 
 	    if($data["gasto"] != NULL and $data["cantidad"] != NULL){
 	         $datos = array();
+
+	         	if($data["tipo"] == 1){ $data["nofactura"] = NULL; $data["tipo_comprobante"] = NULL;}
+	         	if($data["pago"] == 1){ $data["banco"] = NULL; }
+
 			    $datos["tipo"] = $data["tipo"];
 			    $datos["nombre"] = $data["gasto"];
 			    $datos["descripcion"] = $data["descripcion"];

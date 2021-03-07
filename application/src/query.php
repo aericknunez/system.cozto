@@ -321,6 +321,21 @@ echo '<script type="text/javascript" src="assets/js/query/historial.js?v='.$nume
 } 
 
 
+/// reportes
+elseif(isset($_GET["ventadetalle"])) {
+echo '<script type="text/javascript" src="assets/js/query/reportes.js?v='.$numero.'"></script>';
+} 
+elseif(isset($_GET["ventaagrupado"])) {
+echo '<script type="text/javascript" src="assets/js/query/reportes.js?v='.$numero.'"></script>';
+} 
+elseif(isset($_GET["gastodetallado"])) {
+echo '<script type="text/javascript" src="assets/js/query/reportes.js?v='.$numero.'"></script>';
+} 
+
+
+
+
+
 
 
 
@@ -403,6 +418,9 @@ echo '<script type="text/javascript" src="assets/js/query/conf_facturar.js?v='.$
 elseif(isset($_GET["search"])) {
 echo '<script type="text/javascript" src="assets/js/query/search.js?v='.$numero.'"></script>';
 include_once 'assets/js/query/Imprimir.php';
+} 
+elseif(isset($_GET["reportef"])) {
+echo '<script type="text/javascript" src="assets/js/query/facturar.js?v='.$numero.'"></script>';
 } 
 
 else{
