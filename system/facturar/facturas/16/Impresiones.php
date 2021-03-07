@@ -281,8 +281,8 @@ $printer -> setBarcodeHeight(100);
 $printer->setBarcodeTextPosition(Printer::BARCODE_TEXT_BELOW);
     $printer -> barcode($a, Printer::BARCODE_CODE128);
 
-    if ($r = $db->select("descripcion", "producto", "WHERE cod = '$numero' and td = ".$_SESSION["td"]."")) { 
-    $pro = $r["descripcion"];
+if ($r = $db->select("descripcion", "producto", "WHERE cod = '$numero' and td = ".$_SESSION["td"]."")) { 
+$pro = $r["descripcion"];
 } unset($r);  
 
 $printer -> feed(1);
