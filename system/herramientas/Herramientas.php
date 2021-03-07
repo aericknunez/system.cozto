@@ -438,5 +438,230 @@ $page <= 1 ? $enable = 'disabled' : $enable = '';
 
 
 
+
+  public function AjustedeInventario($npagina, $orden, $dir){
+      $db = new dbConn();
+      $producto = new Productos(); 
+
+  $limit = 25;
+  $adjacents = 2;
+  if($npagina == NULL) $npagina = 1;
+  $a = $db->query("SELECT * FROM producto WHERE 
+  producto.cod not in (select ajuste_inventario.cod from ajuste_inventario) and td = ".$_SESSION["td"]."");
+  $total_rows = $a->num_rows;
+  $a->close();
+
+  $total_pages = ceil($total_rows / $limit);
+  
+  if(isset($npagina) && $npagina != NULL) {
+    $page = $npagina;
+    $offset = $limit * ($page-1);
+  } else {
+    $page = 1;
+    $offset = 0;
+  }
+
+if($dir == "desc") $dir2 = "asc";
+if($dir == "asc") $dir2 = "desc";
+
+$op="567";
+
+ $a = $db->query("SELECT cod as codigo, descripcion, cantidad FROM producto WHERE 
+  producto.cod not in (select ajuste_inventario.cod from ajuste_inventario) and td = ".$_SESSION["td"]." order by ".$orden." ".$dir." limit $offset, $limit");
+      
+      if($a->num_rows > 0){
+          echo '<div class="table-responsive">
+          <table class="table table-sm table-striped">
+        <thead>
+          <tr>
+            <th class="th-sm"><a id="paginador" op="'.$op.'" iden="1" orden="cod" dir="'.$dir2.'">Cod</a></th>
+            <th class="th-sm"><a id="paginador" op="'.$op.'" iden="1" orden="descripcion" dir="'.$dir2.'">Producto</a></th>
+            <th class="th-sm"><a id="paginador" op="'.$op.'" iden="1" orden="cantidad" dir="'.$dir2.'">Cantidad</a></th>
+            <th class="th-sm">Ver</th>
+          </tr>
+        </thead>
+        <tbody>';
+        foreach ($a as $b) {
+        // obtener el nombre y detalles del producto
+
+ if ($r = $db->select("precio", "producto_precio", "WHERE producto = ".$b["cod"]." and td = ". $_SESSION["td"] ."")) { 
+        $precio = $r["precio"]; } unset($r); 
+
+
+          echo '<tr>
+                      <td>'.$b["codigo"].'</td>
+                      <td>'.$b["descripcion"].'</td>
+                      <td>'.$b["cantidad"].'</td>
+                      <td><a id="modificarcantidad" op="569" key="'.$b["codigo"].'"><i class="fas fa-pen fa-lg red-text"></i></a>
+
+                      | <a id="establecercantidad" op="571" key="'.$b["codigo"].'"><i class="fas fa-thumbs-up fa-lg blue-text"></i></a>';
+                      echo '</td>
+                    </tr>';
+        }
+        echo '</tbody>
+        </table>
+        </div>';
+
+
+      }
+        $a->close();
+
+  if($total_pages <= (1+($adjacents * 2))) {
+    $start = 1;
+    $end   = $total_pages;
+  } else {
+    if(($page - $adjacents) > 1) {  
+      if(($page + $adjacents) < $total_pages) {  
+        $start = ($page - $adjacents); 
+        $end   = ($page + $adjacents); 
+      } else {              
+        $start = ($total_pages - (1+($adjacents*2))); 
+        $end   = $total_pages; 
+      }
+    } else {
+      $start = 1; 
+      $end   = (1+($adjacents * 2));
+    }
+  }
+echo $total_rows . " Registros faltantes";
+   if($total_pages > 1) { 
+
+$page <= 1 ? $enable = 'disabled' : $enable = '';
+    echo '<ul class="pagination pagination-sm justify-content-center">
+    <li class="page-item '.$enable.'">
+        <a class="page-link" id="paginador" op="'.$op.'" iden="1" orden="'.$orden.'" dir="'.$dir.'">&lt;&lt;</a>
+      </li>';
+    
+    $page>1 ? $pagina = $page-1 : $pagina = 1;
+    echo '<li class="page-item '.$enable.'">
+        <a class="page-link" id="paginador" op="'.$op.'" iden="'.$pagina.'" orden="'.$orden.'" dir="'.$dir.'">&lt;</a>
+      </li>';
+
+    for($i=$start; $i<=$end; $i++) {
+      $i == $page ? $pagina =  'active' : $pagina = '';
+      echo '<li class="page-item '.$pagina.'">
+        <a class="page-link" id="paginador" op="'.$op.'" iden="'.$i.'" orden="'.$orden.'" dir="'.$dir.'">'.$i.'</a>
+      </li>';
+    }
+
+    $page >= $total_pages ? $enable = 'disabled' : $enable = '';
+    $page < $total_pages ? $pagina = ($page+1) : $pagina = $total_pages;
+    echo '<li class="page-item '.$enable.'">
+        <a class="page-link" id="paginador" op="'.$op.'" iden="'.$pagina.'" orden="'.$orden.'" dir="'.$dir.'">&gt;</a>
+      </li>';
+
+    echo '<li class="page-item '.$enable.'">
+        <a class="page-link" id="paginador" op="'.$op.'" iden="'.$total_pages.'" orden="'.$orden.'" dir="'.$dir.'">&gt;&gt;</a>
+      </li>
+
+      </ul>';
+     }  // end pagination 
+
+  } // termina productos
+
+
+
+
+
+ public function ComprobarAjuste(){
+$db = new dbConn();
+
+$a = $db->query("SELECT * FROM ajuste_inventario_activate WHERE edo = 1 and td = ".$_SESSION["td"]."");
+$cantcod = $a->num_rows;
+$a->close();
+
+    if($cantcod > 0){
+       return TRUE; // si encuetra valor es true
+    } else {
+      return FALSE;
+    }
+ }
+
+
+
+
+  public function IniciarAjuste(){ // ingresa un nuevo lote de productos
+      $db = new dbConn();
+                 
+        $datos = array();
+        $datos["edo"] = 1;
+        $datos["inicio"] = Helpers::TimeId();
+        $datos["td"] = $_SESSION["td"];
+        $datos["hash"] = Helpers::HashId();
+        $datos["time"] = Helpers::TimeId();
+        if($db->insert("ajuste_inventario_activate", $datos)){
+          Alerts::Alerta("success","Realizado!","Iniciado correctamente!");
+          $this->AjustedeInventario(1, "id", "asc");
+        } else {
+          Alerts::Alerta("error","Error!","Algo Ocurrio!");
+        }
+
+  }
+
+
+ public function ObtenerCantidad($cod){
+$db = new dbConn();
+
+    if ($r = $db->select("cantidad", "producto", "WHERE cod = '$cod' and td = ".$_SESSION["td"]."")) { 
+        return $r["cantidad"];
+    } unset($r);  
+
+ }
+
+
+  public function CambiarCantidad($data){ // ingresa un nuevo lote de productos
+      $db = new dbConn();
+                 
+        $datos = array();
+        $datos["cod"] = $data["cod"];
+        $datos["cantidad"] = $this->ObtenerCantidad($data["cod"]);
+        $datos["establecido"] = $data["cantidad"];
+        $datos["td"] = $_SESSION["td"];
+        $datos["hash"] = Helpers::HashId();
+        $datos["time"] = Helpers::TimeId();
+        if($db->insert("ajuste_inventario", $datos)){
+
+          // si es mayor vamos a ingresar producto
+
+
+          // is es menor vamos a registrar averias
+
+
+          Alerts::Alerta("success","Realizado!","Iniciado correctamente!");
+          $this->AjustedeInventario(1, "id", "asc");
+        } else {
+          Alerts::Alerta("error","Error!","Algo Ocurrio!");
+        }
+
+  }
+
+
+  public function EstablecerCantidad($data){ // ingresa un nuevo lote de productos
+      $db = new dbConn();
+                 
+        $datos = array();
+        $datos["cod"] = $data["key"];
+        $datos["cantidad"] = $this->ObtenerCantidad($data["key"]);
+        $datos["establecido"] = $this->ObtenerCantidad($data["key"]);
+        $datos["td"] = $_SESSION["td"];
+        $datos["hash"] = Helpers::HashId();
+        $datos["time"] = Helpers::TimeId();
+        if($db->insert("ajuste_inventario", $datos)){
+          Alerts::Alerta("success","Realizado!","Iniciado correctamente!");
+          $this->AjustedeInventario(1, "id", "asc");
+        } else {
+          Alerts::Alerta("error","Error!","Algo Ocurrio!");
+        }
+
+  }
+
+
+
+
+
+
+
+
+
 } // Termina la clase
 ?>

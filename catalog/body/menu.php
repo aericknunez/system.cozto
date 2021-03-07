@@ -164,7 +164,7 @@ if($_SESSION["config_pesaje"] == "on"){
 
 <li><a href="?ingresorapido" class="waves-effect"><i class="fas fa-plus"></i> Ingreso Rápido</a></li>
 <li><a href="?modificarproducto" class="waves-effect"><i class="fas fa-plus"></i> Modificar Productos</a></li>
-
+<li><a href="?ajustedeinventario" class="waves-effect"><i class="fas fa-plus"></i> Ajustar Inventario</a></li>
 </ul>
 </div>
 </li>

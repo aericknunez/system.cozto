@@ -190,6 +190,12 @@ echo '<script type="text/javascript" src="assets/js/query/paginador.js?v='.$nume
 echo '<script type="text/javascript" src="assets/js/query/producto_vermodal.js?v='.$numero.'"></script>';
 } 
 
+elseif(isset($_GET["ajustedeinventario"])) {
+echo '<script type="text/javascript" src="assets/js/query/paginador.js?v='.$numero.'"></script>';
+echo '<script type="text/javascript" src="assets/js/query/producto_vermodal.js?v='.$numero.'"></script>';
+echo '<script type="text/javascript" src="assets/js/query/ingresorapido.js?v='.$numero.'"></script>';
+} 
+
 
 
 

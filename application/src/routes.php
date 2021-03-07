@@ -2370,6 +2370,50 @@ include_once '../../system/producto/Productos.php';
 break;
 
 
+case "567":  /// mostrar todos los productos para ajuste de invantario
+include_once '../../system/herramientas/Herramientas.php';
+include_once '../../system/producto/Productos.php';
+	$prod = new Herramientas(); 
+	$prod->AjustedeInventario($_POST["iden"], $_POST["orden"], $_POST["dir"]);
+break;
+
+
+
+case "568":  /// IniciarAjuste
+include_once '../../system/herramientas/Herramientas.php';
+include_once '../../system/producto/Productos.php';
+	$prod = new Herramientas(); 
+	$prod->IniciarAjuste();
+break;
+
+
+
+case "569":  /// obtener cantidad producto
+include_once '../../system/herramientas/Herramientas.php';
+include_once '../../system/producto/Productos.php';
+	$prod = new Herramientas(); 
+	echo $prod->ObtenerCantidad($_POST["key"]);
+break;
+
+
+case "570":  /// cambiar cantidad producto
+include_once '../../system/herramientas/Herramientas.php';
+include_once '../../system/producto/Productos.php';
+	$prod = new Herramientas(); 
+	$prod->CambiarCantidad($_POST);
+break;
+
+
+
+case "571":  /// cambiar cantidad producto
+include_once '../../system/herramientas/Herramientas.php';
+include_once '../../system/producto/Productos.php';
+	$prod = new Herramientas(); 
+	$prod->EstablecerCantidad($_POST);
+break;
+
+
+
 
 case "580": // ver factura busqueda
 include_once '../../system/facturar/Search.php';

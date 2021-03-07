@@ -30,6 +30,7 @@ elseif(isset($_GET["listadoproductos"])) include_once 'system/producto/productor
 // rapido
 elseif(isset($_GET["ingresorapido"])) include_once 'system/herramientas/ingresarrapido.php'; 
 elseif(isset($_GET["modificarproducto"])) include_once 'system/herramientas/productos.php'; 
+elseif(isset($_GET["ajustedeinventario"])) include_once 'system/herramientas/ajustedeinventario.php'; 
 
 
 
