@@ -52,7 +52,7 @@ $printer->feed();
 $printer->text("Tel: 2393-0845");
 
 $printer->feed();
-$printer->text("FACTURA NUMERO: " . $numero);
+$printer->text("TICKET NUMERO: " . $numero);
 
 
 /* Stuff around with left margin */
