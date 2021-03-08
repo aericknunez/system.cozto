@@ -47,13 +47,14 @@ echo '<a id="u_registrar" class="btn-floating btn-sm blue-gradient"><i class="fa
 <select id="tipo" name="tipo" class="browser-default form-control" required="yes">
 <option value="" disabled selected>Elija una Opcion</option>
 <option <? 
-if($_SESSION['tipo_cuenta'] == 3 or $_SESSION['tipo_cuenta'] == 4 or (Helpers::ServerDomain() == TRUE and $_SESSION['tipo_cuenta'] == 5)) echo "disabled"; ?> value="2"><?php echo Helpers::UserName(2) ?></option>
-<option <? 
-if($_SESSION['tipo_cuenta'] == 3 or (Helpers::ServerDomain() == TRUE and $_SESSION['tipo_cuenta'] == 5)) echo "disabled"; ?> value="3"><?php echo Helpers::UserName(3) ?></option>
-<option <? 
-if($_SESSION['tipo_cuenta'] == 4 or (Helpers::ServerDomain() == TRUE and $_SESSION['tipo_cuenta'] == 5)) echo "disabled"; ?> value="4"><?php echo Helpers::UserName(4) ?></option>
-<option <? 
-if($_SESSION['tipo_cuenta'] != 1) echo "disabled"; ?> value="5"><?php echo Helpers::UserName(5) ?></option>
+if($_SESSION['tipo_cuenta'] == 3 or $_SESSION['tipo_cuenta'] == 4) echo "disabled"; ?> value="2"><?php echo Helpers::UserName(2) ?></option>
+<option value="3"><?php echo Helpers::UserName(3) ?></option>
+<option value="4"><?php echo Helpers::UserName(4) ?></option>
+<?php 
+if($_SESSION['tipo_cuenta'] == 1 or $_SESSION['tipo_cuenta'] == 5){
+ ?>
+<option value="5"><?php echo Helpers::UserName(5) ?></option>
+<?php } ?>
 </select>
 
 <input type="button" value="Registrar" class="btn btn-outline-info btn-rounded btn-block z-depth-0 my-4 waves-effect" id="btn-registrar" name="btn-registrar"/> 
