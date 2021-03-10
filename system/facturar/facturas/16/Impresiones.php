@@ -47,10 +47,7 @@ $printer->text("Tel: 2393-0845");
 
 
 $printer->feed();
-$printer->text("CONTRIBUYENTE");
-
-$printer->feed();
-$printer->text("Dr. Ulises Napoleon Rivas Martinez");
+$printer->text("CONTRIBUYENTE: Dr. Ulises Napoleon Rivas Martinez");
 
 
 /////////////////////
@@ -63,8 +60,6 @@ $printer->text("NRC: 33274-7");
 $printer->feed();
 $printer->text("GIRO: Clinica Veterinaria y venta de productos Agropecuarios");
 
-$printer->feed();
-$printer->text("TICKET NUMERO: " . $numero);
 
 $printer->feed();
 $printer->text("Autorizacion: ASC-15041-036310-2021");
@@ -80,6 +75,9 @@ $printer->text("FECHA DE AUTORIZACION: 09/01/2021");
 
 $printer->feed();
 $printer->text("CAJA: 1");
+
+$printer->feed();
+$printer->text("TICKET NUMERO: " . $numero);
 
 
 /* Stuff around with left margin */
@@ -102,7 +100,7 @@ $a = $db->query("select cod, cant, producto, pv, total, fecha, hora, num_fac fro
   
     foreach ($a as $b) {
  
-$printer -> text($this->Item($b["cant"], substr($b["producto"], 0, 35), $b["pv"], $b["total"]));
+$printer -> text($this->Item($b["cant"], substr($b["producto"], 0, 38), $b["pv"], $b["total"]));
 
 $subtotalf = $subtotalf + $b["total"];
 
@@ -161,7 +159,7 @@ $printer->feed();
 $printer->text("SERIE: 2UA329130D");
 
 
-
+$printer->feed();
 $printer -> text("Cajero: " . $_SESSION['nombre']);
 
 $printer->feed();
