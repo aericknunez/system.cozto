@@ -40,19 +40,46 @@ $printer->text("ANIMAL PET'S");
 $printer -> setJustification(Printer::JUSTIFY_LEFT);
 
 $printer->feed();
-$printer->text("Clinica Veterinaria y venta de productos Agropecuarios");
-
-$printer->feed();
-$printer->text("Dr. Ulises Napoleon Rivas Martinez");
-
-$printer->feed();
 $printer->text("Calle Quinones de Osorio # 35. Bo. El Calvario, San Vicente");
 
 $printer->feed();
 $printer->text("Tel: 2393-0845");
 
+
+$printer->feed();
+$printer->text("CONTRIBUYENTE");
+
+$printer->feed();
+$printer->text("Dr. Ulises Napoleon Rivas Martinez");
+
+
+/////////////////////
+$printer->feed();
+$printer->text("NIT: 1010-291061-002-4");
+
+$printer->feed();
+$printer->text("NRC: 33274-7");
+
+$printer->feed();
+$printer->text("GIRO: Clinica Veterinaria y venta de productos Agropecuarios");
+
 $printer->feed();
 $printer->text("TICKET NUMERO: " . $numero);
+
+$printer->feed();
+$printer->text("Autorizacion: ASC-15041-036310-2021");
+
+$printer->feed();
+$printer->text("DEL: 21SV00000001-1");
+
+$printer->feed();
+$printer->text("AL: 21SV00000001-50000");
+
+$printer->feed();
+$printer->text("FECHA DE AUTORIZACION: 09/01/2021");
+
+$printer->feed();
+$printer->text("CAJA: 1");
 
 
 /* Stuff around with left margin */
@@ -129,6 +156,9 @@ $printer->feed();
 
 
 $printer -> text($this->DosCol($fechaf, 30, $horaf, 30));
+
+$printer->feed();
+$printer->text("SERIE: 2UA329130D");
 
 
 
