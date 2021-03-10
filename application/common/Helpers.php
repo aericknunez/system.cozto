@@ -54,6 +54,25 @@ class Helpers{
         return $hash;
     }
 
+
+
+    public static function DBVersion(){
+       $db = new dbConn();
+        if ($r = $db->select("max(version)", "system_version", "WHERE td = ".$_SESSION["td"]."")) { 
+        $version = $r["max(version)"];
+        if($version == NULL) { $version = 0; }
+        } unset($r); 
+
+      return $version;
+    }
+
+
+
+ 
+
+
+
+
     static public function EdoEcommerce($string) {
     if($string == "0") return '<div class="text-danger font-weight-bold">Anulado</div>';
     if($string == "1") return '<div class="text-secondary font-weight-bold">En Proceso</div>';

@@ -440,4 +440,4 @@ if((Helpers::ServerDomain() == FALSE and $_SESSION["root_plataforma"] == 0) or (
 </ul>
 </li>
 
-<small>Version: <?php echo VERSION . " Data: "; ?> </small>
+<small>Version: <?php echo VERSION . " Data: " . Helpers::DBVersion(); ?> </small>

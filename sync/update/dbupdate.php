@@ -15,8 +15,8 @@ if ($r = $db->select("td", "config_root", "WHERE id = 1")) {
 } unset($r);  
 
 
-if ($r = $db->select("max(version)", "system_version", "WHERE td = ".$_SESSION["temporal_td"]."")) { 
-    $version = $r["max(version)"];
+if($r = $db->select("max(version)", "system_version", "WHERE td = ".$_SESSION["temporal_td"])) {
+	$version = $r["max(version)"];
 } unset($r);  
 
 
