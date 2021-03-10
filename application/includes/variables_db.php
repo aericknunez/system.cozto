@@ -42,4 +42,5 @@ define("SECURE", FALSE);    // For development purposes only!!!!
 define("BASE_URL", "https://pizto.com/admin/");
 define("BASEPATH", "https://pizto.com/admin/");	
 
+define("VERSION", 2.8);	
 ?>

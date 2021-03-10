@@ -37,7 +37,7 @@ $printer -> setLineSpacing(80);
 $printer -> setJustification(Printer::JUSTIFY_CENTER);
 $printer->text("ANIMAL PET'S");
 
-$printer -> setJustification(Printer::JUSTIFY_LEFT);
+// $printer -> setJustification(Printer::JUSTIFY_LEFT);
 
 $printer->feed();
 $printer->text("Calle Quinones de Osorio # 35. Bo. El Calvario, San Vicente");
@@ -52,10 +52,7 @@ $printer->text("CONTRIBUYENTE: Dr. Ulises Napoleon Rivas Martinez");
 
 /////////////////////
 $printer->feed();
-$printer->text("NIT: 1010-291061-002-4");
-
-$printer->feed();
-$printer->text("NRC: 33274-7");
+$printer->text("NIT: 1010-291061-002-4   NRC: 33274-7");
 
 $printer->feed();
 $printer->text("GIRO: Clinica Veterinaria y venta de productos Agropecuarios");
@@ -65,19 +62,13 @@ $printer->feed();
 $printer->text("Autorizacion: ASC-15041-036310-2021");
 
 $printer->feed();
-$printer->text("DEL: 21SV00000001-1");
-
-$printer->feed();
-$printer->text("AL: 21SV00000001-50000");
+$printer->text("DEL: 21SV00000001-1  AL: 21SV00000001-50000");
 
 $printer->feed();
 $printer->text("FECHA DE AUTORIZACION: 09/01/2021");
 
 $printer->feed();
-$printer->text("CAJA: 1");
-
-$printer->feed();
-$printer->text("TICKET NUMERO: " . $numero);
+$printer->text("CAJA: 1.  TICKET NUMERO: " . $numero);
 
 
 /* Stuff around with left margin */
