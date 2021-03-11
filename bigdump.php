@@ -38,10 +38,10 @@ error_reporting(E_ALL);
 
 // Database configuration
 
-$db_server   = 'localhost';
-$db_name     = 'cozto_ventas';
-$db_username = 'root';
-$db_password = 'caca007125-'; 
+$db_server   = 'db5001931638.hosting-data.io';
+$db_name     = 'dbs1580858';
+$db_username = 'dbu307080';
+$db_password = 'Caca007125-'; 
 
 // Connection charset should be the same as the dump file charset (utf8, latin1, cp1251, koi8r etc.)
 // See http://dev.mysql.com/doc/refman/5.0/en/charset-charsets.html for the full list
@@ -51,7 +51,7 @@ $db_connection_charset = 'utf8';
 
 // OPTIONAL SETTINGS 
 
-$filename           = 'superpol_demo_cozto.sql';     // Specify the dump filename to suppress the file selection dialog
+$filename           = 'superpol_pizto.sql';     // Specify the dump filename to suppress the file selection dialog
 $ajax               = true;   // AJAX mode: import will be done without refreshing the website
 $linespersession    = 3000;   // Lines to be executed per one import session
 $delaypersession    = 0;      // You can specify a sleep time in milliseconds after each session
@@ -90,7 +90,7 @@ $string_quotes = '\'';                  // Change to '"' if your dump file uses 
 
 // How many lines may be considered to be one query (except text lines)
 
-$max_query_lines = 300;
+$max_query_lines = 30000;
 
 // Where to put the upload files into (default: bigdump folder)
 
