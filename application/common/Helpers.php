@@ -7,11 +7,10 @@ class Helpers{
 
 
     public static function ServerDomain(){
-          if($_SERVER["SERVER_NAME"] == "pizto.com" 
-          or $_SERVER["SERVER_NAME"] == "www.pizto.com"
+          if($_SERVER["SERVER_NAME"] == "hibridosv.com" 
+          or $_SERVER["SERVER_NAME"] == "www.hibridosv.com"
           or $_SERVER["SERVER_NAME"] == "sistema.hibridosv.com"
-          or $_SERVER["SERVER_NAME"] == "s862695801.onlinehome.us"
-          or $_SERVER["SERVER_NAME"] == "www.s862695801.onlinehome.us"){
+          or $_SERVER["SERVER_NAME"] == "datos.hibridosv.com"){
             return TRUE;
           } else {
             return FALSE;
@@ -45,7 +44,7 @@ class Helpers{
         }  
     }
 
-    public static function CodigoValidacionHora(){
+    public static function CodigoValidacionHora(){ // codigo de 8 digitos qu cambia cada hora
         $id = date("d-m-Y-H");
         $iden = sha1($id); 
         $hash = strtoupper(substr($iden,0,8));  
@@ -55,7 +54,7 @@ class Helpers{
 
 
 
-    public static function DBVersion(){
+    public static function DBVersion(){ // version de la base de datos
        $db = new dbConn();
         if ($r = $db->select("max(version)", "system_version", "WHERE td = ".$_SESSION["td"]."")) { 
         $version = $r["max(version)"];
