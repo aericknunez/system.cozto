@@ -18,7 +18,7 @@ $hora = date("H:i:s");
 
 
 
-$data =  file_get_contents('https://hibridosv.com/app/api/bd_remota.php?x=' . $_SESSION["temporal_td"] . '&type=2');  
+$data =  file_get_contents('https://app.hibridosv.com/api/bd_remota.php?x=' . $_SESSION["temporal_td"] . '&type=2');  
 $datos = json_decode($data, true);
 
 
@@ -29,7 +29,7 @@ $a = $db->query("SELECT * FROM login_db_sync WHERE hash = '$sync'");
 if($a->num_rows == 0){
 
 
-$data =  file_get_contents('https://hibridosv.com/app/api/bd_remota.php?validate=1&hash='.$sync.'&x='.$_SESSION["temporal_td"].'&type=2');  
+$data =  file_get_contents('https://app.hibridosv.com/api/bd_remota.php?validate=1&hash='.$sync.'&x='.$_SESSION["temporal_td"].'&type=2');  
 $result = json_decode($data, true);
 
 

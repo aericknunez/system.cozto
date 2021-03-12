@@ -8,6 +8,9 @@ $seslog = new Login();
 $seslog->sec_session_start();
 include_once '../application/common/Fechas.php';
 
+///sftp
+include_once '../application/common/SFTP/Net/SFTP.php';
+
 
 // busco el numero de local
 
@@ -56,11 +59,11 @@ unset($_SESSION["temporal_td"]);
 function SubirFtp($sync){
 	include_once '../system/sync/Ftp.php';
 		$subir =  new Ftp;
-		if($subir->Servidor("ftp.pizto.com",
-						"erick@pizto.com",
-						"caca007125-",
+		if($subir->Servidor("access862695802.webspace-data.io",
+						"u103976998-upcozto",
+						"Hibrido007125-",
 						$sync,
-						"/login/sync/database/",
+						"/sync/database/",
 						"C:/AppServ/www/cozto/sync/". $sync .".sql") == TRUE){
 						return TRUE;
 		} else {
