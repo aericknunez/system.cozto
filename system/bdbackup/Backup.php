@@ -197,7 +197,25 @@ public function Tablas(){
 "caracteristicas_asig", 
 "clientes", 
 "config_master", 
-"config_root"); // directorios a recorrer
+"config_root", 
+"corte_diario", 
+"cotizaciones", 
+"cotizaciones_data", 
+"creditos", 
+"creditos_abonos",
+"ecommerce", 
+"ecommerce_data", 
+"entradas_efectivo", 
+"facturar_documento", 
+"facturar_documento_factura", 
+"facturar_opciones", 
+"gastos", 
+"gastos_categorias", 
+"gastos_cuentas", 
+"gastos_images", 
+"marcas", 
+"marca_asig", 
+"pesaje"); // directorios a recorrer
 
   return $dir;
 }
