@@ -1,4 +1,5 @@
 <?
+header('Access-Control-Allow-Origin: *');
 /// crea un backup en el sistema es elemental 
 
 include_once '../common/Helpers.php';
