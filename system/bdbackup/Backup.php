@@ -235,7 +235,19 @@ public function Tablas(){
 "producto_precio_mayorista", 
 "producto_precio_promo", 
 "producto_tags", 
-"producto_unidades"); // directorios a recorrer
+"producto_unidades",
+"proveedores", 
+"sync_tabla", 
+"sync_up", 
+"sync_up_cloud", 
+"system_version", 
+"ticket", 
+"ticket_cliente", 
+"ticket_descuenta", 
+"ticket_num", 
+"ticket_orden", 
+"ubicacion", 
+"ubicacion_asig"); // directorios a recorrer
 
   return $dir;
 }
