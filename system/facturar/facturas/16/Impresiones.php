@@ -330,6 +330,328 @@ $printer -> close();
 
 
 
+ public function CoteX(){ // imprime el resumen del ultimo corte
+  $db = new dbConn();
+
+
+
+  $nombre_impresora = "TICKET";
+
+
+$connector = new WindowsPrintConnector($nombre_impresora);
+$printer = new Printer($connector);
+$printer -> initialize();
+
+$printer -> setFont(Printer::FONT_B);
+
+$printer -> setTextSize(1, 2);
+$printer -> setLineSpacing(80);
+
+$printer -> setJustification(Printer::JUSTIFY_LEFT);
+
+$printer -> text("CORTE X");
+
+/* Stuff around with left margin */
+$printer->feed();
+$printer -> setJustification(Printer::JUSTIFY_CENTER);
+$printer -> text("____________________________________________________________");
+$printer -> setJustification(Printer::JUSTIFY_LEFT);
+$printer->feed();
+/* Items */
+
+
+
+$printer -> setJustification(Printer::JUSTIFY_CENTER);
+$printer->text("ANIMAL PET'S");
+
+// FECHA 
+// HORA
+
+// $printer -> setJustification(Printer::JUSTIFY_LEFT);
+
+$printer->feed();
+$printer->text("Calle Quinones de Osorio # 35. Bo. El Calvario, San Vicente");
+
+$printer->feed();
+$printer->text("Tel: 2393-0845");
+
+
+$printer->feed();
+$printer->text("CONTRIBUYENTE: Dr. Ulises Napoleon Rivas Martinez");
+
+
+/////////////////////
+$printer->feed();
+$printer->text("NIT: 1010-291061-002-4   NRC: 33274-7");
+
+$printer->feed();
+$printer->text("GIRO: Clinica Veterinaria y venta de productos Agropecuarios");
+
+
+$printer->feed();
+$printer->text("CAJA: 1.");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+$printer -> text("VENTAS");
+$printer -> text("____________________________________________________________");
+$printer->feed();
+
+
+
+$printer -> text("PAGOS");
+$printer -> text("____________________________________________________________");
+$printer->feed();
+
+
+
+$printer -> text("CORRELATIVOS");
+$printer -> text("____________________________________________________________");
+$printer->feed();
+
+
+
+$printer -> text("DETALLES");
+$printer -> text("____________________________________________________________");
+$printer->feed();
+
+
+
+
+  // total de venta
+      $axy = $db->query("SELECT SUM(total) FROM ticket WHERE time BETWEEN '".$inicio."' and '".Helpers::TimeId()."' and edo = 1 and td = ".$_SESSION["td"]."");
+    foreach ($axy as $bxy) {
+        $counte=$bxy["SUM(total)"];
+    } $axy->close();
+
+
+
+
+
+//////////////// del corte anterior
+    if ($r = $db->select("efectivo, propina, total, gastos, diferencia, clientes, time", "corte_diario", "WHERE edo = 1 and td = ".$_SESSION["td"]." order by time desc")) { 
+        $efectivo = $r["efectivo"];
+        $propina = $r["propina"];
+        $total = $r["total"];
+        $gastos = $r["gastos"];
+        $diferencia = $r["diferencia"];
+        $clientes = $r["clientes"];
+        $fin = $r["time"];
+
+    } unset($r);  
+
+
+
+
+
+// tarjeta de credito
+$a = $db->query("SELECT sum(total) FROM ticket WHERE edo = 1 and tipo_pago = 2 and td = ".$_SESSION["td"]." and time BETWEEN '".$inicio."' and '".$fin."'");
+    foreach ($a as $b) {
+     $tarjetacredito=$b["sum(total)"];
+    } $a->close();
+
+// venta en efectivo
+$a = $db->query("SELECT sum(total) FROM ticket WHERE edo = 1 and tipo_pago = 1 and td = ".$_SESSION["td"]." and time BETWEEN '".$inicio."' and '".$fin."'");
+    foreach ($a as $b) {
+     $vefectivo=$b["sum(total)"];
+    } $a->close();
+
+/// propina de tarjeta
+    $a = $db->query("SELECT num_fac, tx FROM ticket WHERE edo = 1 and tipo_pago = 2 and td = ".$_SESSION["td"]." and time BETWEEN  '".$inicio."' and '".$fin."' GROUP BY num_fac");
+    $propinatarjetac = 0;
+    foreach ($a as $b) {
+
+      if ($r = $db->select("total", "ticket_propina", "WHERE num_fac = ".$b["num_fac"]." and td = ".$_SESSION["td"]." and tx = ".$b["tx"]."")) { 
+          $totalx = $r["total"];
+      } unset($r);  
+      $propinatarjetac = $propinatarjetac + $totalx;
+    } $a->close();
+
+
+/// propina de efectivo
+    $a = $db->query("SELECT num_fac, tx FROM ticket WHERE edo = 1 and tipo_pago = 1 and td = ".$_SESSION["td"]." and time BETWEEN  '".$inicio."' and '".$fin."' GROUP BY num_fac");
+    $propinatarjetae = 0;
+    foreach ($a as $b) {
+
+      if ($r = $db->select("total", "ticket_propina", "WHERE num_fac = ".$b["num_fac"]." and td = ".$_SESSION["td"]." and tx = ".$b["tx"]."")) { 
+          $total2 = $r["total"];
+      } unset($r);  
+      $propinatarjetae = $propinatarjetae + $total2;
+    } $a->close();
+
+
+
+
+
+
+$printer -> text($this->DosCol("VENTA EN EFECTIVO: ", 40, Helpers::Dinero($vefectivo), 20));
+
+$printer -> text($this->DosCol("PROPINA EN EFECTIVO: ", 40, Helpers::Dinero($propinatarjetae), 20));
+
+
+$printer -> text($this->DosCol("VENTA CON TARJETA: ", 40, Helpers::Dinero($tarjetacredito), 20));
+
+$printer -> text($this->DosCol("PROPINA CON TARJETA: ", 40, Helpers::Dinero($propinatarjetac), 20));
+
+
+
+$printer -> text($this->DosCol("TOTAL DE VENTA: ", 40, Helpers::Dinero($counte), 20));
+
+
+
+
+  // total de venta
+      $axy = $db->query("SELECT sum(total) FROM ticket_propina WHERE time BETWEEN '".$inicio."' and '".Helpers::TimeId()."' and td = ".$_SESSION["td"]."");
+    foreach ($axy as $bxy) {
+        $propinas=$bxy["sum(total)"];
+    } $axy->close();
+
+
+$printer -> text($this->DosCol("TOTAL DE PROPINA: ", 40, Helpers::Dinero($propinas), 20));
+
+
+
+$printer -> text($this->DosCol("TOTAL: ", 40, Helpers::Dinero($counte + $propinas), 20));
+
+
+  
+$printer -> text("____________________________________________________________");
+$printer->feed();
+
+
+
+// Eliminadas
+  $axy = $db->query("SELECT count(num_fac) FROM ticket_num WHERE time BETWEEN '".$inicio."' and '".Helpers::TimeId()."' and tx = 1 and edo = 2 and td = ".$_SESSION["td"]."");
+foreach ($axy as $bxy) {
+    $counte=$bxy["count(num_fac)"];
+} $axy->close();
+
+
+
+$printer -> text($this->DosCol("TICKET ELIMINADOS: ", 40, $counte, 20));
+
+
+$printer -> text("____________________________________________________________");
+$printer->feed();
+
+
+
+
+// gastos
+  $axy = $db->query("SELECT sum(cantidad) FROM gastos WHERE tipo != 3 and tipo != 5 and time BETWEEN '".$inicio."' and '".Helpers::TimeId()."' and edo = 1 and td = ".$_SESSION["td"]."");
+foreach ($axy as $bxy) {
+    $gasto=$bxy["sum(cantidad)"];
+} $axy->close();
+
+// remesas (tipo  3)
+  $axy = $db->query("SELECT sum(cantidad) FROM gastos WHERE tipo = 3 and time BETWEEN '".$inicio."' and '".Helpers::TimeId()."' and edo = 1 and td = ".$_SESSION["td"]."");
+foreach ($axy as $bxy) {
+    $remesas=$bxy["sum(cantidad)"];
+} $axy->close();
+
+
+
+$printer -> text($this->DosCol("GASTOS REGISTRADOS: ", 40, Helpers::Dinero($gasto), 10));
+
+
+$printer -> text($this->DosCol("REMESAS: ", 40, Helpers::Dinero($remesas), 10));
+
+
+$printer -> text("_______________________________________________________");
+$printer->feed();
+
+
+
+
+$printer -> text($this->DosCol("DINERO EN APERTURA: ", 40, Helpers::Dinero($apertura), 20));
+
+$printer -> text($this->DosCol("EFECTIVO INGRESADO: ", 40, Helpers::Dinero($efectivo), 20));
+
+
+$printer -> text($this->DosCol("DIFERENCIA: ", 40, Helpers::Dinero($diferencia), 20));
+
+$printer -> text("____________________________________________________________");
+$printer->feed();
+
+
+
+
+$printer -> text("ORDENES ELIMINADAS: ");
+$printer->feed();
+
+$printer -> setJustification(Printer::JUSTIFY_LEFT);
+$printer -> setEmphasis(true);
+$printer -> text($this->Item("#", 'Cant', 'Descripcion', 'Total'));
+$printer -> setEmphasis(false);
+
+
+$printer -> text("____________________________________________________________");
+$printer->feed();
+
+
+
+$a = $db->query("select mesa, cod, cant, producto, pv, total, fecha, hora, num_fac from ticket_borrado where time BETWEEN '".$inicio."' and '".Helpers::TimeId()."' and td = ".$_SESSION["td"]." order by num_fac");
+  
+    foreach ($a as $b) {
+ 
+$subtotalf = 0;
+
+$printer -> text($this->Item("(" . $b["mesa"] . ") " . $b["cant"], $b["producto"], NULL ,$b["total"]));
+
+$subtotalf = $subtotalf + $stotal;
+///
+
+}    $a->close();
+
+
+
+$printer->feed();
+$printer->cut();
+$printer->close();
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
