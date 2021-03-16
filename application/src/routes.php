@@ -1011,6 +1011,17 @@ include_once '../../system/credito/Creditos.php';
 break;
 
 
+case "113": // imprime corte
+    include_once '../../system/facturar/facturas/'.$_SESSION["td"].'/Impresiones.php';
+    require_once ('../ticket/autoload.php'); 
+    $imprimir = new Impresiones(); 
+	Alerts::Alerta("success","Imprimiendo","Imprimiendo reporte");
+
+	$imprimir->CorteX($_POST["hash"]); //
+
+break; 
+
+
 
 case "115": // corte preguntar
 	if($_POST["efectivo"] ==  NULL){

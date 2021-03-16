@@ -330,7 +330,7 @@ $printer -> close();
 
 
 
- public function CoteX(){ // imprime el resumen del ultimo corte
+ public function CorteX($hash){ // imprime el resumen del ultimo corte
   $db = new dbConn();
 
 
@@ -364,8 +364,7 @@ $printer->feed();
 $printer -> setJustification(Printer::JUSTIFY_CENTER);
 $printer->text("ANIMAL PET'S");
 
-// FECHA 
-// HORA
+
 
 // $printer -> setJustification(Printer::JUSTIFY_LEFT);
 
@@ -393,237 +392,184 @@ $printer->text("CAJA: 1.");
 
 
 
+//// obtener lor datos del corte
+if ($r = $db->select("*", "corte_diario", "WHERE hash = '$hash'")) { 
+  $aperturaF = $r["aperturaF"];
+  $cierreF = $r["cierreF"];
+  $apertura = $r["apertura"];
+  $cierre = $r["cierre"];
+  $fecha = $r["fecha"];
+  $caja_chica = $r["caja_chica"];
+  $efectivo = $r["efectivo"];
+  $total = $r["total"];
+  $t_efectivo = $r["t_efectivo"];
+  $t_tarjeta = $r["t_tarjeta"];
+  $t_credito = $r["t_credito"];
+  $gastos = $r["gastos"];
+  $abonos = $r["abonos"];
+  $diferencia = $r["diferencia"];
+  $user = $r["user"];
+
+} unset($r);  
 
 
 
+$printer->feed();
+$printer->text("FECHA: " .  Fechas::FechaEscrita($fecha));
+
+$printer->feed();
+$printer->text("APERTURA: " .$apertura. "  CIERRE: " . $cierre);
+$printer->feed();
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+$printer->feed();
 $printer -> text("VENTAS");
+$printer->feed();
 $printer -> text("____________________________________________________________");
 $printer->feed();
 
 
+if ($r = $db->select("sum(stotal)", "ticket", "WHERE edo = 1 and tipo = 1 and td = ".$_SESSION["td"]." and time BETWEEN '".$aperturaF."' and '".$cierreF."'")) { 
+    $t_ticket = $r["sum(stotal)"];
+} unset($r);  
 
+if ($r = $db->select("sum(stotal)", "ticket", "WHERE edo = 1 and tipo = 2 and td = ".$_SESSION["td"]." and time BETWEEN '".$aperturaF."' and '".$cierreF."'")) { 
+    $t_factura = $r["sum(stotal)"];
+} unset($r);  
+
+if ($r = $db->select("sum(stotal)", "ticket", "WHERE edo = 1 and tipo = 3 and td = ".$_SESSION["td"]." and time BETWEEN '".$aperturaF."' and '".$cierreF."'")) { 
+    $t_credito = $r["sum(stotal)"];
+} unset($r);  
+
+if ($r = $db->select("sum(imp)", "ticket", "WHERE edo = 1 and td = ".$_SESSION["td"]." and time BETWEEN '".$aperturaF."' and '".$cierreF."'")) { 
+    $t_imp = $r["sum(imp)"];
+} unset($r);  
+
+
+$printer -> text($this->DosCol("TICKET $: ", 40, Helpers::Format($t_ticket), 20));
+$printer -> text($this->DosCol("FACTURA $: ", 40, Helpers::Format($t_factura), 20));
+$printer -> text($this->DosCol("CREDITO FISCAL $: ", 40, Helpers::Format($t_credito), 20));
+$printer -> text($this->DosCol("IMPUESTO $: ", 40, Helpers::Format($t_imp), 20));
+$printer -> text($this->DosCol("TOTAL $: ", 40, Helpers::Format($total), 20));
+
+
+
+
+$printer->feed();
 $printer -> text("PAGOS");
+$printer->feed();
 $printer -> text("____________________________________________________________");
 $printer->feed();
 
 
+$printer -> text($this->DosCol("EFECTIVO $: ", 40, Helpers::Format($t_efectivo), 20));
+$printer -> text($this->DosCol("TARJETA DE CREDITO $: ", 40, Helpers::Format($t_tarjeta), 20));
+$printer -> text($this->DosCol("TOTAL $: ", 40, Helpers::Format($total), 20));
+$printer -> text($this->DosCol("DIFERENCIA $: ", 40, Helpers::Format($diferencia), 20));
 
+
+$printer->feed();
 $printer -> text("CORRELATIVOS");
+$printer->feed();
 $printer -> text("____________________________________________________________");
 $printer->feed();
 
+// TICKET - subtotal, iva, total, hora
+if($t_ticket > 0){
+
+  $printer -> text("TICKETS"); 
+  $printer->feed();
+  $printer -> text($this->Col4("HORA - TICKET", 0,  "SUBTOTAL", 15,  "IVA", 15, "TOTAL", 15));
+
+  $a = $db->query("SELECT num_fac, hora FROM ticket_num WHERE edo = 1 and tipo = 1 and td = ".$_SESSION["td"]." and time BETWEEN '".$aperturaF."' and '".$cierreF."'");
+      $cant_t = $a->num_rows;
+      foreach ($a as $b) {
+
+  if ($r = $db->select("sum(stotal), sum(imp), sum(total)", "ticket", "WHERE num_fac = '".$b["num_fac"]."' and tipo = 1 and td = ".$_SESSION["td"]."")) { 
+      $stotalp = $r["sum(stotal)"];
+      $impp = $r["sum(imp)"];
+      $totalp = $r["sum(total)"];
+  } unset($r);  
+
+  $printer -> text($this->Col4($b["hora"] . " - " . $b["num_fac"],0 ,  $stotalp, 15,  $impp, 15, $totalp, 15));
+  }  $a->close();
+
+}
+// FACTURA - subtotal, iva, total, hora
+if($t_facura > 0){
+
+  $printer -> text("FACTURAS");
+  $printer->feed();
+  $printer -> text($this->Col4("HORA - FACTURA", 0,  "SUBTOTAL", 15,  "IVA", 15, "TOTAL", 15));
+
+  $a = $db->query("SELECT num_fac, hora FROM ticket_num WHERE edo = 1 and tipo = 2 and td = ".$_SESSION["td"]." and time BETWEEN '".$aperturaF."' and '".$cierreF."'");
+      $cant_f = $a->num_rows;
+      foreach ($a as $b) {
+
+  if ($r = $db->select("sum(stotal), sum(imp), sum(total)", "ticket", "WHERE num_fac = '".$b["num_fac"]."' and tipo = 1 and td = ".$_SESSION["td"]."")) { 
+      $stotalp = $r["sum(stotal)"];
+      $impp = $r["sum(imp)"];
+      $totalp = $r["sum(total)"];
+  } unset($r);  
+
+  $printer -> text($this->Col4($b["hora"] . " - " . $b["num_fac"],0 ,  $stotalp, 15,  $impp, 15, $totalp, 15));
+
+  }  $a->close();
+
+}
+// CCF - subtotal, iva, total, hora
+if($t_credito > 0){
+
+  $printer -> text("CREDITO FISCAL");
+  $printer->feed();
+  $printer -> text($this->Col4("HORA - CCF", 0,  "SUBTOTAL", 15,  "IVA", 15, "TOTAL", 15));
+
+  $a = $db->query("SELECT num_fac, hora FROM ticket_num WHERE edo = 1 and tipo = 3 and td = ".$_SESSION["td"]." and time BETWEEN '".$aperturaF."' and '".$cierreF."'");
+    $cant_c = $a->num_rows;
+      foreach ($a as $b) {
+
+  if ($r = $db->select("sum(stotal), sum(imp), sum(total)", "ticket", "WHERE num_fac = '".$b["num_fac"]."' and tipo = 1 and td = ".$_SESSION["td"]."")) { 
+      $stotalp = $r["sum(stotal)"];
+      $impp = $r["sum(imp)"];
+      $totalp = $r["sum(total)"];
+  } unset($r);  
+
+  $printer -> text($this->Col4($b["hora"] . " - " . $b["num_fac"],0 ,  $stotalp, 15,  $impp, 15, $totalp, 15));
+  }  $a->close();
+
+}
 
 
+
+
+// VENTA TOTAL - subtotal, iva, total
+  if ($r = $db->select("sum(stotal), sum(imp), sum(total)", "ticket", "WHERE edo = 1 and td = ".$_SESSION["td"]." and time BETWEEN '".$aperturaF."' and '".$cierreF."'")) { 
+      $st = $r["sum(stotal)"];
+      $im = $r["sum(imp)"];
+      $to = $r["sum(total)"];
+  } unset($r);  
+
+  $printer -> text($this->Col4("VENTA TOTAL",0 ,  "SUBTOTAL", 15,  "IVA", 15, "TOTAL", 15));
+
+  $printer -> text($this->Col4("TOTAL GRAVADO",0 ,  $st, 15,  $im, 15, $to, 15));
+  $printer -> text($this->Col4("TOTAL EXENTO",0 ,  Helpers::Format(0), 15,  Helpers::Format(0), 15, Helpers::Format(0), 15));
+  $printer -> text($this->Col4("TOTAL NO SUJETO",0 ,  Helpers::Format(0), 12,  Helpers::Format(0), 15, Helpers::Format(0), 15));
+
+
+$printer->feed();
 $printer -> text("DETALLES");
+$printer->feed();
 $printer -> text("____________________________________________________________");
 $printer->feed();
 
 
 
+$printer -> text($this->Col4("DOCUMENTO",0 ,  "", 0,  "CANTIDAD", 30, "TOTAL", 15));
+$printer -> text($this->Col4("TICKETS",0 ,  "", 0,  Helpers::Entero($cant_t), 28, Helpers::Format($t_ticket), 20));
+$printer -> text($this->Col4("FACTURAS",0 ,  "", 0,  Helpers::Entero($cant_f), 27, Helpers::Format($t_factura), 20));
+$printer -> text($this->Col4("CREDITO FISCAL",0 ,  "", 0,  Helpers::Entero($cant_c), 21, Helpers::Format($t_credito), 20));
 
-  // total de venta
-      $axy = $db->query("SELECT SUM(total) FROM ticket WHERE time BETWEEN '".$inicio."' and '".Helpers::TimeId()."' and edo = 1 and td = ".$_SESSION["td"]."");
-    foreach ($axy as $bxy) {
-        $counte=$bxy["SUM(total)"];
-    } $axy->close();
 
-
-
-
-
-//////////////// del corte anterior
-    if ($r = $db->select("efectivo, propina, total, gastos, diferencia, clientes, time", "corte_diario", "WHERE edo = 1 and td = ".$_SESSION["td"]." order by time desc")) { 
-        $efectivo = $r["efectivo"];
-        $propina = $r["propina"];
-        $total = $r["total"];
-        $gastos = $r["gastos"];
-        $diferencia = $r["diferencia"];
-        $clientes = $r["clientes"];
-        $fin = $r["time"];
-
-    } unset($r);  
-
-
-
-
-
-// tarjeta de credito
-$a = $db->query("SELECT sum(total) FROM ticket WHERE edo = 1 and tipo_pago = 2 and td = ".$_SESSION["td"]." and time BETWEEN '".$inicio."' and '".$fin."'");
-    foreach ($a as $b) {
-     $tarjetacredito=$b["sum(total)"];
-    } $a->close();
-
-// venta en efectivo
-$a = $db->query("SELECT sum(total) FROM ticket WHERE edo = 1 and tipo_pago = 1 and td = ".$_SESSION["td"]." and time BETWEEN '".$inicio."' and '".$fin."'");
-    foreach ($a as $b) {
-     $vefectivo=$b["sum(total)"];
-    } $a->close();
-
-/// propina de tarjeta
-    $a = $db->query("SELECT num_fac, tx FROM ticket WHERE edo = 1 and tipo_pago = 2 and td = ".$_SESSION["td"]." and time BETWEEN  '".$inicio."' and '".$fin."' GROUP BY num_fac");
-    $propinatarjetac = 0;
-    foreach ($a as $b) {
-
-      if ($r = $db->select("total", "ticket_propina", "WHERE num_fac = ".$b["num_fac"]." and td = ".$_SESSION["td"]." and tx = ".$b["tx"]."")) { 
-          $totalx = $r["total"];
-      } unset($r);  
-      $propinatarjetac = $propinatarjetac + $totalx;
-    } $a->close();
-
-
-/// propina de efectivo
-    $a = $db->query("SELECT num_fac, tx FROM ticket WHERE edo = 1 and tipo_pago = 1 and td = ".$_SESSION["td"]." and time BETWEEN  '".$inicio."' and '".$fin."' GROUP BY num_fac");
-    $propinatarjetae = 0;
-    foreach ($a as $b) {
-
-      if ($r = $db->select("total", "ticket_propina", "WHERE num_fac = ".$b["num_fac"]." and td = ".$_SESSION["td"]." and tx = ".$b["tx"]."")) { 
-          $total2 = $r["total"];
-      } unset($r);  
-      $propinatarjetae = $propinatarjetae + $total2;
-    } $a->close();
-
-
-
-
-
-
-$printer -> text($this->DosCol("VENTA EN EFECTIVO: ", 40, Helpers::Dinero($vefectivo), 20));
-
-$printer -> text($this->DosCol("PROPINA EN EFECTIVO: ", 40, Helpers::Dinero($propinatarjetae), 20));
-
-
-$printer -> text($this->DosCol("VENTA CON TARJETA: ", 40, Helpers::Dinero($tarjetacredito), 20));
-
-$printer -> text($this->DosCol("PROPINA CON TARJETA: ", 40, Helpers::Dinero($propinatarjetac), 20));
-
-
-
-$printer -> text($this->DosCol("TOTAL DE VENTA: ", 40, Helpers::Dinero($counte), 20));
-
-
-
-
-  // total de venta
-      $axy = $db->query("SELECT sum(total) FROM ticket_propina WHERE time BETWEEN '".$inicio."' and '".Helpers::TimeId()."' and td = ".$_SESSION["td"]."");
-    foreach ($axy as $bxy) {
-        $propinas=$bxy["sum(total)"];
-    } $axy->close();
-
-
-$printer -> text($this->DosCol("TOTAL DE PROPINA: ", 40, Helpers::Dinero($propinas), 20));
-
-
-
-$printer -> text($this->DosCol("TOTAL: ", 40, Helpers::Dinero($counte + $propinas), 20));
-
-
-  
-$printer -> text("____________________________________________________________");
-$printer->feed();
-
-
-
-// Eliminadas
-  $axy = $db->query("SELECT count(num_fac) FROM ticket_num WHERE time BETWEEN '".$inicio."' and '".Helpers::TimeId()."' and tx = 1 and edo = 2 and td = ".$_SESSION["td"]."");
-foreach ($axy as $bxy) {
-    $counte=$bxy["count(num_fac)"];
-} $axy->close();
-
-
-
-$printer -> text($this->DosCol("TICKET ELIMINADOS: ", 40, $counte, 20));
-
-
-$printer -> text("____________________________________________________________");
-$printer->feed();
-
-
-
-
-// gastos
-  $axy = $db->query("SELECT sum(cantidad) FROM gastos WHERE tipo != 3 and tipo != 5 and time BETWEEN '".$inicio."' and '".Helpers::TimeId()."' and edo = 1 and td = ".$_SESSION["td"]."");
-foreach ($axy as $bxy) {
-    $gasto=$bxy["sum(cantidad)"];
-} $axy->close();
-
-// remesas (tipo  3)
-  $axy = $db->query("SELECT sum(cantidad) FROM gastos WHERE tipo = 3 and time BETWEEN '".$inicio."' and '".Helpers::TimeId()."' and edo = 1 and td = ".$_SESSION["td"]."");
-foreach ($axy as $bxy) {
-    $remesas=$bxy["sum(cantidad)"];
-} $axy->close();
-
-
-
-$printer -> text($this->DosCol("GASTOS REGISTRADOS: ", 40, Helpers::Dinero($gasto), 10));
-
-
-$printer -> text($this->DosCol("REMESAS: ", 40, Helpers::Dinero($remesas), 10));
-
-
-$printer -> text("_______________________________________________________");
-$printer->feed();
-
-
-
-
-$printer -> text($this->DosCol("DINERO EN APERTURA: ", 40, Helpers::Dinero($apertura), 20));
-
-$printer -> text($this->DosCol("EFECTIVO INGRESADO: ", 40, Helpers::Dinero($efectivo), 20));
-
-
-$printer -> text($this->DosCol("DIFERENCIA: ", 40, Helpers::Dinero($diferencia), 20));
-
-$printer -> text("____________________________________________________________");
-$printer->feed();
-
-
-
-
-$printer -> text("ORDENES ELIMINADAS: ");
-$printer->feed();
-
-$printer -> setJustification(Printer::JUSTIFY_LEFT);
-$printer -> setEmphasis(true);
-$printer -> text($this->Item("#", 'Cant', 'Descripcion', 'Total'));
-$printer -> setEmphasis(false);
-
-
-$printer -> text("____________________________________________________________");
-$printer->feed();
-
-
-
-$a = $db->query("select mesa, cod, cant, producto, pv, total, fecha, hora, num_fac from ticket_borrado where time BETWEEN '".$inicio."' and '".Helpers::TimeId()."' and td = ".$_SESSION["td"]." order by num_fac");
-  
-    foreach ($a as $b) {
- 
-$subtotalf = 0;
-
-$printer -> text($this->Item("(" . $b["mesa"] . ") " . $b["cant"], $b["producto"], NULL ,$b["total"]));
-
-$subtotalf = $subtotalf + $stotal;
-///
-
-}    $a->close();
 
 
 
@@ -681,6 +627,13 @@ $printer->close();
 
 
 
+ public function Col4($col1, $esp1,  $col2, $esp2, $col3, $esp3,  $col4,$esp4){
+        $la1 = str_pad($col1, $esp1, ' ', STR_PAD_LEFT);
+        $la2 = str_pad($col2, $esp2, ' ', STR_PAD_LEFT);
+        $la3 = str_pad($col3, $esp3, ' ', STR_PAD_LEFT);
+        $la4 = str_pad($col4, $esp4, ' ', STR_PAD_LEFT);
+        return "$la1$la2$la3$la4\n";
+    }
 
 
 

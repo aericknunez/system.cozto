@@ -306,7 +306,7 @@ if($ramdom == $num){
 
 	public function Content($fecha){
 		//$sync = new Sync;
-
+		$db = new dbConn();
 
 		 echo '<div class="row">
 
@@ -347,6 +347,12 @@ if($ramdom == $num){
 
 
 			<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalConfirmDelete">Eliminar Corte</button>';
+
+
+			echo '<a id="imprimir_corte" hash="'. $this->ObtieneInfo("hash") .'" class="btn-floating cyan" title="Imprimir Corte" data-toggle="tooltip" data-placement="bottom"><i class="fas fa-print"></i></a>';
+
+
+			echo '<div id="msjimprimir"></div>';
 		
 	}
 
