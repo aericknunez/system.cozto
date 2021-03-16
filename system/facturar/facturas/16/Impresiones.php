@@ -14,7 +14,7 @@ class Impresiones{
 
  public function Ticket($efectivo, $numero){
   $db = new dbConn();
-  $nombre_impresora = "TICKET";
+  $nombre_impresora = "EPSON2";
   // $img  = "C:/AppServ/www/pizto/assets/img/logo_factura/grosera.jpg";
 
 
