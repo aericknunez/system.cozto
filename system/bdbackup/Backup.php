@@ -187,6 +187,15 @@ public function Tablas(){
 // "ubicacion_asig"); // directorios a recorrer
 
  $dir  = array(
+"ajuste_inventario", 
+"ajuste_inventario_activate", 
+"autoparts_busqueda_producto", 
+"autoparts_item", 
+"autoparts_marca", 
+"autoparts_modelo", 
+"caracteristicas", 
+"caracteristicas_asig", 
+"clientes", 
 "config_master", 
 "config_root"); // directorios a recorrer
 
