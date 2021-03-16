@@ -23,10 +23,34 @@ public function Clear(){
 // imgcategorias
 // unlink("../../assets/img/productos/" . $_SESSION["td"] . "/" . $b["imagen"]);
 
+$this->ImgDelete("../../assets/img/productos/".$_SESSION["td"]."/");
+$this->ImgDelete("../../assets/img/productos/".$_SESSION["td"]."/tmb/");
+$this->ImgDelete("../../assets/img/gastosimg/".$_SESSION["td"]."/");
+$this->ImgDelete("../../assets/img/imgcategorias/".$_SESSION["td"]."/");
+
+
+
+
+
+
 
 Alerts::Mensajex("Se eliminaron todos los registos de su sistema", "info");
 
-}//
+}
+
+
+
+public function ImgDelete($dir){
+$archivos = glob($dir."*.*");  
+  foreach($archivos as $data){ 
+
+  	$data = str_replace($dir, "", $data);
+    $archx = $dir . $data;            
+
+	if (file_exists($archx)) {
+     @unlink($archx); } 
+} // termina busqueda de archivos en la carpeta
+}
 
 
 
