@@ -8,10 +8,16 @@ public function ReporteF($inicio, $fin, $type = NULL) {
 		$primero = Fechas::Format($inicio);
 		$segundo = Fechas::Format($fin);
 
-if($type == NULL or $type == 0){
-  $a = $db->query("SELECT * FROM ticket_num WHERE edo = 1 and time BETWEEN '$primero' AND '$segundo' and td = ".$_SESSION['td']." order by time desc");	
+if($primero == $segundo){
+	$sqlx = "fecha = '$inicio'";
 } else {
-  $a = $db->query("SELECT * FROM ticket_num WHERE tipo = '$type' and edo = 1 and time BETWEEN '$primero' AND '$segundo' and td = ".$_SESSION['td']." order by time desc");
+	$sqlx = "time BETWEEN '$primero' AND '$segundo'";
+}
+
+if($type == NULL or $type == 0){
+  $a = $db->query("SELECT * FROM ticket_num WHERE edo = 1 and $sqlx and td = ".$_SESSION['td']." order by time desc");	
+} else {
+  $a = $db->query("SELECT * FROM ticket_num WHERE tipo = '$type' and edo = 1 and $sqlx and td = ".$_SESSION['td']." order by time desc");
 }
 
    if ($a->num_rows > 0) {
