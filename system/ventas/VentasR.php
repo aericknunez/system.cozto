@@ -480,7 +480,7 @@ if ($r = $db->select("sum(existencia)", "producto_ingresado", "WHERE existencia 
 						      </td>
 			    			<td>';
 
-			    			if($b["cod"] == 8888888){
+			    			if($b["cod"] == 8888888 or $this->IsSercicio($b["cod"]) == TRUE){
 			    				echo '<a id="agrupado""><i class="fas fa-times-circle blue-text fa-lg"></i></a>';
 			    			} else {
 			    				echo '<a id="modcant" op="91" cod="'.$b["cod"].'"><i class="fas fa-minus-circle red-text fa-lg"></i></a> 
@@ -513,6 +513,24 @@ if ($r = $db->select("sum(existencia)", "producto_ingresado", "WHERE existencia 
 		}    
 	}
 
+
+
+
+
+
+	public function IsSercicio($cod){
+		$db = new dbConn();
+
+	if ($r = $db->select("servicio", "producto", "WHERE cod = '$cod' and td = ".$_SESSION["td"]."")){ 
+        $servicio = $r["servicio"];
+    	} unset($r); 
+
+    	if($servicio == "on"){
+    		return TRUE;
+    	} else {
+    		return FALSE;
+    	}
+    }
 
 
 //// borrar
