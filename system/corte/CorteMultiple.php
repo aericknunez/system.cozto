@@ -61,6 +61,10 @@ public function Cierre($efectivo){
         $datos["edo"] = 2;
       if (Helpers::UpdateId("corte_diario", $datos, "hash = '".$_SESSION["caja_apertura"]."' and user = '".$_SESSION["user"]."' and td = ".$_SESSION["td"]."")) {
 
+/// imprimir cortex
+    $imprimir = new Impresiones(); 
+	$imprimir->CorteX($_SESSION["caja_apertura"]); //
+
       		unset($_SESSION["caja_apertura"]);
           
           Alerts::Alerta("success","Realizado!","Corte Realizado correctamente!");
@@ -68,7 +72,7 @@ public function Cierre($efectivo){
       	Alerts::Alerta("error","Error!","Algo Ocurrió!");
       }          
 
-$pro = new ProductoOtros();
+$pro = new ProductoOtros(); // empareja la cantidad de productos del precio de costo
 $pro->EmparejaExistencias();
 
   } else {
