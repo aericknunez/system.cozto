@@ -1670,6 +1670,12 @@ include_once '../../system/planilla/Planilla.php';
 break;
 
 
+case "249": // Elimiar data del sistema
+include_once '../../system/bdbackup/LimpiarData.php';
+	$data = new DataClear();
+	$data-> Clear();
+break;
+
 
 case "350": // crear back up
 include_once '../../system/bdbackup/Backup.php';

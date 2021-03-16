@@ -13,7 +13,7 @@ public function AddRegistro($sistema){
       'sistema'  =>  $sistema,
       'td'   =>  $_SESSION['td']
         );
-    $api_url = "https://hibridosv.com/app/api/addbackup.php";
+    $api_url = "https://app.hibridosv.com/api/addbackup.php";
     $client = curl_init($api_url);
     curl_setopt($client, CURLOPT_POST, true);
     curl_setopt($client, CURLOPT_POSTFIELDS, $updata);
@@ -36,7 +36,7 @@ public function AddRegistro($sistema){
 public function Search(){
     $db = new dbConn();
 
-$api_url = "https://hibridosv.com/app/api/addbackup.php?action=search&x=" . $_SESSION["td"] . "&type=2";
+$api_url = "https://app.hibridosv.com/api/addbackup.php?action=search&x=" . $_SESSION["td"] . "&type=2";
 $client = curl_init($api_url);
 curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
 $response = curl_exec($client);
@@ -118,19 +118,7 @@ foreach ($dir as $tabla) {
 public function Tablas(){
   $dir  = array(
 "config_master", 
-"config_root", 
-"producto", 
-"producto_averias", 
-"producto_cambios", 
-"producto_categoria", 
-"producto_compuestos", 
-"producto_dependiente", 
-"producto_devoluciones", 
-"producto_imagenes", 
-"producto_ingresado", 
-"producto_precio", 
-"producto_tags", 
-"producto_unidades"); // directorios a recorrer
+"config_root"); // directorios a recorrer
 
 
 

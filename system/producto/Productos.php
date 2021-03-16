@@ -1818,7 +1818,7 @@ $a->close();
           }
       } $a->close();
 
-           Alerts::Alerta("success","Eliminado!","Precio eliminado correctamente!");
+           Alerts::Alerta("success","Eliminado!","Eliminado correctamente!");
         } else {
             Alerts::Alerta("error","Error!","Algo Ocurrio!");
         } 

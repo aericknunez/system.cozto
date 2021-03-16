@@ -374,6 +374,9 @@ echo '<script type="text/javascript" src="assets/js/query/planilla.js?v='.$numer
 elseif(isset($_GET["backup"])) {
 echo '<script type="text/javascript" src="assets/js/query/backup.js?v='.$numero.'"></script>';
 } 
+elseif(isset($_GET["deleteall"])) {
+echo '<script type="text/javascript" src="assets/js/query/backup.js?v='.$numero.'"></script>';
+} 
 
 
 elseif(isset($_GET["autoopciones"])) {
