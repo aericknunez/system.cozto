@@ -108,7 +108,9 @@ foreach ($dir as $tabla) {
 
      fclose($handle);
 
-    } 
+    } else {
+      echo "El Archivo esta vacio";
+    }
 
 
 }//
