@@ -106,7 +106,9 @@ foreach ($dir as $tabla) {
 
       $handle = fopen("../../system/bdbackup/backup/" .$td . "/" . $filename . $ext,'w+');
       
-      fwrite($handle,$archivo);
+      if(fwrite($handle,$archivo)){
+        echo "El respaldo se creo";
+      }
 
      fclose($handle);
 
