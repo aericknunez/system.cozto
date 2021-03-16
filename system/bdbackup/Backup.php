@@ -92,7 +92,7 @@ foreach ($dir as $tabla) {
 
       // verifico si existe la carpeta. sino la creo
       if(!is_dir("../../system/bdbackup/backup/" .$td . "/")){
-        mkdir("../../system/bdbackup/backup/" .$td . "/");
+        mkdir("../../system/bdbackup/backup/" .$td . "/", 0777);
 
         $gitarch = fopen("../../system/bdbackup/backup/" .$td . "/" . ".gitkeep",'w+');
         fwrite($gitarch,"");
