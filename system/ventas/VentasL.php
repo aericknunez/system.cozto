@@ -629,7 +629,7 @@ Helpers::UpdateId("ubicacion_asig", $cambio, "ubicacion = '".$datos["ubicacion"]
 		    		   echo '<tr '.$color.'>
 						      <th scope="row">';
 
-						    if($b["cod"] == 8888888){
+						    if($b["cod"] == 8888888 or $this->IsSercicio($b["cod"]) == TRUE){
 			    				echo '<a id="agrupado""><i class="fas fa-times-circle blue-text fa-lg"></i></a>';
 			    			} else {
 			    				echo $b["cant"];
@@ -656,6 +656,23 @@ Helpers::UpdateId("ubicacion_asig", $cambio, "ubicacion = '".$datos["ubicacion"]
 		}    
 	}
 
+
+
+
+
+	public function IsSercicio($cod){
+		$db = new dbConn();
+
+	if ($r = $db->select("servicio", "producto", "WHERE cod = '$cod' and td = ".$_SESSION["td"]."")){ 
+        $servicio = $r["servicio"];
+    	} unset($r); 
+
+    	if($servicio == "on"){
+    		return TRUE;
+    	} else {
+    		return FALSE;
+    	}
+    }
 
 
 //// borrar

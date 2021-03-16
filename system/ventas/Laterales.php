@@ -154,7 +154,7 @@ else { return '<a id="mticket">N/A</a>'; }
 		echo '<a href="?modal=oventas" class="btn-floating btn-success" title="Venta Especial"><i class="fas fa-donate"></i></a>';
 
 
-		echo '<a href="?modal=agrupado" class="btn-floating btn-info" title="Venta Agrupada"><i class="fas fa-donate"></i></a>';
+		// echo '<a href="?modal=agrupado" class="btn-floating btn-info" title="Venta Agrupada"><i class="fas fa-donate"></i></a>';
 
 		if($_SESSION['cliente_credito'] == NULL and $_SESSION['factura_cliente'] == NULL){
 			echo '<a href="?modal=cliente" class="btn-floating btn-warning" title="Asignar Cliente"><i class="fas fa-user"></i></a>';
