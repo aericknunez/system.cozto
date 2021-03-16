@@ -215,7 +215,27 @@ public function Tablas(){
 "gastos_images", 
 "marcas", 
 "marca_asig", 
-"pesaje"); // directorios a recorrer
+"pesaje",
+"planilla_descuentos", 
+"planilla_descuentos_asig", 
+"planilla_empleados", 
+"planilla_extras", 
+"planilla_pagos",
+"producto", 
+"producto_averias", 
+"producto_cambios", 
+"producto_categoria", 
+"producto_categoria_sub", 
+"producto_compuestos", 
+"producto_dependiente", 
+"producto_devoluciones", 
+"producto_imagenes", 
+"producto_ingresado", 
+"producto_precio", 
+"producto_precio_mayorista", 
+"producto_precio_promo", 
+"producto_tags", 
+"producto_unidades"); // directorios a recorrer
 
   return $dir;
 }
