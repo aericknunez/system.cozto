@@ -97,6 +97,8 @@ foreach ($dir as $tabla) {
         $gitarch = fopen("../../system/bdbackup/backup/" .$td . "/" . ".gitkeep",'w+');
         fwrite($gitarch,"");
         fclose($gitarch);
+      } else {
+        echo "No se pudo crear la carpeta!";
       }
 
       $filename = "Backup-" . date("d-m-Y") . "-" . date("His");
