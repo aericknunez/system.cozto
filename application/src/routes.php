@@ -1044,6 +1044,11 @@ break;
 
 
 case "117": // cierre de corte
+/// imprimir corte x
+    include_once '../../system/facturar/facturas/'.$_SESSION["td"].'/Impresiones.php';
+    require_once ('../ticket/autoload.php'); 
+
+// realiza el corte
 include_once '../../system/corte/CorteMultiple.php';
 include_once '../../system/producto/ProductoOtros.php';
 $cortes = new Corte();
