@@ -41,7 +41,7 @@ $archivos = glob("*.sql", GLOB_BRACE);
 	    $datox["version"] = $hash;
 	    $datox["fecha"] = date("d-m-Y");
 	    $datox["hora"] = date("H:i:s");
-	    $datox["hash"] = $hash;
+	    $datox["hash"] = Helpers::HashId();
 		$datox["time"] = Helpers::TimeId();
 	    $datox["td"] = $_SESSION["temporal_td"];
 	    $db->insert("system_version", $datox);

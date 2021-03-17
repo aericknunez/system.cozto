@@ -63,13 +63,18 @@ if ($r = $db->select("predeterminado", "facturar_opciones", "WHERE td = ".$_SESS
     $_SESSION["tipoticket"] = $r["predeterminado"];
 }  unset($r);  
 
-        
+
+
+if($_SESSION['root_plataforma'] == 0 and Helpers::ServerDomain() == TRUE){
+ ImportFtp(); 
+}
+      
 
         $inicia = new Inicio;
         $inicia->Caduca(); // revisa si ha caducado
 
         header("location: ../../");
-    }
+ }
 
 
     function BuscaDatosSistema(){
@@ -111,6 +116,27 @@ if ($r = $db->select("predeterminado", "facturar_opciones", "WHERE td = ".$_SESS
         $datos["td"] = $_SESSION["td"];
         $db->insert("ubicacion", $datos);
     }
+
+
+
+function ImportFtp(){
+    $db = new dbConn();
+// busca todos los archivos en el directorio
+$archivos = glob("../../sync/database/*.sql");  
+  foreach($archivos as $data){ 
+    $data = str_replace("../../sync/database/", "", $data);
+    $hash = str_replace(".sql", "", $data);
+    $archx = "../../sync/database/" . $data;            
+        // si no es sincronizacion lo ejecuto siempre
+            if(file_exists($archx)) {
+            $sql = explode(";",file_get_contents($archx));//
+            foreach($sql as $query){
+            @$db->query($query);
+            } @unlink($archx);
+        } 
+    } // termina busqueda de archivos en la carpeta
+} // termina Import
+
 
 
 
