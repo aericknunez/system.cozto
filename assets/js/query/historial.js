@@ -252,7 +252,23 @@ $(document).ready(function()
 	
 
 
-
+	$('#btn-cortez').click(function(e){ /// ventas mensual
+	e.preventDefault();
+	$.ajax({
+			url: "application/src/routes.php?op=112",
+			method: "POST",
+			data: $("#form-cortez").serialize(),
+			beforeSend: function () {
+				$('#btn-cortez').html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>Loading...').addClass('disabled');
+	        },
+			success: function(data){
+				$('#btn-cortez').html('Mostrar Datos').removeClass('disabled');	      
+				$("#form-cortez").trigger("reset");
+				$("#contenido").html(data);	
+			}
+		})
+	});
+    
 
 
 

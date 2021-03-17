@@ -373,8 +373,50 @@ $oi=$oi+$n2;
 
 
 
+ public function CorteX($hash){ // imprime el resumen del ultimo corte
+  $db = new dbConn();
+}
 
 
+ public function CorteZ($fechax){ // imprime el resumen del ultimo corte
+  $db = new dbConn();
+}
+
+
+ public function Col4($col1, $esp1,  $col2, $esp2, $col3, $esp3,  $col4,$esp4){
+        $la1 = str_pad($col1, $esp1, ' ', STR_PAD_LEFT);
+        $la2 = str_pad($col2, $esp2, ' ', STR_PAD_LEFT);
+        $la3 = str_pad($col3, $esp3, ' ', STR_PAD_LEFT);
+        $la4 = str_pad($col4, $esp4, ' ', STR_PAD_LEFT);
+        return "$la1$la2$la3$la4\n";
+    }
+
+
+
+
+
+ public function Item($cant,  $name = '', $price = '', $total = '', $dollarSign = false){
+        $rightCols = 10;
+        $leftCols = 42;
+        if ($dollarSign) {
+            $leftCols = $leftCols / 2 - $rightCols / 2;
+        }
+        $left = str_pad($cant . " " . $name, $leftCols) ;
+        
+        $sign = ($dollarSign ? '$ ' : '');
+
+        $total = str_pad($sign . $total, $rightCols, ' ', STR_PAD_LEFT);
+        $right = str_pad($sign . $price, $rightCols, ' ', STR_PAD_LEFT);
+        return "$left$right$total\n";
+    }
+
+
+
+ public function DosCol($izquierda = '', $iz, $derecha = '', $der){
+        $left = str_pad($izquierda, $iz, ' ', STR_PAD_LEFT) ;      
+        $right = str_pad($derecha, $der, ' ', STR_PAD_LEFT);
+        return "$left$right\n";
+    }
 
 
 
