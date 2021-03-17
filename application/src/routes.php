@@ -1011,6 +1011,17 @@ include_once '../../system/credito/Creditos.php';
 break;
 
 
+case "112": // historial mes corte
+	include_once '../../system/historial/Historial.php';
+	$historial = new Historial;
+		$fecha=$_POST["mes"];
+		@$ano=$_POST["ano"];
+		$fechax="-$fecha-$ano";
+
+	$historial->HistorialCortesZ($fechax);
+break;
+
+
 case "113": // imprime corte
     include_once '../../system/facturar/facturas/'.$_SESSION["td"].'/Impresiones.php';
     require_once ('../ticket/autoload.php'); 

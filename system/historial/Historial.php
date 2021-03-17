@@ -246,6 +246,59 @@ class Historial{
 
 
 
+public function HistorialCortesZ($fechax) {
+		$db = new dbConn();
+
+$a = $db->query("SELECT fecha, sum(stotal) as subtotal, sum(imp) as imp, sum(total) as total, count(num_fact) as cantidad FROM ticket WHERE fecha like '%$fechax' and td = ". $_SESSION["td"] ." order by fechaF desc GROUP by fecha");
+$total=0;
+if($a->num_rows > 0){
+
+echo '<h3 class="h3-responsive">RESUMEN MENSUAL</h3>';	
+
+	  echo '<div class="table-responsive">
+	  <table class="table table-striped">
+
+			<thead>
+		     <tr>
+		       <th>Fecha</th>
+		       <th>Documentos</th>
+		       <th>Sub Total</th>					       
+		       <th>Impuesto</th>
+		       <th>Total</th>
+		       <th>Imprimir</th>
+		     </tr>
+		   </thead>
+
+		   <tbody>';
+foreach ($a as $b) {	
+  	echo '<tr>
+	       <th scope="row">'. $b["fecha"] . '</th>
+	       <td>'. $b["cantidad"] . '</td>
+	       <td>'. Helpers::Dinero($b["subtotal"]) . '</td>
+	       <td>'. Helpers::Dinero($b["imp"]) . '</td>
+	       <td>'. Helpers::Dinero($b["total"]) . '</td>
+	       <td>Imprmir</td>
+	     </tr>';
+
+}
+
+
+echo '</tbody>
+	</table></div>';
+
+} $a->close();
+
+
+
+	}
+
+
+
+
+
+
+
+
 
 	public function HistorialUtilidades($inicio, $fin, $type = NULL) {
 		$db = new dbConn();
