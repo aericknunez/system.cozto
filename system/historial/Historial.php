@@ -337,23 +337,13 @@ echo '</tbody>
         $cantidad = $r["cantidad"];
     } unset($r);  
 
-// cantidad de productos ingresados y precio costo
-    if ($r = $db->select("sum(cant) as canti, sum(precio_costo) as pcosto", "producto_ingresado", "WHERE producto = '".$x["cod"]."' and td = ". $_SESSION["td"] ."")) { 
-        $ingreso = $r["canti"];
-        $preciocosto = $r["pcosto"];
-    } 
-    unset($r);    
-// obtengo el numero de registros
-$a = $db->query("SELECT precio_costo FROM producto_ingresado WHERE producto = '".$x["cod"]."' and td = ". $_SESSION["td"] ."");
-$reg = $a->num_rows;
-$a->close();
-    @$pc = $preciocosto / $reg;
 
 // productos vendidos
-    if ($r = $db->select("sum(cant) as cantid, sum(pv) as prev, sum(total) as tota", "ticket", "WHERE cod = '".$x["cod"]."' and td = ". $_SESSION["td"] ." and fechaF BETWEEN '$primero' and '$segundo'")) { 
+    if ($r = $db->select("sum(cant) as cantid, sum(pv) as prev, sum(total) as tota, sum(pc) as costo", "ticket", "WHERE cod = '".$x["cod"]."' and td = ". $_SESSION["td"] ." and fechaF BETWEEN '$primero' and '$segundo'")) { 
         $vcantidad = $r["cantid"];
         $vpv = $r["prev"];
         $vtotal = $r["tota"];
+        $vpc = $r["costo"];
     } 
     unset($r);
 
@@ -364,7 +354,7 @@ $a->close();
     @$precioventa = $vpv / $preg;
 
 // utilidad
-$ut = $precioventa - $pc;
+$ut = $precioventa - $vpc;
 $utilidad = $ut * $vcantidad;
 
 
