@@ -62,8 +62,8 @@ public function Cierre($efectivo){
       if (Helpers::UpdateId("corte_diario", $datos, "hash = '".$_SESSION["caja_apertura"]."' and user = '".$_SESSION["user"]."' and td = ".$_SESSION["td"]."")) {
 
 /// imprimir cortex
-    $imprimir = new Impresiones(); 
-	$imprimir->CorteX($_SESSION["caja_apertura"]); //
+ //    $imprimir = new Impresiones(); 
+	// $imprimir->CorteX($_SESSION["caja_apertura"]); //
 
       		unset($_SESSION["caja_apertura"]);
           
