@@ -44,6 +44,7 @@ if($_SESSION["caja_apertura"] == NULL){ ?>
 <li><a href="?vmensual" class="waves-effect"><i class="fas fa-cogs"></i> Ventas Mensuales</a></li>
 
 <li><a href="?hcortes" class="waves-effect"><i class="fas fa-cogs"></i> Historial de Cortes</a></li>
+<li><a href="?cortez" class="waves-effect"><i class="fas fa-cogs"></i> Historial de Cortes Z</a></li>
 
 <li><a href="?gdiario" class="waves-effect"><i class="fas fa-cog"></i> Gastos Diarios</a></li>
 <li><a href="?gmensual" class="waves-effect"><i class="fas fa-cogs"></i> Gastos Mensuales</a></li>

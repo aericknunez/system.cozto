@@ -248,45 +248,45 @@ class Historial{
 
 public function HistorialCortesZ($fechax) {
 		$db = new dbConn();
-print_r($fechax);
-// $a = $db->query("SELECT fecha, sum(stotal) as subtotal, sum(imp) as imp, sum(total) as total, count(num_fac) as cantidad FROM ticket WHERE fecha like '%$fechax' and td = ". $_SESSION["td"] ." order by fechaF desc GROUP by fecha");
 
-// if($a->num_rows > 0){
+$a = $db->query("SELECT fecha, sum(stotal) as subtotal, sum(imp) as imp, sum(total) as total, count(num_fac) as cantidad FROM ticket WHERE fecha like '%$fechax' and td = ". $_SESSION["td"] ."  GROUP by fecha");
 
-// echo '<h3 class="h3-responsive">RESUMEN MENSUAL</h3>';	
+if($a->num_rows > 0){
 
-// 	  echo '<div class="table-responsive">
-// 	  <table class="table table-striped">
+echo '<h3 class="h3-responsive">RESUMEN MENSUAL</h3>';	
 
-// 			<thead>
-// 		     <tr>
-// 		       <th>Fecha</th>
-// 		       <th>Documentos</th>
-// 		       <th>Sub Total</th>					       
-// 		       <th>Impuesto</th>
-// 		       <th>Total</th>
-// 		       <th>Imprimir</th>
-// 		     </tr>
-// 		   </thead>
+	  echo '<div class="table-responsive">
+	  <table class="table table-striped">
 
-// 		   <tbody>';
-// foreach ($a as $b) {	
-//   	echo '<tr>
-// 	       <th scope="row">'. $b["fecha"] . '</th>
-// 	       <td>'. $b["cantidad"] . '</td>
-// 	       <td>'. Helpers::Dinero($b["subtotal"]) . '</td>
-// 	       <td>'. Helpers::Dinero($b["imp"]) . '</td>
-// 	       <td>'. Helpers::Dinero($b["total"]) . '</td>
-// 	       <td>Imprmir</td>
-// 	     </tr>';
+			<thead>
+		     <tr>
+		       <th>Fecha</th>
+		       <th>Documentos</th>
+		       <th>Sub Total</th>					       
+		       <th>Impuesto</th>
+		       <th>Total</th>
+		       <th>Imprimir</th>
+		     </tr>
+		   </thead>
 
-// }
+		   <tbody>';
+foreach ($a as $b) {	
+  	echo '<tr>
+	       <th scope="row">'. $b["fecha"] . '</th>
+	       <td>'. $b["cantidad"] . '</td>
+	       <td>'. Helpers::Dinero($b["subtotal"]) . '</td>
+	       <td>'. Helpers::Dinero($b["imp"]) . '</td>
+	       <td>'. Helpers::Dinero($b["total"]) . '</td>
+	       <td><a id="imprimir_cortez" fecha="'. $b["fecha"] . '"><i class="fa fa-print blue-text fa-lg"></i></a></td>
+	     </tr>';
+
+}
 
 
-// echo '</tbody>
-// 	</table></div>';
+echo '</tbody>
+	</table></div>';
 
-// } $a->close();
+} $a->close();
 
 
 

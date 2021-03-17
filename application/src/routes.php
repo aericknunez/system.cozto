@@ -1034,6 +1034,17 @@ break;
 
 
 
+
+case "113z": // imprime corte
+    include_once '../../system/facturar/facturas/'.$_SESSION["td"].'/Impresiones.php';
+    require_once ('../ticket/autoload.php'); 
+    $imprimir = new Impresiones(); 
+	Alerts::Alerta("success","Imprimiendo","Imprimiendo reporte");
+
+	$imprimir->CorteZ($_POST["fecha"]); //
+break; 
+
+
 case "115": // corte preguntar
 	if($_POST["efectivo"] ==  NULL){
 		Alerts::Alerta("error","Error!","El Formulario esta vacio");

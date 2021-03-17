@@ -51,3 +51,7 @@ include_once 'system/historial/Historial.php';
 Alerts::Mensajex("Seleccione un mes con registros de ventas","info",$boton,$boton2);
  ?>
 </div>
+
+
+<div id="msjimprimir"></div>
+
