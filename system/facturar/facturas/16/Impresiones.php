@@ -575,6 +575,15 @@ $printer -> text($this->Col4("CREDITO FISCAL",0 ,  "", 0,  Helpers::Entero($cant
 
 
 
+
+if ($r = $db->select("nombre", "login_userdata", "WHERE user = '".$user."' and td = ".$_SESSION["td"]."")) { 
+      $cajero = $r["nombre"];
+  } unset($r);  
+
+$printer->feed();
+$printer->text("CAJERO: " . $cajero);
+
+
 $printer->feed();
 $printer->cut();
 $printer->close();

@@ -196,7 +196,7 @@ class Historial{
 				$colores='class="text-danger"';	
 				} 
 				  echo '<tr '.$colores.'>
-				       <th scope="row">'. $b["fecha"] . '</th>
+				       <th scope="row"><a id="imprimir_corte" hash="'. $b["hash"] . '">'. $b["fecha"] . '</a></th>
 				       <td>'. $b["productos"] . '</td>
 				       <td class="d-none d-md-block">'. $b["clientes"] . '</td>
 				       <td>'. Helpers::Dinero($b["efectivo_ingresado"]) . '</td>

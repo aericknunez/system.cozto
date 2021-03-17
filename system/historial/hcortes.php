@@ -25,3 +25,8 @@ include_once 'system/historial/Historial.php';
 <div id="contenido" class="mt-5">
 
 </div>
+
+
+
+<div id="msjimprimir"></div>
+

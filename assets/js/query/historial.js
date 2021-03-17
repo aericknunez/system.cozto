@@ -252,7 +252,7 @@ $(document).ready(function()
 	
 
 
-	$('#btn-cortez').click(function(e){ /// ventas mensual
+	$('#btn-cortez').click(function(e){ /// cortz mensual
 	e.preventDefault();
 	$.ajax({
 			url: "application/src/routes.php?op=112",
@@ -269,7 +269,7 @@ $(document).ready(function()
 		})
 	});
     
-    $("body").on("click","#imprimir_cortez",function(){
+    $("body").on("click","#imprimir_cortez",function(){ // corte por fecha
     	var fecha = $(this).attr('fecha');
         var dataString = 'op=113z&fecha=' + fecha;
 
@@ -285,6 +285,24 @@ $(document).ready(function()
             }
         });
     });       
+
+    $("body").on("click","#imprimir_corte",function(){ // corte por hash
+    	var hash = $(this).attr('hash');
+        var dataString = 'op=113&hash=' + hash;
+
+        $.ajax({
+            type: "POST",
+            url: "application/src/routes.php",
+            data: dataString,
+            beforeSend: function () {
+               $("#msjimprimir").html('<div class="row justify-content-md-center" ><img src="assets/img/load.gif" alt=""></div>');
+            },
+            success: function(data) {           
+                $("#msjimprimir").html(data); 
+            }
+        });
+    });       
+
 
 
 
