@@ -678,7 +678,7 @@ if ($r = $db->select("sum(stotal)", "ticket", "WHERE edo = 1 and tipo = 1 and td
     $t_ticket = $r["sum(stotal)"];
 } unset($r);  
 
-if ($r = $db->select("sum(stotal)", "ticket", "WHERE edo = 1 and tipo = 2 and td = ".$_SESSION["td"]." and and fecha = '$fechax'")) { 
+if ($r = $db->select("sum(stotal)", "ticket", "WHERE edo = 1 and tipo = 2 and td = ".$_SESSION["td"]." and fecha = '$fechax'")) { 
     $t_factura = $r["sum(stotal)"];
 } unset($r);  
 
