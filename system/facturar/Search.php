@@ -166,7 +166,43 @@ if ($r = $db->select("cantidad", "producto", "WHERE cod = '".$b["cod"]."' and td
 
     $cambiox = array();
     $cambiox["cantidad"] = $cantidad + $b["cant"];
-    Helpers::UpdateId("producto", $cambiox, "cod = '".$b["cod"]."' and td = ".$_SESSION["td"]."");     
+    Helpers::UpdateId("producto", $cambiox, "cod = '".$b["cod"]."' and td = ".$_SESSION["td"]."");
+
+
+
+
+
+// pra actualizar las  caracteristicas y las ubicaciones
+  $c = $db->query("SELECT cant, descuenta, producto, codigo FROM ticket_descuenta WHERE producto_hash = '".$b["hash"]."' and td = ".$_SESSION["td"]."");
+  foreach ($c as $d) {
+
+    if($d["descuenta"] == 1){ // caracteristica
+
+      if ($r = $db->select("cant", "caracteristicas_asig", "WHERE caracteristica = '".$d["codigo"]."' and producto = '".$d["producto"]."' and td = ".$_SESSION["td"]."")) { 
+          $cantc = $r["cant"];
+      } unset($r);  
+
+      $cambioy = array();
+      $cambioy["cant"] = $d["cant"] + $cantc;
+      Helpers::UpdateId("caracteristicas_asig", $cambioy, "caracteristica = '".$d["codigo"]."' and producto = '".$d["producto"]."' and td = ".$_SESSION["td"]."");
+
+    } else { /// si es ubicacion
+
+      if ($r = $db->select("cant", "ubicacion_asig", "WHERE ubicacion = '".$d["codigo"]."' and producto = '".$d["producto"]."' and td = ".$_SESSION["td"]."")) { 
+          $cantu = $r["cant"];
+      } unset($r);  
+
+      $cambioz = array();
+      $cambioz["cant"] = $d["cant"] + $cantu;
+      Helpers::UpdateId("ubicacion_asig", $cambioz, "ubicacion = '".$d["codigo"]."' and producto = '".$d["producto"]."' and td = ".$_SESSION["td"]."");
+
+
+    }
+
+
+  } $c->close();
+
+
 
   } $a->close();
 /////////////

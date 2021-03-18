@@ -471,7 +471,7 @@ printer_close($handle);
 
  public function Ninguno(){
 
-$nombre_impresora = "POS-80C";
+$nombre_impresora = "LR2000";
 
 $connector = new WindowsPrintConnector($nombre_impresora);
 $printer = new Printer($connector);
@@ -530,7 +530,7 @@ $printer->close();
 
  public function AbrirCaja(){
  // $print
-$nombre_impresora = "POS-80C";
+$nombre_impresora = "LR2000";
 
 $connector = new WindowsPrintConnector($nombre_impresora);
 $printer = new Printer($connector);
@@ -547,7 +547,7 @@ $printer->close();
 
  public function Barcode($numero){
   $db = new dbConn();
-  $nombre_impresora = "POS-80C";
+  $nombre_impresora = "LR2000";
 
 
 $connector = new WindowsPrintConnector($nombre_impresora);
