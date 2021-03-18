@@ -155,7 +155,7 @@ public function BorrarFactura($factura){
 
 
 /// solo regresar la cantidad al inventario // esto deberia cambiar y llevarse todo lo necesario
-  $a = $db->query("SELECT cant, cod FROM ticket WHERE num_fac = '$factura' and tipo = '".$_SESSION["tipoticket"]."' and td = ".$_SESSION["td"]."");
+  $a = $db->query("SELECT cant, cod, hash FROM ticket WHERE num_fac = '$factura' and tipo = '".$_SESSION["tipoticket"]."' and td = ".$_SESSION["td"]."");
   foreach ($a as $b) {
 
 // obtener cant de producto

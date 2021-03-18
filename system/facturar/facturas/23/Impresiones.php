@@ -321,7 +321,7 @@ $col3 = 400;
 $col4 = 565;
 $col5 = 500;
 // $print
-$print = "Canon E400 series Printer";
+$print = "FACTURA";
 
 $handle = printer_open($print);
 printer_set_option($handle, PRINTER_MODE, "RAW");
