@@ -333,10 +333,19 @@ echo '</tbody>
         while($x = $d->fetch_assoc()) {
 
 // cantidad de productos disponibles en este moento
-    if ($r = $db->select("cantidad", "producto", "WHERE cod = '".$x["cod"]."' and td = ". $_SESSION["td"] ."")) { 
+if ($r = $db->select("cantidad", "producto", "WHERE cod = '".$x["cod"]."' and td = ". $_SESSION["td"] ."")) { 
         $cantidad = $r["cantidad"];
     } unset($r);  
 
+// cantidad de productos ingresados y precio costo
+if ($r = $db->select("sum(cant) as canti", "producto_ingresado", "WHERE producto = '".$x["cod"]."' and td = ". $_SESSION["td"] ."")) { 
+        $ingreso = $r["canti"];
+    } unset($r);    
+
+
+$a = $db->query("SELECT precio_costo FROM producto_ingresado WHERE producto = '".$x["cod"]."' and td = ". $_SESSION["td"] ."");
+$reg = $a->num_rows;
+$a->close();
 
 // productos vendidos
     if ($r = $db->select("sum(cant) as cantid, sum(pv) as prev, sum(total) as tota, sum(pc) as costo", "ticket", "WHERE cod = '".$x["cod"]."' and td = ". $_SESSION["td"] ." and fechaF BETWEEN '$primero' and '$segundo'")) { 
@@ -347,6 +356,8 @@ echo '</tbody>
     } 
     unset($r);
 
+@$pc = $vpc / $reg;
+
 // obtengo el numero de registros
 $a = $db->query("SELECT pv FROM ticket WHERE cod = '".$x["cod"]."' and td = ". $_SESSION["td"] ." and fechaF BETWEEN '$primero' and '$segundo'");
 $preg = $a->num_rows;
@@ -354,7 +365,7 @@ $a->close();
     @$precioventa = $vpv / $preg;
 
 // utilidad
-$ut = $precioventa - $vpc;
+$ut = $precioventa - $pc;
 $utilidad = $ut * $vcantidad;
 
 
