@@ -150,7 +150,28 @@ public function BorrarFactura($factura){
     $cambio2 = array();
     $cambio2["edo"] = 2;
     Helpers::UpdateId("ticket_num", $cambio2, "num_fac = '$factura' and tipo = '".$_SESSION["tipoticket"]."' and td = ".$_SESSION["td"]."");      
-    
+ 
+
+
+
+/// solo regresar la cantidad al inventario // esto deberia cambiar y llevarse todo lo necesario
+  $a = $db->query("SELECT cant, cod FROM ticket WHERE num_fac = '$factura' and tipo = '".$_SESSION["tipoticket"]."' and td = ".$_SESSION["td"]."");
+  foreach ($a as $b) {
+
+// obtener cant de producto
+if ($r = $db->select("cantidad", "producto", "WHERE cod = '".$b["cod"]."' and td = ".$_SESSION["td"]."")) { 
+    $cantidad = $r["cantidad"];
+} unset($r);  
+
+
+    $cambiox = array();
+    $cambiox["cantidad"] = $cantidad + $b["cant"];
+    Helpers::UpdateId("producto", $cambiox, "cod = '".$b["cod"]."' and td = ".$_SESSION["td"]."");     
+
+  } $a->close();
+/////////////
+
+
 
 
 }
