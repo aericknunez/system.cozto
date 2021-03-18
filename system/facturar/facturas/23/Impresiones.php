@@ -321,7 +321,7 @@ $col3 = 400;
 $col4 = 565;
 $col5 = 500;
 // $print
-$print = "FACTURA";
+$print = "Canon E400 series Printer";
 
 $handle = printer_open($print);
 printer_set_option($handle, PRINTER_MODE, "RAW");
@@ -345,9 +345,9 @@ printer_draw_text($handle, substr(date("Y"), -1), 590, $oi);
 
 
 
-    if ($r = $db->select("documento", "facturar_documento_factura", "WHERE factura = '$numero' and tx = " . $_SESSION["tx"] . " and td = " .  $_SESSION["td"])) { 
-        $documento = $r["documento"];
-    } unset($r);  
+  if ($r = $db->select("documento", "facturar_documento_factura", "WHERE factura = '$numero' and tx = " . $_SESSION["tx"] . " and td = " .  $_SESSION["td"] . " order by time desc limit 1" )) { 
+      $documento = $r["documento"];
+  } unset($r);  
 
 
 
@@ -366,7 +366,7 @@ printer_draw_text($handle, $cliente, 85, $oi);
 $oi=$oi+$n1;
 printer_draw_text($handle, $direccion, 100, $oi);
 $oi=$oi+$n1;
-printer_draw_text($handle, $departamento, 100, $oi);
+printer_draw_text($handle, $departamento, 110, $oi);
 printer_draw_text($handle, $giro, 390, $oi);
 
 $oi=$oi+$n1;

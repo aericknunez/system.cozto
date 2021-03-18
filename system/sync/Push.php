@@ -8,7 +8,7 @@ class Push{
 
 	public function Execute($corte){
 		
-		if($this->VerificarCorteHoy(date("d-m-Y")) != TRUE or $corte != NULL){
+		if($this->VerificarCorteHoy() == TRUE or $corte != NULL){
 			$_SESSION["now"] =  $this->Now();
 			$_SESSION["last_update"] =  $this->LastUpdate();
 
@@ -37,11 +37,11 @@ class Push{
 
 
 /// verificar corte
-	public function VerificarCorteHoy($fecha){
+	public function VerificarCorteHoy(){
 	    $db = new dbConn();
 
 		$a = $db->query("SELECT * FROM corte_diario 
-			WHERE fecha = '$fecha' and td = ".$_SESSION["temporal_td"]."");
+			WHERE edo = 1  and td = ".$_SESSION["temporal_td"]."");
 		if($a->num_rows > 0){
 			return TRUE;
 		} else {
