@@ -53,6 +53,42 @@ $archivos = glob("*.sql", GLOB_BRACE);
 } // termina busqueda de archivos en la carpeta
 
 
+
+
+/// voy a buscar las ultimas tablas para ingresarlas al sistema
+$check = strtoupper(sha1(date("d:m:Y:H")));
+
+$vesiones =  file_get_contents("https://app.hibridosv.com/api/version.php?x=2&check=" . $check); 
+$ver = json_decode($vesiones, true);
+
+
+
+
+if($ver["version"] != $version){
+
+
+$data =  file_get_contents("https://app.hibridosv.com/api/tablas_update.php?x=2&check=" . $check); 
+$datos = json_decode($data, true);
+
+if($datos != NULL){
+
+    $db->query("TRUNCATE sync_tabla");
+
+	foreach ($datos as $valores) { 
+
+		$data = array();
+		$data["tabla"] = $valores["tabla"];
+		$data["edo"] = 1;
+      	$data["hash"] = Helpers::HashId();
+      	$data["time"] = Helpers::TimeId();
+		$data["td"] = $_SESSION["temporal_td"];
+		$db->insert("sync_tabla", $data); 
+	}
+
+}
+
+}
+
 unset($_SESSION["temporal_td"]);
 
 ?>
