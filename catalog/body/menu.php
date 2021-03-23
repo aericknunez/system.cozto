@@ -167,7 +167,7 @@ if($_SESSION["config_pesaje"] == "on"){
 
 
 	if((Helpers::ServerDomain() == FALSE and $_SESSION["root_plataforma"] == 0) or (Helpers::ServerDomain() == TRUE and $_SESSION["root_plataforma"] == 1)) {
-?>?>
+?>
 
 <li><a class="collapsible-header waves-effect arrow-r"><i class="fas fa-calculator"></i> HERRAMIENTAS<i class="fa fa-angle-down rotate-icon"></i></a>
 <div class="collapsible-body">
@@ -324,7 +324,6 @@ if($_SESSION["root_tipo_sistema"] != 1 or $_SESSION["root_tipo_sistema"] != 2) {
 
 if((Helpers::ServerDomain() == FALSE and $_SESSION["root_plataforma"] == 0) or (Helpers::ServerDomain() == TRUE and $_SESSION["root_plataforma"] == 1)) {
 ?>
-	?>
 
 <li><a class="collapsible-header waves-effect arrow-r"><i class="fas fa-user-alt"></i> PLANILLA<i class="fa fa-angle-down rotate-icon"></i></a>
 <div class="collapsible-body">
