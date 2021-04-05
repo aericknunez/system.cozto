@@ -142,14 +142,16 @@ $printer -> text("____________________________________________________________")
 $printer->feed();
 
 
+
+
 if ($x = $db->select("fecha, hora", "ticket", "WHERE num_fac = '".$numero."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."  and tipo = ".$_SESSION["tipoticket"]."" )) { 
 $fechaf=$x["fecha"];
 $horaf=$x["fecha"];
 } unset($x); 
 
-
-
+$printer->feed();
 $printer -> text($this->DosCol($fechaf, 30, $horaf, 30));
+
 
 $printer->feed();
 $printer->text("SERIE: 2UA329130D");
