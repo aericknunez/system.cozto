@@ -41,7 +41,7 @@ if($type == NULL or $type == 0){
 
     foreach ($a as $b) {
 
-$ag = $db->query("SELECT sum(cant), sum(total), cajero, tipo_pago FROM ticket where edo = 1 and num_fac = '".$b["num_fac"]."' and td = ".$_SESSION['td']."");
+$ag = $db->query("SELECT sum(cant), sum(total), cajero, tipo_pago FROM ticket where edo = 1 and num_fac = '".$b["num_fac"]."' and tipo = '".$b["tipo"]."' and td = ".$_SESSION['td']."");
 foreach ($ag as $bg) { 
 	$cant = $bg["sum(cant)"];
 	$total = $bg["sum(total)"];
