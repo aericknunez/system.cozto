@@ -9,7 +9,7 @@ $(document).ready(function()
 			method: "POST",
 			data: $("#form-corte").serialize(),
 			beforeSend: function () {
-               $("#content").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt=""></div>');
+               $("#corte").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt=""></div>');
             },
 			success: function(data){
 				$("#corte").html(data);
@@ -101,6 +101,14 @@ return false;
     });       
 
 
+
+
+
+
+    $("body").on("click","#eliminarcorte",function(){
+
+         $('#modalConfirmDelete').modal('show');
+    });       
 
 
 

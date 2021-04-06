@@ -350,7 +350,7 @@ if($ramdom == $num){
   </div>
 
 
-			<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalConfirmDelete">Eliminar Corte</button>';
+			<button type="button" class="btn btn-danger" id="eliminarcorte">Eliminar Corte</button>';
 
 
 			echo '<a id="imprimir_corte" hash="'. $this->ObtieneInfo("hash") .'" class="btn-floating cyan" title="Imprimir Corte" data-toggle="tooltip" data-placement="bottom"><i class="fas fa-print"></i></a>';
