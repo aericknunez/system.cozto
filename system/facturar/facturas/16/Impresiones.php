@@ -146,7 +146,7 @@ $printer->feed();
 
 if ($x = $db->select("fecha, hora", "ticket", "WHERE num_fac = '".$numero."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."  and tipo = ".$_SESSION["tipoticket"]."" )) { 
 $fechaf=$x["fecha"];
-$horaf=$x["fecha"];
+$horaf=$x["hora"];
 } unset($x); 
 
 $printer->feed();
