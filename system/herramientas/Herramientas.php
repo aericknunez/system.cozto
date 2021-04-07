@@ -614,17 +614,23 @@ $db = new dbConn();
                  
         $datos = array();
         $datos["cod"] = $data["cod"];
-        $datos["cantidad"] = $this->ObtenerCantidad($data["cod"]);
+        $datos["cantidad"] = $this->ObtenerCantidad($data["cod"]); // cantidad actual
         $datos["establecido"] = $data["cantidad"];
         $datos["td"] = $_SESSION["td"];
         $datos["hash"] = Helpers::HashId();
         $datos["time"] = Helpers::TimeId();
         if($db->insert("ajuste_inventario", $datos)){
 
-          // si es mayor vamos a ingresar producto
+           
+          if($datos["cantidad"] > $datos["establecido"]){ // averias
 
+            $this->Averias($datos);
 
-          // is es menor vamos a registrar averias
+          } else { // agrega producto
+
+            $this->Agrega($datos);
+
+          }
 
 
           Alerts::Alerta("success","Realizado!","Iniciado correctamente!");
@@ -655,6 +661,129 @@ $db = new dbConn();
 
   }
 
+
+
+
+
+public function Averias($datos){
+      $db = new dbConn();
+
+    $cantidad = $datos["cantidad"] - $datos["establecido"];
+
+    $data = array();
+    $data["producto"] = $datos["cod"];
+    $data["cant"] = $cantidad;
+    $data["comentarios"] = "Ajuste de inventario";
+    $data["fecha"] = date("d-m-Y");
+    $data["hora"] = date("H:i:s");
+    $data["usuario"] = $_SESSION["user"];
+    $data["td"] = $_SESSION["td"];
+    $data["hash"] = Helpers::HashId();
+    $data["time"] = Helpers::TimeId();
+    if ($db->insert("producto_averias", $data)) {
+
+// se actualiza la cantidad de los productos
+$cambio = array();
+$cambio["cantidad"] = $datos["establecido"];
+Helpers::UpdateId("producto", $cambio, "cod='".$datos["cod"]."' and td = ".$_SESSION["td"]."");        
+
+
+  // ubicacion predeterminada
+if ($r = $db->select("hash", "ubicacion", "WHERE predeterminada = '1' and td = ".$_SESSION["td"]."")) { 
+$predet = $r["hash"];
+} unset($r);  
+
+$asig = array();
+$asig["cant"] = $datos["establecido"];
+Helpers::UpdateId("ubicacion_asig", $asig, "ubicacion = '$predet' and producto='".$datos["cod"]."' and td = ".$_SESSION["td"]."");        
+///
+}
+
+
+}
+
+
+
+
+
+
+public function Agrega($datos){
+      $db = new dbConn();
+
+    $cantidad = $datos["establecido"] - $datos["cantidad"];
+
+    
+    $data = array();
+    $data["producto"] = $datos["cod"];
+    $data["cant"] = $cantidad;
+    $data["existencia"] = $cantidad;
+    $data["precio_costo"] = $this->ObtenerPrecioCosto($datos["cod"]); // buscar precio costo
+    $data["caduca"] = $this->Caduca($datos["cod"]); // buscar la ultima caducidad
+    $data["caducaF"] = Fechas::Format($this->Caduca($datos["cod"]));
+    $data["comentarios"] = "Ajuste de inventario";
+    $data["fecha"] = date("d-m-Y");
+    $data["hora"] = date("H:i:s");
+    $data["td"] = $_SESSION["td"];
+    $data["hash"] = Helpers::HashId();
+    $data["time"] = Helpers::TimeId();
+    if ($db->insert("producto_ingresado", $data)) {
+
+// se actualiza la cantidad de los productos
+$cambio = array();
+$cambio["cantidad"] = $datos["establecido"];
+Helpers::UpdateId("producto", $cambio, "cod='".$datos["cod"]."' and td = ".$_SESSION["td"]."");        
+
+
+  // ubicacion predeterminada
+if ($r = $db->select("hash", "ubicacion", "WHERE predeterminada = '1' and td = ".$_SESSION["td"]."")) { 
+$predet = $r["hash"];
+} unset($r);  
+
+$asig = array();
+$asig["cant"] = $datos["establecido"];
+Helpers::UpdateId("ubicacion_asig", $asig, "ubicacion = '$predet' and producto='".$datos["cod"]."' and td = ".$_SESSION["td"]."");        
+///
+}
+
+
+}
+
+
+
+public function ObtenerPrecioCosto($cod) { // obtine cantiad de productos
+  $db = new dbConn();
+
+$precio = 0;
+// cantidad de productos ingresados y precio costo
+$a = $db->query("SELECT existencia, precio_costo FROM producto_ingresado WHERE existencia > 0 and producto = '".$cod."' and td = ". $_SESSION["td"] ."");
+foreach ($a as $b) {
+    $tot = $b["existencia"] * $b["precio_costo"];
+    $precio = $precio + $tot;
+    unset($tot);
+} $a->close();
+
+ 
+
+if ($r = $db->select("sum(existencia)", "producto_ingresado", "WHERE existencia > 0 and producto = '".$cod."' and td = ". $_SESSION["td"] ."")) { 
+    $productos = $r["sum(existencia)"];
+} unset($r);  
+
+@$pc = $precio / $productos;
+
+    return $pc;
+}
+
+
+
+
+ public function Caduca($cod){
+$db = new dbConn();
+
+    if ($r = $db->select("caduca", "producto_ingresado", "WHERE producto = '$cod' and td = ".$_SESSION["td"]." order by time desc limit 1")) { 
+        return $r["caduca"];
+    } unset($r);  
+
+ }
 
 
 
