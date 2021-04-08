@@ -348,7 +348,7 @@ $reg = $a->num_rows;
 $a->close();
 
 // productos vendidos
-    if ($r = $db->select("sum(cant) as cantid, sum(pv) as prev, sum(total) as tota, sum(pc) as costo", "ticket", "WHERE cod = '".$x["cod"]."' and td = ". $_SESSION["td"] ." and fechaF BETWEEN '$primero' and '$segundo'")) { 
+    if ($r = $db->select("sum(cant) as cantid, sum(pv) as prev, sum(total) as tota, sum(pc) as costo", "ticket", "WHERE cod = '".$x["cod"]."' and td = ". $_SESSION["td"] ." and edo 1 and fechaF BETWEEN '$primero' and '$segundo'")) { 
         $vcantidad = $r["cantid"];
         $vpv = $r["prev"];
         $vtotal = $r["tota"];
@@ -356,7 +356,7 @@ $a->close();
     } 
     unset($r);
 
-@$pc = $vpc / $reg;
+@$pc = $vpc / $vcantidad;
 
 // obtengo el numero de registros
 $a = $db->query("SELECT pv FROM ticket WHERE cod = '".$x["cod"]."' and td = ". $_SESSION["td"] ." and fechaF BETWEEN '$primero' and '$segundo'");
