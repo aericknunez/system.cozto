@@ -356,7 +356,7 @@ $a->close();
     } 
     unset($r);
 
-@$pc = $vpc / $vcantidad;
+@$pc = $vpc / $reg;
 
 // obtengo el numero de registros
 $a = $db->query("SELECT pv FROM ticket WHERE cod = '".$x["cod"]."' and td = ". $_SESSION["td"] ." and fechaF BETWEEN '$primero' and '$segundo'");
