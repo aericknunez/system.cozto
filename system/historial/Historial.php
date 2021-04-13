@@ -160,9 +160,11 @@ class Historial{
 					       <th>Fecha</th>
 					       <th>Productos</th>					       
 					       <th class="d-none d-md-block">Clientes</th>
-					       <th>Efectivo</th>
-					       <th>Tarjeta</th>
-					       <th>Credito</th>
+					       <th>Apertura</th>
+					       <th>Efectivo In.</th>
+					       <th>V. Efectivo</th>
+					       <th>V. Tarjeta</th>
+					       <th>V. Credito</th>
 					        <th>Venta Total</th>
 					        <th>Gastos</th>
 					        <th>Diferencia</th>
@@ -174,6 +176,7 @@ class Historial{
 				$xclientes = 0;
 				$xpropina = 0;
 				$xefectivo = 0;
+				$xefectivo2 = 0;
 				$xtarjeta = 0;
 				$xcredito = 0;
 				$xtotal = 0;
@@ -185,7 +188,9 @@ class Historial{
 				if($b["edo"] == 2){
 				$xproductos=$xproductos+$b["productos"];
 				$xclientes=$xclientes+$b["clientes"];
+				$cajachica=$cajachica+$b["caja_chica"];
 				$xefectivo=$xefectivo+$b["efectivo_ingresado"];
+				$xt_efectivo=$xt_efectivo+$b["t_efectivo"];
 				$xt_tarjeta=$xt_tarjeta+$b["t_tarjeta"];
 				$xt_credito=$xt_credito+$b["t_credito"];
 				$xtotal=$xtotal+$b["total"];
@@ -199,7 +204,9 @@ class Historial{
 				       <th scope="row"><a id="imprimir_corte" hash="'. $b["hash"] . '">'. $b["fecha"] . '</a></th>
 				       <td>'. $b["productos"] . '</td>
 				       <td class="d-none d-md-block">'. $b["clientes"] . '</td>
+				       <td>'. Helpers::Dinero($b["caja_chica"]) . '</td>
 				       <td>'. Helpers::Dinero($b["efectivo_ingresado"]) . '</td>
+				       <td>'. Helpers::Dinero($b["t_efectivo"]) . '</td>
 				       <td>'. Helpers::Dinero($b["t_tarjeta"]) . '</td>
 				       <td>'. Helpers::Dinero($b["t_credito"]) . '</td>
 				       <td>'. Helpers::Dinero($b["total"]) . '</td>
@@ -215,7 +222,9 @@ class Historial{
 			       <th scope="row">Totales</th>
 			       <td>'. $xproductos . '</td>
 			       <td class="d-none d-md-block">'. $xclientes . '</td>
+			       <td>'. Helpers::Dinero($cajachica) . '</td>
 			       <td>'. Helpers::Dinero($xefectivo) . '</td>
+			       <td>'. Helpers::Dinero($xt_efectivo) . '</td>
 			       <td>'. Helpers::Dinero($xt_tarjeta) . '</td>
 			       <td>'. Helpers::Dinero($xcredito) . '</td>
 			       <td>'. Helpers::Dinero($xtotal) . '</td>
