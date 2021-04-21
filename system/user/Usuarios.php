@@ -249,7 +249,7 @@ echo '<label>Tipo de Cuenta</label>
 
     	echo '<tr>';
 		
-		echo '<th scope="row">'.$b["nombre"].'</th>
+		echo '<th scope="row">'.$b["td"].' - '.$b["nombre"].'</th>
 		      <td class="d-none d-md-block">'.$b["email"].'</td>
 		      <td>'.Helpers::UserName($b["tipo"]).'</td>';
 

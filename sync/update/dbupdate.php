@@ -70,24 +70,20 @@ if($ver["version"] != $version){
 $data =  file_get_contents("https://app.hibridosv.com/api/tablas_update.php?x=2&check=" . $check); 
 $datos = json_decode($data, true);
 
-if($datos != NULL){
-
-    $db->query("TRUNCATE sync_tabla");
-
-	foreach ($datos as $valores) { 
-
-		$data = array();
-		$data["tabla"] = $valores["tabla"];
-		$data["edo"] = 1;
-      	$data["hash"] = Helpers::HashId();
-      	$data["time"] = Helpers::TimeId();
-		$data["td"] = $_SESSION["temporal_td"];
-		$db->insert("sync_tabla", $data); 
+	if($datos != NULL){
+	    $db->query("TRUNCATE sync_tabla");
+		foreach ($datos as $valores) { 
+			$data = array();
+			$data["tabla"] = $valores["tabla"];
+			$data["edo"] = 1;
+	      	$data["hash"] = Helpers::HashId();
+	      	$data["time"] = Helpers::TimeId();
+			$data["td"] = $_SESSION["temporal_td"];
+			$db->insert("sync_tabla", $data); 
+		}
 	}
-
 }
 
-}
 
 unset($_SESSION["temporal_td"]);
 
