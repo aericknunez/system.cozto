@@ -53,7 +53,7 @@ if($dir == "asc") $dir2 = "desc";
                       <td class="d-none d-md-block">'.$b["factura"].'</td>
                       <td>'.$b["fecha"]. ' | ' . $b["hora"].'</td>
                       <td>'.Helpers::EstadoCredito($b["edo"]) . '</td>
-                      <td><a id="xver" op="109" credito="'. $b["hash"] .'" factura="'. $b["factura"] .'" tx="'. $b["tx"] .'"><i class="fas fa-search fa-lg green-text"></i></a></td>
+                      <td><a id="xver" op="109" credito="'. $b["hash"] .'" orden="'. $b["orden"] .'" factura="'. $b["factura"] .'" tx="'. $b["tx"] .'"><i class="fas fa-search fa-lg green-text"></i></a></td>
                     </tr>';
         }
         echo '</tbody>
@@ -116,10 +116,10 @@ $page <= 1 ? $enable = 'disabled' : $enable = '';
 
 
  
-  public function ObtenerTotal($factura, $tx){ // total del credito
+  public function ObtenerTotal($factura, $tx, $orden){ // total del credito
     $db = new dbConn();
 
-        if ($r = $db->select("sum(total)", "ticket", "WHERE num_fac = '$factura' and tx = '$tx' and td = ".$_SESSION["td"]."")) { 
+        if ($r = $db->select("sum(total)", "ticket", "WHERE orden = '$orden' and num_fac = '$factura' and tx = '$tx' and td = ".$_SESSION["td"]."")) { 
             return $r["sum(total)"];
         }  unset($r);  
     
@@ -138,10 +138,10 @@ $page <= 1 ? $enable = 'disabled' : $enable = '';
 
 
 
-  public function VerProducto($factura, $tx) { //leva el control del autoincremento de los clientes
+  public function VerProducto($factura, $tx, $orden) { //leva el control del autoincremento de los clientes
     $db = new dbConn();
         
-        $a = $db->query("SELECT * FROM ticket WHERE num_fac = '$factura' and tx = '$tx' and td = ".$_SESSION["td"]."");
+        $a = $db->query("SELECT * FROM ticket WHERE orden = '$orden' and num_fac = '$factura' and tx = '$tx' and td = ".$_SESSION["td"]."");
 
         if($a->num_rows > 0){
             echo '<table class="table table-striped table-sm">
@@ -198,8 +198,8 @@ public function VerAbonos($credito) { //leva el control del autoincremento de lo
 
         if($a->num_rows > 0){
 
-    if ($r = $db->select("factura, tx", "creditos", "WHERE hash = '$credito' and edo = 1 and td = ".$_SESSION["td"]."")) { 
-        $factura = $r["factura"]; $tx = $r["tx"];
+    if ($r = $db->select("factura, tx, orden", "creditos", "WHERE hash = '$credito' and edo = 1 and td = ".$_SESSION["td"]."")) { 
+        $factura = $r["factura"]; $tx = $r["tx"]; $orden = $r["orden"];
     }  unset($r); 
 
             echo '<table class="table table-striped table-sm">
@@ -222,7 +222,7 @@ public function VerAbonos($credito) { //leva el control del autoincremento de lo
                   <td>'.$b["hora"].'</td>';
 
                       if($n == 1 and $b["fecha"] == date("d-m-Y")){
-                      echo '<td><a id="delabono" hash="'.$b["hash"].'" op="108" credito="'.$b["credito"].'" factura="'.$factura.'" tx="'.$tx.'"><i class="fa fa-minus-circle fa-lg red-text"></i></a></td>';
+                      echo '<td><a id="delabono" hash="'.$b["hash"].'" op="108" credito="'.$b["credito"].'" orden="'.$orden.'" factura="'.$factura.'" tx="'.$tx.'"><i class="fa fa-minus-circle fa-lg red-text"></i></a></td>';
                     } else {
                       echo '<td><i class="fa fa-ban fa-lg green-text"></i></td>';
                     }
@@ -244,7 +244,7 @@ public function VerAbonos($credito) { //leva el control del autoincremento de lo
     $db = new dbConn();
       if($datos["credito"] != NULL and $datos["abono"] != NULL){ // comprueba dtos
         
-        $tot = $this->ObtenerTotal($datos["factura"], $datos["tx"]);
+        $tot = $this->ObtenerTotal($datos["factura"], $datos["tx"], $datos["orden"]);
         $abo = $this->TotalAbono($datos["credito"]);
         $resultado = Helpers::Format($tot - $abo);
         $abono = Helpers::Format($datos["abono"]);
@@ -305,11 +305,12 @@ public function VerAbonos($credito) { //leva el control del autoincremento de lo
 
 
 
-  public function LlamarVista($credito, $factura, $tx){
+  public function LlamarVista($credito, $factura, $tx, $orden){
       $db = new dbConn();
-      $this->VerProducto($factura, $tx);
+      
+      $this->VerProducto($factura, $tx, $orden);
  
-      $creditos = $this->ObtenerTotal($factura, $tx);
+      $creditos = $this->ObtenerTotal($factura, $tx, $orden);
       $abonos = $this->TotalAbono($credito);
 
       echo '<div class="form-group row justify-content-center align-items-center">
@@ -379,7 +380,7 @@ if($dir == "asc") $dir2 = "desc";
                       <td class="d-none d-md-block">'.$b["factura"].'</td>
                       <td>'.$b["fecha"]. ' | ' . $b["hora"].'</td>
                       <td>'.Helpers::EstadoCredito($b["edo"]) . '</td>
-                      <td><a id="xver" op="109" credito="'. $b["hash"] .'" factura="'. $b["factura"] .'" tx="'. $b["tx"] .'"><i class="fas fa-search fa-lg green-text"></i></a></td>
+                      <td><a id="xver" op="109" credito="'. $b["hash"] .'" orden="'. $b["orden"] .'" factura="'. $b["factura"] .'" tx="'. $b["tx"] .'"><i class="fas fa-search fa-lg green-text"></i></a></td>
                     </tr>';
         }
         echo '</tbody>
@@ -506,7 +507,7 @@ $page <= 1 ? $enable = 'disabled' : $enable = '';
                       <td class="d-none d-md-block">'.$b["factura"].'</td>
                       <td>'.$b["fecha"]. ' | ' . $b["hora"].'</td>
                       <td>'.Helpers::EstadoCredito($b["edo"]) . '</td>
-                      <td><a id="xver" op="109" credito="'. $b["hash"] .'" factura="'. $b["factura"] .'" tx="'. $b["tx"] .'"><i class="fas fa-search fa-lg green-text"></i></a></td>
+                      <td><a id="xver" op="109" credito="'. $b["hash"] .'" orden="'. $b["orden"] .'" factura="'. $b["factura"] .'" tx="'. $b["tx"] .'"><i class="fas fa-search fa-lg green-text"></i></a></td>
                     </tr>';
         }
         echo '</tbody>

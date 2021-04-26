@@ -12,14 +12,14 @@
       <div class="modal-body">
 <!-- ./  content -->
 <?php 
-$credito->VerProducto($_REQUEST["factura"], $_REQUEST["tx"])
+$credito->VerProducto($_REQUEST["factura"], $_REQUEST["tx"], $_REQUEST["orden"])
  ?>
 
 <!-- ./  content -->
       </div>
       <div class="modal-footer">
 <?php 
-$url = "&cre=" . $_REQUEST["cre"] . "&factura=" . $_REQUEST["factura"]. "&tx=" . $_REQUEST["tx"];
+$url = "&cre=" . $_REQUEST["cre"] . "&factura=" . $_REQUEST["factura"]. "&tx=" . $_REQUEST["tx"]. "&orden=" . $_REQUEST["orden"];
  ?>
 <a href="?modal=abonos<?php echo $url; ?>" class="btn btn-secondary btn-rounded">Ver Abonos</a>
 <a href="?creditos" class="btn btn-primary btn-rounded">Regresar</a>

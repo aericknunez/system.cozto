@@ -973,7 +973,7 @@ case "107":
 include_once '../../system/credito/Creditos.php';
 	$credito = new Creditos;
 	$abonos = $credito->TotalAbono($_REQUEST["credito"]);
-	$totales = $credito->ObtenerTotal($_REQUEST["factura"], $_REQUEST["tx"]);
+	$totales = $credito->ObtenerTotal($_REQUEST["factura"], $_REQUEST["tx"], $_REQUEST["orden"]);
 
 	echo Helpers::Dinero($totales - $abonos);
 break;
@@ -991,7 +991,7 @@ break;
 case "109": 
 include_once '../../system/credito/Creditos.php';
 	$credito = new Creditos;
-	$credito->LlamarVista($_REQUEST["credito"], $_REQUEST["factura"], $_REQUEST["tx"]);
+	$credito->LlamarVista($_REQUEST["credito"], $_REQUEST["factura"], $_REQUEST["tx"], $_REQUEST["orden"]);
 break;
 
 

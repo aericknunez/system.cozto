@@ -9,9 +9,24 @@ class Historial{
 	public function HistorialDiario($fecha, $type = NULL) {
 		$db = new dbConn();
 
+$a = $db->query("select cod, cant, total, producto, pv 
+from ticket 
+where cod = '9999999' and edo = 1 and fecha = '$fecha' and td = ".$_SESSION['td']." order by cant desc");
+$especial = NULL;
+if($a->num_rows > 0){
+    foreach ($a as $b) {
+ $especial .= '<tr>
+       <th scope="row">'. $b["cant"] . '</th>
+       <td>'. $b["producto"] . '</td>
+       <td>'. Helpers::Dinero($b["pv"]) . '</td>
+       <td>'. Helpers::Dinero($b["total"]) . '</td>
+     </tr>';
+    } 
+} $a->close();
+
 			$a = $db->query("select cod, sum(cant), sum(total), producto, pv 
           from ticket 
-          where cod != 8888 and edo = 1 and fecha = '$fecha' and td = ".$_SESSION['td']." GROUP BY cod order by sum(cant) desc");
+          where cod != 8888 and cod != 9999999 and edo = 1 and fecha = '$fecha' and td = ".$_SESSION['td']." GROUP BY cod order by sum(cant) desc");
 
 			if($a->num_rows > 0){
 				
@@ -45,6 +60,7 @@ class Historial{
 			    } 
 
 			    $a->close();
+echo $especial;
 
 			echo '</tbody>
 				</table></div>';
@@ -78,9 +94,24 @@ class Historial{
 	public function HistorialMensual($fechax) {
 		$db = new dbConn();
 
-		$a = $db->query("select cod, sum(cant), sum(total), producto, pv, fecha 
-					                  from ticket 
-					                  where cod != 8888 and edo = 1 and fecha like '%$fechax' and td = ".$_SESSION['td']." GROUP BY cod order by sum(cant) desc");
+$a = $db->query("select cod, cant, total, producto, pv 
+from ticket 
+where cod = '9999999' and edo = 1 and fecha like '%$fechax' and td = ".$_SESSION['td']." order by cant desc");
+$especial = NULL;
+if($a->num_rows > 0){
+    foreach ($a as $b) {
+ $especial .= '<tr>
+       <th scope="row">'. $b["cant"] . '</th>
+       <td>'. $b["producto"] . '</td>
+       <td>'. Helpers::Dinero($b["pv"]) . '</td>
+       <td>'. Helpers::Dinero($b["total"]) . '</td>
+     </tr>';
+    } 
+} $a->close();
+
+$a = $db->query("select cod, sum(cant), sum(total), producto, pv, fecha 
+                  from ticket 
+                  where cod != 8888 and cod != 9999999 and edo = 1 and fecha like '%$fechax' and td = ".$_SESSION['td']." GROUP BY cod order by sum(cant) desc");
 		if($a->num_rows > 0){
 						echo '<h3 class="h3-responsive">PRODUCTOS VENDIDOS</h3>
 						<div class="table-responsive">
@@ -107,6 +138,7 @@ class Historial{
 			     </tr>';
 			    } $a->close();
 
+			    echo $especial;
 
 			    echo '</tbody>
 				</table></div>';

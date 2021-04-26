@@ -34,6 +34,8 @@ if($_SESSION["caja_apertura"] != NULL){ // comprobacion de corte
         <input type="hidden" id="credito" name="credito" value="<?php echo $_REQUEST["cre"]; ?>"> 
         <input type="hidden" id="factura" name="factura" value="<?php echo $_REQUEST["factura"]; ?>">
         <input type="hidden" id="tx" name="tx" value="<?php echo $_REQUEST["tx"]; ?>">
+        <input type="hidden" id="orden" name="orden" value="<?php echo $_REQUEST["orden"]; ?>">
+
 
         <input type="text" id="nombre" name="nombre" autocomplete="off" class="form-control mb-3" placeholder="Cliente" value="<?php echo $nombre; ?>">  
         <input type="number" step="any" id="abono" name="abono" autocomplete="off" class="form-control mb-3" placeholder="0.00">
@@ -44,7 +46,7 @@ if($_SESSION["caja_apertura"] != NULL){ // comprobacion de corte
 
 
     <?php 
-      $creditos = $credito->ObtenerTotal($_REQUEST["factura"], $_REQUEST["tx"]);
+      $creditos = $credito->ObtenerTotal($_REQUEST["factura"], $_REQUEST["tx"], $_REQUEST["orden"]);
       $abonos = $credito->TotalAbono($_REQUEST["cre"]);
      ?>
     <div class="col-md-6" id="destino">
@@ -83,7 +85,7 @@ $credito->VerAbonos($_REQUEST["cre"]);
       <div class="modal-footer">
 
 <?php 
-$url = "&cre=" . $_REQUEST["cre"] . "&factura=" . $_REQUEST["factura"]. "&tx=" . $_REQUEST["tx"];
+$url = "&cre=" . $_REQUEST["cre"] . "&factura=" . $_REQUEST["factura"]. "&tx=" . $_REQUEST["tx"]. "&orden=" . $_REQUEST["orden"];
  ?>
 <a href="?modal=cre_prodcuto<?php echo $url; ?>" class="btn btn-secondary btn-rounded">Ver Productos</a>
 <a href="?creditos" class="btn btn-primary btn-rounded">Regresar</a>

@@ -6,6 +6,7 @@ $(document).ready(function(){
 	var credito = $("#credito").val();
 	var factura = $("#factura").val();
 	var tx = $("#tx").val();
+	var orden = $("#orden").val();
 	
 	$.ajax({
 			url: "application/src/routes.php?op=105",
@@ -20,7 +21,7 @@ $(document).ready(function(){
 				$("#form-abono").trigger("reset");
 				$("#contenido").html(data);	
 				$("#data-abonos").load('application/src/routes.php?op=106&credito='+credito);
-				$("#data-total").load('application/src/routes.php?op=107&credito='+credito+'&factura='+factura+'&tx='+tx);				
+				$("#data-total").load('application/src/routes.php?op=107&credito='+credito+'&factura='+factura+'&tx='+tx+'&orden='+orden);				
 			}
 		})
 	});
@@ -35,7 +36,8 @@ $(document).ready(function(){
 		var credito = $(this).attr('credito');
 		var factura = $(this).attr('factura');
 		var tx = $(this).attr('tx');
-        var dataString = 'op='+op+'&hash='+hash+'&credito='+credito;
+		var orden = $(this).attr('orden');
+        var dataString = 'op='+op+'&hash='+hash+'&credito='+credito+'&orden='+orden;
 
         $.ajax({
             type: "POST",
@@ -47,7 +49,7 @@ $(document).ready(function(){
             success: function(data) {            
                 $("#contenido").html(data); // lo que regresa de la busquea 
                 $("#data-abonos").load('application/src/routes.php?op=106&credito='+credito);
-				$("#data-total").load('application/src/routes.php?op=107&credito='+credito+'&factura='+factura+'&tx='+tx);				
+				$("#data-total").load('application/src/routes.php?op=107&credito='+credito+'&factura='+factura+'&tx='+tx+'&orden='+orden);				
             }
         });
     });                 
@@ -62,9 +64,10 @@ $(document).ready(function(){
 		
 		var factura = $(this).attr('factura');
 		var credito = $(this).attr('credito');
+		var orden = $(this).attr('orden');
 		var tx = $(this).attr('tx');
 		var op = $(this).attr('op');
-		var dataString = 'op='+op+'&credito='+credito+'&factura='+factura+'&tx='+tx;
+		var dataString = 'op='+op+'&credito='+credito+'&orden='+orden+'&factura='+factura+'&tx='+tx;
 
 		$.ajax({
             type: "POST",
@@ -78,7 +81,7 @@ $(document).ready(function(){
             }
         });
 		//$('#btn-modal').attr("valor",valor).attr("op",op).attr("hash",hash);
-		$("#cerrarmodal").before('<a href="?modal=abonos&cre='+credito+'&factura='+factura+'&tx='+tx+'" id="btn-ra" class="btn btn-secondary btn-rounded">Realizar Abonos</a>');
+		$("#cerrarmodal").before('<a href="?modal=abonos&cre='+credito+'&orden='+orden+'&factura='+factura+'&tx='+tx+'" id="btn-ra" class="btn btn-secondary btn-rounded">Realizar Abonos</a>');
 		
 	});
     
