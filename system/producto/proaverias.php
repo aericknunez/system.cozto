@@ -4,6 +4,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 include_once 'application/common/Alerts.php';
 include_once 'system/producto/ProUpdate.php';
 $producto = new ProUpdate(); 
+
+include_once 'system/ventas/Productos.php';
+$opciones = new Productos(); 
 ?>
 
 
@@ -64,6 +67,15 @@ echo '<h2 class="h2-responsive">'.$descripcion .'</h2>';
     </div>
   </div>
 
+
+<?php 
+
+$producto-> CompruebaCaracteristicas($cod);
+
+$opciones-> CompruebaUbicaciones($cod);
+
+ ?>
+ 
   <div class="form-row">
 
     <div class="col-md-12 mb-1 md-form">

@@ -90,8 +90,10 @@ class ProUpdate{
   public function ProAgrega($datox){ // lo que viede del formulario principal
     $db = new dbConn();
 
+  
           if($datox["precio"] != NULL){
               $datos = array();
+              $hashin = Helpers::HashId();
               $datos["producto"] = $datox["cod"];
               $datos["cant"] = $datox["cantidad"];
               $datos["existencia"] = $datox["cantidad"];
@@ -102,7 +104,7 @@ class ProUpdate{
               $datos["fecha"] = date("d-m-Y");
               $datos["hora"] = date("H:i:s");
               $datos["td"] = $_SESSION["td"];
-              $datos["hash"] = Helpers::HashId();
+              $datos["hash"] = $hashin;
               $datos["time"] = Helpers::TimeId();
               if ($db->insert("producto_ingresado", $datos)) {
                 // debo actualizar el total (cantidad) de producto
@@ -115,9 +117,11 @@ class ProUpdate{
                         Helpers::UpdateId("producto", $cambio, "cod = '".$datox["cod"]."' and td = ".$_SESSION["td"].""); 
 
   // ubicacion predeterminada
-if ($r = $db->select("hash", "ubicacion", "WHERE predeterminada = '1' and td = ".$_SESSION["td"]."")) { 
-$predet = $r["hash"];
-} unset($r); 
+// if ($r = $db->select("hash", "ubicacion", "WHERE predeterminada = '1' and td = ".$_SESSION["td"]."")) { 
+// $predet = $r["hash"];
+// } unset($r); 
+
+$predet = $datox["ubicacion"];
 
 if ($r = $db->select("cant", "ubicacion_asig", "WHERE ubicacion = '".$predet."' and producto = '".$datox["cod"]."' and td = ".$_SESSION["td"]."")) { 
 $cantu = $r["cant"];
@@ -126,6 +130,12 @@ $cantu = $r["cant"];
 $cambiox = array();
 $cambiox["cant"] = $datox["cantidad"] + $cantu;
 Helpers::UpdateId("ubicacion_asig", $cambiox, "ubicacion = '".$predet."' and producto = '".$datox["cod"]."' and td = ".$_SESSION["td"]."");   
+
+// para agregarlo en el registro de en que ubicacion se metio
+  $this->InsertaRegistroDescuenta($datox["cod"], $predet, 2, $hashin, $datox["cantidad"]);
+//
+
+$this->CaracteristicaAgrega($datox["cod"], $datox["caracteristica"], $hashin);
 
                     //////////// 
                 Alerts::Alerta("success","Realizado!","Registro creado exitosamente!");
@@ -136,6 +146,156 @@ Helpers::UpdateId("ubicacion_asig", $cambiox, "ubicacion = '".$predet."' and pro
         $this->VerAgrega($datox["cod"]);
 
   }
+
+
+
+
+
+
+
+
+ public function CompruebaCaracteristicas($cod){
+  $db = new dbConn();
+
+  $a = $db->query("SELECT * FROM caracteristicas_asig WHERE producto = '$cod' and td = ".$_SESSION["td"]."");
+
+    if($a->num_rows > 0){
+        echo 'Caracteristicas del producto
+        <div class="form-row">';
+      foreach ($a as $b) {
+
+              if ($r = $db->select("caracteristica", "caracteristicas", "WHERE hash = '". $b["caracteristica"] ."' and td = ".$_SESSION["td"]."")) { 
+                  $carac = $r["caracteristica"];
+              } unset($r); 
+
+        echo '<div class="col-md-2 mb-1 md-form">
+              <label for="caracteristica">'. $carac .'</label>
+              <input type="number" step="any" class="form-control form-control-sm" id="caracteristica['. $b["caracteristica"] .']" name="caracteristica['. $b["caracteristica"] .']">
+            </div>';
+    } 
+      echo '</div>';
+
+    }  $a->close();
+    
+ }
+
+
+
+
+public function CaracteristicaAgrega($cod, $caracteristicas, $hash){
+      $db = new dbConn();
+
+  $a = $db->query("SELECT * FROM caracteristicas_asig WHERE producto = '$cod' and td = ".$_SESSION["td"]."");
+
+    if($a->num_rows > 0){
+      foreach ($a as $b) {
+
+    // cuento el producto tiene varias caracteristicas
+        if ($r = $db->select("cant", "caracteristicas_asig", "WHERE caracteristica = '".$b["caracteristica"]."' and producto = '".$cod."' and td = ".$_SESSION["td"]."")) { 
+          $canti = $r["cant"];
+        }  unset($r);  
+
+        // descuento
+        $cambio = array();
+        $cambio["cant"] = $canti + $caracteristicas[$b["caracteristica"]];
+        Helpers::UpdateId("caracteristicas_asig", $cambio, "caracteristica = '".$b["caracteristica"]."' and producto = '".$cod."' and td = ".$_SESSION["td"]."");
+
+        $this->InsertaRegistroDescuenta($cod, $b["caracteristica"], 1, $hash, $caracteristicas[$b["caracteristica"]]);
+    } 
+  }  $a->close();
+
+}
+
+
+
+
+
+
+public function DevuelveCaracteristica($codigo, $paraverias = NULL){
+      $db = new dbConn();
+
+  $a = $db->query("SELECT * FROM ticket_descuenta WHERE descuenta = '1' and orden = '0' and codigo = '$codigo' and td = ".$_SESSION["td"]."");
+
+    if($a->num_rows > 0){
+      foreach ($a as $b) {
+
+    // cuento el producto tiene varias caracteristicas
+        if ($r = $db->select("cant", "caracteristicas_asig", "WHERE caracteristica = '".$b["producto_hash"]."' and producto = '".$b["producto"]."' and td = ".$_SESSION["td"]."")) { 
+          $canti = $r["cant"];
+        }  unset($r);  
+
+        // descuento
+        $cambio = array();
+
+        if($paraverias == NULL){
+          $cambio["cant"] = $canti - $b["cant"];
+        } else {
+          $cambio["cant"] = $canti + $b["cant"];
+        }
+        
+        Helpers::UpdateId("caracteristicas_asig", $cambio, "caracteristica = '".$b["producto_hash"]."' and producto = '".$b["producto"]."' and td = ".$_SESSION["td"]."");
+    } 
+  }  $a->close();
+
+}
+
+
+
+
+
+
+
+public function InsertaRegistroDescuenta($cod, $hashx, $descuenta, $codigo, $cant){
+      $db = new dbConn();
+
+    $datos = array();
+    $datos["orden"] = 0; // si es cero es para averias o inserta
+    $datos["producto"] = $cod; // codigo del producto
+    $datos["producto_hash"] = $hashx; // hash de la ubicacion o averia
+    $datos["descuenta"] = $descuenta; // 1 caracteritica. 2 ubicacion
+    $datos["codigo"] = $codigo; // hash del inserta o el averia
+    $datos["cant"] = $cant; // cantidad
+    $datos["tx"] = NULL;
+    $datos["td"] = $_SESSION["td"];
+    $datos["hash"] = Helpers::HashId();
+    $datos["time"] = Helpers::TimeId();
+    $db->insert("ticket_descuenta", $datos);
+
+}
+
+
+
+
+
+public function CaracteristicaAveria($cod, $caracteristicas, $hashin){
+      $db = new dbConn();
+
+  $a = $db->query("SELECT * FROM caracteristicas_asig WHERE producto = '$cod' and td = ".$_SESSION["td"]."");
+
+    if($a->num_rows > 0){
+      foreach ($a as $b) {
+
+    // cuento el producto tiene varias caracteristicas
+        if ($r = $db->select("cant", "caracteristicas_asig", "WHERE caracteristica = '".$b["caracteristica"]."' and producto = '".$cod."' and td = ".$_SESSION["td"]."")) { 
+          $canti = $r["cant"];
+        }  unset($r);  
+
+        // descuento
+        $cambio = array();
+        $cambio["cant"] = $canti - $caracteristicas[$b["caracteristica"]];
+        Helpers::UpdateId("caracteristicas_asig", $cambio, "caracteristica = '".$b["caracteristica"]."' and producto = '".$cod."' and td = ".$_SESSION["td"]."");
+
+// para agregarlo en el registro de en que ubicacion se metio
+  $this->InsertaRegistroDescuenta($cod, $b["caracteristica"], 1, $hashin, $caracteristicas[$b["caracteristica"]]);
+//
+ 
+    } 
+  }  $a->close();
+
+
+}
+
+
 
 
   public function VerAgrega($producto){
@@ -183,6 +343,16 @@ Helpers::UpdateId("ubicacion_asig", $cambiox, "ubicacion = '".$predet."' and pro
   }
 
 
+
+
+
+
+
+
+
+
+
+
   public function DelProAgrega($hash, $producto){ // elimina precio
     $db = new dbConn();
     // debo actualizar el total (cantidad) de producto
@@ -195,16 +365,16 @@ Helpers::UpdateId("ubicacion_asig", $cambiox, "ubicacion = '".$predet."' and pro
       } unset($r);
 
 
-  // ubicacion predeterminada
-if ($r = $db->select("hash", "ubicacion", "WHERE predeterminada = '1' and td = ".$_SESSION["td"]."")) { 
-$predet = $r["hash"];
+  // ubicacion del que hay que descontar
+if ($r = $db->select("producto_hash, cant", "ticket_descuenta", "WHERE descuenta = 2 and codigo = '$hash' and td = ".$_SESSION["td"]."")) { 
+$predet = $r["producto_hash"];
+$cantu = $r["cant"];
 } unset($r);  
 
-if ($r = $db->select("cant", "ubicacion_asig", "WHERE ubicacion = '".$predet."' and producto = '".$datox["cod"]."' and td = ".$_SESSION["td"]."")) { 
-$cantu = $r["cant"];
+
+if ($r = $db->select("cant", "ubicacion_asig", "WHERE ubicacion = '".$predet."' and producto = '".$producto."' and td = ".$_SESSION["td"]."")) { 
+$cantubi = $r["cant"];
 } unset($r);   
-
-
 
 
                     //////////// 
@@ -216,8 +386,11 @@ $cantu = $r["cant"];
                 Helpers::UpdateId("producto", $cambio, "cod = '".$producto."' and td = ".$_SESSION["td"].""); 
 
               $cambiox = array();
-              $cambiox["cant"] = $cantu - $cantix;
+              $cambiox["cant"] = $cantubi - $cantu;
               Helpers::UpdateId("ubicacion_asig", $cambiox, "ubicacion = '".$predet."' and producto = '".$producto."' and td = ".$_SESSION["td"].""); 
+
+          // // regresa las caracteristicas
+        $this->DevuelveCaracteristica($hash);
 
           //
            Alerts::Alerta("success","Eliminado!","Productos eliminados correctamente!");
@@ -259,6 +432,7 @@ public function AgregaBusqueda($dato){ // Busqueda para compuestos
 
           if($datox["cantidad"] != NULL){
               $datos = array();
+              $hashin = Helpers::HashId();
               $datos["producto"] = $datox["cod"];
               $datos["cant"] = $datox["cantidad"];
               $datos["comentarios"] = $datox["comentarios"];
@@ -266,7 +440,7 @@ public function AgregaBusqueda($dato){ // Busqueda para compuestos
               $datos["hora"] = date("H:i:s");
               $datos["usuario"] = $_SESSION["user"];
               $datos["td"] = $_SESSION["td"];
-              $datos["hash"] = Helpers::HashId();
+              $datos["hash"] = $hashin;
               $datos["time"] = Helpers::TimeId();
               if ($db->insert("producto_averias", $datos)) {
                 // debo actualizar el total (cantidad) de producto
@@ -278,9 +452,11 @@ public function AgregaBusqueda($dato){ // Busqueda para compuestos
                         Helpers::UpdateId("producto", $cambio, "cod = '".$datox["cod"]."' and td = ".$_SESSION["td"].""); 
 
   // ubicacion predeterminada
-if ($r = $db->select("hash", "ubicacion", "WHERE predeterminada = '1' and td = ".$_SESSION["td"]."")) { 
-$predet = $r["hash"];
-} unset($r);  
+// if ($r = $db->select("hash", "ubicacion", "WHERE predeterminada = '1' and td = ".$_SESSION["td"]."")) { 
+// $predet = $r["hash"];
+// } unset($r);  
+
+$predet = $datox["ubicacion"];
 
 if ($r = $db->select("cant", "ubicacion_asig", "WHERE ubicacion = '".$predet."' and producto = '".$datox["cod"]."' and td = ".$_SESSION["td"]."")) { 
 $cantu = $r["cant"];
@@ -290,6 +466,14 @@ $cambiox = array();
 $cambiox["cant"] = $cantu - $datox["cantidad"];
 Helpers::UpdateId("ubicacion_asig", $cambiox, "ubicacion = '".$predet."' and producto = '".$datox["cod"]."' and td = ".$_SESSION["td"].""); 
                     //////////// 
+
+// para agregarlo en el registro de en que ubicacion se metio
+  $this->InsertaRegistroDescuenta($datox["cod"], $predet, 2, $hashin, $datox["cantidad"]);
+//
+
+
+$this->CaracteristicaAveria($datox["cod"], $datox["caracteristica"], $hashin);
+
                 Alerts::Alerta("success","Realizado!","Registro creado exitosamente!");
                 }
           } else {
@@ -297,6 +481,9 @@ Helpers::UpdateId("ubicacion_asig", $cambiox, "ubicacion = '".$predet."' and pro
           }
         $this->VerAveria($datox["cod"]);
   }
+
+
+
 
 
 
@@ -342,6 +529,10 @@ Helpers::UpdateId("ubicacion_asig", $cambiox, "ubicacion = '".$predet."' and pro
 
 
 
+
+
+
+
   public function DelAveria($hash, $producto){ // elimina precio
     $db = new dbConn();
     // debo actualizar el total (cantidad) de producto
@@ -353,14 +544,20 @@ Helpers::UpdateId("ubicacion_asig", $cambiox, "ubicacion = '".$predet."' and pro
             $fechai = $r["fecha"];
         } unset($r);
   
-  // ubicacion predeterminada
-if ($r = $db->select("hash", "ubicacion", "WHERE predeterminada = '1' and td = ".$_SESSION["td"]."")) { 
-$predet = $r["hash"];
+
+
+  // ubicacion del que hay que descontar
+if ($r = $db->select("producto_hash, cant", "ticket_descuenta", "WHERE descuenta = 2 and codigo = '$hash' and td = ".$_SESSION["td"]."")) { 
+$predet = $r["producto_hash"];
+$cantu = $r["cant"];
 } unset($r);  
 
-if ($r = $db->select("cant", "ubicacion_asig", "WHERE ubicacion = '".$predet."' and producto = '".$datox["cod"]."' and td = ".$_SESSION["td"]."")) { 
-$cantu = $r["cant"];
+
+if ($r = $db->select("cant", "ubicacion_asig", "WHERE ubicacion = '".$predet."' and producto = '".$producto."' and td = ".$_SESSION["td"]."")) { 
+$cantubi = $r["cant"];
 } unset($r);   
+
+
 
                     //////////// 
       if($fechai == date("d-m-Y")){
@@ -371,9 +568,11 @@ $cantu = $r["cant"];
               Helpers::UpdateId("producto", $cambio, "cod = '".$producto."' and td = ".$_SESSION["td"].""); 
 
               $cambiox = array();
-              $cambiox["cant"] = $cantu + $cantix;
+              $cambiox["cant"] = $cantubi + $cantu;
               Helpers::UpdateId("ubicacion_asig", $cambiox, "ubicacion = '".$predet."' and producto = '".$producto."' and td = ".$_SESSION["td"].""); 
 
+        // // regresa las caracteristicas
+        $this->DevuelveCaracteristica($hash, TRUE);
           //
            Alerts::Alerta("success","Eliminado!","Averia eliminada correctamente!");
         } else {

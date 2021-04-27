@@ -113,7 +113,7 @@ if($Imagen == NULL) { $Imagen = "assets/img/logo/" . $_SESSION["config_imagen"];
   $a = $db->query("SELECT * FROM caracteristicas_asig WHERE producto = '$cod' and td = ".$_SESSION["td"]."");
 
     if($a->num_rows > 0){
-        echo 'Caracteristicas a descontar
+        echo 'Caracteristicas del producto
         <div class="form-row">';
       foreach ($a as $b) {
 
@@ -132,7 +132,7 @@ if($Imagen == NULL) { $Imagen = "assets/img/logo/" . $_SESSION["config_imagen"];
     
  }
 
-
+// Carmen de Cocina del abuelo
 
  public function CompruebaUbicaciones($cod){
   $db = new dbConn();
@@ -140,7 +140,7 @@ if($Imagen == NULL) { $Imagen = "assets/img/logo/" . $_SESSION["config_imagen"];
   $a = $db->query("SELECT * FROM ubicacion_asig WHERE producto = '$cod' and td = ".$_SESSION["td"]."");
 
     if($a->num_rows > 0){
-        echo 'Ubicaci&oacuten de donde descontar&aacute
+        echo 'Ubicaci&oacuten del producto
         <div class="form-row">';
 
         $number = 0;
