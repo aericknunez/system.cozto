@@ -310,4 +310,39 @@ $(document).ready(function()
 
 
 
+
+
+
+	$('#btn-prosearch').click(function(e){ /// movimientos de producto
+	e.preventDefault();
+	$.ajax({
+			url: "application/src/routes.php?op=133",
+			method: "POST",
+			data: $("#form-prosearch").serialize(),
+			beforeSend: function () {
+				$('#btn-prosearch').html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>Loading...').addClass('disabled');
+	        },
+			success: function(data){
+				$('#btn-prosearch').html('Mostrar Datos').removeClass('disabled');	      
+				$("#form-prosearch").trigger("reset");
+				$("#contenido").html(data);	
+			}
+		})
+	});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 });

@@ -1250,6 +1250,21 @@ break;
 
 
 
+case "133": // mivimientos de productos
+	include_once '../../system/historial/Historial.php';
+	$historial = new Historial();
+	if($_POST["fecha1_submit"]){
+		$inicio = $_POST["fecha1_submit"]; $fin=$_POST["fecha2_submit"];
+	} else {
+		$inicio = date("01-m-Y"); $fin=date("31-m-Y");
+	}
+	
+	$historial->MovimientosProducto($inicio, $fin);
+break;
+
+
+
+
 case "146": // lateral
 include_once '../../system/cotizar/Laterales.php';
 	$lateral = new Laterales;
