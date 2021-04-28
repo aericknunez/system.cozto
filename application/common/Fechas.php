@@ -106,7 +106,7 @@ class Fechas{
         return $format;
      }
 
-     public function FechaEscrita($fecha)
+     static public function FechaEscrita($fecha)
     {  
         $dia=substr($fecha,0,2);
         $mes=substr($fecha,3,2);
@@ -155,7 +155,7 @@ class Fechas{
     }
 
 
-public function MesEscrito($fecha)
+static public function MesEscrito($fecha)
     {  
         $mes=substr($fecha,0,2);
               

@@ -331,6 +331,11 @@ echo '<script type="text/javascript" src="assets/js/query/historial.js?v='.$nume
 elseif(isset($_GET["movimientos"])) {
 echo '<script type="text/javascript" src="assets/js/query/historial.js?v='.$numero.'"></script>';
 } 
+elseif(isset($_GET["rmensual"])) {
+echo '<script type="text/javascript" src="assets/js/query/historial.js?v='.$numero.'"></script>';
+} 
+
+
 
 /// reportes
 elseif(isset($_GET["ventadetalle"])) {

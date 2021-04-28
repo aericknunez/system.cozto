@@ -1061,6 +1061,27 @@ echo '</tbody>
 
 
 
+	public function ReporteMensual($mes, $ano) {
+		$db = new dbConn();
+
+		Alerts::Mensajex("Imprimir reporte del mes de : <strong>" . Fechas::MesEscrito($mes) . " - " . $ano . " </strong>","info", '<a href="system/documentos/reportemensual.php?mes='.$mes.'&ano='.$ano.'" class="btn btn-success btn-sm">Imprimir</a>');
+
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -1264,6 +1264,18 @@ break;
 
 
 
+case "134": // ventas mensual
+	include_once '../../system/historial/Historial.php';
+	$historial = new Historial;
+		$mes=$_POST["mes"];
+		@$ano=$_POST["ano"];
+
+
+	$historial->ReporteMensual($mes, $ano);
+break;
+
+
+
 
 case "146": // lateral
 include_once '../../system/cotizar/Laterales.php';

@@ -337,6 +337,24 @@ $(document).ready(function()
 
 
 
+	$('#btn-rmensual').click(function(e){ /// gastos mensual 
+	e.preventDefault();
+	$.ajax({
+			url: "application/src/routes.php?op=134",
+			method: "POST",
+			data: $("#form-rmensual").serialize(),
+			beforeSend: function () {
+				$('#btn-rmensual').html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>Loading...').addClass('disabled');
+	        },
+			success: function(data){
+				$('#btn-rmensual').html('Mostrar Datos').removeClass('disabled');	      
+				$("#form-rmensual").trigger("reset");
+				$("#contenido").html(data);	
+			}
+		})
+	});
+    
+
 
 
 

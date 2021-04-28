@@ -41,6 +41,7 @@ if($_SESSION["caja_apertura"] == NULL){ ?>
 <li><a href="?consolidado" class="waves-effect"><i class="fas fa-cogs"></i> Consolidado Diario</a></li>
 
 <li><a href="?vdiario" class="waves-effect"><i class="fas fa-cog"></i> Ventas Diarias</a></li>
+
 <li><a href="?vmensual" class="waves-effect"><i class="fas fa-cogs"></i> Ventas Mensuales</a></li>
 
 <li><a href="?hcortes" class="waves-effect"><i class="fas fa-cogs"></i> Historial de Cortes</a></li>
@@ -50,6 +51,8 @@ if($_SESSION["caja_apertura"] == NULL){ ?>
 <li><a href="?gmensual" class="waves-effect"><i class="fas fa-cogs"></i> Gastos Mensuales</a></li>
 <li><a href="?descuentos" class="waves-effect"><i class="fas fa-cogs"></i> Descuentos Diarios</a></li>
 <li><a href="?utilidades" class="waves-effect"><i class="fas fa-cogs"></i> Utilidades</a></li>
+
+<li><a href="?rmensual" class="waves-effect"><i class="fas fa-cog"></i> Reporte Mensual</a></li>
 
 <li><a href="?listaventa" class="waves-effect"><i class="fas fa-cogs"></i> Listado de ventas</a></li>
 
