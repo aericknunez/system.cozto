@@ -76,6 +76,28 @@ $(document).ready(function()
 
 
 
+	$('#btn-ingresos').click(function(e){ /// ingresos detallados
+	e.preventDefault();
+	$.ajax({
+			url: "application/src/routes.php?op=203",
+			method: "POST",
+			data: $("#form-ingresos").serialize(),
+			beforeSend: function () {
+				$('#btn-ingresos').html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>Loading...').addClass('disabled');
+	        },
+			success: function(data){
+				$('#btn-ingresos').html('Mostrar Datos').removeClass('disabled');	      
+				$("#form-ingresos").trigger("reset");
+				$("#contenido").html(data);	
+			}
+		})
+	});
+
+
+
+
+
+
 
 
 

@@ -1,0 +1,5 @@
+NOTAS DE DATABASE
+
+01 -  Se agregan tres campos a la tabla producto ingresado donde va el proveedor, documento (nummero documento de la compra) y el precio de venta (Esta solo se llenara si el precio de venta cambiara en el momento que se comience a vender esta lote de productos)
+ademas el usuario que registra y la fecha format
+

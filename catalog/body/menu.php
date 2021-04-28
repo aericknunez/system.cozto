@@ -379,6 +379,7 @@ echo '<li><a href="application/src/routes.php?op=510"  class="waves-effect"><i c
 
 <li><a href="?ventaagrupado" class="waves-effect"><i class="fas fa-cog"></i> Ventas Agrupadas</a></li>
 <li><a href="?gastodetallado" class="waves-effect"><i class="fas fa-cogs"></i> Detalle de Gastos</a></li>
+<li><a href="?ingresos" class="waves-effect"><i class="fas fa-cogs"></i> Productos Ingresados</a></li>
 
 </ul>
 </div>

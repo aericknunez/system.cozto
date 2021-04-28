@@ -328,6 +328,9 @@ echo '<script type="text/javascript" src="assets/js/query/historial.js?v='.$nume
 elseif(isset($_GET["cortez"])) {
 echo '<script type="text/javascript" src="assets/js/query/historial.js?v='.$numero.'"></script>';
 } 
+elseif(isset($_GET["movimientos"])) {
+echo '<script type="text/javascript" src="assets/js/query/historial.js?v='.$numero.'"></script>';
+} 
 
 /// reportes
 elseif(isset($_GET["ventadetalle"])) {
@@ -339,6 +342,10 @@ echo '<script type="text/javascript" src="assets/js/query/reportes.js?v='.$numer
 elseif(isset($_GET["gastodetallado"])) {
 echo '<script type="text/javascript" src="assets/js/query/reportes.js?v='.$numero.'"></script>';
 } 
+elseif(isset($_GET["ingresos"])) {
+echo '<script type="text/javascript" src="assets/js/query/reportes.js?v='.$numero.'"></script>';
+} 
+
 
 
 

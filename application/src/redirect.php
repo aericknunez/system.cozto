@@ -84,10 +84,13 @@ elseif(isset($_GET["descuentos"])) include_once 'system/historial/descuentos.php
 elseif(isset($_GET["utilidades"])) include_once 'system/historial/utilidades.php'; 
 elseif(isset($_GET["listaventa"])) include_once 'system/historial/listaventa.php'; 
 elseif(isset($_GET["cortez"])) include_once 'system/historial/cortez.php'; 
+elseif(isset($_GET["movimientos"])) include_once 'system/historial/movimientos.php'; 
+
 // reportes
 elseif(isset($_GET["ventadetalle"])) include_once 'system/reportes/ventasdetalle.php'; 
 elseif(isset($_GET["ventaagrupado"])) include_once 'system/reportes/ventaagrupado.php'; 
 elseif(isset($_GET["gastodetallado"])) include_once 'system/reportes/gastodetallado.php'; 
+elseif(isset($_GET["ingresos"])) include_once 'system/reportes/ingresos.php'; 
 
 
 

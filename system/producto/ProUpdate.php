@@ -101,6 +101,10 @@ class ProUpdate{
               $datos["caduca"] = $datox["caduca_submit"];
               $datos["caducaF"] = Fechas::Format($datox["caduca_submit"]);
               $datos["comentarios"] = $datox["comentarios"];
+              $datos["proveedor"] = $datox["proveedor"];
+              $datos["documento"] = $datox["documento"];
+              $datos["user"] = $_SESSION["user"];
+              $datos["fechaF"] = Fechas::Format(date("d-m-Y"));
               $datos["fecha"] = date("d-m-Y");
               $datos["hora"] = date("H:i:s");
               $datos["td"] = $_SESSION["td"];

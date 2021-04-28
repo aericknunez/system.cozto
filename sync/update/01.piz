@@ -1,0 +1,6 @@
+ALTER TABLE `producto_ingresado` 
+ADD `proveedor` VARCHAR(12) NOT NULL AFTER `comentarios`, 
+ADD `documento` VARCHAR(25) NOT NULL AFTER `proveedor`, 
+ADD `precio_venta` FLOAT(10,4) NOT NULL AFTER `documento`,
+ADD `user` VARCHAR(12) NOT NULL AFTER `documento`,
+ADD `fechaF` VARCHAR(25) NOT NULL AFTER `user`;

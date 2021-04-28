@@ -150,6 +150,7 @@ public function DetallesProducto($data){
 
 echo '</div>
 
+
 </div>
 
 </div>';
@@ -180,14 +181,14 @@ echo '</div>
             } 
 
       } else {
-                Alerts::Mensajex("No se encuentra el producto","danger",$boton,$boton2);
+                Alerts::Mensajex("No se encuentra el producto","danger");
               } $a->close();
 
 
+echo '<div class="mt-4 mb-3"><a href="?movimientos&cod='.$data["key"].'">Movimientos</a></div>';
 
           
   }
-
 
 
 

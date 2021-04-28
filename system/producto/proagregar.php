@@ -91,6 +91,32 @@ $opciones-> CompruebaUbicaciones($cod);
 
  ?>
 
+    <div class="col-md-12 mb-1 md-form">
+      <div class="row">
+        <div class="col-6">
+          <select class="mdb-select md-form colorful-select dropdown-dark" id="proveedor" name="proveedor">
+        <?php echo Helpers::SelectData("* Proveedor", "proveedores", "hash", "nombre"); ?>
+      </select>
+        </div>
+
+        <div class="col-6 mt-3">
+          <input type="text" class="form-control" id="documento" name="documento" placeholder="Documento">
+        </div>
+
+      </div>       
+    </div>
+
+    <div class="col-md-12 mb-1 md-form">
+      <div class="row">
+
+        <div class="col-6 mt-3">
+          <input type="number" step="any" class="form-control" id="precio_venta" name="precio_venta" placeholder="Precio Venta">
+        </div>
+
+      </div>       
+    </div>
+
+
   <div class="form-row">
     
     <div class="col-md-12 mb-1 md-form">

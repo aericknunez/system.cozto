@@ -22,10 +22,10 @@ if($r = $db->select("max(version)", "system_version", "WHERE td = ".$_SESSION["t
 
 
 // busca todos los archivos en el directorio
-$archivos = glob("*.sql", GLOB_BRACE);  
+$archivos = glob("*.piz", GLOB_BRACE);  
   foreach($archivos as $data){ 
 
-  	$hash = str_replace(".sql", "", $data);
+  	$hash = str_replace(".piz", "", $data);
 
 
 // echo "<br>" . $data;

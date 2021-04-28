@@ -313,10 +313,33 @@ if ($r = $db->select("sum(existencia)", "producto_ingresado", "WHERE existencia 
 
 
 
+
+
+
+public function EstablecePrecioVentaNuevo($cod) { // Establece un precio de venta nuevo si se selecciono
+	$db = new dbConn();
+
+	if ($r = $db->select("precio_venta", "producto_ingresado", "WHERE existencia < cant and existencia > 0 and precio_venta != 0 and producto = '".$cod."' and td = ". $_SESSION["td"] ." order by time desc limit 1")){ 
+        $precio = $r["precio_venta"];
+    	} unset($r); 
+ 
+	if($precio != 0){
+	    $cambio = array();
+	    $cambio["precio"] = $precio;
+	    Helpers::UpdateId("producto_precio", $cambio, "producto='".$cod."' and cant = '1' and td = ".$_SESSION["td"]."");
+	}
+
+}
+
+
+
+
 	public function ObtenerPrecio($cod, $cant){ // obtiene el precio independientemente la cantidad
 		$db = new dbConn();
 		// busco el precio que le corresponde
-		
+
+$this->EstablecePrecioVentaNuevo($cod);
+			
 		if($this->ObtenerPrecioPromo($cod, $cant) != NULL){
 			return $this->ObtenerPrecioPromo($cod, $cant);
 		} elseif($_SESSION["config_mayorista"] == "on" and $this->ObtenerPrecioMayorista($cod, $cant) != NULL and $_SESSION["precio_mayorista_activo"] == TRUE){
@@ -913,6 +936,9 @@ $a->close();
 	   	$this->FacturaResult($factura, $datos["efectivo"]);
 	   	$this->RegistroDocumento($factura);
 
+
+	   	$this->Empareja($factura);
+
 	   	if(isset($_SESSION["cliente_c"])){ // agregar el credito
 	   		$opciones = new Opciones();
 	   		$opciones->ConfirmCredito($factura, $_SESSION["cliente_c"]);
@@ -994,6 +1020,63 @@ $_SESSION["cambio_actual_print"] = $efectivo; // solo para imprimir la factura c
 	}
 
 }
+
+
+
+
+
+
+
+
+  public function Empareja($factura){
+      $db = new dbConn();
+
+	$x = $db->query("SELECT cod FROM ticket WHERE num_fac = '$factura' and orden = ".$_SESSION["orden"]." and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."");
+	foreach ($x as $y) {
+		$this->EmparejaExistencias($y["cod"]);
+	} $x->close();
+}
+
+
+
+  public function EmparejaExistencias($cod){
+      $db = new dbConn();
+
+$x = $db->query("SELECT producto, hash, existencia FROM producto_ingresado WHERE producto = '$cod' and existencia != 0  and td = ".$_SESSION["td"]."");
+foreach ($x as $y) {
+
+// cantidad total de los productos que hay
+    if ($r = $db->select("sum(cantidad)", "producto", "WHERE cod = '".$y["producto"]."' and td = ".$_SESSION["td"]."")) { $cantidad = $r["sum(cantidad)"]; } unset($r); 
+
+// cantidad total de las existencia
+    if ($r = $db->select("sum(existencia)", "producto_ingresado", "WHERE producto = '".$y["producto"]."' and td = ".$_SESSION["td"]."")) { $canti = $r["sum(existencia)"]; } unset($r); 
+
+// existencia actual del registro
+$existencia = $y["existencia"];
+
+      if($cantidad < $canti){
+
+        $xcant = $canti - $cantidad;
+        // evito los numeros negativos
+        if($xcant > $existencia){
+          $xcant = 0;
+        } else {
+          $xcant = $existencia - $xcant;
+        }
+
+          $cambio = array();
+          $cambio["existencia"] = $xcant;
+          Helpers::UpdateId("producto_ingresado", $cambio, "hash = '".$y["hash"]."' and td = ".$_SESSION["td"]."");
+      }
+
+  } $x->close();
+    
+
+
+}
+
+
+
 
 
 
