@@ -127,6 +127,7 @@ class ProUpdate{
 
 $predet = $datox["ubicacion"];
 
+$cantu = 0;
 if ($r = $db->select("cant", "ubicacion_asig", "WHERE ubicacion = '".$predet."' and producto = '".$datox["cod"]."' and td = ".$_SESSION["td"]."")) { 
 $cantu = $r["cant"];
 } unset($r);   
@@ -280,6 +281,7 @@ public function CaracteristicaAveria($cod, $caracteristicas, $hashin){
       foreach ($a as $b) {
 
     // cuento el producto tiene varias caracteristicas
+        $canti = 0;
         if ($r = $db->select("cant", "caracteristicas_asig", "WHERE caracteristica = '".$b["caracteristica"]."' and producto = '".$cod."' and td = ".$_SESSION["td"]."")) { 
           $canti = $r["cant"];
         }  unset($r);  
@@ -370,12 +372,14 @@ public function CaracteristicaAveria($cod, $caracteristicas, $hashin){
 
 
   // ubicacion del que hay que descontar
+$cantu = 0;
 if ($r = $db->select("producto_hash, cant", "ticket_descuenta", "WHERE descuenta = 2 and codigo = '$hash' and td = ".$_SESSION["td"]."")) { 
 $predet = $r["producto_hash"];
 $cantu = $r["cant"];
 } unset($r);  
 
 
+$cantubi = 0;
 if ($r = $db->select("cant", "ubicacion_asig", "WHERE ubicacion = '".$predet."' and producto = '".$producto."' and td = ".$_SESSION["td"]."")) { 
 $cantubi = $r["cant"];
 } unset($r);   
@@ -462,6 +466,7 @@ public function AgregaBusqueda($dato){ // Busqueda para compuestos
 
 $predet = $datox["ubicacion"];
 
+$cantu = 0;
 if ($r = $db->select("cant", "ubicacion_asig", "WHERE ubicacion = '".$predet."' and producto = '".$datox["cod"]."' and td = ".$_SESSION["td"]."")) { 
 $cantu = $r["cant"];
 } unset($r);   
@@ -551,12 +556,14 @@ $this->CaracteristicaAveria($datox["cod"], $datox["caracteristica"], $hashin);
 
 
   // ubicacion del que hay que descontar
+$cantu = 0;
 if ($r = $db->select("producto_hash, cant", "ticket_descuenta", "WHERE descuenta = 2 and codigo = '$hash' and td = ".$_SESSION["td"]."")) { 
 $predet = $r["producto_hash"];
 $cantu = $r["cant"];
 } unset($r);  
 
 
+$cantubi = 0;
 if ($r = $db->select("cant", "ubicacion_asig", "WHERE ubicacion = '".$predet."' and producto = '".$producto."' and td = ".$_SESSION["td"]."")) { 
 $cantubi = $r["cant"];
 } unset($r);   
