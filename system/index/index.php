@@ -35,9 +35,16 @@ if($_SESSION["caja_apertura"] != NULL or $_SESSION["caja_soloagregar"] != NULL){
 	else { include_once 'system/ventas/venta_rapida.php'; }
 
 } else { /// termina comprobacion de corte
+
+if($_SESSION["tipo_cuenta"] != 4) { 
+  $btn_apertura = 'btn-info';
+} else {
+  $btn_apertura = 'btn-dark disabled';
+}
 	Alerts::Mensajex("Para poder realizar ventas debe aperturar la caja", "danger", 
-    '<a id="abrirCaja" class="btn btn-info my-4" ><i class="fas fa-donate mr-1"></i> Abrir Caja</a>', 
+    '<a id="abrirCaja" class="btn my-4 '.$btn_apertura.'" ><i class="fas fa-donate mr-1"></i> Abrir Caja</a>', 
     '<a id="cambiar" op="74" class="small" ><i class="fas fa-chalkboard mr-1"></i> Generar Ordenes</a>');
+
 }
 
 
