@@ -557,6 +557,12 @@ $page <= 1 ? $enable = 'disabled' : $enable = '';
       </ul>';
      }  // end pagination 
 
+
+
+echo '<div class="text-right">
+        <a id="terminarajuste" class="btn btn-danger btn-rounded btn-sm">Terminar</a>
+      </div>';
+
   } // termina productos
 
 
@@ -787,6 +793,32 @@ $db = new dbConn();
 
 
 
+
+
+  public function TerminarAjuste(){ // ingresa un nuevo lote de productos
+      $db = new dbConn();
+                 
+      $cambio = array();
+      $cambio["edo"] = 0;
+      $cambio["fin"] = Helpers::TimeId();
+      if(Helpers::UpdateId("ajuste_inventario_activate", $cambio, "edo='1' and td = ".$_SESSION["td"]."")){
+          Alerts::Alerta("success","Realizado!","Terminado correctamente!");
+      } else {
+           Alerts::Alerta("error","Error!","Algo Ocurrio!");
+      }       
+
+
+  if($this->ComprobarAjuste() == TRUE){
+    
+    $this->AjustedeInventario(1, "id", "asc"); 
+
+  } else {
+
+    Alerts::Mensajex("No se ha iniciado el ajuste de inventario. Con esta herramienta podrá ajustar su inventario con los datos reales","info", '<a id="iniciarajuste" class="btn btn-primary btn-rounded">Iniciar</a>');
+  }
+
+
+  }
 
 
 

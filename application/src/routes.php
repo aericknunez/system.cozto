@@ -1267,11 +1267,13 @@ break;
 case "134": // ventas mensual
 	include_once '../../system/historial/Historial.php';
 	$historial = new Historial;
-		$mes=$_POST["mes"];
-		@$ano=$_POST["ano"];
+	if($_POST["fecha1_submit"]){
+		$inicio = $_POST["fecha1_submit"]; $fin=$_POST["fecha2_submit"];
+	} else {
+		$inicio = date("01-m-Y"); $fin=date("31-m-Y");
+	}
 
-
-	$historial->ReporteMensual($mes, $ano);
+	$historial->ReporteMensual($inicio, $fin);
 break;
 
 
@@ -2495,6 +2497,15 @@ include_once '../../system/herramientas/Herramientas.php';
 include_once '../../system/producto/Productos.php';
 	$prod = new Herramientas(); 
 	$prod->EstablecerCantidad($_POST);
+break;
+
+
+
+case "573":  /// TerminarAjuste
+include_once '../../system/herramientas/Herramientas.php';
+include_once '../../system/producto/Productos.php';
+	$prod = new Herramientas(); 
+	$prod->TerminarAjuste();
 break;
 
 

@@ -156,6 +156,33 @@ $this->CaracteristicaAgrega($datox["cod"], $datox["caracteristica"], $hashin);
 
 
 
+ public function ListarUbicaciones(){
+  $db = new dbConn();
+
+  $a = $db->query("SELECT * FROM ubicacion WHERE td = ".$_SESSION["td"]."");
+
+    if($a->num_rows > 0){
+        echo 'Ubicaci&oacuten del producto
+        <div class="form-row">';
+
+      foreach ($a as $b) {
+
+        if($b["predeterminada"] == 1){ $check = "checked"; } else { $check = ""; }
+
+      echo '<div class="form-check form-check-inline">
+            <input type="radio" class="form-check-input" id="'. $b["hash"] .'" name="ubicacion" value="'. $b["hash"] .'" '.$check.'>
+            <label class="form-check-label" for="'. $b["hash"] .'">'. $b["ubicacion"] .'</label>
+          </div>';
+
+    } 
+      echo '</div>';
+
+    }  $a->close();
+
+ }
+
+
+
 
 
 

@@ -8,29 +8,23 @@ $seslog = new Login();
 $seslog->sec_session_start();
 
 
-if($_REQUEST["mes"] != NULL){
-  $fechax = '-' . $_REQUEST["mes"] . '-' .  $_REQUEST["ano"];
-} else {
-  $fechax = date("-m-Y");
-}
-
-
-
 if ($seslog->login_check() == TRUE) {
 
 include_once '../../application/common/Fechas.php';
 include_once '../../application/common/Alerts.php';
 
 
-if($fechax != NULL){
+if($_REQUEST["inicio"] != NULL){
 
+$primero = Fechas::Format($_REQUEST["inicio"]);
+$segundo = Fechas::Format($_REQUEST["fin"]);
 
 // $objPHPExcel->getColumnDimension('C')->setAutoSize(true);
 
 
 $a = $db->query("select cod, sum(cant), sum(total), producto, pv, fecha 
                             from ticket 
-                            where cod != 8888 and edo = 1 and fecha like '%$fechax' and td = ".$_SESSION['td']." GROUP BY cod order by sum(cant) desc");
+                            where cod != 8888 and edo = 1 and time BETWEEN '$primero' AND '$segundo' and td = ".$_SESSION['td']." GROUP BY cod order by sum(cant) desc");
 
     if($a->num_rows > 0){
 
@@ -133,7 +127,7 @@ $objPHPExcel->setActiveSheetIndex(0);
 $objPHPExcel->getActiveSheet()->getStyle("A1:E1")->getFont()->setBold(true);
 // Redirect output to a client’s web browser (Excel2007)
 header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-header('Content-Disposition: attachment;filename="ReporteMensual-'.Fechas::MesEscrito($_REQUEST["mes"]) . '-' . $_REQUEST["ano"].'.xlsx"');
+header('Content-Disposition: attachment;filename="ReporteMensual-'.$_REQUEST["inicio"] . '-al-' . $_REQUEST["fin"].'.xlsx"');
 header('Cache-Control: max-age=0');
 // If you're serving to IE 9, then the following may be needed
 header('Cache-Control: max-age=1');
@@ -153,9 +147,10 @@ exit;
 
 
 
+} else {
+  echo "No se encuentran registros";
 } // si hay registros
    $a->close();         
-
 
 } // termina fecha
 

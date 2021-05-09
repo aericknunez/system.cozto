@@ -6,48 +6,29 @@ include_once 'system/historial/Historial.php';
 ?>
 
   <div class="row justify-content-md-center">
-    <div class="col-md-4 col-md-auto">
+    <div class="col-12 col-md-auto">
         <form name="form-rmensual" method="post" id="form-rmensual">
-
-        	<select name="mes" id="mes" class="browser-default form-control my-2">
-    <option value="01" <? if ($fecha=date("m")=="01") echo "selected='selected'"; ?>>Enero</option>
-    <option value="02" <? if ($fecha=date("m")=="02") echo "selected='selected'"; ?>>Febrero</option>
-    <option value="03" <? if ($fecha=date("m")=="03") echo "selected='selected'"; ?>>Marzo</option>
-    <option value="04" <? if ($fecha=date("m")=="04") echo "selected='selected'"; ?>>Abril</option>
-    <option value="05" <? if ($fecha=date("m")=="05") echo "selected='selected'"; ?>>Mayo</option>
-    <option value="06" <? if ($fecha=date("m")=="06") echo "selected='selected'"; ?>>Junio</option>
-    <option value="07" <? if ($fecha=date("m")=="07") echo "selected='selected'"; ?>>Julio</option>
-    <option value="08" <? if ($fecha=date("m")=="08") echo "selected='selected'"; ?>>Agosto</option>
-    <option value="09" <? if ($fecha=date("m")=="09") echo "selected='selected'"; ?>>Septiembre</option>
-    <option value="10" <? if ($fecha=date("m")=="10") echo "selected='selected'"; ?>>Octubre</option>
-    <option value="11" <? if ($fecha=date("m")=="11") echo "selected='selected'"; ?>>Noviembre</option>
-    <option value="12" <? if ($fecha=date("m")=="12") echo "selected='selected'"; ?>>Diciembre</option>
-  </select>
-    <select name="ano" id="ano" class="browser-default form-control my-2">
-    <option value="2018" <? if ($fecha=date("Y")=="2018") echo "selected='selected'"; ?>>2018</option>
-    <option value="2019" <? if ($fecha=date("Y")=="2019") echo "selected='selected'"; ?>>2019</option>
-    <option value="2020" <? if ($fecha=date("Y")=="2020") echo "selected='selected'"; ?>>2020</option>
-    <option value="2021" <? if ($fecha=date("Y")=="2021") echo "selected='selected'"; ?>>2021</option>
-    <option value="2022" <? if ($fecha=date("Y")=="2022") echo "selected='selected'"; ?>>2022</option>
-    <option value="2023" <? if ($fecha=date("Y")=="2023") echo "selected='selected'"; ?>>2023</option>
-    <option value="2024" <? if ($fecha=date("Y")=="2024") echo "selected='selected'"; ?>>2024</option>
-    <option value="2025" <? if ($fecha=date("Y")=="2025") echo "selected='selected'"; ?>>2025</option>
-  </select>
+    <input placeholder="Seleccione una fecha" type="text" id="fecha1" name="fecha1" class="form-control datepicker my-2">
+    <input placeholder="Seleccione una fecha" type="text" id="fecha2" name="fecha2" class="form-control datepicker my-2">
 
     </div>
   </div>
 
 
-  <div class="row justify-content-center">
+  <div class="row justify-content-md-center">
+    <div class="col-12 col-md-auto text-center">
     <button class="btn btn-info my-2 btn-rounded btn-sm waves-effect" type="submit" id="btn-rmensual" name="btn-rmensual">Mostra Datos</button>
-
       </form> 
+    </div>
   </div>
 
 
 
 <div id="contenido" class="mt-5">
 <?php 
-Alerts::Mensajex("Seleccione un mes con registros de ventas","info",$boton,$boton2);
+Alerts::Mensajex("Seleccione un rango de fechas del registros de ventas","info",$boton,$boton2);
  ?>
 </div>
+
+
+<div id="msjimprimir"></div>

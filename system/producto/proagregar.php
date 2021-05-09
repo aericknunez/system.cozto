@@ -87,7 +87,7 @@ echo '<h2 class="h2-responsive">'.$descripcion .'</h2>';
 
 $producto-> CompruebaCaracteristicas($cod);
 
-$opciones-> CompruebaUbicaciones($cod);
+$producto-> ListarUbicaciones();
 
  ?>
 

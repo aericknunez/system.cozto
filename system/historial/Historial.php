@@ -1061,10 +1061,13 @@ echo '</tbody>
 
 
 
-	public function ReporteMensual($mes, $ano) {
+	public function ReporteMensual($inicio, $fin) {
 		$db = new dbConn();
 
-		Alerts::Mensajex("Imprimir reporte del mes de : <strong>" . Fechas::MesEscrito($mes) . " - " . $ano . " </strong>","info", '<a href="system/documentos/reportemensual.php?mes='.$mes.'&ano='.$ano.'" class="btn btn-success btn-sm">Imprimir</a>');
+		$primero = Fechas::Format($inicio);
+		$segundo = Fechas::Format($fin);
+
+		Alerts::Mensajex("Imprimir reporte entre las fechas : <strong>" . $inicio . " - " . $fin . " </strong>","info", '<a href="system/documentos/reportemensual.php?inicio='.$inicio.'&fin='.$fin.'" class="btn btn-success btn-sm">Imprimir</a>');
 
 	}
 
