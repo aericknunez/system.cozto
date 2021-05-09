@@ -443,11 +443,13 @@ $page <= 1 ? $enable = 'disabled' : $enable = '';
       $db = new dbConn();
       $producto = new Productos(); 
 
+      $timeinicio = Helpers::GetData("ajuste_inventario_activate", "inicio", "edo", 1);
+
   $limit = 25;
   $adjacents = 2;
   if($npagina == NULL) $npagina = 1;
   $a = $db->query("SELECT * FROM producto WHERE 
-  producto.cod not in (select ajuste_inventario.cod from ajuste_inventario) and td = ".$_SESSION["td"]."");
+  producto.cod not in (select ajuste_inventario.cod from ajuste_inventario WHERE time > $timeinicio) and td = ".$_SESSION["td"]."");
   $total_rows = $a->num_rows;
   $a->close();
 
@@ -467,7 +469,7 @@ if($dir == "asc") $dir2 = "desc";
 $op="567";
 
  $a = $db->query("SELECT cod as codigo, descripcion, cantidad FROM producto WHERE 
-  producto.cod not in (select ajuste_inventario.cod from ajuste_inventario) and td = ".$_SESSION["td"]." order by ".$orden." ".$dir." limit $offset, $limit");
+  producto.cod not in (select ajuste_inventario.cod from ajuste_inventario WHERE time > $timeinicio) and td = ".$_SESSION["td"]." order by ".$orden." ".$dir." limit $offset, $limit");
       
       if($a->num_rows > 0){
           echo '<div class="table-responsive">
