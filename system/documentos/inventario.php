@@ -68,6 +68,14 @@ $fila = 1;
 
 $costo = $herramientas->ObtenerPrecioCosto($b["cod"]);
 
+if($costo == FALSE){
+  $ap = $db->query("SELECT precio_costo FROM producto_ingresado WHERE  producto = '".$x["cod"]."' and td = ". $_SESSION["td"] ." order by time asc limit 1");
+  foreach ($ap as $bp) {
+      $costo = $bp["precio_costo"];
+  } $ap->close();
+}
+
+
 // productos vendidos
 if ($r = $db->select("sum(cant) as cantidad", "ticket", "WHERE cod = '".$b["cod"]."' and td = ". $_SESSION["td"] ."")) {
 $vcantidad = $r["cantidad"];

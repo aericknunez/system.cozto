@@ -386,13 +386,6 @@ if ($r = $db->select("sum(cant) as canti", "producto_ingresado", "WHERE producto
 
 $precio_costo = $herramientas->ObtenerPrecioCosto($x["cod"]);
 
-if($precio_costo == FALSE){
-	$ap = $db->query("SELECT precio_costo FROM producto_ingresado WHERE  producto = '".$x["cod"]."' and td = ". $_SESSION["td"] ." order by time asc limit 1");
-	foreach ($ap as $bp) {
-	    $precio_costo = $bp["precio_costo"];
-	} $ap->close();
-}
-
 // productos vendidos
     if ($r = $db->select("sum(cant) as cantid, sum(pv) as prev, sum(total) as tota", "ticket", "WHERE cod = '".$x["cod"]."' and td = ". $_SESSION["td"] ." and edo = 1 and fechaF BETWEEN '$primero' and '$segundo'")) { 
         $vcantidad = $r["cantid"];
