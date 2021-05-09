@@ -776,7 +776,12 @@ if ($r = $db->select("sum(existencia)", "producto_ingresado", "WHERE existencia 
     $productos = $r["sum(existencia)"];
 } unset($r);  
 
-@$pc = $precio / $productos;
+
+if($precio != 0){
+  @$pc = $precio / $productos;
+} else {
+  $pc = 0;
+}
 
     return $pc;
 }

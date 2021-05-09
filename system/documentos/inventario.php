@@ -19,7 +19,7 @@ include_once '../../application/common/Alerts.php';
 // $objPHPExcel->getColumnDimension('C')->setAutoSize(true);
 
 
- $a = $db->query("SELECT producto.cod, producto.descripcion, producto.cantidad, producto.existencia_minima, producto_categoria_sub.subcategoria FROM producto INNER JOIN producto_categoria_sub ON producto.categoria = producto_categoria_sub.hash and producto.td = ".$_SESSION["td"]."");
+ $a = $db->query("SELECT producto.cod, producto.descripcion, producto.cantidad, producto.existencia_minima, producto_categoria_sub.subcategoria FROM producto INNER JOIN producto_categoria_sub ON producto.categoria = producto_categoria_sub.hash and producto.td = ".$_SESSION["td"]." limit 10");
 
     if($a->num_rows > 0){
 
@@ -68,11 +68,9 @@ $fila = 1;
 
 $costo = $herramientas->ObtenerPrecioCosto($b["cod"]);
 
-if($costo == FALSE){
-  $ap = $db->query("SELECT precio_costo FROM producto_ingresado WHERE  producto = '".$x["cod"]."' and td = ". $_SESSION["td"] ." order by time asc limit 1");
-  foreach ($ap as $bp) {
-      $costo = $bp["precio_costo"];
-  } $ap->close();
+if($costo == 0){
+if ($r = $db->select("precio_costo", "producto_ingresado", "WHERE precio_costo != 0 and producto = '".$b["cod"]."' and td = ". $_SESSION["td"] ." order by time desc limit 1")) {   
+  $costo = $r["precio_costo"]; } unset($r); 
 }
 
 
