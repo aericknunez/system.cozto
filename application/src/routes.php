@@ -1111,6 +1111,7 @@ break;
 
 case "121": // historial de  utilidades
 	include_once '../../system/historial/Historial.php';
+	include_once '../../system/herramientas/Herramientas.php';
 	$historial = new Historial;
 	if($_POST["fecha1_submit"]){
 		$inicio = $_POST["fecha1_submit"]; $fin=$_POST["fecha2_submit"];

@@ -343,6 +343,8 @@ echo '</tbody>
 
 	public function HistorialUtilidades($inicio, $fin, $type = NULL) {
 		$db = new dbConn();
+		$herramientas = new Herramientas();
+
 		$primero = Fechas::Format($inicio);
 		$segundo = Fechas::Format($fin);
 
@@ -373,10 +375,8 @@ echo '</tbody>
 
         while($x = $d->fetch_assoc()) {
 
-// cantidad de productos disponibles en este moento
-if ($r = $db->select("cantidad", "producto", "WHERE cod = '".$x["cod"]."' and td = ". $_SESSION["td"] ."")) { 
-        $cantidad = $r["cantidad"];
-    } unset($r);  
+// cantidad de productos disponibles en este moento    
+$cantidad = Helpers::GetData("producto", "cantidad", "cod", $x["cod"]);
 
 // cantidad de productos ingresados y precio costo
 if ($r = $db->select("sum(cant) as canti", "producto_ingresado", "WHERE producto = '".$x["cod"]."' and td = ". $_SESSION["td"] ."")) { 
@@ -384,12 +384,10 @@ if ($r = $db->select("sum(cant) as canti", "producto_ingresado", "WHERE producto
     } unset($r);    
 
 
-$a = $db->query("SELECT precio_costo FROM producto_ingresado WHERE producto = '".$x["cod"]."' and td = ". $_SESSION["td"] ."");
-$reg = $a->num_rows;
-$a->close();
+$precio_costo = $herramientas->ObtenerPrecioCosto($x["cod"]);
 
 // productos vendidos
-    if ($r = $db->select("sum(cant) as cantid, sum(pv) as prev, sum(total) as tota, sum(pc) as costo", "ticket", "WHERE cod = '".$x["cod"]."' and td = ". $_SESSION["td"] ." and edo 1 and fechaF BETWEEN '$primero' and '$segundo'")) { 
+    if ($r = $db->select("sum(cant) as cantid, sum(pv) as prev, sum(total) as tota, sum(pc) as costo", "ticket", "WHERE cod = '".$x["cod"]."' and td = ". $_SESSION["td"] ." and edo = 1 and fechaF BETWEEN '$primero' and '$segundo'")) { 
         $vcantidad = $r["cantid"];
         $vpv = $r["prev"];
         $vtotal = $r["tota"];
@@ -397,7 +395,6 @@ $a->close();
     } 
     unset($r);
 
-@$pc = $vpc / $reg;
 
 // obtengo el numero de registros
 $a = $db->query("SELECT pv FROM ticket WHERE cod = '".$x["cod"]."' and td = ". $_SESSION["td"] ." and fechaF BETWEEN '$primero' and '$segundo'");
@@ -406,7 +403,7 @@ $a->close();
     @$precioventa = $vpv / $preg;
 
 // utilidad
-$ut = $precioventa - $pc;
+$ut = $precioventa - $precio_costo;
 $utilidad = $ut * $vcantidad;
 
 
@@ -418,7 +415,7 @@ echo '<tr>
 	   <th>'.$x["producto"].'</th>					       
 	   <th>'.$cantidad.'</th>
 	   <th>'.$ingreso.'</th>
-	   <th>'.Helpers::Dinero($pc).'</th>
+	   <th>'.Helpers::Dinero($precio_costo).'</th>
 	   <th>'.$vcantidad.'</th>
 	    <th>'.Helpers::Dinero($precioventa).'</th>
 	    <th>'.Helpers::Dinero($vtotal).'</th>

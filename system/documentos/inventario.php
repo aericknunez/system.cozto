@@ -25,6 +25,9 @@ include_once '../../application/common/Alerts.php';
 
 require_once '../../application/common/PHPExcel.php';
 
+require_once '../herramientas/herramientas.php';
+$herramientas = new Herramientas();
+
 // Create new PHPExcel object
 $objPHPExcel = new PHPExcel();
 
@@ -48,10 +51,11 @@ $objPHPExcel->setActiveSheetIndex(0)
             ->setCellValue('B1', 'DESCRIPCION')
             ->setCellValue('C1', 'CANTIDAD')
             ->setCellValue('D1', 'CATEGORIA')
-            ->setCellValue('E1', 'PRECIO')
-            ->setCellValue('F1', 'EXISTENCIA MINIMA')
-            ->setCellValue('G1', 'MARCA')
-            ->setCellValue('H1', 'CANTIDAD VENDIDO');
+            ->setCellValue('E1', 'COSTO')
+            ->setCellValue('F1', 'PRECIO')
+            ->setCellValue('G1', 'EXISTENCIA MINIMA')
+            ->setCellValue('H1', 'MARCA')
+            ->setCellValue('I1', 'CANTIDAD VENDIDO');
  
 
 
@@ -61,6 +65,8 @@ $fila = 1;
  if ($r = $db->select("precio", "producto_precio", "WHERE producto = ".$b["cod"]." and td = ". $_SESSION["td"] ."")) { 
         $precio = $r["precio"]; } unset($r); 
 
+
+$costo = $herramientas->ObtenerPrecioCosto($b["cod"]);
 
 // productos vendidos
 if ($r = $db->select("sum(cant) as cantidad", "ticket", "WHERE cod = '".$b["cod"]."' and td = ". $_SESSION["td"] ."")) {
@@ -87,10 +93,11 @@ $objPHPExcel->setActiveSheetIndex(0)
           ->setCellValue('B' . $fila, $b["descripcion"])
           ->setCellValue('C' . $fila, $b["cantidad"])
           ->setCellValue('D' . $fila, $b["subcategoria"])
-          ->setCellValue('E' . $fila, $precio)
-          ->setCellValue('F' . $fila, $b["existencia_minima"])
-          ->setCellValue('G' . $fila, $marca)
-          ->setCellValue('H' . $fila, Helpers::Entero($vcantidad));
+          ->setCellValue('E' . $fila, $costo)
+          ->setCellValue('F' . $fila, $precio)
+          ->setCellValue('G' . $fila, $b["existencia_minima"])
+          ->setCellValue('H' . $fila, $marca)
+          ->setCellValue('I' . $fila, Helpers::Entero($vcantidad));
  
 
         } 
@@ -98,8 +105,8 @@ $objPHPExcel->setActiveSheetIndex(0)
 
 
 
-$columnas = array('A','B','C','D','E','F','G','H');
-$numeros = array('E');
+$columnas = array('A','B','C','D','E','F','G','H','I');
+$numeros = array('E','F');
 
 // establece ceros numerocico las filas numerocas
 foreach($numeros as $columnID) {
@@ -148,7 +155,7 @@ $objPHPExcel->getActiveSheet()->setTitle('Inventario');
 $objPHPExcel->setActiveSheetIndex(0);
 
 
-$objPHPExcel->getActiveSheet()->getStyle("A1:H1")->getFont()->setBold(true);
+$objPHPExcel->getActiveSheet()->getStyle("A1:I1")->getFont()->setBold(true);
 // Redirect output to a client’s web browser (Excel2007)
 header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 header('Content-Disposition: attachment;filename="Inventario-'.date("d-m-Y-H_i_s").'.xlsx"');
