@@ -97,7 +97,8 @@ function LoadImprimir(parametros){
            $("#botones-imprimir").html('<div class="row justify-content-center" >Espere... </div>');
         },
         success: function(data) {            
-            $("#botones-imprimir").html(data); // lo que regresa de la busquea         
+            $("#botones-imprimir").html('<div class="row justify-content-center" >Realizado!</div>');
+            // $("#botones-imprimir").html(data); // lo que regresa de la busquea         
         }
     });
    
