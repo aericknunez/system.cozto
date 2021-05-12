@@ -1,5 +1,13 @@
 NOTAS DE DATABASE
 
-01 -  Se agregan tres campos a la tabla producto ingresado donde va el proveedor, documento (nummero documento de la compra) y el precio de venta (Esta solo se llenara si el precio de venta cambiara en el momento que se comience a vender esta lote de productos)
+01.00 -  Se agregan tres campos a la tabla producto ingresado donde va el proveedor, documento (nummero documento de la compra) y el precio de venta (Esta solo se llenara si el precio de venta cambiara en el momento que se comience a vender esta lote de productos)
 ademas el usuario que registra y la fecha format
+
+
+01.01	- Se agrego a Config Root la opcion de taller
+		- Se agrega la tabla de clientes para taller
+		- Se agrega tabla de vihiculos de cliente taller
+		- Se agrega Facturas Cliente taller
+		
+ALTER TABLE `config_root` ADD `taller` VARCHAR(100) NOT NULL AFTER `autoparts`;
 
