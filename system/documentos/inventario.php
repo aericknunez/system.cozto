@@ -25,7 +25,7 @@ include_once '../../application/common/Alerts.php';
 
 require_once '../../application/common/PHPExcel.php';
 
-require_once '../herramientas/herramientas.php';
+require_once '../herramientas/Herramientas.php';
 $herramientas = new Herramientas();
 
 // Create new PHPExcel object
