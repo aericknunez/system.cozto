@@ -122,8 +122,39 @@ $r = $db->select("*", "config_root", "where td = ".$_SESSION['td']."")
 
 
   <tr>
+
+     <td>
+          <div class="switch mt-4">
+            <label>
+             Taller ||  Off
+              <input type="checkbox" <?php if(Encrypt::Decrypt($r["taller"],$_SESSION['secret_key']) == "on") echo "checked"; ?> id="taller" name="taller" >
+              <span class="lever"></span> On 
+            </label>
+          </div>
+    </td>
+
+     <td>
+          <div class="switch mt-4">
+            <label>
+             Consignaciones ||  Off
+              <input type="checkbox" <?php if(Encrypt::Decrypt($r["consignaciones"],$_SESSION['secret_key']) == "on") echo "checked"; ?> id="consignaciones" name="consignaciones" >
+              <span class="lever"></span> On 
+            </label>
+          </div>
+    </td>
+
+  </tr>
+
+
+ <tr>
+
+     <td>
+
+    </td>
+
         <td><button class="btn btn-info my-4" type="submit" id="btn-root" name="btn-root">Realizar Cambios</button></td>
   </tr>
+
 
   
 <?

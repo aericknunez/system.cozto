@@ -8,6 +8,15 @@ ademas el usuario que registra y la fecha format
 		- Se agrega la tabla de clientes para taller
 		- Se agrega tabla de vihiculos de cliente taller
 		- Se agrega Facturas Cliente taller
+
+		- Se agrega el tipo de documento a la base de datos de tipo facturar_documento_factura y tambien a ticket_cliente
+
+
 		
 ALTER TABLE `config_root` ADD `taller` VARCHAR(100) NOT NULL AFTER `autoparts`;
 
+ALTER TABLE `config_root` ADD `consignaciones` VARCHAR(100) NOT NULL AFTER `taller`;
+
+ALTER TABLE `facturar_documento_factura` ADD `tipo` INT(1) NOT NULL COMMENT 'tipo de documento' AFTER `tx`;
+
+ALTER TABLE `ticket_cliente` ADD `tipo` INT(1) NOT NULL COMMENT 'Tipo de documento' AFTER `tx`;

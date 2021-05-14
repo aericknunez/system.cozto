@@ -977,6 +977,7 @@ $_SESSION["cambio_actual_print"] = $efectivo; // solo para imprimir la factura c
 		$datos = array();
 		$datos["factura"] = $factura;
 	    $datos["tx"] = $_SESSION["tx"];
+	    $datos["tipo"] = $_SESSION["tipoticket"];
 	    $datos["cliente"] = $_SESSION["factura_cliente"];
 	    $datos["documento"] = $_SESSION["factura_documento"];
 	    $datos["hash"] = Helpers::HashId();

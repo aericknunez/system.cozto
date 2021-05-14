@@ -88,6 +88,18 @@ $r = $db->select("*", "config_root", "where td = ".$_SESSION['td']."");
               if(Encrypt::Decrypt($r["autoparts"],$_SESSION['secret_key']) == "") echo "Inactivo"; ?></td>
      </tr> 
 
+     <tr>
+       <td>Activar Taller</td>
+       <td><? if(Encrypt::Decrypt($r["taller"],$_SESSION['secret_key']) == "on") echo "Activado";
+              if(Encrypt::Decrypt($r["taller"],$_SESSION['secret_key']) == "") echo "Inactivo"; ?></td>
+     </tr> 
+
+     <tr>
+       <td>Activar Consignaciones</td>
+       <td><? if(Encrypt::Decrypt($r["consignaciones"],$_SESSION['secret_key']) == "on") echo "Activado";
+              if(Encrypt::Decrypt($r["consignaciones"],$_SESSION['secret_key']) == "") echo "Inactivo"; ?></td>
+     </tr> 
+
 <?
  unset($r);  
    ?>

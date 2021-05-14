@@ -48,7 +48,7 @@ if($_SESSION["tipo_cuenta"] != 4) {
 }
 
 
-// print_r($_SESSION);
+print_r($_SESSION);
 
 if($_SESSION["caja_apertura"] == NULL){
 ?>

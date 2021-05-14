@@ -73,6 +73,8 @@ class Config{
 	    $cambio["ecommerce"] = Encrypt::Encrypt($data["ecommerce"],$_SESSION['secret_key']);
 	    $cambio["receta"] = Encrypt::Encrypt($data["receta"],$_SESSION['secret_key']);
 	    $cambio["autoparts"] = Encrypt::Encrypt($data["autoparts"],$_SESSION['secret_key']);
+	    $cambio["taller"] = Encrypt::Encrypt($data["taller"],$_SESSION['secret_key']);
+	    $cambio["consignaciones"] = Encrypt::Encrypt($data["consignaciones"],$_SESSION['secret_key']);
 	    $cambio["time"] = Helpers::TimeId();
 	    if (Helpers::UpdateId("config_root", $cambio, "td = ".$_SESSION["td"]."")) {
 	    	$this->CrearVariables();
@@ -143,6 +145,8 @@ class Config{
 			$_SESSION['root_ecommerce'] = $root["ecommerce"];
 			$_SESSION['root_receta'] = $root["receta"];
 			$_SESSION['root_autoparts'] = $root["autoparts"];
+			$_SESSION['root_taller'] = $root["taller"];
+			$_SESSION['root_consignaciones'] = $root["consignaciones"];
      
 			} unset($root);
 			$_SESSION['root_tipo_sistema'] = $encrypt->Decrypt(
@@ -162,6 +166,12 @@ class Config{
 
 			$_SESSION['root_autoparts'] = $encrypt->Decrypt(
 			$_SESSION['root_autoparts'],$_SESSION['secret_key']);
+
+			$_SESSION['root_taller'] = $encrypt->Decrypt(
+			$_SESSION['root_taller'],$_SESSION['secret_key']);
+
+			$_SESSION['root_consignaciones'] = $encrypt->Decrypt(
+			$_SESSION['root_consignaciones'],$_SESSION['secret_key']);
 
 	}
 

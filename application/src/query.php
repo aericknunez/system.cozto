@@ -411,6 +411,18 @@ elseif(isset($_GET["autoproadd"])) {
 } 
 
 
+
+/// taller
+elseif(isset($_GET["clientes"])) {
+echo '<script type="text/javascript" src="assets/js/query/taller.js?v='.$numero.'"></script>';
+echo '<script type="text/javascript" src="assets/js/query/paginador.js?v='.$numero.'"></script>';
+} 
+elseif(isset($_GET["vehiculos"])) {
+echo '<script type="text/javascript" src="assets/js/query/taller.js?v='.$numero.'"></script>';
+echo '<script type="text/javascript" src="assets/js/query/paginador.js?v='.$numero.'"></script>';
+} 
+
+
 /// ecommerce
 elseif(isset($_GET["epedidos"])) {
 echo '<script type="text/javascript" src="assets/js/query/ecommerce.js?v='.$numero.'"></script>';

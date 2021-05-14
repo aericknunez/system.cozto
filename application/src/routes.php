@@ -2586,6 +2586,18 @@ break;
 
 
 
+case "600": // agrega cliente de taller
+include_once '../../system/taller/Taller.php';
+	$talleres = new Taller();
+	$talleres->AddCliente($_POST);
+break;
+
+
+case "601": // ver todass las cuentas
+include_once '../../system/taller/Taller.php';
+	$talleres = new Taller();
+	$talleres->VerClientes($_POST["iden"], $_POST["orden"], $_POST["dir"]);
+break;
 
 
 

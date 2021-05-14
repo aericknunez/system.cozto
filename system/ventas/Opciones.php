@@ -82,6 +82,7 @@ class Opciones{
 		    $datos["factura"] = NULL;
 		    $datos["orden"] = $_SESSION["orden"];
 		    $datos["tx"] = $_SESSION["tx"];
+		    $datos["tipo"] = $_SESSION["tipoticket"];
 		    $datos["cliente"] = $_SESSION["cliente_cli"];
 		    $datos["fecha"] = date("d-m-Y");
 		    $datos["hora"] = date("H:i:s");
