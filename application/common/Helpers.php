@@ -10,7 +10,8 @@ class Helpers{
           if($_SERVER["SERVER_NAME"] == "hibridosv.com" 
           or $_SERVER["SERVER_NAME"] == "www.hibridosv.com"
           or $_SERVER["SERVER_NAME"] == "sistema.hibridosv.com"
-          or $_SERVER["SERVER_NAME"] == "datos.hibridosv.com"){
+          or $_SERVER["SERVER_NAME"] == "datos.hibridosv.com"
+          or $_SERVER["SERVER_NAME"] == "cozto.hibridosv.com"){
             return TRUE;
           } else {
             return FALSE;
