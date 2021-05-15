@@ -18,7 +18,7 @@ $taller = new Taller();
 
 <div id="contenido">
    <?php 
-   // $cuenta->VerCuentas(1, "id", "desc"); ?>
+   $taller->VerVehiculos(1, "id", "desc"); ?>
 </div>
 
 
@@ -38,13 +38,15 @@ $taller = new Taller();
 <?php 
     $a = $db->query("SELECT hash, cliente FROM taller_cliente WHERE td = ".$_SESSION["td"]."");
 
+     $c = $db->query("SELECT hash, marca FROM autoparts_marca WHERE td = ".$_SESSION["td"]."");
+
 ?>  
   <form id="form-vehiculo">
 
   <div class="form-row">
     
-    <div class="col-md-4 mt-0 md-form">
-      <select class="mdb-select md-form colorful-select dropdown-dark" id="proveedor" name="proveedor">
+    <div class="col-md-12 mt-0 md-form">
+      <select class="mdb-select md-form colorful-select dropdown-dark" id="cliente" name="cliente">
         <option selected disabled>Cliente</option>
         <?php foreach ($a as $b) {
         echo '<option value="'. $b["hash"] .'">'. $b["cliente"] .'</option>'; 
@@ -52,12 +54,85 @@ $taller = new Taller();
       </select>
     </div>
 
-  <div class="col-md-8 mb-0 md-form">
-      <label for="cuenta">* Nombre de la Cuenta</label>
-      <input type="text" class="form-control" id="cuenta" name="cuenta" required>
+  </div>
+
+
+<div id="datos_cliente"></div>
+
+
+  <div class="form-row">
+    
+    <div class="col-md-4 mb-1 md-form">
+      <label for="placa">* Placa</label>
+      <input type="text" step="any" class="form-control" id="placa" name="placa" required>
+    </div>
+
+    <div class="col-md-4 mb-1 md-form">
+      <select class="mdb-select md-form colorful-select dropdown-dark mt-1" id="marca" name="marca">
+        <option selected disabled>Marca</option>
+        <?php foreach ($c as $d) {
+        echo '<option value="'. $d["hash"] .'">'. $d["marca"] .'</option>'; 
+        } $a->close(); ?>
+      </select>
+    </div>
+  
+    <div class="col-md-4 mb-1 md-form">
+      <label for="ano">* Año</label>
+      <input type="text" class="form-control" id="ano" name="ano" required>
     </div>
 
   </div>
+
+
+
+  <div class="form-row">
+    
+    <div class="col-md-3 mb-1 md-form">
+      <select class="mdb-select md-form colorful-select dropdown-dark mt-1" id="modelo" name="modelo">
+            <option selected disabled>Modelo</option>  
+      </select>
+    </div>
+
+    <div class="col-md-3 mb-1 md-form">
+      <label for="clase">* Clase</label>
+      <input type="text" class="form-control" id="clase" name="clase" required>
+    </div>
+  
+    <div class="col-md-3 mb-1 md-form">
+      <label for="tipo">* Tipo</label>
+      <input type="text" class="form-control" id="tipo" name="tipo" required>
+    </div>
+
+    <div class="col-md-3 mb-1 md-form">
+      <label for="color">* Color</label>
+      <input type="text" class="form-control" id="color" name="color" required>
+    </div>
+
+  </div>
+
+
+
+
+  <div class="form-row">
+    
+    <div class="col-md-4 mb-1 md-form">
+      <label for="chasis_gravado">* Chasis Gravado</label>
+      <input type="text" step="any" class="form-control" id="chasis_gravado" name="chasis_gravado" required>
+    </div>
+
+    <div class="col-md-4 mb-1 md-form">
+      <label for="chasis_vin">* Chasis Vin</label>
+      <input type="text" class="form-control" id="chasis_vin" name="chasis_vin" required>
+    </div>
+  
+    <div class="col-md-4 mb-1 md-form">
+      <label for="no_motor">* No Motor</label>
+      <input type="text" class="form-control" id="no_motor" name="no_motor" required>
+    </div>
+
+  </div>
+
+
 
 
 
@@ -70,26 +145,6 @@ $taller = new Taller();
 
   </div>
 
-
-
-
-  <div class="form-row">
-    
-    <div class="col-md-4 mb-1 md-form">
-      <label for="factura">* Factura</label>
-      <input type="number" step="any" class="form-control" id="factura" name="factura" required>
-    </div>
-
-    <div class="col-md-4 mb-1 md-form">
-      <label for="total">* Total</label>
-      <input type="number" class="form-control" id="total" name="total" required>
-    </div>
-  
-    <div class="col-md-4 mt-3 md-form">
-          <input placeholder="Fecha Limite" type="text" id="fecha_limite" name="fecha_limite" class="form-control datepicker my-2">
-    </div>
-
-  </div>
 
 
 

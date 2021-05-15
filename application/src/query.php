@@ -421,6 +421,11 @@ elseif(isset($_GET["vehiculos"])) {
 echo '<script type="text/javascript" src="assets/js/query/taller.js?v='.$numero.'"></script>';
 echo '<script type="text/javascript" src="assets/js/query/paginador.js?v='.$numero.'"></script>';
 } 
+elseif(isset($_GET["mantenimiento"])) {
+echo '<script type="text/javascript" src="assets/js/query/taller.js?v='.$numero.'"></script>';
+echo '<script type="text/javascript" src="assets/js/query/paginador.js?v='.$numero.'"></script>';
+} 
+
 
 
 /// ecommerce

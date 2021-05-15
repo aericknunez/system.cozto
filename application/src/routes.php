@@ -2601,6 +2601,43 @@ break;
 
 
 
+case "602": // agrega cliente de taller
+include_once '../../system/taller/Taller.php';
+	$talleres = new Taller();
+	$talleres->AddVehiculo($_POST);
+break;
+
+
+case "603": // ver todass vehiculos
+include_once '../../system/taller/Taller.php';
+	$talleres = new Taller();
+	$talleres->VerVehiculos($_POST["iden"], $_POST["orden"], $_POST["dir"]);
+break;
+
+
+case "604": // muestra los datos del cliente seleccionado
+include_once '../../system/taller/Taller.php';
+	$talleres = new Taller();
+	$talleres->DatosCliente($_POST["hash"]);
+break;
+
+
+case "605": // muestra modelo a cambiar la marca
+include_once '../../system/taller/Taller.php';
+	$talleres = new Taller();
+	$talleres->ModeloVehiculo($_POST["hash"]);
+break;
+
+
+
+case "606": // muestra los datos del vehiculo seleccionado
+include_once '../../system/taller/Taller.php';
+	$talleres = new Taller();
+	$talleres->DatosVehiculo($_POST["hash"]);
+break;
+
+
+
 
 
 

@@ -64,6 +64,7 @@ elseif(isset($_GET["cuentaspendientes"])) include_once 'system/cuenta/cuentaspen
 // Modulo de taller
 elseif(isset($_GET["clientes"])) include_once 'system/taller/clientes.php'; // clientes nuevos
 elseif(isset($_GET["vehiculos"])) include_once 'system/taller/vehiculos.php'; // vehiculos
+elseif(isset($_GET["mantenimiento"])) include_once 'system/taller/mantenimiento.php'; // mantenimiento
 
 
 

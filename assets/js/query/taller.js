@@ -91,13 +91,113 @@ $(document).ready(function(){
 
 
 
-/// Nueva cuenta
+/// Nueva vehiculo
 	$("body").on("click","#addvehiculo",function(){ 
 		
 		$('#ModalAddVehiculo').modal('show');
 
 	});
     
+
+ /// add vehiculo    
+	$('#btn-vehiculo').click(function(e){ /// agregar un producto 
+	e.preventDefault();
+
+	$.ajax({
+			url: "application/src/routes.php?op=602",
+			method: "POST",
+			data: $("#form-vehiculo").serialize(),
+			beforeSend: function () {
+				$('#btn-vehiculo').html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>Loading...').addClass('disabled');
+	           // $("#contenido").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt=""></div>');
+            },
+			success: function(data){
+				$('#btn-vehiculo').html('<i class="fas fa-save mr-1"></i> Guardar').removeClass('disabled');	      
+				$("#form-vehiculo").trigger("reset");
+				$("#contenido").html(data);	
+				$('#ModalAddVehiculo').modal('hide');
+			}
+		})
+	});
+    
+
+
+/// cambia el tipo de cliente y muestra detalles
+    $("#cliente").change(function(){
+        var hash=$(this).val();
+        var dataString = 'hash='+ hash;
+    
+        $.ajax ({
+            type: "POST",
+            url: "application/src/routes.php?op=604",
+            data: dataString,
+            cache: false,
+            success: function(html) {
+                $("#datos_cliente").html(html);
+            } 
+        });
+    });
+
+
+
+// moestra el modelo al cambiar la marca
+    $("#marca").change(function(){
+        var hash=$(this).val();
+        var dataString = 'hash='+ hash;
+    
+        $.ajax ({
+            type: "POST",
+            url: "application/src/routes.php?op=605",
+            data: dataString,
+            cache: false,
+            success: function(html) {
+                $("#modelo").html(html);
+            } 
+        });
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+/// Nueva vehiculo
+	$("body").on("click","#addmantenimiento",function(){ 
+		
+		$('#ModalAddMantenimiento').modal('show');
+
+	});
+
+
+
+// obtiene datos del vehiculo
+    $("#vehiculo").change(function(){
+        var hash=$(this).val();
+        var dataString = 'hash='+ hash;
+    
+        $.ajax ({
+            type: "POST",
+            url: "application/src/routes.php?op=606",
+            data: dataString,
+            cache: false,
+            success: function(html) {
+                $("#datos_src").html(html);
+            } 
+        });
+    });
+
+
+
+
+
+
 
 
 
