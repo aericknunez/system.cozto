@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
 
 <h1>Configuraciones</h1>
-Datos Generales del Sistema V. 2.8.0
+Datos Generales del Sistema: V: <?php echo VERSION . " Data: " . Helpers::DBVersion(); ?>
     <table class="table table-sm table-striped">
 
    <thead>
