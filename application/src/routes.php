@@ -2637,6 +2637,34 @@ include_once '../../system/taller/Taller.php';
 break;
 
 
+case "607": // ver todass vehiculos
+include_once '../../system/taller/Taller.php';
+	$talleres = new Taller();
+	$talleres->VerMantenimiento($_POST["iden"], $_POST["orden"], $_POST["dir"]);
+break;
+
+
+
+case "608": // agrega cliente de taller
+include_once '../../system/taller/Taller.php';
+	$talleres = new Taller();
+	$talleres->AddMantenimiento($_POST);
+break;
+
+
+
+case "609": // VER DETALLES DE MANTENIMIENTO
+include_once '../../system/taller/Taller.php';
+	$talleres = new Taller();
+	$talleres->DetallesMantenimiento($_POST["hash"]);
+break;
+
+
+
+
+
+
+
 
 
 

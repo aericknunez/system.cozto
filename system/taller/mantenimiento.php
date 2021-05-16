@@ -35,7 +35,7 @@ $taller = new Taller();
       <div class="modal-body">
 <!-- ./  content -->
 
-  <form id="form-cliente">
+  <form id="form-mantenimiento">
 
 <?php 
     $a = $db->query("SELECT hash, placa FROM taller_vehiculo WHERE td = ".$_SESSION["td"]."");
@@ -60,7 +60,7 @@ $taller = new Taller();
 
   <div class="form-row">
     
-    <div class="col-md-12 mb-0 md-form">
+    <div class="col-md-12 mb-0 md-form mt-0">
       <label for="direccion">* Millaje de ingreso</label>
       <input type="text" class="form-control" id="millaje" name="millaje" required>
     </div>
@@ -69,10 +69,20 @@ $taller = new Taller();
 
 
 
+    <div class="form-row">
+    
+    <div class="col-md-12 mt-0 md-form mt-0">
+      <textarea id="motivo" name="motivo" class="md-textarea form-control" rows="3"></textarea>
+      <label for="motivo">Motivo de Ingreso</label>
+    </div>
 
-  <div class="form-row mt-5">
+  </div>
+
+
+
+  <div class="form-row mt-0">
     <div class="col-md-12 md-form text-center">
-     <button class="btn btn-info" type="submit" id="btn-cliente"><i class="fas fa-save mr-1"></i> Guardar Ingreso</button>
+     <button class="btn btn-info" type="submit" id="btn-mantenimiento"><i class="fas fa-save mr-1"></i> Guardar Ingreso </button>
 
     </div>
   </div>
@@ -102,38 +112,32 @@ $taller = new Taller();
 
 
 
-
-
-
-
-
 <!-- modal para ver el cuenta -->
-<div class="modal" id="ModalVerCuenta" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"  data-backdrop="false">
+<div class="modal" id="ModalVer" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"  data-backdrop="false">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">
-         CUENTA POR COBRAR</h5>
+         DETALLES MANTENIMIENTO</h5>
       </div>
       <div class="modal-body">
 <!-- ./  content -->
 
-<div id="vista_ver"></div>
+        <div id="vista_ver"> </div>
 
 <!-- ./  content -->
       </div>
       <div class="modal-footer">
 
-<!-- <a href="?modal=abonos<?php echo $url; ?>" class="btn btn-secondary btn-rounded">Realizar Abonos</a> -->
-<a id="cerrarver" class="btn btn-primary btn-rounded" data-dismiss="modal">Regresar</a>
-
-          
+        <a class="btn btn-primary btn-rounded" data-dismiss="modal">Regresar</a>  
     
       </div>
     </div>
   </div>
 </div>
 <!-- ./  Modal -->
+
+
 
 
 

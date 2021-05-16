@@ -76,7 +76,7 @@ $op="601";
         <thead>
           <tr>
             <th class="th-sm"><a id="paginador" op="'.$op.'" iden="1" orden="cliente" dir="'.$dir2.'">Cliente</a></th>
-            <th class="th-sm d-none d-md-block"><a id="paginador" op="'.$op.'" iden="1" orden="direccion" dir="'.$dir2.'">Dirección</a></th>
+            <th class="th-sm"><a id="paginador" op="'.$op.'" iden="1" orden="direccion" dir="'.$dir2.'">Dirección</a></th>
             <th class="th-sm"><a id="paginador" op="'.$op.'" iden="1" orden="telefono" dir="'.$dir2.'">Teléfono</a></th>
             <th class="th-sm">Ver</th>
           </tr>
@@ -249,7 +249,7 @@ $op="603";
         <thead>
           <tr>
             <th class="th-sm"><a id="paginador" op="'.$op.'" iden="1" orden="cliente" dir="'.$dir2.'">Cliente</a></th>
-            <th class="th-sm d-none d-md-block"><a id="paginador" op="'.$op.'" iden="1" orden="placa" dir="'.$dir2.'">Placa</a></th>
+            <th class="th-sm"><a id="paginador" op="'.$op.'" iden="1" orden="placa" dir="'.$dir2.'">Placa</a></th>
             <th class="th-sm"><a id="paginador" op="'.$op.'" iden="1" orden="marca" dir="'.$dir2.'">Marca</a></th>
             <th class="th-sm"><a id="paginador" op="'.$op.'" iden="1" orden="ano" dir="'.$dir2.'">Año</a></th>
             <th class="th-sm"><a id="paginador" op="'.$op.'" iden="1" orden="color" dir="'.$dir2.'">Color</a></th>
@@ -373,6 +373,33 @@ echo '<option selected disabled>Modelo</option>';
 
 
 
+  public function AddMantenimiento($datos){
+    $db = new dbConn();
+      if($datos["vehiculo"] != NULL and $datos["millaje"] != NULL){ // comprueba dtos
+        
+                $data["vehiculo"] = $datos["vehiculo"];
+                $data["millaje"] =  $datos["millaje"];
+                $data["fecha_ingreso"] = date("d-m-Y");
+                $data["fecha_ingresoF"] = Fechas::Format(date("d-m-Y"));
+                $data["hora_ingreso"] = date("H:i:s");
+                $data["motivo"] =  $datos["motivo"];
+                $data["edo"] = 1;
+                $data["hash"] = Helpers::HashId();
+                $data["time"] = Helpers::TimeId();
+                $data["td"] = $_SESSION["td"];
+                if ($db->insert("taller_mantenimiento", $data)) {
+
+                 Alerts::Alerta("success","Realizado!","Registro realizado correctamente!");  
+
+                }
+ 
+        } else {
+          Alerts::Alerta("error","Error!","Faltan Datos!");
+        }
+      $this->VerMantenimiento(1, "id", "desc");
+  }
+
+
 
 
 
@@ -383,7 +410,7 @@ echo '<option selected disabled>Modelo</option>';
   $limit = 12;
   $adjacents = 2;
   if($npagina == NULL) $npagina = 1;
-  $a = $db->query("SELECT * FROM taller_vehiculo WHERE td = ". $_SESSION['td'] ."");
+  $a = $db->query("SELECT * FROM taller_mantenimiento WHERE td = ". $_SESSION['td'] ."");
   $total_rows = $a->num_rows;
   $a->close();
 
@@ -400,9 +427,9 @@ echo '<option selected disabled>Modelo</option>';
 if($dir == "desc") $dir2 = "asc";
 if($dir == "asc") $dir2 = "desc";
 
-$op="603";
+$op="607";
 
- $a = $db->query("SELECT * FROM taller_vehiculo WHERE td = ".$_SESSION["td"]." order by ".$orden." ".$dir." limit $offset, $limit");
+ $a = $db->query("SELECT * FROM taller_mantenimiento WHERE td = ".$_SESSION["td"]." order by ".$orden." ".$dir." limit $offset, $limit");
       
       if($a->num_rows > 0){
           echo '<div class="table-responsive">
@@ -410,10 +437,9 @@ $op="603";
         <thead>
           <tr>
             <th class="th-sm"><a id="paginador" op="'.$op.'" iden="1" orden="cliente" dir="'.$dir2.'">Cliente</a></th>
-            <th class="th-sm d-none d-md-block"><a id="paginador" op="'.$op.'" iden="1" orden="placa" dir="'.$dir2.'">Placa</a></th>
-            <th class="th-sm"><a id="paginador" op="'.$op.'" iden="1" orden="marca" dir="'.$dir2.'">Marca</a></th>
-            <th class="th-sm"><a id="paginador" op="'.$op.'" iden="1" orden="ano" dir="'.$dir2.'">Año</a></th>
-            <th class="th-sm"><a id="paginador" op="'.$op.'" iden="1" orden="color" dir="'.$dir2.'">Color</a></th>
+            <th class="th-sm"><a id="paginador" op="'.$op.'" iden="1" orden="placa" dir="'.$dir2.'">Vehiculo</a></th>
+            <th class="th-sm"><a id="paginador" op="'.$op.'" iden="1" orden="vehiculo" dir="'.$dir2.'">Placa</a></th>
+            <th class="th-sm"><a id="paginador" op="'.$op.'" iden="1" orden="edo" dir="'.$dir2.'">Estado</a></th>
             <th class="th-sm">Ver</th>
           </tr>
         </thead>
@@ -421,14 +447,20 @@ $op="603";
         foreach ($a as $b) {
         // obtener el nombre y detalles del producto
 
+    if ($r = $db->select("*", "taller_vehiculo", "WHERE hash = '".$b["vehiculo"]."' and td = ". $_SESSION['td'] ."")) { 
+        $cliente = $r["cliente"];
+        $marca = $r["marca"];
+        $modelo = $r["modelo"];
+        $color = $r["color"];
+        $placa = $r["placa"];
+    } unset($r); 
 
           echo '<tr>
-                      <td >'.Helpers::GetData("taller_cliente", "cliente", "hash", $b["cliente"]).'</td>
-                      <td>'.$b["placa"]. '</td>
-                      <td>'.Helpers::GetData("autoparts_marca", "marca", "hash", $b["marca"]). '</td>
-                      <td>'.$b["ano"]. '</td>
-                      <td>'.$b["color"]. '</td>
-                      <td>Ver</td>
+                      <td >'.Helpers::GetData("taller_cliente", "cliente", "hash", $cliente).'</td>
+                      <td>'.Helpers::GetData("autoparts_marca", "marca", "hash", $marca) .' - '.  Helpers::GetData("autoparts_modelo", "modelo", "hash", $modelo). ' - '.$color. '</td>
+                      <td>'.$placa. '</td>
+                      <td>'. $this->EdoTaller($b["edo"]). '</td>
+                      <td><a id="xver" op="609" hash="'.$b["hash"].'">Ver</a></td>
                      </tr>';
         }
         echo '</tbody>
@@ -529,6 +561,73 @@ $page <= 1 ? $enable = 'disabled' : $enable = '';
           </div>';  
 
   }
+
+
+
+
+
+
+    public function EdoTaller($string) {
+    if($string == "0") return '<div class="text-danger font-weight-bold">Suspendido</div>';
+    if($string == "1") return '<div class="text-secondary font-weight-bold">Activo</div>';
+    if($string == "2") return '<div class="text-success font-weight-bold">En Reparación</div>';
+    if($string == "3") return '<div class="text-primary font-weight-bold">Terminado</div>';
+    }
+
+
+
+  public function DetallesMantenimiento($hash){
+    $db = new dbConn();
+
+    if ($r = $db->select("*", "taller_mantenimiento", "WHERE hash = '$hash' and td = ". $_SESSION['td'] ."")) { 
+        $vehiculo = $r["vehiculo"];
+        $millaje = $r["millaje"];
+        $fecha_ingreso = $r["fecha_ingreso"];
+        $hora_ingreso = $r["hora_ingreso"];
+        $motivo = $r["motivo"];
+        $diagnostico = $r["diagnostico"];
+        $reparacion = $r["reparacion"];
+        $fecha_salida = $r["fecha_salida"];
+        $hora_salida = $r["hora_salida"];
+    } unset($r); 
+
+    if ($r = $db->select("*", "taller_vehiculo", "WHERE hash = '$vehiculo' and td = ". $_SESSION['td'] ."")) { 
+        $cliente = $r["cliente"];
+        $marca = $r["marca"];
+        $modelo = $r["modelo"];
+        $color = $r["color"];
+        $ano = $r["ano"];
+        $chasis_gravado = $r["chasis_gravado"];
+        $chasis_vin = $r["chasis_vin"];
+        $no_motor = $r["no_motor"];
+    } unset($r); 
+
+
+    if ($r = $db->select("cliente, direccion, municipio, departamento, telefono1, telefono2", "taller_cliente", "WHERE hash = '$cliente' and td = ". $_SESSION['td'] ."")) { 
+        $cliente = $r["cliente"];
+        $direccion = $r["direccion"];
+        $municipio = $r["municipio"];
+        $departamento = $r["departamento"];
+        $telefono1 = $r["telefono1"];
+        $telefono2 = $r["telefono2"];
+    } unset($r);  
+
+    echo '<div class="alert alert-info" role="alert">
+            <h4 class="alert-heading">'.  $cliente .'</h4>
+            <p>'. $direccion .', '. $municipio .', '. $departamento .' - '.$telefono1.' - '.$telefono2.'</p>
+          </div>';  
+ 
+
+     echo '<div class="alert alert-danger" role="alert">
+            <h4 class="alert-heading">'.  Helpers::GetData("autoparts_marca", "marca", "hash", $marca) .' -> '.  Helpers::GetData("autoparts_modelo", "modelo", "hash", $modelo) .' -> '.  $color .' -> '.  $ano .'</h4>
+            <p>Chasis Gravado: <strong>'. $chasis_gravado .'</strong>, Chasis Vin: <strong>'. $chasis_vin .'</strong>, No. Motor: <strong>'. $no_motor .'</strong></p>
+          </div>';  
+ 
+  }
+
+
+
+
 
 
 

@@ -54,39 +54,6 @@ $(document).ready(function(){
 
 
 
-/// llamar modal ver
-	$("body").on("click","#xver",function(){ 
-
-		$('#ModalVerCuenta').modal('show');
-		$("#btn-ra").remove();
-		
-		var op = $(this).attr('op');
-		var cuenta = $(this).attr('cuenta');
-		var dataString = 'op='+op+'&cuenta='+cuenta;
-
-		$.ajax({
-            type: "POST",
-            url: "application/src/routes.php",
-            data: dataString,
-            beforeSend: function () {
-               $("#vista_ver").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt=""></div>');
-            },
-            success: function(data) {            
-                $("#vista_ver").html(data); // lo que regresa de la busquea 		
-            }
-        });
-		$("#cerrarver").before('<a href="?modal=abonos_cuentas&cuenta='+cuenta+'" id="btn-ra" class="btn btn-secondary btn-rounded">Realizar Abonos</a>');
-	});
-    
-
-
-/// 
-/// 
-/// 
- 
-
-
-
 
 
 
@@ -192,6 +159,66 @@ $(document).ready(function(){
             } 
         });
     });
+
+
+ /// add mantenimiento    
+	$('#btn-mantenimiento').click(function(e){ /// agregar un producto 
+	e.preventDefault();
+
+	$.ajax({
+			url: "application/src/routes.php?op=608",
+			method: "POST",
+			data: $("#form-mantenimiento").serialize(),
+			beforeSend: function () {
+				$('#btn-mantenimiento').html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>Loading...').addClass('disabled');
+	           // $("#contenido").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt=""></div>');
+            },
+			success: function(data){
+				$('#btn-mantenimiento').html('<i class="fas fa-save mr-1"></i> Guardar Ingreso').removeClass('disabled');	      
+				$("#form-mantenimiento").trigger("reset");
+				$("#contenido").html(data);	
+				$('#ModalAddMantenimiento').modal('hide');
+			}
+		})
+	});
+    
+
+
+
+
+
+/// llamar modal ver
+	$("body").on("click","#xver",function(){ 
+
+		$('#ModalVer').modal('show');
+
+		var op = $(this).attr('op');
+		var hash = $(this).attr('hash');
+		var dataString = 'op='+op+'&hash='+hash;
+
+		$.ajax({
+            type: "POST",
+            url: "application/src/routes.php",
+            data: dataString,
+            beforeSend: function () {
+               $("#vista_ver").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt=""></div>');
+            },
+            success: function(data) {            
+                $("#vista_ver").html(data); // lo que regresa de la busquea 		
+            }
+        });
+	});
+    
+
+
+
+
+
+
+
+
+
+
 
 
 
