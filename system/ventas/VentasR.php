@@ -973,10 +973,33 @@ $_SESSION["cambio_actual_print"] = $efectivo; // solo para imprimir la factura c
   public function RegistroDocumento($factura){ // registra el documento al facturar (credito fiscal)
     $db = new dbConn();
 
+
+//// solo si esta activo lo de taller
+	if($_SESSION["root_taller"] == "on" and $_SESSION["vehiculo_factura"] != NULL){
+		$data = array();
+		$data["cliente"] = $_SESSION["cliente_cli"];
+	    $data["vehiculo"] = $_SESSION["vehiculo_factura"];
+		$data["factura"] = $factura;
+	    $data["tx"] = $_SESSION["tx"];
+	    $data["tipo"] = $_SESSION["tipoticket"];
+	    $data["fecha"] = date("d-m-Y");
+	    $data["fechaF"] = Fechas::Format(date("d-m-Y"));
+	    $data["hora"] = date("H:i:s");
+	    $data["hash"] = Helpers::HashId();
+	    $data["time"] = Helpers::TimeId();
+	    $data["td"] = $_SESSION["td"];
+	    if($db->insert("taller_facturas", $data)){
+	    	unset($_SESSION["vehiculo_factura"]);
+	    } 	
+	}
+
+
+
 	if($_SESSION["factura_cliente"] != NULL and $_SESSION["factura_documento"] != NULL){
 		$datos = array();
 		$datos["factura"] = $factura;
 	    $datos["tx"] = $_SESSION["tx"];
+	    $datos["tipo"] = $_SESSION["tipoticket"];
 	    $datos["cliente"] = $_SESSION["factura_cliente"];
 	    $datos["documento"] = $_SESSION["factura_documento"];
 	    $datos["hash"] = Helpers::HashId();

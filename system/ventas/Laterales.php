@@ -147,7 +147,7 @@ else { return '<a id="mticket">N/A</a>'; }
 		}
 
 
-		if($_SESSION['cliente_credito'] == NULL and $_SESSION['cliente_asig'] == NULL){
+		if($_SESSION['cliente_credito'] == NULL and $_SESSION['cliente_asig'] == NULL and $_SESSION["root_taller"] != "on"){
 		echo '<a href="?modal=dfactura" class="btn-floating btn-secondary" title="Datos Factura"><i class="fas fa-file-invoice-dollar"></i></a>';
 		}
 		
@@ -156,13 +156,21 @@ else { return '<a id="mticket">N/A</a>'; }
 
 		// echo '<a href="?modal=agrupado" class="btn-floating btn-info" title="Venta Agrupada"><i class="fas fa-donate"></i></a>';
 
-		if($_SESSION['cliente_credito'] == NULL and $_SESSION['factura_cliente'] == NULL){
+		if($_SESSION['cliente_credito'] == NULL and $_SESSION['factura_cliente'] == NULL and $_SESSION["root_taller"] != "on"){
 			echo '<a href="?modal=cliente" class="btn-floating btn-warning" title="Asignar Cliente"><i class="fas fa-user"></i></a>';
 		}
-		
+
+
+		if($_SESSION["root_taller"] == "on"){
+			echo '<a href="?modal=cliente_taller" class="btn-floating btn-danger" title="Asignar Cliente"><i class="fas fa-user"></i></a>';
+		}
+
 		echo '</div>';
 
 
+
+/// Mensajes de de usuarios agregados
+/// 
 		if($_SESSION["descuento"] != NULL){
 			$texto = 'Esta venta posee un descuento del: ' . $_SESSION["descuento"] . " %";
 			Alerts::Mensajex($texto,"danger",NULL,NULL);

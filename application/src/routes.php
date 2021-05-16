@@ -2586,6 +2586,143 @@ break;
 
 
 
+case "600": // agrega cliente de taller
+include_once '../../system/taller/Taller.php';
+	$talleres = new Taller();
+	$talleres->AddCliente($_POST);
+break;
+
+
+case "601": // ver todass las cuentas
+include_once '../../system/taller/Taller.php';
+	$talleres = new Taller();
+	$talleres->VerClientes($_POST["iden"], $_POST["orden"], $_POST["dir"]);
+break;
+
+
+
+case "602": // agrega cliente de taller
+include_once '../../system/taller/Taller.php';
+	$talleres = new Taller();
+	$talleres->AddVehiculo($_POST);
+break;
+
+
+case "603": // ver todass vehiculos
+include_once '../../system/taller/Taller.php';
+	$talleres = new Taller();
+	$talleres->VerVehiculos($_POST["iden"], $_POST["orden"], $_POST["dir"]);
+break;
+
+
+case "604": // muestra los datos del cliente seleccionado
+include_once '../../system/taller/Taller.php';
+	$talleres = new Taller();
+	$talleres->DatosCliente($_POST["hash"]);
+break;
+
+
+case "605": // muestra modelo a cambiar la marca
+include_once '../../system/taller/Taller.php';
+	$talleres = new Taller();
+	$talleres->ModeloVehiculo($_POST["hash"]);
+break;
+
+
+
+case "606": // muestra los datos del vehiculo seleccionado
+include_once '../../system/taller/Taller.php';
+	$talleres = new Taller();
+	$talleres->DatosVehiculo($_POST["hash"]);
+break;
+
+
+case "607": // ver todass vehiculos
+include_once '../../system/taller/Taller.php';
+	$talleres = new Taller();
+	$talleres->VerMantenimiento($_POST["iden"], $_POST["orden"], $_POST["dir"]);
+break;
+
+
+
+case "608": // agrega cliente de taller
+include_once '../../system/taller/Taller.php';
+	$talleres = new Taller();
+	$talleres->AddMantenimiento($_POST);
+break;
+
+
+
+case "609": // VER DETALLES DE MANTENIMIENTO
+include_once '../../system/taller/Taller.php';
+	$talleres = new Taller();
+	$talleres->DetallesMantenimiento($_POST["hash"]);
+break;
+
+
+
+case "610": // agrrega edit
+include_once '../../system/taller/Taller.php';
+	$talleres = new Taller();
+	$talleres->EditarOp($_POST);
+break;
+
+
+case "611": // obtiene texto para  edit
+include_once '../../system/taller/Taller.php';
+	$talleres = new Taller();
+	$talleres->TextoOp($_POST);
+break;
+
+
+
+case "612": // obtiene texto para  edit
+include_once '../../system/taller/Taller.php';
+	$talleres = new Taller();
+	$talleres->CambiarEdo($_POST);
+break;
+
+
+
+case "617": ///////////agregar a factura
+include_once '../../system/taller/Taller.php';
+	$talleres = new Taller();
+	$talleres->ClienteBusqueda($_POST);
+break;
+
+
+
+case "618": // add
+include_once '../../system/taller/Taller.php';
+	$talleres = new Taller();
+	$talleres->AgregaCliente($_POST);
+break;
+
+
+case "619": // del
+include_once '../../system/taller/Taller.php';
+	$talleres = new Taller();
+	$talleres->DelClienteFactura();
+break;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

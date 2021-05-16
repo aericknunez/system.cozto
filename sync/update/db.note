@@ -8,6 +8,5 @@ ademas el usuario que registra y la fecha format
 		- Se agrega la tabla de clientes para taller
 		- Se agrega tabla de vihiculos de cliente taller
 		- Se agrega Facturas Cliente taller
-		
-ALTER TABLE `config_root` ADD `taller` VARCHAR(100) NOT NULL AFTER `autoparts`;
 
+		- Se agrega el tipo de documento a la base de datos de tipo facturar_documento_factura

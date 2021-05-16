@@ -61,6 +61,13 @@ elseif(isset($_GET["cuentas"])) include_once 'system/cuentas/cuentasver.php'; //
 elseif(isset($_GET["cuentaspendientes"])) include_once 'system/cuenta/cuentaspendientes.php'; // pendientes
 
 
+// Modulo de taller
+elseif(isset($_GET["clientes"])) include_once 'system/taller/clientes.php'; // clientes nuevos
+elseif(isset($_GET["vehiculos"])) include_once 'system/taller/vehiculos.php'; // vehiculos
+elseif(isset($_GET["mantenimiento"])) include_once 'system/taller/mantenimiento.php'; // mantenimiento
+
+
+
 
 // Gastos y compras
 elseif(isset($_GET["gastos"])) include_once 'system/gastos/gastos_update.php'; 

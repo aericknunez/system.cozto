@@ -83,7 +83,11 @@ echo '
 	if($_GET["modal"] == "abonos_cuentas"){
 	echo '<script type="text/javascript" src="assets/js/query/cuentas.js?v='.$numero.'"></script>';
 	}
-
+	
+// taller
+	if($_GET["modal"] == "cliente_taller"){
+	echo '<script type="text/javascript" src="assets/js/query/taller.js?v='.$numero.'"></script>';
+	}
 
 // cotizador
 	if($_GET["modal"] == "cantidadc"){
@@ -409,6 +413,23 @@ elseif(isset($_GET["autoproadd"])) {
 	echo '<script type="text/javascript" src="assets/js/query/autopartsProducto.js?v='.$numero.'"></script>';	
 		}
 } 
+
+
+
+/// taller
+elseif(isset($_GET["clientes"])) {
+echo '<script type="text/javascript" src="assets/js/query/taller.js?v='.$numero.'"></script>';
+echo '<script type="text/javascript" src="assets/js/query/paginador.js?v='.$numero.'"></script>';
+} 
+elseif(isset($_GET["vehiculos"])) {
+echo '<script type="text/javascript" src="assets/js/query/taller.js?v='.$numero.'"></script>';
+echo '<script type="text/javascript" src="assets/js/query/paginador.js?v='.$numero.'"></script>';
+} 
+elseif(isset($_GET["mantenimiento"])) {
+echo '<script type="text/javascript" src="assets/js/query/taller.js?v='.$numero.'"></script>';
+echo '<script type="text/javascript" src="assets/js/query/paginador.js?v='.$numero.'"></script>';
+} 
+
 
 
 /// ecommerce

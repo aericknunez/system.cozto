@@ -42,6 +42,10 @@ if($_REQUEST["modal"]=="cliente") include_once 'system/modal/modal/cliente.php';
 if($_REQUEST["modal"]=="agrupado") include_once 'system/modal/modal/agrupado.php';
 
 
+//taller -- para agregar a la factura
+if($_REQUEST["modal"]=="cliente_taller") include_once 'system/modal/modal/cliente_taller.php';
+
+
 // creditos
 if($_REQUEST["modal"]=="abonos") include_once 'system/modal/modal/creditos_abonos.php';
 
