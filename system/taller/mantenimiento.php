@@ -171,3 +171,89 @@ $taller = new Taller();
 </div>
 <!--Modal: modalConfirmDelete-->
 
+
+
+
+
+
+
+
+
+
+<!-- modal para ver el cuenta -->
+<div class="modal" id="ModalEditor" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"  data-backdrop="false">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">
+         MOTIVO DE INGRESO</h5>
+      </div>
+      <div class="modal-body">
+<!-- ./  content -->
+  <form id="form-editor">
+
+<input type="hidden" id="tipo" name="tipo" value="">
+<input type="hidden" id="hash" name="hash" value="">
+
+    <div class="form-row">
+    <div class="col-md-12 mt-0 md-form mt-0">
+      <textarea id="texto" name="texto" class="md-textarea form-control" rows="3"></textarea>
+      <label for="texto">Motivo de Ingreso</label>
+    </div>
+  </div>
+
+
+  <div class="form-row mt-0">
+    <div class="col-md-12 md-form text-center">
+     <button class="btn btn-info" type="submit" id="btn-editor"><i class="fas fa-save mr-1"></i> Guardar Cambios </button>
+    </div>
+  </div>
+
+</form>
+
+<!-- ./  content -->
+      </div>
+      <div class="modal-footer">
+
+        <a class="btn btn-primary btn-rounded" data-dismiss="modal">Regresar</a>  
+    
+      </div>
+    </div>
+  </div>
+</div>
+<!-- ./  Modal -->
+
+
+
+
+
+
+
+
+<div class="modal fade" id="ModalEstadoDel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-sm modal-notify modal-danger" role="document">
+    <!--Content-->
+    <div class="modal-content text-center">
+      <!--Header-->
+      <div class="modal-header d-flex justify-content-center">
+        <p class="heading">Desea dar por completo este elemento?</p>
+      </div>
+
+      <!--Body-->
+      <div class="modal-body">
+        <p>Al dar por terminado el elemento ya no se podra cambiar el estado</p>
+        <i class="fas fa-times fa-4x animated rotateIn"></i>
+
+      </div>
+
+      <!--Footer-->
+      <div class="modal-footer flex-center">
+        <a id="competado" class="btn  btn-outline-danger">Completado</a>
+        <a type="button" class="btn  btn-danger waves-effect" data-dismiss="modal">No</a>
+      </div>
+    </div>
+    <!--/.Content-->
+  </div>
+</div>
+<!--Modal: modalConfirmDelete-->

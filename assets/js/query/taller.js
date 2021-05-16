@@ -213,18 +213,105 @@ $(document).ready(function(){
 
 
 
+	$("body").on("click","#edit",function(){ 
+		
+		$('#ModalEditor').modal('show');
+		$('#tipo').attr("value",$(this).attr('tipo'));
+		$('#hash').attr("value",$(this).attr('hash'));
+
+		var hash = $(this).attr('hash');
+		var tipo = $(this).attr('tipo');
+		var dataString = 'tipo='+tipo+'&hash='+hash;
+
+		$.ajax({
+            type: "POST",
+            url: "application/src/routes.php?op=611",
+            data: dataString,
+            beforeSend: function () {
+               $("#texto").val('Cargando... Espere!');
+            },
+            success: function(data) {    
+            	$('#texto').val(data);        
+                // $("#vista_ver").html(data); // lo que regresa de la busquea 		
+            }
+        });
+
+	});
+
+
+	$('#btn-editor').click(function(e){ /// agregar un producto 
+	e.preventDefault();
+
+	$.ajax({
+			url: "application/src/routes.php?op=610",
+			method: "POST",
+			data: $("#form-editor").serialize(),
+			beforeSend: function () {
+				$('#btn-editor').html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>Loading...').addClass('disabled');
+	           // $("#contenido").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt=""></div>');
+            },
+			success: function(data){
+				$('#btn-editor').html('<i class="fas fa-save mr-1"></i> Guardar Cambios ').removeClass('disabled');	      
+				$("#form-editor").trigger("reset");
+				$("#vista_ver").html(data);	
+				$('#ModalEditor').modal('hide');
+			}
+		})
+	});
 
 
 
 
+	$("body").on("click","#estado",function(){ 
+		
+		var hash = $(this).attr('hash');
+		var edo = $(this).attr('edo');
+		var dataString = 'edo='+edo+'&hash='+hash;
+
+		$.ajax({
+            type: "POST",
+            url: "application/src/routes.php?op=612",
+            data: dataString,
+            beforeSend: function () {
+               $("#contenido").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt=""></div>');
+            },
+            success: function(data) {         
+                $("#contenido").html(data); // lo que regresa de la busquea 		
+            }
+        });
+
+	});
 
 
+	$("body").on("click","#cestado",function(){ 
+		
+		$('#ModalEstadoDel').modal('show');
+		$('#competado').attr("hash",$(this).attr('hash'));
+		$('#competado').attr("edo",'2');
+
+	});
 
 
+	$("body").on("click","#competado",function(){ 
+		
+		var hash = $(this).attr('hash');
+		var edo = $(this).attr('edo');
+		var dataString = 'edo='+edo+'&hash='+hash;
 
+		$.ajax({
+            type: "POST",
+            url: "application/src/routes.php?op=612",
+            data: dataString,
+            beforeSend: function () {
+               $("#contenido").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt=""></div>');
+            },
+            success: function(data) {         
+                $("#contenido").html(data); // lo que regresa de la busquea 
+                $('#ModalEstadoDel').modal('hide');		
+            }
+        });
 
-
-
+	});
 
 
 

@@ -2661,6 +2661,28 @@ break;
 
 
 
+case "610": // agrrega edit
+include_once '../../system/taller/Taller.php';
+	$talleres = new Taller();
+	$talleres->EditarOp($_POST);
+break;
+
+
+case "611": // obtiene texto para  edit
+include_once '../../system/taller/Taller.php';
+	$talleres = new Taller();
+	$talleres->TextoOp($_POST);
+break;
+
+
+
+case "612": // obtiene texto para  edit
+include_once '../../system/taller/Taller.php';
+	$talleres = new Taller();
+	$talleres->CambiarEdo($_POST);
+break;
+
+
 
 
 

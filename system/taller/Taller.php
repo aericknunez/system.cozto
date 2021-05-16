@@ -455,12 +455,22 @@ $op="607";
         $placa = $r["placa"];
     } unset($r); 
 
+if($b["edo"] == 3){
+  $edo = $this->EdoTaller($b["edo"]);
+}
+if($b["edo"] == 2){
+   $edo = '<a id="cestado" hash="'.$b["hash"].'"> '. $this->EdoTaller($b["edo"]). ' </a>';
+}
+if($b["edo"] == 1){
+  $edo = '<a id="estado" edo="'.$b["edo"].'" hash="'.$b["hash"].'"> '. $this->EdoTaller($b["edo"]). ' </a>';
+}
+
           echo '<tr>
                       <td >'.Helpers::GetData("taller_cliente", "cliente", "hash", $cliente).'</td>
                       <td>'.Helpers::GetData("autoparts_marca", "marca", "hash", $marca) .' - '.  Helpers::GetData("autoparts_modelo", "modelo", "hash", $modelo). ' - '.$color. '</td>
                       <td>'.$placa. '</td>
-                      <td>'. $this->EdoTaller($b["edo"]). '</td>
-                      <td><a id="xver" op="609" hash="'.$b["hash"].'">Ver</a></td>
+                      <td>'.$edo.'</td>
+                      <td><a id="xver" op="609" hash="'.$b["hash"].'"><i class="text-success fas fa-edit fa-lg"></i></a></td>
                      </tr>';
         }
         echo '</tbody>
@@ -589,6 +599,7 @@ $page <= 1 ? $enable = 'disabled' : $enable = '';
         $reparacion = $r["reparacion"];
         $fecha_salida = $r["fecha_salida"];
         $hora_salida = $r["hora_salida"];
+        $edo = $r["edo"];
     } unset($r); 
 
     if ($r = $db->select("*", "taller_vehiculo", "WHERE hash = '$vehiculo' and td = ". $_SESSION['td'] ."")) { 
@@ -623,7 +634,142 @@ $page <= 1 ? $enable = 'disabled' : $enable = '';
             <p>Chasis Gravado: <strong>'. $chasis_gravado .'</strong>, Chasis Vin: <strong>'. $chasis_vin .'</strong>, No. Motor: <strong>'. $no_motor .'</strong></p>
           </div>';  
  
+    echo '<div class="card border-info">
+          <h5 class="card-title ml-2 mt-2">MILLAJE: '.$millaje.'</h5>
+            <div class="mt-0 mb-2 ml-2 font-weight-bolder">
+                Fecha de ingreso: '.Fechas::FechaEscrita($fecha_ingreso).' - '.$hora_ingreso.'
+            </div>
+        </div>';      
+
+if($motivo != NULL){
+    echo '<div class="card mt-3">
+        <div class="row">
+          <div class="col">
+          <h5 class="card-title ml-2 mt-2">MOTIVO DE INGRESO</h5>
+          <div class="card-text mt-0 mb-2 ml-2">'.$motivo.'</div>
+          </div>
+
+          <div class="col mr-2">
+          <a id="edit" tipo="1" hash="'.$hash.'" class="close">
+          <i class="fas fa-edit fa-sm"></i>
+          </a>
+          </div>
+        </div>
+
+        </div>';  
+} else {
+  echo '<a id="edit" tipo="1" hash="'.$hash.'" class="btn btn-primary btn-rounded btn-sm">Agregar Motivo</a>';
+}
+ 
+   
+if($diagnostico != NULL){
+    echo '<div class="card mt-3">
+        <div class="row">
+          <div class="col">
+          <h5 class="card-title ml-2 mt-2">DIAGNOSTICO</h5>
+          <div class="card-text mt-0 mb-2 ml-2">'.$diagnostico.'</div>
+          </div>
+
+          <div class="col mr-2">
+          <a id="edit" tipo="2" hash="'.$hash.'" class="close">
+          <i class="fas fa-edit fa-sm"></i>
+          </a>
+          </div>
+        </div>
+
+        </div>';   
+} else {
+   echo '<a id="edit" tipo="2" hash="'.$hash.'" class="btn btn-primary btn-rounded btn-sm">Agregar Diagnostico</a>';
+}
+ 
+
+
+if($reparacion != NULL){
+    echo '<div class="card mt-3">
+        <div class="row">
+          <div class="col">
+          <h5 class="card-title ml-2 mt-2">REPARACION</h5>
+          <div class="card-text mt-0 mb-2 ml-2">'.$reparacion.'</div>
+          </div>
+
+          <div class="col mr-2">
+          <a id="edit" tipo="3" hash="'.$hash.'"accordion class="close">
+          <i class="fas fa-edit fa-sm"></i>
+          </a>
+          </div>
+        </div>
+
+        </div>';   
+} else {
+   echo '<a id="edit" tipo="3" hash="'.$hash.'" class="btn btn-primary btn-rounded btn-sm">Agregar Reparación</a>';
+}
+ 
+
+
+echo  '<div class="mt-2">Estado: '.$this->EdoTaller($edo).'</div>';
+
+
   }
+
+
+
+
+
+  public function EditarOp($datos){
+    $db = new dbConn();
+      if($datos["hash"] != NULL and $datos["texto"] != NULL){ // comprueba dtos
+        
+        if($datos["tipo"] == 1) $tipo = "motivo";
+        if($datos["tipo"] == 2) $tipo = "diagnostico";
+        if($datos["tipo"] == 3) $tipo = "reparacion";
+
+        $cambio = array();
+        $cambio[$tipo] = $datos["texto"];
+          if (Helpers::UpdateId("taller_mantenimiento", $cambio, "hash = '".$datos["hash"]."' and td = ".$_SESSION["td"]."")) {
+
+           Alerts::Alerta("success","Realizado!","Registro actualizado correctamente!");  
+
+          }
+ 
+        } else {
+          Alerts::Alerta("error","Error!","Faltan Datos!");
+        }
+      $this->DetallesMantenimiento($datos["hash"]);
+  }
+
+
+
+
+  public function TextoOp($datos){
+    $db = new dbConn();
+
+        if($datos["tipo"] == 1) $tipo = "motivo";
+        if($datos["tipo"] == 2) $tipo = "diagnostico";
+        if($datos["tipo"] == 3) $tipo = "reparacion";
+
+        echo Helpers::GetData("taller_mantenimiento", $tipo, "hash", $datos["hash"]);
+
+  }
+
+
+  public function CambiarEdo($datos){
+    $db = new dbConn();
+
+if($datos["edo"] == 0){
+    Alerts::Alerta("error","Antención!","no se puede cambiar el estado!");
+} else {
+    $cambio = array();
+    $cambio["edo"] = $datos["edo"] + 1;
+      if(Helpers::UpdateId("taller_mantenimiento", $cambio, "hash = '".$datos["hash"]."' and td = ".$_SESSION["td"]."")) {
+        Alerts::Alerta("success","Realizado!","Registro actualizado correctamente!");  
+    }
+
+}
+
+    $this->VerMantenimiento(1, "id", "desc");
+  }
+
+
 
 
 
