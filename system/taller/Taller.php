@@ -90,7 +90,7 @@ $op="601";
                       <td >'.$b["cliente"].'</td>
                       <td>'.$b["direccion"]. '</td>
                       <td>'.$b["telefono1"]. '</td>
-                      <td>Ver</td>
+                      <td><i class="green-text fas fa-plus-circle fa-lg"></i></td>
                      </tr>';
         }
         echo '</tbody>
@@ -267,7 +267,7 @@ $op="603";
                       <td>'.Helpers::GetData("autoparts_marca", "marca", "hash", $b["marca"]). '</td>
                       <td>'.$b["ano"]. '</td>
                       <td>'.$b["color"]. '</td>
-                      <td>Ver</td>
+                      <td><i class="green-text fas fa-plus-circle fa-lg"></i></td>
                      </tr>';
         }
         echo '</tbody>
@@ -768,6 +768,129 @@ if($datos["edo"] == 0){
 
     $this->VerMantenimiento(1, "id", "desc");
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  public function ClienteBusqueda($dato){ // Busqueda para cliente
+    $db = new dbConn();
+
+          $a = $db->query("SELECT * FROM taller_cliente WHERE (cliente like '%".$dato["keyword"]."%' or nit like '%".$dato["keyword"]."%') and td = ".$_SESSION["td"]." limit 10");
+           if($a->num_rows > 0){
+            echo '<table class="table table-sm table-hover">';
+    foreach ($a as $b) {
+               echo '<tr>
+                      <td scope="row"><a id="select-cli" hash="'. $b["hash"] .'" nombre="'. $b["cliente"] .'"><div>'. $b["cliente"] .'   ||   '. $b["nit"].'</div></a></td>
+                    </tr>'; 
+    }  $a->close();
+
+        echo '
+        </table>';
+          } else {
+            echo "El criterio de busqueda no corresponde a un cliente";
+          }
+  }
+
+
+
+  public function AgregaCliente($dato){ // agrega  cliente
+    $db = new dbConn();
+
+    $_SESSION["cliente_cli"] = $dato["hash"];
+    $_SESSION["cliente_asig"] = $dato["nombre"];
+ 
+     $_SESSION["factura_cliente"] = $dato["nombre"];
+     $_SESSION["factura_documento"] = Helpers::GetData("taller_cliente", "nit", "hash", $dato["hash"]);   
+
+      $this->AddClienteFactura(); /// agrega el registro
+
+
+      $texto = 'Cliente asignado para la Factura: ' . $_SESSION['cliente_asig']. ".";
+    Alerts::Mensajex($texto,"danger",'<a id="quitar-clienteA" op="619" class="btn btn-danger btn-rounded">Quitar Cliente</a>',$boton2);
+
+
+      $cambio = array();
+      $cambio["nombre"] = $_SESSION["cliente_asig"];
+      Helpers::UpdateId("ticket_orden", $cambio, "correlativo = '".$_SESSION["orden"]."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."");   
+
+
+
+/// si hay solo un vehiculo asignado a ese cliente se crea la variable automaticamente
+/// sino se da a elegir a que vehiculo le asiganara la factura
+$a = $db->query("SELECT * FROM taller_vehiculo WHERE cliente = '".$dato["hash"]."' and td = ".$_SESSION["td"]."");
+$veh = $a->num_rows;
+$a->close();
+
+if($veh == 0){
+ unset($_SESSION["vehiculo_factura"]);
+} elseif($veh == 1){
+ $_SESSION["vehiculo_factura"] = Helpers::GetData("taller_vehiculo", "hash", "cliente", $dato["hash"]);
+ echo "Se asigno vehiculo";
+} else {
+ echo "Seleccione Un vehiculo";
+}
+
+
+
+  }
+
+
+
+
+  public function AddClienteFactura(){
+    $db = new dbConn();
+
+      $datos = array();
+        $datos["factura"] = NULL;
+        $datos["orden"] = $_SESSION["orden"];
+        $datos["tx"] = $_SESSION["tx"];
+        $datos["cliente"] = $_SESSION["cliente_cli"];
+        $datos["fecha"] = date("d-m-Y");
+        $datos["hora"] = date("H:i:s");
+        $datos["hash"] = Helpers::HashId();
+        $datos["time"] = Helpers::TimeId();
+        $datos["td"] = $_SESSION["td"];
+        $db->insert("ticket_cliente", $datos); 
+  }
+
+
+  public function DelClienteFactura(){
+    $db = new dbConn();
+
+    Helpers::DeleteId("ticket_cliente", "orden = ".$_SESSION["orden"]." and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."");
+    $this->UnsetCliente();
+
+      $cambio = array();
+      $cambio["nombre"] = NULL;
+      Helpers::UpdateId("ticket_orden", $cambio, "correlativo = '".$_SESSION["orden"]."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."");  
+  }
+
+  public function UnsetCliente(){
+      if(isset($_SESSION["cliente_cli"])) unset($_SESSION["cliente_cli"]);
+      if(isset($_SESSION["cliente_asig"])) unset($_SESSION["cliente_asig"]);  
+
+      unset($_SESSION["factura_cliente"]);
+      unset($_SESSION["factura_documento"]); 
+
+      unset($_SESSION["vehiculo_factura"]); 
+  }
+
+
+
+
+
 
 
 

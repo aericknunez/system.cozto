@@ -319,4 +319,72 @@ $(document).ready(function(){
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+//// agregar cliente a factura
+
+    $("#cliente-busquedaA").keyup(function(){ /// para la caja de busqueda
+        $.ajax({
+        type: "POST",
+        url: "application/src/routes.php?op=617",
+        data:'keyword='+$(this).val(),
+        beforeSend: function(){
+            $("#muestra-busquedaA").css("background","#FFF url(assets/img/LoaderIcon.gif) no-repeat 550px");
+        },
+        success: function(data){
+            $("#muestra-busquedaA").show();
+            $("#muestra-busquedaA").html(data);
+            $("#cliente-busquedaA").css("background","#FFF");
+        }
+        });
+    });
+
+
+////////////////
+
+    $("body").on("click","#select-cli",function(){
+    var hash = $(this).attr('hash');
+    var nombre = $(this).attr('nombre');
+        $.post("application/src/routes.php?op=618", {hash:hash, nombre:nombre}, 
+        function(data){
+            $("#muestra-busquedaA").hide();
+            $("#ver").html(data); // lo que regresa de la busquea 
+            $("#c-busquedaA").trigger("reset"); // no funciona
+        });
+    });
+
+
+    $("body").on("click","#quitar-clienteA",function(){ // quita descuento
+        var op = $(this).attr('op');
+        var dataString = 'op='+op;
+
+        $.ajax({
+            type: "POST",
+            url: "application/src/routes.php",
+            data: dataString,
+            beforeSend: function () {
+               $("#ver").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt=""></div>');
+            },
+            success: function(data) {            
+                $("#ver").html(data); // lo que regresa de la busquea 
+            }
+        });
+    });                 
+
+
+
+
+
+
 }); // termina query

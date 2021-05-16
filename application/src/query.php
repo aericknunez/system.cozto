@@ -83,7 +83,11 @@ echo '
 	if($_GET["modal"] == "abonos_cuentas"){
 	echo '<script type="text/javascript" src="assets/js/query/cuentas.js?v='.$numero.'"></script>';
 	}
-
+	
+// taller
+	if($_GET["modal"] == "cliente_taller"){
+	echo '<script type="text/javascript" src="assets/js/query/taller.js?v='.$numero.'"></script>';
+	}
 
 // cotizador
 	if($_GET["modal"] == "cantidadc"){

@@ -2684,6 +2684,44 @@ break;
 
 
 
+case "617": ///////////agregar a factura
+include_once '../../system/taller/Taller.php';
+	$talleres = new Taller();
+	$talleres->ClienteBusqueda($_POST);
+break;
+
+
+
+case "618": // add
+include_once '../../system/taller/Taller.php';
+	$talleres = new Taller();
+	$talleres->AgregaCliente($_POST);
+break;
+
+
+case "619": // del
+include_once '../../system/taller/Taller.php';
+	$talleres = new Taller();
+	$talleres->DelClienteFactura();
+break;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
