@@ -1,0 +1,113 @@
+		
+ALTER TABLE `config_root` ADD `taller` VARCHAR(100) NOT NULL AFTER `autoparts`;
+
+ALTER TABLE `config_root` ADD `consignaciones` VARCHAR(100) NOT NULL AFTER `taller`;
+
+ALTER TABLE `facturar_documento_factura` ADD `tipo` INT(1) NOT NULL COMMENT 'tipo de documento' AFTER `tx`;
+
+
+CREATE TABLE `taller_cliente` (
+  `id` int(6) NOT NULL,
+  `cliente` varchar(200) NOT NULL,
+  `direccion` varchar(200) NOT NULL,
+  `departamento` varchar(50) NOT NULL,
+  `municipio` varchar(50) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `giro` varchar(100) NOT NULL,
+  `registro` varchar(50) NOT NULL,
+  `nit` varchar(50) NOT NULL,
+  `telefono1` varchar(20) NOT NULL,
+  `telefono2` varchar(20) NOT NULL,
+  `comentarios` text NOT NULL,
+  `edo` int(2) NOT NULL,
+  `hash` varchar(12) NOT NULL,
+  `time` int(12) NOT NULL,
+  `td` int(6) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE `taller_facturas` (
+  `id` int(6) NOT NULL,
+  `cliente` varchar(12) NOT NULL,
+  `vehiculo` varchar(12) NOT NULL,
+  `factura` varchar(12) NOT NULL,
+  `tx` int(2) NOT NULL,
+  `tipo` int(2) NOT NULL,
+  `fecha` varchar(25) NOT NULL,
+  `fechaF` varchar(25) NOT NULL,
+  `hora` varchar(25) NOT NULL,
+  `hash` varchar(12) NOT NULL,
+  `time` int(12) NOT NULL,
+  `td` int(6) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE `taller_mantenimiento` (
+  `id` int(6) NOT NULL,
+  `vehiculo` varchar(12) NOT NULL,
+  `millaje` varchar(25) NOT NULL,
+  `fecha_ingreso` varchar(25) NOT NULL,
+  `fecha_ingresoF` varchar(25) NOT NULL,
+  `fecha_salida` varchar(25) NOT NULL,
+  `fecha_salidaF` varchar(25) NOT NULL,
+  `hora_ingreso` varchar(25) NOT NULL,
+  `hora_salida` varchar(25) NOT NULL,
+  `motivo` text NOT NULL,
+  `diagnostico` text NOT NULL,
+  `reparacion` text NOT NULL,
+  `edo` int(2) NOT NULL COMMENT '1 activo, 2 en reparacion, 3 terminado, 0 suspendido',
+  `hash` varchar(12) NOT NULL,
+  `time` int(12) NOT NULL,
+  `td` int(6) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+CREATE TABLE `taller_vehiculo` (
+  `id` int(6) NOT NULL,
+  `cliente` varchar(12) NOT NULL,
+  `placa` varchar(20) NOT NULL,
+  `marca` varchar(25) NOT NULL,
+  `ano` varchar(10) NOT NULL,
+  `modelo` varchar(20) NOT NULL,
+  `clase` varchar(20) NOT NULL,
+  `tipo` varchar(20) NOT NULL,
+  `color` varchar(20) NOT NULL,
+  `chasis_gravado` varchar(50) NOT NULL,
+  `chasis_vin` varchar(50) NOT NULL,
+  `no_motor` varchar(50) NOT NULL,
+  `detalles` text NOT NULL,
+  `edo` int(2) NOT NULL,
+  `hash` varchar(12) NOT NULL,
+  `time` int(12) NOT NULL,
+  `td` int(6) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+ALTER TABLE `taller_cliente`
+  ADD PRIMARY KEY (`id`);
+
+
+ALTER TABLE `taller_facturas`
+  ADD PRIMARY KEY (`id`);
+
+
+ALTER TABLE `taller_mantenimiento`
+  ADD PRIMARY KEY (`id`);
+
+
+ALTER TABLE `taller_vehiculo`
+  ADD PRIMARY KEY (`id`);
+
+
+ALTER TABLE `taller_cliente`
+  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `taller_facturas`
+  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `taller_mantenimiento`
+  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `taller_vehiculo`
+  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT;
