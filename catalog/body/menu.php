@@ -284,10 +284,27 @@ if($_SESSION["root_tipo_sistema"] != 1) {
 
 
 
+<?php if($_SESSION["root_taller"] == "on") { 
+?>
+<li><a class="collapsible-header waves-effect arrow-r"><i class="far fa-user"></i> CLIENTES TALLER<i class="fa fa-angle-down rotate-icon"></i></a>
+<div class="collapsible-body">
+<ul class="list-unstyled">
+
+<li><a href="?clientes" class="waves-effect"><i class="fas fa-user"></i> Clientes</a></li>
+<li><a href="?vehiculos" class="waves-effect"><i class="fas fa-address-book"></i> Vehiculos</a></li>
+<li><a href="?mantenimiento" class="waves-effect"><i class="fas fa-address-book"></i> Mantenimiento</a></li>
+
+</ul>
+</div>
+</li>
+
+<?php }  ?>
 
 
 
 
+<?php if($_SESSION["root_taller"] != "on") { 
+?>
 <li><a class="collapsible-header waves-effect arrow-r"><i class="far fa-user"></i> CLIENTES<i class="fa fa-angle-down rotate-icon"></i></a>
 <div class="collapsible-body">
 <ul class="list-unstyled">
@@ -298,6 +315,8 @@ if($_SESSION["root_tipo_sistema"] != 1) {
 </ul>
 </div>
 </li>
+
+<?php }  ?>
 
 
 
