@@ -2707,6 +2707,19 @@ break;
 
 
 
+case "620": // ver cliente
+include_once '../../system/taller/Taller.php';
+	$talleres = new Taller();
+	$talleres->VistaCliente($_POST);
+break;
+
+
+
+case "621": // ver cliente
+include_once '../../system/taller/Taller.php';
+	$talleres = new Taller();
+	$talleres->VistaVehiculo($_POST);
+break;
 
 
 

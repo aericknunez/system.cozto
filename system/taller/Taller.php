@@ -90,7 +90,7 @@ $op="601";
                       <td >'.$b["cliente"].'</td>
                       <td>'.$b["direccion"]. '</td>
                       <td>'.$b["telefono1"]. '</td>
-                      <td><i class="green-text fas fa-plus-circle fa-lg"></i></td>
+                      <td><a id="detalles" op="620" key="'.$b["hash"].'"><i class="green-text fas fa-plus-circle fa-lg"></i></a></td>
                      </tr>';
         }
         echo '</tbody>
@@ -267,7 +267,7 @@ $op="603";
                       <td>'.Helpers::GetData("autoparts_marca", "marca", "hash", $b["marca"]). '</td>
                       <td>'.$b["ano"]. '</td>
                       <td>'.$b["color"]. '</td>
-                      <td><i class="green-text fas fa-plus-circle fa-lg"></i></td>
+                      <td><a id="detalles" op="621" key="'.$b["hash"].'"><i class="green-text fas fa-plus-circle fa-lg"></i></a></td>
                      </tr>';
         }
         echo '</tbody>
@@ -886,6 +886,167 @@ if($veh == 0){
 
       unset($_SESSION["vehiculo_factura"]); 
   }
+
+
+
+
+
+
+
+
+
+
+  public function VistaCliente($data){
+      $db = new dbConn();
+     if ($r = $db->select("*", "taller_cliente", "WHERE hash = '".$data["key"]."' and td = ".$_SESSION["td"]."")) { 
+
+
+echo '<blockquote class="blockquote bq-primary">
+  <p class="bq-title" mb-0>'.$r["cliente"].'</p>
+</blockquote>';
+
+echo '  <p  class="mt-1">NIT: <strong>'.$r["nit"].'</strong> </p>';
+echo '  <p  class="mt-1">Tel&eacutefono: <strong>'.$r["telefono1"].'  |  '.$r["telefono2"].'</strong> </p>';
+// echo '  <p  class="mt-1">Fecha de Nacimiento: <strong>'.Fechas::FechaEscrita($r["nacimiento"]).'</strong> </p>';
+
+              echo '<table class="table table-hover">
+                <tbody>
+                  <tr>
+                    <th colspan="2">Direcci&oacuten: '.$r["direccion"].'</th>
+                  </tr>
+                  <tr>
+                    <td>Departamento: '.$r["departamento"].'</td>
+                    <td>Municipio: '.$r["municipio"].'</td>
+                  </tr>
+                  <tr>
+                    <td>Email: '.$r["email"].'</td>
+                    <td>Comentarios: '.$r["comentarios"].'</td>
+                  </tr>
+                </tbody>
+              </table>'; 
+
+        }  unset($r); 
+
+
+
+   $a = $db->query("SELECT * FROM ticket_cliente WHERE cliente = '".$data["key"]."' and td = ".$_SESSION["td"]."");
+    $cf = $a->num_rows;  // numero de facturas
+    $a->close();
+
+   $a = $db->query("SELECT * FROM creditos WHERE hash_cliente = '".$data["key"]."' and td = ".$_SESSION["td"]."");
+    $cas = $a->num_rows; // numero de creditos
+    $a->close();
+
+
+
+
+echo '<div class="card-group">
+    <!--Panel-->
+    <div class="card ml-3 mr-2">
+        <div class="card-body text-center">
+            <h5 class="card-title">Facturas Registradas</h5>
+            <h1 class="display-1">'. $cf .'</h1>
+        </div>
+        <div class="card-footer">
+            <small class="text-muted"><a href="?cliente_facturas&key='.$data["key"].'">Ver todas las facturas</a></small>
+        </div>
+    </div>
+    <!--/.Panel-->
+
+    <!--Panel-->
+    <div class="card ml-2 mr-3">
+        <div class="card-body text-center">
+            <h5 class="card-title">Creditos Otorgados</h5>
+            <h1 class="display-1">'. $cas .'</h1>
+        </div>
+        <div class="card-footer">
+            <small class="text-muted"><a href="?creditosvercliente&key='.$data["key"].'">Ver los creditos</a></small>
+        </div>
+    </div>
+    <!--/.Panel-->
+
+</div>';
+
+
+
+
+  }
+
+
+
+
+
+  public function VistaVehiculo($data){
+      $db = new dbConn();
+
+
+if ($r = $db->select("*", "taller_vehiculo", "WHERE hash = '".$data["key"]."' and td = ". $_SESSION['td'] ."")) { 
+$cliente = $r["cliente"];
+$marca = $r["marca"];
+$modelo = $r["modelo"];
+$color = $r["color"];
+$ano = $r["ano"];
+$chasis_gravado = $r["chasis_gravado"];
+$chasis_vin = $r["chasis_vin"];
+$no_motor = $r["no_motor"];
+$v_hash = $r["hash"];
+} unset($r); 
+
+
+
+$this->DatosCliente($cliente);
+
+
+
+echo '<div class="alert alert-danger" role="alert">
+<h4 class="alert-heading">'.  Helpers::GetData("autoparts_marca", "marca", "hash", $marca) .' | '.  Helpers::GetData("autoparts_modelo", "modelo", "hash", $modelo) .' | '.  $color .' | '.  $ano .'</h4>
+<p>Chasis Gravado: <strong>'. $chasis_gravado .'</strong>, Chasis Vin: <strong>'. $chasis_vin .'</strong>, No. Motor: <strong>'. $no_motor .'</strong></p>
+</div>';  
+
+
+   $a = $db->query("SELECT * FROM taller_mantenimiento WHERE vehiculo = '".$v_hash."' and td = ".$_SESSION["td"]."");
+    $cf = $a->num_rows;  // numero de facturas
+    $a->close();
+
+   $a = $db->query("SELECT * FROM taller_facturas WHERE vehiculo = '".$v_hash."' and td = ".$_SESSION["td"]."");
+    $cas = $a->num_rows; // numero de creditos
+    $a->close();
+
+
+
+
+echo '<div class="card-group">
+    <!--Panel-->
+    <div class="card ml-3 mr-2">
+        <div class="card-body text-center">
+            <h5 class="card-title">Mantenimientos</h5>
+            <h1 class="display-1">'. $cf .'</h1>
+        </div>
+
+    </div>
+    <!--/.Panel-->
+
+    <!--Panel-->
+    <div class="card ml-2 mr-3">
+        <div class="card-body text-center">
+            <h5 class="card-title">Facturas Aplicadas</h5>
+            <h1 class="display-1">'. $cas .'</h1>
+        </div>
+
+    </div>
+    <!--/.Panel-->
+
+</div>';
+
+
+
+
+  }
+
+
+
+
+
 
 
 
