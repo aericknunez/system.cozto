@@ -127,11 +127,23 @@ if($_SESSION["root_autoparts"] == "on"){
 }
 
 
-if($_SESSION["root_autoparts"] == "on"){
+
+
+
+if($_SESSION["root_autoparts"] == "on" or $_SESSION["root_taller"] == "on"){
  ?>
 <li><a href="?autoopciones" class="waves-effect arrow-r"><i class="fas fa-handshake"></i> Marcas y modelos</a></li>
+<?php } 
+
+
+
+if($_SESSION["root_autoparts"] == "on"){
+ ?>
 <li><a href="?autoverproductos" class="waves-effect arrow-r"><i class="fas fa-handshake"></i> Productos por marca</a></li>
 <?php } ?>
+
+
+
 
 <?php  if((Helpers::ServerDomain() == FALSE and $_SESSION["root_plataforma"] == 0) or (Helpers::ServerDomain() == TRUE and $_SESSION["root_plataforma"] == 1)) {
 ?>
