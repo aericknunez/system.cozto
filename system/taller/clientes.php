@@ -50,7 +50,7 @@ $taller = new Taller();
   <div class="form-row">
     
     <div class="col-md-12 mb-0 md-form">
-      <label for="direccion">* Dirección</label>
+      <label for="direccion">Dirección</label>
       <input type="text" class="form-control" id="direccion" name="direccion" required>
     </div>
 
@@ -87,7 +87,7 @@ $taller = new Taller();
     </div>
 
     <div class="col-md-4 mb-1 md-form">
-      <label for="telefono1">* Teléfono</label>
+      <label for="telefono1">Teléfono</label>
       <input type="text" class="form-control" id="telefono1" name="telefono1" required>
     </div>
   
@@ -108,12 +108,12 @@ $taller = new Taller();
     </div>
 
     <div class="col-md-4 mb-1 md-form">
-      <label for="registro">* No Registro</label>
+      <label for="registro">No Registro</label>
       <input type="text" class="form-control" id="registro" name="registro" required>
     </div>
   
     <div class="col-md-4 mb-1 md-form">
-      <label for="nit">* NIT</label>
+      <label for="nit">NIT</label>
       <input type="text" class="form-control" id="nit" name="nit" required>
     </div>
 

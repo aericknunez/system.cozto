@@ -26,9 +26,18 @@ class Taller{
                 $data["time"] = Helpers::TimeId();
                 $data["td"] = $_SESSION["td"];
                 if ($db->insert("taller_cliente", $data)) {
-
                  Alerts::Alerta("success","Realizado!","Registro realizado correctamente!");  
 
+                $datax = array();
+                $datax["nombre"] = $data["cliente"];
+                $datax["documento"] = $data["nit"];
+                $datax["direccion"] = $data["direccion"];
+                $datax["departamento"] = $data["departamento"];
+                $datax["municipio"] = $data["municipio"];
+                $datax["telefono"] = $data["telefono2"];
+                $datax["email"] = $data["email"];
+                $datax["comentarios"] = $data["comentarios"];
+                  $this->AddClientex($datax);
                 }
  
         } else {
@@ -36,6 +45,29 @@ class Taller{
         }
       $this->VerClientes(1, "id", "desc");
   }
+
+
+
+
+  public function AddClientex($datos){
+    $db = new dbConn();
+
+        $datos["nombre"] = strtoupper($datos["nombre"]);
+        $datos["hash"] = Helpers::HashId();
+        $datos["time"] = Helpers::TimeId();
+        $datos["td"] = $_SESSION["td"];
+        $db->insert("clientes", $datos);
+
+  }
+
+
+
+
+
+
+
+
+
 
 
 

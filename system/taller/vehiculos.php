@@ -94,17 +94,17 @@ $taller = new Taller();
     </div>
 
     <div class="col-md-3 mb-1 md-form">
-      <label for="clase">* Clase</label>
+      <label for="clase">Clase</label>
       <input type="text" class="form-control" id="clase" name="clase" required>
     </div>
   
     <div class="col-md-3 mb-1 md-form">
-      <label for="tipo">* Tipo</label>
+      <label for="tipo">Tipo</label>
       <input type="text" class="form-control" id="tipo" name="tipo" required>
     </div>
 
     <div class="col-md-3 mb-1 md-form">
-      <label for="color">* Color</label>
+      <label for="color">Color</label>
       <input type="text" class="form-control" id="color" name="color" required>
     </div>
 
@@ -116,17 +116,17 @@ $taller = new Taller();
   <div class="form-row">
     
     <div class="col-md-4 mb-1 md-form">
-      <label for="chasis_gravado">* Chasis Gravado</label>
+      <label for="chasis_gravado">Chasis Gravado</label>
       <input type="text" step="any" class="form-control" id="chasis_gravado" name="chasis_gravado" required>
     </div>
 
     <div class="col-md-4 mb-1 md-form">
-      <label for="chasis_vin">* Chasis Vin</label>
+      <label for="chasis_vin">Chasis Vin</label>
       <input type="text" class="form-control" id="chasis_vin" name="chasis_vin" required>
     </div>
   
     <div class="col-md-4 mb-1 md-form">
-      <label for="no_motor">* No Motor</label>
+      <label for="no_motor">No Motor</label>
       <input type="text" class="form-control" id="no_motor" name="no_motor" required>
     </div>
 
