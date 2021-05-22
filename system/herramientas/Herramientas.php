@@ -818,6 +818,7 @@ $db = new dbConn();
   if($this->ComprobarAjuste() == TRUE){
     
     $this->AjustedeInventario(1, "id", "asc"); 
+    $this->AjustesRealizados();
 
   } else {
 
@@ -826,6 +827,73 @@ $db = new dbConn();
 
 
   }
+
+
+
+
+
+
+
+
+
+
+  public function AjustesRealizados(){
+      $db = new dbConn();
+
+
+ $a = $db->query("SELECT * FROM ajuste_inventario_activate WHERE edo = 0 and td = ".$_SESSION["td"]." order by id DESC limit 1");
+      
+      if($a->num_rows > 0){
+          echo '<div class="table-responsive">
+          <table class="table table-sm table-striped">
+        <thead>
+          <tr>
+            <th>id</a></th>
+            <th>Ultimo Ajuste</a></th>
+            <th>Productos Afectados</a></th>
+            <th>Detalles</th>
+          </tr>
+        </thead>
+        <tbody>';
+        foreach ($a as $b) {
+
+
+        $ax = $db->query("SELECT * FROM ajuste_inventario WHERE time BETWEEN '".$b["inicio"]."' and '".$b["fin"]."' and td = ".$_SESSION["td"]."");
+        $cant_productos = $ax->num_rows;
+        $ax->close();
+
+          echo '<tr>
+                      <td>1</td>
+                      <td>'.$b["inicio"].'</td>
+                      <td>'.$cant_productos.'</td>
+                      <td><a > <i class="fas fa-eye fa-lg green-text ml-3"></i></a></td>
+                    </tr>';
+        }
+        echo '</tbody>
+        </table>
+        </div>';
+
+
+      }
+        $a->close();
+
+
+  } // termina productos
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

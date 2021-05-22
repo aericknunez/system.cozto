@@ -719,6 +719,10 @@ $printer->text("APERTURA: " .$apertura. "  CIERRE: " . $cierre);
 $printer->feed();
 
 
+$printer->text("GASTOS: " .$gastos. "  ABONOS: " . $abonos);
+$printer->feed();
+
+
 $printer->feed();
 $printer -> text("VENTAS");
 $printer->feed();

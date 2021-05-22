@@ -20,6 +20,9 @@ include_once 'system/producto/Productos.php';
   } else {
 
     Alerts::Mensajex("No se ha iniciado el ajuste de inventario. Con esta herramienta podrá ajustar su inventario con los datos reales","info", '<a id="iniciarajuste" class="btn btn-primary btn-rounded">Iniciar</a>');
+
+
+    $herramienta->AjustesRealizados();
   }
 
 ?>
