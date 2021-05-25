@@ -32,6 +32,7 @@
 
       </form>
 
+
 <div id="ver">
   <?php 
 if($_SESSION['descuento'] != NULL){

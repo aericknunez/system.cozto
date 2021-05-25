@@ -256,6 +256,44 @@ Esconder();
         })
     })
 
+/// cambiar para porcentaje o establecer cantidad de propina
+    $("body").on("click","#prop",function(){ /// para el los botones de opciones
+
+        if($(this).attr('checked')){ // es por que estaba activo
+            $('#prop').removeAttr("checked","checked");
+            var dir = 'op=154&edo=0';
+        } 
+        else {
+            $('#prop').attr("checked","checked");
+            var dir = 'op=154&edo=1';
+        }
+    
+    QueryGo(dir);   
+    
+    });
+
+function QueryGo(dir){
+
+        var dataString = dir;
+
+        $.ajax({
+            type: "POST",
+            url: "application/src/routes.php",
+            data: dataString,
+            beforeSend: function () {
+               $("#load").html('<div class="row justify-content-md-center" ><img src="assets/img/load.gif" alt=""></div>');
+            },
+            success: function(data) {            
+                $("#load").html(data); // lo que regresa de la busquea 
+            }
+
+    });      
+}
+
+///////
+
+
+
 
 
     $("body").on("click","#del-descuento",function(){

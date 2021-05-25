@@ -19,7 +19,7 @@ include_once '../../application/common/Alerts.php';
 // $objPHPExcel->getColumnDimension('C')->setAutoSize(true);
 
 
- $a = $db->query("SELECT producto.cod, producto.descripcion, producto.cantidad, producto.existencia_minima, producto_categoria_sub.subcategoria FROM producto INNER JOIN producto_categoria_sub ON producto.categoria = producto_categoria_sub.hash and producto.td = ".$_SESSION["td"]."");
+ $a = $db->query("SELECT producto.cod, producto.descripcion, producto.cantidad, producto.existencia_minima, producto.compuesto, producto.dependiente, producto.servicio, producto_categoria_sub.subcategoria FROM producto INNER JOIN producto_categoria_sub ON producto.categoria = producto_categoria_sub.hash and producto.td = ".$_SESSION["td"]."");
 
     if($a->num_rows > 0){
 
@@ -62,7 +62,7 @@ $objPHPExcel->setActiveSheetIndex(0)
 $fila = 1;   
    foreach ($a as $b) {
  
- if ($r = $db->select("precio", "producto_precio", "WHERE producto = ".$b["cod"]." and td = ". $_SESSION["td"] ."")) { 
+ if ($r = $db->select("precio", "producto_precio", "WHERE producto = '".$b["cod"]."' and td = ". $_SESSION["td"] ."")) { 
         $precio = $r["precio"]; } unset($r); 
 
 
@@ -72,6 +72,19 @@ if($costo == 0){
 if ($r = $db->select("precio_costo", "producto_ingresado", "WHERE precio_costo != 0 and producto = '".$b["cod"]."' and td = ". $_SESSION["td"] ." order by time desc limit 1")) {   
   $costo = $r["precio_costo"]; } unset($r); 
 }
+
+
+/// cantidad solo si es producto, si es servio o dependiente no aplica
+if($b["compuesto"] == "on"){
+  $cantidad = 'N/A';
+} else if($b["dependiente"] == "on"){
+  $cantidad = 'N/A';
+} else if($b["servicio"] == "on"){
+  $cantidad = 'N/A';
+} else {
+  $cantidad = $b["cantidad"];
+}
+
 
 
 // productos vendidos
@@ -97,7 +110,7 @@ $fila = $fila + 1;
 $objPHPExcel->setActiveSheetIndex(0)
           ->setCellValue('A' . $fila, $b["cod"])
           ->setCellValue('B' . $fila, $b["descripcion"])
-          ->setCellValue('C' . $fila, $b["cantidad"])
+          ->setCellValue('C' . $fila, $cantidad)
           ->setCellValue('D' . $fila, $b["subcategoria"])
           ->setCellValue('E' . $fila, $costo)
           ->setCellValue('F' . $fila, $precio)

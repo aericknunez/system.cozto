@@ -65,6 +65,20 @@ $ventas->VerProducto();
   <div class="col-md-12 z-depth-2 justify-content-center">
       <div class="md-form mt-0">
         <form id="form-Ddescuento">
+
+<div class="mb-5 row">
+            <div class="switch">
+            <label>
+             Porcentaje
+              <input type="checkbox" <?php if($_SESSION['tipo_descuento'] == "1") echo 'checked = "checked"'; ?> id="prop" name="prop" >
+              <span class="lever"></span> 
+             Cantidad 
+            </label>
+          </div>
+
+</div>
+
+
         <input class="form-control form-control-lg" type="number" step="any" min="1" placeholder="Descuento %" id="descuento" name="descuento" autofocus>
         <input type="hidden" id="dcantidad" name="dcantidad" value="">
         <input type="hidden" id="dcodigo" name="dcodigo" value="">

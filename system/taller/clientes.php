@@ -60,18 +60,22 @@ $taller = new Taller();
   <div class="form-row">
     
     <div class="col-md-6 mt-0 md-form">
-      <select class="mdb-select md-form colorful-select dropdown-dark" id="departamento" name="departamento">
+      <!-- <select class="mdb-select md-form colorful-select dropdown-dark" id="departamento" name="departamento">
         <option selected disabled>Departamento</option>
         <option value="1">Departamento</option>
-      </select>
+      </select> -->
+      <label for="departamento">Departamento</label>
+      <input type="text" class="form-control" id="departamento" name="departamento">
     </div>
 
 
     <div class="col-md-6 mt-0 md-form">
-      <select class="mdb-select md-form colorful-select dropdown-dark" id="municipio" name="municipio">
+      <!-- <select class="mdb-select md-form colorful-select dropdown-dark" id="municipio" name="municipio">
         <option selected disabled>Municipio</option>
         <option value="1">Municipio</option>
-      </select>
+      </select> -->
+      <label for="municipio">Municipio</label>
+      <input type="text" class="form-control" id="municipio" name="municipio">
     </div>
 
   </div>

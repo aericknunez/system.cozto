@@ -1171,7 +1171,7 @@ if($predeterminada != "1"){
 if($dir == "desc") $dir2 = "asc";
 if($dir == "asc") $dir2 = "desc";
 
- $a = $db->query("SELECT producto.cod, producto.descripcion, producto.cantidad, producto.existencia_minima, producto_categoria_sub.subcategoria FROM producto INNER JOIN producto_categoria_sub ON producto.categoria = producto_categoria_sub.hash and producto.td = ".$_SESSION["td"]." order by ".$orden." ".$dir." limit $offset, $limit");
+ $a = $db->query("SELECT producto.cod, producto.descripcion, producto.cantidad, producto.existencia_minima, producto.compuesto, producto.dependiente, producto.servicio, producto_categoria_sub.subcategoria FROM producto INNER JOIN producto_categoria_sub ON producto.categoria = producto_categoria_sub.hash and producto.td = ".$_SESSION["td"]." order by ".$orden." ".$dir." limit $offset, $limit");
       
       if($a->num_rows > 0){
           echo '<div class="table-responsive">
@@ -1199,20 +1199,30 @@ if($dir == "asc") $dir2 = "desc";
         $producto = $r["nombre"]; } unset($r); 
 
 
- if ($r = $db->select("precio", "producto_precio", "WHERE producto = ".$b["cod"]." and td = ". $_SESSION["td"] ."")) { 
+ if ($r = $db->select("precio", "producto_precio", "WHERE producto = '".$b["cod"]."' and td = ". $_SESSION["td"] ."")) { 
         $precio = $r["precio"]; } unset($r); 
 
 
           echo '<tr>
                       <td>'.$b["cod"].'</td>';
 
-            if($this->CompruebaSiMarca() == TRUE){
-              echo '<th class="th-sm"><a >'.$this->MostrarMarca($b["cod"]).'</a></th>';
-            }
+  if($this->CompruebaSiMarca() == TRUE){
+    echo '<th class="th-sm"><a >'.$this->MostrarMarca($b["cod"]).'</a></th>';
+  }
 
-          echo '
-                      <td>'.$b["descripcion"].'</td>
-                      <td>'.$b["cantidad"].'</td>
+/// cantidad solo si es producto, si es servio o dependiente no aplica
+if($b["compuesto"] == "on"){
+  $cantidad = '<i class="fas fa-exclamation-triangle text-info"></i>';
+} else if($b["dependiente"] == "on"){
+  $cantidad = '<i class="fas fa-exclamation-circle text-info"></i>';
+} else if($b["servicio"] == "on"){
+  $cantidad = '<i class="fas fa-exclamation-circle text-info"></i>';
+} else {
+  $cantidad = $b["cantidad"];
+}
+
+                echo '<td>'.$b["descripcion"].'</td>
+                      <td>'.$cantidad.'</td>
                       <td>'.$b["subcategoria"].'</td>
                       <td>'.$precio.'</td>
                       <td class="d-none d-md-block">'.$b["existencia_minima"].'</td>

@@ -29,7 +29,19 @@ $opciones = new Productos();
 $cod = $r["cod"];
 $descripcion = $r["descripcion"];  
 $caduca = $r["caduca"]; 
-  }  unset($r); 
+$dependiente = $r["dependiente"]; 
+$compuesto = $r["compuesto"]; 
+$servicio = $r["servicio"]; 
+}  unset($r); 
+
+
+if($dependiente == "on"){
+ Alerts::Mensajex("No se puede modificar cantidades del producto por que es un producto dependiente","info");
+} elseif($compuesto == "on"){
+ Alerts::Mensajex("No se puede modificar cantidades del producto por que es un producto compuesto","info");
+} elseif($servicio == "on"){
+ Alerts::Mensajex("No se puede modificar cantidades de registro por que es un servicio","info");
+} else {
 
 
 if($cod != NULL){
@@ -153,4 +165,6 @@ $producto-> ListarUbicaciones();
 }
 
 } 
+
+}
 ?>

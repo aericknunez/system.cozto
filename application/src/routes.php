@@ -804,8 +804,6 @@ include_once '../../system/ventas/Laterales.php';
 include_once '../../system/ventas/VentasR.php';
 	$venta = new Ventas();
 
-
-
 if($_POST["descuento"] != NULL and is_numeric($_POST["descuento"])){
 
 		if($_SESSION["descuento"] != NULL){// se ya se ha aplicado descuento a toda la factura
@@ -813,7 +811,19 @@ if($_POST["descuento"] != NULL and is_numeric($_POST["descuento"])){
 			unset($_SESSION["descuento"]);
 		}
 
+	
+	
+if($_SESSION["tipo_descuento"] != NULL){ /// si es cantidad establecidad
+// obterner el total del producto 
+  if($r = $db->select("total", "ticket", "WHERE cod = '".$_POST["dcodigo"]."' and orden = ".$_SESSION["orden"]." and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."")) { 
+    $total = $r["total"]; 
+  } unset($r); 
+
+  $_SESSION["descuento"] = Helpers::PorcentajeDescuento($total, $_POST["descuento"]);
+} else { // si es porcentaje
 	$_SESSION["descuento"] = $_POST["descuento"];
+}
+
 	$data["cantidad"] = $_POST["dcantidad"];
 	$data["cod"] = $_POST["dcodigo"];
 	$venta->Actualiza($data, 1);
@@ -1340,6 +1350,16 @@ include_once '../../system/cotizar/CotizarR.php';
 	$cot = new Cotizar();
 	$cot->VerProducto();
 break;
+
+
+
+case  "154": // tipo de descuento
+	if($_SESSION['tipo_descuento'] != NULL){
+		unset($_SESSION['tipo_descuento']);
+	} else {
+		$_SESSION['tipo_descuento'] = TRUE;		
+	}
+break; 
 
 
 

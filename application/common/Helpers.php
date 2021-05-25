@@ -282,6 +282,17 @@ class Helpers{
         return $numer;
     }
 
+
+
+    static public function PorcentajeDescuento($total, $descuento){ /// obtiene que porcentaje de descuento se aplicara segun total y cantidad a descontar
+        $num = $total - $descuento;
+        $nume = ($num * 100)/$total;
+        $porcent = $total - $nume;
+        return $porcent;
+    }
+
+
+
     static public function DescuentoTotalCot($numero){ 
         $num = $_SESSION['descuento_cot'] / 100;
         $descuento = $numero * $num;
