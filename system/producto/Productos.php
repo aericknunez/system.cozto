@@ -1202,6 +1202,8 @@ if($dir == "asc") $dir2 = "desc";
  if ($r = $db->select("precio", "producto_precio", "WHERE producto = '".$b["cod"]."' and td = ". $_SESSION["td"] ."")) { 
         $precio = $r["precio"]; } unset($r); 
 
+/// cantidad de productos dependientes
+
 
           echo '<tr>
                       <td>'.$b["cod"].'</td>';
