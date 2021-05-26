@@ -876,6 +876,31 @@ $printer -> text($this->Col4("CREDITO FISCAL",0 ,  "", 0,  Helpers::Entero($cant
 
 
 
+
+
+
+
+
+$printer -> text("DETALLE DE GASTOS REGISTRADOS: ");
+$printer->feed();
+
+$printer -> setJustification(Printer::JUSTIFY_LEFT);
+$printer -> setEmphasis(true);
+$printer -> text($this->Item("Descripcion", '', '', 'Total'));
+$printer -> setEmphasis(false);
+
+$printer -> text("_______________________________________________________");
+$printer->feed();
+
+$ax = $db->query("select nombre, cantidad FROM gastos WHERE time BETWEEN '".$aperturaF."' and '".$cierreF."' and td = ".$_SESSION["td"]." and edo = 1");
+  
+foreach ($ax as $bx) {
+$printer -> text($this->Item($bx["nombre"], NULL, NULL ,$bx["cantidad"]));
+}   $ax->close();
+
+///////////////
+
+
 if ($r = $db->select("nombre", "login_userdata", "WHERE user = '".$user."' and td = ".$_SESSION["td"]."")) { 
       $cajero = $r["nombre"];
   } unset($r);  
