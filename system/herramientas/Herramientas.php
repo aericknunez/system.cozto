@@ -445,11 +445,11 @@ $page <= 1 ? $enable = 'disabled' : $enable = '';
 
       $timeinicio = Helpers::GetData("ajuste_inventario_activate", "inicio", "edo", 1);
 
+
   $limit = 25;
   $adjacents = 2;
   if($npagina == NULL) $npagina = 1;
-  $a = $db->query("SELECT * FROM producto WHERE 
-  producto.cod not in (select ajuste_inventario.cod from ajuste_inventario WHERE time > $timeinicio) and td = ".$_SESSION["td"]."");
+  $a = $db->query("SELECT * FROM producto WHERE producto.dependiente != 'on' and producto.servicio != 'on' and producto.cod NOT IN (SELECT ajuste_inventario.cod FROM ajuste_inventario WHERE time > $timeinicio) and td = ".$_SESSION["td"]."");
   $total_rows = $a->num_rows;
   $a->close();
 
@@ -468,7 +468,7 @@ if($dir == "asc") $dir2 = "desc";
 
 $op="567";
 
- $a = $db->query("SELECT cod as codigo, descripcion, cantidad FROM producto WHERE 
+ $a = $db->query("SELECT cod as codigo, descripcion, cantidad FROM producto WHERE  producto.dependiente != 'on' and producto.servicio != 'on' and 
   producto.cod not in (select ajuste_inventario.cod from ajuste_inventario WHERE time > $timeinicio) and td = ".$_SESSION["td"]." order by ".$orden." ".$dir." limit $offset, $limit");
       
       if($a->num_rows > 0){
