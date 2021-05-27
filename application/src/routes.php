@@ -815,11 +815,15 @@ if($_POST["descuento"] != NULL and is_numeric($_POST["descuento"])){
 	
 if($_SESSION["tipo_descuento"] != NULL){ /// si es cantidad establecidad
 // obterner el total del producto 
-  if($r = $db->select("total", "ticket", "WHERE cod = '".$_POST["dcodigo"]."' and orden = ".$_SESSION["orden"]." and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."")) { 
-    $total = $r["total"]; 
+  if($r = $db->select("pv, descuento", "ticket", "WHERE cod = '".$_POST["dcodigo"]."' and orden = '".$_SESSION["orden"]."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."")) { 
+    $pv = $r["pv"]; 
+    $d = $r["descuento"]; 
   } unset($r); 
 
-  $_SESSION["descuento"] = Helpers::PorcentajeDescuento($total, $_POST["descuento"]);
+$total = ($pv * $_POST["dcantidad"]) + $d;
+
+
+  	$_SESSION["descuento"] = Helpers::PorcentajeDescuento($total, $_POST["descuento"]);
 } else { // si es porcentaje
 	$_SESSION["descuento"] = $_POST["descuento"];
 }
