@@ -650,6 +650,53 @@ $db = new dbConn();
   }
 
 
+
+
+
+
+
+
+  public function CambiarCantidadUpdate($data){ // ingresa un nuevo lote de productos
+      $db = new dbConn();
+                 
+        $datos = array();
+        $datos["cod"] = $data["codx"];
+        $datos["cantidad"] = $this->ObtenerCantidad($data["codx"]); // cantidad actual
+        $datos["establecido"] = $data["cantidadx"];
+        $datos["td"] = $_SESSION["td"];
+        $datos["hash"] = Helpers::HashId();
+        $datos["time"] = Helpers::TimeId();
+        if($db->insert("ajuste_inventario", $datos)){
+
+           
+          if($datos["cantidad"] > $datos["establecido"]){ // averias
+
+            $this->Averias($datos);
+
+          } else { // agrega producto
+
+            $this->Agrega($datos);
+
+          }
+
+        } 
+
+        echo $data["cantidadx"];
+
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
   public function EstablecerCantidad($data){ // ingresa un nuevo lote de productos
       $db = new dbConn();
                  

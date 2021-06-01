@@ -2526,6 +2526,17 @@ break;
 
 
 
+
+case "572":  /// cambiar cantidad producto desde el actualizar [producto]
+include_once '../../system/herramientas/Herramientas.php';
+include_once '../../system/producto/Productos.php';
+	$prod = new Herramientas(); 
+	$prod->CambiarCantidadUpdate($_POST);
+break;
+
+
+
+
 case "573":  /// TerminarAjuste
 include_once '../../system/herramientas/Herramientas.php';
 include_once '../../system/producto/Productos.php';

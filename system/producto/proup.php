@@ -116,9 +116,8 @@ if($cod != NULL){
   </div>
 
   <div class="form-row">
-    
     <div class="col-md-4 mb-1 md-form">
-      <label for="cantidad">* Cantidad</label>
+      <label for="cantidad"><a id="modificarcantidad" op="569" key="<?php echo $cod; ?>">* Cantidad</a></label>
       <input type="number" step="any" class="form-control" id="cantidad" name="cantidad" readonly value="<?php echo $cantidad; ?>">
     </div>
 
@@ -275,3 +274,74 @@ if($_SESSION['root_ecommerce'] == "on"){
 } 
 ?>
 </div> <!-- TERMINA CONTENIDO -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Ver producto -->
+<div class="modal" id="ModalCantidad" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"  data-backdrop="false">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">
+         DETALLES PRODUCTO</h5>
+      </div>
+      <div class="modal-body">
+<!-- ./  content -->
+
+<div id="cantproducto"></div>
+
+
+  <form id="form-ajustari">
+  
+  <div class="form-row justify-content-center">
+    
+    <div class="col-md-12 mb-1 md-form">
+      <input type="hidden"  id="codx" name="codx" value="">
+      <small >* Nueva cantidad</small>
+      <input type="number" step="any" class="form-control" id="cantidadx" name="cantidadx" required>
+    </div>
+
+  </div>
+
+
+  <div class="form-row">
+    <div class="col-md-12 my-6 md-form text-center">
+     <button class="btn btn-info my-4" type="submit" id="btn-ajustari"><i class="fa fa-save mr-1"></i> Ingresar</button>
+
+    </div>
+  </div>
+
+</form>
+<!-- ./  content -->
+      </div>
+      <div class="modal-footer">
+<a id="cerrarmodal" class="btn btn-primary btn-rounded" data-dismiss="modal">Regresar</a>
+
+      </div>
+    </div>
+  </div>
+</div>
+<!-- ./  Modal -->
+
