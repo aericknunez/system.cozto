@@ -728,7 +728,7 @@ public function Averias($datos){
     $data = array();
     $data["producto"] = $datos["cod"];
     $data["cant"] = $cantidad;
-    $data["comentarios"] = "Ajuste de inventario";
+    $data["comentarios"] = "Ajuste de inventario desde actualizar producto";
     $data["fecha"] = date("d-m-Y");
     $data["hora"] = date("H:i:s");
     $data["usuario"] = $_SESSION["user"];
@@ -775,7 +775,7 @@ public function Agrega($datos){
     $data["precio_costo"] = $this->ObtenerPrecioCosto($datos["cod"]); // buscar precio costo
     $data["caduca"] = $this->Caduca($datos["cod"]); // buscar la ultima caducidad
     $data["caducaF"] = Fechas::Format($this->Caduca($datos["cod"]));
-    $data["comentarios"] = "Ajuste de inventario";
+    $data["comentarios"] = "Ajuste de inventario desde actualizar producto";
     $data["fecha"] = date("d-m-Y");
     $data["hora"] = date("H:i:s");
     $data["td"] = $_SESSION["td"];
