@@ -93,6 +93,10 @@ echo '</tbody>
 	</table></div>';
 
 
+		echo '<div class="text-right"><a href="system/documentos/reporte_detalleventas.php?inicio='.$inicio.'&fin='.$fin.'" >Descargar Excel</a></div>';
+
+
+
   } $a->close();
 		
 
@@ -178,6 +182,9 @@ echo '<div class="table-responsive text-nowrap">
 
 	echo '</tbody>
 		</table></div>';
+
+
+		echo '<div class="text-right"><a href="system/documentos/reporte_ventaagrupada.php?inicio='.$inicio.'&fin='.$fin.'" >Descargar Excel</a></div>';
 	
 
 	} else {
@@ -269,6 +276,9 @@ else { $colores='class="text-danger font-weight-light"';}
 
 echo '</tbody>
 	</table></div>';
+
+
+		echo '<div class="text-right"><a href="system/documentos/reporte_detallegastos.php?inicio='.$inicio.'&fin='.$fin.'" >Descargar Excel</a></div>';
 
 
   } $a->close();
@@ -405,6 +415,8 @@ if($primero == $segundo){
 echo '</tbody>
 	</table></div>';
 
+
+		echo '<div class="text-right"><a href="system/documentos/reporte_ingresoproductos.php?inicio='.$inicio.'&fin='.$fin.'" >Descargar Excel</a></div>';
 
   } $a->close();
 		
