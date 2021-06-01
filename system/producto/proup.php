@@ -117,7 +117,13 @@ if($cod != NULL){
 
   <div class="form-row">
     <div class="col-md-4 mb-1 md-form">
-      <label for="cantidad"><a id="modificarcantidad" op="569" key="<?php echo $cod; ?>">* Cantidad</a></label>
+      
+<?php if($_SESSION["tipo_cuenta"] == 5 or $_SESSION["tipo_cuenta"] == 1){
+ echo '<label for="cantidad"><a id="modificarcantidad" op="569" key="<?php echo $cod; ?>">* Cantidad</a></label>';
+} else {
+ echo '<label for="cantidad">* Cantidad</label>';
+} ?>
+
       <input type="number" step="any" class="form-control" id="cantidad" name="cantidad" readonly value="<?php echo $cantidad; ?>">
     </div>
 
