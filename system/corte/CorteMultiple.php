@@ -356,7 +356,8 @@ if($ramdom == $num){
 			echo '<a id="imprimir_corte" hash="'. $this->ObtieneInfo("hash") .'" class="btn-floating cyan" title="Imprimir Corte" data-toggle="tooltip" data-placement="bottom"><i class="fas fa-print"></i></a>';
 
 
-			echo '<button type="button" class="btn btn-info" id="descargar">Descargar</button>';
+			echo '<a href="system/documentos/reporte_corte_x.php?hash='. $this->ObtieneInfo("hash") .'" class="btn btn-info">Descargar</a>';
+
 
 			echo '<div id="msjimprimir"></div>';
 		
