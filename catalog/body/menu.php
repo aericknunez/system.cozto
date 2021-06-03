@@ -24,7 +24,7 @@ if((Helpers::ServerDomain() == FALSE and $_SESSION["root_plataforma"] == 0) or (
 
 
 if($_SESSION["caja_apertura"] == NULL){ ?>
-<li><a id="abrirCaja" class="waves-effect arrow-r"><i class="fas fa-donate"></i> ABRIR CAJA </a></li>
+<!-- <li><a id="abrirCaja" class="waves-effect arrow-r"><i class="fas fa-donate"></i> ABRIR CAJA </a></li> -->
 
 <?
 }
