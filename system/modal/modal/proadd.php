@@ -283,7 +283,7 @@ $imgs->VerProducto($_REQUEST["key"], "assets/img/productos/" . $_SESSION["td"] .
 
 
     <div class="tab-pane fade" id="etiquetas-classic" role="tabpanel" aria-labelledby="etiquetas-tab-classic">
-      <p class="note note-primary"><strong>Etiquetas:</strong> Ingrese palabras claves que identifican a su produto, estas serviran para hacer una busqueda mas adecuada</p>
+      <p class="note note-primary"><strong>Etiquetas:</strong> Ingrese palabras claves que identifican a su producto, estas serviran para hacer una busqueda mas adecuada</p>
 
                 <div class="row d-flex justify-content-center text-center" id="etiqueta"> 
                 <div class="col-sm-12">

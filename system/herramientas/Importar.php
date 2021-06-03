@@ -185,10 +185,10 @@ if($b["caducidad"] != NULL){
 $datos = array();
 $datos["cod"] = $b["codigo"];
 $datos["descripcion"] = $b["descripcion"];
-$datos["categoria"] = 'd0352752b1'; // necesito la csategoria correcta
+$datos["categoria"] = $this->Categoria(); // necesito la csategoria correcta
 $datos["cantidad"] = $b["cantidad"];
-$datos["medida"] = 'de3031e66e'; /// unidad de media primera
-$datos["proveedor"] = '6575aadd1d'; /// proveedor predeterminado
+$datos["medida"] = $this->Medida(); /// unidad de media primera
+$datos["proveedor"] = $this->Proveedor(); /// proveedor predeterminado
 $datos["informacion"] = NULL;
 $datos["existencia_minima"] = 1;
 $datos["caduca"] = $caducax;
@@ -280,7 +280,31 @@ $db->insert("ubicacion_asig", $ubi);
 
 
 
+public function Categoria(){ // inserta los datos a la base de datos
+    $db = new dbConn();
 
+    if ($r = $db->select("hash", "producto_categoria_sub", "WHERE td = ".$_SESSION["td"]." order by id desc limit 1")) { 
+        return $r["hash"];
+    }unset($r);  
+}
+
+public function Medida(){ // inserta los datos a la base de datos
+    $db = new dbConn();
+
+    if ($r = $db->select("hash", "producto_unidades", "WHERE td = ".$_SESSION["td"]." order by id desc limit 1")) { 
+        return $r["hash"];
+    }unset($r);  
+
+}
+
+
+public function Proveedor(){ // inserta los datos a la base de datos
+    $db = new dbConn();
+
+    if ($r = $db->select("hash", "proveedores", "WHERE td = ".$_SESSION["td"]." order by id desc limit 1")) { 
+        return $r["hash"];
+    }unset($r);  
+}
 
 
 

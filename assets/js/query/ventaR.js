@@ -293,7 +293,7 @@ $('#ModalBalanza').on('shown.bs.modal', function() { // para autofocus en el mod
         $('#dcantidad').attr("value", dcantidad);
 
         if(ddescuento != "0.00"){
-            $('#ver-descuento').html('<div class="border border-light alert alert-success alert-dismissible"><div align="center">El total descuento en este prooducto es: $'+ddescuento+' ('+porcentaje+'%)<br></div></div>');
+            $('#ver-descuento').html('<div class="border border-light alert alert-success alert-dismissible"><div align="center">El total descuento en este producto es: $'+ddescuento+' ('+porcentaje+'%)<br></div></div>');
             $('#ver-btndescuento').html('<a id="del-descuento" dcantidad="'+dcantidad+'" dcodigo="'+dcodigo+'" ddescuento="0" class="btn btn-danger btn-rounded waves-effect waves-light">Quitar Descuento</a>');
             $('#ver-btndescuento').show();
         } else {
