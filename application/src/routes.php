@@ -2758,8 +2758,29 @@ break;
 
 
 
+case "630":
+include("../common/Imagenes.php");
+	$file = new upload($_FILES['archivo']);
+
+	if($file->uploaded) {
+		$name = Helpers::TimeId();
+		$file->file_new_name_body  = $name . "-" . $_SESSION["td"]; // agregamos un nuevo nombre
+	
+		$file->process('../../assets/file/');	
 
 
+	include_once '../../system/herramientas/Importar.php';
+	$import = new Importar(); 
+	$import -> ExtraeExcel($file->file_dst_name);
+		// echo 'Realizado : ' . $file->file_dst_name;
+	} // [file_dst_name] nombre de la imagen
+	else {
+
+	Alerts::Mensajex("Error: " . $file->error . " No se proceso correctamente","danger");
+	}	
+break;
+
+ 
 
 
 

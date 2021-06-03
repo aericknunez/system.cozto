@@ -200,6 +200,11 @@ echo '<script type="text/javascript" src="assets/js/query/producto_vermodal.js?v
 echo '<script type="text/javascript" src="assets/js/query/ingresorapido.js?v='.$numero.'"></script>';
 } 
 
+elseif(isset($_GET["importarproducto"])) {
+echo '<script type="text/javascript" src="assets/js/query/importarproducto.js?v='.$numero.'"></script>';
+} 
+
+
 
 
 
