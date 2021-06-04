@@ -145,8 +145,7 @@ exit;
 
 
 
-} // si hay registros
-   $a->close();         
+}  $a->close();         
 
 } // termina fecha
 

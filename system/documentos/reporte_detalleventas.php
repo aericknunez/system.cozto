@@ -173,10 +173,7 @@ exit;
 
 
 
-} else {
-  echo "No se encuentran registros";
-} // si hay registros
-   $a->close();         
+} $a->close();         
 
 } // termina fecha
 
