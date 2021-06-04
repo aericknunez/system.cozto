@@ -8,9 +8,11 @@ $import = new Importar();
 
 <div id="msj"></div>
 <h2 class="h2-responsive">Importar productos a Inventario  <?php 
-echo '<a href="downloader.php?data=Formato_importar.xlsx&name=Formato_importar&type=3" data-toggle="tooltip" data-html="true"
-  title="<b>DESCARGAR FORMATO EXCEL</b>"><i class="fas fa-cloud-download-alt fa-lg red-text"></i>
-      </a>'; ?></h2>
+// echo '<a href="downloader.php?data=Formato_importar.xlsx&name=Formato_importar&type=3" data-toggle="tooltip" data-html="true" title="<b>DESCARGAR FORMATO EXCEL</b>"><i class="fas fa-cloud-download-alt fa-lg red-text"></i></a>'; 
+
+echo '<a href="downloader.php?data=Formato_importar.xlsx&name=Formato_importar&type=3" data-toggle="tooltip" data-html="true" title="<b>DESCARGAR FORMATO EXCEL</b>"><i class="fas fa-cloud-download-alt fa-lg red-text"></i></a>'; 
+
+      ?></h2>
 
 
 <div class="row d-flex justify-content-center" id="formulario">
