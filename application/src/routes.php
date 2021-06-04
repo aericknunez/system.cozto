@@ -692,9 +692,13 @@ break;
 
 
 case "80": // recibe el formulario para agregar los productos (va a ventas)
+if($_POST["unidades"] >= $_POST["cantidad"]){
 include_once '../../system/ventas/VentasL.php';
 	$venta = new Ventas();
 	$venta->AddVenta($_POST);
+} else {
+	 Alerts::Alerta("error","Error!","La cantidad establecida es mayor a la cantidad de productos!");
+}
 break;
 
 

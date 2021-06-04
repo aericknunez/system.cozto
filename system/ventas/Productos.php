@@ -52,13 +52,13 @@ class Productos{
     $nombreU = $s["nombre"];
   } unset($s); 
 
-  if ($img = $db->select("imagen", "producto_imagenes", "WHERE producto = '". $dato["cod"] ."' and td = ".$_SESSION["td"]." limit 1")) { 
+if ($img = $db->select("imagen", "producto_imagenes", "WHERE producto = '". $dato["cod"] ."' and td = ".$_SESSION["td"]." limit 1")) { 
     $Imagen = $img["imagen"];
   } unset($img); 
 if($Imagen == NULL) { $Imagen = "assets/img/logo/" . $_SESSION["config_imagen"]; } else { $Imagen = "assets/img/productos/". $_SESSION["td"] . '/' . $Imagen; }
 
 
-         echo '<section class="my-2">
+echo '<section class="my-2">
   <div class="row">
     <div class="col-lg-5 col-xl-4">
 
@@ -86,17 +86,23 @@ if($Imagen == NULL) { $Imagen = "assets/img/logo/" . $_SESSION["config_imagen"];
 
     echo '<div class="md-form md-outline form-sm col-md-2">';
 
-      echo '<label for="cantidad">Cantidad</label>
+
+if($cantidad <= 0){
+
+
+} else {
+    echo '<label for="cantidad">Cantidad</label>
       <input id="cantidad" name="cantidad" class="form-control form-control-sm" type="number" value="'.$value.'" step="any" max="'. $cantidad .'" min="1">';
       
     echo '</div>';
 
     $this->CompruebaCaracteristicas($dato["cod"]);
     $this->CompruebaUbicaciones($dato["cod"]);
-    
+}   
 
     echo '</p>
               <input id="cod" name="cod" type="hidden" value="'. $dato["cod"] .'">
+              <input id="unidades" name="unidades" type="hidden" value="'. $cantidad .'">
     </div>
 
   </div>

@@ -283,7 +283,7 @@ $db->insert("ubicacion_asig", $ubi);
 public function Categoria(){ // inserta los datos a la base de datos
     $db = new dbConn();
 
-    if ($r = $db->select("hash", "producto_categoria_sub", "WHERE td = ".$_SESSION["td"]." order by id desc limit 1")) { 
+    if ($r = $db->select("hash", "producto_categoria_sub", "WHERE td = ".$_SESSION["td"]." order by id asc limit 1")) { 
         return $r["hash"];
     }unset($r);  
 }
@@ -291,7 +291,7 @@ public function Categoria(){ // inserta los datos a la base de datos
 public function Medida(){ // inserta los datos a la base de datos
     $db = new dbConn();
 
-    if ($r = $db->select("hash", "producto_unidades", "WHERE td = ".$_SESSION["td"]." order by id desc limit 1")) { 
+    if ($r = $db->select("hash", "producto_unidades", "WHERE td = ".$_SESSION["td"]." order by id asc limit 1")) { 
         return $r["hash"];
     }unset($r);  
 
@@ -301,7 +301,7 @@ public function Medida(){ // inserta los datos a la base de datos
 public function Proveedor(){ // inserta los datos a la base de datos
     $db = new dbConn();
 
-    if ($r = $db->select("hash", "proveedores", "WHERE td = ".$_SESSION["td"]." order by id desc limit 1")) { 
+    if ($r = $db->select("hash", "proveedores", "WHERE td = ".$_SESSION["td"]." order by id asc limit 1")) { 
         return $r["hash"];
     }unset($r);  
 }

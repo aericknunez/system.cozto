@@ -8,8 +8,10 @@ class Ventas{
 
 
    public function AddVenta($datos){ // lento
-	if($_SESSION["orden"] == NULL){ $this->AddOrden(); }
-  	$this->Agregar($datos);
+   	if($datos["cantidad"] > 0){	
+		if($_SESSION["orden"] == NULL){ $this->AddOrden(); }
+  		$this->Agregar($datos);
+   	}
 
   	$this->VerProducto();
    }

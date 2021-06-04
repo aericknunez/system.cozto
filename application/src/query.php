@@ -481,6 +481,7 @@ else{
 			echo '<script type="text/javascript" src="assets/js/query/ventaR.js?v='.$numero.'"></script>';
 		} else {
 			echo '<script type="text/javascript" src="assets/js/query/ventaL.js?v='.$numero.'"></script>';
+			// echo '<script type="text/javascript" src="assets/js/query/ventaL_filtrocantidad.js?v='.$numero.'"></script>';
 		}
 
 	/// para actualizar automaticamente el lateral cada 3 seg

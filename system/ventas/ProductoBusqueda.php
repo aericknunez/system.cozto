@@ -101,10 +101,11 @@ public function DetallesProducto($data){
       $db = new dbConn();
 
 // imagen
-    if ($r = $db->select("imagen", "producto_imagenes", "WHERE producto = '".$data["key"]."' AND td = ".$_SESSION["td"]." limit 1")) { 
-        $img = $r["imagen"];
-    } unset($r); 
-    if($img == NULL) { $img = "assets/img/logo/" . $_SESSION["config_imagen"]; } else { $img = "assets/img/productos/".$_SESSION["td"] . '/' .$img; } 
+if ($r = $db->select("imagen", "producto_imagenes", "WHERE producto = '".$data["key"]."' AND td = ".$_SESSION["td"]." limit 1")) { 
+    $img = $r["imagen"];
+} unset($r); 
+
+if($img == NULL) { $img = "assets/img/logo/" . $_SESSION["config_imagen"]; } else { $img = "assets/img/productos/".$_SESSION["td"] . '/' .$img; } 
 
 
     $a = $db->query("SELECT producto.cod, producto.informacion, producto.descripcion, producto.cantidad, producto.existencia_minima, producto.caduca, producto.compuesto, producto.gravado, producto.receta, producto.dependiente, producto.servicio, producto_categoria_sub.subcategoria, producto_unidades.nombre, proveedores.nombre as proveedores FROM producto INNER JOIN producto_categoria_sub ON producto.categoria = producto_categoria_sub.hash INNER JOIN producto_unidades ON producto.medida = producto_unidades.hash INNER JOIN proveedores ON producto.proveedor = proveedores.hash WHERE producto.cod = '".$data["key"]."' AND producto.td = ".$_SESSION["td"]."");

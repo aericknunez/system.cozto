@@ -208,6 +208,28 @@ Esconder();
 
 
 
+// evita que se digite una cantidad mayor a la que hay en productos
+    $("#producto-busqueda").keyup(function(){ /// para la caja de busqueda
+        $.ajax({
+        type: "POST",
+        url: "application/src/routes.php?op=75",
+        data:'keyword='+$(this).val(),
+        beforeSend: function(){
+            $("#muestra-busqueda").css("background","#FFF url(assets/img/LoaderIcon.gif) no-repeat 550px");
+        },
+        success: function(data){
+            $("#muestra-busqueda").show();
+            $("#muestra-busqueda").html(data);
+            $("#producto-busqueda").css("background","#FFF");
+            Esconder();
+        }
+        });
+    });
+
+
+
+
+
 
 
 
