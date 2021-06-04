@@ -16,6 +16,7 @@ include_once '../../application/common/Alerts.php';
 
 if($_REQUEST["hash"] != NULL){
 
+$hash = $_REQUEST["hash"];
 //// obtener lor datos del corte
 if ($r = $db->select("*", "corte_diario", "WHERE hash = '$hash'")) { 
   $aperturaF = $r["aperturaF"];
