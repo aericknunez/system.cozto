@@ -8,13 +8,7 @@ $import = new Importar();
 
 <div id="msj"></div>
 <h2 class="h2-responsive">Importar productos a Inventario  <?php 
-
-    $url = "../../assets/file/";
-    $file = $url."Formato_importar.xlsx";
-    $filename = str_replace($url, "", $file);
-    $data = str_replace(".xlsx", "", $filename);
-
-echo '<a href="downloader.php?data='. $filename . $ext .'&name='. $data .'&type=3" data-toggle="tooltip" data-html="true"
+echo '<a href="downloader.php?data=Formato_importar.xlsx&name=Formato_importar&type=3" data-toggle="tooltip" data-html="true"
   title="<b>DESCARGAR FORMATO EXCEL</b>"><i class="fas fa-cloud-download-alt fa-lg red-text"></i>
       </a>'; ?></h2>
 
