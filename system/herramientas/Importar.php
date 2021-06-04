@@ -117,8 +117,17 @@ $this->EliminarTabla();
 
 public function Insertar($data){ // inserta los datos a la base de datos
     $db = new dbConn();
+// verifico su el codigo existe   
+$a = $db->query("SELECT descripcion FROM producto WHERE cod = '".$data["codigo"]."' and td = " .$_SESSION["td"]);
+$canti = $a->num_rows; $a->close();
 
-if($data["codigo"] != NULL and $data["descripcion"] != NULL and $data["cantidad"] != NULL  and $data["precio"] != NULL){
+
+if($data["codigo"] != NULL and 
+  $data["descripcion"] != NULL and 
+  $data["cantidad"] != NULL  and 
+  $data["precio"] != NULL and 
+  $canti == 0){
+  
     $datos = array();
     $datos = $data;
     if($db->insert("import_to_excel", $datos)){
