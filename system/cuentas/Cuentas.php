@@ -363,10 +363,14 @@ public function VerAbonos($cuenta) { //leva el control del autoincremento de los
                      }
                      /////////// agrego a gastos
                      
-                $gastox["tipo"] = 2;
+                $gastox["tipo"] = 2; 
                 $gastox["nombre"] = "Abono a cuenta por pagar";
                 $gastox["descripcion"] = "ABONO A: " . $this->NombreCuenta($datos["cuenta"]);
                 $gastox["cantidad"] = $datos["abono"];
+                $gastox["tipo_comprobante"] = 2;
+                $gastox["no_factura"] = Helpers::GetData("cuentas","factura","hash",$datos["cuenta"]);
+                $gastox["tipo_pago"] = $datos["pago"];
+                $gastox["cuenta_banco"] = $datos["banco"];
                 $gastox["fecha"] = date("d-m-Y");
                 $gastox["fechaF"] = Fechas::Format(date("d-m-Y"));
                 $gastox["hora"] = date("H:i:s");
@@ -377,7 +381,7 @@ public function VerAbonos($cuenta) { //leva el control del autoincremento de los
                 $gastox["td"] = $_SESSION["td"];
                 $db->insert("gastos", $gastox);
                
-
+                $this->UpdateCuentaBancos($datos["abono"], 0, $datos["banco"]);
 
                      ///
 
@@ -395,6 +399,8 @@ public function VerAbonos($cuenta) { //leva el control del autoincremento de los
 
 
 
+
+
   public function DelAbono($hash, $cuenta){ // elimina abono
     $db = new dbConn();
           $cambios = array();
@@ -403,28 +409,54 @@ public function VerAbonos($cuenta) { //leva el control del autoincremento de los
           $cambios["hora_del"] = date("H:i:s");
       if(Helpers::UpdateId("cuentas_abonos", $cambios, "hash='$hash' and td = ".$_SESSION["td"]."")){
         
-           Alerts::Alerta("success","Eliminado!","Abono Eliminado correctamente!");
-                    $cambio = array();
-                    $cambio["edo"] = 1;
-                    Helpers::UpdateId("cuentas", $cambio, "hash='$cuenta' and td = ".$_SESSION["td"].""); 
+          Alerts::Alerta("success","Eliminado!","Abono Eliminado correctamente!");
+          
+          $cambio = array();
+          $cambio["edo"] = 1;
+          Helpers::UpdateId("cuentas", $cambio, "hash='$cuenta' and td = ".$_SESSION["td"].""); 
 
 //// gastos
  
-    if ($r = $db->select("fecha, abono", "cuentas_abonos", "WHERE hash = '".$hash."' and td = ".$_SESSION["td"]."")) { 
-        $fechax = $r["fecha"];
-        $abonox = $r["abono"];
-    }
+if ($r = $db->select("fecha, abono", "cuentas_abonos", "WHERE hash = '".$hash."' and td = ".$_SESSION["td"]."")) { 
+    $fechax = $r["fecha"];
+    $abonox = $r["abono"];
+}
+
+if ($r = $db->select("hash, cuenta_banco", "gastos", "WHERE edo = 2 and fecha='".$fechax."' and cantidad='".$abonox."' and td = ".$_SESSION["td"]."")) { 
+    $gasto_hash = $r["hash"];
+    $gasto_cuenta = $r["cuenta_banco"];
+}
+
   $cambio = array();
   $cambio["edo"] = 0;               
-  Helpers::UpdateId("gastos", $cambio, "fecha='$fechax' and cantidad='$abonox' and td = ".$_SESSION["td"]."");
+  Helpers::UpdateId("gastos", $cambio, "hash='".$gasto_hash."' and td = ".$_SESSION["td"]."");
 ///
-
+ 
+ $this->UpdateCuentaBancos($abonox, 1, $gasto_cuenta);
 
         } else {
             Alerts::Alerta("error","Error!","Algo Ocurrio!");
         } 
       $this->VerAbonos($cuenta);
   }
+
+
+
+public function UpdateCuentaBancos($cantidad, $tipo, $cuenta) { // cantidad, tipo descuenta o suma, y a cuenta 
+$db = new dbConn();
+
+  $saldo = Helpers::GetData("gastos_cuentas", "saldo", "hash", $cuenta);
+
+    if ($tipo == 1) { // 1 suma, 0 resta
+      $cantidadUp = $cantidad + $saldo;
+    } else {
+      $cantidadUp = $saldo - $cantidad;
+    }
+
+      $cambio = array();
+      $cambio["saldo"] = $cantidadUp;    
+      Helpers::UpdateId("gastos_cuentas", $cambio, "hash='".$cuenta."' and td = ".$_SESSION["td"]."");  
+}
 
 
 
