@@ -46,6 +46,7 @@ if($_SESSION["caja_apertura"] != NULL){ // comprobacion de corte
   <option value="2">CHEQUE</option>
   <option value="3">TRANSFERENCIA</option>
   <option value="4">TARJETA</option>
+  <option value="5">CAJA CHICA</option>
 </select>
 
 
@@ -285,6 +286,7 @@ Descripci&oacuten
   <option value="2">CHEQUERA</option>
   <option value="3" selected>CUENTA BANCARIA</option>
   <option value="4">TARJETA DE CREDITO</option>
+  <option value="5">CAJA CHICA</option>
 </select>
 
 

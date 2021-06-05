@@ -98,6 +98,50 @@ $(document).ready(function()
     });
 
 
+/// eliminar datos del sistema con config
+    $("body").on("click","#deleteallconfig",function(){ 
+        
+        var op = "248";
+        var dataString = 'op='+op;
+
+        $.ajax({
+            type: "POST",
+            url: "application/src/routes.php",
+            data: dataString,
+            beforeSend: function () {
+               $("#vista").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt=""></div>');
+            },
+            success: function(data) {            
+                $("#vista").html(data); // lo que regresa de la busquea      
+            }
+        });
+
+    });
+
+
+/// eliminar datos del sistema con ususarios
+    $("body").on("click","#deletealluser",function(){ 
+        
+        var op = "247";
+        var dataString = 'op='+op;
+
+        $.ajax({
+            type: "POST",
+            url: "application/src/routes.php",
+            data: dataString,
+            beforeSend: function () {
+               $("#vista").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt=""></div>');
+            },
+            success: function(data) {            
+                $("#vista").html(data); // lo que regresa de la busquea      
+            }
+        });
+
+    });
+
+
+
+
 
 
 

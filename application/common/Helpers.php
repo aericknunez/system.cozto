@@ -97,6 +97,7 @@ class Helpers{
     if($string == "2") return '<div class="text-success font-weight-bold">Chequera</div>';
     if($string == "3") return '<div class="text-info font-weight-bold">Cuenta Bancaria</div>';
     if($string == "4") return '<div class="text-primary font-weight-bold">Tarjeta de credito</div>';
+    if($string == "5") return '<div class="text-secondary font-weight-bold">Caja Chica</div>';
     }
 
 

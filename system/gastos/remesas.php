@@ -244,6 +244,7 @@ Descripci&oacuten
   <option value="2">CHEQUERA</option>
   <option value="3" selected>CUENTA BANCARIA</option>
   <option value="4">TARJETA DE CREDITO</option>
+  <option value="5">CAJA CHICA</option>
 </select>
 
 

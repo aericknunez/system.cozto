@@ -32,6 +32,9 @@ class Gastos {
 				$datos["time"] = Helpers::TimeId();
 			    $datos["td"] = $_SESSION["td"];
 			    if ($db->insert("gastos", $datos)) {
+
+			    	if($data["tipo"] == 3) { $tipo = 1; } else { $tipo = 0; } // 3 suma sino resta 
+			    	$this->UpdateCuentaBancos($data["cantidad"], $tipo, $data["banco"]);
 			        Alerts::Alerta("success","Agregado Correctamente","Gasto Agregado corectamente!");
 			    } else {
 			    	Alerts::Alerta("error","Error","Error desconocido, no se agrego el registro!");
@@ -42,6 +45,31 @@ class Gastos {
 			$this->VerGastos();
 
 	}
+
+
+
+
+
+
+public function UpdateCuentaBancos($cantidad, $tipo, $cuenta) { // cantidad, tipo descuenta o suma, y a cuenta 
+$db = new dbConn();
+
+	$saldo = Helpers::GetData("gastos_cuentas", "saldo", "hash", $cuenta);
+
+		if ($tipo == 1) { // 1 suma, 0 resta
+			$cantidadUp = $cantidad + $saldo;
+		} else {
+			$cantidadUp = $saldo - $cantidad;
+		}
+
+	    $cambio = array();
+	    $cambio["saldo"] = $cantidadUp;    
+	    Helpers::UpdateId("gastos_cuentas", $cambio, "hash='".$cuenta."' and td = ".$_SESSION["td"]."");  
+}
+
+
+
+
 
 
 
@@ -92,7 +120,7 @@ class Gastos {
 				      <span class="badge green"><i class="fas fa-image" aria-hidden="true"></i></span>
 				      </a>
 
-			      <a id="xdelete" op="171" iden="'. $b["id"] .'">
+			      <a id="xdelete" op="171" iden="'. $b["hash"] .'">
 				      <span class="badge red"><i class="fas fa-trash-alt" aria-hidden="true"></i></span>
 				      </a>';
 			      } if($b["edo"] == 2){
@@ -122,41 +150,51 @@ class Gastos {
 
 	
 
-		public function BorrarGasto($iden) {
-		$db = new dbConn();
+public function BorrarGasto($hash) {
+$db = new dbConn();
 
-			    $cambio = array();
-			    $cambio["edo"] = 0;
+if ($r = $db->select("tipo, cuenta_banco, cantidad, id", "gastos", "WHERE hash='".$hash."' and td = ".$_SESSION["td"]."")) { 
+$tipox = $r["tipo"]; $cuenta_banco = $r["cuenta_banco"]; $cantidad = $r["cantidad"]; $iden = $r["id"];
+}  unset($r);  
+
+
+	    $cambio = array();
+	    $cambio["edo"] = 0; 
+	    if (Helpers::UpdateId("gastos", $cambio, "hash='".$hash."' and td = ".$_SESSION["td"]."")) {
+				$this->BorrarImagenesGasto($iden);
+				// acualiza el saldo de las cuentas
+				if($tipox == 3) { $tipo = 0; } else { $tipo = 1; }  
+	    		$this->UpdateCuentaBancos($cantidad, $tipo, $cuenta_banco);
+
+	        Alerts::Alerta("success","Eliminado","Se ha eliminado el registo correctamente!");
+	    } else {
+	        Alerts::Alerta("error","Error","No se pudo eliminar!"); 
+	    }
 			    
-			    if (Helpers::UpdateId("gastos", $cambio, "id='$iden' and td = ".$_SESSION["td"]."")) {
-						$this->BorrarImagenesGasto($iden);
-			        Alerts::Alerta("success","Eliminado","Se ha eliminado el registo correctamente!");
-			    } else {
-			        Alerts::Alerta("error","Error","No se pudo eliminar!"); 
-			    }
-					    
-		    
-		    $this->VerGastos();
+    
+    $this->VerGastos();
 
-   		}
+}
 
-	public function BorrarImagenesGasto($gasto) {
-		$db = new dbConn();
 
-	$a = $db->query("SELECT id, imagen FROM gastos_images WHERE gasto='$gasto' and td = ".$_SESSION["td"]."");
-	    foreach ($a as $b) {
-	       
-	   if(Helpers::DeleteId("gastos_images", "id = '".$b["id"]."' and td = ".$_SESSION["td"]."")){
-			   if (file_exists("../../assets/img/gastosimg/" . $b["imagen"])) {
-                unlink("../../assets/img/gastosimg/" . $b["imagen"]);
-            	}
+
+public function BorrarImagenesGasto($gasto) {
+$db = new dbConn();
+
+	$a = $db->query("SELECT id, imagen FROM gastos_images WHERE gasto = '$gasto' and td = ".$_SESSION["td"]."");
+	foreach ($a as $b) {
+	   
+		if(Helpers::DeleteId("gastos_images", "id = '".$b["id"]."' and td = ".$_SESSION["td"]."")){
+			   if (file_exists("../../assets/img/gastosimg/" . $_SESSION["td"] . "/" . $b["imagen"])) {
+		        unlink("../../assets/img/gastosimg/" . $_SESSION["td"] . "/" . $b["imagen"]);
+		    	}
 		}
 
 	}
-	    $a->close();
+$a->close();
 
 
-	}
+}
 
 
 

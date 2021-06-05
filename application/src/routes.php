@@ -1780,10 +1780,25 @@ include_once '../../system/planilla/Planilla.php';
 break;
 
 
+case "247": // Elimiar data del sistema con usuarios
+include_once '../../system/bdbackup/LimpiarData.php';
+	$data = new DataClear();
+	$data-> Clear(1, 1);
+break;
+
+
+
+case "248": // Elimiar data del sistema con config
+include_once '../../system/bdbackup/LimpiarData.php';
+	$data = new DataClear();
+	$data-> Clear(1, NULL);
+break;
+
+
 case "249": // Elimiar data del sistema
 include_once '../../system/bdbackup/LimpiarData.php';
 	$data = new DataClear();
-	$data-> Clear();
+	$data-> Clear(NULL, NULL);
 break;
 
 
