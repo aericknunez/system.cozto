@@ -108,6 +108,8 @@ $(document).ready(function(){
 			success: function(data){
 				$('#btn-abono').html('Agregar Abono').removeClass('disabled');	      
 				$("#form-abono").trigger("reset");
+				$("#muestra_b").hide();
+				$("#banco").attr("value", null);
 				$("#contenido").html(data);	
 				$("#data-abonos").load('application/src/routes.php?op=403&cuenta='+cuenta);
 				$("#data-total").load('application/src/routes.php?op=404&cuenta='+cuenta);			
