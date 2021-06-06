@@ -2,6 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 include_once 'application/common/Alerts.php';
+include_once 'application/common/Fechas.php';
 include_once 'system/corte/CorteMultiple.php';
 $cortes = new Corte();
 
@@ -14,6 +15,14 @@ include_once 'system/producto/ProductoOtros.php';
 $cortes->Contenido();
 ?>
 </div>
+
+
+<div align="center" id="cajas">
+<?php 
+$cortes->CajasAbiertas();
+?>
+</div>
+
 
 
 <!--Modal: modalConfirmDelete-->

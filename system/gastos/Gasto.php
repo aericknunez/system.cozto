@@ -319,14 +319,19 @@ $a->close();
 
 
 
-   static public function MostarBancos($id) { 
+   static public function MostarBancos($id = NULL) { 
     $db = new dbConn();
 
-      $a = $db->query("SELECT * FROM gastos_cuentas WHERE tipo = '$id' and td = ".$_SESSION["td"]."");
+    if($id == NULL){
+    	$a = $db->query("SELECT * FROM gastos_cuentas WHERE td = ".$_SESSION["td"]."");
+    } else {
+    	$a = $db->query("SELECT * FROM gastos_cuentas WHERE tipo = '$id' and td = ".$_SESSION["td"]."");
+    }
+      
       echo '<select class="browser-default custom-select mb-3" id="banco" name="banco">
       <option selected disabled>* Cuenta</option>';
       foreach ($a as $b) {  
-              echo '<option value="'. $b["hash"] .'">'. $b["cuenta"] .' - '. $b["banco"] .' ('. Helpers::Dinero($b["saldo"]) .')</option>'; 
+     echo '<option value="'. $b["hash"] .'">'. $b["cuenta"] .' - '. $b["banco"] .' ('. Helpers::Dinero($b["saldo"]) .')</option>'; 
       } $a->close(); 
       echo '</select>';
     }

@@ -28,7 +28,7 @@ if($_SESSION["caja_apertura"] != NULL){ // comprobacion de corte
   <div id="muestra_banco" class="col-10">
 
 <?php 
-echo $gasto::MostarBancos(3); ?>
+echo $gasto::MostarBancos(); ?>
 
   </div>
   <div class="col-2 mt-0">

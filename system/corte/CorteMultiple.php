@@ -381,6 +381,49 @@ if($ramdom == $num){
 
 
 
+
+
+
+
+public function CajasAbiertas(){
+	$db = new dbConn();
+
+    $a = $db->query("SELECT fecha, apertura, caja_chica, user FROM corte_diario WHERE user != '". $_SESSION["user"] ."' and td = ".$_SESSION["td"]." and edo = 1");
+    if($a->num_rows > 0){
+    	Alerts::Mensajex('<i class="fas fa-exclamation-triangle red-text"></i> Existen otros usuarios con la caja aperturada en el sistema',"warning");
+    	foreach ($a as $b) {
+    		if($b["fecha"] == date("d-m-Y")){
+    			$fecha = "Hoy";
+    		} else {
+    			$fecha = Fechas::FechaEscrita($b["fecha"]);
+    		}
+
+    	echo '<div class="alert alert-primary" role="alert">
+
+   			Apertura: '. $fecha .' a las '. $b["apertura"] . ' con una caja de: ' . Helpers::Dinero($b["caja_chica"]) . ' por el usuario: '. Helpers::GetData("login_userdata", "nombre", "user", $b["user"]) . '
+			</div>';
+    	} 
+	} $a->close();
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 } // fin de la clase
 
  ?>
