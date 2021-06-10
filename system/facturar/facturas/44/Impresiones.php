@@ -35,7 +35,7 @@ $printer -> setLineSpacing(80);
 // $printer->bitImage($logo);
 
 $printer -> setJustification(Printer::JUSTIFY_CENTER);
-$printer->text("IMPRESIONES");
+$printer->text("ARTDESIGN");
 
 
 $printer->feed();
