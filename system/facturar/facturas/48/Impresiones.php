@@ -81,7 +81,13 @@ $a = $db->query("select cod, cant, producto, pv, total, fecha, hora, num_fac fro
   
     foreach ($a as $b) {
  
-$printer -> text($this->Item($b["cant"], substr($b["producto"], 0, 38), $b["pv"], $b["total"]));
+ // si el nombre del producto no cabe en el ticket cambiar substr($b["producto"], 0, 38) el 38 por menos
+          $oi=$oi+$n1;
+          printer_draw_text($handle, $b["cant"], $col1, $oi);
+          printer_draw_text($handle, substr($b["producto"], 0, 38), $col2, $oi);
+          printer_draw_text($handle, $b["pv"], $col3, $oi);
+          printer_draw_text($handle, $b["total"], $col4, $oi);
+
 
 $subtotalf = $subtotalf + $b["total"];
 
@@ -131,8 +137,8 @@ printer_draw_text($handle, Helpers::Format($cambios), 320, $oi);
 $oi=$oi+$n2;
 printer_draw_text($handle, "___________________________________", 0, $oi);
 
-$oi=$oi+$n1;
-printer_draw_text($handle, "G=Articulo Gravado", 0, $oi);
+// $oi=$oi+$n1;
+// printer_draw_text($handle, "G=Articulo Gravado", 0, $oi);
 
 
 if ($x = $db->select("fecha, hora", "ticket", "WHERE num_fac = '".$numero."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."  and tipo = ".$_SESSION["tipoticket"]."" )) { 
