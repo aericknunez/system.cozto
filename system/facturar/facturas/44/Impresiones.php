@@ -39,17 +39,18 @@ $printer->text("ARTDESIGN");
 
 
 $printer->feed();
-$printer->text("Salida a San Julian, Barrio Veracruz");
+$printer->text("2da Av. Nte entre 3ra y 5ta calle pte.");
 $printer->feed();
-$printer->text("Cuisnahuat, Sonsonate");
+$printer->text("Santa Ana, Santa Ana");
 
 $printer->feed();
-$printer->text("Tel: 7609-7442");
+$printer->text("Tel: 2407-5729 y 7178-2357");
 
 
 $printer->feed();
-$printer->text("Giro: Venta al por menor de Materiales ");
-$printer->text("de Construccion y articulos conexos ");
+$printer->text("Giro: Publicidad ");
+$printer->feed();
+$printer->text("Maximo 15 dias para retirar su orden ");
 
 
 // $printer->feed();
@@ -76,11 +77,11 @@ $printer->text("CAJA: 1.  TICKET NUMERO: " . $numero);
 $printer->feed();
 $printer -> setJustification(Printer::JUSTIFY_CENTER);
 $printer -> text("_______________________________________________________");
-$printer -> setJustification(Printer::JUSTIFY_LEFT);
+//$printer -> setJustification(Printer::JUSTIFY_LEFT);
 $printer->feed();
 /* Items */
 
-$printer -> setJustification(Printer::JUSTIFY_LEFT);
+//$printer -> setJustification(Printer::JUSTIFY_LEFT);
 $printer -> setEmphasis(true);
 $printer -> text($this->Item("Cant", 'Producto', 'Precio', 'Total'));
 $printer -> setEmphasis(false);
@@ -657,23 +658,22 @@ $printer->feed();
 
 
 $printer -> setJustification(Printer::JUSTIFY_CENTER);
-$printer->text("FERRETERIA ABREGO");
-
-
-
-
-$printer->feed();
-$printer->text("Salida a San Julian, Barrio Veracruz");
-$printer->feed();
-$printer->text("Cuisnahuat, Sonsonate");
-
-$printer->feed();
-$printer->text("Tel: 7609-7442");
+$printer->text("ARTDESIGN");
 
 
 $printer->feed();
-$printer->text("Giro: Venta al por menor de Materiales ");
-$printer->text("de Construccion y articulos conexos ");
+$printer->text("2da Av. Nte entre 3ra y 5ta calle pte.");
+$printer->feed();
+$printer->text("Santa Ana, Santa Ana");
+
+$printer->feed();
+$printer->text("Tel: 2407-5729 y 7178-2357");
+
+
+$printer->feed();
+$printer->text("Giro: Publicidad ");
+$printer->feed();
+$printer->text("Maximo 15 dias para retirar su orden ");
 
 
 
@@ -956,21 +956,22 @@ $printer->feed();
 /* Items */
 
 $printer -> setJustification(Printer::JUSTIFY_CENTER);
-$printer->text("FERRETERIA ABREGO");
+$printer->text("ARTDESIGN");
 
 
 $printer->feed();
-$printer->text("Salida a San Julian, Barrio Veracruz");
+$printer->text("2da Av. Nte entre 3ra y 5ta calle pte.");
 $printer->feed();
-$printer->text("Cuisnahuat, Sonsonate");
+$printer->text("Santa Ana, Santa Ana");
 
 $printer->feed();
-$printer->text("Tel: 7609-7442");
+$printer->text("Tel: 2407-5729 y 7178-2357");
 
 
 $printer->feed();
-$printer->text("Giro: Venta al por menor de Materiales ");
-$printer->text("de Construccion y articulos conexos ");
+$printer->text("Giro: Publicidad ");
+$printer->feed();
+$printer->text("Maximo 15 dias para retirar su orden ");
 
 
 // $printer->feed();

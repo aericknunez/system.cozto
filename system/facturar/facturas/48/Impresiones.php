@@ -48,7 +48,7 @@ printer_select_font($handle, $font);
 
 
 //// comienza la factura
-printer_draw_text($handle, "FARMACIA JEHOVA RAFAJ", 50, $oi);
+printer_draw_text($handle, "FARMACIA JEHOVA RAFAH", 50, $oi);
 
 $oi=$oi+$n1;
 printer_draw_text($handle, "Km 51.5 Carr a Ilobasco, Plaza comercial", 0, $oi);
@@ -58,7 +58,7 @@ $oi=$oi+$n1;
 printer_draw_text($handle, "Cabanas", 0, $oi);
 
 $oi=$oi+$n1;
-printer_draw_text($handle, "Tel: 7842-7299", 0, $oi);
+printer_draw_text($handle, "Tel: 7861-9295", 0, $oi);
 
 $oi=$oi+$n1;
 printer_draw_text($handle, "CAJA: 1", 0, $oi);
