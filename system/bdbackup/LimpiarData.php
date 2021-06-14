@@ -196,7 +196,7 @@ public function Tablas(){
 "ticket_descuenta", 
 "ticket_num", 
 "ticket_orden", 
-// "ubicacion", 
+"ubicacion", 
 "ubicacion_asig"); // directorios a recorrer
 
   return $dir;

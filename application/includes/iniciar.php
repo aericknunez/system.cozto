@@ -116,7 +116,7 @@ if($_SESSION['root_plataforma'] == 0 and Helpers::ServerDomain() == TRUE){
         $datos["td"] = $_SESSION["td"];
         $db->insert("ubicacion", $datos);
 
-        $data_u["unidad"] = "Unidad";
+        $data_u["nombre"] = "Unidad";
         $data_u["abreviacion"] = "U";
         $data_u["hash"] = Helpers::HashId();
         $data_u["time"] = Helpers::TimeId();
