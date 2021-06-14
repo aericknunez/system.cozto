@@ -206,9 +206,7 @@ $objPHPExcel->setActiveSheetIndex(0)
             ->setCellValue('J15', 'PRECIO UNITARIO')
             ->setCellValue('K15', 'PRECIO TOTAL')
             ->setCellValue('L15', 'DESCUENTO')
-            ->setCellValue('M15', 'MONTO TOTAL')
-            ->setCellValue('N15', 'MARGEN $')
-            ->setCellValue('O15', 'MARGEN %');
+            ->setCellValue('M15', 'MONTO TOTAL');
  
 
 $fila = 15;   
@@ -216,9 +214,6 @@ $fila = 15;
 
       $totalcosto = $b["pc"] * $b["cant"];
       $total = $b["pv"] * $b["cant"];
-      $ganancia = $b["total"] - $totalcosto;
-      @$porcentaje = ($ganancia / $b["total"])*100;
-
 
 $fila = $fila + 1; 
 $objPHPExcel->setActiveSheetIndex(0)
@@ -234,9 +229,7 @@ $objPHPExcel->setActiveSheetIndex(0)
           ->setCellValue('J' . $fila, $b["pv"])
           ->setCellValue('K' . $fila, $total)
           ->setCellValue('L' . $fila, $b["descuento"])
-          ->setCellValue('M' . $fila, $b["total"])
-          ->setCellValue('N' . $fila, $ganancia)
-          ->setCellValue('O' . $fila, Helpers::Format($porcentaje));
+          ->setCellValue('M' . $fila, $b["total"]);
  
 
         } 
@@ -245,7 +238,7 @@ $objPHPExcel->setActiveSheetIndex(0)
 
 
 $columnas = array('A','B','C','D','E','F','G');
-$numeros = array('H','I','J','K','L','M','N','O');
+$numeros = array('H','I','J','K','L','M');
 
 // establece ceros numerocico las filas numerocas
 foreach($numeros as $columnID) {
