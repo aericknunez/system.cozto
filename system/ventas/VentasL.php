@@ -657,7 +657,7 @@ Helpers::UpdateId("ubicacion_asig", $cambio, "ubicacion = '".$datos["ubicacion"]
 						      <th scope="row">';
 
 						    if($b["cod"] == 8888888 or $this->IsSercicio($b["cod"]) == TRUE){
-			    				echo '<a id="agrupado""><i class="fas fa-times-circle blue-text fa-lg"></i></a>';
+			    				echo '<a id="agrupado""><i class="fas fa-times-circle blue-text fa-lg"></i></a>'.$b["cant"];
 			    			} else {
 			    				echo $b["cant"];
 			    			}
