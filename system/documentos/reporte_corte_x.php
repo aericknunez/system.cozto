@@ -201,12 +201,10 @@ $objPHPExcel->setActiveSheetIndex(0)
             ->setCellValue('E15', 'CODIGO')
             ->setCellValue('F15', 'CANTIDAD')
             ->setCellValue('G15', 'PRODUCTO')
-            ->setCellValue('H15', 'COSTO UNITARIO')
-            ->setCellValue('I15', 'COSTO TOTAL')
-            ->setCellValue('J15', 'PRECIO UNITARIO')
-            ->setCellValue('K15', 'PRECIO TOTAL')
-            ->setCellValue('L15', 'DESCUENTO')
-            ->setCellValue('M15', 'MONTO TOTAL');
+            ->setCellValue('H15', 'PRECIO UNITARIO')
+            ->setCellValue('I15', 'PRECIO TOTAL')
+            ->setCellValue('J15', 'DESCUENTO')
+            ->setCellValue('K15', 'MONTO TOTAL');
  
 
 $fila = 15;   
@@ -224,12 +222,10 @@ $objPHPExcel->setActiveSheetIndex(0)
           ->setCellValue('E' . $fila, $b["cod"])
           ->setCellValue('F' . $fila, $b["cant"])
           ->setCellValue('G' . $fila, $b["producto"])
-          ->setCellValue('H' . $fila, $b["pc"])
-          ->setCellValue('I' . $fila, Helpers::Format4D($totalcosto))
-          ->setCellValue('J' . $fila, $b["pv"])
-          ->setCellValue('K' . $fila, $total)
-          ->setCellValue('L' . $fila, $b["descuento"])
-          ->setCellValue('M' . $fila, $b["total"]);
+          ->setCellValue('H' . $fila, $b["pv"])
+          ->setCellValue('I' . $fila, $total)
+          ->setCellValue('J' . $fila, $b["descuento"])
+          ->setCellValue('K' . $fila, $b["total"]);
  
 
         } 
@@ -238,7 +234,7 @@ $objPHPExcel->setActiveSheetIndex(0)
 
 
 $columnas = array('A','B','C','D','E','F','G');
-$numeros = array('H','I','J','K','L','M');
+$numeros = array('H','I','J','K');
 
 // establece ceros numerocico las filas numerocas
 foreach($numeros as $columnID) {
