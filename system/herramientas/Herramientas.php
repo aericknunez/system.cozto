@@ -143,11 +143,11 @@ $a->close();
           $db->insert("producto_ingresado", $datos);
 
 
- if ($r = $db->select("hash", "ubicacion", "WHERE predeterminada = 1 and td = ". $_SESSION["td"] ."")) { 
+ if ($r = $db->select("hash", "ubicacion", "WHERE predeterminada = '1' and td = ". $_SESSION["td"] ."")) { 
         $hash = $r["hash"]; } unset($r); 
 
           $data = array();
-          $data["ubucacion"] =  $hash;
+          $data["ubicacion"] =  $hash;
           $data["producto"] = $datox["producto"];
           $data["cant"] = $datox["cantidad"];
           $data["td"] = $_SESSION["td"];

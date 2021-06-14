@@ -41,9 +41,9 @@ $_SESSION["ver_avatar"] = NULL;
 
             } unset($r);
 
-            if(VerificaUbicacion() == FALSE){
+            if(VerificaDataInicial() == FALSE){
                     // inserto ubicacion predeterminada
-                    AddUbicacion();
+                    AddDataInicial();
             }
 
             BuscaDatosSistema();
@@ -91,7 +91,7 @@ if($_SESSION['root_plataforma'] == 0 and Helpers::ServerDomain() == TRUE){
     }
 
 
-    function VerificaUbicacion(){
+    function VerificaDataInicial(){
         $db = new dbConn();
 
         $a = $db->query("SELECT * FROM ubicacion WHERE td = " . $_SESSION['td']);
@@ -106,7 +106,7 @@ if($_SESSION['root_plataforma'] == 0 and Helpers::ServerDomain() == TRUE){
     }
 
 
-    function AddUbicacion(){ // ubicaion predeterminada para cuando no hay datos
+    function AddDataInicial(){ // ubicaion predeterminada para cuando no hay datos
         $db = new dbConn();
 
         $datos["ubicacion"] = "Principal";
@@ -115,6 +115,39 @@ if($_SESSION['root_plataforma'] == 0 and Helpers::ServerDomain() == TRUE){
         $datos["time"] = Helpers::TimeId();
         $datos["td"] = $_SESSION["td"];
         $db->insert("ubicacion", $datos);
+
+        $data_u["unidad"] = "Unidad";
+        $data_u["abreviacion"] = "U";
+        $data_u["hash"] = Helpers::HashId();
+        $data_u["time"] = Helpers::TimeId();
+        $data_u["td"] = $_SESSION["td"];
+        $db->insert("producto_unidades", $data_u);
+
+        $data_s["categoria"] = "GENERAL";
+        $hash_cat = Helpers::HashId();
+        $data_s["hash"] = $hash_cat;
+        $data_s["time"] = Helpers::TimeId();
+        $data_s["td"] = $_SESSION["td"];
+        $db->insert("producto_categoria", $data_s);
+
+        $data_su["categoria"] = $hash_cat;
+        $data_su["subcategoria"] = "General";
+        $data_su["hash"] = Helpers::HashId();
+        $data_su["time"] = Helpers::TimeId();
+        $data_su["td"] = $_SESSION["td"];
+        $db->insert("producto_categoria_sub", $data_su);
+
+        $data_p["nombre"] = "Proveedor";
+        $data_p["direccion"] = "San Salvador";
+        $data_p["telefono"] = "2400-0000";
+        $data_p["tel_contacto"] = "2400-0000";
+        $data_p["hash"] = Helpers::HashId();
+        $data_p["time"] = Helpers::TimeId();
+        $data_p["td"] = $_SESSION["td"];
+        $db->insert("proveedores", $data_p);
+
+
+
     }
 
 

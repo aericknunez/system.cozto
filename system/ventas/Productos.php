@@ -46,6 +46,7 @@ class Productos{
   if ($r = $db->select("*", "producto", "WHERE cod = '". $dato["cod"] ."' and td = ".$_SESSION["td"]."")) {  
     $cantidad = $r["cantidad"];
     $medida = $r["medida"];
+    $servicio = $r["servicio"];
   } unset($r); 
 
   if ($s = $db->select("*", "producto_unidades", "WHERE hash = '$medida' and td = ".$_SESSION["td"]."")) { 
@@ -77,7 +78,19 @@ echo '<section class="my-2">
       <p>Cantidad disponible: <a class="font-weight-bold">'.$cantidad.'</a> '.$nombreU.'</p>
 
       <p class="dark-grey-text">';
-    
+ 
+if($servicio == "on"){
+Alerts::Mensajex("Puede agregar la cantidad de servios que desee","success");
+
+echo '<div class="md-form md-outline form-sm col-md-2">';
+echo '<label for="cantidad">Cantidad</label>
+  <input id="cantidad" name="cantidad" class="form-control form-control-sm" type="number" value="1" step="any" min="1">';  
+echo '</div>';
+
+
+
+} else {
+
     if($cantidad <= 0){
        Alerts::Mensajex("No hay productos disponibles en inventario","danger",$boton,$boton2);
     }
@@ -100,8 +113,11 @@ if($cantidad <= 0){
     $this->CompruebaUbicaciones($dato["cod"]);
 }   
 
+}// sino es servicio
+
     echo '</p>
               <input id="cod" name="cod" type="hidden" value="'. $dato["cod"] .'">
+              <input id="servicio" name="servicio" type="hidden" value="'. $servicio .'">
               <input id="unidades" name="unidades" type="hidden" value="'. $cantidad .'">
     </div>
 

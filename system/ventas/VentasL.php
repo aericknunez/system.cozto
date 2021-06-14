@@ -8,10 +8,12 @@ class Ventas{
 
 
    public function AddVenta($datos){ // lento
-   	if($datos["cantidad"] > 0){	
+   	if($_POST["unidades"] >= $_POST["cantidad"] or $_POST["servicio"] == "on"){
 		if($_SESSION["orden"] == NULL){ $this->AddOrden(); }
   		$this->Agregar($datos);
-   	}
+   	} else {
+	 Alerts::Alerta("error","Error!","La cantidad establecida es mayor a la cantidad de productos!");
+	}
 
   	$this->VerProducto();
    }
