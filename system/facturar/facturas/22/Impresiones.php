@@ -197,10 +197,13 @@ printer_draw_text($handle, date("Y"), 180, $oi);
 
 
 
-    if ($r = $db->select("cliente", "ticket_cliente", "WHERE factura = '$numero' and tx = " . $_SESSION["tx"] . " and td = " .  $_SESSION["td"])) { 
+if ($r = $db->select("orden", "ticket_num", "WHERE num_fac = '$numero' and tx = " . $_SESSION["tx"] . " and tipo = ".$_SESSION["tipoticket"]." and td = " .  $_SESSION["td"])) { 
+    $orden = $r["orden"];
+} unset($r);
+
+    if ($r = $db->select("cliente", "ticket_cliente", "WHERE orden = '$orden' and factura = '$numero' and tx = " . $_SESSION["tx"] . " and td = " .  $_SESSION["td"])) { 
         $hashcliente = $r["cliente"];
     } unset($r);  
-
 
 
     if ($r = $db->select("nombre, documento, direccion", "clientes", "WHERE hash = '$hashcliente' and td = " .  $_SESSION["td"])) { 
