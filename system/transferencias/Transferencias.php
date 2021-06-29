@@ -377,9 +377,12 @@ public function EnviarOrden($url){
     $error = curl_error($ch);
     curl_close ($ch);
 
-    // $respuesta = json_decode($respuesta, true);//
+    $respuesta = json_decode($respuesta, true);//
 
-    print_r($respuesta);
+    // print_r($respuesta);
+    if ($respuesta["mensaje"] == "Registro Realizado") {
+    	echo "Se realizo el registro con todo";
+    }
 }
 
 
