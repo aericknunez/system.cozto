@@ -148,6 +148,11 @@ elseif(isset($_GET["search"])) include_once 'system/facturar/busqueda.php'; // s
 elseif(isset($_GET["reportef"])) include_once 'system/facturar/reportef.php'; // search factura
 
 
+//trasnferencias
+elseif(isset($_GET["transferencias"])) include_once 'system/transferencias/transfer.php'; 
+elseif(isset($_GET["enviadas"])) include_once 'system/transferencias/enviadas.php'; 
+
+
 
 
 

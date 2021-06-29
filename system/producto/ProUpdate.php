@@ -87,7 +87,7 @@ class ProUpdate{
   }
 
 
-  public function ProAgrega($datox){ // lo que viede del formulario principal
+  public function ProAgrega($datox, $cargaPro = NULL){ // lo que viede del formulario principal
     $db = new dbConn();
 
   
@@ -148,8 +148,11 @@ $this->CaracteristicaAgrega($datox["cod"], $datox["caracteristica"], $hashin);
           } else {
               Alerts::Alerta("error","Error!","Faltan Datos!");
           }
-        $this->VerAgrega($datox["cod"]);
 
+        if ($cargaPro == NULL) {
+          $this->VerAgrega($datox["cod"]);
+        }
+       
   }
 
 

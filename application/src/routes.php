@@ -460,6 +460,8 @@ case "48":
 include_once '../../system/producto/ProUpdate.php';
 	$productos = new ProUpdate;
 	$productos->ProAgrega($_POST);
+
+	// print_r($_POST);
 break;
 
 
@@ -2797,13 +2799,86 @@ break;
 
  
 
+case "650": // aceptar orden
+include_once '../../system/transferencias/Transferencias.php';
+	$trans = new Transferencias();
+
+	include_once '../../system/producto/ProUpdate.php';
+	$trans->AceptarOrden(URL_TRANSFERENCIA .'?op=12&hash=' . $_REQUEST["hash"], $_REQUEST["hash"]);
+break;
+
+
+
+case "651": // mostrar todas las orden
+include_once '../../system/transferencias/Transferencias.php';
+	$trans = new Transferencias();
+	$trans->OrdenesPendientes(URL_TRANSFERENCIA .'?op=10&iden=' . $_SESSION["td"]);
+break;
+
+
+
+case "652": // aceptar orden
+include_once '../../system/transferencias/Transferencias.php';
+	$trans = new Transferencias();
+	$trans->RechazarOrden(URL_TRANSFERENCIA .'?op=15&hash=' . $_REQUEST["hash"], $_REQUEST["hash"]);
+break;
+
+
+
+case "653": // Obtiene Cuentas vienculadas
+include_once '../../system/transferencias/Transferencias.php';
+	$trans = new Transferencias();
+	$trans->CuentasVinculadas(URL_TRANSFERENCIA .'?op=19&origen=' . $_SESSION["td"]);
+break;
+
+
+
+case "654": // destruye  variables de sesion de nueva orden
+include_once '../../system/transferencias/Transferencias.php';
+	$trans = new Transferencias();
+	$trans->DestruyeVariables();
+break;
+
+
+
+case "655": // crear variables de sesion de nueva orden
+include_once '../../system/transferencias/Transferencias.php';
+	$trans = new Transferencias();
+	$trans->CreaVariables($_REQUEST["destino"]);
+break;
+
+
+
+case "656": // seleccion de productos
+include_once '../../system/transferencias/Transferencias.php';
+	$trans = new Transferencias();
+	$trans->SelectProduct($_REQUEST["key"]);
+break;
+
+
+
+case "657": // seleccion de productos
+include_once '../../system/transferencias/Transferencias.php';
+	$trans = new Transferencias();
+	$trans->AgregaProducto($_POST);
+break;
 
 
 
 
+case "658": // enviar orden de productos a la nube
+include_once '../../system/transferencias/Transferencias.php';
+	$trans = new Transferencias();
+	$trans->EnviarOrden(URL_TRANSFERENCIA .'?op=11');
+break;
 
 
 
+case "659": // mostrar todas las orden enviadas
+include_once '../../system/transferencias/Transferencias.php';
+	$trans = new Transferencias();
+	$trans->OrdenesEnviadas(URL_TRANSFERENCIA .'?op=20&iden=' . $_SESSION["td"]);
+break;
 
 
 

@@ -7,72 +7,129 @@ sec_session_start();
 include_once '../common/Encrypt.php';
 include_once '../common/Mysqli.php';
 include_once '../common/Fechas.php';
-include_once '../../system/corte/Corte.php';
-include_once '../../system/sync/Sync.php';
-include_once '../../system/index/Inicio.php';
-
-if($_REQUEST["fecha"] == NULL){
-   $fecha = date("d-m-Y"); 
-} else {
-    $fecha = $_REQUEST["fecha"];
-}
-
-Delete("corte_diario", "user", $fecha);
-
-// Delete("ticket", "cod", $fecha);
-// Delete("ticket_num", "mesa", $fecha);
-// Delete("mesa_nombre", "mesa", $fecha);
-// Delete("gastos_images", "imagen", $fecha);
-// Delete("mesa", "mesa", $fecha);
-// Delete("gastos", "tipo", $fecha);
-// Delete("control_cocina", "mesa", $fecha);
 
 
-  function Delete($tabla, $cod, $fecha){
+
+// Delete("corte_diario", "user", $fecha);
+
+
+  function Delete($tabla, $hash){
     $db = new dbConn();
 
-        $a = $db->query("SELECT * FROM $tabla WHERE fecha = '$fecha'");
+$dir = $this->Tablas();
 
 
-        $contador = 0;
-    foreach ($a as $b) { //$b["id"]
-        $hora=$b["hora"];
-        $codigo = $b[$cod];
-                
-                $ax = $db->query("SELECT * FROM $tabla WHERE hora = '$hora' and $cod = '$codigo' and fecha = '$fecha'");
+// foreach ($dir as $tabla) {
 
-                if($ax->num_rows > 1){
-                    $contador = $contador + $ax->num_rows;
-                    $cant = $ax->num_rows - 1;
+//   $db->delete($tabla, "WHERE td=" . $_SESSION["td"]);
 
-                    if ( $db->delete("$tabla", "WHERE hora = '$hora' and $cod = '$codigo' and fecha = '$fecha' LIMIT " . $cant)) {
-                            echo "$cant - Record Deleted!<br />"; 
-                        } unset($cant);
-
-                    $ax->close();
-                } 
+// } /// termina recorrido de directorios
 
 
-    }  echo $tabla . " -- ".$contador." <br>";
-        unset($contador);
 
-    $a->close();
- }
+
+// $a = $db->query("SELECT * FROM $tabla WHERE hash = '$hash'");
+//     foreach ($a as $b) { //$b["id"]
+
+//     $ax = $db->query("SELECT * FROM $tabla WHERE hora = '$hora' and $cod = '$codigo' and fecha = '$fecha'");
+
+//     if($ax->num_rows > 1){
+//         $contador = $contador + $ax->num_rows;
+//         $cant = $ax->num_rows - 1;
+
+//         if ( $db->delete("$tabla", "WHERE hora = '$hora' and $cod = '$codigo' and fecha = '$fecha' LIMIT " . $cant)) {
+//                 echo "$cant - Record Deleted!<br />"; 
+//             } unset($cant);
+
+//         $ax->close();
+//     } 
+
+//     } 
+
+
+//     $a->close();
+//  }
  
 
 
 
+public function Tablas(){
 
-///////redirect
+$dir  = array(
+"ajuste_inventario", 
+"ajuste_inventario_activate", 
+"autoparts_busqueda_producto", 
+"autoparts_item", 
+"autoparts_marca", 
+"autoparts_modelo", 
+"caracteristicas", 
+"caracteristicas_asig", 
+"clientes", 
+"config_master", 
+"config_root", 
+"corte_diario", 
+"cotizaciones", 
+"cotizaciones_data", 
+"creditos", 
+"creditos_abonos",
+"ecommerce", 
+"ecommerce_data", 
+"entradas_efectivo", 
+"facturar_documento", 
+"facturar_documento_factura", 
+"facturar_opciones", 
+"gastos", 
+"gastos_categorias", 
+"gastos_cuentas", 
+"gastos_images", 
+"marcas", 
+"marca_asig", 
+"pesaje", 
+"planilla_descuentos", 
+"planilla_descuentos_asig", 
+"planilla_empleados", 
+"planilla_extras", 
+"planilla_pagos",
+"producto", 
+"producto_averias", 
+"producto_cambios", 
+"producto_categoria", 
+"producto_categoria_sub", 
+"producto_compuestos", 
+"producto_dependiente", 
+"producto_devoluciones", 
+"producto_imagenes", 
+"producto_ingresado", 
+"producto_precio", 
+"producto_precio_mayorista", 
+"producto_precio_promo", 
+"producto_tags", 
+"producto_unidades", 
+"proveedores", 
+"sync_tabla", 
+"sync_tables_updates", 
+"sync_up", 
+"sync_up_cloud", 
+"system_version", 
+"ticket", 
+"ticket_cliente", 
+"ticket_descuenta", 
+"ticket_num", 
+"ticket_orden", 
+"ubicacion", 
+"ubicacion_asig"); // directorios a recorrer
 
- $fechax = new Fechas();
+  return $dir;
+}
 
- $next = $fechax->DiaSiguiente($fecha);
 
- sleep(2);
 
- echo '<script>
-    window.location.href="?fecha='. $next.'"
-</script>';
+
+
+
+
+
+
+
 
 ?>

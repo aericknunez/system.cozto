@@ -36,7 +36,8 @@ if(Helpers::ServerDomain() == TRUE){
 		}
 	
 	}
-  
+
+define("URL_TRANSFERENCIA", "https://coztoapi.hibridosv.com/");  
 
 } else {
 
@@ -46,6 +47,9 @@ define("PASSWORD", "erick"); 							// The database password.
 define("DATABASE", "cozto_ventas"); 
 define("XSERV", "http://localhost/cozto/");	
 define("TYPE", "Local");
+
+define("URL_TRANSFERENCIA", "http://localhost/coztoapi/");
+
 }
 
 define("CAN_REGISTER", "any");

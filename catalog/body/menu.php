@@ -464,6 +464,10 @@ if((Helpers::ServerDomain() == FALSE and $_SESSION["root_plataforma"] == 0) or (
 
 <li><a href="?ctc" class="waves-effect"><i class="fas fa-cogs"></i> Cambiar Cuenta</a></li>
 
+<li><a href="?transferencias" class="waves-effect"><i class="fas fa-cogs"></i> Aceptar Ordenes</a></li>
+<li><a href="?enviadas" class="waves-effect"><i class="fas fa-cogs"></i> Ordenes Enviadas</a></li>
+
+
 </ul>
 </div>
 </li>

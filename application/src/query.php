@@ -472,6 +472,26 @@ elseif(isset($_GET["reportef"])) {
 echo '<script type="text/javascript" src="assets/js/query/facturar.js?v='.$numero.'"></script>';
 } 
 
+
+
+
+////////// transferencias
+elseif(isset($_GET["transferencias"])) {
+echo '<script type="text/javascript" src="assets/js/query/transferencias.js?v='.$numero.'"></script>';
+} 
+elseif(isset($_GET["enviadas"])) {
+echo '<script type="text/javascript" src="assets/js/query/transferencias.js?v='.$numero.'"></script>';
+} 
+
+
+
+
+
+
+
+
+
+
 else{
 /// lo que llevara index
 //echo '<script type="text/javascript" src="assets/js/query/ventas.js?v='.$numero.'"></script>';
