@@ -1,6 +1,7 @@
  <?php  
 use Mike42\Escpos\EscposImage;
 use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
+use Mike42\Escpos\PrintConnectors\NetworkPrintConnector;
 use Mike42\Escpos\Printer;
 
 
@@ -22,13 +23,19 @@ if(Helpers::GetIp() == "192.168.1.100"){
   $nombre_impresora = "POS-80";
 }
 
+
+// use Mike42\Escpos\PrintConnectors\NetworkPrintConnector;
+// use Mike42\Escpos\Printer;
+// $connector = new NetworkPrintConnector("10.x.x.x", 9100);
+// $printer = new Printer($connector);
   // $nombre_impresora = "TICKET";
   
 
 // $img  = "C:/AppServ/www/pizto/assets/img/logo_factura/abrego.jpg";
 
 
-$connector = new WindowsPrintConnector($nombre_impresora);
+// $connector = new WindowsPrintConnector($nombre_impresora);
+$connector = new NetworkPrintConnector("192.168.1.4", 9100);
 $printer = new Printer($connector);
 $printer -> initialize();
 
