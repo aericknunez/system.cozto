@@ -18,7 +18,7 @@ class Impresiones{
 
 
 
-  $nombre_impresora = "POS-80";
+  $nombre_impresora = "POS-80 en Elias";
 
 
 
