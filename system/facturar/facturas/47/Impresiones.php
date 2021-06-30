@@ -17,11 +17,9 @@ class Impresiones{
   $db = new dbConn();
 
 
-if(Helpers::GetIp() == "192.168.1.100"){
-  $nombre_impresora = "TICKET";
-} else {
+
   $nombre_impresora = "POS-80";
-}
+
 
 
 // use Mike42\Escpos\PrintConnectors\NetworkPrintConnector;
@@ -34,8 +32,7 @@ if(Helpers::GetIp() == "192.168.1.100"){
 // $img  = "C:/AppServ/www/pizto/assets/img/logo_factura/abrego.jpg";
 
 
-// $connector = new WindowsPrintConnector($nombre_impresora);
-$connector = new NetworkPrintConnector("192.168.1.4", 9100);
+$connector = new WindowsPrintConnector($nombre_impresora);
 $printer = new Printer($connector);
 $printer -> initialize();
 
