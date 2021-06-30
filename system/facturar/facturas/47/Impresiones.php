@@ -14,8 +14,18 @@ class Impresiones{
 
  public function Ticket($efectivo, $numero){
   $db = new dbConn();
+
+
+// if(Helpers::GetIp() == "192.168.1.151"){
+//   $nombre_impresora = "TICKET";
+// } else {
+//   $nombre_impresora = "LR200";
+// }
+
   $nombre_impresora = "TICKET";
-  // $img  = "C:/AppServ/www/pizto/assets/img/logo_factura/abrego.jpg";
+  
+
+// $img  = "C:/AppServ/www/pizto/assets/img/logo_factura/abrego.jpg";
 
 
 $connector = new WindowsPrintConnector($nombre_impresora);
