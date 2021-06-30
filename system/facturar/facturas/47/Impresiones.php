@@ -1,7 +1,6 @@
  <?php  
 use Mike42\Escpos\EscposImage;
 use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
-use Mike42\Escpos\PrintConnectors\NetworkPrintConnector;
 use Mike42\Escpos\Printer;
 
 
@@ -17,16 +16,20 @@ class Impresiones{
   $db = new dbConn();
 
 
-
-  $nombre_impresora = "POS-80 en Elias";
-
+// if(Helpers::GetIp() == "192.168.1.100"){
+//   $nombre_impresora = "TICKET";
+// } else {
+//   $nombre_impresora = "POS-80";
+// }
 
 
 // use Mike42\Escpos\PrintConnectors\NetworkPrintConnector;
 // use Mike42\Escpos\Printer;
 // $connector = new NetworkPrintConnector("10.x.x.x", 9100);
 // $printer = new Printer($connector);
-  // $nombre_impresora = "TICKET";
+
+
+  $nombre_impresora = "TICKET";
   
 
 // $img  = "C:/AppServ/www/pizto/assets/img/logo_factura/abrego.jpg";
