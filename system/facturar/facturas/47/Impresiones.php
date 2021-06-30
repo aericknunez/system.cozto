@@ -16,13 +16,13 @@ class Impresiones{
   $db = new dbConn();
 
 
-// if(Helpers::GetIp() == "192.168.1.151"){
-//   $nombre_impresora = "TICKET";
-// } else {
-//   $nombre_impresora = "LR200";
-// }
-
+if(Helpers::GetIp() == "192.168.1.100"){
   $nombre_impresora = "TICKET";
+} else {
+  $nombre_impresora = "POS-80";
+}
+
+  // $nombre_impresora = "TICKET";
   
 
 // $img  = "C:/AppServ/www/pizto/assets/img/logo_factura/abrego.jpg";
