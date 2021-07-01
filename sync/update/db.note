@@ -1,7 +1,7 @@
 NOTAS DE DATABASE
 
-01.00 -  Se agregan tres campos a la tabla producto ingresado donde va el proveedor, documento (nummero documento de la compra) y el precio de venta (Esta solo se llenara si el precio de venta cambiara en el momento que se comience a vender esta lote de productos)
-ademas el usuario que registra y la fecha format
+01.00 	- Se agregan tres campos a la tabla producto ingresado donde va el proveedor, documento (nummero documento de la compra) y el precio de venta (Esta solo se llenara si el precio de venta cambiara en el momento que se comience a vender esta lote de productos)
+		ademas el usuario que registra y la fecha format
 
 
 01.01	- Se agrego a Config Root la opcion de taller
@@ -10,3 +10,8 @@ ademas el usuario que registra y la fecha format
 		- Se agrega Facturas Cliente taller
 
 		- Se agrega el tipo de documento a la base de datos de tipo facturar_documento_factura
+		- Se agrego el campo en config_master para poder establecer taller
+		- Se agrego el campo en config_master para poder establecer consignaciones
+
+01.02	- Se agrego el campo en config_root para activar o desactivar las tranferencias
+		- Se agrego el campo en config_master para poder establecer vender productos agotados
