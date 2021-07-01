@@ -1,0 +1,3 @@
+ALTER TABLE `config_root` ADD `transferencias` VARCHAR(100) NOT NULL AFTER `consignaciones`;
+
+ALTER TABLE `config_master` ADD `agotado` VARCHAR(3) NOT NULL AFTER `pesaje`;

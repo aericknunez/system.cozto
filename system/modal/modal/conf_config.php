@@ -180,6 +180,7 @@ $r = $db->select("*", "config_master", "where td = ".$_SESSION['td']."")
           </div>
   
     </td>
+
   </tr>
     <tr>
 
@@ -193,6 +194,24 @@ $r = $db->select("*", "config_master", "where td = ".$_SESSION['td']."")
             </label>
           </div>
 
+       </td>
+    
+    <td>
+         <div class="switch mt-4">
+            <label>
+             Productos Agotados ||  Off
+          <input type="checkbox" <?php if($r["agotado"] == "on") echo "checked"; ?> id="agotado" name="agotado" >
+              <span class="lever"></span> On 
+            </label>
+          </div>
+    </td>
+  </tr>
+
+
+  </tr>
+    <tr>
+
+       <td>
        </td>
     
     <td>

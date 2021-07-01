@@ -48,8 +48,8 @@ foreach ($data["ordenes"] as $key => $orden) {
 echo '<div>
 
 <div class="clearfix">
-  <h2 class="h2-responsive float-left">'.$data["ordenes"][$key]["fecha"].' | '.$data["ordenes"][$key]["hora"].' | '.$data["ordenes"][$key]["nombre_o"].'</h2> 
-  <h2 class="h2-responsive float-right"></h2>
+  <h2 class="h4-responsive float-left">'.$data["ordenes"][$key]["fecha"].' | '.$data["ordenes"][$key]["hora"].' | '.$data["ordenes"][$key]["nombre_o"].'</h2> 
+  <h2 class="h4-responsive float-right"></h2>
 </div>
 
 
@@ -76,8 +76,8 @@ echo '</tbody>
 </div>
 
 <div class="clearfix">
-  <h2 class="h2-responsive float-left"><a id="cancelar_orden" hash="'.$data["ordenes"][$key]["hash"].'" class="btn btn-danger  btn-sm mb-3">CANCELAR ORDEN</i></a></h2> 
-  <h2 class="h2-responsive float-right">';
+  <h2 class="h4-responsive float-left"><a id="cancelar_orden" hash="'.$data["ordenes"][$key]["hash"].'" class="btn btn-danger  btn-sm mb-3">CANCELAR ORDEN</i></a></h2> 
+  <h2 class="h4-responsive float-right">';
   if($btn == TRUE){
   	echo '<a id="order_acept" hash="'.$data["ordenes"][$key]["hash"].'" class="btn btn-info  btn-sm mb-3">ACEPTAR ORDEN</i></a>';
   } else {
@@ -157,11 +157,13 @@ public function AceptarOrden($url, $hash){
 
   if($res["mensaje"] == "Realizado"){
 
-  	$productosx = $this->ObtenerData('http://localhost/coztoapi/?op=18&hash=' . $hash);
+  	$productosx = $this->ObtenerData(URL_TRANSFERENCIA . '?op=18&hash=' . $hash);
   	$productos = json_decode($productosx, true);
 
 	$agrega = new ProUpdate;
-  	foreach ($productos as $key => $producto) {
+
+
+  	foreach ($productos["productos"] as $key => $producto) {
   		// echo $producto["cod"] . "  ||  " . $producto["cantidad"] . "<br>";
 
 		if ($r = $db->select("hash", "ubicacion", "WHERE predeterminada = '1' and td = ".$_SESSION["td"]."")) { 
@@ -239,7 +241,7 @@ public function CuentasVinculadas($url){
 
 if($datos["mensaje"] != "No se encontraron datos"){
   foreach ($datos as $key => $destino) {
-  	echo '<a id="select_destino" destino="'.$destino["destino"] .'" class="btn btn-info btn-rounded">'.$destino["nombre_d"] .'</a>';
+  	echo '<div class="z-depth-2 rounded my-4 pl-3"><a id="select_destino" destino="'.$destino["destino"] .'" class="font-weight-bold">'.$destino["nombre_d"] .'</a></div>';
   }
 } else {
 	Alerts::Mensajex("No se encontraron ordenes pendientes de aceptar", "info");
@@ -287,8 +289,10 @@ public function SelectProduct($key){
 	$db = new dbConn();
 
 	$producto = Helpers::GetData("producto", "descripcion", "cod", $key);
+	$cantidad = Helpers::GetData("producto", "cantidad", "cod", $key);
 
-	echo '<div class="h2-responsive mb-3">'.$producto.'</div>';
+	echo '<div class="mb-3"><div class="h2-responsive">'.$producto.'</div>
+	Existencias <small>('.$cantidad.')</small></div>';
 
 	echo '<input type="hidden" id="cod" name="cod" value="'.$key.'">';
 	echo '<input type="hidden" id="producto" name="producto" value="'.$producto.'">';
@@ -436,13 +440,20 @@ foreach ($data["ordenes"] as $key => $orden) {
 
 switch ($data["ordenes"][$key]["edo"]) {
 	case '1':
-		$edo = "Pendiente";
+		$edo = "PENDIENTE";
+		$color = "info";
 	break;
 	case '2':
-		$edo = "Aceptado";
+		$edo = "ACEPTADO";
+		$color = "success";
 	break;
 	case '3':
-		$edo = "Rechazado";
+		$edo = "RECHAZADO";
+		$color = "danger";
+	break;
+	case '4':
+		$edo = "RECHAZADO";
+		$color = "secondary";
 	break;
 	
 }
@@ -450,8 +461,8 @@ switch ($data["ordenes"][$key]["edo"]) {
 echo '<div>
 
 <div class="clearfix">
-  <h2 class="h2-responsive float-left">'.$data["ordenes"][$key]["fecha"].' | '.$data["ordenes"][$key]["hora"].' | '.$data["ordenes"][$key]["nombre_o"].'</h2> 
-  <h2 class="h2-responsive float-right"><a class="bnt btn-indigo btn-sm btn-rounded text-white">'.$edo.'</a></h2>
+  <h2 class="h4-responsive float-left">'.$data["ordenes"][$key]["fecha"].' | '.$data["ordenes"][$key]["hora"].' | '.$data["ordenes"][$key]["nombre_o"].'</h2> 
+  <h2 class="h4-responsive float-right"><span class="badge badge-pill badge-'.$color.'">'.$edo.'</span></h2>
 </div>
 
 
@@ -474,10 +485,14 @@ $btn = $this->ProductosE($data["ordenes"][$key]["productos"]);
 echo '</tbody>
 </table>
 </div>
-</div>
+</div>';
 
+if ($data["ordenes"][$key]["edo"] == 3) {
+	Alerts::Mensajex("Esta orden ha sido RECHAZADA, para devolver los productos a su inventario haga clic en ", "danger", 
+	'<a id="devolver_productos" hash="'.$data["ordenes"][$key]["hash"].'" class="btn btn-info  btn-sm mb-3">OBTENER PRODUCTOS</i></a>');
+}
 
-<hr class="z-depth-1-half">';
+echo '<hr class="z-depth-1-half">';
 }
 
 
@@ -505,6 +520,143 @@ public function ProductosE($data){
 
 
 }
+
+
+
+
+
+
+
+
+
+
+
+public function DevolverProductos($url, $hash){ // devuelve los productos de la orden rechazada
+	$db = new dbConn();
+
+    $ch = curl_init($url);
+     
+    curl_setopt ($ch, CURLOPT_POST, 1);
+    //le decimos qué paramáetros enviamos (pares nombre/valor, también acepta un array)
+    curl_setopt ($ch, CURLOPT_POSTFIELDS, $data);
+    //le decimos que queremos recoger una respuesta (si no esperas respuesta, ponlo a false)
+    curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
+    //recogemos la respuesta
+    $respuesta = curl_exec($ch);
+    $error = curl_error($ch);
+    curl_close ($ch);
+
+    $res = json_decode($respuesta, true);
+
+  if($res["mensaje"] == "Realizado"){
+
+  	$productosx = $this->ObtenerData(URL_TRANSFERENCIA . '?op=18&hash=' . $hash);
+  	$productos = json_decode($productosx, true);
+
+	$agrega = new ProUpdate;
+
+
+  	foreach ($productos["productos"] as $key => $producto) {
+  		// echo $producto["cod"] . "  ||  " . $producto["cantidad"] . "<br>";
+
+		if ($r = $db->select("hash", "ubicacion", "WHERE predeterminada = '1' and td = ".$_SESSION["td"]."")) { 
+		$ubic = $r["hash"];
+		} unset($r);
+
+		if ($r = $db->select("precio_costo", "producto_ingresado", "WHERE producto = '".$producto["cod"]."' and td = ".$_SESSION["td"]." order by id desc limit 1")) { 
+		$costo = $r["precio_costo"];
+		} unset($r);
+
+
+  		$xdato = array();
+  		$xdato["cod"] = $producto["cod"];
+  		$xdato["descripcion"] = Helpers::GetData("producto", "descripcion", "cod", $producto["cod"]);
+  		$xdato["precio"] = $costo;
+  		$xdato["cantidad"] = $producto["cantidad"];
+  		$xdato["ubicacion"] = $ubic;
+  		$xdato["comentarios"] = "Agregado desde tranferencias";
+
+  		$agrega->ProAgrega($xdato, TRUE); // aqui deberia ir todo para agregarlo
+  	}
+
+  	// cod, descripcion, precio = costo, cantidad, ubicacion, cometarios
+  }
+
+$this->OrdenesEnviadas(URL_TRANSFERENCIA .'?op=20&iden=' . $_SESSION["td"]);
+ 
+}
+
+
+
+
+//// cuentas vienculadas para mostrar
+public function MisCuentas($url){
+  $jsondata = $this->ObtenerData($url);
+  $datos = json_decode($jsondata, true); 
+
+	if($datos["mensaje"] != "No se encontraron datos"){
+	  foreach ($datos as $key => $destino) {
+	  	echo '<div class="z-depth-2 rounded my-2 pl-3">'.$destino["nombre_d"] .'</div>';
+	  }
+	} else {
+		Alerts::Mensajex("No se encuentran cuentas vinculadas", "info");
+	}
+
+}
+
+
+
+
+public function ClientesRegistrados($url){
+  $jsondata = $this->ObtenerData($url);
+  $datos = json_decode($jsondata, true); 
+
+	  foreach ($datos as $key => $destino) {
+	  	($destino["plataforma"] == 0) ? $plataforma = "Local" : $plataforma = "Web";
+	  	echo '<option value="'.$destino["td"] .'">'.$destino["cliente"] .' ('.$plataforma .')</option>';
+	  }
+
+}
+
+
+
+
+
+
+public function AsociarSucursales($url){
+	$db = new dbConn();
+
+	$data = json_encode($_POST);
+    $ch = curl_init($url);
+     
+    curl_setopt ($ch, CURLOPT_POST, 1);
+    //le decimos qué paramáetros enviamos (pares nombre/valor, también acepta un array)
+    curl_setopt ($ch, CURLOPT_POSTFIELDS, $data);
+    //le decimos que queremos recoger una respuesta (si no esperas respuesta, ponlo a false)
+    curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
+    //recogemos la respuesta
+    $respuesta = curl_exec($ch);
+    $error = curl_error($ch);
+    curl_close ($ch);
+
+    $respuesta = json_decode($respuesta, true);//
+
+		$this->MisCuentas(URL_TRANSFERENCIA .'?op=19&origen=' . $_SESSION["td"]);
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

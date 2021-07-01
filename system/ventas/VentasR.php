@@ -12,7 +12,7 @@ class Ventas{
    		$datos["cod"] = $datos["codigox"];
    	}
 
-  		if($this->ObtenerCantidad($datos["cod"]) > 0){
+  		if($this->FiltroAgotado() == TRUE){
   			if($_SESSION["orden"] == NULL){ $this->AddOrden(); }
   			
   			/// aqui determino si agrego o actualizo
@@ -36,24 +36,34 @@ class Ventas{
 
 
 
+public function FiltroAgotado(){
+	if ($_SESSION["config_agotado"] == "on") {
+		if ($this->ObtenerCantidad($datos["cod"]) > 0) {
+			return TRUE;
+		} else {
+			return FALSE;
+		}
+	} else {
+		return TRUE;
+	}
+}
+
+
    public function RestaVenta($datos){ // Rapida
 
-  		if($this->ObtenerCantidad($datos["cod"]) >= 0){
-  			if($_SESSION["orden"] == NULL){ $this->AddOrden(); }
-  			
-  			/// aqui determino si agrego o actualizo
-	  		if($datos["cantidad"] == NULL or $datos["cantidad"] == 0) $datos["cantidad"] = 1;
-	  		$product = $this->ObtenerCantidadTicket($datos["cod"]);
-  			if($datos["cantidad"] == 1){
-	  			$datos["cantidad"] = $product - 1;
-  			}
-  			
-  			if($product > 1){  				
-  				$this->Actualiza($datos, 1); // uno suma
-  			} 
-  		} else {
-  			 Alerts::Alerta("error","Error!","No se encontro el producto!");
-  		}
+	if($_SESSION["orden"] == NULL){ $this->AddOrden(); }
+	
+	/// aqui determino si agrego o actualizo
+	if($datos["cantidad"] == NULL or $datos["cantidad"] == 0) $datos["cantidad"] = 1;
+	$product = $this->ObtenerCantidadTicket($datos["cod"]);
+	if($datos["cantidad"] == 1){
+		$datos["cantidad"] = $product - 1;
+	}
+	
+	if($product > 1){  				
+		$this->Actualiza($datos, 1); // uno suma
+	} 
+
   	$this->VerProducto();
    }
 

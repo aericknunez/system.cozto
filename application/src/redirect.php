@@ -151,6 +151,8 @@ elseif(isset($_GET["reportef"])) include_once 'system/facturar/reportef.php'; //
 //trasnferencias
 elseif(isset($_GET["transferencias"])) include_once 'system/transferencias/transfer.php'; 
 elseif(isset($_GET["enviadas"])) include_once 'system/transferencias/enviadas.php'; 
+elseif(isset($_GET["asociar"])) include_once 'system/transferencias/asociar.php'; 
+
 
 
 

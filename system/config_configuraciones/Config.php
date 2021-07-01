@@ -43,6 +43,7 @@ class Config{
 	    $cambio["mayorista"] = $data["mayorista"];
 	    $cambio["sonido"] = $data["sonido"];
 	    $cambio["pesaje"] = $data["pesaje"];
+	    $cambio["agotado"] = $data["agotado"];
 	    $cambio["time"] = Helpers::TimeId();
 	    if (Helpers::UpdateId("config_master", $cambio, "td = ".$_SESSION["td"]."")) {
 	    	$this->CrearVariables();
@@ -75,6 +76,7 @@ class Config{
 	    $cambio["autoparts"] = Encrypt::Encrypt($data["autoparts"],$_SESSION['secret_key']);
 	    $cambio["taller"] = Encrypt::Encrypt($data["taller"],$_SESSION['secret_key']);
 	    $cambio["consignaciones"] = Encrypt::Encrypt($data["consignaciones"],$_SESSION['secret_key']);
+	    $cambio["transferencias"] = Encrypt::Encrypt($data["transferencias"],$_SESSION['secret_key']);
 	    $cambio["time"] = Helpers::TimeId();
 	    if (Helpers::UpdateId("config_root", $cambio, "td = ".$_SESSION["td"]."")) {
 	    	$this->CrearVariables();
@@ -127,6 +129,7 @@ class Config{
 			$_SESSION['config_mayorista'] = $r["mayorista"];
 			$_SESSION['config_sonido'] = $r["sonido"];
 			$_SESSION['config_pesaje'] = $r["pesaje"];
+			$_SESSION['config_agotado'] = $r["agotado"];
 
 			if($_SESSION['config_skin'] == NULL) $_SESSION['config_skin'] = "mdb-skin";
 			// white-skin , mdb-skin , grey-skin , pink-skin ,  light-blue-skin , black-skin  cyan-skin, navy-blue-skin
@@ -147,6 +150,7 @@ class Config{
 			$_SESSION['root_autoparts'] = $root["autoparts"];
 			$_SESSION['root_taller'] = $root["taller"];
 			$_SESSION['root_consignaciones'] = $root["consignaciones"];
+			$_SESSION['root_transferencias'] = $root["transferencias"];
      
 			} unset($root);
 			$_SESSION['root_tipo_sistema'] = $encrypt->Decrypt(
@@ -172,6 +176,9 @@ class Config{
 
 			$_SESSION['root_consignaciones'] = $encrypt->Decrypt(
 			$_SESSION['root_consignaciones'],$_SESSION['secret_key']);
+
+			$_SESSION['root_transferencias'] = $encrypt->Decrypt(
+			$_SESSION['root_transferencias'],$_SESSION['secret_key']);
 
 	}
 

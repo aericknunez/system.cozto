@@ -482,6 +482,9 @@ echo '<script type="text/javascript" src="assets/js/query/transferencias.js?v='.
 elseif(isset($_GET["enviadas"])) {
 echo '<script type="text/javascript" src="assets/js/query/transferencias.js?v='.$numero.'"></script>';
 } 
+elseif(isset($_GET["asociar"])) {
+echo '<script type="text/javascript" src="assets/js/query/transferencias.js?v='.$numero.'"></script>';
+} 
 
 
 

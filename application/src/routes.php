@@ -2882,6 +2882,28 @@ break;
 
 
 
+case "660": // devolver Productos de orden cancelada
+include_once '../../system/transferencias/Transferencias.php';
+include_once '../../system/producto/ProUpdate.php';
+	$trans = new Transferencias();
+	$trans->DevolverProductos(URL_TRANSFERENCIA .'?op=22&hash=' . $_REQUEST["hash"], $_REQUEST["hash"]);
+break;
+
+
+
+case "661": // Obtiene Cuentas vienculadas
+include_once '../../system/transferencias/Transferencias.php';
+	$trans = new Transferencias();
+	$trans->MisCuentas(URL_TRANSFERENCIA .'?op=19&origen=' . $_SESSION["td"]);
+break;
+
+
+
+case "662": // enviar orden de productos a la nube
+include_once '../../system/transferencias/Transferencias.php';
+	$trans = new Transferencias();
+	$trans->AsociarSucursales(URL_TRANSFERENCIA .'?op=17'); // envia s1 s2 via post
+break;
 
 
 

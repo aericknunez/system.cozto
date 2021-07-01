@@ -9,9 +9,10 @@ $transferencias = new Transferencias();
 <div id="msj"></div>
 
 <div class="clearfix">
-  <h2 class="h2-responsive float-left">TRASNFERENCIAS</h2> 
+  <h2 class="h2-responsive float-left">ORDENES DE PRODUCTOS ENVIADOS</h2> 
   <h2 class="h2-responsive float-right"><a id="nueva_tranferencia" class="btn-floating btn-info btn-sm mb-3" title="Nueva Transferencia"><i class="fas fa-plus"></i></a></h2>
 </div>
+<hr class="z-depth-1-half mb-3">
 
 
 

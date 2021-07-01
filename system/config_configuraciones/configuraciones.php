@@ -142,6 +142,11 @@ $r = $db->select("*", "config_master", "where td = ".$_SESSION['td']."")
        <td><? if($r["pesaje"] == "on") echo "Activado"; else echo "Inactivo"; ?></td>    
      </tr> 
 
+     <tr>
+       <td>Restringir vender productos agotados</td>
+       <td><? if($r["agotado"] == "on") echo "Activado"; else echo "Inactivo"; ?></td>    
+     </tr> 
+
      <?
  unset($r);  
 

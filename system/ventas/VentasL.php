@@ -8,7 +8,7 @@ class Ventas{
 
 
    public function AddVenta($datos){ // lento
-   	if($_POST["unidades"] >= $_POST["cantidad"] or $_POST["servicio"] == "on"){
+   	if($this->FiltroAgotado() == TRUE or $_POST["servicio"] == "on"){		
 		if($_SESSION["orden"] == NULL){ $this->AddOrden(); }
   		$this->Agregar($datos);
    	} else {
@@ -17,6 +17,25 @@ class Ventas{
 
   	$this->VerProducto();
    }
+
+
+
+public function FiltroAgotado(){
+	if ($_POST["cantidad"] > 0) {
+		if ($_SESSION["config_agotado"] == "on") {
+			if ($_POST["unidades"] >= $_POST["cantidad"]) {
+				return TRUE;
+			} else {
+				return FALSE;
+			}
+		} else {
+			return TRUE;
+		}
+	} else {
+		return FALSE;
+	}
+}
+
 
 
 

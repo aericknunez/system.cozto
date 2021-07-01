@@ -48,7 +48,7 @@ $(document).ready(function(){
 
 
 
-/// borrar factura
+/// aceptar orden
     $("body").on("click","#order_acept",function(){ 
         var op = "650";
         var hash = $(this).attr('hash');
@@ -70,7 +70,7 @@ $(document).ready(function(){
 
 
 
-/// borrar factura
+/// cancelar
     $("body").on("click","#cancelar_orden",function(){ 
         var op = "652";
         var hash = $(this).attr('hash');
@@ -262,6 +262,47 @@ $('#ModalNuevo').modal('hide');
 
 
 
+
+    $("body").on("click","#devolver_productos",function(){ 
+        var op = "660";
+        var hash = $(this).attr('hash');
+        var dataString = 'op='+op+'&hash='+hash;
+
+        $.ajax({
+            type: "POST",
+            url: "application/src/routes.php",
+            data: dataString,
+            beforeSend: function () {
+               $("#contenido").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt=""></div>');
+            },
+            success: function(data) {            
+                $("#contenido").html(data);
+            }
+        }); 
+
+    });
+
+
+
+
+
+
+    $('#btn-asociar').click(function(e){ /// agregar un producto 
+    e.preventDefault();
+    $.ajax({
+            url: "application/src/routes.php?op=662",
+            method: "POST",
+            data: $("#form-asociar").serialize(),
+            beforeSend: function () {
+                $('#btn-asociar').html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>Loading...').addClass('disabled');
+            },
+            success: function(data){
+                $('#btn-asociar').html('Agregar Sucursal').removeClass('disabled');       
+                $("#form-asociar").trigger("reset");
+                $("#destinos").html(data); 
+            }
+        })
+    });
 
 
 
