@@ -2801,9 +2801,8 @@ break;
 
 case "650": // aceptar orden
 include_once '../../system/transferencias/Transferencias.php';
+include_once '../../system/producto/ProUpdate.php';
 	$trans = new Transferencias();
-
-	include_once '../../system/producto/ProUpdate.php';
 	$trans->AceptarOrden(URL_TRANSFERENCIA .'?op=12&hash=' . $_REQUEST["hash"], $_REQUEST["hash"]);
 break;
 
@@ -2868,6 +2867,7 @@ break;
 
 case "658": // enviar orden de productos a la nube
 include_once '../../system/transferencias/Transferencias.php';
+include_once '../../system/producto/ProUpdate.php';
 	$trans = new Transferencias();
 	$trans->EnviarOrden(URL_TRANSFERENCIA .'?op=11');
 break;

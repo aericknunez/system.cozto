@@ -239,7 +239,7 @@ public function CuentasVinculadas($url){
 
 if($datos["mensaje"] != "No se encontraron datos"){
   foreach ($datos as $key => $destino) {
-  	echo '<a id="select_destino" destino="'.$destino["destino"] .'" class="btn btn-info btn-rounded">'.$destino["destino"] .'</a>';
+  	echo '<a id="select_destino" destino="'.$destino["destino"] .'" class="btn btn-info btn-rounded">'.$destino["nombre_d"] .'</a>';
   }
 } else {
 	Alerts::Mensajex("No se encontraron ordenes pendientes de aceptar", "info");
@@ -363,6 +363,7 @@ if (count($_SESSION["ordenes"]["ordenes"]["productos"]) > 0) {
 
 
 public function EnviarOrden($url){
+	$db = new dbConn();
 
 	$data = json_encode($_SESSION["ordenes"]);
     $ch = curl_init($url);
@@ -381,7 +382,28 @@ public function EnviarOrden($url){
 
     // print_r($respuesta);
     if ($respuesta["mensaje"] == "Registro Realizado") {
-    	echo "Se realizo el registro con todo";
+		$agrega = new ProUpdate;
+
+		foreach ($_SESSION["ordenes"]["ordenes"]["productos"] as $key => $producto) {
+
+		if ($r = $db->select("hash", "ubicacion", "WHERE predeterminada = '1' and td = ".$_SESSION["td"]."")) { 
+		$ubic = $r["hash"];
+		} unset($r);
+
+  		$xdato = array();
+  		$xdato["cod"] = $producto["cod"];
+  		$xdato["cantidad"] = $producto["cantidad"];
+  		$xdato["ubicacion"] = $ubic;
+  		$xdato["comentarios"] = "Descontado desde tranferencias";
+
+  		$agrega->AddAveria($xdato, TRUE); // aqui deberia ir todo para agregarlo
+
+	}// foreach
+
+	Alerts::Mensajex("Orden Enviada correctamente","success");
+	$this->DestruyeVariables();
+
+
     }
 }
 

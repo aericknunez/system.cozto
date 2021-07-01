@@ -465,7 +465,7 @@ public function AgregaBusqueda($dato){ // Busqueda para compuestos
 
 
 //////////////// averias
-  public function AddAveria($datox){ // lo que viede del formulario principal
+  public function AddAveria($datox, $cargaPro = NULL){ // lo que viede del formulario principal
     $db = new dbConn();
 
           if($datox["cantidad"] != NULL){
@@ -518,7 +518,11 @@ $this->CaracteristicaAveria($datox["cod"], $datox["caracteristica"], $hashin);
           } else {
               Alerts::Alerta("error","Error!","Faltan Datos!");
           }
+
+      if ($cargaPro == NULL) {
         $this->VerAveria($datox["cod"]);
+      }
+
   }
 
 
