@@ -37,7 +37,10 @@ echo '
 	if($_GET["modal"] == "productoBusqueda"){
 	echo '<script type="text/javascript" src="assets/js/query/productoBusqueda.js?v='.$numero.'"></script>';
 	}
-
+	if($_GET["modal"] == "productoBusquedaTaller"){
+	echo '<script type="text/javascript" src="assets/js/query/taller_producto.js?v='.$numero.'"></script>';	
+	echo '<script type="text/javascript" src="assets/js/query/mdb_select.js?v='.$numero.'"></script>';	
+	}
 
 	/// proveedor
 	if($_GET["modal"] == "editproveedor"){
@@ -88,7 +91,9 @@ echo '
 	if($_GET["modal"] == "cliente_taller"){
 	echo '<script type="text/javascript" src="assets/js/query/taller.js?v='.$numero.'"></script>';
 	}
-
+	if($_GET["modal"] == "edit_vehiculo_taller"){
+	echo '<script type="text/javascript" src="assets/js/query/taller.js?v='.$numero.'"></script>';
+	}
 // cotizador
 	if($_GET["modal"] == "cantidadc"){
 	echo '<script type="text/javascript" src="assets/js/query/cotizaR.js?v='.$numero.'"></script>';
@@ -147,9 +152,12 @@ echo '<script type="text/javascript" src="system/user/login.js?v='.$numero.'"></
 /// producto
 elseif(isset($_GET["proadd"])) {
 echo '<script type="text/javascript" src="assets/js/query/producto.js?v='.$numero.'"></script>';
-		if($_SESSION["root_autoparts"] == "on"){
+	if($_SESSION["root_autoparts"] == "on"){
 	echo '<script type="text/javascript" src="assets/js/query/autoparts.js?v='.$numero.'"></script>';	
-		}
+	}
+	if($_SESSION["root_taller"] == "on"){
+	echo '<script type="text/javascript" src="assets/js/query/taller_producto.js?v='.$numero.'"></script>';	
+	}
 } 
 elseif(isset($_GET["proopciones"])) {
 echo '<script type="text/javascript" src="assets/js/query/proopciones.js?v='.$numero.'"></script>';

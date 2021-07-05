@@ -15,10 +15,7 @@ $(document).ready(function(){
 		})
     
 
-    $(document).ready(function() {
     $('.mdb-select').materialSelect();
-    });
-
 
 
 	$('#btn-proadd').click(function(e){ /// para el formulario

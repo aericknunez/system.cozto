@@ -171,6 +171,9 @@ include_once '../../system/producto/Productos.php';
 	if($_SESSION["root_autoparts"] == "on"){
 		include_once '../../system/autoparts/Autoparts.php';
 	}	
+	if($_SESSION["root_taller"] == "on"){ // solo si es taller
+		include_once '../../system/taller/Productos.php';
+	}
 	$productos->AddProducto($_POST);
 break;
 
@@ -2774,8 +2777,127 @@ include_once '../../system/taller/Taller.php';
 break;
 
 
+case "622": // modelos para agregarle al producto
+include_once '../../system/taller/Productos.php';
+	$talleres = new TallerProductos();
+	$talleres->GetMarcas();
+break;
 
-case "630":
+
+case "623": // lista los modelos de las marcas
+include_once '../../system/taller/Productos.php';
+	$talleres = new TallerProductos();
+	$talleres->GetModelos($_POST["hash"]);
+break;
+
+
+case "624": // agrega un modelo a la lista
+include_once '../../system/taller/Productos.php';
+	$talleres = new TallerProductos();
+	$talleres->AddModelo($_POST["hash"]);
+break;
+
+
+
+case "625": // elimina un modelo a la lista
+include_once '../../system/taller/Productos.php';
+	$talleres = new TallerProductos();
+	$talleres->DelModelo($_POST["hash"]);
+break;
+
+
+case "626": // Muestra los modelos Agregados
+include_once '../../system/taller/Productos.php';
+	$talleres = new TallerProductos();
+	$talleres->ModelosAgregados();
+break;
+
+
+
+case "627": // anos para agregarle al producto
+include_once '../../system/taller/Productos.php';
+	$talleres = new TallerProductos();
+	$talleres->GetAnios();
+break;
+
+
+case "628": // agrega un anio a la lista
+include_once '../../system/taller/Productos.php';
+	$talleres = new TallerProductos();
+	$talleres->AddAnio($_POST["hash"]);
+break;
+
+
+
+case "629": // elimina un anio a la lista
+include_once '../../system/taller/Productos.php';
+	$talleres = new TallerProductos();
+	$talleres->DelAnio($_POST["hash"]);
+break;
+
+
+case "631": // Muestra los modelos Agregados
+include_once '../../system/taller/Productos.php';
+	$talleres = new TallerProductos();
+	$talleres->AniosAgregados();
+break;
+
+
+
+case "632": // Muestra los modelos Agregados
+include_once '../../system/taller/Productos.php';
+	$talleres = new TallerProductos();
+	$talleres->AniosAgregados();
+	$talleres->ModelosAgregados();
+break;
+
+
+
+case "633": // model select
+	$_SESSION["tallerSearch"]["modelo"] = $_POST["hash"];
+include_once '../../system/taller/Productos.php';
+	$talleres = new TallerProductos();
+	$talleres->Search();
+break;
+
+
+
+case "634": // anio select
+	$_SESSION["tallerSearch"]["anio"] = $_POST["hash"];
+include_once '../../system/taller/Productos.php';
+	$talleres = new TallerProductos();
+	$talleres->Search();
+break;
+
+
+case "635": // anio medida
+$_SESSION["tallerSearch"]["medida"] = $_POST["hash"];
+include_once '../../system/taller/Productos.php';
+	$talleres = new TallerProductos();
+	$talleres->Search();
+break;
+
+
+case "636": // key
+	$_SESSION["tallerSearch"]["key"] = $_POST["hash"];
+include_once '../../system/taller/Productos.php';
+	$talleres = new TallerProductos();
+	$talleres->Search();
+break;
+
+
+case "637": // key
+unset($_SESSION["tallerSearch"]);
+include_once '../../system/taller/Productos.php';
+	$talleres = new TallerProductos();
+	$talleres->Search();
+break;
+
+
+
+
+
+case "649": // archivo de excel
 include("../common/Imagenes.php");
 	$file = new upload($_FILES['archivo']);
 

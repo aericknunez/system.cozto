@@ -15,3 +15,6 @@ NOTAS DE DATABASE
 
 01.02	- Se agrego el campo en config_root para activar o desactivar las tranferencias
 		- Se agrego el campo en config_master para poder establecer vender productos agotados
+
+
+01.03	- se agrego campo DUI a taller_cliente

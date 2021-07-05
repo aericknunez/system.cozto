@@ -16,7 +16,7 @@ $('[data-toggle="tooltip"]').tooltip()
         $.ajax({
             type: "POST",
             enctype: 'multipart/form-data',
-            url: "application/src/routes.php?op=630",
+            url: "application/src/routes.php?op=649",
             data: data,
             processData: false,
             contentType: false,

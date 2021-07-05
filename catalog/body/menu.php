@@ -395,8 +395,8 @@ echo '<li><a href="application/src/routes.php?op=510"  class="waves-effect"><i c
 } ?>
 
 <li><a href="?reportef" class="waves-effect"><i class="fas fa-cogs"></i> Facturas Emitidas</a></li>
-<li><a  class="waves-effect"><i class="fas fa-cog"></i> Opciones</a></li>
-<li><a  class="waves-effect"><i class="fas fa-cogs"></i> Imprimir Facturas</a></li>
+<!-- <li><a  class="waves-effect"><i class="fas fa-cog"></i> Opciones</a></li>
+<li><a  class="waves-effect"><i class="fas fa-cogs"></i> Imprimir Facturas</a></li> -->
 
 </ul>
 </div>

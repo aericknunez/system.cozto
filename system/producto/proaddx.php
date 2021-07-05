@@ -4,6 +4,7 @@ include_once 'application/common/Alerts.php';
 include_once 'system/producto/Productos.php';
 $producto = new Productos(); 
 
+
     if ($r = $db->select("cod", "producto", "WHERE td = ".$_SESSION["td"]." ORDER BY id desc limit 1")) { 
         $codigox = $r["cod"] + 1;
     } unset($r);  
@@ -93,14 +94,7 @@ $producto = new Productos();
       <label for="existencia_minima">* Existencia Minima</label>
       <input type="number" class="form-control" id="existencia_minima" name="existencia_minima" required>
     </div>
-
-<?php if($_SESSION["root_taller"] == "on"){ // si esta activada la opcion en root ?>
-    <div class="col-6 col-md-2 mb-1 md-form">
-      <label for="xmedida">* Medida</label>
-      <input type="text" class="form-control" id="xmedida" name="xmedida" required>
-    </div>
-<?php } ?>
-
+	
 	<div class="col-6 col-md-2 mb-1 md-form">
       	<div class="switch">
             <label>
@@ -131,27 +125,6 @@ $producto = new Productos();
     </div>
 
   </div>
-
-
-
-
-<?php 
-if($_SESSION["root_taller"] == "on"){
- ?>
-<div class="row mt-5"> 
-  <div class="col-6">
-    <div class="h2-responsive">Años del producto <a id="AddOpcionesTaller" op="627"><i class="fas fa-plus-circle green-text"></i></a></div>
-    <div id="aniosAgregados"></div>
-  </div>
-
-  <div class="col-6">
-    <div class="h2-responsive">Marcas Aceptadas <a id="AddOpcionesTaller" op="622"><i class="fas fa-plus-circle green-text"></i></a></div>
-    <div id="modelosAgregados"></div>
-  </div>
-
-</div>
-<?php } ?>
-
 
 
   <div class="form-row">
@@ -292,49 +265,6 @@ if($_SESSION["root_autoparts"] == "on"){
 
         <a id="eliminardatos" op="525" class="btn-floating btn-sm btn-secondary"><i class="fas fa-trash"></i></a>
         <a id="cerrarDetalles" class="btn btn-danger btn-rounded">Omitir Estos Datos</a>
- 
-   
-      </div>
-    </div>
-  </div>
-</div>
-<!-- ./  Modal -->
-<?php 
-}
- ?>
-
-
-
-
-
-
-
-
-
-
-
-<?php 
-if($_SESSION["root_taller"] == "on"){
- ?>
-<!-- para agregar los detalles de autoparts -->
-<!-- modal para ver el credito -->
-<div class="modal" id="AddTaller" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"  data-backdrop="false">
-  <div class="modal-dialog modal-lg z-depth-5" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">
-         AGREGAR DETALLES</h5>
-      </div>
-      <div class="modal-body">
-<!-- ./  content -->
-
-<div id="vistataller"></div>
-<div id="vistataller_detalles"></div>
-<!-- ./  content -->
-      </div>
-      <div class="modal-footer">
-
-        <a id="cerrarModal" class="btn btn-danger btn-rounded">Cerrar</a>
  
    
       </div>

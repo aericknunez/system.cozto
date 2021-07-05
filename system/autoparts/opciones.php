@@ -19,11 +19,12 @@ $auto = new Autoparts();
       <a class="nav-link waves-light" id="unidades-tab-classic" data-toggle="tab" href="#unidades-classic" role="tab"
         aria-controls="unidades-classic" aria-selected="false">MODELOS</a>
     </li>
+    <?php if($_SESSION["root_autoparts"] == "on"){ ?>
     <li class="nav-item">
       <a class="nav-link waves-light" id="caracteristicas-tab-classic" data-toggle="tab" href="#caracteristicas-classic" role="tab"
         aria-controls="caracteristicas-classic" aria-selected="false">ITEM PRODUCTOS</a>
     </li>
-
+  <?php } ?>
   </ul>
   <div class="tab-content border-right border-bottom border-left rounded-bottom" id="myClassicTabContent">
     <div class="tab-pane fade active show" id="steps-classic" role="tabpanel" aria-labelledby="steps-tab-classic">
@@ -106,6 +107,7 @@ $auto = new Autoparts();
 
     </div> <!-- termina tab -->
 
+<?php if($_SESSION["root_autoparts"] == "on"){ ?>
 
     <div class="tab-pane fade" id="caracteristicas-classic" role="tabpanel" aria-labelledby="caracteristicas-tab-classic">
       <?php Alerts::Mensaje("Ingrese los items de los productos","success",$boton,$boton2); ?>
@@ -158,7 +160,7 @@ echo Helpers::SelectDataMultiple("* Categoria",
 
     </div> <!-- termina tab -->
 
-
+<?php } ?>
 
   </div>
 

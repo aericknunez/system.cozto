@@ -25,6 +25,7 @@ if($_REQUEST["modal"]=="facturar") include_once 'system/modal/modal/facturar.php
 if($_REQUEST["modal"]=="proadd") include_once 'system/modal/modal/proadd.php';
 
 if($_REQUEST["modal"]=="productoBusqueda") include_once 'system/modal/modal/productoBusqueda.php';
+if($_REQUEST["modal"]=="productoBusquedaTaller") include_once 'system/modal/modal/productoBusquedaTaller.php';
 
 
 
@@ -44,6 +45,9 @@ if($_REQUEST["modal"]=="agrupado") include_once 'system/modal/modal/agrupado.php
 
 //taller -- para agregar a la factura
 if($_REQUEST["modal"]=="cliente_taller") include_once 'system/modal/modal/cliente_taller.php';
+
+if($_REQUEST["modal"]=="edit_cliente_taller") include_once 'system/modal/modal/editar_cliente_taller.php';
+if($_REQUEST["modal"]=="edit_vehiculo_taller") include_once 'system/modal/modal/editar_vehiculo_taller.php';
 
 
 // creditos

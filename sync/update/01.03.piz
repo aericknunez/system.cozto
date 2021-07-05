@@ -1,0 +1,50 @@
+ALTER TABLE `taller_cliente` ADD `dui` VARCHAR(10) NOT NULL AFTER `cliente`;
+
+CREATE TABLE `taller_anios` (
+  `id` int(5) NOT NULL,
+  `anio` varchar(50) NOT NULL,
+  `producto` varchar(25) NOT NULL,
+  `hash` varchar(12) NOT NULL,
+  `time` int(12) NOT NULL,
+  `td` int(5) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='anios que se le asignaron a cada producto';
+
+ALTER TABLE `taller_anios`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `taller_anios`
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT;
+
+
+
+CREATE TABLE `taller_medida` (
+  `id` int(5) NOT NULL,
+  `medida` varchar(50) NOT NULL,
+  `producto` varchar(25) NOT NULL,
+  `hash` varchar(12) NOT NULL,
+  `time` int(12) NOT NULL,
+  `td` int(5) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='anios que se le asignaron a cada producto';
+
+ALTER TABLE `taller_medida`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `taller_medida`
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT;
+
+
+
+CREATE TABLE `taller_modelos` (
+  `id` int(5) NOT NULL,
+  `modelo` varchar(50) NOT NULL,
+  `producto` varchar(25) NOT NULL,
+  `hash` varchar(12) NOT NULL,
+  `time` int(12) NOT NULL,
+  `td` int(5) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='marca que se le asignaron a cada producto';
+
+ALTER TABLE `taller_modelos`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `taller_modelos`
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT;

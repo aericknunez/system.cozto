@@ -39,9 +39,14 @@ $taller = new Taller();
 
   <div class="form-row">
     
-    <div class="col-md-12 mb-0 md-form">
+    <div class="col-md-8 mb-0 md-form">
       <label for="cliente">* Cliente</label>
       <input type="text" class="form-control" id="cliente" name="cliente" required>
+    </div>
+
+    <div class="col-md-4 mb-0 md-form">
+      <label for="dui">DUI</label>
+      <input type="text" class="form-control" id="dui" name="dui">
     </div>
 
   </div>

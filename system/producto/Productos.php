@@ -9,6 +9,9 @@ class Productos{
 		$db = new dbConn();
     if($this->CompCod($datos["cod"]) == TRUE){
       if($this->CompruebaForm($datos) == TRUE){ // comprueba si todos los datos requeridos estan llenos
+        
+                $dotox["xmedida"] = $datos["xmedida"]; unset($datos["xmedida"]);
+
                 if($datos["gravado"] == NULL) $datos["gravado"] = 0;
                 if($datos["receta"] == NULL) $datos["receta"] = 0;
                 if($datos["servicio"] == NULL) $datos["servicio"] = 0;
@@ -27,6 +30,13 @@ class Productos{
                     $auto = new Autoparts(); 
                     $auto->InsertDataProduct($datos["cod"]);  
                   }
+
+                  if($_SESSION["root_taller"] == "on"){ // si es taller agrego datos
+                    $taller = new TallerProductos(); 
+                    $taller->InsertDataProduct($datos["cod"]);
+                    $taller->AddMedida($datos["cod"], $dotox["xmedida"]);  
+                  }
+
 
                   $this->Redirect($datos);
               }           

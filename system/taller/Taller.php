@@ -8,9 +8,10 @@ class Taller{
 
   public function AddCliente($datos){
     $db = new dbConn();
-      if($datos["cliente"] != NULL and $datos["direccion"] != NULL){ // comprueba dtos
+      if($datos["cliente"] != NULL and $datos["telefono2"] != NULL){ // comprueba dtos
         
                 $data["cliente"] = $datos["cliente"];
+                $data["dui"] = $datos["dui"];
                 $data["direccion"] =  $datos["direccion"];
                 $data["departamento"] = $datos["departamento"];
                 $data["municipio"] = $datos["municipio"];
@@ -122,7 +123,7 @@ $op="601";
                       <td >'.$b["cliente"].'</td>
                       <td>'.$b["direccion"]. '</td>
                       <td>'.$b["telefono1"]. '</td>
-                      <td><a id="detalles" op="620" key="'.$b["hash"].'"><i class="green-text fas fa-plus-circle fa-lg"></i></a></td>
+                      <td><a id="detalles" op="620" key="'.$b["hash"].'" ref="cliente"><i class="green-text fas fa-plus-circle fa-lg"></i></a></td>
                      </tr>';
         }
         echo '</tbody>
@@ -299,7 +300,7 @@ $op="603";
                       <td>'.Helpers::GetData("autoparts_marca", "marca", "hash", $b["marca"]). '</td>
                       <td>'.$b["ano"]. '</td>
                       <td>'.$b["color"]. '</td>
-                      <td><a id="detalles" op="621" key="'.$b["hash"].'"><i class="green-text fas fa-plus-circle fa-lg"></i></a></td>
+                      <td><a id="detalles" op="621" key="'.$b["hash"].'" ref="vehiculo"><i class="green-text fas fa-plus-circle fa-lg"></i></a></td>
                      </tr>';
         }
         echo '</tbody>
@@ -681,11 +682,15 @@ if($motivo != NULL){
           <div class="card-text mt-0 mb-2 ml-2">'.$motivo.'</div>
           </div>
 
-          <div class="col mr-2">
-          <a id="edit" tipo="1" hash="'.$hash.'" class="close">
-          <i class="fas fa-edit fa-sm"></i>
-          </a>
-          </div>
+          <div class="col mr-2">';
+
+          if ($edo != 3) {
+           echo '<a id="edit" tipo="1" hash="'.$hash.'" class="close">
+           <i class="fas fa-edit fa-sm"></i>
+          </a>';
+          }
+          
+          echo '</div>
         </div>
 
         </div>';  
@@ -702,11 +707,15 @@ if($diagnostico != NULL){
           <div class="card-text mt-0 mb-2 ml-2">'.$diagnostico.'</div>
           </div>
 
-          <div class="col mr-2">
-          <a id="edit" tipo="2" hash="'.$hash.'" class="close">
-          <i class="fas fa-edit fa-sm"></i>
-          </a>
-          </div>
+          <div class="col mr-2">';
+
+          if ($edo != 3) {
+           echo '<a id="edit" tipo="2" hash="'.$hash.'" class="close">
+           <i class="fas fa-edit fa-sm"></i>
+          </a>';
+          }
+          
+          echo '</div>
         </div>
 
         </div>';   
@@ -724,11 +733,15 @@ if($reparacion != NULL){
           <div class="card-text mt-0 mb-2 ml-2">'.$reparacion.'</div>
           </div>
 
-          <div class="col mr-2">
-          <a id="edit" tipo="3" hash="'.$hash.'"accordion class="close">
-          <i class="fas fa-edit fa-sm"></i>
-          </a>
-          </div>
+          <div class="col mr-2">';
+
+          if ($edo != 3) {
+           echo '<a id="edit" tipo="3" hash="'.$hash.'"accordion class="close">
+           <i class="fas fa-edit fa-sm"></i>
+          </a>';
+          }
+          
+          echo '</div>
         </div>
 
         </div>';   

@@ -73,7 +73,7 @@ $(document).ready(function(){
             }
         });
 
-		$('#btn-pro').attr("href",'?vehiculos&key='+key);
+		$('#btn-pro').attr("href",'?modal=edit_'+$(this).attr('ref')+'_taller&key='+key);
 		
 	});
 

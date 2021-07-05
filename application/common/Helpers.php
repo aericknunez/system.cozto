@@ -446,6 +446,9 @@ public static function UpdateId($tabla, $dato, $condicion){
 }
 
 
+
+
+
 /// para hacer un select sencilo y no tener que andar haciendolos uno a uno
    static public function SelectData($select, $tabla, $iden, $nombre, $selected = NULL) { // NOmbre, tabla, iden = hash nombre= listado
     $db = new dbConn();
@@ -476,9 +479,11 @@ public static function UpdateId($tabla, $dato, $condicion){
       $a = $db->query("SELECT $iden, $nombre FROM $tabla WHERE td = ".$_SESSION["td"]."");
       echo '<option selected disabled>'.$select.'</option>';
       foreach ($a as $b) {  
-        echo '<optgroup label="'.$b[$nombre].'">';
+        
+        $x = $db->query("SELECT $iden2, $nombre2 FROM $tabla2 WHERE $campo = '".$b[$iden]."' and td = ".$_SESSION["td"]."");
 
-              $x = $db->query("SELECT $iden2, $nombre2 FROM $tabla2 WHERE $campo = '".$b[$iden]."' and td = ".$_SESSION["td"]."");
+              if ($x->num_rows > 0) {
+              echo '<optgroup label="'.$b[$nombre].'">';
               foreach ($x as $y) {
 
                   if($selected != NULL and $selected == $y[$iden2]){
@@ -486,10 +491,10 @@ public static function UpdateId($tabla, $dato, $condicion){
                   } else {
                       echo '<option value="'. $y[$iden2] .'">'. $y[$nombre2] .'</option>'; 
                   }
-
-
-              }$x->close();
+              } // foreach
         echo '</optgroup>';   
+      } // num rows
+        $x->close();
 
       } $a->close(); 
 
