@@ -17,7 +17,7 @@ class Impresiones{
 
 
 if(Helpers::GetIp() == "192.168.1.3"){
-  $nombre_impresora = "TICKET3";
+  $nombre_impresora = "TICKET2";
 } else {
   $nombre_impresora = "TICKET";
 }
@@ -525,11 +525,13 @@ printer_close($handle);
  public function Ninguno(){
 
 
+
 if(Helpers::GetIp() == "192.168.1.3"){
-  $nombre_impresora = "TICKET3";
+  $nombre_impresora = "TICKET2";
 } else {
   $nombre_impresora = "TICKET";
 }
+
 
 $connector = new WindowsPrintConnector($nombre_impresora);
 $printer = new Printer($connector);
@@ -563,11 +565,13 @@ $printer->close();
 
  public function AbrirCaja(){
 
+
 if(Helpers::GetIp() == "192.168.1.3"){
-  $nombre_impresora = "TICKET3";
+  $nombre_impresora = "TICKET2";
 } else {
   $nombre_impresora = "TICKET";
 }
+
 
 $connector = new WindowsPrintConnector($nombre_impresora);
 $printer = new Printer($connector);
@@ -590,11 +594,13 @@ $printer->close();
  public function Barcode($numero){
   $db = new dbConn();
 
+
 if(Helpers::GetIp() == "192.168.1.3"){
-  $nombre_impresora = "TICKET3";
+  $nombre_impresora = "TICKET2";
 } else {
   $nombre_impresora = "TICKET";
 }
+
 
 
 $connector = new WindowsPrintConnector($nombre_impresora);
@@ -644,11 +650,13 @@ $printer -> close();
 
 
 
+
 if(Helpers::GetIp() == "192.168.1.3"){
-  $nombre_impresora = "TICKET3";
+  $nombre_impresora = "TICKET2";
 } else {
   $nombre_impresora = "TICKET";
 }
+
 
 $connector = new WindowsPrintConnector($nombre_impresora);
 $printer = new Printer($connector);
@@ -946,11 +954,13 @@ $printer->close();
   $db = new dbConn();
 
 
+
 if(Helpers::GetIp() == "192.168.1.3"){
-  $nombre_impresora = "TICKET3";
+  $nombre_impresora = "TICKET2";
 } else {
   $nombre_impresora = "TICKET";
 }
+
 
 $connector = new WindowsPrintConnector($nombre_impresora);
 $printer = new Printer($connector);
