@@ -739,7 +739,7 @@ echo $this-> ExtraFactura($empleado, 3,1);
 
 
 
-  public function AddPlanilla($data){
+  public function AddPlanilla($data, $msj = NULL){
     $db = new dbConn();
   
   if($data["fecha1_submit"] == NULL or $data["fecha2_submit"] == NULL){
@@ -790,7 +790,9 @@ $descuento = $this->SumarExtras($empleado, 3, Fechas::Format($data["fecha1_submi
   }
 
 
-      $this->VerTodosPlanillas(1, "id", "asc");
+      if ($msj == NULL) {
+       $this->VerTodosPlanillas(1, "id", "asc");
+      }
   }
 
 

@@ -477,7 +477,7 @@ public static function UpdateId($tabla, $dato, $condicion){
     $db = new dbConn();
 
       $a = $db->query("SELECT $iden, $nombre FROM $tabla WHERE td = ".$_SESSION["td"]."");
-      echo '<option selected disabled>'.$select.'</option>';
+      echo '<option value="" selected>'.$select.'</option>';
       foreach ($a as $b) {  
         
         $x = $db->query("SELECT $iden2, $nombre2 FROM $tabla2 WHERE $campo = '".$b[$iden]."' and td = ".$_SESSION["td"]."");

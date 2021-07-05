@@ -18,3 +18,4 @@ NOTAS DE DATABASE
 
 
 01.03	- se agrego campo DUI a taller_cliente
+		- nuevas tablas taller_anios, taller_modelos, taller_medida (estas ayudaran a la busqueda avanzada de taller)
