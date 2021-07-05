@@ -16,11 +16,11 @@ class Impresiones{
   $db = new dbConn();
 
 
-// if(Helpers::GetIp() == "192.168.1.100"){
-//   $nombre_impresora = "TICKET";
-// } else {
-//   $nombre_impresora = "POS-80";
-// }
+if(Helpers::GetIp() == "192.168.1.3"){
+  $nombre_impresora = "TICKET3";
+} else {
+  $nombre_impresora = "TICKET";
+}
 
 
 // use Mike42\Escpos\PrintConnectors\NetworkPrintConnector;
@@ -29,7 +29,7 @@ class Impresiones{
 // $printer = new Printer($connector);
 
 
-  $nombre_impresora = "TICKET";
+  // $nombre_impresora = "TICKET";
   
 
 // $img  = "C:/AppServ/www/pizto/assets/img/logo_factura/abrego.jpg";
@@ -524,7 +524,12 @@ printer_close($handle);
 
  public function Ninguno(){
 
-$nombre_impresora = "TICKET";
+
+if(Helpers::GetIp() == "192.168.1.3"){
+  $nombre_impresora = "TICKET3";
+} else {
+  $nombre_impresora = "TICKET";
+}
 
 $connector = new WindowsPrintConnector($nombre_impresora);
 $printer = new Printer($connector);
@@ -557,7 +562,12 @@ $printer->close();
 
 
  public function AbrirCaja(){
-$nombre_impresora = "TICKET";
+
+if(Helpers::GetIp() == "192.168.1.3"){
+  $nombre_impresora = "TICKET3";
+} else {
+  $nombre_impresora = "TICKET";
+}
 
 $connector = new WindowsPrintConnector($nombre_impresora);
 $printer = new Printer($connector);
@@ -579,7 +589,12 @@ $printer->close();
 
  public function Barcode($numero){
   $db = new dbConn();
+
+if(Helpers::GetIp() == "192.168.1.3"){
+  $nombre_impresora = "TICKET3";
+} else {
   $nombre_impresora = "TICKET";
+}
 
 
 $connector = new WindowsPrintConnector($nombre_impresora);
@@ -629,8 +644,11 @@ $printer -> close();
 
 
 
+if(Helpers::GetIp() == "192.168.1.3"){
+  $nombre_impresora = "TICKET3";
+} else {
   $nombre_impresora = "TICKET";
-
+}
 
 $connector = new WindowsPrintConnector($nombre_impresora);
 $printer = new Printer($connector);
@@ -928,8 +946,11 @@ $printer->close();
   $db = new dbConn();
 
 
+if(Helpers::GetIp() == "192.168.1.3"){
+  $nombre_impresora = "TICKET3";
+} else {
   $nombre_impresora = "TICKET";
-
+}
 
 $connector = new WindowsPrintConnector($nombre_impresora);
 $printer = new Printer($connector);
