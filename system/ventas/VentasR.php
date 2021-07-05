@@ -12,7 +12,7 @@ class Ventas{
    		$datos["cod"] = $datos["codigox"];
    	}
 
-  		if($this->FiltroAgotado() == TRUE){
+  		if($this->FiltroAgotado($datos["cod"]) == TRUE){
   			if($_SESSION["orden"] == NULL){ $this->AddOrden(); }
   			
   			/// aqui determino si agrego o actualizo
@@ -36,9 +36,9 @@ class Ventas{
 
 
 
-public function FiltroAgotado(){
-	if ($_SESSION["config_agotado"] == "on") {
-		if ($this->ObtenerCantidad($datos["cod"]) > 0) {
+public function FiltroAgotado($cod){
+	if ($_SESSION["config_agotado"] == "on") { // on restringido
+		if ($this->ObtenerCantidad($cod) > $this->ObtenerCantidadTicket($cod)) {
 			return TRUE;
 		} else {
 			return FALSE;

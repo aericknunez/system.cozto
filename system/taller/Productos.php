@@ -223,6 +223,8 @@ $db = new dbConn();
 
 if ($_SESSION["tallerSearch"]["medida"] == "") { unset($_SESSION["tallerSearch"]["medida"]); }
 if ($_SESSION["tallerSearch"]["key"] == "") { unset($_SESSION["tallerSearch"]["key"]); }
+if ($_SESSION["tallerSearch"]["modelo"] == "") { unset($_SESSION["tallerSearch"]["modelo"]); }
+
 
 $anio = $_SESSION["tallerSearch"]["anio"];
 $key = $_SESSION["tallerSearch"]["key"];
@@ -258,7 +260,7 @@ $queryx = "SELECT producto.cod, producto.descripcion, producto.cantidad ".$campo
  	".$key_medida."
  	".$key_modelo."
  	and producto.td = ".$_SESSION["td"]."
- 	GROUP BY producto.cod";
+ 	GROUP BY producto.cod limit 15";
 
 // echo $queryx;
 
