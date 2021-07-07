@@ -39,7 +39,7 @@ echo '
 	}
 	if($_GET["modal"] == "productoBusquedaTaller"){
 	echo '<script type="text/javascript" src="assets/js/query/taller_producto.js?v='.$numero.'"></script>';	
-	echo '<script type="text/javascript" src="assets/js/query/mdb_select.js?v='.$numero.'"></script>';	
+	echo '<script type="text/javascript" src="assets/js/query/producto_vermodal.js?v='.$numero.'"></script>';	
 	}
 
 	/// proveedor

@@ -231,6 +231,7 @@ $key = $_SESSION["tallerSearch"]["key"];
 $medida = $_SESSION["tallerSearch"]["medida"];
 $modelo = $_SESSION["tallerSearch"]["modelo"];
 
+
 // print_r($_SESSION["tallerSearch"]);
 if ($_SESSION["tallerSearch"] != NULL) {
 
@@ -272,25 +273,25 @@ $queryx = "SELECT producto.cod, producto.descripcion, producto.cantidad ".$campo
           <tr>
             <th class="th-sm">Cod</th>
             <th class="th-sm">Producto</th>
-            <th class="th-sm">Cantidad</th>';
-            if ($medida != NULL) {
-            	echo '<th class="th-sm">Medida</th>';
-            }
-            
-         
-       echo '</tr>
+            <th class="th-sm">Cantidad</th>
+            <th class="th-sm">Medida</th>
+       		<th class="th-sm">Precio</th>
+       		<th class="th-sm">Ver</th>
+       		</tr>
         </thead>
         <tbody>';
         foreach ($a as $b) {
-        echo '<tr>
-                      <td>'.$b["cod"].'</td>
-                      <td>'.$b["descripcion"].'</td>
-                      <td>'.$b["cantidad"].'</td>';
 
-                if ($medida != NULL) {
-            	echo ' <td>'.$b["medida"].'</td>';
-            	}              
-                echo '</tr>';
+$precio = Helpers::GetData("producto_precio", "precio", "producto", $b["cod"]);
+
+        echo '<tr>
+              <td>'.$b["cod"].'</td>
+              <td>'.$b["descripcion"].'</td>
+              <td>'.$b["cantidad"].'</td>
+              <td>'.$b["medida"].'</td>
+        	 <td>'.Helpers::Dinero($precio).'</td>
+        	 <td><a id="xver" op="55" key="'.$b["cod"].'"><i class="fas fa-eye green-text"></i></a></td>
+        </tr>';
         }
         echo '</tbody>
         </table>';

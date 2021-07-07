@@ -1435,6 +1435,55 @@ echo '<div class="row justify-content-center">
         echo "<hr>";
 
 
+
+if ($_SESSION["root_taller"] == "on") {
+
+
+$aniox = array();
+$am = $db->query("SELECT anio FROM taller_anios WHERE producto = '".$data["key"]."' and td = " .$_SESSION["td"]);
+if ($am->num_rows > 0) {
+   foreach ($am as $bm) {
+      $aniox[] = $bm["anio"];
+  }
+
+  $yearx = NULL;
+  foreach ($aniox as $key => $year) {
+   $yearx .= ' <span class="badge badge-pill badge-default font-weight-bold">'.$year.' </span> ';
+  }
+
+  echo $yearx;
+  echo '<hr class="mb-3">';
+} $am->close();
+
+
+
+$modelox = array();
+$am = $db->query("SELECT modelo FROM taller_modelos WHERE producto = '".$data["key"]."' and td = " .$_SESSION["td"]);
+if ($am->num_rows > 0) {
+  foreach ($am as $bm) {
+      $modelox[] = $bm["modelo"];
+  } 
+
+  $model = NULL;
+  foreach ($modelox as $key => $modelx) {
+   $model .= ' <span class="badge badge-pill badge-primary font-weight-bold"> '.Helpers::GetData("autoparts_modelo","modelo", "hash", $modelx).' </span> ';
+  }
+
+  echo $model;
+  echo '<hr class="mb-3">';
+} $am->close();
+
+
+
+}
+
+
+
+
+
+
+
+
               $au = $db->query("SELECT ubicacion.ubicacion, ubicacion_asig.cant FROM ubicacion_asig, ubicacion WHERE ubicacion_asig.ubicacion = ubicacion.hash AND ubicacion_asig.producto = '".$data["key"]."' AND ubicacion_asig.td = ".$_SESSION["td"]."");
               if($au->num_rows > 0){
                   echo '<ul class="list-group">
@@ -1498,11 +1547,14 @@ echo '<div class="row justify-content-center">
       } else {
                 Alerts::Mensajex("No se encuentra el producto","danger",$boton,$boton2);
               } $a->close();
-
-
-
-          
+       
   }
+
+
+
+
+
+
 
   public function VerTagModal($producto){
       $db = new dbConn();
