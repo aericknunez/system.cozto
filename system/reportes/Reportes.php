@@ -380,6 +380,7 @@ if($primero == $segundo){
 	       <th>Cantidad</th>
 	       <th>Precio de Costo</th>
 	       <th>Proveedor</th>
+	       <th>Comentario</th>
 	       <th>Caduca</th>
 	       <th>Usuario</th>
 	     </tr>
@@ -395,6 +396,7 @@ if($primero == $segundo){
 		   <th>'.$b["cant"].'</th>
 		   <th>'.Helpers::Dinero($b["precio_costo"]).'</th>
 		   <th>'.Helpers::GetData("proveedores", "nombre", "hash", $b["proveedor"]).'</th>
+		   <th>'.$b["comentarios"].'</th>
 		   <th>'.$b["caduca"].'</th>
 		   <th>'.Helpers::GetData("login_userdata", "nombre", "user", $b["user"]).'</th>  
 		 </tr>';

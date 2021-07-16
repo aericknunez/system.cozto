@@ -49,7 +49,7 @@ public function Cierre($efectivo){
         $datos["productos"] = $this->Productos();
         $datos["clientes"] = $this->Clientes();
         $datos["efectivo_ingresado"] = $efectivo;
-        $datos["tx"] = $this->Tx;
+        $datos["tx"] = $this->Tx();
         $datos["no_tx"] = $this->NoTx();
         $datos["total"] = $this->Total();
         $datos["t_efectivo"] = $this->TotalTipo(1);
