@@ -167,6 +167,7 @@ echo '<script type="text/javascript" src="assets/js/query/proopciones.js?v='.$nu
 elseif(isset($_GET["productos"])) {
 echo '<script type="text/javascript" src="assets/js/query/paginador.js?v='.$numero.'"></script>';
 echo '<script type="text/javascript" src="assets/js/query/producto_vermodal.js?v='.$numero.'"></script>';
+echo '<script type="text/javascript" src="assets/js/query/producto_search.js?v='.$numero.'"></script>';
 } 
 elseif(isset($_GET["proup"])) {
 echo '<script type="text/javascript" src="assets/js/query/producto.js?v='.$numero.'"></script>';

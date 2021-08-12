@@ -1328,6 +1328,179 @@ echo '<div class="row justify-content-center">
 
 
 
+  
+  public function VerProductosSearch($npagina, $orden, $dir, $search){
+    $db = new dbConn();
+
+$limit = 25;
+$adjacents = 2;
+if($npagina == NULL) $npagina = 1;
+$a = $db->query("SELECT * FROM producto WHERE (cod like '%".$search."%' or descripcion like '%".$search."%') and td = ". $_SESSION['td'] ."");
+$total_rows = $a->num_rows;
+$a->close();
+
+$total_pages = ceil($total_rows / $limit);
+
+if(isset($npagina) && $npagina != NULL) {
+  $page = $npagina;
+  $offset = $limit * ($page-1);
+} else {
+  $page = 1;
+  $offset = 0;
+}
+
+if($dir == "desc") $dir2 = "asc";
+if($dir == "asc") $dir2 = "desc";
+
+$a = $db->query("SELECT producto.cod, producto.descripcion, producto.cantidad, producto.existencia_minima, producto.compuesto, producto.dependiente, producto.servicio, producto_categoria_sub.subcategoria FROM producto INNER JOIN producto_categoria_sub ON producto.categoria = producto_categoria_sub.hash and (producto.cod like '%".$search."%' or producto.descripcion like '%".$search."%') and producto.td = ".$_SESSION["td"]." order by ".$orden." ".$dir." limit $offset, $limit");
+    
+    if($a->num_rows > 0){
+        echo '<div class="table-responsive">
+        <table class="table table-sm table-striped">
+      <thead>
+        <tr>
+          <th class="th-sm"><a id="paginador" op="54" iden="1" orden="producto.cod" dir="'.$dir2.'">Cod</a></th>';
+
+          if($this->CompruebaSiMarca() == TRUE){
+            echo '<th class="th-sm"><a >Marca</a></th>';
+          }
+
+        echo '<th class="th-sm"><a id="paginador" op="54" iden="1" orden="producto.descripcion" dir="'.$dir2.'">Producto</a></th>
+          <th class="th-sm"><a id="paginador" op="54" iden="1" orden="producto.cantidad" dir="'.$dir2.'">Cantidad</a></th>
+          <th class="th-sm"><a id="paginador" op="54" iden="1" orden="producto.categoria" dir="'.$dir2.'">Categoria</a></th>
+          <th class="th-sm">Precio</th>
+          <th class="th-sm d-none d-md-block"><a id="paginador" op="54" iden="1" orden="producto.existencia_minima" dir="'.$dir2.'">Minimo</a></th>
+          <th class="th-sm">Ver</th>
+        </tr>
+      </thead>
+      <tbody>';
+      foreach ($a as $b) {
+      // obtener el nombre y detalles del producto
+  if ($r = $db->select("*", "pro_dependiente", "WHERE iden = ".$b["producto"]." and td = ". $_SESSION["td"] ."")) { 
+      $producto = $r["nombre"]; } unset($r); 
+
+
+if ($r = $db->select("precio", "producto_precio", "WHERE producto = '".$b["cod"]."' and td = ". $_SESSION["td"] ."")) { 
+      $precio = $r["precio"]; } unset($r); 
+
+/// cantidad de productos dependientes
+
+
+        echo '<tr>
+                    <td>'.$b["cod"].'</td>';
+
+if($this->CompruebaSiMarca() == TRUE){
+  echo '<th class="th-sm"><a >'.$this->MostrarMarca($b["cod"]).'</a></th>';
+}
+
+/// cantidad solo si es producto, si es servio o dependiente no aplica
+if($b["compuesto"] == "on"){
+$cantidad = '<i class="fas fa-exclamation-triangle text-info"></i>';
+} else if($b["dependiente"] == "on"){
+$cantidad = '<i class="fas fa-exclamation-circle text-info"></i>';
+} else if($b["servicio"] == "on"){
+$cantidad = '<i class="fas fa-exclamation-circle text-info"></i>';
+} else {
+$cantidad = $b["cantidad"];
+}
+
+              echo '<td>'.$b["descripcion"].'</td>
+                    <td>'.$cantidad.'</td>
+                    <td>'.$b["subcategoria"].'</td>
+                    <td>'.$precio.'</td>
+                    <td class="d-none d-md-block">'.$b["existencia_minima"].'</td>
+                    <td><a id="xver" op="55" key="'.$b["cod"].'"><i class="fas fa-search fa-lg green-text"></i></a>';
+
+// aqui iria el  de borrar producto
+if($_SESSION["tipo_cuenta"] == 1 or $_SESSION["tipo_cuenta"] == 5){
+  echo '<a id="delpro" op="550" iden="'.$b["cod"].'"> <i class="fas fa-trash fa-lg red-text ml-3"></i></a>';
+  echo '<a id="barcode" op="122" iden="'.$b["cod"].'"> <i class="fas fa-barcode fa-lg back-text ml-3"></i></a>';
+}
+
+
+                    echo '</td>
+                  </tr>';
+      }
+      echo '</tbody>
+      </table>
+      </div>';
+
+
+    }
+      $a->close();
+
+if($total_pages <= (1+($adjacents * 2))) {
+  $start = 1;
+  $end   = $total_pages;
+} else {
+  if(($page - $adjacents) > 1) {  
+    if(($page + $adjacents) < $total_pages) {  
+      $start = ($page - $adjacents); 
+      $end   = ($page + $adjacents); 
+    } else {              
+      $start = ($total_pages - (1+($adjacents*2))); 
+      $end   = $total_pages; 
+    }
+  } else {
+    $start = 1; 
+    $end   = (1+($adjacents * 2));
+  }
+}
+echo $total_rows . " Registros encontrados";
+ if($total_pages > 1) { 
+
+$page <= 1 ? $enable = 'disabled' : $enable = '';
+  echo '<ul class="pagination pagination-sm justify-content-center">
+  <li class="page-item '.$enable.'">
+      <a class="page-link" id="paginador" op="54" iden="1" orden="'.$orden.'" dir="'.$dir.'">&lt;&lt;</a>
+    </li>';
+  
+  $page>1 ? $pagina = $page-1 : $pagina = 1;
+  echo '<li class="page-item '.$enable.'">
+      <a class="page-link" id="paginador" op="54" iden="'.$pagina.'" orden="'.$orden.'" dir="'.$dir.'">&lt;</a>
+    </li>';
+
+  for($i=$start; $i<=$end; $i++) {
+    $i == $page ? $pagina =  'active' : $pagina = '';
+    echo '<li class="page-item '.$pagina.'">
+      <a class="page-link" id="paginador" op="54" iden="'.$i.'" orden="'.$orden.'" dir="'.$dir.'">'.$i.'</a>
+    </li>';
+  }
+
+  $page >= $total_pages ? $enable = 'disabled' : $enable = '';
+  $page < $total_pages ? $pagina = ($page+1) : $pagina = $total_pages;
+  echo '<li class="page-item '.$enable.'">
+      <a class="page-link" id="paginador" op="54" iden="'.$pagina.'" orden="'.$orden.'" dir="'.$dir.'">&gt;</a>
+    </li>';
+
+  echo '<li class="page-item '.$enable.'">
+      <a class="page-link" id="paginador" op="54" iden="'.$total_pages.'" orden="'.$orden.'" dir="'.$dir.'">&gt;&gt;</a>
+    </li>
+
+    </ul>';
+   }  // end pagination 
+
+
+// boton de imprimir
+echo '<div class="row justify-content-center">
+        <a href="system/imprimir/imprimir.php?op=10" class="btn btn-info my-2 btn-rounded btn-sm waves-effect" title="Imprimir todos los productos">Imprimir Todo</a>
+      </div>';
+
+
+       echo '<div class="text-right"><a href="system/documentos/inventario.php" >Descargar Excel</a></div>';      
+
+} // termina productos
+
+
+
+
+
+
+
+
+
+
+
 
   public function ProductosResumen(){
       $db = new dbConn();

@@ -520,6 +520,22 @@ break;
 
 
 
+case "54x": // ver todos los producto de la busqueda
+	$_SESSION["psearch"] = $_POST["keyword"];
+
+	include_once '../../system/producto/Productos.php';
+		$productos = new Productos;
+
+	if($_SESSION["psearch"] == NULL){
+		$productos->VerTodosProductos(1, "producto.id", "asc");
+	} else {
+		$productos->VerProductosSearch(1, "producto.id", "asc", $_SESSION["psearch"]);
+	}
+	
+break;
+
+
+
 case "55": // detalles del producto
 include_once '../../system/producto/Productos.php';
 	$productos = new Productos;
