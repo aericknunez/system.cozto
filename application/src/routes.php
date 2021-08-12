@@ -446,6 +446,9 @@ break;
 case "46": // actualiza el producto
 include_once '../../system/producto/ProUpdate.php';
 	$productos = new ProUpdate;
+	if($_SESSION["root_taller"] == "on"){ // solo si es taller
+		include_once '../../system/taller/Productos.php';
+	}
 	$productos->UpProducto($_POST);
 break;
 
@@ -2891,6 +2894,16 @@ unset($_SESSION["tallerSearch"]);
 include_once '../../system/taller/Productos.php';
 	$talleres = new TallerProductos();
 	$talleres->Search();
+break;
+
+
+
+case "640": // Muestra los modelos Agregados en update
+	unset($_SESSION["dataTaller"]);
+	include_once '../../system/taller/Productos.php';
+		$talleres = new TallerProductos();
+		$talleres->ModelosAgregadosDB();
+		$talleres->AniosAgregadosDB();
 break;
 
 

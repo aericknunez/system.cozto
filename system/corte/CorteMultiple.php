@@ -206,6 +206,25 @@ $pro->EmparejaExistencias();
 
 	}
 
+	public function AbonosEfectivo(){
+		$db = new dbConn();
+	       $a = $db->query("SELECT sum(abono) FROM creditos_abonos WHERE user = '".$_SESSION["user"]."' and tipo_pago = 1 and td = ".$_SESSION["td"]." and edo = 1 and time BETWEEN '".$this->GetInicio()."' and '".Helpers::TimeId()."'");
+		    foreach ($a as $b) {
+		        $abono=$b["sum(abono)"];
+		    } $a->close();
+		    return  $abono;
+
+	}
+
+	public function AbonosCredito(){
+		$db = new dbConn();
+	       $a = $db->query("SELECT sum(abono) FROM creditos_abonos WHERE user = '".$_SESSION["user"]."' and tipo_pago = 2 and td = ".$_SESSION["td"]." and edo = 1 and time BETWEEN '".$this->GetInicio()."' and '".Helpers::TimeId()."'");
+		    foreach ($a as $b) {
+		        $abono=$b["sum(abono)"];
+		    } $a->close();
+		    return  $abono;
+	}
+
 
 	public function EntradasEfectivo(){
 		$db = new dbConn();
@@ -221,7 +240,7 @@ $pro->EmparejaExistencias();
 
 	public function Diferencia($efectivo){
 		/// conversiones para el dinero
-		$total_cc = $this->TotalTipo(1)+$this->CajaChica()+$this->Abonos()+$this->EntradasEfectivo(); //total ventas  mas caja chica de ayer
+		$total_cc = $this->TotalTipo(1)+$this->CajaChica()+$this->AbonosEfectivo()+$this->EntradasEfectivo(); //total ventas  mas caja chica de ayer
 		$total_debido = $total_cc-$this->Gastos(); //dinero que deberia haber ()
 		$diferencia = $efectivo - $total_debido;
 		return $diferencia;

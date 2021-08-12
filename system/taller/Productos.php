@@ -55,6 +55,39 @@ public function ModelosAgregados(){
 }
 
 
+public function ModelosAgregadosDB(){ /// ya en la base de datos
+	$db = new dbConn();
+
+    $a = $db->query("SELECT modelo FROM taller_modelos WHERE producto = '".$_SESSION["producto_mod"]."' and td = " . $_SESSION["td"]);
+    foreach ($a as $b) {
+        $_SESSION["dataTaller"]["modelo"][] = $b["modelo"];
+    } $a->close();	
+
+	if (count($_SESSION["dataTaller"]["modelo"]) > 0) {
+			$json = json_encode($_SESSION["dataTaller"]);
+
+			echo '<hr class="border-2">';
+			echo '<small>MODELOS AGREGADOS </small><br>';
+			foreach ($_SESSION["dataTaller"]["modelo"] as $key => $producto) {
+
+				$marca = Helpers::GetData("autoparts_modelo", "marca", "hash", $producto);
+
+				echo '<div class="chip cyan lighten-4">';
+				echo Helpers::GetData("autoparts_marca", "marca", "hash", $marca); 
+				echo " - ";
+				echo Helpers::GetData("autoparts_modelo", "modelo", "hash", $producto); 
+				echo '<a id="select" hash="'.$key.'" op="625"> 
+					   <i class="close fa fa-times"></i>
+					   </a>
+					 </div>';
+			}
+	}
+
+}
+
+
+
+
 
 
 public function GetMarcas(){
@@ -154,8 +187,35 @@ public function AniosAgregados(){
 			}
 	}
 
+}
+
+
+public function AniosAgregadosDB(){
+	$db = new dbConn();
+
+	$a = $db->query("SELECT anio FROM taller_anios WHERE producto = '".$_SESSION["producto_mod"]."' and td = " . $_SESSION["td"]);
+    foreach ($a as $b) {
+        $_SESSION["dataTaller"]["anio"][] = $b["anio"];
+    } $a->close();
+
+	if (count($_SESSION["dataTaller"]["anio"]) > 0) {
+			$json = json_encode($_SESSION["dataTaller"]);
+
+			echo '<hr class="border-2">';
+			echo '<small>AÑOS AGREGADOS </small><br>';
+			foreach ($_SESSION["dataTaller"]["anio"] as $key => $anio) {
+
+				echo '<div class="chip blue lighten-2">';
+				echo $anio; 
+				echo '<a id="select" hash="'.$key.'" op="629"> 
+					   <i class="close fa fa-times"></i>
+					   </a>
+					 </div>';
+			}
+	}
 
 }
+
 
 
 
@@ -195,6 +255,18 @@ $db = new dbConn();
     $datos["td"] = $_SESSION["td"];
     $db->insert($bd, $datos);
 }
+
+
+public function DeleteDataDB($producto){ // Borra datos de la base de datos antes de actualizar
+	$db = new dbConn();
+		// anios
+		Helpers::DeleteId("taller_anios", "producto='$producto' and td = '".$_SESSION["td"]."'");
+		// modelos
+		Helpers::DeleteId("taller_modelos", "producto='$producto' and td = '".$_SESSION["td"]."'");
+		// Medida
+		Helpers::DeleteId("taller_medida", "producto='$producto' and td = '".$_SESSION["td"]."'");
+
+	}
 
 
 public function DeleteData(){

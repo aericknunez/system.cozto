@@ -122,6 +122,4 @@ $("body").on("click","#deleteAll",function(){
 
 
 
-
-
 }); // termina query

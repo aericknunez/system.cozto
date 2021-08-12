@@ -157,6 +157,8 @@ echo '<script type="text/javascript" src="assets/js/query/producto.js?v='.$numer
 	}
 	if($_SESSION["root_taller"] == "on"){
 	echo '<script type="text/javascript" src="assets/js/query/taller_producto.js?v='.$numero.'"></script>';	
+	echo '<script type="text/javascript" src="assets/js/query/taller_producto_add.js?v='.$numero.'"></script>';	
+
 	}
 } 
 elseif(isset($_GET["proopciones"])) {
@@ -168,6 +170,12 @@ echo '<script type="text/javascript" src="assets/js/query/producto_vermodal.js?v
 } 
 elseif(isset($_GET["proup"])) {
 echo '<script type="text/javascript" src="assets/js/query/producto.js?v='.$numero.'"></script>';
+
+	if($_SESSION["root_taller"] == "on"){
+	echo '<script type="text/javascript" src="assets/js/query/taller_producto.js?v='.$numero.'"></script>';	
+	echo '<script type="text/javascript" src="assets/js/query/taller_producto_update.js?v='.$numero.'"></script>';	
+	}
+	
 } 
 elseif(isset($_GET["proagregar"])) {
 echo '<script type="text/javascript" src="assets/js/query/producto.js?v='.$numero.'"></script>';

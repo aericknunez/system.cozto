@@ -96,7 +96,7 @@ $producto = new Productos();
 
 <?php if($_SESSION["root_taller"] == "on"){ // si esta activada la opcion en root ?>
     <div class="col-6 col-md-2 mb-1 md-form">
-      <label for="xmedida">* Medida</label>
+      <label for="xmedida">Medida</label>
       <input type="text" class="form-control" id="xmedida" name="xmedida" required>
     </div>
 <?php } ?>

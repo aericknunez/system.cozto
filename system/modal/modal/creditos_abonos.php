@@ -38,6 +38,14 @@ if($_SESSION["caja_apertura"] != NULL){ // comprobacion de corte
 
 
         <input type="text" id="nombre" name="nombre" autocomplete="off" class="form-control mb-3" placeholder="Cliente" value="<?php echo $nombre; ?>">  
+        
+
+        <select class="browser-default custom-select mb-3" id="tipo_pago" name="tipo_pago">
+        <option value="1" selected>EFECTIVO</option>
+        <option value="2">TARJETA</option>
+        </select>
+
+
         <input type="number" step="any" id="abono" name="abono" autocomplete="off" class="form-control mb-3" placeholder="0.00">
         <button class="btn btn-info my-2" type="submit" id="btn-abono" name="btn-abono">AGREGAR ABONO</button>
         </form>

@@ -135,6 +135,10 @@ $abonototal = $this->TotalAbono($b["hash"]);
       $end   = (1+($adjacents * 2));
     }
   }
+
+  echo '<div class="font-weight-bold">Total Pendiente : ' . Helpers::Dinero($this->ObtenerTotalTodo() - $this->TotalAbonoTodo()) . '</div><br>';
+
+
 echo $total_rows . " Registros encontrados";
    if($total_pages > 1) { 
 
@@ -461,6 +465,27 @@ $db = new dbConn();
 
 
 
+
+
+
+public function ObtenerTotalTodo(){ // total del credito
+  $db = new dbConn();
+
+      if ($r = $db->select("total", "cuentas", "WHERE edo in (1,2) and td = ".$_SESSION["td"]."")) { 
+          return $r["total"];
+      }  unset($r);  
+  
+}
+
+
+public function TotalAbonoTodo(){ // total abonos
+  $db = new dbConn();
+
+  if ($r = $db->select("sum(abono)", "cuentas_abonos", "WHERE edo = 1 and td = ".$_SESSION["td"]."")) { 
+          return $r["sum(abono)"];
+      }  unset($r);  
+  
+}
 
 
 

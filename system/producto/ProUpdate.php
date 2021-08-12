@@ -8,6 +8,9 @@ class ProUpdate{
   public function UpProducto($datos){ // lo que viede del formulario principal
     $db = new dbConn();
       if($this->CompruebaForm($datos) == TRUE){ // comprueba si todos los datos requeridos estan llenos
+
+        $dotox["xmedida"] = $datos["xmedida"]; unset($datos["xmedida"]);
+
                 if($datos["gravado"] == NULL) $datos["gravado"] = 0;
                 if($datos["receta"] == NULL) $datos["receta"] = 0;
                 if($datos["servicio"] == NULL) $datos["servicio"] = 0;
@@ -19,6 +22,15 @@ class ProUpdate{
                 $datos["descripcion"] = strtoupper($datos["descripcion"]);
                 $datos["time"] = Helpers::TimeId();
               if (Helpers::UpdateId("producto", $datos, "cod = '".$datos["cod"]."' and td = ".$_SESSION["td"]."")) {
+
+                if($_SESSION["root_taller"] == "on"){ // si es taller agrego datos
+                  $taller = new TallerProductos(); 
+                  $taller->DeleteDataDB($datos["cod"]); // elimina los datos para meterlos de nuevo
+                  $taller->InsertDataProduct($datos["cod"]);
+                  $taller->AddMedida($datos["cod"], $dotox["xmedida"]);  
+                }
+
+                  unset($_SESSION["producto_mod"]);
                   $this->Redirect($datos);
               }           
 

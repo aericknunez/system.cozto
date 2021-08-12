@@ -1,0 +1,3 @@
+ALTER TABLE `creditos_abonos` ADD `tipo_pago` INT(2) NOT NULL AFTER `abono`;
+
+UPDATE `creditos_abonos` SET `tipo_pago`= 1;

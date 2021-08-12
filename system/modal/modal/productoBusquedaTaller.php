@@ -32,7 +32,7 @@
         <select class="mdb-select md-form colorful-select dropdown-dark" id="anio" name="anio">
         <?php 
                 echo '<option value="" selected >Seleccione un Año</option>'; 
-                for ($i = date("Y"); $i >= 2000; $i--) {    
+                for ($i = date("Y"); $i >= 1970; $i--) {    
                   echo '<option value="'.$i.'">'.$i.'</option>';      
                   }
 

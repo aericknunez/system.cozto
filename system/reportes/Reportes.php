@@ -409,6 +409,7 @@ if($primero == $segundo){
 	       <th>Cantidad</th>
 	       <th>Precio de Costo</th>
 	       <th>Proveedor</th>
+	       <th>Comentario</th>
 	       <th>Caduca</th>
 	       <th>Usuario</th>
 		  </tr>';

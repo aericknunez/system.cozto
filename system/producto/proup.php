@@ -15,7 +15,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 
 <div id="contenido">
-<?php if($_REQUEST["key"] != NULL){ 
+<?php 
+$_SESSION["producto_mod"] = $_REQUEST["key"];
+
+if($_REQUEST["key"] != NULL){ 
   if ($r = $db->select("*", "producto", "WHERE cod = '".$_REQUEST["key"]."' and td = ".$_SESSION["td"]."")) { 
 
 $cod = $r["cod"];
@@ -37,7 +40,9 @@ $verecommerce = $r["verecommerce"];
 $ilimitado = $r["ilimitado"]; 
   }  unset($r); 
 
-  
+
+$xmedida = Helpers::GetData("taller_medida", "medida", "producto", $cod);
+
 if($cod != NULL){
 
   ?>
@@ -132,6 +137,16 @@ if($cod != NULL){
       <input type="number" class="form-control" id="existencia_minima" name="existencia_minima" required value="<?php echo $existencia_minima; ?>">
     </div>
   
+
+
+    <?php if($_SESSION["root_taller"] == "on"){ // si esta activada la opcion en root ?>
+    <div class="col-6 col-md-2 mb-1 md-form">
+      <label for="xmedida">Medida</label>
+      <input type="text" class="form-control" id="xmedida" name="xmedida" required value="<?php echo $xmedida; ?>">
+    </div>
+<?php } ?>
+
+
   <div class="col-6 col-md-2 mb-1 md-form">
         <div class="switch">
             <label>
@@ -162,6 +177,27 @@ if($cod != NULL){
     </div>
 
   </div>
+
+
+
+
+
+  <?php 
+if($_SESSION["root_taller"] == "on"){
+ ?>
+<div class="row mt-5"> 
+  <div class="col-6">
+    <div class="h2-responsive">Años del producto <a id="AddOpcionesTaller" op="627"><i class="fas fa-plus-circle green-text"></i></a></div>
+    <div id="aniosAgregados"></div>
+  </div>
+
+  <div class="col-6">
+    <div class="h2-responsive">Marcas Aceptadas <a id="AddOpcionesTaller" op="622"><i class="fas fa-plus-circle green-text"></i></a></div>
+    <div id="modelosAgregados"></div>
+  </div>
+
+</div>
+<?php } ?>
 
 
   <div class="form-row">
@@ -283,7 +319,38 @@ if($_SESSION['root_ecommerce'] == "on"){
 
 
 
+<?php 
+if($_SESSION["root_taller"] == "on"){
+ ?>
+<!-- para agregar los detalles de autoparts -->
+<!-- modal para ver el credito -->
+<div class="modal" id="AddTaller" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"  data-backdrop="false">
+  <div class="modal-dialog modal-lg z-depth-5" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">
+         AGREGAR DETALLES</h5>
+      </div>
+      <div class="modal-body">
+<!-- ./  content -->
 
+<div id="vistataller"></div>
+<div id="vistataller_detalles"></div>
+<!-- ./  content -->
+      </div>
+      <div class="modal-footer">
+
+        <a id="cerrarModal" class="btn btn-danger btn-rounded">Cerrar</a>
+ 
+   
+      </div>
+    </div>
+  </div>
+</div>
+<!-- ./  Modal -->
+<?php 
+}
+ ?>
 
 
 
@@ -350,4 +417,3 @@ if($_SESSION['root_ecommerce'] == "on"){
   </div>
 </div>
 <!-- ./  Modal -->
-
