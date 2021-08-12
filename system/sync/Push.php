@@ -8,7 +8,6 @@ class Push{
 
 	public function Execute($corte){
 		
-		if($this->VerificarCorteHoy() == TRUE or $corte != NULL){
 			$_SESSION["now"] =  $this->Now();
 			$_SESSION["last_update"] =  $this->LastUpdate();
 
@@ -23,8 +22,6 @@ class Push{
 			$this->BorroSession();
 		}
 
-
-	}
 
 
 // borrar registros viejos de sync_tabla despues de crear lo qu e hay  que crear
