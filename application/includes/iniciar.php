@@ -58,10 +58,6 @@ $_SESSION["ver_avatar"] = NULL;
         }
 
 
-if ($_SESSION["td"] == 46) {
-    AgregaParaTaller();
-}
-
 
 // agrego el tipo de ticket predeterminado
 if ($r = $db->select("predeterminado", "facturar_opciones", "WHERE td = ".$_SESSION["td"]."")) { 
@@ -174,27 +170,6 @@ $archivos = glob("../../sync/database/*.sql");
         } 
     } // termina busqueda de archivos en la carpeta
 } // termina Import
-
-
-
-
-function AgregaParaTaller(){
-    $db = new dbConn();
-
-    $a = $db->query("SELECT cod FROM producto WHERE td = " . $_SESSION["td"]);
-    foreach ($a as $b) {
-
-        $datos = array();
-        $datos["medida"] = NULL;
-        $datos["producto"] = $b["cod"];
-        $datos["hash"] = Helpers::HashId();
-        $datos["time"] = Helpers::TimeId();
-        $datos["td"] = $_SESSION["td"];
-        $db->insert("taller_medida", $datos);
-
-    } $a->close();
-
-}
 
 
 
