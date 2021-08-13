@@ -134,25 +134,6 @@ $(document).ready(function(){
 
 
 
-// busqueda actualizar
-	// $("#key").keyup(function(){ /// para la caja de busqueda
-	// 	$.ajax({
-	// 	type: "POST",
-	// 	url: "application/src/routes.php?op=110",
-	// 	data:'keyword='+$(this).val(),
-	// 	beforeSend: function(){
-	// 		$("#muestra-busqueda").css("background","#FFF url(assets/img/LoaderIcon.gif) no-repeat 550px");
-	// 	},
-	// 	success: function(data){
-	// 		$("#muestra-busqueda").show();
-	// 		$("#muestra-busqueda").html(data);
-	// 		$("#key").css("background","#FFF");
-	// 	}
-	// 	});
-	// });
-
-
-
 
 //////// cancel 
 	$("body").on("click","#cancel-p",function(){
@@ -175,6 +156,28 @@ $(document).ready(function(){
 	});
 
 
+
+
+
+
+	$("body").on("click","#printAbono",function(){
+        var op = $(this).attr('op');
+		var hash = $(this).attr('hash');
+        var dataString = 'op='+op+'&hash='+hash;
+
+        $.ajax({
+            type: "POST",
+            url: "application/src/routes.php",
+            data: dataString,
+            beforeSend: function () {
+               $("#printAbono").html('<i class="fas fa-sync fa-spin fa-lg green-text"></i>');
+            },
+            success: function(data) {            
+                $("#msj").html(data); // lo que regresa de la busquea 
+				$("#printAbono").html('<i class="fa fa-print fa-lg blue-text"></i>');				
+            }
+        });
+    });  
 
 
 

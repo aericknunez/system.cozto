@@ -74,6 +74,7 @@ if($_SESSION["caja_apertura"] != NULL){ // comprobacion de corte
    
 </div>
 
+<div id="msj"></div>
 
 <div id="contenido" class="mt-4">
 <?php 

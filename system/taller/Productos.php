@@ -316,7 +316,11 @@ if ($medida != NULL) {
 	$join_medida = 'INNER JOIN taller_medida ON producto.cod = taller_medida.producto ';
 	$key_medida = "and taller_medida.medida LIKE '%".$medida."%' ";
 	$campo = ", taller_medida.medida";
-} else { $join_medida = ''; $key_medida = NULL; $campo = NULL; }
+} else { 
+	$join_medida = 'INNER JOIN taller_medida ON producto.cod = taller_medida.producto '; 
+	$key_medida = NULL; 
+	$campo = ", taller_medida.medida"; 
+}
 
 if ($modelo != NULL) {
 	$join_modelo = 'INNER JOIN taller_modelos ON producto.cod = taller_modelos.producto ';

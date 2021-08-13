@@ -1317,6 +1317,15 @@ break;
 
 
 
+case "135": // imprime cuotas de credito
+    include_once '../../system/facturar/facturas/'.$_SESSION["td"].'/Impresiones.php';
+    require_once ('../ticket/autoload.php'); 
+    $imprimir = new Impresiones(); 
+	Alerts::Alerta("success","Imprimiendo","Imprimiendo reporte");
+	$imprimir->CuotaCredito($_POST["hash"]); //
+break; 
+
+
 
 case "146": // lateral
 include_once '../../system/cotizar/Laterales.php';
