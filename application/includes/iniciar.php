@@ -184,7 +184,7 @@ function AgregaParaTaller(){
     $a = $db->query("SELECT cod FROM producto WHERE td = " . $_SESSION["td"]);
     foreach ($a as $b) {
 
-        if ($r = $db->select("medida", "taller_medida", "WHERE td = " . $_SESSION["td"])) { 
+        if ($r = $db->select("medida", "taller_medida", "WHERE producto = '".$b["cod"]."' td = " . $_SESSION["td"])) { 
            $medida = $r["medida"];
         }
 
@@ -197,7 +197,7 @@ function AgregaParaTaller(){
             $datos["time"] = Helpers::TimeId();
             $datos["td"] = $_SESSION["td"];
             $db->insert("taller_medida", $datos);
-            
+
         }
 
 
