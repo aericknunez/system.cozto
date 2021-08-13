@@ -99,22 +99,57 @@ $(document).ready(function(){
 
 	});
     
-// busqueda actualizar
-	$("#key").keyup(function(){ /// para la caja de busqueda
+
+	function delay(callback, ms) {
+		var timer = 0;
+		return function() {
+		  var context = this, args = arguments;
+		  clearTimeout(timer);
+		  timer = setTimeout(function () {
+			callback.apply(context, args);
+		  }, ms || 0);
+		};
+	  }
+	  
+	  
+	  // Example usage:
+	  
+	  $('#key').keyup(delay(function (e) {
 		$.ajax({
-		type: "POST",
-		url: "application/src/routes.php?op=110",
-		data:'keyword='+$(this).val(),
-		beforeSend: function(){
-			$("#muestra-busqueda").css("background","#FFF url(assets/img/LoaderIcon.gif) no-repeat 550px");
-		},
-		success: function(data){
-			$("#muestra-busqueda").show();
-			$("#muestra-busqueda").html(data);
-			$("#key").css("background","#FFF");
-		}
-		});
-	});
+			type: "POST",
+			url: "application/src/routes.php?op=110",
+			data:'keyword='+$(this).val(),
+			beforeSend: function(){
+				$("#muestra-busqueda").css("background","#FFF url(assets/img/LoaderIcon.gif) no-repeat 550px");
+			},
+			success: function(data){
+				$("#muestra-busqueda").show();
+				$("#muestra-busqueda").html(data);
+				$("#key").css("background","#FFF");
+			}
+			});
+	  }, 700));
+
+	  
+
+
+
+// busqueda actualizar
+	// $("#key").keyup(function(){ /// para la caja de busqueda
+	// 	$.ajax({
+	// 	type: "POST",
+	// 	url: "application/src/routes.php?op=110",
+	// 	data:'keyword='+$(this).val(),
+	// 	beforeSend: function(){
+	// 		$("#muestra-busqueda").css("background","#FFF url(assets/img/LoaderIcon.gif) no-repeat 550px");
+	// 	},
+	// 	success: function(data){
+	// 		$("#muestra-busqueda").show();
+	// 		$("#muestra-busqueda").html(data);
+	// 		$("#key").css("background","#FFF");
+	// 	}
+	// 	});
+	// });
 
 
 

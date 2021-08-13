@@ -115,6 +115,7 @@ class ProUpdate{
               $datos["comentarios"] = $datox["comentarios"];
               $datos["proveedor"] = $datox["proveedor"];
               $datos["documento"] = $datox["documento"];
+              $datos["precio_venta"] = $datox["precio_venta"];
               $datos["user"] = $_SESSION["user"];
               $datos["fechaF"] = Fechas::Format(date("d-m-Y"));
               $datos["fecha"] = date("d-m-Y");

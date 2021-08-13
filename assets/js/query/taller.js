@@ -15,9 +15,8 @@ $(document).ready(function(){
 		})
 
 
-    $(document).ready(function() {
+
     $('.mdb-select').materialSelect();
-    });
 
 
 

@@ -91,15 +91,42 @@ $("#anio").change(function(){
     Selecciona(634, anio); 
 });
 
-$("#medida").keyup(function(){ /// para la caja de busqueda
-    var valor=$(this).val();
-    Selecciona(635, valor); 
-});
 
-$("#key").keyup(function(){ /// para la caja de busqueda
+function delay(callback, ms) {
+    var timer = 0;
+    return function() {
+      var context = this, args = arguments;
+      clearTimeout(timer);
+      timer = setTimeout(function () {
+        callback.apply(context, args);
+      }, ms || 0);
+    };
+  }
+  
+  
+  // Example usage:
+  
+  $('#key').keyup(delay(function (e) {
     var valor=$(this).val();
     Selecciona(636, valor); 
-});
+  }, 700));
+
+
+  $('#medida').keyup(delay(function (e) {
+    var valor=$(this).val();
+    Selecciona(635, valor); 
+  }, 700));
+
+
+// $("#medida").keyup(function(){ /// para la caja de busqueda
+//     var valor=$(this).val();
+//     Selecciona(635, valor); 
+// });
+
+// $("#key").keyup(function(){ /// para la caja de busqueda
+//     var valor=$(this).val();
+//     Selecciona(636, valor); 
+// });
 
 $("body").on("click","#deleteAll",function(){
    

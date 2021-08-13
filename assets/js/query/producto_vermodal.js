@@ -137,9 +137,9 @@ $("#mdb-lightbox-ui").load("assets/mdb-addons/mdb-lightbox-ui.html");
 
 
 /// llamar modal ver.
-    $(document).ready(function() {
+ 
     $('.mdb-select').materialSelect();
-    });
+
 
     $("body").on("click","#modmarca",function(){ 
        
