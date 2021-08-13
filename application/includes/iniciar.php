@@ -184,7 +184,7 @@ function AgregaParaTaller(){
     $a = $db->query("SELECT cod FROM producto WHERE td = " . $_SESSION["td"]);
     foreach ($a as $b) {
 
-        if ($r = $db->select("medida", "taller_medida", "WHERE producto = '".$b["cod"]."' td = " . $_SESSION["td"])) { 
+        if ($r = $db->select("medida", "taller_medida", "WHERE producto = '".$b["cod"]."' and td = " . $_SESSION["td"])) { 
            $medida = $r["medida"];
         }
 
