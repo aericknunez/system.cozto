@@ -200,7 +200,8 @@ function AgregaParaTaller(){
 
         }
 
-
+        unset($medida);
+        unset($datos);
 
 
     } $a->close();
