@@ -86,6 +86,7 @@ if((Helpers::ServerDomain() == FALSE and $_SESSION["root_plataforma"] == 0) or (
 <li><a href="?gastos" class="waves-effect"><i class="fas fa-cog"></i> Gastos y Compras</a></li>
 <li><a href="?entradas" class="waves-effect"><i class="fas fa-cogs"></i> Entrada de Efectivo</a></li>
 <li><a href="?remesas" class="waves-effect"><i class="fas fa-cogs"></i> Remesas de Efectivo</a></li>
+<li><a href="?cuentas_banco" class="waves-effect"><i class="fas fa-cogs"></i> Movimiento de Cuentas</a></li>
 
 </ul>
 </div>

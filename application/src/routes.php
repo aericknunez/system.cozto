@@ -1618,6 +1618,13 @@ include_once '../../system/gastos/Gasto.php';
 break;
 
 
+case "183":  // muestra el select de las categorias de gastos
+	include_once '../../system/gastos/Cuentas_Banco.php';
+		$cuenta = new Cuentas();
+		$cuenta->TransaccionesBanco($_POST["hash"]);
+break;
+
+
 case "200": // ventas detallado
 	include_once '../../system/reportes/Reportes.php';
 	$historial = new Reportes();

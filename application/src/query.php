@@ -306,6 +306,9 @@ echo '<script type="text/javascript" src="assets/js/query/gastos.js?v='.$numero.
 elseif(isset($_GET["remesas"])) {
 echo '<script type="text/javascript" src="assets/js/query/gastos.js?v='.$numero.'"></script>';
 } 
+elseif(isset($_GET["cuentas_banco"])) {
+	echo '<script type="text/javascript" src="assets/js/query/gastos.js?v='.$numero.'"></script>';
+	} 
 //// corte
 elseif(isset($_GET["corte"])) {
 echo '<script type="text/javascript" src="assets/js/query/corte.js?v='.$numero.'"></script>';

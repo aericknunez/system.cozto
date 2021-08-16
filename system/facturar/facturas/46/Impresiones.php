@@ -1174,14 +1174,114 @@ $printer->close();
   public function CuotaCredito($credito){ // imprime el resumen del ultimo corte
     $db = new dbConn();
 
- // Nombre
- // Factura
- // Fecha
- // Total factura
+    $nombre_impresora = "COCINA";
+    // $img  = "C:/AppServ/www/pizto/assets/img/logo_factura/grosera.jpg";
+  
+  
+  $connector = new WindowsPrintConnector($nombre_impresora);
+  $printer = new Printer($connector);
+  $printer -> initialize();
+  
+  $printer -> setFont(Printer::FONT_B);
+  // $printer -> selectPrintMode(Printer::MODE_DOUBLE_HEIGHT);
+  // $printer -> selectPrintMode(Printer::MODE_DOUBLE_WIDTH);
+  
+  $printer -> setTextSize(1, 2);
+  $printer -> setLineSpacing(80);
+  
+  
+  // $printer -> setJustification(Printer::JUSTIFY_CENTER);
+  // $logo = EscposImage::load($img, false);
+  // $printer->bitImage($logo);
+  
+  $printer -> setJustification(Printer::JUSTIFY_CENTER);
+  $printer->text("ANIMAL PET'S");
 
-//  Saldo anterior **
-// Saldo Actual
-// Ultimos Abonos
+
+$printer->feed();
+$printer->text("2da Av. Nte entre 3ra y 5ta calle pte.");
+$printer->feed();
+$printer->text("Santa Ana, Santa Ana");
+
+$printer->feed();
+$printer->text("Tel: 2407-5729 y 7178-2357");
+
+
+$printer->feed();
+$printer -> text("_______________________________________________________");
+$printer->feed();
+
+
+
+if ($r = $db->select("*", "creditos", "WHERE hash = '".$credito."' and td= " . $_SESSION["td"])) { 
+    $nombre = $r["nombre"];
+    $factura = $r["factura"];
+    $orden = $r["orden"];
+    $tx = $r["tx"];
+    $fecha = $r["fecha"];
+}  unset($r);  
+
+
+$printer->feed();
+$printer -> text($this->DosCol($nombre, 30, $factura, 20));
+
+$printer->feed();
+$printer->text("FECHA: " .  Fechas::FechaEscrita($fecha));
+
+
+
+if ($r = $db->select("sum(total)", "ticket", "WHERE num_fac = '".$factura."' and orden = '".$orden."' and tx = '".$tx."' and td= " . $_SESSION["td"])) { 
+$total = $r["sum(total)"];
+}  unset($r); 
+
+$printer->feed();
+$printer->text("TOTAL DEL CREDITO ADQUIRIDO: " . Helpers::Dinero($total));
+
+
+
+
+$printer->feed();
+$printer -> text("ABONOS");
+$printer->feed();
+$printer -> text("_______________________________________________________");
+$printer->feed();
+
+
+
+$printer -> text($this->Col4("FECHA", 0, "NOMBRE", 15,  "ABONO", 10, "SALDO", 10));
+
+$saldo = 0;
+$totalx = 0;
+ $a = $db->query("SELECT * FROM creditos_abonos WHERE edo = 1 and credito = '$credito' and td= " . $_SESSION["td"]);
+ foreach ($a as $b) {
+    $totalx = $totalx + $b["abono"];
+    $saldo = $total - $totalx;
+
+  $printer -> text($this->Col4($b["fecha"], 0,  $b["nombre"], 15,  $b["abono"], 10, $saldo, 10));
+
+     $user = $b["user"];
+ } $a->close();
+
+$printer->feed();
+$printer -> text("_______________________________________________________");
+$printer->feed();
+
+$printer -> text("SALDO PENDIENTE: " . Helpers::Dinero($saldo));
+ 
+
+
+if ($r = $db->select("nombre", "login_userdata", "WHERE user = '$user'")) { 
+    $usuario = $r["nombre"];
+}  unset($r); 
+
+$printer->feed();
+$printer -> text("LE ATENDIO: " . $usuario);
+
+
+
+$printer->feed();
+$printer->cut();
+$printer->close();
 
 
   }

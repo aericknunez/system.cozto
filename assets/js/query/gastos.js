@@ -366,4 +366,28 @@ $("#muestra_b").hide();
 
 
 
+    $("body").on("click","#verdetallesbanco",function(){ 
+        
+        var op = "183";
+        var hash =  $(this).attr('hash');
+        var dataString = 'op='+op+'&hash='+hash;
+
+        $.ajax({
+            type: "POST",
+            url: "application/src/routes.php",
+            data: dataString,
+            beforeSend: function () {
+               $("#resultado").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt=""></div>');
+            },
+            success: function(data) {            
+                $("#resultado").html(data); // lo que regresa de la busquea         
+            }
+        });
+
+    });
+
+
+
+
+
 });

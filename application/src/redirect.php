@@ -74,6 +74,7 @@ elseif(isset($_GET["mantenimiento"])) include_once 'system/taller/mantenimiento.
 elseif(isset($_GET["gastos"])) include_once 'system/gastos/gastos_update.php'; 
 elseif(isset($_GET["entradas"])) include_once 'system/gastos/entradas.php'; 
 elseif(isset($_GET["remesas"])) include_once 'system/gastos/remesas.php'; 
+elseif(isset($_GET["cuentas_banco"])) include_once 'system/gastos/cuentas.php'; 
 
 
 // Corte Diario
