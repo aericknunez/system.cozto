@@ -63,7 +63,7 @@ class Cuentas {
       <thead>
         <tr>
           <th scope="col">Tipo</th>
-          <th scope="col">Cuenta</th>
+          <th scope="col">Tipo Movimiento</th>
           <th scope="col">Nombre</th>
           <th scope="col">Descripci&oacuten</th>
           <th scope="col">Cantidad</th>
@@ -75,7 +75,7 @@ class Cuentas {
         ($b["tipo"] == 3) ? $cuenta = "Entrada" : $cuenta = "Salida";
         echo '<tr>
           <th scope="row">'. $cuenta .'</th>
-          <th scope="row">'. Helpers::TipoCuentaBanco($b["tipo"]) .'</th>
+          <th scope="row">'. Helpers::Gasto($b["tipo"]) .'</th>
           <td>'. $b["nombre"] .'</td>
           <td>'. $b["descripcion"] .'</td>
           <td>'. Helpers::Dinero($b["cantidad"]) .'</td>
