@@ -19,7 +19,9 @@ if(Helpers::ServerDomain() == TRUE){
 		define("TYPE", "Practica");			
 	} else { /// para sistema normal online
 
-		if($_SERVER["SERVER_NAME"] == "sistema.hibridosv.com" or $_SERVER["SERVER_NAME"] == "arguetaautomotriz.com"){
+		if($_SERVER["SERVER_NAME"] == "sistema.hibridosv.com"
+		 or $_SERVER["SERVER_NAME"] == "arguetaautomotriz.com"
+		 or $_SERVER["SERVER_NAME"] == "farmaciagenesissv.com"){
 			define("HOST", "db5001821416.hosting-data.io");	 
 			define("USER", "dbu690380"); 					
 			define("PASSWORD", "Caca007125-"); 			
