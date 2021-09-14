@@ -15,7 +15,7 @@ class Impresiones{
  public function Ticket($efectivo, $numero){
   $db = new dbConn();
   $nombre_impresora = "LR2000";
-  $img  = "C:/AppServ/www/pizto/assets/img/logo_factura/bioanalisis.jpg";
+  $img  = "C:/AppServ/www/cozto/assets/img/logo_factura/bioanalisis.jpg";
 
 
 $connector = new WindowsPrintConnector($nombre_impresora);
