@@ -23,3 +23,5 @@ NOTAS DE DATABASE
 
 01.04	- Se agrega tipo_pago para determinar si es efectivo o trajeta de credito 1 = Efectivo. 2 = Tarjeta
 		- Paso todos los pagos a Efectivo, para setearlos todos por primera vez
+
+01.05 	- Se le cambian los decimales a las cantidades a 4 a productos compuestos y dependientes

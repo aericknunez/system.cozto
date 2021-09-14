@@ -1567,17 +1567,44 @@ echo '<div class="row justify-content-center">
   public function DetallesProducto($data){
       $db = new dbConn();
 
-    $a = $db->query("SELECT producto.cod, producto.descripcion, producto.cantidad, producto.existencia_minima, producto.caduca, producto.compuesto, producto.gravado, producto.receta, producto.dependiente, producto.servicio, producto_categoria_sub.subcategoria, producto_unidades.nombre, proveedores.nombre as proveedores FROM producto INNER JOIN producto_categoria_sub ON producto.categoria = producto_categoria_sub.hash INNER JOIN producto_unidades ON producto.medida = producto_unidades.hash INNER JOIN proveedores ON producto.proveedor = proveedores.hash WHERE producto.cod = '".$data["key"]."' AND producto.td = ".$_SESSION["td"]."");
+    $a = $db->query("SELECT  producto.informacion, producto.cod, producto.descripcion, producto.cantidad, producto.existencia_minima, producto.caduca, producto.compuesto, producto.gravado, producto.receta, producto.dependiente, producto.servicio, producto_categoria_sub.subcategoria, producto_unidades.nombre, proveedores.nombre as proveedores FROM producto INNER JOIN producto_categoria_sub ON producto.categoria = producto_categoria_sub.hash INNER JOIN producto_unidades ON producto.medida = producto_unidades.hash INNER JOIN proveedores ON producto.proveedor = proveedores.hash WHERE producto.cod = '".$data["key"]."' AND producto.td = ".$_SESSION["td"]."");
     
     if($a->num_rows > 0){
-        foreach ($a as $b) {        
-          echo '<ul class="list-group">
-                    <li class="list-group-item active">'. $b["cod"] .' || '. $b["descripcion"].'</li>
-                    <li class="list-group-item">Cantidad: <strong>'. $b["cantidad"] .'</strong>  ||   Minima: <strong>'. $b["existencia_minima"] .'</strong></li>
-                    <li class="list-group-item">Caduca: <strong>'. $b["caduca"] .'</strong>  || Compuesto: <strong>'. $b["compuesto"] .'</strong>  || Gravado: <strong>'. $b["gravado"] .'</strong> </li>
-                    <li class="list-group-item">Receta: '. $b["receta"] .'  ||  Dependiente: <strong>'. $b["dependiente"] .'</strong>  || Servicio: '. $b["servicio"] .' </li>
-                    <li class="list-group-item">Categoria: <strong>'. $b["subcategoria"] .'</strong> || Unidad: <strong>'. $b["nombre"] .'</strong>  || Proveedor: <strong>'. $b["proveedores"] .'</strong></li>
-                  </ul>'; 
+        foreach ($a as $b) {    
+          
+        echo '<blockquote class="blockquote bq-primary">
+              <p class="bq-title">'. $b["cod"] .' | '. $b["descripcion"].'</p>
+            </blockquote>';
+
+        echo '<ul class="list-group">
+              <li class="list-group-item">Categoria: <strong>'. $b["subcategoria"] .'</strong> || Unidad de Medida: <strong>'. $b["nombre"] .'</strong>  || Proveedor: <strong>'. $b["proveedores"] .'</strong></li>
+            </ul>';        
+
+
+        echo '<div class="row mt-2"> 
+        <div class="col-6">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Candidad</h5>
+                <p class="card-text"><h1>'. $b["cantidad"] .'</h1></p>
+              </div>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Minima</h5>
+                <p class="card-text"><h1>'. $b["existencia_minima"] .'</h1></p>
+              </div>
+            </div>
+        </div>
+        </div>';
+
+
+          // echo '<ul class="list-group">
+          //           <li class="list-group-item">Caduca: <strong>'. $b["caduca"] .'</strong>  || Compuesto: <strong>'. $b["compuesto"] .'</strong>  || Gravado: <strong>'. $b["gravado"] .'</strong> </li>
+          //           <li class="list-group-item">Receta: '. $b["receta"] .'  ||  Dependiente: <strong>'. $b["dependiente"] .'</strong>  || Servicio: '. $b["servicio"] .' </li>
+          //         </ul>'; 
         }
 
         echo "<hr>";
@@ -1716,6 +1743,12 @@ if ($am->num_rows > 0) {
         ///       
 
         $this->VerTagModal($data["key"]);
+
+
+            if ($b["informacion"] != NULL) {
+              echo '<p class="note note-light mt-4"><strong>Comentarios: </strong>'.$b["informacion"].'</p>';
+            }
+
 
       } else {
                 Alerts::Mensajex("No se encuentra el producto","danger",$boton,$boton2);

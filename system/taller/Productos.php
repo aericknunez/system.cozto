@@ -143,14 +143,14 @@ public function GetAnios(){
 	</button>
 	<div class="dropdown-menu" aria-labelledby="btnGroupDrop1">';
 
-	for ($i = 1980; $i <= 1999; $i++) {          
+	for ($i = 1950; $i <= 1964; $i++) {          
 	echo '<a id="select" op="628" hash="'.$i.'"  class="dropdown-item">'.$i.'</a>';
 	}
 
 	echo '</div>
 	</div>';
 
-	for ($i = 2000; $i <= date("Y"); $i++) {          
+	for ($i = 1965; $i <= date("Y"); $i++) {          
 	echo '<a id="select" op="628" hash="'.$i.'" type="button" class="btn btn-primary btn-rounded waves-effect">'.$i.'</a>';
 	}
 

@@ -1,167 +1,169 @@
  <?php  
+use Mike42\Escpos\EscposImage;
+use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
+use Mike42\Escpos\Printer;
+
+
 
 class Impresiones{
     public function __construct() { 
      } 
 
 
-  public function Ticket($efectivo, $numero){
+
+
+ public function Ticket($efectivo, $numero){
   $db = new dbConn();
-
-$img  = "bioanalisis.bmp";
-$txt1   = "31"; 
-$txt2   = "11";
-$txt3   = "0";
-$txt4   = "0";
-$n1   = "40";
-$n2   = "60";
-$n3   = "0";
-$n4   = "0";
+  $nombre_impresora = "LR2000";
+  $img  = "C:/AppServ/www/pizto/assets/img/logo_factura/bioanalisis.jpg";
 
 
-$col1 = 0;
-$col2 = 30;
-$col3 = 340;
-$col4 = 440;
-$col5 = 500;
-// $print
-$print = "LR2000";
-$logo_imagen="C:/AppServ/www/cozto/assets/img/logo_factura/". $img;
+$connector = new WindowsPrintConnector($nombre_impresora);
+$printer = new Printer($connector);
+$printer -> initialize();
+
+$printer -> setFont(Printer::FONT_B);
+// $printer -> selectPrintMode(Printer::MODE_DOUBLE_HEIGHT);
+// $printer -> selectPrintMode(Printer::MODE_DOUBLE_WIDTH);
+
+$printer -> setTextSize(1, 2);
+$printer -> setLineSpacing(80);
 
 
+$printer -> setJustification(Printer::JUSTIFY_CENTER);
+$logo = EscposImage::load($img, false);
+$printer->bitImage($logo);
 
-$handle = printer_open($print);
-printer_set_option($handle, PRINTER_MODE, "RAW");
-
-printer_start_doc($handle, "Mi Documento");
-printer_start_page($handle);
-
-printer_draw_bmp($handle, $logo_imagen, 35, 1, 450, 300);
-
-$font = printer_create_font("Arial", $txt1, $txt2, PRINTER_FW_NORMAL, false, false, false, 0);
-printer_select_font($handle, $font);
+// $printer -> setJustification(Printer::JUSTIFY_CENTER);
+// $printer->text("FERRETERIA ABREGO");
 
 
+$printer->feed();
+$printer->text("GERENTE: YANERI ABIGAIL FLAMENCO GUERRA");
 
-$oi=350;
-//// comienza la factura
+$printer->feed();
+$printer->text("No DE INSCRIPCION JVPLC 2119");
 
-printer_draw_text($handle, "GERENTE: YANERI ABIGAIL FLAMENCO GUERRA", 5, $oi);
-$oi=$oi+$n1;
-printer_draw_text($handle, "No DE INSCRIPCION JVPLC 2119", 5, $oi);
-$oi=$oi+$n1;
-printer_draw_text($handle, "Bo El Angel, 6ta Av. Norte #3-11 y 5", 5, $oi);
-$oi=$oi+$n1;
-printer_draw_text($handle, "Sonsonate", 200, $oi);
-
-// $oi=$oi+$n1;
-// printer_draw_text($handle, Helpers::Pais($_SESSION['config_pais']), 0, $oi);
-// $oi=$oi+$n1;
-// printer_draw_text($handle, "Propietario: " . $_SESSION['config_propietario'], 0, $oi);
-// $oi=$oi+$n1;
-// printer_draw_text($handle, $_SESSION['config_nombre_documento'] . ": " . $_SESSION['config_nit'], 0, $oi);
-$oi=$oi+$n1;
-printer_draw_text($handle, "Tel: 2486-5515", 0, $oi);
-
-$oi=$oi+$n1;
-printer_draw_text($handle, "Email: bioanalisis.sonsonate@gmail.com", 0, $oi);
+$printer->feed();
+$printer->text("Bo El Angel, 6ta Av. Norte #3-11 y 5");
 
 
+$printer->feed();
+$printer->text("Sonsonate");
 
-$oi=$oi+$n2;
-printer_draw_text($handle, "____________________________________", 0, $oi);
-$oi=$oi+$n1;
-printer_draw_text($handle, "Cant.", 55, $oi);
-printer_draw_text($handle, "Descripcion", $col2, $oi);
-printer_draw_text($handle, "Total", $col4, $oi);
-
-$oi=$oi+25;
-printer_draw_text($handle, "____________________________________", 0, $oi);
+$printer->feed();
+$printer->text("Tel: 2486-5515");
 
 
-///////////////
-///
+$printer->feed();
+$printer->text("Email: bioanalisis.sonsonate@gmail.com");
+
+
+$printer->feed();
+$printer->text("TICKET NUMERO: " . $numero);
+
+
+/* Stuff around with left margin */
+$printer->feed();
+$printer -> setJustification(Printer::JUSTIFY_CENTER);
+$printer -> text("_______________________________________________________");
+$printer -> setJustification(Printer::JUSTIFY_LEFT);
+$printer->feed();
+/* Items */
+
+$printer -> setJustification(Printer::JUSTIFY_LEFT);
+$printer -> setEmphasis(true);
+$printer -> text($this->Item("Cant", 'Producto', 'Precio', 'Total'));
+$printer -> setEmphasis(false);
+
+
 $subtotalf = 0;
-///
-
-
 
 $a = $db->query("select cod, cant, producto, pv, total, fecha, hora, num_fac from ticket where num_fac = '".$numero."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]." and tipo = ".$_SESSION["tipoticket"]." group by cod");
   
     foreach ($a as $b) {
  
- $fechaf=$b["fecha"];
- $horaf=$b["hora"];
- $num_fac=$b["num_fac"];
+$printer -> text($this->Item($b["cant"], substr($b["producto"], 0, 38), $b["pv"], $b["total"]));
 
-          $oi=$oi+$n1;
-          printer_draw_text($handle, $b["cant"], $col1, $oi);
-          printer_draw_text($handle, $b["producto"], $col2, $oi);
-          printer_draw_text($handle, $b["total"], $col4, $oi);
+$subtotalf = $subtotalf + $b["total"];
+
+}    $a->close();
 
 
-////
-$subtotalf = $subtotalf + $stotal;
-///
 
-    }    $a->close();
-
-
-if ($sx = $db->select("sum(total)", "ticket", "WHERE num_fac = '".$numero."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]." and tipo = ".$_SESSION["tipoticket"]."")) { 
+if ($sx = $db->select("sum(total)", "ticket", "WHERE num_fac = '".$numero."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."  and tipo = ".$_SESSION["tipoticket"]."" )) { 
        $stotalx=$sx["sum(total)"];
     } unset($sx); 
  
 
-$oi=$oi+$n1;
-printer_draw_text($handle, "Total " . $_SESSION['config_moneda_simbolo'] . ":", 232, $oi);
-printer_draw_text($handle, Helpers::Format($stotalx), $col4, $oi);
 
-$oi=$oi+$n2;
-printer_draw_text($handle, "____________________________________", 0, $oi);
+
+$printer -> text("_______________________________________________________");
+$printer->feed();
+
+
+$printer -> text($this->DosCol("Sub Total " . $_SESSION['config_moneda_simbolo'] . ":", 40, Helpers::Format(Helpers::STotal($subtotalf, $_SESSION['config_imp'])), 10));
+
+
+$printer -> text($this->DosCol("IVA " . $_SESSION['config_moneda_simbolo'] . ":", 40, Helpers::Format(Helpers::Impuesto(Helpers::STotal($subtotalf, $_SESSION['config_imp']), $_SESSION['config_imp'])), 10));
+
+
+$printer -> text($this->DosCol("TOTAL " . $_SESSION['config_moneda_simbolo'] . ":", 40, Helpers::Format($subtotalf), 10));
+
+
+
+$printer -> text("_______________________________________________________");
+$printer->feed();
+
 
 //efectivo
 if($efectivo == NULL){
-  $efectivo = $stotalx;
+  $efectivo = $xtotal;
 }
-$oi=$oi+$n1;
-printer_draw_text($handle, "Efectivo " . $_SESSION['config_moneda_simbolo'] . ":", 160, $oi);
-printer_draw_text($handle, Helpers::Format($efectivo), $col4, $oi);
+
+
+
+$printer -> text($this->DosCol("Efectivo " . $_SESSION['config_moneda_simbolo'] . ":", 40, Helpers::Format($efectivo), 10));
 
 //cambio
-$cambios = $efectivo - $stotalx;
-$oi=$oi+$n1;
-printer_draw_text($handle, "Cambio " . $_SESSION['config_moneda_simbolo'] . ":", 162, $oi);
-printer_draw_text($handle, Helpers::Format($cambios), $col4, $oi);
-
-$oi=$oi+$n2;
-printer_draw_text($handle, "___________________________________", 0, $oi);
+$cambios = $efectivo - $subtotalf;
+$printer -> text($this->DosCol("Cambio " . $_SESSION['config_moneda_simbolo'] . ":", 40, Helpers::Format($cambios), 10));
 
 
-$oi=$oi+$n1;
-printer_draw_text($handle, $fechaf, 100, $oi);
-printer_draw_text($handle, $horaf, 332, $oi);
+$printer -> text("_______________________________________________________");
+$printer->feed();
 
 
-$oi=$oi+$n1;
-printer_draw_text($handle, "Cajero: " . $_SESSION['nombre'], 25, $oi);
 
 
-$oi=$oi+$n1+$n4;
-printer_draw_text($handle, "GRACIAS POR PREFERIRNOS...", 50, $oi);
+if ($x = $db->select("fecha, hora", "ticket", "WHERE num_fac = '".$numero."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."  and tipo = ".$_SESSION["tipoticket"]."" )) { 
+$fechaf=$x["fecha"];
+$horaf=$x["hora"];
+} unset($x); 
+
+$printer->feed();
+$printer -> text($this->DosCol($fechaf, 30, $horaf, 20));
 
 
-$oi=$oi+$n1;
-printer_draw_text($handle, ".", 0, $oi);
-
-printer_write($handle, chr(27).chr(112).chr(48).chr(55).chr(121)); //enviar pulso
-
-printer_delete_font($font);
-///
-printer_end_page($handle);
-printer_end_doc($handle);
-printer_close($handle);
+// $printer->feed();
+// $printer->text("SERIE: 2UA329130D");
 
 
+$printer->feed();
+$printer -> text("Cajero: " . $_SESSION['nombre']);
+
+$printer->feed();
+$printer -> setJustification(Printer::JUSTIFY_CENTER);
+$printer -> text("GRACIAS POR PREFERIRNOS...");
+$printer -> setJustification();
+
+
+
+
+$printer->feed();
+$printer->cut();
+$printer->pulse();
+$printer->close();
 
 }
 
@@ -172,19 +174,19 @@ printer_close($handle);
 
 
  public function Factura($efectivo, $numero){
-  $db = new dbConn();
-
-
+ 
+    
 }   /// termina FACTURA
 
 
 
 
 
- public function CreditoFiscal($data){
-  $db = new dbConn();
-
+ public function CreditoFiscal($efectivo, $numero){
+ 
+    
 }
+
 
 
 
@@ -216,6 +218,18 @@ printer_close($handle);
 
 
 
+ public function Ninguno(){
+
+$nombre_impresora = "LR2000";
+
+$connector = new WindowsPrintConnector($nombre_impresora);
+$printer = new Printer($connector);
+$printer->pulse();
+$printer->close();
+
+
+}   /// termina /.;ninguno
+
 
 
 
@@ -229,121 +243,6 @@ printer_close($handle);
   $db = new dbConn();
 
 
-$txt1   = "17"; 
-$txt2   = "10";
-$txt3   = "15";
-$txt4   = "8";
-$n1   = "30";
-$n2   = "45";
-$n3   = "21";
-$n4   = "10";
-
-// $print
-$print = "EPSON TM-U220 Receipt";
-
-
-    $handle = printer_open($print);
-    printer_set_option($handle, PRINTER_MODE, "RAW");
-
-    printer_start_doc($handle, "Mi Documento");
-    printer_start_page($handle);
-
-    $font = printer_create_font("Arial", $txt1, $txt2, PRINTER_FW_NORMAL, false, false, false, 0);
-    printer_select_font($handle, $font);
-
-$oi=0;
-//// comienza la factura
-printer_draw_text($handle, $_SESSION['config_cliente'], 110, $oi);
-
-$oi=$oi+$n1;
-printer_draw_text($handle, "Bo. El centro 1/2 Cdra al Este", 0, $oi);
-$oi=$oi+$n1;
-printer_draw_text($handle, "del Elektra, Choluteca, Honduras.", 0, $oi);
-
-
-$oi=$oi+$n1;
-printer_draw_text($handle, "Email: " . $_SESSION['config_email'], 0, $oi);
-$oi=$oi+$n1;
-printer_draw_text($handle, $_SESSION['config_nombre_documento'] . ": " . $_SESSION['config_nit'], 0, $oi);
-$oi=$oi+$n1;
-printer_draw_text($handle, "Tel: " . $_SESSION['config_telefono'], 0, $oi);
-
-
-
-
-      // inicial y final
-          $ax = $db->query("SELECT max(num_fac), min(num_fac), count(num_fac)  FROM ticket_num WHERE fecha = '$fecha' and tx = 1 and edo = 1 and td = ".$_SESSION["td"]."");
-        foreach ($ax as $bx) {
-            $max=$bx["max(num_fac)"]; $min=$bx["min(num_fac)"]; $count=$bx["count(num_fac)"];
-        } $ax->close();
-        
-        
-        
-$oi=$oi+$n1;
-printer_draw_text($handle, "Fact. Inicial: " . Helpers::NFactura($min), 0, $oi);
-
-$oi=$oi+$n1;
-printer_draw_text($handle, "Fact. Final: " . Helpers::NFactura($max), 0, $oi);
-
-$oi=$oi+$n1;
-printer_draw_text($handle, "FACTURAS: " .  $count, 0, $oi);
-
-
-
-      // total
-      $ay = $db->query("SELECT sum(total) FROM ticket WHERE fecha = '$fecha' and tx = 1 and edo = 1 and td = ".$_SESSION["td"]."");
-        foreach ($ay as $by) {
-            $total=$by["sum(total)"];
-        } $ay->close();
-
-$oi=$oi+$n2;
-    printer_draw_text($handle, "____________________________________", 0, 220);
-    //consulta cuantos productos imprimir
-    $oi=250;
-    printer_draw_text($handle, $fecha, 15, $oi);
-
-    $oi=$oi+30;
-    printer_draw_text($handle, "EXENTO:  " . Helpers::Dinero(0), 10, $oi);
-
-    $oi=$oi+30;
-    printer_draw_text($handle, "GRAVADO:  " . Helpers::Dinero(Helpers::STotal($total, $_SESSION['config_imp'])), 10, $oi);
-
-    $oi=$oi+30;
-    printer_draw_text($handle, "SUBTOTAL:  " . Helpers::Dinero(Helpers::STotal($total, $_SESSION['config_imp'])), 10, $oi);
-
-    $oi=$oi+30;
-    printer_draw_text($handle, "ISV:  " . Helpers::Dinero(Helpers::Impuesto(Helpers::STotal($total, $_SESSION['config_imp']), $_SESSION['config_imp'])), 10, $oi);
-
-    $oi=$oi+30;
-    printer_draw_text($handle, "____________________________________", 0, $oi);
-    $oi=$oi+30;
-    printer_draw_text($handle, "TOTAL:  " . Helpers::Dinero($total), 10, $oi);
-    printer_delete_font($font);
-
-
-    //////////////////
-    $oi=$oi+30;
-    printer_draw_text($handle, "Cajero: " . $_SESSION['nombre'], 20, $oi);
-
-
-      // Eliminadas
-          $axy = $db->query("SELECT count(num_fac) FROM ticket_num WHERE fecha = '$fecha' and tx = 1 and edo = 2 and td = ".$_SESSION["td"]."");
-        foreach ($axy as $bxy) {
-            $counte=$bxy["count(num_fac)"];
-        } $axy->close();
-
-
-    $oi=$oi+30;
-    printer_draw_text($handle, "Total Eliminadas: " . $counte, 20, $oi);
-      
-
-    printer_end_page($handle);
-    printer_end_doc($handle, 20);
-    printer_close($handle);
-
-
-
-
 }   // termina reporte diario
 
 
@@ -354,19 +253,67 @@ $oi=$oi+$n2;
 
 
  public function AbrirCaja(){
- // $print
-  $print = "EPSON TM-T20II Receipt5";
-  
-    $handle = printer_open($print);
-    printer_set_option($handle, PRINTER_MODE, "RAW");
+$nombre_impresora = "LR2000";
 
-    printer_start_doc($handle, "Mi Documento");
-    printer_start_page($handle);
-    printer_write($handle, chr(27).chr(112).chr(48).chr(55).chr(121)); //enviar pulso
-    printer_end_page($handle);
-    printer_end_doc($handle, 20);
-    printer_close($handle);
+$connector = new WindowsPrintConnector($nombre_impresora);
+$printer = new Printer($connector);
+$printer->pulse();
+$printer->close();
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+ public function Barcode($numero){
+  $db = new dbConn();
+  $nombre_impresora = "LR2000";
+
+
+$connector = new WindowsPrintConnector($nombre_impresora);
+$printer = new Printer($connector);
+$printer -> initialize();
+
+$a = "{A" . $numero;
+
+$printer -> setJustification(Printer::JUSTIFY_CENTER);
+$printer->setBarcodeWidth(3);
+$printer -> setBarcodeHeight(100);
+$printer->setBarcodeTextPosition(Printer::BARCODE_TEXT_BELOW);
+    $printer -> barcode($a, Printer::BARCODE_CODE128);
+
+if ($r = $db->select("descripcion", "producto", "WHERE cod = '$numero' and td = ".$_SESSION["td"]."")) { 
+$pro = $r["descripcion"];
+} unset($r);  
+
+$printer -> feed(1);
+
+$printer->text($pro);
+
+$printer -> feed(1);
+
+$printer -> cut();
+$printer -> close();
+
+}
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -375,29 +322,573 @@ $oi=$oi+$n2;
 
  public function CorteX($hash){ // imprime el resumen del ultimo corte
   $db = new dbConn();
+
+
+
+  $nombre_impresora = "LR2000";
+
+
+$connector = new WindowsPrintConnector($nombre_impresora);
+$printer = new Printer($connector);
+$printer -> initialize();
+
+$printer -> setFont(Printer::FONT_B);
+
+$printer -> setTextSize(1, 2);
+$printer -> setLineSpacing(80);
+
+$printer -> setJustification(Printer::JUSTIFY_LEFT);
+
+
+$printer -> text("CORTE X");
+
+
+/* Stuff around with left margin */
+$printer->feed();
+$printer -> setJustification(Printer::JUSTIFY_CENTER);
+$printer -> text("_______________________________________________________");
+$printer -> setJustification(Printer::JUSTIFY_LEFT);
+$printer->feed();
+/* Items */
+
+
+$printer -> setJustification(Printer::JUSTIFY_CENTER);
+$printer->text("BIOANALISIS");
+
+
+
+
+$printer->feed();
+$printer->text("GERENTE: YANERI ABIGAIL FLAMENCO GUERRA");
+
+$printer->feed();
+$printer->text("No DE INSCRIPCION JVPLC 2119");
+
+$printer->feed();
+$printer->text("Bo El Angel, 6ta Av. Norte #3-11 y 5");
+
+
+$printer->feed();
+$printer->text("Sonsonate");
+
+$printer->feed();
+$printer->text("Tel: 2486-5515");
+
+
+$printer->feed();
+$printer->text("Email: bioanalisis.sonsonate@gmail.com");
+
+
+
+// $printer->feed();
+// $printer->text("NIT: 1010-291061-002-4   NRC: 33274-7");
+
+// $printer->feed();
+// $printer->text("GIRO: Clinica Veterinaria y venta de productos Agropecuarios");
+
+
+// $printer->feed();
+// $printer->text("CAJA: 1.");
+
+
+
+//// obtener lor datos del corte
+if ($r = $db->select("*", "corte_diario", "WHERE hash = '$hash'")) { 
+  $aperturaF = $r["aperturaF"];
+  $cierreF = $r["cierreF"];
+  $apertura = $r["apertura"];
+  $cierre = $r["cierre"];
+  $fecha = $r["fecha"];
+  $caja_chica = $r["caja_chica"];
+  $efectivo = $r["efectivo"];
+  $total = $r["total"];
+  $t_efectivo = $r["t_efectivo"];
+  $t_tarjeta = $r["t_tarjeta"];
+  $t_credito = $r["t_credito"];
+  $gastos = $r["gastos"];
+  $abonos = $r["abonos"];
+  $diferencia = $r["diferencia"];
+  $user = $r["user"];
+
+} unset($r);  
+
+
+
+$printer->feed();
+$printer->text("FECHA: " .  Fechas::FechaEscrita($fecha));
+
+$printer->feed();
+$printer->text("APERTURA: " .$apertura. "  CIERRE: " . $cierre);
+$printer->feed();
+
+
+$printer->text("GASTOS: " .$gastos. "  ABONOS: " . $abonos);
+$printer->feed();
+
+
+$printer->feed();
+$printer -> text("VENTAS");
+$printer->feed();
+$printer -> text("_______________________________________________________");
+$printer->feed();
+
+
+if ($r = $db->select("sum(stotal)", "ticket", "WHERE edo = 1 and tipo = 1 and td = ".$_SESSION["td"]." and time BETWEEN '".$aperturaF."' and '".$cierreF."'")) { 
+    $t_ticket = $r["sum(stotal)"];
+} unset($r);  
+
+if ($r = $db->select("sum(stotal)", "ticket", "WHERE edo = 1 and tipo = 2 and td = ".$_SESSION["td"]." and time BETWEEN '".$aperturaF."' and '".$cierreF."'")) { 
+    $t_factura = $r["sum(stotal)"];
+} unset($r);  
+
+if ($r = $db->select("sum(stotal)", "ticket", "WHERE edo = 1 and tipo = 3 and td = ".$_SESSION["td"]." and time BETWEEN '".$aperturaF."' and '".$cierreF."'")) { 
+    $t_credito = $r["sum(stotal)"];
+} unset($r);  
+
+if ($r = $db->select("sum(imp)", "ticket", "WHERE edo = 1 and td = ".$_SESSION["td"]." and time BETWEEN '".$aperturaF."' and '".$cierreF."'")) { 
+    $t_imp = $r["sum(imp)"];
+} unset($r);  
+
+
+$printer -> text($this->DosCol("TICKET $: ", 40, Helpers::Format($t_ticket), 10));
+$printer -> text($this->DosCol("FACTURA $: ", 40, Helpers::Format($t_factura), 10));
+$printer -> text($this->DosCol("CREDITO FISCAL $: ", 40, Helpers::Format($t_credito), 10));
+$printer -> text($this->DosCol("IMPUESTO $: ", 40, Helpers::Format($t_imp), 10));
+$printer -> text($this->DosCol("TOTAL $: ", 40, Helpers::Format($total), 10));
+
+
+
+
+$printer->feed();
+$printer -> text("PAGOS");
+$printer->feed();
+$printer -> text("_______________________________________________________");
+$printer->feed();
+
+
+$printer -> text($this->DosCol("EFECTIVO $: ", 40, Helpers::Format($t_efectivo), 10));
+$printer -> text($this->DosCol("TARJETA DE CREDITO $: ", 40, Helpers::Format($t_tarjeta), 10));
+$printer -> text($this->DosCol("TOTAL $: ", 40, Helpers::Format($total), 10));
+$printer -> text($this->DosCol("DIFERENCIA $: ", 40, Helpers::Format($diferencia), 10));
+
+
+$printer->feed();
+$printer -> text("CORRELATIVOS");
+$printer->feed();
+$printer -> text("_______________________________________________________");
+$printer->feed();
+
+// TICKET - subtotal, iva, total, hora
+if($t_ticket > 0){
+
+  $printer -> text("TICKETS"); 
+  $printer->feed();
+  $printer -> text($this->Col4("HORA - TICKET", 0,  "SUBTOTAL", 15,  "IVA", 10, "TOTAL", 10));
+
+  $a = $db->query("SELECT num_fac, hora FROM ticket_num WHERE edo = 1 and tipo = 1 and td = ".$_SESSION["td"]." and time BETWEEN '".$aperturaF."' and '".$cierreF."'");
+      $cant_t = $a->num_rows;
+      foreach ($a as $b) {
+
+  if ($r = $db->select("sum(stotal), sum(imp), sum(total)", "ticket", "WHERE num_fac = '".$b["num_fac"]."' and tipo = 1 and td = ".$_SESSION["td"]."")) { 
+      $stotalt = $r["sum(stotal)"];
+      $impt = $r["sum(imp)"];
+      $totalt = $r["sum(total)"];
+  } unset($r);  
+
+  $printer -> text($this->Col4($b["hora"] . " - " . $b["num_fac"],0 ,  $stotalt, 15,  $impt, 10, $totalt, 10));
+  }  $a->close();
+
 }
+// FACTURA - subtotal, iva, total, hora
+if($t_factura > 0){
+
+  $printer -> text("FACTURAS");
+  $printer->feed();
+  $printer -> text($this->Col4("HORA - FACTURA", 0,  "SUBTOTAL", 15,  "IVA", 10, "TOTAL", 10));
+
+  $a = $db->query("SELECT num_fac, hora FROM ticket_num WHERE edo = 1 and tipo = 2 and td = ".$_SESSION["td"]." and time BETWEEN '".$aperturaF."' and '".$cierreF."'");
+      $cant_f = $a->num_rows;
+      foreach ($a as $b) {
+
+  if ($r = $db->select("sum(stotal), sum(imp), sum(total)", "ticket", "WHERE num_fac = '".$b["num_fac"]."' and tipo = 2 and td = ".$_SESSION["td"]."")) { 
+      $stotalp = $r["sum(stotal)"];
+      $impp = $r["sum(imp)"];
+      $totalp = $r["sum(total)"];
+  } unset($r);  
+
+  $printer -> text($this->Col4($b["hora"] . " - " . $b["num_fac"],0 ,  $stotalp, 15,  $impp, 10, $totalp, 10));
+
+  }  $a->close();
+
+}
+// CCF - subtotal, iva, total, hora
+if($t_credito > 0){
+
+  $printer -> text("CREDITO FISCAL");
+  $printer->feed();
+  $printer -> text($this->Col4("HORA - CCF", 0,  "SUBTOTAL", 15,  "IVA", 10, "TOTAL", 10));
+
+  $a = $db->query("SELECT num_fac, hora FROM ticket_num WHERE edo = 1 and tipo = 3 and td = ".$_SESSION["td"]." and time BETWEEN '".$aperturaF."' and '".$cierreF."'");
+    $cant_c = $a->num_rows;
+      foreach ($a as $b) {
+
+  if ($r = $db->select("sum(stotal), sum(imp), sum(total)", "ticket", "WHERE num_fac = '".$b["num_fac"]."' and tipo = 3 and td = ".$_SESSION["td"]."")) { 
+      $stotalc = $r["sum(stotal)"];
+      $impc = $r["sum(imp)"];
+      $totalc = $r["sum(total)"];
+  } unset($r);  
+
+  $printer -> text($this->Col4($b["hora"] . " - " . $b["num_fac"],0 ,  $stotalc, 15,  $impc, 10, $totalc, 10));
+  }  $a->close();
+
+}
+
+
+
+$printer -> text("_______________________________________________________");
+$printer->feed();
+// VENTA TOTAL - subtotal, iva, total
+  if ($r = $db->select("sum(stotal), sum(imp), sum(total)", "ticket", "WHERE edo = 1 and td = ".$_SESSION["td"]." and time BETWEEN '".$aperturaF."' and '".$cierreF."'")) { 
+      $st = $r["sum(stotal)"];
+      $im = $r["sum(imp)"];
+      $to = $r["sum(total)"];
+  } unset($r);  
+
+  $printer -> text($this->Col4("VENTA TOTAL",0 ,  "SUBTOTAL", 15,  "IVA", 10, "TOTAL", 10));
+
+  $printer -> text($this->Col4("TOTAL GRAVADO",0 ,  $st, 15,  $im, 10, $to, 10));
+  $printer -> text($this->Col4("TOTAL EXENTO",0 ,  Helpers::Format(0), 15,  Helpers::Format(0), 10, Helpers::Format(0), 10));
+  $printer -> text($this->Col4("TOTAL NO SUJETO",0 ,  Helpers::Format(0), 12,  Helpers::Format(0), 10, Helpers::Format(0), 10));
+
+
+$printer->feed();
+$printer -> text("DETALLES");
+$printer->feed();
+$printer -> text("_______________________________________________________");
+$printer->feed();
+
+
+
+$printer -> text($this->Col4("DOCUMENTO",0 ,  "", 0,  "CANTIDAD", 30, "TOTAL", 15));
+$printer -> text($this->Col4("TICKETS",0 ,  "", 0,  Helpers::Entero($cant_t), 28, Helpers::Format($t_ticket), 15));
+$printer -> text($this->Col4("FACTURAS",0 ,  "", 0,  Helpers::Entero($cant_f), 27, Helpers::Format($t_factura), 15));
+$printer -> text($this->Col4("CREDITO FISCAL",0 ,  "", 0,  Helpers::Entero($cant_c), 21, Helpers::Format($t_credito), 15));
+
+
+
+
+
+
+
+
+
+
+
+$printer -> text("DETALLE DE GASTOS REGISTRADOS: ");
+$printer->feed();
+
+$printer -> setJustification(Printer::JUSTIFY_LEFT);
+$printer -> setEmphasis(true);
+$printer -> text($this->Item("Descripcion", '', '', 'Total'));
+$printer -> setEmphasis(false);
+
+$printer -> text("_______________________________________________________");
+$printer->feed();
+
+$ax = $db->query("select nombre, cantidad FROM gastos WHERE time BETWEEN '".$aperturaF."' and '".$cierreF."' and td = ".$_SESSION["td"]." and edo = 1");
+  
+foreach ($ax as $bx) {
+$printer -> text($this->Item($bx["nombre"], NULL, NULL ,$bx["cantidad"]));
+}   $ax->close();
+
+///////////////
+
+
+if ($r = $db->select("nombre", "login_userdata", "WHERE user = '".$user."' and td = ".$_SESSION["td"]."")) { 
+      $cajero = $r["nombre"];
+  } unset($r);  
+
+$printer->feed();
+$printer->text("CAJERO: " . $cajero);
+
+
+$printer->feed();
+$printer->cut();
+$printer->close();
+
+
+}
+
+
+
+
+
+
+
+
+
 
 
  public function CorteZ($fechax){ // imprime el resumen del ultimo corte
   $db = new dbConn();
+
+
+  $nombre_impresora = "LR2000";
+
+
+$connector = new WindowsPrintConnector($nombre_impresora);
+$printer = new Printer($connector);
+$printer -> initialize();
+
+$printer -> setFont(Printer::FONT_B);
+
+$printer -> setTextSize(1, 2);
+$printer -> setLineSpacing(80);
+
+$printer -> setJustification(Printer::JUSTIFY_LEFT);
+
+$printer -> text("CORTE Z");
+
+
+/* Stuff around with left margin */
+$printer->feed();
+$printer -> setJustification(Printer::JUSTIFY_CENTER);
+$printer -> text("_______________________________________________________");
+$printer -> setJustification(Printer::JUSTIFY_LEFT);
+$printer->feed();
+/* Items */
+
+$printer -> setJustification(Printer::JUSTIFY_CENTER);
+$printer->text("BIOANALISIS");
+
+
+$printer->feed();
+$printer->text("GERENTE: YANERI ABIGAIL FLAMENCO GUERRA");
+
+$printer->feed();
+$printer->text("No DE INSCRIPCION JVPLC 2119");
+
+$printer->feed();
+$printer->text("Bo El Angel, 6ta Av. Norte #3-11 y 5");
+
+
+$printer->feed();
+$printer->text("Sonsonate");
+
+$printer->feed();
+$printer->text("Tel: 2486-5515");
+
+
+$printer->feed();
+$printer->text("Email: bioanalisis.sonsonate@gmail.com");
+// $printer->feed();
+// $printer->text("NIT: 1010-291061-002-4   NRC: 33274-7");
+
+// $printer->feed();
+// $printer->text("GIRO: Clinica Veterinaria y venta de productos Agropecuarios");
+
+
+$printer->feed();
+$printer->text("CAJA: 1.");
+
+
+
+
+
+$printer->feed();
+$printer->text("FECHA: " .  Fechas::FechaEscrita($fechax));
+
+
+
+$printer->feed();
+$printer -> text("VENTAS");
+$printer->feed();
+$printer -> text("_______________________________________________________");
+$printer->feed();
+
+
+if ($r = $db->select("sum(stotal)", "ticket", "WHERE edo = 1 and tipo = 1 and td = ".$_SESSION["td"]." and fecha = '$fechax'")) { 
+    $t_ticket = $r["sum(stotal)"];
+} unset($r);  
+
+if ($r = $db->select("sum(stotal)", "ticket", "WHERE edo = 1 and tipo = 2 and td = ".$_SESSION["td"]." and fecha = '$fechax'")) { 
+    $t_factura = $r["sum(stotal)"];
+} unset($r);  
+
+if ($r = $db->select("sum(stotal)", "ticket", "WHERE edo = 1 and tipo = 3 and td = ".$_SESSION["td"]." and fecha = '$fechax'")) { 
+    $t_credito = $r["sum(stotal)"];
+} unset($r);  
+
+if ($r = $db->select("sum(imp), sum(total)", "ticket", "WHERE edo = 1 and td = ".$_SESSION["td"]." and fecha = '$fechax'")) { 
+    $t_imp = $r["sum(imp)"];
+    $total = $r["sum(total)"];
+} unset($r);  
+
+
+$printer -> text($this->DosCol("TICKET $: ", 40, Helpers::Format($t_ticket), 10));
+$printer -> text($this->DosCol("FACTURA $: ", 40, Helpers::Format($t_factura), 10));
+$printer -> text($this->DosCol("CREDITO FISCAL $: ", 40, Helpers::Format($t_credito), 10));
+$printer -> text($this->DosCol("IMPUESTO $: ", 40, Helpers::Format($t_imp), 10));
+$printer -> text($this->DosCol("TOTAL $: ", 40, Helpers::Format($total), 10));
+
+
+
+
+$printer->feed();
+$printer -> text("PAGOS");
+$printer->feed();
+$printer -> text("_______________________________________________________");
+$printer->feed();
+
+
+if ($r = $db->select("sum(total)", "ticket", "WHERE edo = 1 and tipo_pago = 1 and td = ".$_SESSION["td"]." and fecha = '$fechax'")) { 
+    $t_efectivo = $r["sum(total)"];
+} unset($r);  
+
+if ($r = $db->select("sum(total)", "ticket", "WHERE edo = 1 and tipo_pago = 2 and td = ".$_SESSION["td"]." and fecha = '$fechax'")) { 
+    $t_tarjeta = $r["sum(total)"];
+} unset($r);  
+
+
+$printer -> text($this->DosCol("EFECTIVO $: ", 40, Helpers::Format($t_efectivo), 10));
+$printer -> text($this->DosCol("TARJETA DE CREDITO $: ", 40, Helpers::Format($t_tarjeta), 10));
+$printer -> text($this->DosCol("TOTAL $: ", 40, Helpers::Format($total), 10));
+
+
+$printer->feed();
+$printer -> text("CORRELATIVOS");
+$printer->feed();
+$printer -> text("_______________________________________________________");
+$printer->feed();
+
+// TICKET - subtotal, iva, total, hora
+if($t_ticket > 0){
+
+  $printer -> text("TICKETS"); 
+  $printer->feed();
+  $printer -> text($this->Col4("HORA - TICKET", 0,  "SUBTOTAL", 15,  "IVA", 10, "TOTAL", 10));
+
+  $a = $db->query("SELECT num_fac, hora FROM ticket_num WHERE edo = 1 and tipo = 1 and td = ".$_SESSION["td"]." and fecha = '$fechax'");
+      $cant_t = $a->num_rows;
+      foreach ($a as $b) {
+
+  if ($r = $db->select("sum(stotal), sum(imp), sum(total)", "ticket", "WHERE num_fac = '".$b["num_fac"]."' and tipo = 1 and td = ".$_SESSION["td"]."")) { 
+      $stotalt = $r["sum(stotal)"];
+      $impt = $r["sum(imp)"];
+      $totalt = $r["sum(total)"];
+  } unset($r);  
+
+  $printer -> text($this->Col4($b["hora"] . " - " . $b["num_fac"],0 ,  $stotalt, 15,  $impt, 10, $totalt, 10));
+  }  $a->close();
+
+}
+// FACTURA - subtotal, iva, total, hora
+if($t_factura > 0){
+
+  $printer -> text("FACTURAS");
+  $printer->feed();
+  $printer -> text($this->Col4("HORA - FACTURA", 0,  "SUBTOTAL", 15,  "IVA", 10, "TOTAL", 10));
+
+  $a = $db->query("SELECT num_fac, hora FROM ticket_num WHERE edo = 1 and tipo = 2 and td = ".$_SESSION["td"]." and fecha = '$fechax'");
+      $cant_f = $a->num_rows;
+      foreach ($a as $b) {
+
+  if ($r = $db->select("sum(stotal), sum(imp), sum(total)", "ticket", "WHERE num_fac = '".$b["num_fac"]."' and tipo = 2 and td = ".$_SESSION["td"]."")) { 
+      $stotalp = $r["sum(stotal)"];
+      $impp = $r["sum(imp)"];
+      $totalp = $r["sum(total)"];
+  } unset($r);  
+
+  $printer -> text($this->Col4($b["hora"] . " - " . $b["num_fac"],0 ,  $stotalp, 15,  $impp, 10, $totalp, 10));
+
+  }  $a->close();
+
+}
+// CCF - subtotal, iva, total, hora
+if($t_credito > 0){
+
+  $printer -> text("CREDITO FISCAL");
+  $printer->feed();
+  $printer -> text($this->Col4("HORA - CCF", 0,  "SUBTOTAL", 15,  "IVA", 10, "TOTAL", 10));
+
+  $a = $db->query("SELECT num_fac, hora FROM ticket_num WHERE edo = 1 and tipo = 3 and td = ".$_SESSION["td"]." and fecha = '$fechax'");
+    $cant_c = $a->num_rows;
+      foreach ($a as $b) {
+
+  if ($r = $db->select("sum(stotal), sum(imp), sum(total)", "ticket", "WHERE num_fac = '".$b["num_fac"]."' and tipo = 3 and td = ".$_SESSION["td"]."")) { 
+      $stotalc = $r["sum(stotal)"];
+      $impc = $r["sum(imp)"];
+      $totalc = $r["sum(total)"];
+  } unset($r);  
+
+  $printer -> text($this->Col4($b["hora"] . " - " . $b["num_fac"],0 ,  $stotalc, 15,  $impc, 10, $totalc, 10));
+  }  $a->close();
+
 }
 
 
- public function Col4($col1, $esp1,  $col2, $esp2, $col3, $esp3,  $col4,$esp4){
-        $la1 = str_pad($col1, $esp1, ' ', STR_PAD_LEFT);
-        $la2 = str_pad($col2, $esp2, ' ', STR_PAD_LEFT);
-        $la3 = str_pad($col3, $esp3, ' ', STR_PAD_LEFT);
-        $la4 = str_pad($col4, $esp4, ' ', STR_PAD_LEFT);
-        return "$la1$la2$la3$la4\n";
-    }
+
+$printer -> text("_______________________________________________________");
+$printer->feed();
+// VENTA TOTAL - subtotal, iva, total
+  if ($r = $db->select("sum(stotal), sum(imp), sum(total)", "ticket", "WHERE edo = 1 and td = ".$_SESSION["td"]." and fecha = '$fechax'")) { 
+      $st = $r["sum(stotal)"];
+      $im = $r["sum(imp)"];
+      $to = $r["sum(total)"];
+  } unset($r);  
+
+  $printer -> text($this->Col4("VENTA TOTAL",0 ,  "SUBTOTAL", 15,  "IVA", 10, "TOTAL", 10));
+
+  $printer -> text($this->Col4("TOTAL GRAVADO",0 ,  $st, 15,  $im, 10, $to, 10));
+  $printer -> text($this->Col4("TOTAL EXENTO",0 ,  Helpers::Format(0), 15,  Helpers::Format(0), 10, Helpers::Format(0), 10));
+  $printer -> text($this->Col4("TOTAL NO SUJETO",0 ,  Helpers::Format(0), 12,  Helpers::Format(0), 10, Helpers::Format(0), 10));
+
+
+$printer->feed();
+$printer -> text("DETALLES");
+$printer->feed();
+$printer -> text("_______________________________________________________");
+$printer->feed();
+
+
+
+$printer -> text($this->Col4("DOCUMENTO",0 ,  "", 0,  "CANTIDAD", 30, "TOTAL", 15));
+$printer -> text($this->Col4("TICKETS",0 ,  "", 0,  Helpers::Entero($cant_t), 28, Helpers::Format($t_ticket), 20));
+$printer -> text($this->Col4("FACTURAS",0 ,  "", 0,  Helpers::Entero($cant_f), 27, Helpers::Format($t_factura), 20));
+$printer -> text($this->Col4("CREDITO FISCAL",0 ,  "", 0,  Helpers::Entero($cant_c), 21, Helpers::Format($t_credito), 20));
+
+
+
+
+
+$printer->feed();
+$printer->cut();
+$printer->close();
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 
 
  public function Item($cant,  $name = '', $price = '', $total = '', $dollarSign = false){
-        $rightCols = 10;
-        $leftCols = 42;
+        $rightCols = 8;
+        $leftCols = 38;
         if ($dollarSign) {
             $leftCols = $leftCols / 2 - $rightCols / 2;
         }
@@ -417,6 +908,21 @@ $oi=$oi+$n2;
         $right = str_pad($derecha, $der, ' ', STR_PAD_LEFT);
         return "$left$right\n";
     }
+
+
+
+ public function Col4($col1, $esp1,  $col2, $esp2, $col3, $esp3,  $col4,$esp4){
+        $la1 = str_pad($col1, $esp1, ' ', STR_PAD_LEFT);
+        $la2 = str_pad($col2, $esp2, ' ', STR_PAD_LEFT);
+        $la3 = str_pad($col3, $esp3, ' ', STR_PAD_LEFT);
+        $la4 = str_pad($col4, $esp4, ' ', STR_PAD_LEFT);
+        return "$la1$la2$la3$la4\n";
+    }
+
+
+
+
+
 
 
 
