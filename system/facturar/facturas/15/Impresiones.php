@@ -98,40 +98,41 @@ if ($sx = $db->select("sum(total)", "ticket", "WHERE num_fac = '".$numero."' and
 
 
 
-$printer -> text("_______________________________________________________");
-$printer->feed();
-
-
-$printer -> text($this->DosCol("Sub Total " . $_SESSION['config_moneda_simbolo'] . ":", 40, Helpers::Format(Helpers::STotal($subtotalf, $_SESSION['config_imp'])), 10));
-
-
-$printer -> text($this->DosCol("IVA " . $_SESSION['config_moneda_simbolo'] . ":", 40, Helpers::Format(Helpers::Impuesto(Helpers::STotal($subtotalf, $_SESSION['config_imp']), $_SESSION['config_imp'])), 10));
-
-
-$printer -> text($this->DosCol("TOTAL " . $_SESSION['config_moneda_simbolo'] . ":", 40, Helpers::Format($subtotalf), 10));
-
-
-
-$printer -> text("_______________________________________________________");
-$printer->feed();
-
-
-//efectivo
-if($efectivo == NULL){
-  $efectivo = $xtotal;
-}
-
-
-
-$printer -> text($this->DosCol("Efectivo " . $_SESSION['config_moneda_simbolo'] . ":", 40, Helpers::Format($efectivo), 10));
-
-//cambio
-$cambios = $efectivo - $subtotalf;
-$printer -> text($this->DosCol("Cambio " . $_SESSION['config_moneda_simbolo'] . ":", 40, Helpers::Format($cambios), 10));
-
-
-$printer -> text("_______________________________________________________");
-$printer->feed();
+    $printer -> text("_______________________________________________________");
+    $printer->feed();
+    
+    
+    $printer -> text($this->DosCol("Sub Total " . $_SESSION['config_moneda_simbolo'] . ":", 40, Helpers::Format(Helpers::STotal($subtotalf, $_SESSION['config_imp'])), 10));
+    
+    
+    $printer -> text($this->DosCol("IVA " . $_SESSION['config_moneda_simbolo'] . ":", 40, Helpers::Format(Helpers::Impuesto(Helpers::STotal($subtotalf, $_SESSION['config_imp']), $_SESSION['config_imp'])), 10));
+    
+    
+    $printer -> text($this->DosCol("TOTAL " . $_SESSION['config_moneda_simbolo'] . ":", 40, Helpers::Format($subtotalf), 10));
+    
+    
+    
+    $printer -> text("_______________________________________________________");
+    $printer->feed();
+    
+    
+    //efectivo
+    if($efectivo == NULL){
+      $efectivo = $xtotal;
+    }
+    
+    
+    
+    $printer -> text($this->DosCol("Efectivo " . $_SESSION['config_moneda_simbolo'] . ":", 40, Helpers::Format($efectivo), 10));
+    
+    //cambio
+    $cambios = $efectivo - $subtotalf;
+    $printer -> text($this->DosCol("Cambio " . $_SESSION['config_moneda_simbolo'] . ":", 40, Helpers::Format($cambios), 10));
+    
+    
+    $printer -> text("_______________________________________________________");
+    $printer->feed();
+    
 
 
 
