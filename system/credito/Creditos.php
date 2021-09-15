@@ -266,8 +266,8 @@ public function VerAbonos($credito) { //leva el control del autoincremento de lo
         
         $tot = $this->ObtenerTotal($datos["factura"], $datos["tx"], $datos["orden"]);
         $abo = $this->TotalAbono($datos["credito"]);
-        $resultado = Helpers::Format($tot - $abo);
-        $abono = Helpers::Format($datos["abono"]);
+        $resultado = Helpers::Entero($tot - $abo);
+        $abono = Helpers::Entero($datos["abono"]);
 
           if($abono <= $resultado){
                 $data["credito"] = $datos["credito"];
