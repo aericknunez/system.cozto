@@ -196,6 +196,8 @@ if($_SESSION["config_pesaje"] == "on"){
 <li><a href="?modificarproducto" class="waves-effect"><i class="fas fa-plus"></i> Modificar Productos</a></li>
 <li><a href="?ajustedeinventario" class="waves-effect"><i class="fas fa-plus"></i> Ajustar Inventario</a></li>
 <li><a href="?importarproducto" class="waves-effect"><i class="fas fa-plus"></i> Importar desde Excel</a></li>
+<li><a href="?restartprecio" class="waves-effect"><i class="fas fa-database"></i> Reestablecer Precio</a></li>
+
 </ul>
 </div>
 </li>

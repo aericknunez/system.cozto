@@ -3073,9 +3073,17 @@ include_once '../../system/transferencias/Transferencias.php';
 break;
 
 
+case "670": // busqueda productos para restablecer precios
+	include_once '../../system/herramientas/RestablecerPrecio.php';
+		$restart = new RestablecerPrecio();
+		$restart->DetallesProducto($_POST);
+break;
 
-
-
+case "671": // Cambiar precio
+	include_once '../../system/herramientas/RestablecerPrecio.php';
+		$restart = new RestablecerPrecio();
+		$restart->CambiarPrecio($_POST);
+break;
 
 
 } // termina switch

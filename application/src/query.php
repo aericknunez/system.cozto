@@ -220,7 +220,9 @@ echo '<script type="text/javascript" src="assets/js/query/ingresorapido.js?v='.$
 elseif(isset($_GET["importarproducto"])) {
 echo '<script type="text/javascript" src="assets/js/query/importarproducto.js?v='.$numero.'"></script>';
 } 
-
+elseif(isset($_GET["restartprecio"])) {
+	echo '<script type="text/javascript" src="assets/js/query/restartprecio.js?v='.$numero.'"></script>';
+} 
 
 
 
