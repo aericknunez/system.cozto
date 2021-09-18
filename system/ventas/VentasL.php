@@ -339,19 +339,14 @@ if ($r = $db->select("sum(existencia)", "producto_ingresado", "WHERE existencia 
 
 
 
-public function EstablecePrecioVentaNuevo($cod) { // Establece un precio de venta nuevo si se selecciono
+public function PrecioLote($cod) { // Establece un precio de venta nuevo si se selecciono
 	$db = new dbConn();
 
-	if ($r = $db->select("precio_venta", "producto_ingresado", "WHERE existencia < cant and existencia > 0 and precio_venta != 0 and producto = '".$cod."' and td = ". $_SESSION["td"] ." order by time desc limit 1")){ 
+	if ($r = $db->select("precio_venta", "producto_ingresado", "WHERE existencia <= cant and existencia > 0 and precio_venta != 0 and producto = '".$cod."' and td = ". $_SESSION["td"] ." order by time desc limit 1")){ 
         $precio = $r["precio_venta"];
     	} unset($r); 
  
-	if($precio != 0){
-	    $cambio = array();
-	    $cambio["precio"] = $precio;
-	    Helpers::UpdateId("producto_precio", $cambio, "producto='".$cod."' and cant = '1' and td = ".$_SESSION["td"]."");
-	}
-
+	return $precio; 
 }
 
 
@@ -360,15 +355,17 @@ public function EstablecePrecioVentaNuevo($cod) { // Establece un precio de vent
 	public function ObtenerPrecio($cod, $cant){ // obtiene el precio independientemente la cantidad
 		$db = new dbConn();
 		// busco el precio que le corresponde
-
-$this->EstablecePrecioVentaNuevo($cod);
 			
 		if($this->ObtenerPrecioPromo($cod, $cant) != NULL){
 			return $this->ObtenerPrecioPromo($cod, $cant);
 		} elseif($_SESSION["config_mayorista"] == "on" and $this->ObtenerPrecioMayorista($cod, $cant) != NULL and $_SESSION["precio_mayorista_activo"] == TRUE){
 			return $this->ObtenerPrecioMayorista($cod, $cant);
 		} else {
-			return $this->ObtenerPrecioNormal($cod, $cant);
+			if ($this->PrecioLote($cod) != NULL) {
+				return $this->PrecioLote($cod);
+			} else {
+				return $this->ObtenerPrecioNormal($cod, $cant);
+			}
 		}	
 	}
 
