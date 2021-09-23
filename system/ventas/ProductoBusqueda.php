@@ -148,6 +148,16 @@ if($img == NULL) { $img = "assets/img/logo/" . $_SESSION["config_imagen"]; } els
                 Alerts::Mensajex("No se he establecido un precio",'danger',$boton,$boton2);
               }
 
+                      // precio asignado al lote
+        if ($bus = $db->select("precio_venta", "producto_ingresado", "WHERE existencia <= cant and existencia > 0 and precio_venta != 0 and producto = '".$data["key"]."' and td = ". $_SESSION["td"] ." order by time desc limit 1")){ 
+          $preciolote = $bus["precio_venta"];
+        } unset($r); 
+
+        if ($preciolote != NULL) {
+          echo '<li class="list-group-item d-flex justify-content-between align-items-center">PRECIO ASIGNADO A ESTE LOTE
+                 <span class="badge badge-secondary badge-pill">'.Helpers::Dinero($preciolote).'</span></li>';
+        }
+        
 
 echo '</div>
 
