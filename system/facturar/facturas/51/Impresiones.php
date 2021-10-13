@@ -35,7 +35,7 @@ $printer -> setLineSpacing(80);
 // $printer->bitImage($logo);
 
 $printer -> setJustification(Printer::JUSTIFY_CENTER);
-$printer->text("CHATOS");
+$printer->text("CHATO");
 
 
 $printer->feed();
@@ -44,11 +44,11 @@ $printer->feed();
 $printer->text("Metapán, Santa Ana");
 
 $printer->feed();
-$printer->text("Tel: 2467-9707");
+$printer->text("Tel: 2467-9707 Cel: 7899-4580");
 
 
 $printer->feed();
-$printer->text("Giro: Repareción de motos");
+$printer->text("Giro: Reparación de motos");
 
 
 // $printer->feed();
@@ -661,7 +661,7 @@ $printer->feed();
 
 
 $printer -> setJustification(Printer::JUSTIFY_CENTER);
-$printer->text("CHATOS");
+$printer->text("CHATO");
 
 
 $printer->feed();
@@ -670,11 +670,11 @@ $printer->feed();
 $printer->text("Metapán, Santa Ana");
 
 $printer->feed();
-$printer->text("Tel: 2467-9707");
+$printer->text("Tel: 2467-9707 Cel: 7899-4580");
 
 
 $printer->feed();
-$printer->text("Giro: Repareción de motos");
+$printer->text("Giro: Reparación de motos");
 
 
 
@@ -958,7 +958,7 @@ $printer->feed();
 
 
 $printer -> setJustification(Printer::JUSTIFY_CENTER);
-$printer->text("CHATOS");
+$printer->text("CHATO");
 
 
 $printer->feed();
@@ -967,11 +967,11 @@ $printer->feed();
 $printer->text("Metapán, Santa Ana");
 
 $printer->feed();
-$printer->text("Tel: 2467-9707");
+$printer->text("Tel: 2467-9707 Cel: 7899-4580");
 
 
 $printer->feed();
-$printer->text("Giro: Repareción de motos");
+$printer->text("Giro: Reparación de motos");
 
 
 
