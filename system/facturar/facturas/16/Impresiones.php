@@ -166,8 +166,6 @@ $printer -> text("GRACIAS POR SU PREFERENCIA...");
 $printer -> setJustification();
 
 
-
-
 $printer->feed();
 $printer->cut();
 $printer->pulse();
@@ -183,6 +181,9 @@ $printer->close();
 
  public function Factura($efectivo, $numero){
 $nombre_impresora = "EPSON2";
+
+
+
 
 $connector = new WindowsPrintConnector($nombre_impresora);
 $printer = new Printer($connector);
