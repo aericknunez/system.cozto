@@ -659,7 +659,7 @@ if($exispredet == 0){
                       <th scope="row">'. $n ++ .'</th>
                       <td>'.$b["cant"].'</td>
                       <td>'.$nombre.'</td>
-                      <td><a id="delcaracteristicaasig" hash="'.$b["caracteristica"].'" op="44" producto="'.$producto.'" ><i class="fa fa-minus-circle fa-lg red-text"></i></a></td>
+                      <td><a id="delcaracteristicaasig" hash="'.$b["hash"].'" op="44" producto="'.$producto.'" ><i class="fa fa-minus-circle fa-lg red-text"></i></a></td>
                     </tr>';
                     $canta =  $canta + $b["cant"];          
               }
@@ -675,7 +675,7 @@ if($exispredet == 0){
 
   public function DelCaracteristicaAsig($hash, $producto){ // elimina ubicacion asig
     $db = new dbConn();
-        if (Helpers::DeleteId("caracteristicas_asig", "caracteristica='$hash'")) {
+        if (Helpers::DeleteId("caracteristicas_asig", "hash='$hash'")) {
            Alerts::Alerta("success","Eliminado!","Caracteristica eliminada correctamente!");
         } else {
             Alerts::Alerta("error","Error!","Algo Ocurrio!");
