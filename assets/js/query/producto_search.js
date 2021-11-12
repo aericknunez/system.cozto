@@ -25,7 +25,7 @@ function delay(callback, ms) {
   
   $('#key').keyup(delay(function (e) {
     Search();
-  }, 1000));
+  }, 700));
 
 
 
