@@ -38,6 +38,13 @@ $('#btn-busqueda').click(function(e){ /// agregar un producto
 	});
 
 
+  $('#cerrarmodal').click(function(e){ /// agregar un producto 
+    e.preventDefault();
+    
+          Search();
+  
+    });
+
 
 function Search(){
     $.ajax({
