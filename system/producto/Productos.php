@@ -1332,7 +1332,7 @@ echo '<div class="row justify-content-center">
   public function VerProductosSearch($npagina, $orden, $dir, $search){
     $db = new dbConn();
 
-$limit = 25;
+$limit = 15;
 $adjacents = 2;
 if($npagina == NULL) $npagina = 1;
 $a = $db->query("SELECT * FROM producto WHERE (cod like '%".$search."%' or descripcion like '%".$search."%') and td = ". $_SESSION['td'] ."");
