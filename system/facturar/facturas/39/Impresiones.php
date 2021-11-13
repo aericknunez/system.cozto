@@ -366,7 +366,7 @@ printer_select_font($handle, $font);
 
 
 
-$oi=50;
+$oi=45;
 //// comienza la factura
 
 $oi=$oi+$n1;
