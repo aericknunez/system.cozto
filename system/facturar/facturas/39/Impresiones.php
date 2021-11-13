@@ -348,7 +348,7 @@ $n4   = "0";
 
 $col1 = 30;
 $col2 = 70;
-$col3 = 380; //400
+$col3 = 370; //400
 $col4 = 550; //565
 $col5 = 500;
 // $print
@@ -366,11 +366,14 @@ printer_select_font($handle, $font);
 
 
 
-$oi=45;
+$oi=47;
 //// comienza la factura
 
 $oi=$oi+$n1;
 printer_draw_text($handle, date("d-m-Y"), 450, $oi);
+
+$oi=$oi+$n1;
+printer_draw_text($handle, "CONTADO", 540, $oi);
 // printer_draw_text($handle, date("m"), 490, $oi);
 // printer_draw_text($handle, substr(date("Y"), -1), 590, $oi);
 
