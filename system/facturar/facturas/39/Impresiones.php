@@ -195,7 +195,7 @@ $n3   = "30";
 $n4   = "0";
 
 
-$col1 = 30;
+$col1 = 25;
 $col2 = 70;
 $col3 = 370; //400
 $col4 = 550; //565
@@ -247,7 +247,7 @@ printer_draw_text($handle, $nombre, 85, $oi);
 $oi=$oi+$n1;
 printer_draw_text($handle, $direccion, 100, $oi);
 
-$oi=$oi+$n1;
+$oi=$oi+$n1+2;
 printer_draw_text($handle, $documento, 105, $oi);
 
 
