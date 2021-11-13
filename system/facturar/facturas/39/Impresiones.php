@@ -374,7 +374,7 @@ printer_draw_text($handle, date("d-m-Y"), 450, $oi);
 // printer_draw_text($handle, date("m"), 490, $oi);
 // printer_draw_text($handle, substr(date("Y"), -1), 590, $oi);
 
-$oi=85;
+$oi=92;
 
   if ($r = $db->select("documento", "facturar_documento_factura", "WHERE factura = '$numero' and tx = " . $_SESSION["tx"] . " and td = " .  $_SESSION["td"] . " order by time desc limit 1" )) { 
       $documento = $r["documento"];
