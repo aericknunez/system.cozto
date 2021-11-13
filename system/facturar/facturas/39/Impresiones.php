@@ -218,8 +218,8 @@ printer_select_font($handle, $font);
 $oi=47;
 //// comienza la factura
 
-$oi=$oi+$n1;
-printer_draw_text($handle, date("d-m-Y"), 450, $oi);
+$oi=$oi+$n1+$n1;
+printer_draw_text($handle, date("d") . " - " . Fechas::MesEscrito(date("m")) ." - " . date("Y"), 460, $oi);
 
 
 $oi=96;
@@ -243,7 +243,6 @@ if ($r = $db->select("orden", "ticket_num", "WHERE num_fac = '$numero' and tx = 
 
 $oi=$oi+$n1;
 printer_draw_text($handle, $nombre, 85, $oi);
-printer_draw_text($handle, date("d") . " - " . Fechas::MesEscrito(date("m")) ." - " . date("Y"), 460, $oi);
 
 $oi=$oi+$n1;
 printer_draw_text($handle, $direccion, 100, $oi);
@@ -280,7 +279,7 @@ if ($sx = $db->select("sum(stotal), sum(imp), sum(total)", "ticket", "WHERE num_
     } unset($sx); 
  
 /// salto de linea
-$oi=435;
+$oi=440;
 
 
 // valores en letras
@@ -302,7 +301,7 @@ $oi=$oi+$n1;
 // printer_draw_text($handle, Helpers::Format($totalx), $col4, $oi);
 
 
-$oi=$oi+$n1+$n1+$n1+$n1;
+$oi=$oi+$n1+$n1+$n1;
 printer_draw_text($handle, Helpers::Format($totalx), $col4, $oi);
 
 
