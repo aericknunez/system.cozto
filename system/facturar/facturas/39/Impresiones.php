@@ -215,14 +215,14 @@ printer_select_font($handle, $font);
 
 
 
-$oi=55;
+$oi=58;
 //// comienza la factura
 
 $oi=$oi+$n1;
 printer_draw_text($handle, date("d") . " - " . Fechas::MesEscrito(date("m")) ." - " . date("Y"), 460, $oi);
 
 
-$oi=96;
+$oi=98;
 
 
 if ($r = $db->select("orden", "ticket_num", "WHERE num_fac = '$numero' and tx = " . $_SESSION["tx"] . " and tipo = ".$_SESSION["tipoticket"]." and td = " .  $_SESSION["td"])) { 
