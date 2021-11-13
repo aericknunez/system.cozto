@@ -218,7 +218,7 @@ printer_select_font($handle, $font);
 $oi=47;
 //// comienza la factura
 
-$oi=$oi+$n1+$n1;
+$oi=$oi+$n1;
 printer_draw_text($handle, date("d") . " - " . Fechas::MesEscrito(date("m")) ." - " . date("Y"), 460, $oi);
 
 
