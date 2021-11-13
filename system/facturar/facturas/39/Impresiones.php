@@ -219,7 +219,6 @@ $oi=95;
 //// comienza la factura
 
 
-
 if ($r = $db->select("orden", "ticket_num", "WHERE num_fac = '$numero' and tx = " . $_SESSION["tx"] . " and tipo = ".$_SESSION["tipoticket"]." and td = " .  $_SESSION["td"])) { 
     $orden = $r["orden"];
 } unset($r);
@@ -229,13 +228,11 @@ if ($r = $db->select("orden", "ticket_num", "WHERE num_fac = '$numero' and tx = 
     } unset($r);  
 
 
-
     if ($r = $db->select("nombre, documento, direccion", "clientes", "WHERE hash = '$hashcliente' and td = " .  $_SESSION["td"])) { 
         $nombre = $r["nombre"];
         $documento = $r["documento"];
         $direccion = $r["direccion"];
     } unset($r);  
-
 
 
 $oi=$oi+$n1;
