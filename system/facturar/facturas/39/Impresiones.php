@@ -366,15 +366,15 @@ printer_select_font($handle, $font);
 
 
 
-$oi=55;
+$oi=50;
 //// comienza la factura
 
 $oi=$oi+$n1;
-printer_draw_text($handle, date("d-m-Y"), 440, $oi);
+printer_draw_text($handle, date("d-m-Y"), 450, $oi);
 // printer_draw_text($handle, date("m"), 490, $oi);
 // printer_draw_text($handle, substr(date("Y"), -1), 590, $oi);
 
-$oi=80;
+$oi=85;
 
   if ($r = $db->select("documento", "facturar_documento_factura", "WHERE factura = '$numero' and tx = " . $_SESSION["tx"] . " and td = " .  $_SESSION["td"] . " order by time desc limit 1" )) { 
       $documento = $r["documento"];
@@ -457,7 +457,7 @@ $oi=$oi+$n1;
 printer_draw_text($handle, Helpers::Format($totalx), $col4, $oi);
 
 
-$oi=$oi+$n1+$n1+$n1+$n1+8;
+$oi=$oi+$n1+$n1+$n1+$n1;
 printer_draw_text($handle, Helpers::Format($totalx), $col4, $oi);
 
 
