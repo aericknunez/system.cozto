@@ -297,11 +297,11 @@ $oi=$oi+$n1;
 // printer_draw_text($handle, Helpers::Format(Helpers::Impuesto(Helpers::STotal($totalx, $_SESSION['config_imp']), $_SESSION['config_imp'])), $col4, $oi);
 
 
-$oi=$oi+$n1;
-// printer_draw_text($handle, Helpers::Format($totalx), $col4, $oi);
+$oi=$oi+$n1+$n1;
+printer_draw_text($handle, Helpers::Format($totalx), $col4, $oi);
 
 
-$oi=$oi+$n1+$n1+$n1;
+$oi=$oi+$n1+$n1;
 printer_draw_text($handle, Helpers::Format($totalx), $col4, $oi);
 
 
