@@ -197,8 +197,8 @@ $n4   = "0";
 
 $col1 = 30;
 $col2 = 70;
-$col3 = 385;
-$col4 = 550;
+$col3 = 370; //400
+$col4 = 550; //565
 $col5 = 500;
 // $print
 $print = "FACTURA";
@@ -215,8 +215,14 @@ printer_select_font($handle, $font);
 
 
 
-$oi=95;
+$oi=47;
 //// comienza la factura
+
+$oi=$oi+$n1;
+printer_draw_text($handle, date("d-m-Y"), 450, $oi);
+
+
+$oi=96;
 
 
 if ($r = $db->select("orden", "ticket_num", "WHERE num_fac = '$numero' and tx = " . $_SESSION["tx"] . " and tipo = ".$_SESSION["tipoticket"]." and td = " .  $_SESSION["td"])) { 
@@ -242,10 +248,11 @@ printer_draw_text($handle, date("d") . " - " . Fechas::MesEscrito(date("m")) ." 
 $oi=$oi+$n1;
 printer_draw_text($handle, $direccion, 100, $oi);
 
-printer_draw_text($handle, $documento, 475, $oi);
+$oi=$oi+$n1;
+printer_draw_text($handle, $documento, 105, $oi);
 
 
-$oi=158; // salto de linea
+$oi=180; // salto de linea
 
 $a = $db->query("select cod, cant, producto, pv, total, fecha, hora, num_fac from ticket where num_fac = '".$numero."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]." and tipo = ".$_SESSION["tipoticket"]." group by cod");
   
@@ -273,7 +280,8 @@ if ($sx = $db->select("sum(stotal), sum(imp), sum(total)", "ticket", "WHERE num_
     } unset($sx); 
  
 /// salto de linea
-$oi=423;
+$oi=435;
+
 
 // valores en letras
 printer_draw_text($handle, Dinero::DineroEscrito($totalx), $col2, $oi);
@@ -294,7 +302,7 @@ $oi=$oi+$n1;
 // printer_draw_text($handle, Helpers::Format($totalx), $col4, $oi);
 
 
-$oi=$oi+$n1+$n1+8;
+$oi=$oi+$n1+$n1+$n1+$n1;
 printer_draw_text($handle, Helpers::Format($totalx), $col4, $oi);
 
 
