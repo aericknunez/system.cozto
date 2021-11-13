@@ -373,7 +373,7 @@ $oi=$oi+$n1;
 printer_draw_text($handle, date("d-m-Y"), 450, $oi);
 
 $oi=$oi+$n1;
-printer_draw_text($handle, "CONTADO", 540, $oi);
+printer_draw_text($handle, "CONTADO", 528, $oi);
 // printer_draw_text($handle, date("m"), 490, $oi);
 // printer_draw_text($handle, substr(date("Y"), -1), 590, $oi);
 
