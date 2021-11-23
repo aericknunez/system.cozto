@@ -26,9 +26,9 @@ $printer -> setFont(Printer::FONT_B);
 // $printer -> selectPrintMode(Printer::MODE_DOUBLE_HEIGHT);
 // $printer -> selectPrintMode(Printer::MODE_DOUBLE_WIDTH);
 
-$printer -> setTextSize(1, 2);
+$printer -> setTextSize(2, 2);
 $printer -> setLineSpacing(80);
-
+$printer -> setEmphasis(true);
 
 // $printer -> setJustification(Printer::JUSTIFY_CENTER);
 // $logo = EscposImage::load($img, false);
@@ -37,7 +37,8 @@ $printer -> setLineSpacing(80);
 $printer -> setJustification(Printer::JUSTIFY_CENTER);
 $printer->text("FARMACIA SEGURA");
 
-
+$printer -> setTextSize(1, 2);
+$printer -> setEmphasis(false);
 $printer->feed();
 $printer->text("Calle Principal boulevard El Calvario");
 
