@@ -1,0 +1,3 @@
+ALTER TABLE `producto` ADD `descuento` FLOAT(10,4) NOT NULL AFTER `cantidad`;
+
+ALTER TABLE `config_master` ADD `descuento` VARCHAR(3) NOT NULL AFTER `mayorista`;

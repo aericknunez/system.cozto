@@ -288,6 +288,14 @@ class Helpers{
     }
 
 
+    static public function DescuentoTotalX($numero, $descuento){ 
+      $num = $descuento / 100;
+      $descuento = $numero * $num;
+      $numer = $numero - $descuento;
+      return $numer;
+  }
+
+
 
     static public function PorcentajeDescuento($total, $descuento){ /// obtiene que porcentaje de descuento se aplicara segun total y cantidad a descontar
         $nume = ($descuento * 100)/$total;

@@ -20,6 +20,7 @@ class Productos{
                 if($datos["dependiente"] == NULL) $datos["dependiente"] = 0;
                 if($datos["promocion"] == NULL) $datos["promocion"] = 0;
                 if($datos["verecommerce"] == NULL) $datos["verecommerce"] = 0;
+                if($datos["descuento"] == NULL) $datos["descuento"] = 0;
                 $datos["descripcion"] = strtoupper($datos["descripcion"]);
                 $datos["hash"] = Helpers::HashId();
                 $datos["time"] = Helpers::TimeId();
@@ -1310,13 +1311,19 @@ $page <= 1 ? $enable = 'disabled' : $enable = '';
      }  // end pagination 
 
 
-// boton de imprimir
-echo '<div class="row justify-content-center">
+
+    if ($_SESSION["tipo_cuenta"] == 1 or $_SESSION["tipo_cuenta"] == 2 or $_SESSION["tipo_cuenta"] == 5) {
+    // boton de imprimir
+      echo '<div class="row justify-content-center">
           <a href="system/imprimir/imprimir.php?op=10" class="btn btn-info my-2 btn-rounded btn-sm waves-effect" title="Imprimir todos los productos">Imprimir Todo</a>
         </div>';
 
 
          echo '<div class="text-right"><a href="system/documentos/inventario.php" >Descargar Excel</a></div>';      
+    }
+
+
+
 
   } // termina productos
 

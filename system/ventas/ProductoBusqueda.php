@@ -108,7 +108,7 @@ if ($r = $db->select("imagen", "producto_imagenes", "WHERE producto = '".$data["
 if($img == NULL) { $img = "assets/img/logo/" . $_SESSION["config_imagen"]; } else { $img = "assets/img/productos/".$_SESSION["td"] . '/' .$img; } 
 
 
-    $a = $db->query("SELECT producto.cod, producto.informacion, producto.descripcion, producto.cantidad, producto.existencia_minima, producto.caduca, producto.compuesto, producto.gravado, producto.receta, producto.dependiente, producto.servicio, producto_categoria_sub.subcategoria, producto_unidades.nombre, proveedores.nombre as proveedores FROM producto INNER JOIN producto_categoria_sub ON producto.categoria = producto_categoria_sub.hash INNER JOIN producto_unidades ON producto.medida = producto_unidades.hash INNER JOIN proveedores ON producto.proveedor = proveedores.hash WHERE producto.cod = '".$data["key"]."' AND producto.td = ".$_SESSION["td"]."");
+    $a = $db->query("SELECT producto.cod, producto.informacion, producto.descripcion, producto.cantidad, producto.descuento, producto.existencia_minima, producto.caduca, producto.compuesto, producto.gravado, producto.receta, producto.dependiente, producto.servicio, producto_categoria_sub.subcategoria, producto_unidades.nombre, proveedores.nombre as proveedores FROM producto INNER JOIN producto_categoria_sub ON producto.categoria = producto_categoria_sub.hash INNER JOIN producto_unidades ON producto.medida = producto_unidades.hash INNER JOIN proveedores ON producto.proveedor = proveedores.hash WHERE producto.cod = '".$data["key"]."' AND producto.td = ".$_SESSION["td"]."");
     
     if($a->num_rows > 0){
         foreach ($a as $b) {        
@@ -133,14 +133,24 @@ if($img == NULL) { $img = "assets/img/logo/" . $_SESSION["config_imagen"]; } els
                     <thead>
                       <tr>
                         <th scope="col">Cantidad</th>
-                        <th scope="col">Precio</th>
-                      </tr>
+                        <th scope="col">Precio</th>';
+
+                        if ($_SESSION['config_descuento']) {
+                          echo '<th scope="col">Descuento</th>
+                                <th scope="col">Precio</th>';
+                        }
+                 echo '</tr>
                     </thead>
                     <tbody>';
               foreach ($ap as $bp) {
                  echo '<tr>
                         <td>'.$bp["cant"].'</td>
                         <td><strong>'.Helpers::Dinero($bp["precio"]).'</strong></td>';
+
+                        if ($_SESSION['config_descuento']) {
+                          echo '<th scope="col">'.Helpers::Entero($b["descuento"]). ' %</th>
+                                <th scope="col">'.Helpers::Dinero(Helpers::DescuentoTotalX($bp["precio"], $b["descuento"])).'</th>';
+                        }
               } $ap->close();
               echo '</tbody>
                   </table>';

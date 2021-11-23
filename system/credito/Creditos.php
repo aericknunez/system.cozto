@@ -9,7 +9,7 @@ class Creditos{
   public function VerCredito($npagina, $orden, $dir){
       $db = new dbConn();
 
-  $limit = 12;
+  $limit = 35;
   $adjacents = 2;
   if($npagina == NULL) $npagina = 1;
   $a = $db->query("SELECT * FROM creditos WHERE td = ". $_SESSION['td'] ."");
@@ -357,7 +357,7 @@ public function VerAbonos($credito) { //leva el control del autoincremento de lo
   public function CreditosPendientes($npagina, $orden, $dir){
       $db = new dbConn();
 
-  $limit = 12;
+  $limit = 35;
   $adjacents = 2;
   if($npagina == NULL) $npagina = 1;
   $a = $db->query("SELECT * FROM creditos WHERE edo = 1 and td = ". $_SESSION['td'] ."");

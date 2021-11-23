@@ -101,6 +101,14 @@ $producto = new Productos();
     </div>
 <?php } ?>
 
+
+<?php if($_SESSION["config_descuento"] == "on"){ // si esta activada la opcion en las configuraciones ?>
+    <div class="col-6 col-md-2 mb-1 md-form">
+      <label for="descuento">Descuento %</label>
+      <input type="number" step="any" class="form-control" id="descuento" name="descuento">
+    </div>
+<?php } ?>
+
 	<div class="col-6 col-md-2 mb-1 md-form">
       	<div class="switch">
             <label>
