@@ -35,38 +35,24 @@ $printer -> setLineSpacing(80);
 // $printer->bitImage($logo);
 
 $printer -> setJustification(Printer::JUSTIFY_CENTER);
-$printer->text("FERRETERIA ABREGO");
+$printer->text("FARMACIA SEGURA");
 
 
 $printer->feed();
-$printer->text("Salida a San Julian, Barrio Veracruz");
-$printer->feed();
-$printer->text("Cuisnahuat, Sonsonate");
+$printer->text("Calle Principal boulevard El Calvario");
 
 $printer->feed();
-$printer->text("Tel: 7609-7442");
+$printer->text("Canton Cara Sucia, Ahuachapan");
 
-
-$printer->feed();
-$printer->text("Giro: Venta al por menor de Materiales ");
-$printer->text("de Construccion y articulos conexos ");
+// $printer->feed();
+// $printer->text("Tel: 7609-7442");
 
 
 // $printer->feed();
-// $printer->text("NIT: 1010-291061-002-4   NRC: 33274-7");
-
-// $printer->feed();
-// $printer->text("GIRO: Clinica Veterinaria y venta de productos Agropecuarios");
+// $printer->text("Giro: Venta al por menor de Materiales ");
+// $printer->text("de Construccion y articulos conexos ");
 
 
-// $printer->feed();
-// $printer->text("Autorizacion: ASC-15041-036310-2021");
-
-// $printer->feed();
-// $printer->text("DEL: 21SV00000001-1  AL: 21SV00000001-50000");
-
-// $printer->feed();
-// $printer->text("FECHA DE AUTORIZACION: 09/01/2021");
 
 $printer->feed();
 $printer->text("CAJA: 1.  TICKET NUMERO: " . $numero);
@@ -185,157 +171,7 @@ $printer->close();
 
 
  public function Factura($efectivo, $numero){
-  $db = new dbConn();
-
-$txt1   = "15"; 
-$txt2   = "5";
-$txt3   = "0";
-$txt4   = "0";
-$n1   = "15";
-$n2   = "60";
-$n3   = "30";
-$n4   = "0";
-
-
-$col1 = 25;
-$col2 = 70;
-$col3 = 370; //400
-$col4 = 550; //565
-$col5 = 500;
-// $print
-$print = "FACTURA";
-
-$handle = printer_open($print);
-printer_set_option($handle, PRINTER_MODE, "RAW");
-
-printer_start_doc($handle, "Mi Documento");
-printer_start_page($handle);
-
-
-$font = printer_create_font("Arial", $txt1, $txt2, PRINTER_FW_NORMAL, false, false, false, 0);
-printer_select_font($handle, $font);
-
-
-
-$oi=58;
-//// comienza la factura
-
-$oi=$oi+$n1;
-printer_draw_text($handle, date("d") . " - " . Fechas::MesEscrito(date("m")) ." - " . date("Y"), 460, $oi);
-
-
-$oi=98;
-
-
-if ($r = $db->select("orden", "ticket_num", "WHERE num_fac = '$numero' and tx = " . $_SESSION["tx"] . " and tipo = ".$_SESSION["tipoticket"]." and td = " .  $_SESSION["td"])) { 
-    $orden = $r["orden"];
-} unset($r);
-
-    if ($r = $db->select("cliente", "ticket_cliente", "WHERE orden = '$orden' and factura = '$numero' and tx = " . $_SESSION["tx"] . " and td = " .  $_SESSION["td"])) { 
-        $hashcliente = $r["cliente"];
-    } unset($r);  
-
-
-    if ($r = $db->select("nombre, documento, direccion", "clientes", "WHERE hash = '$hashcliente' and td = " .  $_SESSION["td"])) { 
-        $nombre = $r["nombre"];
-        $documento = $r["documento"];
-        $direccion = $r["direccion"];
-    } unset($r);  
-
-
-$oi=$oi+$n1;
-printer_draw_text($handle, $nombre, 85, $oi);
-
-$oi=$oi+$n1;
-printer_draw_text($handle, $direccion, 100, $oi);
-
-$oi=$oi+$n1+2;
-printer_draw_text($handle, $documento, 105, $oi);
-
-
-$oi=180; // salto de linea
-
-$a = $db->query("select cod, cant, producto, pv, total, fecha, hora, num_fac from ticket where num_fac = '".$numero."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]." and tipo = ".$_SESSION["tipoticket"]." group by cod");
-  
-    foreach ($a as $b) {
  
- $fechaf=$b["fecha"];
- $horaf=$b["hora"];
- $num_fac=$b["num_fac"];
-
-          $oi=$oi+$n1;
-          printer_draw_text($handle, $b["cant"], $col1, $oi);
-          printer_draw_text($handle, $b["producto"], $col2, $oi);
-          printer_draw_text($handle, $b["pv"], $col3, $oi);
-          printer_draw_text($handle, $b["total"], $col4, $oi);
-
-
-
-    }    $a->close();
-
-
-if ($sx = $db->select("sum(stotal), sum(imp), sum(total)", "ticket", "WHERE num_fac = '".$numero."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]." and tipo = ".$_SESSION["tipoticket"]."")) { 
-       $stotalx=$sx["sum(stotal)"];
-       $impx=$sx["sum(imp)"];
-       $totalx=$sx["sum(total)"];
-    } unset($sx); 
- 
-/// salto de linea
-$oi=440;
-
-
-// valores en letras
-printer_draw_text($handle, Dinero::DineroEscrito($totalx), $col2, $oi);
-// echo wordwrap($cadena, 15, "<br>" ,FALSE);
-
-
-// volores numericos
-printer_draw_text($handle, Helpers::Format($totalx), $col4, $oi);
-
-
-
-$oi=$oi+$n1;
-// printer_draw_text($handle, Helpers::Format($impx), $col4, $oi);
-// printer_draw_text($handle, Helpers::Format(Helpers::Impuesto(Helpers::STotal($totalx, $_SESSION['config_imp']), $_SESSION['config_imp'])), $col4, $oi);
-
-
-$oi=$oi+$n1+$n1;
-printer_draw_text($handle, Helpers::Format($totalx), $col4, $oi);
-
-
-$oi=$oi+$n1+$n1;
-printer_draw_text($handle, Helpers::Format($totalx), $col4, $oi);
-
-
-// $oi=$oi+$n3+$n1;
-// printer_draw_text($handle, "Sub Total " . $_SESSION['config_moneda_simbolo'] . ":", 185, $oi);
-// printer_draw_text($handle, Helpers::Format(Helpers::STotal($subtotalf, $_SESSION['config_imp'])), 320, $oi);
-
-
-// $oi=$oi+$n1;
-// printer_draw_text($handle, "15% Impu. " . $_SESSION['config_moneda_simbolo'] . ":", 175, $oi);
-// printer_draw_text($handle, Helpers::Format(Helpers::Impuesto(Helpers::STotal($subtotalf, $_SESSION['config_imp']), $_SESSION['config_imp'])), 320, $oi);
-
-
-
-
-// $oi=$oi+$n1;
-// printer_draw_text($handle, "Total " . $_SESSION['config_moneda_simbolo'] . ":", 232, $oi);
-// printer_draw_text($handle, Helpers::Format($subtotalf), 320, $oi);
-
-
-
-
-
-printer_delete_font($font);
-///
-printer_end_page($handle);
-printer_end_doc($handle);
-printer_close($handle);
-
-
-
-
 }   /// termina FACTURA
 
 
@@ -343,161 +179,7 @@ printer_close($handle);
 
 
  public function CreditoFiscal($efectivo, $numero){
-  $db = new dbConn();
 
-$txt1   = "15"; 
-$txt2   = "5";
-$txt3   = "0";
-$txt4   = "0";
-$n1   = "15";
-$n2   = "15";
-$n3   = "30";
-$n4   = "0";
-
-
-$col1 = 30;
-$col2 = 70;
-$col3 = 370; //400
-$col4 = 550; //565
-$col5 = 500;
-// $print
-$print = "FACTURA";
-
-$handle = printer_open($print);
-printer_set_option($handle, PRINTER_MODE, "RAW");
-
-printer_start_doc($handle, "Mi Documento");
-printer_start_page($handle);
-
-
-$font = printer_create_font("Arial", $txt1, $txt2, PRINTER_FW_NORMAL, false, false, false, 0);
-printer_select_font($handle, $font);
-
-
-
-$oi=47;
-//// comienza la factura
-
-$oi=$oi+$n1;
-printer_draw_text($handle, date("d-m-Y"), 450, $oi);
-
-$oi=$oi+$n1;
-printer_draw_text($handle, "CONTADO", 528, $oi);
-// printer_draw_text($handle, date("m"), 490, $oi);
-// printer_draw_text($handle, substr(date("Y"), -1), 590, $oi);
-
-$oi=96;
-
-  if ($r = $db->select("documento", "facturar_documento_factura", "WHERE factura = '$numero' and tx = " . $_SESSION["tx"] . " and td = " .  $_SESSION["td"] . " order by time desc limit 1" )) { 
-      $documento = $r["documento"];
-  } unset($r);  
-
-
-
-    if ($r = $db->select("cliente, giro, registro, direccion, departamento", "facturar_documento", "WHERE documento = '$documento' and td = " .  $_SESSION["td"])) { 
-        $cliente = $r["cliente"];
-        $giro = $r["giro"];
-        $registro = $r["registro"];
-        $direccion = $r["direccion"];
-        $departamento = $r["departamento"];
-    } unset($r);  
-
-
-
-$oi=$oi+$n1;
-printer_draw_text($handle, $cliente, 85, $oi);
-printer_draw_text($handle, $registro, 450, $oi);
-$oi=$oi+$n1;
-printer_draw_text($handle, $direccion, 100, $oi);
-printer_draw_text($handle, $departamento, 450, $oi);
-
-$oi=$oi+$n1;
-printer_draw_text($handle, $giro, 110, $oi);
-printer_draw_text($handle, $documento, 450, $oi);
-
-
-$oi=180; // salto de linea
-
-$a = $db->query("select cod, cant, producto, pv, stotal, total, fecha, hora, num_fac from ticket where num_fac = '".$numero."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]." and tipo = ".$_SESSION["tipoticket"]." group by cod");
-  
-    foreach ($a as $b) {
- 
- $fechaf=$b["fecha"];
- $horaf=$b["hora"];
- $num_fac=$b["num_fac"];
-
-          $oi=$oi+$n2;
-          printer_draw_text($handle, $b["cant"], $col1, $oi);
-          printer_draw_text($handle, $b["producto"], $col2, $oi);
-          printer_draw_text($handle, Helpers::Format4D(Helpers::STotal($b["pv"], $_SESSION['config_imp'])), $col3, $oi);
-
-          // printer_draw_text($handle, $b["pv"], $col3, $oi);
-          printer_draw_text($handle, $b["stotal"], $col4, $oi);
-
-
-
-    }    $a->close();
-
-
-if ($sx = $db->select("sum(stotal), sum(imp), sum(total)", "ticket", "WHERE num_fac = '".$numero."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]." and tipo = ".$_SESSION["tipoticket"]."")) { 
-       $stotalx=$sx["sum(stotal)"];
-       $impx=$sx["sum(imp)"];
-       $totalx=$sx["sum(total)"];
-    } unset($sx); 
- 
-/// salto de linea
-$oi=435;
-
-// valores en letras
-printer_draw_text($handle, Dinero::DineroEscrito($totalx), $col2, $oi);
-// echo wordwrap($cadena, 15, "<br>" ,FALSE);
-
-
-// volores numericos
-// printer_draw_text($handle, Helpers::Format($totalx), $col4, $oi);
-printer_draw_text($handle, Helpers::Format($stotalx), $col4, $oi);
-
-
-
-
-$oi=$oi+$n1;
-// printer_draw_text($handle, Helpers::Format($impx), $col4, $oi);
-printer_draw_text($handle, Helpers::Format(Helpers::Impuesto(Helpers::STotal($totalx, $_SESSION['config_imp']), $_SESSION['config_imp'])), $col4, $oi);
-
-
-$oi=$oi+$n1;
-printer_draw_text($handle, Helpers::Format($totalx), $col4, $oi);
-
-
-$oi=$oi+$n1+$n1+$n1+$n1;
-printer_draw_text($handle, Helpers::Format($totalx), $col4, $oi);
-
-
-// $oi=$oi+$n3+$n1;
-// printer_draw_text($handle, "Sub Total " . $_SESSION['config_moneda_simbolo'] . ":", 185, $oi);
-// printer_draw_text($handle, Helpers::Format(Helpers::STotal($subtotalf, $_SESSION['config_imp'])), 320, $oi);
-
-
-// $oi=$oi+$n1;
-// printer_draw_text($handle, "15% Impu. " . $_SESSION['config_moneda_simbolo'] . ":", 175, $oi);
-// printer_draw_text($handle, Helpers::Format(Helpers::Impuesto(Helpers::STotal($subtotalf, $_SESSION['config_imp']), $_SESSION['config_imp'])), 320, $oi);
-
-
-
-
-// $oi=$oi+$n1;
-// printer_draw_text($handle, "Total " . $_SESSION['config_moneda_simbolo'] . ":", 232, $oi);
-// printer_draw_text($handle, Helpers::Format($subtotalf), 320, $oi);
-
-
-
-
-
-printer_delete_font($font);
-///
-printer_end_page($handle);
-printer_end_doc($handle);
-printer_close($handle);
 
 
 }
@@ -668,23 +350,15 @@ $printer->feed();
 
 
 $printer -> setJustification(Printer::JUSTIFY_CENTER);
-$printer->text("FERRETERIA ABREGO");
-
-
-
-
-$printer->feed();
-$printer->text("Salida a San Julian, Barrio Veracruz");
-$printer->feed();
-$printer->text("Cuisnahuat, Sonsonate");
-
-$printer->feed();
-$printer->text("Tel: 7609-7442");
+$printer->text("FARMACIA SEGURA");
 
 
 $printer->feed();
-$printer->text("Giro: Venta al por menor de Materiales ");
-$printer->text("de Construccion y articulos conexos ");
+$printer->text("Calle Principal boulevard El Calvario");
+
+$printer->feed();
+$printer->text("Canton Cara Sucia, Ahuachapan");
+
 
 
 
@@ -967,21 +641,14 @@ $printer->feed();
 /* Items */
 
 $printer -> setJustification(Printer::JUSTIFY_CENTER);
-$printer->text("FERRETERIA ABREGO");
+$printer->text("FARMACIA SEGURA");
 
 
 $printer->feed();
-$printer->text("Salida a San Julian, Barrio Veracruz");
-$printer->feed();
-$printer->text("Cuisnahuat, Sonsonate");
+$printer->text("Calle Principal boulevard El Calvario");
 
 $printer->feed();
-$printer->text("Tel: 7609-7442");
-
-
-$printer->feed();
-$printer->text("Giro: Venta al por menor de Materiales ");
-$printer->text("de Construccion y articulos conexos ");
+$printer->text("Canton Cara Sucia, Ahuachapan");
 
 
 // $printer->feed();
