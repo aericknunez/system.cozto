@@ -283,7 +283,32 @@ if($_SESSION["venta_agrupado"]){
 
 
 
+
+
 	    $cambio = array();
+
+
+		if($_SESSION['config_descuento'] != NULL){
+	
+			if ($r = $db->select("descuento", "producto", "WHERE cod = '".$datos["cod"]."' and td = ".$_SESSION["td"]."")) { 
+				$_SESSION['descuento'] = $r["descuento"]; 
+			}  unset($r);  
+		
+			if ($_SESSION['descuento'] != NULL) {
+				$sumas = $pv * $datos["cantidad"];
+				$sumasx = $sumas;
+				$sumas = Helpers::DescuentoTotal($sumas);
+				$pv = Helpers::DescuentoTotal($pv);
+				$descuento = $sumasx - $sumas;
+			
+				$stot=Helpers::STotal($sumas, $_SESSION['config_imp']);
+				$im=Helpers::Impuesto($stot, $_SESSION['config_imp']);
+			
+				$datox["descuento"] = $descuento;
+			}
+			unset($_SESSION['descuento']);
+		}
+		
 	    $cambio["cant"] = $datos["cantidad"];
 	    $cambio["pv"] = $pv;
 	    $cambio["stotal"] = $stot;
