@@ -185,5 +185,35 @@ $(document).ready(function(){
 
 
 
+	$("body").on("click","#delete",function(){
+        var op = '136';
+		var credito = $(this).attr('credito');
+		var factura = $(this).attr('factura');
+		var tx = $(this).attr('tx');
+		var orden = $(this).attr('orden');
+		var tipo = $(this).attr('tipo');
+        var dataString = 'op='+op+'&tx='+tx+'&credito='+credito+'&orden='+orden+'&factura='+factura+'&tipo='+tipo;
+
+        $.ajax({
+            type: "POST",
+            url: "application/src/routes.php",
+            data: dataString,
+            beforeSend: function () {
+               $("#contenido").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt=""></div>');
+            },
+            success: function(data) {            
+                $("#contenido").html(data); // lo que regresa de la busquea 			
+            }
+        });
+    });                 
+
+
+
+
+
+
+
+
+
 
 }); // termina query

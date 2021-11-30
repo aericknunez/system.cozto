@@ -990,6 +990,12 @@ include_once '../../system/credito/Creditos.php';
 break;
 
 
+case "136": // Borrar credito
+	include_once '../../system/credito/Creditos.php';
+		$credito = new Creditos;
+		$credito->BorrarFactura($_POST['factura'], $_POST['orden'], $_POST['tx'], $_POST['credito'], $_POST['tipo']);
+break;
+
 
 case "105": // agrega abono
 include_once '../../system/credito/Creditos.php';

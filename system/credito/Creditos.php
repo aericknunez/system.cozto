@@ -63,7 +63,14 @@ if($dir == "asc") $dir2 = "desc";
                       <td>'. Helpers::Dinero($saldo) .'</td>
                       <td>'.$b["fecha"]. ' | ' . $b["hora"].'</td>
                       <td>'.Helpers::EstadoCredito($b["edo"]) . '</td>
-                      <td><a id="xver" op="109" credito="'. $b["hash"] .'" orden="'. $b["orden"] .'" factura="'. $b["factura"] .'" tx="'. $b["tx"] .'"><i class="fas fa-search fa-lg green-text"></i></a></td>
+                      <td><a id="xver" op="109" credito="'. $b["hash"] .'" orden="'. $b["orden"] .'" factura="'. $b["factura"] .'" tx="'. $b["tx"] .'"><i class="fas fa-search fa-lg green-text"></i></a>';
+                      
+                      if ($abonado == 0) {
+                        echo '<a id="delete" credito="'. $b["hash"] .'" orden="'. $b["orden"] .'" factura="'. $b["factura"] .'" tx="'. $b["tx"] .'"  tipo="1"><i class="fas fa-trash fa-lg red-text ml-2"></i></a>';
+                      }
+
+                      
+                      echo '</td>
                     </tr>';
         }
         echo '</tbody>
@@ -413,7 +420,14 @@ if($dir == "asc") $dir2 = "desc";
                       <td>'. Helpers::Dinero($saldo) .'</td>
                       <td>'.$b["fecha"]. ' | ' . $b["hora"].'</td>
                       <td>'.Helpers::EstadoCredito($b["edo"]) . '</td>
-                      <td><a id="xver" op="109" credito="'. $b["hash"] .'" orden="'. $b["orden"] .'" factura="'. $b["factura"] .'" tx="'. $b["tx"] .'"><i class="fas fa-search fa-lg green-text"></i></a></td>
+                      <td><a id="xver" op="109" credito="'. $b["hash"] .'" orden="'. $b["orden"] .'" factura="'. $b["factura"] .'" tx="'. $b["tx"] .'"><i class="fas fa-search fa-lg green-text"></i></a>';
+                      
+                      if ($abonado == 0) {
+                        echo '<a id="delete" credito="'. $b["hash"] .'" orden="'. $b["orden"] .'" factura="'. $b["factura"] .'" tx="'. $b["tx"] .'" tipo="2"><i class="fas fa-trash fa-lg red-text ml-2"></i></a>';
+                      }
+
+                      
+                      echo '</td>
                     </tr>';
         }
         echo '</tbody>
@@ -560,7 +574,8 @@ $page <= 1 ? $enable = 'disabled' : $enable = '';
                       <td>'. Helpers::Dinero($saldo) .'</td>
                       <td>'.$b["fecha"]. ' | ' . $b["hora"].'</td>
                       <td>'.Helpers::EstadoCredito($b["edo"]) . '</td>
-                      <td><a id="xver" op="109" credito="'. $b["hash"] .'" orden="'. $b["orden"] .'" factura="'. $b["factura"] .'" tx="'. $b["tx"] .'"><i class="fas fa-search fa-lg green-text"></i></a></td>
+                      <td>
+                      <a id="xver" op="109" credito="'. $b["hash"] .'" orden="'. $b["orden"] .'" factura="'. $b["factura"] .'" tx="'. $b["tx"] .'"><i class="fas fa-search fa-lg green-text"></i></a></td>
                     </tr>';
         }
         echo '</tbody>
@@ -607,6 +622,83 @@ public function TotalAbonoRealiado(){ // total abonos realiados en todo el tiemp
 
 
 
+
+
+
+public function BorrarFactura($factura, $orden, $tx, $credito, $tipo){
+  $db = new dbConn();
+
+  $cambio = array();
+  $cambio["edo"] = 2;
+  Helpers::UpdateId("ticket", $cambio, "num_fac = '$factura' and orden = '$orden' and tx = '$tx' and td = ".$_SESSION["td"]."");      
+  
+  $cambio2 = array();
+  $cambio2["edo"] = 2;
+  Helpers::UpdateId("ticket_num", $cambio2, "num_fac = '$factura' and orden = '$orden' and tx = '$tx' and td = ".$_SESSION["td"]."");      
+
+
+  Helpers::DeleteId("creditos", "hash = '$credito' and td = ".$_SESSION["td"]."");
+
+
+/// solo regresar la cantidad al inventario // esto deberia cambiar y llevarse todo lo necesario
+$a = $db->query("SELECT cant, cod, hash FROM ticket WHERE num_fac = '$factura' and orden = '$orden' and tx = '$tx' and td = ".$_SESSION["td"]."");
+foreach ($a as $b) {
+
+// obtener cant de producto
+if ($r = $db->select("cantidad", "producto", "WHERE cod = '".$b["cod"]."' and td = ".$_SESSION["td"]."")) { 
+  $cantidad = $r["cantidad"];
+} unset($r);  
+
+
+  $cambiox = array();
+  $cambiox["cantidad"] = $cantidad + $b["cant"];
+  Helpers::UpdateId("producto", $cambiox, "cod = '".$b["cod"]."' and td = ".$_SESSION["td"]."");
+
+
+
+// pra actualizar las  caracteristicas y las ubicaciones
+$c = $db->query("SELECT cant, descuenta, producto, codigo FROM ticket_descuenta WHERE producto_hash = '".$b["hash"]."' and td = ".$_SESSION["td"]."");
+foreach ($c as $d) {
+
+  if($d["descuenta"] == 1){ // caracteristica
+
+    if ($r = $db->select("cant", "caracteristicas_asig", "WHERE caracteristica = '".$d["codigo"]."' and producto = '".$d["producto"]."' and td = ".$_SESSION["td"]."")) { 
+        $cantc = $r["cant"];
+    } unset($r);  
+
+    $cambioy = array();
+    $cambioy["cant"] = $d["cant"] + $cantc;
+    Helpers::UpdateId("caracteristicas_asig", $cambioy, "caracteristica = '".$d["codigo"]."' and producto = '".$d["producto"]."' and td = ".$_SESSION["td"]."");
+
+  } else { /// si es ubicacion
+
+    if ($r = $db->select("cant", "ubicacion_asig", "WHERE ubicacion = '".$d["codigo"]."' and producto = '".$d["producto"]."' and td = ".$_SESSION["td"]."")) { 
+        $cantu = $r["cant"];
+    } unset($r);  
+
+    $cambioz = array();
+    $cambioz["cant"] = $d["cant"] + $cantu;
+    Helpers::UpdateId("ubicacion_asig", $cambioz, "ubicacion = '".$d["codigo"]."' and producto = '".$d["producto"]."' and td = ".$_SESSION["td"]."");
+
+
+  }
+
+
+} $c->close();
+
+
+
+} $a->close();
+/////////////
+
+if ($tipo == 1) {
+  $this->VerCredito(1, "factura", "desc");
+} else {
+  $this->CreditosPendientes(1, "factura", "asc");
+}
+
+
+}
 
 
 
