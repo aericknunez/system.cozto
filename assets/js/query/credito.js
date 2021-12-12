@@ -185,7 +185,7 @@ $(document).ready(function(){
 
 
 
-	$("body").on("click","#delete",function(){
+	$("body").on("click","#deletex",function(){
         var op = '136';
 		var credito = $(this).attr('credito');
 		var factura = $(this).attr('factura');
@@ -207,6 +207,19 @@ $(document).ready(function(){
         });
     });                 
 
+
+	$("body").on("click","#delete",function(){ 
+		
+        var op = '136';
+		var credito = $(this).attr('credito');
+		var factura = $(this).attr('factura');
+		var tx = $(this).attr('tx');
+		var orden = $(this).attr('orden');
+		var tipo = $(this).attr('tipo');
+		
+		$('#deletex').attr("op",op).attr("credito",credito).attr("factura",factura).attr("tx",tx).attr("orden",orden).attr("tipo",tipo);
+		$('#ConfirmDelete').modal('show');
+	});
 
 
 

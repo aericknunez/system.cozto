@@ -13,21 +13,27 @@ class Ventas{
    	}
 
   		if($this->FiltroAgotado($datos["cod"]) == TRUE){
-  			if($_SESSION["orden"] == NULL){ $this->AddOrden(); }
-  			
-  			/// aqui determino si agrego o actualizo
-  			if($datos["cantidad"] == NULL or $datos["cantidad"] == 0) $datos["cantidad"] = 1;
-  			$product = $this->ObtenerCantidadTicket($datos["cod"]);
-  			if($datos["cantidad"] == 1 and $datos["codigox"] == NULL){
-	  			$datos["cantidad"] = $product + 1;
-  			}
 
-
-  			if($product > 0){  				
-  				$this->Actualiza($datos, null); // null es resta
-  			} else {
-  				$this->Agregar($datos);
-  			}
+			if ($this->ObtenerCantidad($datos["cod"]) != NULL) {
+						if($_SESSION["orden"] == NULL){ $this->AddOrden(); }
+					
+						/// aqui determino si agrego o actualizo
+						if($datos["cantidad"] == NULL or $datos["cantidad"] == 0) $datos["cantidad"] = 1;
+						$product = $this->ObtenerCantidadTicket($datos["cod"]);
+						if($datos["cantidad"] == 1 and $datos["codigox"] == NULL){
+							$datos["cantidad"] = $product + 1;
+						}
+		
+		
+						if($product > 0){  				
+							$this->Actualiza($datos, null); // null es resta
+						} else {
+							$this->Agregar($datos);
+						}
+			} else {
+				Alerts::Alerta("error","Error!","No se encontro el producto!");
+			}
+  		
   		} else {
   			 Alerts::Alerta("error","Error!","No se encontro el producto!");
   		}
