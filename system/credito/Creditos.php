@@ -101,6 +101,10 @@ echo '<div class="font-weight-bold">Total Credito Pendiente: ' . Helpers::Dinero
 
 
 echo $total_rows . " Registros encontrados";
+
+echo '<div class="text-right"><a href="system/documentos/creditospendientes.php" >Descargar Excel</a></div>';
+
+
    if($total_pages > 1) { 
 
 $page <= 1 ? $enable = 'disabled' : $enable = '';
@@ -457,6 +461,8 @@ if($dir == "asc") $dir2 = "desc";
 echo '<div class="font-weight-bold">Total Credito Pendiente: ' . Helpers::Dinero($this->TotalCreditoOtorgado() - $this->TotalAbonoRealiado()) . '</div><br>';
 
 echo $total_rows . " Registros encontrados";
+
+echo '<div class="text-right"><a href="system/documentos/creditospendientes.php" >Descargar Excel</a></div>';
 
 
    if($total_pages > 1) { 

@@ -35,15 +35,15 @@ $printer -> setEmphasis(true);
 // $printer->bitImage($logo);
 
 $printer -> setJustification(Printer::JUSTIFY_CENTER);
-$printer->text("FARMACIA SEGURA");
+$printer->text("TIENDA LA GRANJA");
 
 $printer -> setTextSize(1, 2);
 $printer -> setEmphasis(false);
 $printer->feed();
-$printer->text("Calle Principal boulevard El Calvario");
+$printer->text("Final calle vieja, contiguo al puente");
 
 $printer->feed();
-$printer->text("Canton Cara Sucia, Ahuachapan");
+$printer->text("Barrio El Calvario, Jujutla");
 
 // $printer->feed();
 // $printer->text("Tel: 7609-7442");
@@ -62,7 +62,7 @@ $printer->text("CAJA: 1.  TICKET NUMERO: " . $numero);
 /* Stuff around with left margin */
 $printer->feed();
 $printer -> setJustification(Printer::JUSTIFY_CENTER);
-$printer -> text("_______________________________________________________");
+$printer -> text("        _______________________________________________________");
 $printer -> setJustification(Printer::JUSTIFY_LEFT);
 $printer->feed();
 /* Items */
@@ -94,7 +94,7 @@ if ($sx = $db->select("sum(total)", "ticket", "WHERE num_fac = '".$numero."' and
 
 
 
-$printer -> text("_______________________________________________________");
+$printer -> text("        _______________________________________________________");
 $printer->feed();
 
 
@@ -110,7 +110,7 @@ $printer -> text($this->DosCol("TOTAL " . $_SESSION['config_moneda_simbolo'] . "
 
 
 
-$printer -> text("_______________________________________________________");
+$printer -> text("        _______________________________________________________");
 $printer->feed();
 
 
@@ -128,7 +128,7 @@ $cambios = $efectivo - $subtotalf;
 $printer -> text($this->DosCol("Cambio " . $_SESSION['config_moneda_simbolo'] . ":", 40, Helpers::Format($cambios), 10));
 
 
-$printer -> text("_______________________________________________________");
+$printer -> text("        _______________________________________________________");
 $printer->feed();
 
 
@@ -148,7 +148,7 @@ $printer -> text($this->DosCol($fechaf, 30, $horaf, 20));
 
 
 $printer->feed();
-$printer -> text("Cajero: " . $_SESSION['nombre']);
+$printer -> text("        Cajero: " . $_SESSION['nombre']);
 
 $printer->feed();
 $printer -> setJustification(Printer::JUSTIFY_CENTER);
@@ -338,7 +338,7 @@ $printer -> setLineSpacing(80);
 $printer -> setJustification(Printer::JUSTIFY_LEFT);
 
 
-$printer -> text("CORTE X");
+$printer -> text("        CORTE X");
 
 
 /* Stuff around with left margin */
@@ -351,14 +351,15 @@ $printer->feed();
 
 
 $printer -> setJustification(Printer::JUSTIFY_CENTER);
-$printer->text("FARMACIA SEGURA");
+$printer->text("TIENDA LA GRANJA");
 
+$printer -> setTextSize(1, 2);
+$printer -> setEmphasis(false);
+$printer->feed();
+$printer->text("Final calle vieja, contiguo al puente");
 
 $printer->feed();
-$printer->text("Calle Principal boulevard El Calvario");
-
-$printer->feed();
-$printer->text("Canton Cara Sucia, Ahuachapan");
+$printer->text("Barrio El Calvario, Jujutla");
 
 
 
@@ -575,7 +576,7 @@ $printer -> setEmphasis(true);
 $printer -> text($this->Item("Descripcion", '', '', 'Total'));
 $printer -> setEmphasis(false);
 
-$printer -> text("_______________________________________________________");
+$printer -> text("        _______________________________________________________");
 $printer->feed();
 
 $ax = $db->query("select nombre, cantidad FROM gastos WHERE time BETWEEN '".$aperturaF."' and '".$cierreF."' and td = ".$_SESSION["td"]." and edo = 1");
@@ -592,7 +593,7 @@ if ($r = $db->select("nombre", "login_userdata", "WHERE user = '".$user."' and t
   } unset($r);  
 
 $printer->feed();
-$printer->text("CAJERO: " . $cajero);
+$printer->text("        CAJERO: " . $cajero);
 
 
 $printer->feed();
@@ -630,7 +631,7 @@ $printer -> setLineSpacing(80);
 
 $printer -> setJustification(Printer::JUSTIFY_LEFT);
 
-$printer -> text("CORTE Z");
+$printer -> text("        CORTE Z");
 
 
 /* Stuff around with left margin */
@@ -642,14 +643,15 @@ $printer->feed();
 /* Items */
 
 $printer -> setJustification(Printer::JUSTIFY_CENTER);
-$printer->text("FARMACIA SEGURA");
+$printer->text("TIENDA LA GRANJA");
 
+$printer -> setTextSize(1, 2);
+$printer -> setEmphasis(false);
+$printer->feed();
+$printer->text("Final calle vieja, contiguo al puente");
 
 $printer->feed();
-$printer->text("Calle Principal boulevard El Calvario");
-
-$printer->feed();
-$printer->text("Canton Cara Sucia, Ahuachapan");
+$printer->text("Barrio El Calvario, Jujutla");
 
 
 // $printer->feed();
@@ -859,11 +861,11 @@ $printer->close();
 
  public function Item($cant,  $name = '', $price = '', $total = '', $dollarSign = false){
         $rightCols = 8;
-        $leftCols = 38;
+        $leftCols = 48;
         if ($dollarSign) {
             $leftCols = $leftCols / 2 - $rightCols / 2;
         }
-        $left = str_pad($cant . " " . $name, $leftCols) ;
+        $left = str_pad("         " . $cant . " " . $name, $leftCols) ;
         
         $sign = ($dollarSign ? '$ ' : '');
 
