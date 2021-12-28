@@ -38,6 +38,8 @@ if($_REQUEST["modal"]=="dfactura") include_once 'system/modal/modal/dfactura.php
 
 if($_REQUEST["modal"]=="oventas") include_once 'system/modal/modal/oventas.php';
 
+if($_REQUEST["modal"]=="oventascot") include_once 'system/modal/modal/oventascot.php';
+
 if($_REQUEST["modal"]=="cliente") include_once 'system/modal/modal/cliente.php';
 
 if($_REQUEST["modal"]=="agrupado") include_once 'system/modal/modal/agrupado.php';

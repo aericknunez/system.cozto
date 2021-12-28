@@ -404,4 +404,22 @@ $('#ModalBusqueda').on('shown.bs.modal', function() { // para autofocus en el mo
 
 
 
+    ////////////// otras ventas ////////
+    $('#btn-oventascot').click(function(e){ /// para el formulario
+        e.preventDefault();
+        $.ajax({
+                url: "application/src/routes.php?op=78",
+                method: "POST",
+                data: $("#form-oventascot").serialize(),
+                beforeSend: function () {
+                    $('#btn-oventascot').html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>Loading...').addClass('disabled');
+                },
+                success: function(data){
+                    $('#btn-oventascot').html('Agregar Producto').removeClass('disabled');
+                    $("#form-oventascot").trigger("reset");
+                    $("#msj").html(data);           
+                }
+            })
+        })
+
 }); // termina query

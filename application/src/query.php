@@ -75,6 +75,9 @@ echo '
 	if($_GET["modal"] == "oventas"){
 	echo '<script type="text/javascript" src="assets/js/query/ventaPop.js?v='.$numero.'"></script>';
 	}
+	if($_GET["modal"] == "oventascot"){
+		echo '<script type="text/javascript" src="assets/js/query/cotizaR.js?v='.$numero.'"></script>';
+		}
 	if($_GET["modal"] == "agrupado"){
 	echo '<script type="text/javascript" src="assets/js/query/ventaPop.js?v='.$numero.'"></script>';
 	}

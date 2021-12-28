@@ -295,6 +295,8 @@ if($_SESSION['config_descuento'] != NULL){
 
 public function AgregarProductoEspecial($datos) { // agrega el producto Especial
 		$db = new dbConn();
+		
+		if($_SESSION["orden"] == NULL){ $this->AddOrden(); }
 
 if($datos["precio"] != NULL and $datos["producto"] != NULL){
 

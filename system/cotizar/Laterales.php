@@ -53,6 +53,7 @@ class Laterales{
  		<a data-toggle="modal" data-target="#ModalBusqueda" class="btn-floating btn-info" title="Buscar Producto"><i class="fas fa-search"></i></a>
 		<a href="?modal=descuentocot" class="btn-floating btn-default" title="Descuento"><i class="fas fa-money-bill"></i></a>
 		<a id="xver" op="160" key="'. $this->IdCot($cotizacion) .'" cotizacion="'.$cotizacion.'" esto="1" class="btn-floating btn-success" title="Imprimir"><i class="fas fa-print"></i></a>
+		<a href="?modal=oventascot" class="btn-floating btn-success" title="Venta Especial"><i class="fas fa-donate"></i></a>
 		</div>';
 
 		if($_SESSION["descuento_cot"] != NULL){

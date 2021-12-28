@@ -235,6 +235,50 @@ class Cotizar{
 
 
 
+	
+public function AgregarProductoEspecial($datos) { // agrega el producto Especial
+	$db = new dbConn();
+	
+	if($_SESSION["cotizacion"] == NULL){ $this->AddOrden(); }
+
+if($datos["precio"] != NULL and $datos["producto"] != NULL){
+
+$stot=Helpers::STotal($datos["precio"], $_SESSION['config_imp']);
+$im=Helpers::Impuesto($stot, $_SESSION['config_imp']);
+
+if($datos["agrupado"] == NULL){
+$codigog = 9999999;
+} else {
+$codigog = 8888888;
+$_SESSION["venta_agrupado"] = TRUE;
+}
+
+	$datox = array();
+	$datox["cod"] = $codigog;
+	$datox["cant"] = 1;
+	$datox["producto"] = strtoupper($datos["producto"]);
+	$datox["pv"] = $datos["precio"];  				   
+	$datox["stotal"] = $stot;	    				   
+	$datox["imp"] = $im;
+	$datox["total"] = $stot + $im;
+	$datox["cotizacion"] = $_SESSION["cotizacion"];
+	$datox["user"] = $_SESSION['user'];
+	$datox["edo"] = 1;
+	$hash = Helpers::HashId();
+	$datox["hash"] = $hash;
+	$datox["time"] = Helpers::TimeId();
+	$datox["td"] = $_SESSION["td"];
+	if($db->insert("cotizaciones", $datox)){
+		echo '<script>
+			window.location.href="?cotizar"
+		</script>';
+	}
+} else {
+	Alerts::Alerta("error","Error!","Los campos no pueden estar vacios!");
+}   	
+
+}
+
 
 /////////// mostrar los productos agregados
 

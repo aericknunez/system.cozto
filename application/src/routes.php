@@ -706,6 +706,12 @@ include_once '../../system/ventas/Productos.php';
 break;
 
 
+case "78": // otras Ventas cotizacion
+	include_once '../../system/cotizar/CotizarR.php';
+	$cot = new Cotizar();
+	$cot->AgregarProductoEspecial($_POST);
+break;
+
 
 case "79": // otras Ventas
 include_once '../../system/ventas/VentasL.php';
