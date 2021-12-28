@@ -743,6 +743,9 @@ Helpers::UpdateId("ubicacion_asig", $cambio, "ubicacion = '".$datos["ubicacion"]
 
 		} else {
 			echo '<div class="text-center">Ingrese un producto</div>';
+			echo '<div class="text-center">
+			<a href="?modal=oventas" class="btn-floating btn-success" title="Venta Especial"><i class="fas fa-donate"></i></a>
+			</div>';
 		}    
 	}
 
