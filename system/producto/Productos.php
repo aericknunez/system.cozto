@@ -388,51 +388,139 @@ $a->close();
 
     public function AddTag($datox){
       $db = new dbConn();
-          if($datox["etiquetas"] != NULL){
-              $datos = array();
-              $datos["producto"] = $datox["producto"];              
-              $datos["tag"] = $datox["etiquetas"];
-              $datos["td"] = $_SESSION["td"];
-              $datos["hash"] = Helpers::HashId();
-                $datos["time"] = Helpers::TimeId();
-              if ($db->insert("producto_tags", $datos)) {
 
-                  $this->VerTag($datox["producto"]);
+      $producto = $datox["producto"];
+
+      // print_r($datox);
+          if($datox["etiquetas"] != NULL){
+          // verifico si hay tag para el producto si hay lo extraigo y le agrego uno mas, sino agrego uno nuevo
+              $a = $db->query("SELECT * FROM producto_tags WHERE producto = '$producto' and td = " . $_SESSION['td']);
+              if ($a->num_rows > 0) {
+                    $tags = array();
+                    $iden = 0;
+
+                    foreach ($a as $b) {
+                        $tags[$iden] = $b['tag'];
+                        $iden ++;
+                    }
+
+                    Helpers::DeleteId("producto_tags", "producto = '$producto' and td = " . $_SESSION['td']);
+
+                    $cadena = NULL;
+                    $counter = 1;
+                    foreach ($tags as $tag) {
+                      if ($counter == 1) {
+                        $cadena .=  trim($tag);
+                      } else {
+                        $cadena .= ',' . trim($tag);
+                      }
+                        $counter ++;
+                    }
+                    $cadena = $cadena . ',' . $datox["etiquetas"];
+                    $datos = array();
+                    $datos["producto"] = $producto;              
+                    $datos["tag"] = $cadena;
+                    $datos["td"] = $_SESSION["td"];
+                    $datos["hash"] = Helpers::HashId();
+                    $datos["time"] = Helpers::TimeId();
+                    $db->insert("producto_tags", $datos);
+              
+              $a->close();
+              } 
+              else {
+                $datos = array();
+                $datos["producto"] = $producto;              
+                $datos["tag"] = $datox["etiquetas"];
+                $datos["td"] = $_SESSION["td"];
+                $datos["hash"] = Helpers::HashId();
+                $datos["time"] = Helpers::TimeId();
+                $db->insert("producto_tags", $datos);
+
               }
+
+
+              $this->VerTag($producto);
           } else {
               Alerts::Alerta("error","Error!","Faltan Datos!");
           }
     }
 
 
+    public function DelTag($hash, $producto){ // elimina dependiente
+      $db = new dbConn();
+
+
+      $a = $db->query("SELECT * FROM producto_tags WHERE producto = '$producto' and td = " . $_SESSION['td']);
+      if ($a->num_rows > 0) {
+            $tags = array();
+
+            foreach ($a as $b) {
+                $tags = $b['tag'];
+            }
+
+
+            $tags = explode(',', $tags);
+
+
+            $i = 0;
+            $cadena = null;
+            foreach ($tags as $tag) {
+              if ($hash == $tag) {
+                unset($tag);
+              } else {
+                if ($i == 0) {
+                  $cadena .= $tag;
+                } else {
+                  $cadena .= "," . $tag;
+                }
+                $i++;
+              }
+
+            }
+
+
+            if ($cadena == '') {
+                Helpers::DeleteId("producto_tags", "producto = '$producto' and td = " . $_SESSION['td']);
+                Alerts::Alerta("success","Eliminado!","Etiqueta eliminada correctamente!");
+            } else {
+
+              $cambio = array();
+              $cambio["tag"] = $cadena;
+              Helpers::UpdateId("producto_tags", $cambio, "producto = '$producto' and td = " . $_SESSION['td']); 
+
+            Alerts::Alerta("success","Eliminado!","Etiqueta eliminada correctamente!");
+            }
+      $a->close();
+      }
+        $this->VerTag($producto);
+    }
+
+
+
+
   public function VerTag($producto){
       $db = new dbConn();
-          $a = $db->query("SELECT * FROM producto_tags WHERE producto = '$producto' and td = ".$_SESSION["td"]."");
-          if($a->num_rows > 0){
 
-              foreach ($a as $b) {  
-                echo '<div class="chip cyan lighten-4">
-                        '.$b["tag"].'
-                       <a id="deltag" hash="'.$b["hash"].'" op="39" producto="'.$producto.'"> 
-                       <i class="close fa fa-times"></i>
-                       </a>
-                     </div>';
-      
-              }
-          } $a->close();  
+      if ($r = $db->select("tag", "producto_tags", "WHERE producto = '$producto' and td = ".$_SESSION["td"]."")) { 
+        $tags = $r["tag"];
+    } unset($r); 
+
+    if ($tags) {
+      $tags = explode(',', $tags);
+      foreach ($tags as $tag) {
+        echo '<div class="chip cyan lighten-4">
+                  '.$tag.'
+                <a id="deltag" hash="'.$tag.'" op="39" producto="'.$producto.'"> 
+                <i class="close fa fa-times"></i>
+                </a>
+              </div>';
+      }
+    }
+
+
   }
 
 
-
-  public function DelTag($hash, $producto){ // elimina dependiente
-    $db = new dbConn();
-        if (Helpers::DeleteId("producto_tags", "hash='$hash'")) {
-           Alerts::Alerta("success","Eliminado!","Etiqueta eliminada correctamente!");
-        } else {
-            Alerts::Alerta("error","Error!","Algo Ocurrio!");
-        } 
-      $this->VerTag($producto);
-  }
 
 /////// asignar ubicacion
 
@@ -1782,18 +1870,21 @@ if ($am->num_rows > 0) {
 
   public function VerTagModal($producto){
       $db = new dbConn();
-          $a = $db->query("SELECT * FROM producto_tags WHERE producto = '$producto' and td = ".$_SESSION["td"]."");
-          if($a->num_rows > 0){
 
+          if ($r = $db->select("tag", "producto_tags", "WHERE producto = '$producto' and td = ".$_SESSION["td"]."")) { 
+            $tags = $r["tag"];
+        } unset($r); 
+    
+        if ($tags) {
+          $tags = explode(',', $tags);
+          echo '<strong class="mr-2">Palabras Clave: </strong>';
+          foreach ($tags as $tag) {
+                  echo '<div class="badge badge-pill badge-light mr-3">
+                  '.$tag.'
+               </div>';
+          }
+        }
 
-              echo '<strong class="mr-2">Palabras Clave: </strong>';
-              foreach ($a as $b) {  
-                echo '<div class="badge badge-pill badge-light mr-3">
-                        '.$b["tag"].'
-                     </div>';
-      
-              }
-          } $a->close();  
   }
 
 

@@ -47,7 +47,10 @@
 
 <?php if($_SESSION["root_taller"] == "on"){  ?>
           <a href="?modal=productoBusquedaTaller" class="btn btn-link">Busqueda Avanzada</a>
-<?php } ?>
+<?php } else { ?>
+          <a href="?modal=productoBusquedaAvanzada" class="btn btn-link">Busqueda Avanzada</a>
+<?php }  ?>
+
 
           <a href="<?php echo $url; ?>" class="btn btn-primary btn-rounded">Regresar</a>
     

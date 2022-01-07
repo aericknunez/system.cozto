@@ -26,6 +26,7 @@ if($_REQUEST["modal"]=="proadd") include_once 'system/modal/modal/proadd.php';
 
 if($_REQUEST["modal"]=="productoBusqueda") include_once 'system/modal/modal/productoBusqueda.php';
 if($_REQUEST["modal"]=="productoBusquedaTaller") include_once 'system/modal/modal/productoBusquedaTaller.php';
+if($_REQUEST["modal"]=="productoBusquedaAvanzada") include_once 'system/modal/modal/productoBusquedaAvanzada.php';
 
 
 

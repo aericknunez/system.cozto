@@ -1,0 +1,16 @@
+CREATE TABLE `system_modify` (
+  `id` int(6) NOT NULL,
+  `tags` int(1) NOT NULL,
+  `hash` varchar(12) NOT NULL,
+  `time` int(12) NOT NULL,
+  `td` int(6) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+ALTER TABLE `system_modify`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `system_modify`
+  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `producto_tags` CHANGE `tag` `tag` VARCHAR(250) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;

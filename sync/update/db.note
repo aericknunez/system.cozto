@@ -28,3 +28,5 @@ NOTAS DE DATABASE
 
 01.06 	- Se le agrega descuento porcentaje a la tabla productos para establecer un valor de descuento pre determinado a un producto
 		- Se agrega config_master el campo descuento para activar la casilla de descuento al agregar un producto
+
+01.07 	- Llevara el registro de algunas modificaciones importantes

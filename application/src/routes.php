@@ -3098,6 +3098,53 @@ case "671": // Cambiar precio
 break;
 
 
+
+
+
+case "681": // key
+	$_SESSION["advancedSearch"]["criterio1"] = $_POST["hash"];
+	include_once '../../system/ventas/AdvancedSearch.php';
+		$search = new AdvancedSearch();
+		$search->Search();
+break;
+
+
+case "682": // key
+	$_SESSION["advancedSearch"]["criterio2"] = $_POST["hash"];
+	include_once '../../system/ventas/AdvancedSearch.php';
+		$search = new AdvancedSearch();
+		$search->Search();
+break;
+
+
+case "683": // key
+	$_SESSION["advancedSearch"]["criterio3"] = $_POST["hash"];
+	include_once '../../system/ventas/AdvancedSearch.php';
+		$search = new AdvancedSearch();
+		$search->Search();
+break;
+
+case "684": // key
+	$_SESSION["advancedSearch"]["key"] = $_POST["hash"];
+	include_once '../../system/ventas/AdvancedSearch.php';
+		$search = new AdvancedSearch();
+		$search->Search();
+break;
+
+case "685": // key
+	unset($_SESSION["advancedSearch"]);
+	include_once '../../system/ventas/AdvancedSearch.php';
+		$search = new AdvancedSearch();
+		$search->Search();
+break;
+
+
+
+
+
+
+
+
 } // termina switch
 
 

@@ -58,6 +58,12 @@ $_SESSION["ver_avatar"] = NULL;
         }
 
 
+        /// modifaica el sistama de tags
+include_once '../../system/producto/ModificaTags.php';
+$tags = new ModificaTags;
+$tags->EjecutarCambios(); 
+
+
 
 
 // agrego el tipo de ticket predeterminado

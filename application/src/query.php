@@ -41,6 +41,10 @@ echo '
 	echo '<script type="text/javascript" src="assets/js/query/taller_producto.js?v='.$numero.'"></script>';	
 	echo '<script type="text/javascript" src="assets/js/query/producto_vermodal.js?v='.$numero.'"></script>';	
 	}
+	if($_GET["modal"] == "productoBusquedaAvanzada"){
+		echo '<script type="text/javascript" src="assets/js/query/advanced_search.js?v='.$numero.'"></script>';	
+		echo '<script type="text/javascript" src="assets/js/query/producto_vermodal.js?v='.$numero.'"></script>';	
+		}
 
 	/// proveedor
 	if($_GET["modal"] == "editproveedor"){
