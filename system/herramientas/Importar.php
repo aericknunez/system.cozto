@@ -38,6 +38,7 @@ $filas = $objPHPExcel->setActiveSheetIndex(0)->getHighestRow();
       $_DATOS_EXCEL[$i]['costo']        = $objPHPExcel->getActiveSheet()->getCell('E'.$i)->getCalculatedValue();
       $_DATOS_EXCEL[$i]['precio']       = $objPHPExcel->getActiveSheet()->getCell('F'.$i)->getCalculatedValue();
       $_DATOS_EXCEL[$i]['caducidad']    = $objPHPExcel->getActiveSheet()->getCell('G'.$i)->getCalculatedValue();
+      $_DATOS_EXCEL[$i]['tags']         = $objPHPExcel->getActiveSheet()->getCell('G'.$i)->getCalculatedValue();
     }   
 
 
@@ -156,7 +157,8 @@ public function CrearTabla(){ // CREA LA TABLA PARA INSERTAR LOS DATOS
   `categoria` varchar(25) NOT NULL,
   `costo` float(10,4) NOT NULL,
   `precio` float(10,4) NOT NULL,
-  `caducidad` varchar(25) NOT NULL,
+  `caducidad` varchar(25) NULL,
+  `tags` varchar(250) NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8");
 
@@ -245,13 +247,17 @@ $db->insert("producto_ingresado", $datax);
 
 
 
-// $tag1 = array();
-// $tag1["producto"] = $b["cod"];
-// $tag1["tag"] = $b["comentario1"];
-// $tag1["hash"] = Helpers::HashId();
-// $tag1["time"] = Helpers::TimeId();
-// $tag1["td"] = 16;
-// $db->insert("producto_tags", $tag1); 
+if($b["tags"] != NULL){
+  $caducax = "on";
+}
+
+$tag1 = array();
+$tag1["producto"] = $b["cod"];
+$tag1["tag"] =$b["tags"];
+$tag1["hash"] = Helpers::HashId();
+$tag1["time"] = Helpers::TimeId();
+$tag1["td"] = $_SESSION["td"];
+$db->insert("producto_tags", $tag1); 
 
 
 
@@ -272,7 +278,7 @@ $ubi["producto"] = $b["codigo"];
 $ubi["cant"] = $b["cantidad"];
 $ubi["hash"] = Helpers::HashId();
 $ubi["time"] = Helpers::TimeId();
-$ubi["td"] = 16;
+$ubi["td"] = $_SESSION["td"];
 $db->insert("ubicacion_asig", $ubi); 
 
 
