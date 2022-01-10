@@ -129,3 +129,46 @@ $cot->VerProducto();
   </div>
 </div>
 <!-- ./  Modal -->
+
+
+
+
+<!-- Ver producto -->
+<div class="modal" id="Materiales" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"  data-backdrop="false">
+  <div class="modal-dialog modal-md" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">
+         AGREGAR MATERIALES A LA COTIZACION</h5>
+      </div>
+      <div class="modal-body">
+<!-- ./  content -->
+
+<div class="row d-flex justify-content-center">
+  <div class="col-md-12">
+<form class="text-center border border-light p-3" id="form-materiales" name="form-materiales">
+
+<input type="text" name="producto" id="producto" class="form-control mb-3" placeholder="Producto">
+
+<input type="number" step="any" id="precio" name="precio" class="form-control mb-3" placeholder="Precio">
+<button class="btn btn-info my-4" type="submit" id="btn-materiales" name="btn-materiales">Agregar Material</button>
+ </form>
+
+  </div>
+</div>
+
+<div id="msj"></div>
+
+<!-- ./  content -->
+      </div>
+      <div class="modal-footer">
+
+<a id="cerrarmodal" class="btn btn-primary btn-rounded" data-dismiss="modal">Regresar</a>
+
+          
+    
+      </div>
+    </div>
+  </div>
+</div>
+<!-- ./  Modal -->

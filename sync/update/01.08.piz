@@ -1,0 +1,16 @@
+CREATE TABLE `cotizaciones_materiales` (
+  `id` int(6) NOT NULL,
+  `material` varchar(250) NOT NULL,
+  `precio` float(10,4) NOT NULL,
+  `hash` varchar(12) NOT NULL,
+  `time` int(12) NOT NULL,
+  `td` int(6) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+ALTER TABLE `cotizaciones_materiales`
+  ADD PRIMARY KEY (`id`);
+
+
+ALTER TABLE `cotizaciones_materiales`
+  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT;

@@ -38,7 +38,7 @@ $filas = $objPHPExcel->setActiveSheetIndex(0)->getHighestRow();
       $_DATOS_EXCEL[$i]['costo']        = $objPHPExcel->getActiveSheet()->getCell('E'.$i)->getCalculatedValue();
       $_DATOS_EXCEL[$i]['precio']       = $objPHPExcel->getActiveSheet()->getCell('F'.$i)->getCalculatedValue();
       $_DATOS_EXCEL[$i]['caducidad']    = $objPHPExcel->getActiveSheet()->getCell('G'.$i)->getCalculatedValue();
-      $_DATOS_EXCEL[$i]['tags']         = $objPHPExcel->getActiveSheet()->getCell('G'.$i)->getCalculatedValue();
+      $_DATOS_EXCEL[$i]['tags']         = $objPHPExcel->getActiveSheet()->getCell('H'.$i)->getCalculatedValue();
     }   
 
 
