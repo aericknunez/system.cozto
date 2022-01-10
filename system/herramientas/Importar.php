@@ -252,7 +252,7 @@ if($b["tags"] != NULL){
 }
 
 $tag1 = array();
-$tag1["producto"] = $b["cod"];
+$tag1["producto"] = $b["codigo"];
 $tag1["tag"] =$b["tags"];
 $tag1["hash"] = Helpers::HashId();
 $tag1["time"] = Helpers::TimeId();
