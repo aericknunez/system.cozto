@@ -26,8 +26,22 @@ if($_SESSION["cotizacion"] != NULL){
 <div id="ver">
 <?php 
 $cot->VerProducto();	
+
+if ($cot->cuentaMateriales() > 0) {
+  echo '<hr>'; 
+  echo '<hr>'; 
+  echo '<h4>Materiales</h4>'; 
+  $cot->VerMateriales();
+
+  }
+
  ?>
-</div>  <!--  Aqui ira el resultado de lo precesado -->
+</div>  
+
+
+<hr>
+
+<!--  Aqui ira el resultado de lo precesado -->
 
 
 <?php } else {
@@ -148,9 +162,9 @@ $cot->VerProducto();
   <div class="col-md-12">
 <form class="text-center border border-light p-3" id="form-materiales" name="form-materiales">
 
-<input type="text" name="producto" id="producto" class="form-control mb-3" placeholder="Producto">
+<input type="text" name="material" id="material" class="form-control mb-3" placeholder="Material">
 
-<input type="number" step="any" id="precio" name="precio" class="form-control mb-3" placeholder="Precio">
+<input type="hidden" step="any" id="precio" name="precio" class="form-control mb-3" placeholder="Precio">
 <button class="btn btn-info my-4" type="submit" id="btn-materiales" name="btn-materiales">Agregar Material</button>
  </form>
 

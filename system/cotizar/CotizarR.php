@@ -28,6 +28,13 @@ class Cotizar{
   			 Alerts::Alerta("error","Error!","No se encontro el producto!");
   		}
   	$this->VerProducto();
+	  if ($this->cuentaMateriales() > 0) {
+		echo '<hr>'; 
+		echo '<hr>'; 
+		echo '<h4>Materiales</h4>'; 
+		$this->VerMateriales();
+
+	  }
    }
 
 
@@ -51,6 +58,13 @@ class Cotizar{
   			 Alerts::Alerta("error","Error!","No se encontro el producto!");
   		}
   	$this->VerProducto();
+	  if ($this->cuentaMateriales() > 0) {
+		echo '<hr>'; 
+		echo '<hr>'; 
+		echo '<h4>Materiales</h4>'; 
+		$this->VerMateriales();
+
+	  }
    }
 
 
@@ -344,6 +358,7 @@ $_SESSION["venta_agrupado"] = TRUE;
 		$db = new dbConn();
 
 		Helpers::DeleteId("cotizaciones_data", "correlativo = '$cotizacion' and td = ".$_SESSION["td"]."");
+		$this->DelMateriales();
 		
 		if(isset($_SESSION["cotizacion"])) unset($_SESSION["cotizacion"]);
 		if(isset($_SESSION["descuento_cot"])) unset($_SESSION["descuento_cot"]);
@@ -366,13 +381,28 @@ $_SESSION["venta_agrupado"] = TRUE;
 	  	
 	  	if($this->CuentaProductos($_SESSION["cotizacion"]) == 0){
 	  		$this->DelOrden($_SESSION["cotizacion"]);
+			$this->DelMateriales();
 	  	}
 
 	  	if($ver == NULL){
 	  		$this->VerProducto();
+			  	  if ($this->cuentaMateriales() > 0) {
+						echo '<hr>'; 
+						echo '<hr>'; 
+						echo '<h4>Materiales</h4>'; 
+						$this->VerMateriales();
+
+					}
 	  	}
 	  	if($ver == 1 and $this->CuentaProductos($_SESSION["cotizacion"]) == 0){
 	  		$this->VerProducto();
+			  	  if ($this->cuentaMateriales() > 0) {
+					echo '<hr>'; 
+					echo '<hr>'; 
+					echo '<h4>Materiales</h4>'; 
+					$this->VerMateriales();
+
+				}
 	  	}
    }
 
@@ -620,125 +650,6 @@ $page <= 1 ? $enable = 'disabled' : $enable = '';
 
 
 
-  public function VerCotizacion($cotizacion){
-       $db = new dbConn();
-       
-
-if ($r = $db->select("cliente, fecha, correlativo, caduca", "cotizaciones_data", "WHERE id = '".$cotizacion."' and td = ". $_SESSION["td"] ."")) { 
-    $cliente = $r["cliente"]; 
-    $fecha = $r["fecha"]; 
-    $correlativo = $r["correlativo"]; 
-    $caduca = $r["caduca"]; 
-} unset($r); 
-
-if ($r = $db->select("*", "clientes", "WHERE hash = '".$cliente."' and td = ". $_SESSION["td"] ."")) { 
-    $nombre = $r["nombre"];
-    $documento = $r["documento"];
-    $direccion = $r["direccion"];
-    $municipio = $r["municipio"];
-    $departamento = $r["departamento"];
-     } unset($r); 
-
-echo '<div class="row">
-      <div class="col-8">
-              <div class="text-center">
-              <h3>'. $_SESSION['config_cliente'] .'</h3>
-              </div>
-              <div><h3>
-              Dirección: '. $_SESSION['config_direccion'] .'
-              </h3></div>
-              <div><h3>
-              Teléfono: '. $_SESSION['config_telefono'] .'
-              </h3></div>
-
-      </div>
-
-        <div class="col-4 text-right">
-        <img alt="" src="'.XSERV.'assets/img/logo/'.$_SESSION['config_imagen'].'" height="200" id="logo-neg" class="img-fluid" />
-        </div>
-</div>
-
-<hr />';
-
-echo '<div class="row">
-      <div class="col-8">
-              <div>
-              <h4>Cliente: '. $nombre .'</h4>
-              </div>
-              <div><h4>
-              Dirección: '. $direccion .' '.$municipio.' '.$departamento.'
-              </h4></div>
-
-      </div>
-        <div class="col-4 text-right">
-       
-       		<div>
-              <h4>Creada : '. $fecha .'</h4>
-             </div>
-			<div>
-              <h4>Cotización : '. $correlativo .'</h4>
-             </div>
-        </div>
-	</div>
-
-
-	<pre>Detalles de la cotización</pre>';
-
-$a = $db->query("SELECT * FROM cotizaciones WHERE cotizacion = '".$correlativo."' and td = ".$_SESSION["td"]."");
-
-        if($a->num_rows > 0){
-            echo '<table class="table table-striped table-sm">
-            <thead>
-              <tr>
-                <th scope="col">Cant</th>
-                <th scope="col">Producto</th>
-                <th scope="col">Precio</th>
-                <th scope="col">Subtotal</th>
-                <th scope="col">Impuesto</th>
-                <th scope="col">Total</th>
-              </tr>
-            </thead>
-            <tbody>';
-            $pv = 0; $st=0; $im=0; $to=0;
-            foreach ($a as $b) {
-            $pv = $pv + $b["pv"]; 
-            $st = $st + $b["stotal"]; 
-            $im = $im + $b["imp"]; 
-            $to = $to + $b["total"];
-            echo '<tr>
-                  <th scope="row">'.$b["cant"].'</th>
-                  <td>'.$b["producto"].'</td>
-                  <td>'.$b["pv"].'</td>
-                  <td>'.$b["stotal"].'</td>
-                  <td>'.$b["imp"].'</td>
-                  <td>'.$b["total"].'</td>
-                </tr>';
-            }
-            echo '<tr>
-                  <td></td>
-                  <td>Total</td>
-                  <th>'.Helpers::Dinero($pv).'</th>
-                  <th>'.Helpers::Dinero($st).'</th>
-                  <th>'.Helpers::Dinero($im).'</th>
-                  <th>'.Helpers::Dinero($to).'</th>
-                </tr>';
-
-            echo '</tbody>
-              </table>';
-        }  $a->close();
-  
-echo '<div class="row mt-4">
-      <div class="col-12">
-              <div>
-              <h3> Cotización válida hasta el: '. Fechas::FechaEscrita($caduca) .'</h3>
-              </div>
-      </div>
-</div>';
-
-
-  }
-
-
 
 
 
@@ -757,6 +668,104 @@ echo '<div class="row mt-4">
 
 
 
+
+
+
+   public function addMateriales($data) { //agrega materiales a la cotizacion
+	$db = new dbConn();
+
+
+		if($data['material'] != NULL){
+		$datos = array();
+		$datos["material"] = $data["material"];
+		$datos["precio"] = $data["precio"];
+		$datos["cotizacion"] = $_SESSION["cotizacion"];
+		$datos["hash"] = Helpers::HashId();
+		$datos["time"] = Helpers::TimeId();
+		$datos["td"] = $_SESSION["td"];
+		$db->insert("cotizaciones_materiales", $datos); 
+			$this->VerProducto();
+			if ($this->cuentaMateriales() > 0) {
+				echo '<hr>'; 
+				echo '<hr>'; 
+				echo '<h4>Materiales</h4>'; 
+				$this->VerMateriales();
+		
+			  }
+	} else {
+		Alerts::Alerta("error","Error!","Los campos no pueden estar vacios!");
+	}
+	
+}
+
+
+
+
+public function VerMateriales() { //leva el control del autoincremento de los clientes
+	$db = new dbConn();
+		
+	if($_SESSION["cotizacion"] != NULL){
+		
+		$a = $db->query("SELECT * FROM cotizaciones_materiales WHERE cotizacion = ".$_SESSION["cotizacion"]." and td = ".$_SESSION["td"]."");
+
+		if($a->num_rows > 0){
+				echo '<table class="table table-striped table-sm">
+				  <thead>
+					<tr>
+					  <th scope="col" style="width:10px;">Cant</th>
+					  <th scope="col">Material</th>
+					  <th scope="col" style="width:10px;">Borrar</th>
+					</tr>
+				  </thead>
+				  <tbody>';
+				foreach ($a as $b) {
+				   echo '<tr>
+						  <th scope="row">'.$b["cant"].'</th>
+						  <td>'.$b["material"].'</td>
+						  <td><a id="borrar-material" op="691" hash="'.$b["hash"].'"><i class="fas fa-times-circle red-text fa-lg"></i></a></td>
+						</tr>';
+				}
+					echo '</tbody>
+						</table>';
+		} $a->close();
+
+	} 
+	  
+}
+
+
+public function DelMaterial($hash){
+	$db = new dbConn();
+
+  	// borro el registro de ticket
+  	Helpers::DeleteId("cotizaciones_materiales", "hash = '$hash' and td = ".$_SESSION["td"]."");
+  	// compruebo si hay mas productos sino elimino orden
+	  $this->VerProducto();
+	  if ($this->cuentaMateriales() > 0) {
+		echo '<hr>'; 
+		echo '<hr>'; 
+		echo '<h4>Materiales</h4>'; 
+		$this->VerMateriales();
+
+	  }
+   }
+
+
+   public function DelMateriales(){
+	$db = new dbConn();
+  	Helpers::DeleteId("cotizaciones_materiales", "cotizacion = ".$_SESSION["cotizacion"]." and td = ".$_SESSION["td"]."");
+   }
+
+
+   public function cuentaMateriales(){
+	$db = new dbConn();
+
+	$a = $db->query("SELECT * FROM cotizaciones_materiales WHERE cotizacion = ".$_SESSION["cotizacion"]." and td = ".$_SESSION["td"]."");
+	$num = $a->num_rows;
+	$a->close();
+	return $num;
+	
+   }
 
 
 

@@ -394,8 +394,11 @@ $('#ModalBusqueda').on('shown.bs.modal', function() { // para autofocus en el mo
     $('#imprimir').on("click", function () {
       $('#vista').printThis({
         importCSS: false,
-        loadCSS: ["http://localhost/cozto/assets/css/font-awesome-582.css","http://localhost/cozto/assets/css/bootstrap.min.css", 
-        "http://localhost/cozto/assets/css/mdb.min.css"],
+        loadCSS: [
+        "http://localhost/cozto/assets/css/font-awesome-582.css",
+        "http://localhost/cozto/assets/css/bootstrap.min.css", 
+        "http://localhost/cozto/assets/css/mdb.min.css",
+        "http://localhost/cozto/assets/css/galeria.css"],
         removeScripts: true,
          base: false
       });
@@ -421,5 +424,50 @@ $('#ModalBusqueda').on('shown.bs.modal', function() { // para autofocus en el mo
                 }
             })
         })
+
+
+
+    $('#btn-materiales').click(function(e){ /// para el formulario
+        e.preventDefault();
+        $.ajax({
+                url: "application/src/routes.php?op=690",
+                method: "POST",
+                data: $("#form-materiales").serialize(),
+                beforeSend: function () {
+                    $('#btn-materiales').html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>Loading...').addClass('disabled');
+                },
+                success: function(data){
+                    $('#btn-materiales').html('Agregar Material').removeClass('disabled');
+                    $("#form-materiales").trigger("reset");
+                    $("#ver").html(data);           
+                }
+            })
+        })
+
+
+
+        $("body").on("click","#borrar-material",function(){ // quita descuento
+            var op = $(this).attr('op');
+            var hash = $(this).attr('hash');
+            var dataString = 'op='+op+'&hash='+hash;
+    
+            $.ajax({
+                type: "POST",
+                url: "application/src/routes.php",
+                data: dataString,
+                beforeSend: function () {
+                   $("#ver").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt=""></div>');
+                },
+                success: function(data) {            
+                    $("#ver").html(data);           
+                }
+            });
+        });      
+    
+    
+
+        
+
+
 
 }); // termina query

@@ -119,3 +119,37 @@
 /* para el input con cantidad */
 
 /*/// termina input con cantidad*/
+
+
+/*/// bordeados*/
+.bordeado-x4{
+  border-radius: 4rem !important;
+}
+
+.bordeado-x3{
+  border-radius: 3rem !important;
+}
+
+.bordeado-x2{
+  border-radius: 2rem !important;
+}
+
+.bordeado-x1{
+  border-radius: 1rem !important;
+}
+
+
+
+
+/* rondeado de una tabla */
+.table-round {
+  border-collapse:separate;
+  border-spacing: 1;
+  border:solid rgb(165, 165, 165) 1px;
+  border-radius:1px;
+  -moz-border-radius:1px;
+  -webkit-border-radius: 5px;  
+  -webkit-box-shadow: 0 3px 3px #ccc;
+  -moz-box-shadow: 0 3px 3px #ccc;
+  box-shadow: 0 3px 3px #ccc; 
+}

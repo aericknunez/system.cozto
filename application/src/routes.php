@@ -1457,8 +1457,8 @@ break;
 
 
 case "160": 
-include_once '../../system/cotizar/CotizarR.php';
-	$cot = new Cotizar();
+include_once '../../system/cotizar/VerCotizaciones.php';
+	$cot = new VerCotizaciones();
 	$cot->VerCotizacion($_POST["key"]);
 break;
 
@@ -3139,6 +3139,19 @@ case "685": // key
 break;
 
 
+
+case "690": // agrega materiales a la cotizacion
+	include_once '../../system/cotizar/CotizarR.php';
+		$cot = new Cotizar();
+		$cot->addMateriales($_POST);
+break;
+
+
+case "691": // borra materiales a la cotizacion
+	include_once '../../system/cotizar/CotizarR.php';
+		$cot = new Cotizar();
+		$cot->DelMaterial($_POST['hash']);
+break;
 
 
 

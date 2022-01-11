@@ -17,12 +17,6 @@ $cot = new Cotizar();
 </div>
 
 
-
-
-
-
-
-
 <!-- Ver producto -->
 <div class="modal" id="ModalVer" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"  data-backdrop="false">
   <div class="modal-dialog modal-xl" role="document">

@@ -1,0 +1,3 @@
+ALTER TABLE `cotizaciones_materiales` ADD `cotizacion` VARCHAR(12) NOT NULL AFTER `precio`;
+ALTER TABLE `cotizaciones_materiales` ADD `cantidad` VARCHAR(20) NOT NULL AFTER `id`;
+ALTER TABLE `cotizaciones_materiales` CHANGE `material` `material` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
