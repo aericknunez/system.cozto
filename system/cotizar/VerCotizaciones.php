@@ -30,31 +30,31 @@ class VerCotizaciones{
          } unset($r); 
 
 
-   echo '<div class="container-fluid">
+   echo '<div class="container-fluid letras">
    <!-- Encabezado -->
  <div class="row">
    <div class="col-3 text-center"><img src="'.XSERV.'assets/img/logo/FYF.png" width="200px" alt=""></div>
    <div class="col-6 text-center">
-       <div class="font-weight-bold mt-3">INDUSTRIAS F & F</div>
-       <div class="font-weight-bold"> Servicio de torno</div>
-       <div>
+       <div class="letras1 font-weight-bold mt-3">INDUSTRIAS F & F</div>
+       <div class="letras1 font-weight-bold"> Servicio de torno</div>
+       <div class="letras2 font-weight-bold">
        Final E. Mancía, Lote # 35, Bo. Las
        Flores,
        Metapán, Santa Ana
        </div>
-       <div>
+       <div class="letras2 font-weight-bold">
        TELS.: 7498-5138 / 7866-6426
        </div>
    </div>
-   <div class="col-3 text-center">
-     <div class="bordeado-x1 border" style="height: 100%;">
+   <div class="letras1 col-3 text-center  font-weight-bold">
+     <div class="bordeado-x1 border-bold" style="height: 100%;">
        <div class="font-weight-bold mt-3">COTIZACION</div>
        <div>NO. '. str_pad($correlativo, 8, "0", STR_PAD_LEFT) .'</div>
      </div>
    </div>
  </div>
  <!-- Datos generales  -->
- <div class="bordeado-x1 border mt-2">
+ <div class="letras2 bordeado-x1 border-bold mt-2  font-weight-bold">
    <div class="ml-3">
          <div class="row">
            <div class="col-8">
@@ -78,10 +78,10 @@ class VerCotizaciones{
  <!-- Contenido de productos  -->
  <table class="table table-sm table-round mt-2">
    <thead>
-     <th>CANTIDAD</th>
-     <th>DESCRIPCION</th>
-     <th>PRECIO</th>
-     <th>VENTAS</th>
+     <th class="letras3 font-weight-bold">CANT.</th>
+     <th class="letras3 font-weight-bold">DESCRIPCION</th>
+     <th class="letras3 font-weight-bold">PRECIO</th>
+     <th class="letras3 font-weight-bold text-nowrap">VENTAS</th>
    </thead>
    <tbody>';
 
@@ -97,13 +97,13 @@ $im = $im + $b["imp"];
 $to = $to + $b["total"];
 
 echo '<tr>
-       <td>'.$b["cant"].'</td>
-       <td>'.$b["producto"].'</td>
-       <td></td>';
+       <td class="letras3 font-weight-bold">'.$b["cant"].'</td>
+       <td class="letras3 font-weight-bold">'.$b["producto"].'</td>
+       <td class="letras3 font-weight-bold"></td>';
        if ($b["stotal"] == 0) {
-        echo '<td></td>';
+        echo '<td class="letras3 font-weight-bold"></td>';
        } else {
-        echo '<td>'.$b["stotal"].'</td>';
+        echo '<td class="letras3 font-weight-bold text-nowrap">'.Helpers::Dinero($b["stotal"]).'</td>';
        }
 echo '</tr>';
     }  
@@ -112,10 +112,10 @@ $a->close();
 $nNum = 10 - $cantidadP;
 for ($i=0; $i < $nNum; $i++) { 
     echo '<tr>
-            <td>&nbsp</td>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td class="letras3 font-weight-bold">&nbsp</td>
+            <td class="letras3 font-weight-bold"></td>
+            <td class="letras3 font-weight-bold"></td>
+            <td class="letras3 font-weight-bold"></td>
           </tr>';
 }
 
@@ -131,46 +131,46 @@ for ($i=0; $i < $nNum; $i++) {
 $a = $db->query("SELECT * FROM cotizaciones_materiales WHERE cotizacion = '".$correlativo."' and td = ".$_SESSION["td"]."");
 $cantidadM = $a->num_rows;
 foreach ($a as $b) {
-     echo '<tr>
-       <td></td>
-       <td>'.$b["material"].'</td>
-       <td></td>
-       <td></td>
+echo '<tr>
+       <td class="letras3 font-weight-bold"></td>
+       <td class="letras3 font-weight-bold">'.$b["material"].'</td>
+       <td class="letras3 font-weight-bold"></td>
+       <td class="letras3 font-weight-bold"></td>
      </tr>';
     }  
 $a->close();
 
 
-$nNum2 = 6 - $cantidadM;
+$nNum2 = 5 - $cantidadM;
 for ($i=0; $i < $nNum2; $i++) { 
     echo '<tr>
-            <td>&nbsp</td>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td class="letras3 font-weight-bold">&nbsp</td>
+            <td class="letras3 font-weight-bold"></td>
+            <td class="letras3 font-weight-bold"></td>
+            <td class="letras3 font-weight-bold"></td>
           </tr>';
 }
 
 echo '<tr>
-       <td colspan="2" rowspan="5" class="font-weight-bold">SON: '.Dinero::DineroEscrito($to).' </td>
-       <td>SUMAS</td>
-       <td>'.Helpers::Dinero($st).'</td>
+       <td colspan="2" rowspan="5" class="letras2 font-weight-bold">SON: '.Dinero::DineroEscrito($to).' </td>
+       <td class="letras3 font-weight-bold">SUMAS</td>
+       <td class="letras3 font-weight-bold text-nowrap">'.Helpers::Dinero($st).'</td>
      </tr>
      <tr>
-       <td>13% IVA</td>
-       <td>'.Helpers::Dinero($im).'</td>
+       <td class="letras3 font-weight-bold">13% IVA</td>
+       <td class="letras3 font-weight-bold text-nowrap">'.Helpers::Dinero($im).'</td>
      </tr>
      <tr>
-       <td>SUBTOTAL</td>
-       <td>'.Helpers::Dinero($to).'</td>
+       <td class="letras3 font-weight-bold">SUBTOTAL</td>
+       <td class="letras3 font-weight-bold text-nowrap">'.Helpers::Dinero($to).'</td>
      </tr>
      <tr>
-       <td>(-) IVA RET.</td>
-       <td></td>
+       <td class="letras3 font-weight-bold">(-) IVA RET.</td>
+       <td class="letras3 font-weight-bold text-nowrap"></td>
      </tr>
      <tr>
-       <td>TOTAL</td>
-       <td>'.Helpers::Dinero($to).'</td>
+       <td class="letras3 font-weight-bold">TOTAL</td>
+       <td class="letras3 font-weight-bold text-nowrap">'.Helpers::Dinero($to).'</td>
      </tr>
  
  

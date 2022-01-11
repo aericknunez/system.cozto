@@ -147,9 +147,23 @@
   border-spacing: 1;
   border:solid rgb(165, 165, 165) 1px;
   border-radius:1px;
+  border-style: double !important;
+
   -moz-border-radius:1px;
   -webkit-border-radius: 5px;  
   -webkit-box-shadow: 0 3px 3px #ccc;
   -moz-box-shadow: 0 3px 3px #ccc;
   box-shadow: 0 3px 3px #ccc; 
 }
+
+.border-bold {
+  border: #000000;
+  border-style: double;
+}
+
+
+.letras1 { font-size: 26px; }
+.letras2 { font-size: 22px; }
+.letras3 { font-size: 18px; }
+
+
