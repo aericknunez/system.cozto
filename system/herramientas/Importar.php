@@ -196,7 +196,7 @@ if($b["caducidad"] != NULL){
 $datos = array();
 $datos["cod"] = $b["codigo"];
 $datos["descripcion"] = $b["descripcion"];
-$datos["categoria"] = $this->Categoria(); // necesito la csategoria correcta
+$datos["categoria"] = $this->Categoria($b["categoria"]); // necesito la csategoria correcta
 $datos["cantidad"] = $b["cantidad"];
 $datos["medida"] = $this->Medida(); /// unidad de media primera
 $datos["proveedor"] = $this->Proveedor(); /// proveedor predeterminado
@@ -253,7 +253,7 @@ if($b["tags"] != NULL){
 
 $tag1 = array();
 $tag1["producto"] = $b["codigo"];
-$tag1["tag"] =$b["tags"];
+$tag1["tag"] = $b["tags"];
 $tag1["hash"] = Helpers::HashId();
 $tag1["time"] = Helpers::TimeId();
 $tag1["td"] = $_SESSION["td"];
@@ -295,12 +295,23 @@ $db->insert("ubicacion_asig", $ubi);
 
 
 
-public function Categoria(){ // inserta los datos a la base de datos
+public function Categoria($categoria){ // inserta los datos a la base de datos
     $db = new dbConn();
 
-    if ($r = $db->select("hash", "producto_categoria_sub", "WHERE td = ".$_SESSION["td"]." order by id asc limit 1")) { 
-        return $r["hash"];
+    // busco el hash y el nombre de la categoria, si exsite lo devuelo sino uso el hash de  predeterminado
+    if ($r = $db->select("hash", "producto_categoria_sub", "WHERE subcategoria = '$categoria' and  td = ".$_SESSION["td"]." order by id asc limit 1")) { 
+      $hash = $r["hash"];
     }unset($r);  
+
+    if ($hash != NULL) {
+      return $hash;
+    } else {
+      if ($r = $db->select("hash", "producto_categoria_sub", "WHERE td = ".$_SESSION["td"]." order by id asc limit 1")) { 
+        return $r["hash"];
+       }unset($r);  
+    }
+
+
 }
 
 public function Medida(){ // inserta los datos a la base de datos
