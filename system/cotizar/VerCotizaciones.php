@@ -3,7 +3,7 @@ class VerCotizaciones{
 
 
     public function VerCotizacion($cot){
-        if ($_SESSION['td'] == 55) {
+        if ($_SESSION['td'] == 17) {
             $this->IndustriasFF($cot);
         } else {
             $this->general($cot);

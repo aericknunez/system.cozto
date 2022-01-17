@@ -237,10 +237,20 @@ elseif(isset($_GET["restartprecio"])) {
 
 elseif(isset($_GET["cotizar"])) {
 echo '<script type="text/javascript" src="assets/js/printThis.js?v='.$numero.'"></script>';
-echo '<script type="text/javascript" src="assets/js/query/cotizaR.js?v='.$numero.'"></script>';
+if (Helpers::ServerDomain()) {
+echo '<script type="text/javascript" src="assets/js/printThis_print_web.js?v='.$numero.'"></script>';
+} else {
+	echo '<script type="text/javascript" src="assets/js/printThis_print.js?v='.$numero.'"></script>';
+}
+	echo '<script type="text/javascript" src="assets/js/query/cotizaR.js?v='.$numero.'"></script>';
 } 
 elseif(isset($_GET["cotizaciones"])) {
 echo '<script type="text/javascript" src="assets/js/printThis.js?v='.$numero.'"></script>';
+if (Helpers::ServerDomain()) {
+	echo '<script type="text/javascript" src="assets/js/printThis_print_web.js?v='.$numero.'"></script>';
+	} else {
+		echo '<script type="text/javascript" src="assets/js/printThis_print.js?v='.$numero.'"></script>';
+}
 echo '<script type="text/javascript" src="assets/js/query/cotizaR.js?v='.$numero.'"></script>';
 echo '<script type="text/javascript" src="assets/js/query/paginador.js?v='.$numero.'"></script>';
 } 
