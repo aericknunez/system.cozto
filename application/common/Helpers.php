@@ -296,6 +296,21 @@ class Helpers{
   }
 
 
+  //// subtotal e impuestos con descuento (por tema de decimales)
+  static public function STotalDesc($numero, $impuestos){  
+    $imp = ($impuestos / 100)+1;
+    $st = $numero / $imp;
+    return number_format($st, 2,'.',',');
+ } 
+
+
+static public function ImpuestoDesc($numero, $impuestos){  
+    $imp = $impuestos / 100;
+    return number_format($numero * $imp, 2,'.',',');
+} 
+
+  //
+
 
     static public function PorcentajeDescuento($total, $descuento){ /// obtiene que porcentaje de descuento se aplicara segun total y cantidad a descontar
         $nume = ($descuento * 100)/$total;

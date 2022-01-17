@@ -118,15 +118,15 @@ if($_SESSION['config_descuento'] != NULL){
 	}  unset($r);  
 
 	if ($_SESSION['descuento'] != NULL) {
+		$sumas = number_format($pv * $datos["cantidad"], 2,'.',',');
 		$sumasx = $sumas;
 		$sumas = Helpers::DescuentoTotal($sumas);
 		$pv = Helpers::DescuentoTotal($pv);
 		$descuento = $sumasx - $sumas;
 	
-		$stot=Helpers::STotal($sumas, $_SESSION['config_imp']);
-		$im=Helpers::Impuesto($stot, $_SESSION['config_imp']);
 		$total = $pv * $datos['cantidad'];
-
+		$stot=Helpers::STotalDesc($sumas, $_SESSION['config_imp']);
+		$im=$total - $stot;
 	
 		$datox["descuento"] = $descuento;
 	}
@@ -271,16 +271,15 @@ if($_SESSION['config_descuento'] != NULL){
 			}  unset($r);  
 		
 			if ($_SESSION['descuento'] != NULL) {
-				$sumas = $pv * $datos["cantidad"];
+				$sumas = number_format($pv * $datos["cantidad"], 2,'.',',');
 				$sumasx = $sumas;
 				$sumas = Helpers::DescuentoTotal($sumas);
 				$pv = Helpers::DescuentoTotal($pv);
 				$descuento = $sumasx - $sumas;
 			
-				$stot=Helpers::STotal($sumas, $_SESSION['config_imp']);
-				$im=Helpers::Impuesto($stot, $_SESSION['config_imp']);
 				$total = $pv * $datos['cantidad'];
-
+				$stot=Helpers::STotalDesc($sumas, $_SESSION['config_imp']);
+				$im=$total - $stot;
 			
 				$datox["descuento"] = $descuento;
 			}
