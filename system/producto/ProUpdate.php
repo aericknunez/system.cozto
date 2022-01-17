@@ -103,7 +103,7 @@ class ProUpdate{
     $db = new dbConn();
 
   
-          if($datox["precio"] != NULL and $datox["cantidad"] != NULL){
+          if($datox["precio"] != NULL and $datox["cantidad"] != NULL and $datox["cantidad"] != 0){
               $datos = array();
               $hashin = Helpers::HashId();
               $datos["producto"] = $datox["cod"];
