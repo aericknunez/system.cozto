@@ -284,7 +284,7 @@ class Helpers{
         $num = $_SESSION['descuento'] / 100;
         $descuento = $numero * $num;
         $numer = $numero - $descuento;
-        return $numer;
+        return number_format($numer, 2,'.',',');
     }
 
 
@@ -292,7 +292,7 @@ class Helpers{
       $num = $descuento / 100;
       $descuento = $numero * $num;
       $numer = $numero - $descuento;
-      return $numer;
+      return number_format($numer, 2,'.',',');
   }
 
 

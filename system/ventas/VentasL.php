@@ -93,6 +93,7 @@ if($_SESSION["venta_agrupado"]){
 	$sumas = 0;
     $stot=0;
     $im =0;
+	$total = 0;
     $productox = "Producto_Agrupado";
 } else {
 
@@ -102,6 +103,8 @@ if($_SESSION["venta_agrupado"]){
     $stot=Helpers::STotal($sumas, $_SESSION['config_imp']);
     $im=Helpers::Impuesto($stot, $_SESSION['config_imp']);
     $productox = $this->ObtenerNombre($datos["cod"]);
+	$total = $stot + $im;
+
 }
 
 
@@ -122,6 +125,8 @@ if($_SESSION['config_descuento'] != NULL){
 	
 		$stot=Helpers::STotal($sumas, $_SESSION['config_imp']);
 		$im=Helpers::Impuesto($stot, $_SESSION['config_imp']);
+		$total = $pv * $datos['cantidad'];
+
 	
 		$datox["descuento"] = $descuento;
 	}
@@ -135,7 +140,7 @@ if($_SESSION['config_descuento'] != NULL){
 	    $datox["pv"] = $pv;  				   
 	    $datox["stotal"] = $stot;	    				   
 	    $datox["imp"] = $im;
-	    $datox["total"] = $stot + $im;
+	    $datox["total"] = $total;
 	    $datox["num_fac"] = 0;
 	    $datox["fecha"] = date("d-m-Y");
 	    $datox["hora"] = date("H:i:s");
@@ -254,6 +259,7 @@ if($_SESSION['config_descuento'] != NULL){
 
     $stot=Helpers::STotal($sumas, $_SESSION['config_imp']);
     $im=Helpers::Impuesto($stot, $_SESSION['config_imp']);
+	$total = $stot + $im;
 
 	    $cambio = array();
 
@@ -273,6 +279,8 @@ if($_SESSION['config_descuento'] != NULL){
 			
 				$stot=Helpers::STotal($sumas, $_SESSION['config_imp']);
 				$im=Helpers::Impuesto($stot, $_SESSION['config_imp']);
+				$total = $pv * $datos['cantidad'];
+
 			
 				$datox["descuento"] = $descuento;
 			}
@@ -283,7 +291,7 @@ if($_SESSION['config_descuento'] != NULL){
 	    $cambio["pv"] = $pv;
 	    $cambio["stotal"] = $stot;
 	    $cambio["imp"] = $im;
-	    $cambio["total"] = $stot + $im;
+	    $cambio["total"] = $total;
 	    $cambio["descuento"] = $descuento;
 	    if (Helpers::UpdateId("ticket", $cambio, "cod='".$datos["cod"]."' and orden = ".$_SESSION["orden"]." and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."")) {
 	       $this->ActualizaProducto($datos["cod"], 1, $func);
