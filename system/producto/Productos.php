@@ -108,7 +108,7 @@ $a->close();
           if($datox["precio_costo"] != NULL){
 
             // debo actualizar el total (cantidad) de producto
-                    if ($r = $db->select("cantidad", "producto", "WHERE cod = ".$datox["producto"]." and td = ".$_SESSION["td"]."")) { 
+                    if ($r = $db->select("cantidad", "producto", "WHERE cod = '".$datox["producto"]."' and td = ".$_SESSION["td"]."")) { 
                         $canti = $r["cantidad"];
                     } unset($r); 
                                           
