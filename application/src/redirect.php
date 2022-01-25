@@ -102,6 +102,7 @@ elseif(isset($_GET["ventadetalle"])) include_once 'system/reportes/ventasdetalle
 elseif(isset($_GET["ventaagrupado"])) include_once 'system/reportes/ventaagrupado.php'; 
 elseif(isset($_GET["gastodetallado"])) include_once 'system/reportes/gastodetallado.php'; 
 elseif(isset($_GET["ingresos"])) include_once 'system/reportes/ingresos.php'; 
+elseif(isset($_GET["raverias"])) include_once 'system/reportes/averias.php'; 
 
 
 

@@ -445,6 +445,70 @@ echo '</tbody>
 
 
 
+public function ProductoAveriado($inicio, $fin, $type = NULL) {
+	$db = new dbConn();
+	$primero = Fechas::Format($inicio);
+	$segundo = Fechas::Format($fin);
+
+if($primero == $segundo){
+$a = $db->query("SELECT * FROM producto_averias WHERE time = '$segundo' and td = ".$_SESSION['td']." order by time desc");
+} else {
+$a = $db->query("SELECT * FROM producto_averias WHERE time BETWEEN '$primero' AND '$segundo' and td = ".$_SESSION['td']." order by time desc");
+}
+
+
+if ($a->num_rows > 0) {
+
+  echo '<h3 class="h3-responsive">REPORTE DE PRODUCTOS AVERIADOS</h3>
+  <div class="table-responsive text-nowrap">
+  <table class="table table-striped table-sm table-bordered">
+
+	<thead>
+	 <tr>
+	   <th>Fecha</th>
+	   <th>Producto</th>					       
+	   <th>Cantidad</th>
+	   <th>Comentario</th>
+	   <th>Usuario</th>
+	 </tr>
+   </thead>
+   <tbody>';
+
+foreach ($a as $b) {
+
+echo '<tr class="text-black font-weight-bold">
+	   <th>'.$b["fecha"].' - '.$b["hora"].'</th>					       
+	   <th>'.$b["producto"]. ' - ' .Helpers::GetData("producto", "descripcion", "cod", $b["producto"]).'</th>
+	   <th>'.$b["cant"].'</th>
+	   <th>'.$b["comentarios"].'</th>
+	   <th>'.Helpers::GetData("login_userdata", "nombre", "user", $b["usuario"]).'</th>  
+	 </tr>';
+}    
+
+echo '<tr>
+		<th>Fecha</th>
+		<th>Producto</th>					       
+		<th>Cantidad</th>
+		<th>Comentario</th>
+		<th>Usuario</th>
+	  </tr>';
+
+
+echo '</tbody>
+</table></div>';
+
+
+	echo '<div class="text-right"><a href="system/documentos/reporte_averias.php?inicio='.$inicio.'&fin='.$fin.'" >Descargar Excel</a></div>';
+
+} $a->close();
+	
+
+} // termina la funcion
+
+
+
+
+
 
 
 

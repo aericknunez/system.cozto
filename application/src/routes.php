@@ -1691,6 +1691,19 @@ case "203": // ventas detallado
 break;
 
 
+case "204": // reporte de averias
+	include_once '../../system/reportes/Reportes.php';
+	$historial = new Reportes();
+	if($_POST["fecha1_submit"]){
+		$inicio = $_POST["fecha1_submit"]; $fin=$_POST["fecha2_submit"];
+	} else {
+		$inicio = date("01-m-Y"); $fin=date("31-m-Y");
+	}
+	
+	$historial->ProductoAveriado($inicio, $fin);
+break;
+
+
 
 case "210": // ventas detallado
 	include_once '../../system/facturar/ReportesFacturas.php';

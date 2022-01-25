@@ -95,7 +95,25 @@ $(document).ready(function()
 
 
 
-
+	$('#btn-averias').click(function(e){ /// averias detallados
+		e.preventDefault();
+		$.ajax({
+				url: "application/src/routes.php?op=204",
+				method: "POST",
+				data: $("#form-averias").serialize(),
+				beforeSend: function () {
+					$('#btn-averias').html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>Loading...').addClass('disabled');
+				},
+				success: function(data){
+					$('#btn-averias').html('Mostrar Datos').removeClass('disabled');	      
+					$("#form-averias").trigger("reset");
+					$("#contenido").html(data);	
+				}
+			})
+		});
+	
+	
+	
 
 
 
