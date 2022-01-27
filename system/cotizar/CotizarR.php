@@ -711,18 +711,20 @@ public function VerMateriales() { //leva el control del autoincremento de los cl
 		if($a->num_rows > 0){
 				echo '<table class="table table-striped table-sm">
 				  <thead>
-					<tr>
-					  <th scope="col" style="width:10px;">Cant</th>
-					  <th scope="col">Material</th>
-					  <th scope="col" style="width:10px;">Borrar</th>
+					<tr>';
+					//   echo '<th scope="col" style="width:10px;">Cant</th>';
+					  echo '<th scope="col">Material</th>';
+					  echo '<th scope="col">Precio</th>';
+					  echo '<th scope="col" style="width:10px;">Borrar</th>
 					</tr>
 				  </thead>
 				  <tbody>';
 				foreach ($a as $b) {
-				   echo '<tr>
-						  <th scope="row">'.$b["cant"].'</th>
-						  <td>'.$b["material"].'</td>
-						  <td><a id="borrar-material" op="691" hash="'.$b["hash"].'"><i class="fas fa-times-circle red-text fa-lg"></i></a></td>
+				   echo '<tr>';
+						//   echo '<th scope="row">'.$b["cant"].'</th>';
+						  echo '<td>'.$b["material"].'</td>';
+						  echo '<td>'.Helpers::Dinero($b["precio"]).'</td>';
+						  echo '<td><a id="borrar-material" op="691" hash="'.$b["hash"].'"><i class="fas fa-times-circle red-text fa-lg"></i></a></td>
 						</tr>';
 				}
 					echo '</tbody>

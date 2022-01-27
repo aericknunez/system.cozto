@@ -55,13 +55,16 @@ $objPHPExcel->getDefaultStyle()->getFont()->setName('Arial')
 // Add encabezado
 $objPHPExcel->setActiveSheetIndex(0)
             ->setCellValue('A1', 'FECHA')
-            ->setCellValue('B1', 'PRODUCTO')
-            ->setCellValue('C1', 'NO DOCUMENTO')
-            ->setCellValue('D1', 'CANTIDAD')
-            ->setCellValue('E1', 'PRECIO DE COSTO')
-            ->setCellValue('F1', 'PROVEEDOR')
-            ->setCellValue('G1', 'CADUCA')
-            ->setCellValue('H1', 'USUARIO');
+            ->setCellValue('B1', 'HORA')
+            ->setCellValue('C1', 'CODIGO')
+            ->setCellValue('D1', 'PRODUCTO')
+            ->setCellValue('E1', 'NO DOCUMENTO')
+            ->setCellValue('F1', 'TIPO MOVIMIENTO')
+            ->setCellValue('G1', 'CANTIDAD')
+            ->setCellValue('H1', 'PRECIO DE COSTO')
+            ->setCellValue('I1', 'PROVEEDOR')
+            ->setCellValue('J1', 'CADUCA')
+            ->setCellValue('K1', 'USUARIO');
  
 
 $fila = 1;   
@@ -75,24 +78,25 @@ $fila = 1;
 
 $fila = $fila + 1; 
 $objPHPExcel->setActiveSheetIndex(0)
-          ->setCellValue('A' . $fila, $b["fecha"].' - '.$b["hora"])
-          ->setCellValue('B' . $fila, $b["producto"]. ' - ' .Helpers::GetData("producto", "descripcion", "cod", $b["producto"]))
-          ->setCellValue('C' . $fila, $b["documento"])
-          ->setCellValue('D' . $fila, $b["cant"])
-          ->setCellValue('E' . $fila, $b["precio_costo"])
-          ->setCellValue('F' . $fila, Helpers::GetData("proveedores", "nombre", "hash", $b["proveedor"]))
-          ->setCellValue('G' . $fila, $b["caduca"])
-          ->setCellValue('H' . $fila, Helpers::GetData("login_userdata", "nombre", "user", $b["user"]));
-
-
+          ->setCellValue('A' . $fila, $b["fecha"])
+          ->setCellValue('B' . $fila, $b["hora"])
+          ->setCellValue('C' . $fila, $b["producto"])
+          ->setCellValue('D' . $fila, Helpers::GetData("producto", "descripcion", "cod", $b["producto"]))
+          ->setCellValue('E' . $fila, $b["documento"])
+          ->setCellValue('F' . $fila, "INGRESO")
+          ->setCellValue('G' . $fila, $b["cant"])
+          ->setCellValue('H' . $fila, $b["precio_costo"])
+          ->setCellValue('I' . $fila, Helpers::GetData("proveedores", "nombre", "hash", $b["proveedor"]))
+          ->setCellValue('J' . $fila, $b["caduca"])
+          ->setCellValue('K' . $fila, Helpers::GetData("login_userdata", "nombre", "user", $b["user"]));
 
         } 
 
 
 
 
-$columnas = array('A','B','C','F','G','h');
-$numeros = array('D','E');
+$columnas = array('A','B','C','D','F','I','J','K');
+$numeros = array('G','H');
 
 // establece ceros numerocico las filas numerocas
 foreach($numeros as $columnID) {

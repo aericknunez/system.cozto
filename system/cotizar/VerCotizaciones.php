@@ -3,7 +3,7 @@ class VerCotizaciones{
 
 
     public function VerCotizacion($cot){
-        if ($_SESSION['td'] == 55) {
+        if ($_SESSION['td'] == 55) { // 55 f&f
             $this->IndustriasFF($cot);
         } else {
             $this->general($cot);
@@ -134,9 +134,14 @@ foreach ($a as $b) {
 echo '<tr>
        <td class="letras3 font-weight-bold"></td>
        <td class="letras3 font-weight-bold">'.$b["material"].'</td>
-       <td class="letras3 font-weight-bold"></td>
-       <td class="letras3 font-weight-bold"></td>
-     </tr>';
+       <td class="letras3 font-weight-bold"></td>';
+       if ($b["precio"] != 0) {
+        echo '<td class="letras3 font-weight-bold">'.Helpers::Dinero($b["precio"]).'</td>';
+       } else {
+        echo '<td class="letras3 font-weight-bold"></td>';
+       }
+
+     echo '</tr>';
     }  
 $a->close();
 

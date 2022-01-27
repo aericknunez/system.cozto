@@ -164,7 +164,7 @@ if ($cot->cuentaMateriales() > 0) {
 
 <input type="text" name="material" id="material" class="form-control mb-3" placeholder="Material">
 
-<input type="hidden" step="any" id="precio" name="precio" class="form-control mb-3" placeholder="Precio">
+<input type="number" step="any" id="precio" name="precio" class="form-control mb-3" placeholder="Precio">
 <button class="btn btn-info my-4" type="submit" id="btn-materiales" name="btn-materiales">Agregar Material</button>
  </form>
 
