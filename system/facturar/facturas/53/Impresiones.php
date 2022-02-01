@@ -79,7 +79,7 @@ $a = $db->query("select cod, cant, producto, pv, total, fecha, hora, num_fac fro
   
     foreach ($a as $b) {
  
-$printer -> text($this->Item($b["cant"], substr($b["producto"], 0, 38), $b["pv"], $b["total"]));
+$printer -> text($this->Item($b["cant"], substr($b["producto"], 0, 34), $b["pv"], $b["total"]));
 
 $subtotalf = $subtotalf + $b["total"];
 
