@@ -95,13 +95,26 @@ if($_SESSION["tipoticket"] == 3){
 
         $parametros["documento"] = $documento;
 
-    if ($r = $db->select("cliente, giro, registro, direccion, departamento", "facturar_documento", "WHERE documento = '$documento' and td = " .  $_SESSION["td"])) { 
-        $parametros["cliente"] = $r["cliente"];
-        $parametros["giro"] = $r["giro"];
-        $parametros["registro"] = $r["registro"];
-        $parametros["direccion"] = $r["direccion"];
-        $parametros["departamento"] = $r["departamento"];
-    } unset($r);  
+    if($_SESSION["root_taller"] == "on") { 
+        if ($r = $db->select("cliente, giro, registro, direccion, departamento", "taller_cliente", "WHERE nit = '$documento' and td = " .  $_SESSION["td"])) { 
+            $parametros["cliente"] = $r["cliente"];
+            $parametros["giro"] = $r["giro"];
+            $parametros["registro"] = $r["registro"];
+            $parametros["direccion"] = $r["direccion"];
+            $parametros["departamento"] = $r["departamento"];
+        } unset($r);  
+    } else {
+        if ($r = $db->select("cliente, giro, registro, direccion, departamento", "facturar_documento", "WHERE documento = '$documento' and td = " .  $_SESSION["td"])) { 
+            $parametros["cliente"] = $r["cliente"];
+            $parametros["giro"] = $r["giro"];
+            $parametros["registro"] = $r["registro"];
+            $parametros["direccion"] = $r["direccion"];
+            $parametros["departamento"] = $r["departamento"];
+        } unset($r);  
+    }
+
+
+
 
 if ($sx = $db->select("sum(stotal), sum(imp), sum(total)", "ticket", "WHERE num_fac = '".$parametros["num_fac"]."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]." and tipo = ".$_SESSION["tipoticket"]."")) { 
        $parametros["stotal"]=$sx["sum(stotal)"];

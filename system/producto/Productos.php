@@ -2185,7 +2185,7 @@ $a->close();
 
   public function DelProducto($cod){ // esta funcion elimina permanentemente el producto
       $db = new dbConn();
-        if (Helpers::DeleteId("producto", "cod='$cod'")) {
+        if (Helpers::DeleteId("producto", "cod='$cod' and td = ". $_SESSION["td"] ."" )) {
 
           Helpers::DeleteId("caracteristicas_asig", "producto='$cod' and td = ". $_SESSION["td"] ."");
           Helpers::DeleteId("producto_averias", "producto='$cod' and td = ". $_SESSION["td"] ."");

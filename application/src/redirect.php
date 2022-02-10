@@ -149,6 +149,7 @@ elseif(isset($_GET["ecategorias"])) include_once 'system/ecommerce/categoria_pro
 elseif(isset($_GET["mod_factura"])) include_once 'system/facturar/mod_factura.php'; // cambia lo de la factra
 elseif(isset($_GET["search"])) include_once 'system/facturar/busqueda.php'; // search factura
 elseif(isset($_GET["reportef"])) include_once 'system/facturar/reportef.php'; // search factura
+elseif(isset($_GET["mod_nit"])) include_once 'system/facturar/modificar_datos_nit.php'; // modificar datos NIT
 
 
 //trasnferencias

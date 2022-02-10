@@ -1841,6 +1841,21 @@ include_once '../../system/planilla/Planilla.php';
 break;
 
 
+
+case "320": // paginar facturas
+	include_once '../../system/facturar/CambioDatosCliente.php';
+		$fac = new CambioDatosCliente;
+		$fac->VerClientes($_POST["iden"], $_POST["orden"], $_POST["dir"]);
+break;
+
+
+case "321": // Eliminar Cliente Factura
+	include_once '../../system/facturar/CambioDatosCliente.php';
+		$fac = new CambioDatosCliente;
+		$fac->EliminarCliente($_POST["iden"]);
+break;
+
+
 case "247": // Elimiar data del sistema con usuarios
 include_once '../../system/bdbackup/LimpiarData.php';
 	$data = new DataClear();

@@ -513,6 +513,11 @@ include_once 'assets/js/query/Imprimir.php';
 elseif(isset($_GET["reportef"])) {
 echo '<script type="text/javascript" src="assets/js/query/facturar.js?v='.$numero.'"></script>';
 } 
+elseif(isset($_GET["mod_nit"])) {
+echo '<script type="text/javascript" src="assets/js/query/mod_nit.js?v='.$numero.'"></script>';
+echo '<script type="text/javascript" src="assets/js/query/paginador.js?v='.$numero.'"></script>';
+} 
+
 
 
 
