@@ -125,6 +125,13 @@ class CambioDatosCliente{
     public function EliminarCliente($hash){
         $db = new dbConn();
 
+        if (Helpers::DeleteId("facturar_documento", "hash='$hash'")) {
+          Alerts::Alerta("success","Eliminado!","Cliente eliminado correctamente!");
+       } else {
+           Alerts::Alerta("error","Error!","Algo Ocurrio!");
+       } 
+      $this->VerClientes(1, "id", "asc");
+
     }
 
 
