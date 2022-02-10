@@ -27,12 +27,18 @@ if($fecha != NULL){
 
 // $objPHPExcel->getColumnDimension('C')->setAutoSize(true);
 
+$ax = $db->query("select cod, cant, total, producto, pv 
+from ticket 
+where cod = '9999999' and edo = 1 and fecha = '$fecha' and td = ".$_SESSION['td']." order by cant desc");
+$especial = NULL;
+
+
 
 $a = $db->query("select cod, sum(cant), sum(total), producto, pv 
   from ticket 
-  where cod != 8888 and edo = 1 and fecha = '$fecha' and td = ".$_SESSION['td']." GROUP BY cod order by sum(cant) desc");
+  where cod != 8888  and cod != 9999999 and edo = 1 and fecha = '$fecha' and td = ".$_SESSION['td']." GROUP BY cod order by sum(cant) desc");
 
-    if($a->num_rows > 0){
+    if($a->num_rows > 0 or $ax->num_rows > 0){
 
 require_once '../../application/common/PHPExcel.php';
 
@@ -77,6 +83,18 @@ $objPHPExcel->setActiveSheetIndex(0)
 
         } 
 
+        if($ax->num_rows > 0){
+          foreach ($ax as $bx) {
+            $fila = $fila + 1; 
+            $objPHPExcel->setActiveSheetIndex(0)
+                      ->setCellValue('A' . $fila, $bx["cant"])
+                      ->setCellValue('B' . $fila, $bx["cod"])
+                      ->setCellValue('C' . $fila, $bx["producto"])
+                      ->setCellValue('D' . $fila, $bx["pv"])
+                      ->setCellValue('E' . $fila, $bx["total"]);
+             
+          } 
+      } $ax->close();
 
 
 

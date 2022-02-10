@@ -106,11 +106,20 @@ $r = $db->select("*", "config_root", "where td = ".$_SESSION['td']."");
               if(Encrypt::Decrypt($r["transferencias"],$_SESSION['secret_key']) == "") echo "Inactivo"; ?></td>
      </tr> 
 
+     <tr>
+       <td>Activar Tarjeta o Cheque</td>
+       <td><? if(Encrypt::Decrypt($r["tarjeta"],$_SESSION['secret_key']) == "on") echo "Activado";
+              if(Encrypt::Decrypt($r["tarjeta"],$_SESSION['secret_key']) == "") echo "Inactivo"; ?></td>
+     </tr> 
+
+
+
 
 <?
  unset($r);  
    ?>
    </tbody>
 </table>
+
 
 <a href="?modal=conf_root" class="btn btn-indigo">Cambiar configuraciones<i class="fa fa-cog ml-2"></i></a>

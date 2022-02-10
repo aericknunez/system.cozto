@@ -9,7 +9,7 @@ if ($_REQUEST["t"] == 1) {
 } else {
   if(isset($_SESSION["tcredito"])) unset($_SESSION["tcredito"]);
   $dir = "?modal=facturar&t=1";
-  $txt = "Pago con tarjeta";
+  $txt = "Pago con " . $_SESSION['root_tarjeta'];
 }
  ?><div class="modal" id="<? echo $_GET["modal"]; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"  data-backdrop="false">
   <div class="modal-dialog" role="document">
@@ -49,7 +49,7 @@ echo '<div class="display-4 text-center font-weight-bold">'. Helpers::Dinero($to
 
      <div class="form-group row justify-content-center align-items-center">
       <div class="col-xs-2">
-        <label for="ex1">Aplicar a Tarjeta</label>
+        <label for="ex1">APLICAR PAGO</label>
         <input name="efectivo" type="hidden" id="efectivo" size="8" />
       </div>
     </div>

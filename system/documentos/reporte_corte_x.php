@@ -73,7 +73,7 @@ $objPHPExcel->setActiveSheetIndex(0)
             ->setCellValue('D1', 'CANTIDAD APERTURA')
             ->setCellValue('E1', 'EFECTIVO INGRESADO')
             ->setCellValue('F1', 'TOTAL EFECTIVO')
-            ->setCellValue('G1', 'TOTAL TARJETA')
+            ->setCellValue('G1', 'TOTAL ' . strtoupper($_SESSION['root_tarjeta']))
             ->setCellValue('H1', 'TOTAL CREDITO')
             ->setCellValue('I1', 'VENTA TOTAL')
             ->setCellValue('J1', 'GASTOS')
@@ -137,7 +137,7 @@ $objPHPExcel->setActiveSheetIndex(0)
 // Add PAGOS
 $objPHPExcel->setActiveSheetIndex(0)
             ->setCellValue('A7', 'EFECTIVO')
-            ->setCellValue('B7', 'TARJETA DE CREDITO')
+            ->setCellValue('B7', strtoupper($_SESSION['root_tarjeta']))
             ->setCellValue('C7', 'TOTAL')
             ->setCellValue('D7', 'DIFERENCIA');
  

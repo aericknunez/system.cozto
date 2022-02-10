@@ -200,7 +200,7 @@ $db->close();
     if($string == "1") return 'Efectivo';
     if($string == "2") return 'Cheque';
     if($string == "3") return 'Transferencia';
-    if($string == "4") return 'Tarjeta';
+    if($string == "4") return $_SESSION['root_tarjeta'];
     }
 
 

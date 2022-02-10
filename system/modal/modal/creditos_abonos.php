@@ -42,7 +42,9 @@ if($_SESSION["caja_apertura"] != NULL){ // comprobacion de corte
 
         <select class="browser-default custom-select mb-3" id="tipo_pago" name="tipo_pago">
         <option value="1" selected>EFECTIVO</option>
-        <option value="2">TARJETA</option>
+        <option value="2"><?php
+        echo strtoupper($_SESSION['root_tarjeta']);
+        ?></option>
         </select>
 
 

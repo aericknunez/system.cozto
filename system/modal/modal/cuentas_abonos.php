@@ -145,7 +145,11 @@ $cuenta->VerAbonos($_REQUEST["cuenta"]);
 <select class="browser-default custom-select mb-3" id="tipo" name="tipo">
   <option value="2">CHEQUERA</option>
   <option value="3" selected>CUENTA BANCARIA</option>
-  <option value="4">TARJETA DE CREDITO</option>
+  <option value="4">
+    <?php
+    echo strtoupper($_SESSION['root_tarjeta']);
+    ?>
+  </option>
   <option value="5">CAJA CHICA</option>
 </select>
 

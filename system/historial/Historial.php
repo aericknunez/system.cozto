@@ -28,7 +28,7 @@ if($a->num_rows > 0){
           from ticket 
           where cod != 8888 and cod != 9999999 and edo = 1 and fecha = '$fecha' and td = ".$_SESSION['td']." GROUP BY cod order by sum(cant) desc");
 
-			if($a->num_rows > 0){
+			if($a->num_rows > 0 or $especial){
 				
 				if($type == NULL){
 					echo '<h3 class="h3-responsive">PRODUCTOS VENDIDOS DEL DIA :: '.$fecha.'</h3>';
@@ -112,7 +112,7 @@ if($a->num_rows > 0){
 $a = $db->query("select cod, sum(cant), sum(total), producto, pv, fecha 
                   from ticket 
                   where cod != 8888 and cod != 9999999 and edo = 1 and fecha like '%$fechax' and td = ".$_SESSION['td']." GROUP BY cod order by sum(cant) desc");
-		if($a->num_rows > 0){
+		if($a->num_rows > 0 or $especial){
 						echo '<h3 class="h3-responsive">PRODUCTOS VENDIDOS</h3>
 						<div class="table-responsive">
 				    <table class="table table-striped">
@@ -195,7 +195,7 @@ $a = $db->query("select cod, sum(cant), sum(total), producto, pv, fecha
 					       <th>Apertura</th>
 					       <th>Efectivo In.</th>
 					       <th>V. Efectivo</th>
-					       <th>V. Tarjeta</th>
+					       <th>V. '.$_SESSION['root_tarjeta'].'</th>
 					       <th>V. Credito</th>
 					        <th>Venta Total</th>
 					        <th>Gastos</th>

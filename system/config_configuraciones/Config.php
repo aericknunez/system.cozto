@@ -78,6 +78,7 @@ class Config{
 	    $cambio["taller"] = Encrypt::Encrypt($data["taller"],$_SESSION['secret_key']);
 	    $cambio["consignaciones"] = Encrypt::Encrypt($data["consignaciones"],$_SESSION['secret_key']);
 	    $cambio["transferencias"] = Encrypt::Encrypt($data["transferencias"],$_SESSION['secret_key']);
+	    $cambio["tarjeta"] = Encrypt::Encrypt($data["tarjeta"],$_SESSION['secret_key']);
 	    $cambio["time"] = Helpers::TimeId();
 	    if (Helpers::UpdateId("config_root", $cambio, "td = ".$_SESSION["td"]."")) {
 	    	$this->CrearVariables();
@@ -153,6 +154,7 @@ class Config{
 			$_SESSION['root_taller'] = $root["taller"];
 			$_SESSION['root_consignaciones'] = $root["consignaciones"];
 			$_SESSION['root_transferencias'] = $root["transferencias"];
+			$_SESSION['root_tarjeta'] = $root["tarjeta"];
      
 			} unset($root);
 			$_SESSION['root_tipo_sistema'] = $encrypt->Decrypt(
@@ -181,6 +183,13 @@ class Config{
 
 			$_SESSION['root_transferencias'] = $encrypt->Decrypt(
 			$_SESSION['root_transferencias'],$_SESSION['secret_key']);
+
+			if ($encrypt->Decrypt($_SESSION['root_tarjeta'],$_SESSION['secret_key'])) {
+				$_SESSION['root_tarjeta'] = 'Cheque';
+			} else {
+				$_SESSION['root_tarjeta'] = 'Tarjeta';
+			}
+			
 
 	}
 
