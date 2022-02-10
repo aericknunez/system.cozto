@@ -204,7 +204,8 @@ $objPHPExcel->setActiveSheetIndex(0)
             ->setCellValue('H15', 'PRECIO UNITARIO')
             ->setCellValue('I15', 'PRECIO TOTAL')
             ->setCellValue('J15', 'DESCUENTO')
-            ->setCellValue('K15', 'MONTO TOTAL');
+            ->setCellValue('K15', 'MONTO TOTAL')
+            ->setCellValue('L15', 'PAGO');
  
 
 $fila = 15;   
@@ -225,7 +226,8 @@ $objPHPExcel->setActiveSheetIndex(0)
           ->setCellValue('H' . $fila, $b["pv"])
           ->setCellValue('I' . $fila, $total)
           ->setCellValue('J' . $fila, $b["descuento"])
-          ->setCellValue('K' . $fila, $b["total"]);
+          ->setCellValue('K' . $fila, $b["total"])
+          ->setCellValue('L' . $fila, Helpers::TipoPago($b["tipo_pago"]));
  
 
         } 
@@ -233,7 +235,7 @@ $objPHPExcel->setActiveSheetIndex(0)
 
 
 
-$columnas = array('A','B','C','D','E','F','G');
+$columnas = array('A','B','C','D','E','F','G','L');
 $numeros = array('H','I','J','K');
 
 // establece ceros numerocico las filas numerocas
