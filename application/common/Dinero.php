@@ -108,5 +108,5 @@ public static function convertir($n) {
 
 
 
-} // clase
+} // Actualizado de miles
 ?>
