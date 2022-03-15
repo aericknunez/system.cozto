@@ -184,6 +184,9 @@ class Config{
 			$_SESSION['root_transferencias'] = $encrypt->Decrypt(
 			$_SESSION['root_transferencias'],$_SESSION['secret_key']);
 
+			$_SESSION['root_tarjeta'] = $encrypt->Decrypt(
+			$_SESSION['root_tarjeta'],$_SESSION['secret_key']);
+
 			if ($encrypt->Decrypt($_SESSION['root_tarjeta'],$_SESSION['secret_key'])) {
 				$_SESSION['root_tarjeta'] = 'Cheque';
 			} else {
