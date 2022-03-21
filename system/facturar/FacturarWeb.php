@@ -68,6 +68,26 @@ $hashcliente = $r["cliente"];
 
 
 
+
+
+if($_SESSION["root_taller"] == "on") { 
+
+    if ($r = $db->select("documento", "facturar_documento_factura", "WHERE factura = '".$parametros["num_fac"]."' and tx = " . $_SESSION["tx"] . " and td = " .  $_SESSION["td"])) { 
+        $documento = $r["documento"];
+    } unset($r);  
+    
+    $parametros["documento"] = $documento;
+    
+    if ($r = $db->select("cliente, giro, registro, direccion, departamento", "taller_cliente", "WHERE nit = '$documento' and td = " .  $_SESSION["td"])) { 
+        $parametros["cliente"] = $r["cliente"];
+        $parametros["giro"] = $r["giro"];
+        $parametros["registro"] = $r["registro"];
+        $parametros["direccion"] = $r["direccion"];
+        $parametros["departamento"] = $r["departamento"];
+    } unset($r);  
+}
+
+
 if ($r = $db->select("nombre, documento, direccion", "clientes", "WHERE hash = '".$hashcliente."' and td = " .  $_SESSION["td"])) { 
 $parametros["nombre"] = $r["nombre"];
 $parametros["documento"] = $r["documento"];

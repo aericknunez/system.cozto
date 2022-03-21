@@ -88,22 +88,20 @@ public function FiltroAgotado($cod){
 		    	}
 		    } $a->close();
 
-		    if($_SESSION['descuento'] != NULL){
+		if($_SESSION['descuento'] != NULL){
 		 $lateral = new Laterales(); 
    		 $precio = $lateral->ObtenerTotal($_SESSION["orden"]);
 		  $texto = 'El total en esta venta es de: ' . $precio;
-		  Alerts::Mensajex($texto,"success",$boton,$boton2);
-
-
+		  Alerts::Mensajex($texto,"success");
 
 		  $texto = 'Esta venta posee un descuento de : ' . $_SESSION['descuento']. " %";
-		  Alerts::Mensajex($texto,"danger",'<a id="quitar-descuento" op="96" class="btn btn-danger btn-rounded">Quitar Descuento</a>',$boton2);
+		  Alerts::Mensajex($texto,"danger",'<a id="quitar-descuento" op="96" class="btn btn-danger btn-rounded">Quitar Descuento</a>');
 		} else {
 			$lateral = new Laterales();
-			    $precio = $lateral->ObtenerTotal($_SESSION["orden"]);
-			  $texto = 'El total en esta venta sin descuento es de: ' . $precio;
-			  Alerts::Mensajex($texto,"success",$boton,$boton2);
-			} 
+			$precio = $lateral->ObtenerTotal($_SESSION["orden"]);
+			$texto = 'El total en esta venta sin descuento es de: ' . $precio;
+			Alerts::Mensajex($texto,"success");
+		} 
 
 	}
 

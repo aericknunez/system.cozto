@@ -879,13 +879,15 @@ break;
 case "95": // aplicar descuento a factura
 if($_POST["descuento"] != NULL and is_numeric($_POST["descuento"])){
 	$_SESSION["descuento"] = $_POST["descuento"];
-include_once '../../system/ventas/Laterales.php';
-include_once '../../system/ventas/VentasR.php';
+
+	include_once '../../system/ventas/Laterales.php';
+	include_once '../../system/ventas/VentasR.php';
 	$venta = new Ventas();
 	$venta->AplicarDescuento();	
 	} else {
 		Alerts::Alerta("error","Error!","Revise sus datos!");
 	}	
+
 break;
 
 
