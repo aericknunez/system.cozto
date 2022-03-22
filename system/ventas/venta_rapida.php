@@ -24,7 +24,6 @@ $ventas = new Ventas();
 <div id="ver">
 <?php 
 $ventas->VerProducto();	
-print_r($_SESSION);
  ?>
 </div>  <!--  Aqui ira el resultado de lo precesado -->
 
