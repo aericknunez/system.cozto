@@ -2718,6 +2718,29 @@ break;
 
 
 
+case "597": // Seleccionar viehiculo
+	include_once '../../system/taller/Taller.php';
+		$talleres = new Taller();
+		$talleres->VerVehiculoAsigando();
+break;
+
+
+case "598": // Seleccionar viehiculo
+	include_once '../../system/taller/Taller.php';
+		$talleres = new Taller();
+		$talleres->SeleccionarVehiculo($_POST);
+break;
+
+
+
+case "599": // Seleccionar viehiculo
+	include_once '../../system/taller/Taller.php';
+		$talleres = new Taller();
+		$talleres->SelectVehiculo($_POST);
+break;
+
+
+
 case "600": // agrega cliente de taller
 include_once '../../system/taller/Taller.php';
 	$talleres = new Taller();

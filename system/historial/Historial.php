@@ -728,7 +728,6 @@ public function VerAbonos($fecha) { //leva el control del autoincremento de los 
 					     <tr>
 					       <th>Cant</th>
 					       <th>Producto</th>
-					       <th>Usuario</th>
 					       <th>Factura</th>
 					       <th>Precio</th>
 					       <th>Descuento</th>
@@ -746,7 +745,6 @@ public function VerAbonos($fecha) { //leva el control del autoincremento de los 
 			   echo '<tr>
 			       <th scope="row">'. $b["cant"] . '</th>
 			       <td>'. $b["producto"] . '</td>
-			       <td>'. $b["cajero"] . '</td>
 			       <td>'. $b["num_fac"] . '</td>
 			       <td>'. Helpers::Dinero($b["pv"]) . '</td>
 			       <td>'. Helpers::Dinero($b["descuento"]) . '</td>

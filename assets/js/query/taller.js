@@ -385,6 +385,9 @@ $(document).ready(function(){
             $("#ver").html(data); // lo que regresa de la busquea 
             $("#c-busquedaA").trigger("reset"); // no funciona
         });
+
+        verVehiculoAsignado();
+
     });
 
 
@@ -406,6 +409,67 @@ $(document).ready(function(){
     });                 
 
 
+
+
+	$("body").on("click","#select-vehiculo",function(){ 
+		
+		$('#ModalSelectVehiculo').modal('show');
+
+		var hash = $(this).attr('hash');
+		var dataString = 'hash='+hash;
+
+		$.ajax({
+            type: "POST",
+            url: "application/src/routes.php?op=599",
+            data: dataString,
+            beforeSend: function () {
+               $("#vista_vehiculos").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt=""></div>');
+            },
+            success: function(data) {    
+                $("#vista_vehiculos").html(data); // lo que regresa de la busquea 	
+            }
+        });
+	});
+        
+
+
+    $("body").on("click","#add-vehiculo-client",function(){ 
+		
+
+		var hash = $(this).attr('hash');
+		var dataString = 'hash='+hash;
+
+		$.ajax({
+            type: "POST",
+            url: "application/src/routes.php?op=598",
+            data: dataString,
+            beforeSend: function () {
+               $("#ver_vehiculo_asignado_factura").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt=""></div>');
+            },
+            success: function(data) {    
+                $("#ver_vehiculo_asignado_factura").html(data); // lo que regresa de la busquea 
+
+            }
+        });
+		$('#ModalSelectVehiculo').modal('hide');
+
+	});
+
+
+    function verVehiculoAsignado(){
+		var dataString = 'op=597';
+
+        $.ajax({
+            type: "POST",
+            url: "application/src/routes.php",
+            data: dataString,
+            success: function(data) {    
+                $("#ver_vehiculo_asignado_factura").html(data); // lo que regresa de la busquea 		
+            }
+        });
+    }
+
+    verVehiculoAsignado();
 
 
 

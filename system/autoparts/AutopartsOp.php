@@ -39,7 +39,7 @@ public function AddMarca($data){
   public function VerMarca(){ // listado de marcas
     $db = new dbConn();
 
-      $a = $db->query("SELECT * FROM autoparts_marca WHERE td = ".$_SESSION["td"]."");
+      $a = $db->query("SELECT * FROM autoparts_marca WHERE td = ".$_SESSION["td"]." order by marca");
       if($a->num_rows > 0){
     echo '<table class="table table-sm table-hover">
       <thead>
@@ -116,7 +116,7 @@ public function AddModelo($data){
   public function VerModelo(){ // listado de modelos
     $db = new dbConn();
 
-      $a = $db->query("SELECT autoparts_modelo.hash as hash, autoparts_modelo.modelo as modelo, autoparts_marca.marca as marca FROM autoparts_modelo inner join autoparts_marca on autoparts_modelo.marca = autoparts_marca.hash WHERE autoparts_modelo.td = ".$_SESSION["td"]." order by autoparts_modelo.marca");
+      $a = $db->query("SELECT autoparts_modelo.hash as hash, autoparts_modelo.modelo as modelo, autoparts_marca.marca as marca FROM autoparts_modelo inner join autoparts_marca on autoparts_modelo.marca = autoparts_marca.hash WHERE autoparts_modelo.td = ".$_SESSION["td"]." order by autoparts_modelo.marca, modelo");
       if($a->num_rows > 0){
     echo '<table class="table table-sm table-hover">
       <thead>

@@ -878,19 +878,54 @@ $a = $db->query("SELECT * FROM taller_vehiculo WHERE cliente = '".$dato["hash"].
 $veh = $a->num_rows;
 $a->close();
 
-if($veh == 0){
- unset($_SESSION["vehiculo_factura"]);
-} elseif($veh == 1){
- $_SESSION["vehiculo_factura"] = Helpers::GetData("taller_vehiculo", "hash", "cliente", $dato["hash"]);
- echo "Se asigno vehiculo";
-} else {
- echo "Seleccione Un vehiculo";
-}
-
-
-
+  if($veh == 0){
+  unset($_SESSION["vehiculo_factura"]);
+  } 
+  elseif($veh == 1){
+  $_SESSION["vehiculo_factura"] = Helpers::GetData("taller_vehiculo", "hash", "cliente", $dato["hash"]);
   }
 
+  $this->VerVehiculoAsigando();
+
+}
+
+  public function VerVehiculoAsigando(){
+
+    if ($_SESSION["cliente_cli"]) {
+
+        if ($_SESSION["vehiculo_factura"]) {
+          echo 'Se asigno el vehiculo: ' . $_SESSION["vehiculo_factura"];
+          echo '<a id="select-vehiculo" hash="'.$_SESSION["cliente_cli"].'"> Cambiar</a>';
+
+        } else {
+          echo '<a id="select-vehiculo" hash="'.$_SESSION["cliente_cli"].'">Seleccione Un vehiculo</a>';
+        }
+    }
+  }
+
+
+
+  public function SelectVehiculo($data){
+    $db = new dbConn();
+    $a = $db->query("SELECT * FROM taller_vehiculo WHERE cliente = '".$data["hash"]."' and td = ".$_SESSION["td"]."");
+      echo '<ul class="list-group">';
+    foreach ($a as $b) {
+        echo '<li class="list-group-item"><a id="add-vehiculo-client" hash="'.$b['placa'].'">Placa: '.$b['placa'].' - Tipo: '.$b['tipo'].'</a></li>';
+        // print_r($b);
+    }  
+
+      echo '</ul>';
+    $a->close();
+  }
+
+
+
+
+  public function SeleccionarVehiculo($data){
+    unset($_SESSION["vehiculo_factura"]);
+    $_SESSION["vehiculo_factura"] = $data["hash"];
+    $this->VerVehiculoAsigando();
+  }
 
 
 
