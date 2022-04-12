@@ -1,9 +1,9 @@
- <?php  
+<?php  
 use Mike42\Escpos\EscposImage;
 use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
 use Mike42\Escpos\Printer;
 
-
+/// Daniel Osorio 
 
 class Impresiones{
     public function __construct() { 
@@ -14,25 +14,8 @@ class Impresiones{
 
  public function Ticket($efectivo, $numero){
   $db = new dbConn();
-
-
-if(Helpers::GetIp() == "192.168.1.41"){
   $nombre_impresora = "TICKET";
-} else {
-  $nombre_impresora = "TICKET2";
-}
-
-
-// use Mike42\Escpos\PrintConnectors\NetworkPrintConnector;
-// use Mike42\Escpos\Printer;
-// $connector = new NetworkPrintConnector("10.x.x.x", 9100);
-// $printer = new Printer($connector);
-
-
-  // $nombre_impresora = "TICKET";
-  
-
-// $img  = "C:/AppServ/www/pizto/assets/img/logo_factura/abrego.jpg";
+  // $img  = "C:/AppServ/www/pizto/assets/img/logo_factura/abrego.jpg";
 
 
 $connector = new WindowsPrintConnector($nombre_impresora);
@@ -43,30 +26,34 @@ $printer -> setFont(Printer::FONT_B);
 // $printer -> selectPrintMode(Printer::MODE_DOUBLE_HEIGHT);
 // $printer -> selectPrintMode(Printer::MODE_DOUBLE_WIDTH);
 
-$printer -> setTextSize(1, 2);
+$printer -> setTextSize(2, 2);
 $printer -> setLineSpacing(80);
-
+$printer -> setEmphasis(true);
 
 // $printer -> setJustification(Printer::JUSTIFY_CENTER);
 // $logo = EscposImage::load($img, false);
 // $printer->bitImage($logo);
 
 $printer -> setJustification(Printer::JUSTIFY_CENTER);
-$printer->text("TIENDA SAN ANTONIO");
+$printer->text("ZAPATERIA  DON COJUTE");
 
+$printer -> setTextSize(1, 2);
+$printer -> setEmphasis(false);
+$printer->feed();
+$printer->text("4ta Calle Ote, y 4ta Avenida Sur local 2 - 3,");
 
 $printer->feed();
-$printer->text("Barrio El Centro, Salida Los Conacastes");
-$printer->feed();
-$printer->text("Agua Caliente, Chalatenango");
+$printer->text(" Barrio San Juan. Cojutepeque ");
 
-$printer->feed();
-$printer->text("Tel: 2309 4262 y  2309 5125");
+// $printer->feed();
+// $printer->text("Tel: 7609-7442");
 
 
-//$printer->feed();
-//$printer->text("Giro: Venta al por menor de Materiales ");
-//$printer->text("de Construccion y articulos conexos ");
+// $printer->feed();
+// $printer->text("Giro: Venta al por menor de Materiales ");
+// $printer->text("de Construccion y articulos conexos ");
+
+
 
 $printer->feed();
 $printer->text("CAJA: 1.  TICKET NUMERO: " . $numero);
@@ -75,7 +62,7 @@ $printer->text("CAJA: 1.  TICKET NUMERO: " . $numero);
 /* Stuff around with left margin */
 $printer->feed();
 $printer -> setJustification(Printer::JUSTIFY_CENTER);
-$printer -> text("_______________________________________________________");
+$printer -> text("        _______________________________________________________");
 $printer -> setJustification(Printer::JUSTIFY_LEFT);
 $printer->feed();
 /* Items */
@@ -92,7 +79,7 @@ $a = $db->query("select cod, cant, producto, pv, total, fecha, hora, num_fac fro
   
     foreach ($a as $b) {
  
-$printer -> text($this->Item($b["cant"], substr($b["producto"], 0, 38), $b["pv"], $b["total"]));
+$printer -> text($this->Item($b["cant"], substr($b["producto"], 0, 34), $b["pv"], $b["total"]));
 
 $subtotalf = $subtotalf + $b["total"];
 
@@ -107,11 +94,13 @@ if ($sx = $db->select("sum(total)", "ticket", "WHERE num_fac = '".$numero."' and
 
 
 
-$printer -> text("_______________________________________________________");
+$printer -> text("        _______________________________________________________");
 $printer->feed();
 
 
 // $printer -> text($this->DosCol("Sub Total " . $_SESSION['config_moneda_simbolo'] . ":", 40, Helpers::Format(Helpers::STotal($subtotalf, $_SESSION['config_imp'])), 10));
+$printer -> text($this->DosCol("Sub Total  " . $_SESSION['config_moneda_simbolo'] . ":", 40, Helpers::Format($subtotalf), 10));
+
 
 
 // $printer -> text($this->DosCol("IVA " . $_SESSION['config_moneda_simbolo'] . ":", 40, Helpers::Format(Helpers::Impuesto(Helpers::STotal($subtotalf, $_SESSION['config_imp']), $_SESSION['config_imp'])), 10));
@@ -121,7 +110,7 @@ $printer -> text($this->DosCol("TOTAL " . $_SESSION['config_moneda_simbolo'] . "
 
 
 
-$printer -> text("_______________________________________________________");
+$printer -> text("        _______________________________________________________");
 $printer->feed();
 
 
@@ -139,7 +128,7 @@ $cambios = $efectivo - $subtotalf;
 $printer -> text($this->DosCol("Cambio " . $_SESSION['config_moneda_simbolo'] . ":", 40, Helpers::Format($cambios), 10));
 
 
-$printer -> text("_______________________________________________________");
+$printer -> text("        _______________________________________________________");
 $printer->feed();
 
 
@@ -159,7 +148,7 @@ $printer -> text($this->DosCol($fechaf, 30, $horaf, 20));
 
 
 $printer->feed();
-$printer -> text("Cajero: " . $_SESSION['nombre']);
+$printer -> text("        Cajero: " . $_SESSION['nombre']);
 
 $printer->feed();
 $printer -> setJustification(Printer::JUSTIFY_CENTER);
@@ -183,149 +172,7 @@ $printer->close();
 
 
  public function Factura($efectivo, $numero){
-  $db = new dbConn();
-
-$txt1   = "15"; 
-$txt2   = "5";
-$txt3   = "0";
-$txt4   = "0";
-$n1   = "15";
-$n2   = "60";
-$n3   = "30";
-$n4   = "0";
-
-
-$col1 = 30;
-$col2 = 70;
-$col3 = 385;
-$col4 = 550;
-$col5 = 500;
-// $print
-$print = "FACTURA";
-
-$handle = printer_open($print);
-printer_set_option($handle, PRINTER_MODE, "RAW");
-
-printer_start_doc($handle, "Mi Documento");
-printer_start_page($handle);
-
-
-$font = printer_create_font("Arial", $txt1, $txt2, PRINTER_FW_NORMAL, false, false, false, 0);
-printer_select_font($handle, $font);
-
-
-
-$oi=95;
-//// comienza la factura
-
-
-
-    if ($r = $db->select("cliente", "ticket_cliente", "WHERE factura = '$numero' and tx = " . $_SESSION["tx"] . " and td = " .  $_SESSION["td"])) { 
-        $hashcliente = $r["cliente"];
-    } unset($r);  
-
-
-
-    if ($r = $db->select("nombre, documento, direccion", "clientes", "WHERE hash = '$hashcliente' and td = " .  $_SESSION["td"])) { 
-        $nombre = $r["nombre"];
-        $documento = $r["documento"];
-        $direccion = $r["direccion"];
-    } unset($r);  
-
-
-
-$oi=$oi+$n1;
-printer_draw_text($handle, $nombre, 85, $oi);
-printer_draw_text($handle, date("d") . " - " . Fechas::MesEscrito(date("m")) ." - " . date("Y"), 460, $oi);
-
-$oi=$oi+$n1;
-printer_draw_text($handle, $direccion, 100, $oi);
-
-printer_draw_text($handle, $documento, 475, $oi);
-
-
-$oi=158; // salto de linea
-
-$a = $db->query("select cod, cant, producto, pv, total, fecha, hora, num_fac from ticket where num_fac = '".$numero."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]." and tipo = ".$_SESSION["tipoticket"]." group by cod");
-  
-    foreach ($a as $b) {
  
- $fechaf=$b["fecha"];
- $horaf=$b["hora"];
- $num_fac=$b["num_fac"];
-
-          $oi=$oi+$n1;
-          printer_draw_text($handle, $b["cant"], $col1, $oi);
-          printer_draw_text($handle, $b["producto"], $col2, $oi);
-          printer_draw_text($handle, $b["pv"], $col3, $oi);
-          printer_draw_text($handle, $b["total"], $col4, $oi);
-
-
-
-    }    $a->close();
-
-
-if ($sx = $db->select("sum(stotal), sum(imp), sum(total)", "ticket", "WHERE num_fac = '".$numero."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]." and tipo = ".$_SESSION["tipoticket"]."")) { 
-       $stotalx=$sx["sum(stotal)"];
-       $impx=$sx["sum(imp)"];
-       $totalx=$sx["sum(total)"];
-    } unset($sx); 
- 
-/// salto de linea
-$oi=423;
-
-// valores en letras
-printer_draw_text($handle, Dinero::DineroEscrito($totalx), $col2, $oi);
-// echo wordwrap($cadena, 15, "<br>" ,FALSE);
-
-
-// volores numericos
-printer_draw_text($handle, Helpers::Format($totalx), $col4, $oi);
-
-
-
-$oi=$oi+$n1;
-// printer_draw_text($handle, Helpers::Format($impx), $col4, $oi);
-// printer_draw_text($handle, Helpers::Format(Helpers::Impuesto(Helpers::STotal($totalx, $_SESSION['config_imp']), $_SESSION['config_imp'])), $col4, $oi);
-
-
-$oi=$oi+$n1;
-// printer_draw_text($handle, Helpers::Format($totalx), $col4, $oi);
-
-
-$oi=$oi+$n1+$n1+8;
-printer_draw_text($handle, Helpers::Format($totalx), $col4, $oi);
-
-
-// $oi=$oi+$n3+$n1;
-// printer_draw_text($handle, "Sub Total " . $_SESSION['config_moneda_simbolo'] . ":", 185, $oi);
-// printer_draw_text($handle, Helpers::Format(Helpers::STotal($subtotalf, $_SESSION['config_imp'])), 320, $oi);
-
-
-// $oi=$oi+$n1;
-// printer_draw_text($handle, "15% Impu. " . $_SESSION['config_moneda_simbolo'] . ":", 175, $oi);
-// printer_draw_text($handle, Helpers::Format(Helpers::Impuesto(Helpers::STotal($subtotalf, $_SESSION['config_imp']), $_SESSION['config_imp'])), 320, $oi);
-
-
-
-
-// $oi=$oi+$n1;
-// printer_draw_text($handle, "Total " . $_SESSION['config_moneda_simbolo'] . ":", 232, $oi);
-// printer_draw_text($handle, Helpers::Format($subtotalf), 320, $oi);
-
-
-
-
-
-printer_delete_font($font);
-///
-printer_end_page($handle);
-printer_end_doc($handle);
-printer_close($handle);
-
-
-
-
 }   /// termina FACTURA
 
 
@@ -333,160 +180,7 @@ printer_close($handle);
 
 
  public function CreditoFiscal($efectivo, $numero){
-  $db = new dbConn();
 
-$txt1   = "15"; 
-$txt2   = "5";
-$txt3   = "0";
-$txt4   = "0";
-$n1   = "15";
-$n2   = "15";
-$n3   = "30";
-$n4   = "0";
-
-
-$col1 = 30;
-$col2 = 70;
-$col3 = 400;
-$col4 = 565;
-$col5 = 500;
-// $print
-$print = "FACTURA";
-
-$handle = printer_open($print);
-printer_set_option($handle, PRINTER_MODE, "RAW");
-
-printer_start_doc($handle, "Mi Documento");
-printer_start_page($handle);
-
-
-$font = printer_create_font("Arial", $txt1, $txt2, PRINTER_FW_NORMAL, false, false, false, 0);
-printer_select_font($handle, $font);
-
-
-
-$oi=80;
-//// comienza la factura
-
-$oi=$oi+$n1;
-printer_draw_text($handle, date("d"), 430, $oi);
-printer_draw_text($handle, date("m"), 490, $oi);
-printer_draw_text($handle, substr(date("Y"), -1), 590, $oi);
-
-
-
-  if ($r = $db->select("documento", "facturar_documento_factura", "WHERE factura = '$numero' and tx = " . $_SESSION["tx"] . " and td = " .  $_SESSION["td"] . " order by time desc limit 1" )) { 
-      $documento = $r["documento"];
-  } unset($r);  
-
-
-
-    if ($r = $db->select("cliente, giro, registro, direccion, departamento", "facturar_documento", "WHERE documento = '$documento' and td = " .  $_SESSION["td"])) { 
-        $cliente = $r["cliente"];
-        $giro = $r["giro"];
-        $registro = $r["registro"];
-        $direccion = $r["direccion"];
-        $departamento = $r["departamento"];
-    } unset($r);  
-
-
-
-$oi=$oi+$n1;
-printer_draw_text($handle, $cliente, 85, $oi);
-$oi=$oi+$n1;
-printer_draw_text($handle, $direccion, 100, $oi);
-$oi=$oi+$n1;
-printer_draw_text($handle, $departamento, 110, $oi);
-printer_draw_text($handle, $giro, 390, $oi);
-
-$oi=$oi+$n1;
-printer_draw_text($handle, $documento, 100, $oi);
-printer_draw_text($handle, $registro, 390, $oi);
-
-
-
-$oi=220; // salto de linea
-
-$a = $db->query("select cod, cant, producto, pv, stotal, total, fecha, hora, num_fac from ticket where num_fac = '".$numero."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]." and tipo = ".$_SESSION["tipoticket"]." group by cod");
-  
-    foreach ($a as $b) {
- 
- $fechaf=$b["fecha"];
- $horaf=$b["hora"];
- $num_fac=$b["num_fac"];
-
-          $oi=$oi+$n2;
-          printer_draw_text($handle, $b["cant"], $col1, $oi);
-          printer_draw_text($handle, $b["producto"], $col2, $oi);
-          printer_draw_text($handle, Helpers::Format4D(Helpers::STotal($b["pv"], $_SESSION['config_imp'])), $col3, $oi);
-
-          // printer_draw_text($handle, $b["pv"], $col3, $oi);
-          printer_draw_text($handle, $b["stotal"], $col4, $oi);
-
-
-
-    }    $a->close();
-
-
-if ($sx = $db->select("sum(stotal), sum(imp), sum(total)", "ticket", "WHERE num_fac = '".$numero."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]." and tipo = ".$_SESSION["tipoticket"]."")) { 
-       $stotalx=$sx["sum(stotal)"];
-       $impx=$sx["sum(imp)"];
-       $totalx=$sx["sum(total)"];
-    } unset($sx); 
- 
-/// salto de linea
-$oi=430;
-
-// valores en letras
-printer_draw_text($handle, Dinero::DineroEscrito($totalx), $col2, $oi);
-// echo wordwrap($cadena, 15, "<br>" ,FALSE);
-
-
-// volores numericos
-// printer_draw_text($handle, Helpers::Format($totalx), $col4, $oi);
-printer_draw_text($handle, Helpers::Format($stotalx), $col4, $oi);
-
-
-
-
-$oi=$oi+$n1;
-// printer_draw_text($handle, Helpers::Format($impx), $col4, $oi);
-printer_draw_text($handle, Helpers::Format(Helpers::Impuesto(Helpers::STotal($totalx, $_SESSION['config_imp']), $_SESSION['config_imp'])), $col4, $oi);
-
-
-$oi=$oi+$n1;
-printer_draw_text($handle, Helpers::Format($totalx), $col4, $oi);
-
-
-$oi=$oi+$n1+$n1+$n1+$n1+$n1+8;
-printer_draw_text($handle, Helpers::Format($totalx), $col4, $oi);
-
-
-// $oi=$oi+$n3+$n1;
-// printer_draw_text($handle, "Sub Total " . $_SESSION['config_moneda_simbolo'] . ":", 185, $oi);
-// printer_draw_text($handle, Helpers::Format(Helpers::STotal($subtotalf, $_SESSION['config_imp'])), 320, $oi);
-
-
-// $oi=$oi+$n1;
-// printer_draw_text($handle, "15% Impu. " . $_SESSION['config_moneda_simbolo'] . ":", 175, $oi);
-// printer_draw_text($handle, Helpers::Format(Helpers::Impuesto(Helpers::STotal($subtotalf, $_SESSION['config_imp']), $_SESSION['config_imp'])), 320, $oi);
-
-
-
-
-// $oi=$oi+$n1;
-// printer_draw_text($handle, "Total " . $_SESSION['config_moneda_simbolo'] . ":", 232, $oi);
-// printer_draw_text($handle, Helpers::Format($subtotalf), 320, $oi);
-
-
-
-
-
-printer_delete_font($font);
-///
-printer_end_page($handle);
-printer_end_doc($handle);
-printer_close($handle);
 
 
 }
@@ -524,14 +218,7 @@ printer_close($handle);
 
  public function Ninguno(){
 
-
-
-if(Helpers::GetIp() == "192.168.1.3"){
-  $nombre_impresora = "TICKET2";
-} else {
-  $nombre_impresora = "TICKET";
-}
-
+$nombre_impresora = "TICKET";
 
 $connector = new WindowsPrintConnector($nombre_impresora);
 $printer = new Printer($connector);
@@ -564,14 +251,7 @@ $printer->close();
 
 
  public function AbrirCaja(){
-
-
-if(Helpers::GetIp() == "192.168.1.3"){
-  $nombre_impresora = "TICKET2";
-} else {
-  $nombre_impresora = "TICKET";
-}
-
+$nombre_impresora = "TICKET";
 
 $connector = new WindowsPrintConnector($nombre_impresora);
 $printer = new Printer($connector);
@@ -593,14 +273,7 @@ $printer->close();
 
  public function Barcode($numero){
   $db = new dbConn();
-
-
-if(Helpers::GetIp() == "192.168.1.3"){
-  $nombre_impresora = "TICKET2";
-} else {
   $nombre_impresora = "TICKET";
-}
-
 
 
 $connector = new WindowsPrintConnector($nombre_impresora);
@@ -650,12 +323,7 @@ $printer -> close();
 
 
 
-
-if(Helpers::GetIp() == "192.168.1.3"){
-  $nombre_impresora = "TICKET2";
-} else {
   $nombre_impresora = "TICKET";
-}
 
 
 $connector = new WindowsPrintConnector($nombre_impresora);
@@ -670,7 +338,7 @@ $printer -> setLineSpacing(80);
 $printer -> setJustification(Printer::JUSTIFY_LEFT);
 
 
-$printer -> text("CORTE X");
+$printer -> text("        CORTE X");
 
 
 /* Stuff around with left margin */
@@ -683,21 +351,17 @@ $printer->feed();
 
 
 $printer -> setJustification(Printer::JUSTIFY_CENTER);
-$printer->text("TIENDA SAN ANTONIO");
+$printer->text("ZAPATERIA  DON COJUTE");
 
+
+$printer -> setTextSize(1, 2);
+$printer -> setEmphasis(false);
+$printer->feed();
+$printer->text("4ta Calle Ote, y 4ta Avenida Sur local 2 - 3,");
 
 $printer->feed();
-$printer->text("Barrio El Centro, Salida Los Conacastes");
-$printer->feed();
-$printer->text("Aguas Calientes, Chalatenango");
+$printer->text(" Barrio San Juan. Cojutepeque ");
 
-$printer->feed();
-$printer->text("Tel: 2309 4262 y  2309 5125");
-
-
-//$printer->feed();
-//$printer->text("Giro: Venta al por menor de Materiales ");
-//$printer->text("de Construccion y articulos conexos ");
 
 
 
@@ -913,7 +577,7 @@ $printer -> setEmphasis(true);
 $printer -> text($this->Item("Descripcion", '', '', 'Total'));
 $printer -> setEmphasis(false);
 
-$printer -> text("_______________________________________________________");
+$printer -> text("        _______________________________________________________");
 $printer->feed();
 
 $ax = $db->query("select nombre, cantidad FROM gastos WHERE time BETWEEN '".$aperturaF."' and '".$cierreF."' and td = ".$_SESSION["td"]." and edo = 1");
@@ -930,7 +594,7 @@ if ($r = $db->select("nombre", "login_userdata", "WHERE user = '".$user."' and t
   } unset($r);  
 
 $printer->feed();
-$printer->text("CAJERO: " . $cajero);
+$printer->text("        CAJERO: " . $cajero);
 
 
 $printer->feed();
@@ -954,12 +618,7 @@ $printer->close();
   $db = new dbConn();
 
 
-
-if(Helpers::GetIp() == "192.168.1.3"){
-  $nombre_impresora = "TICKET2";
-} else {
   $nombre_impresora = "TICKET";
-}
 
 
 $connector = new WindowsPrintConnector($nombre_impresora);
@@ -973,7 +632,7 @@ $printer -> setLineSpacing(80);
 
 $printer -> setJustification(Printer::JUSTIFY_LEFT);
 
-$printer -> text("CORTE Z");
+$printer -> text("        CORTE Z");
 
 
 /* Stuff around with left margin */
@@ -985,21 +644,16 @@ $printer->feed();
 /* Items */
 
 $printer -> setJustification(Printer::JUSTIFY_CENTER);
-$printer->text("TIENDA SAN ANTONIO");
+$printer->text("ZAPATERIA  DON COJUTE");
 
+
+$printer -> setTextSize(1, 2);
+$printer -> setEmphasis(false);
+$printer->feed();
+$printer->text("4ta Calle Ote, y 4ta Avenida Sur local 2 - 3,");
 
 $printer->feed();
-$printer->text("Barrio El Centro, Salida Los Conacastes");
-$printer->feed();
-$printer->text("Aguas Calientes, Chalatenango");
-
-$printer->feed();
-$printer->text("Tel: 2309 4262 y  2309 5125");
-
-
-//$printer->feed();
-//$printer->text("Giro: Venta al por menor de Materiales ");
-//$printer->text("de Construccion y articulos conexos ");
+$printer->text(" Barrio San Juan. Cojutepeque ");
 
 
 
@@ -1210,11 +864,11 @@ $printer->close();
 
  public function Item($cant,  $name = '', $price = '', $total = '', $dollarSign = false){
         $rightCols = 8;
-        $leftCols = 38;
+        $leftCols = 48;
         if ($dollarSign) {
             $leftCols = $leftCols / 2 - $rightCols / 2;
         }
-        $left = str_pad($cant . " " . $name, $leftCols) ;
+        $left = str_pad("         " . $cant . " " . $name, $leftCols) ;
         
         $sign = ($dollarSign ? '$ ' : '');
 
