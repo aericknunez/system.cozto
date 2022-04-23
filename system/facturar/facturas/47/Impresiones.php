@@ -17,9 +17,9 @@ class Impresiones{
 
 
 if(Helpers::GetIp() == "192.168.1.41"){
-  $nombre_impresora = "TICKET";
-} else {
   $nombre_impresora = "TICKET2";
+} else {
+  $nombre_impresora = "TICKET";
 }
 
 
