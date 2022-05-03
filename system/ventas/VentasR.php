@@ -709,7 +709,7 @@ if ($r = $db->select("sum(existencia)", "producto_ingresado", "WHERE existencia 
 	public function AddTicketNum($efectivo) { //leva el control del autoincremento de los clientes
 		$db = new dbConn();
 
-	    if ($r = $db->select("num_fac", "ticket_num", "WHERE tipo = '".$_SESSION["tipoticket"]."' and td = ".$_SESSION["td"]." and tx = ".$_SESSION["tx"]." order by num_fac desc limit 1")) { 
+	    if ($r = $db->select("num_fac", "ticket_num", "WHERE tipo = '".$_SESSION["tipoticket"]."' and td = ".$_SESSION["td"]." and tx = ".$_SESSION["tx"]." order by id desc limit 1")) { 
 	        $ultimoorden = $r["num_fac"];
 	    } unset($r);  
 
