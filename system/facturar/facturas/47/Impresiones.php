@@ -16,7 +16,7 @@ class Impresiones{
   $db = new dbConn();
 
 
-if(Helpers::GetIp() == "192.168.1.41"){
+if($_SESSION['user'] == "0f4a13"){
   $nombre_impresora = "TICKET2";
 } else {
   $nombre_impresora = "TICKET";
@@ -526,11 +526,11 @@ printer_close($handle);
 
 
 
-if(Helpers::GetIp() == "192.168.1.41"){
-  $nombre_impresora = "TICKET2";
-} else {
-  $nombre_impresora = "TICKET";
-}
+  if($_SESSION['user'] == "0f4a13"){
+    $nombre_impresora = "TICKET2";
+  } else {
+    $nombre_impresora = "TICKET";
+  }
 
 
 $connector = new WindowsPrintConnector($nombre_impresora);
@@ -566,12 +566,11 @@ $printer->close();
  public function AbrirCaja(){
 
 
-if(Helpers::GetIp() == "192.168.1.41"){
-  $nombre_impresora = "TICKET2";
-} else {
-  $nombre_impresora = "TICKET";
-}
-
+  if($_SESSION['user'] == "0f4a13"){
+    $nombre_impresora = "TICKET2";
+  } else {
+    $nombre_impresora = "TICKET";
+  }
 
 $connector = new WindowsPrintConnector($nombre_impresora);
 $printer = new Printer($connector);
@@ -595,11 +594,11 @@ $printer->close();
   $db = new dbConn();
 
 
-if(Helpers::GetIp() == "192.168.1.41"){
-  $nombre_impresora = "TICKET2";
-} else {
-  $nombre_impresora = "TICKET";
-}
+  if($_SESSION['user'] == "0f4a13"){
+    $nombre_impresora = "TICKET2";
+  } else {
+    $nombre_impresora = "TICKET";
+  }
 
 
 $connector = new WindowsPrintConnector($nombre_impresora);
@@ -650,11 +649,11 @@ $printer -> close();
 
 
 
-if(Helpers::GetIp() == "192.168.1.41"){
-  $nombre_impresora = "TICKET2";
-} else {
-  $nombre_impresora = "TICKET";
-}
+  if($_SESSION['user'] == "0f4a13"){
+    $nombre_impresora = "TICKET2";
+  } else {
+    $nombre_impresora = "TICKET";
+  }
 
 
 $connector = new WindowsPrintConnector($nombre_impresora);
@@ -954,11 +953,11 @@ $printer->close();
 
 
 
-if(Helpers::GetIp() == "192.168.1.41"){
-  $nombre_impresora = "TICKET2";
-} else {
-  $nombre_impresora = "TICKET";
-}
+  if($_SESSION['user'] == "0f4a13"){
+    $nombre_impresora = "TICKET2";
+  } else {
+    $nombre_impresora = "TICKET";
+  }
 
 
 $connector = new WindowsPrintConnector($nombre_impresora);
