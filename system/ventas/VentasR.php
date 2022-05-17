@@ -555,9 +555,15 @@ if ($r = $db->select("sum(existencia)", "producto_ingresado", "WHERE existencia 
 		    		   echo '<tr '.$color.'>
 						      <th scope="row">
 						      <a id="xcantidad" codigox="'.$b["cod"].'" cantidad="'.$b["cant"].'">'.$b["cant"].'</a>
-						      </th>
-						      <td>'.$productox.'</td>
-						      <td>'.$b["pv"].'</td>
+						      </th>';
+
+						if ($_SESSION["root_comment_ticket"] == "on") {
+							echo '<td><a id="selectComment" iden="'.$b["hash"].'">'.$productox.'</a></td>';
+						} else {
+							echo '<td>'.$productox.'</td>';
+						}
+
+						echo '<td>'.$b["pv"].'</td>
 						      <td>'.$b["stotal"].'</td>
 						      <td>'.$b["imp"].'</td>
 						      <td>
@@ -1135,14 +1141,31 @@ $existencia = $y["existencia"];
       }
 
   } $x->close();
-    
-
-
 }
 
 
 
 
+
+
+
+public function AddComment($iden, $comentario){
+	$db = new dbConn();
+
+    $cambio = array();
+    $cambio["comentario"] = $comentario;
+	Helpers::UpdateId("ticket", $cambio, "hash = '$iden' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."");
+	echo $comentario;
+}
+
+
+public function GetComment($iden){
+	$db = new dbConn();
+	if ($r = $db->select("comentario", "ticket", "WHERE hash = '$iden' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."")) { 
+        echo $r["comentario"];
+    } unset($r);  
+
+}
 
 
 

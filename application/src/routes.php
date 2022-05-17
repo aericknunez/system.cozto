@@ -3207,6 +3207,19 @@ case "691": // borra materiales a la cotizacion
 break;
 
 
+case "700": // Agrega comentario a producto
+	include_once '../../system/ventas/VentasR.php';
+		$msj = new Ventas();
+		$msj->AddComment($_POST['iden'], $_POST['comentario']);
+break;
+
+case "701": // Ver comentario de producto
+	include_once '../../system/ventas/VentasR.php';
+		$msj = new Ventas();
+		$msj->GetComment($_REQUEST['iden']);
+break;
+
+
 
 
 

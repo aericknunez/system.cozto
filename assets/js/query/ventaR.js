@@ -516,7 +516,41 @@ function QueryGo(dir){
     });                 
 
 
+  
+    $('#btn-comment').click(function(e){ /// cambia la cantidad de los productos
+        e.preventDefault();
+        $.ajax({
+            url: "application/src/routes.php?op=700",
+            method: "POST",
+            data: $("#form-comment").serialize(),
+            beforeSend: function () {
+                $('#btn-comment').html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>Loading...').addClass('disabled');
+            },
+            success: function(data){
+               $('#btn-comment').html('Agregar').removeClass('disabled');
+               $("#form-comment").trigger("reset");
+               $('#ModalComentario').modal('hide');
+                $("#msj_comment").html(data);
+            }
+        })
+    })
 
+	$("body").on("click","#selectComment",function(){
+        $('#ModalComentario').modal('show');
+        var iden = $(this).attr('iden');
+        $('#iden').attr("value", iden);
+        var op = "701";
+        var dataString = 'op='+op+'&iden='+iden;
+
+        $.ajax({
+            type: "POST",
+            url: "application/src/routes.php",
+            data: dataString,
+            success: function(data) {            
+                $("#msj_comment").html(data);
+            }
+        });    
+    });
 
 
 

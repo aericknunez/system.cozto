@@ -113,6 +113,11 @@ $r = $db->select("*", "config_root", "where td = ".$_SESSION['td']."");
      </tr> 
 
 
+     <tr>
+       <td>Activar Comentarios</td>
+       <td><? if(Encrypt::Decrypt($r["comment_ticket"],$_SESSION['secret_key']) == "on") echo "Activado";
+              if(Encrypt::Decrypt($r["comment_ticket"],$_SESSION['secret_key']) == "") echo "Inactivo"; ?></td>
+     </tr> 
 
 
 <?

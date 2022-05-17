@@ -732,9 +732,15 @@ Helpers::UpdateId("ubicacion_asig", $cambio, "ubicacion = '".$datos["ubicacion"]
 			    				echo $b["cant"];
 			    			}
 
-						      echo '</th>
-						      <td>'.$productox.'</td>
-						      <td>'.$b["pv"].'</td>
+						      echo '</th>';
+
+						if ($_SESSION["root_comment_ticket"] == "on") {
+							echo '<td><a id="selectComment" iden="'.$b["hash"].'">'.$productox.'</a></td>';
+						} else {
+							echo '<td>'.$productox.'</td>';
+						}
+
+						echo '<td>'.$b["pv"].'</td>
 						      <td>'.$b["stotal"].'</td>
 						      <td>'.$b["imp"].'</td>
 						      <td>

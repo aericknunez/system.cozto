@@ -38,6 +38,7 @@ $ventas = new Ventas();
 <div id="ver">
 <?php 
 $ventas->VerProducto();	
+// print_r($_SESSION);
  ?>
 </div>  <!--  Aqui ira el resultado de lo precesado -->
 
@@ -148,3 +149,40 @@ if($_SESSION["config_pesaje"] == "on"){
 
 
  <?php } ?>
+
+ 
+<!-- Modal -->
+<div class="modal bounceIn" id="ModalComentario" tabindex="-1" role="dialog" aria-labelledby="ModalComentario"
+  aria-hidden="true" data-backdrop="false">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">AGREGAR COMENTARIO</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+<!-- CONTENIDO -->
+  <div class="col-md-12 z-depth-2 justify-content-center">
+  <div id="msj_comment" class="mt-2 font-weight-bold red-text"></div>
+
+      <div class="md-form mt-0">
+        <form id="form-comment">
+        <input type="hidden" id="iden" name="iden" value="">
+        <input class="form-control form-control-lg" type="text" placeholder="Comentario" id="comentario" name="comentario" autofocus>
+        <div class="align-right">
+         <button class="btn aqua-gradient btn-rounded btn-sm" type="submit" id="btn-comment" name="btn-comment">Agregar</button>
+        </div>
+        </form>
+      </div>
+  </div>
+
+<!-- CONTENIDO -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
