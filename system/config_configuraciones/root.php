@@ -114,11 +114,15 @@ $r = $db->select("*", "config_root", "where td = ".$_SESSION['td']."");
 
 
      <tr>
-       <td>Activar Comentarios</td>
+       <td>Activar Campo Extra</td>
        <td><? if(Encrypt::Decrypt($r["comment_ticket"],$_SESSION['secret_key']) == "on") echo "Activado";
               if(Encrypt::Decrypt($r["comment_ticket"],$_SESSION['secret_key']) == "") echo "Inactivo"; ?></td>
      </tr> 
 
+     <tr>
+       <td>Nombre Campo Extra</td>
+       <td><? echo Encrypt::Decrypt($r["extra"],$_SESSION['secret_key']); ?></td>
+     </tr> 
 
 <?
  unset($r);  

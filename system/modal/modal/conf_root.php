@@ -179,6 +179,13 @@ $r = $db->select("*", "config_root", "where td = ".$_SESSION['td']."")
         </label>
       </div>
   </td>
+  <td><small id="ftp_ruta" class="form-text text-muted mb-1">
+        Nombre Campo Extra
+    </small><input type="text" id="extra" name="extra" class="form-control mb-1" placeholder="Campo Extra" value="<? echo Encrypt::Decrypt($r["extra"],$_SESSION['secret_key']); ?>"></td>
+  </tr>
+
+  <tr>
+  <td></td>
   <td><button class="btn btn-info my-4" type="submit" id="btn-root" name="btn-root">Realizar Cambios</button></td>
 
   </tr>

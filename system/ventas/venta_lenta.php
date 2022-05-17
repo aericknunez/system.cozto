@@ -150,14 +150,13 @@ if($_SESSION["config_pesaje"] == "on"){
 
  <?php } ?>
 
- 
-<!-- Modal -->
+ <!-- Modal -->
 <div class="modal bounceIn" id="ModalComentario" tabindex="-1" role="dialog" aria-labelledby="ModalComentario"
   aria-hidden="true" data-backdrop="false">
   <div class="modal-dialog modal-sm" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">AGREGAR COMENTARIO</h5>
+        <h5 class="modal-title" id="exampleModalLabel">AGREGAR <?php echo strtoupper($_SESSION["root_extra"]) ?></h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -170,7 +169,7 @@ if($_SESSION["config_pesaje"] == "on"){
       <div class="md-form mt-0">
         <form id="form-comment">
         <input type="hidden" id="iden" name="iden" value="">
-        <input class="form-control form-control-lg" type="text" placeholder="Comentario" id="comentario" name="comentario" autofocus>
+        <input class="form-control form-control-lg" type="text" placeholder="<?php echo $_SESSION["root_extra"] ?>" id="comentario" name="comentario" autofocus>
         <div class="align-right">
          <button class="btn aqua-gradient btn-rounded btn-sm" type="submit" id="btn-comment" name="btn-comment">Agregar</button>
         </div>
