@@ -362,7 +362,7 @@ public function ProductoIngresado($inicio, $fin, $type = NULL) {
 if($primero == $segundo){
   $a = $db->query("SELECT * FROM producto_ingresado WHERE fechaF = '$segundo' and td = ".$_SESSION['td']." order by time desc");
 } else {
-  $a = $db->query("SELECT * FROM producto_ingresado WHERE time BETWEEN '$primero' AND '$segundo' and td = ".$_SESSION['td']." order by time desc");
+  $a = $db->query("SELECT * FROM producto_ingresado WHERE fechaF BETWEEN '$primero' AND '$segundo' and td = ".$_SESSION['td']." order by time desc");
 }
 
 
