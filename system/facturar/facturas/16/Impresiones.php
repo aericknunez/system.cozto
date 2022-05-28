@@ -163,6 +163,8 @@ $printer -> text("Cajero: " . $_SESSION['nombre']);
 $printer->feed();
 $printer -> setJustification(Printer::JUSTIFY_CENTER);
 $printer -> text("GRACIAS POR SU PREFERENCIA...");
+$printer->feed();
+$printer -> text("DISPONE DE 1 DÍA PARA RECLAMOS O DEVOLUCIONES");
 $printer -> setJustification();
 
 
