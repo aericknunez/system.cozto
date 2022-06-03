@@ -20,7 +20,6 @@ $cortes->Contenido();
 <div align="center" id="cajas">
 <?php 
 $cortes->CajasAbiertas();
-print_r($_SESSION)
 ?>
 </div>
 
