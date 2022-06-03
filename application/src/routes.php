@@ -1128,6 +1128,13 @@ include_once '../../system/producto/ProductoOtros.php';
 $cortes = new Corte();
 
 $cortes->Cierre($_POST["efectivo"]);
+
+
+include_once '../phpMailer/Exception.php';
+include_once '../phpMailer/PHPMailer.php';
+include_once '../phpMailer/SMTP.php';
+include_once '../phpMailer/EmailCorte.php';
+EmailCorte::EnviarCorte();
 break;
 
 

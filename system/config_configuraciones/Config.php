@@ -45,6 +45,7 @@ class Config{
 	    $cambio["sonido"] = $data["sonido"];
 	    $cambio["pesaje"] = $data["pesaje"];
 	    $cambio["agotado"] = $data["agotado"];
+	    $cambio["enviar_email"] = $data["enviar_email"];
 	    $cambio["time"] = Helpers::TimeId();
 	    if (Helpers::UpdateId("config_master", $cambio, "td = ".$_SESSION["td"]."")) {
 	    	$this->CrearVariables();
@@ -135,6 +136,7 @@ class Config{
 			$_SESSION['config_sonido'] = $r["sonido"];
 			$_SESSION['config_pesaje'] = $r["pesaje"];
 			$_SESSION['config_agotado'] = $r["agotado"];
+			$_SESSION['config_enviar_email'] = $r["enviar_email"];
 
 			if($_SESSION['config_skin'] == NULL) $_SESSION['config_skin'] = "mdb-skin";
 			// white-skin , mdb-skin , grey-skin , pink-skin ,  light-blue-skin , black-skin  cyan-skin, navy-blue-skin

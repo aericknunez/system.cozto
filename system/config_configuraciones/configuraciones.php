@@ -152,6 +152,11 @@ $r = $db->select("*", "config_master", "where td = ".$_SESSION['td']."")
        <td><? if($r["agotado"] == "on") echo "Activado"; else echo "Inactivo"; ?></td>    
      </tr> 
 
+     <tr>
+       <td>Enviar Email notificando Corte</td>
+       <td><? if($r["enviar_email"] == "on") echo "Activado"; else echo "Inactivo"; ?></td>    
+     </tr> 
+
      <?
  unset($r);  
 
