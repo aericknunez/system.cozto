@@ -57,7 +57,7 @@ $_SESSION["ver_avatar"] = NULL;
             $_SESSION["caja_apertura"] = $corte->ObtenerHash();
         }
 
-        // VerificaFechaProductos();
+        VerificaFechaProductos();
 
         /// modifaica el sistama de tags
 include_once '../../system/producto/ModificaTags.php';
