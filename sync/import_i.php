@@ -1,6 +1,7 @@
 <?
 header('Access-Control-Allow-Origin: *');
 include_once '../application/common/Helpers.php'; // [Para todo]
+include_once '../application/common/Encrypt.php';
 include_once '../application/includes/variables_db.php';
 include_once '../application/common/Mysqli.php';
 include_once '../application/includes/DataLogin.php';
