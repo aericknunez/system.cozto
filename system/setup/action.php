@@ -3,6 +3,7 @@
 include_once '../../application/common/Alerts.php';
 $alert = new Alerts();
 include_once '../../application/common/Helpers.php';
+include_once '../../application/common/Encrypt.php';
 include_once '../../application/includes/variables_db.php';
 include_once '../../application/common/Mysqli.php';
 $db = new dbConn();
