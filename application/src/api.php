@@ -1,5 +1,6 @@
 <?php
 include_once '../common/Helpers.php'; // [Para todo]
+include_once '../common/Encrypt.php';
 include_once '../includes/variables_db.php';
 include_once '../common/Mysqli.php';
 $db = new dbConn();
@@ -8,7 +9,6 @@ $db = new dbConn();
 
 include_once '../common/Alerts.php';
 include_once '../common/Fechas.php';
-include_once '../common/Encrypt.php';
 include_once '../common/Dinero.php';
 
 // print_r(array_sort($people, 'age', SORT_DESC)); // Sort by oldest first
