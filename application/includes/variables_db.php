@@ -1,5 +1,7 @@
 <?php
 date_default_timezone_set('America/El_Salvador');
+include_once '../common/Encrypt.php'; // 
+
 
 if(Helpers::ServerDomain() == TRUE){
 
