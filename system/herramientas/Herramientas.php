@@ -136,6 +136,7 @@ $a->close();
           $datos["caducaF"] = Fechas::Format($datox["caduca_submit"]);
           $datos["comentarios"] = "Producto de inicio de inventario";
           $datos["fecha"] = date("d-m-Y");
+          $datos["fecha_ingreso"] = Fechas::Format(date("d-m-Y"));
           $datos["hora"] = date("H:i:s");
           $datos["td"] = $_SESSION["td"];
           $datos["hash"] = Helpers::HashId();

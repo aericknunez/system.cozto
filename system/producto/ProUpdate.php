@@ -118,6 +118,7 @@ class ProUpdate{
               $datos["precio_venta"] = $datox["precio_venta"];
               $datos["user"] = $_SESSION["user"];
               $datos["fechaF"] = Fechas::Format(date("d-m-Y"));
+              $datos["fecha_ingreso"] = Fechas::Format(date("d-m-Y"));
               $datos["fecha"] = date("d-m-Y");
               $datos["hora"] = date("H:i:s");
               $datos["td"] = $_SESSION["td"];

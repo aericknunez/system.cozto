@@ -122,6 +122,7 @@ $a->close();
               $datos["comentarios"] = $datox["comentarios"];
               $datos["fecha"] = date("d-m-Y");
               $datos["hora"] = date("H:i:s");
+              $datos["fecha_ingreso"] = Fechas::Format(date("d-m-Y"));
               $datos["td"] = $_SESSION["td"];
               $datos["hash"] = Helpers::HashId();
               $datos["time"] = Helpers::TimeId();

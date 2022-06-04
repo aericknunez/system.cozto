@@ -239,6 +239,7 @@ $datax["caducaF"] = Fechas::Format($b["caducidad"]);
 $datax["comentarios"] = "Ingreso desde Excel";
 $datax["fecha"] = date("d-m-Y");
 $datax["hora"] = date("H:i:s");
+$datox["fecha_ingreso"] = Fechas::Format(date("d-m-Y"));
 $datax["hash"] = Helpers::HashId();
 $datax["time"] = Helpers::TimeId();
 $datax["td"] = $_SESSION["td"];
