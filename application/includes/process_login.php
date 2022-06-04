@@ -1,5 +1,6 @@
 <?php
 include_once '../common/Helpers.php';
+include_once '../common/Encrypt.php';
 include_once '../common/Mysqli.php';
 include_once '../common/Alerts.php';
 include_once 'variables_db.php';
