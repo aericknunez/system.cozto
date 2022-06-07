@@ -19,8 +19,7 @@ $cortes->Contenido();
 
 <div align="center" id="cajas">
 <?php 
-$cortes->CajasAbiertas();
-echo EnCrypt::decrypt('NUgzVEpkcHJOdUgzSkdZZ3FsTkxIUT09', 'https://hibridosv.com');  
+$cortes->CajasAbiertas(); 
 ?>
 </div>
 
