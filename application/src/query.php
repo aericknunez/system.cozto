@@ -518,7 +518,10 @@ echo '<script type="text/javascript" src="assets/js/query/mod_nit.js?v='.$numero
 echo '<script type="text/javascript" src="assets/js/query/paginador.js?v='.$numero.'"></script>';
 } 
 
-
+elseif(isset($_GET["busquedaOpt"])) {
+	echo '<script type="text/javascript" src="assets/js/query/busqueda_comentario.js?v='.$numero.'"></script>';
+echo '<script type="text/javascript" src="assets/js/query/search.js?v='.$numero.'"></script>';
+} 
 
 
 
