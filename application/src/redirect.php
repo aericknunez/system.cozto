@@ -150,7 +150,7 @@ elseif(isset($_GET["mod_factura"])) include_once 'system/facturar/mod_factura.ph
 elseif(isset($_GET["search"])) include_once 'system/facturar/busqueda.php'; // search factura
 elseif(isset($_GET["reportef"])) include_once 'system/facturar/reportef.php'; // search factura
 elseif(isset($_GET["mod_nit"])) include_once 'system/facturar/modificar_datos_nit.php'; // modificar datos NIT
-elseif(isset($_GET["busquedaOpt"])) include_once 'system/facturar/buscar_campo.php'; // Buscar por campo
+
 
 //trasnferencias
 elseif(isset($_GET["transferencias"])) include_once 'system/transferencias/transfer.php'; 

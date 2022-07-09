@@ -399,13 +399,6 @@ echo '<li><a href="application/src/routes.php?op=510"  class="waves-effect"><i c
 
 <li><a href="?reportef" class="waves-effect"><i class="fas fa-cogs"></i> Facturas Emitidas</a></li>
 <li><a href="?mod_nit" class="waves-effect"><i class="fas fa-cogs"></i> Agregar Clientes</a></li>
-<?php
-if($_SESSION['root_comment_ticket'] == "on") {
-?>
-<li><a href="?busquedaOpt" class="waves-effect"><i class="fas fa-cogs"></i> Buscar <?php echo $_SESSION["root_extra"] ?></a></li>
-<?
-}
-?>
 <!-- <li><a  class="waves-effect"><i class="fas fa-cog"></i> Opciones</a></li>
 <li><a  class="waves-effect"><i class="fas fa-cogs"></i> Imprimir Facturas</a></li> -->
 

@@ -206,6 +206,10 @@ if ($r = $db->select("cantidad", "producto", "WHERE cod = '".$b["cod"]."' and td
 
   } $a->close();
 /////////////
+
+
+
+
 }
 
 
@@ -215,60 +219,6 @@ if ($r = $db->select("cantidad", "producto", "WHERE cod = '".$b["cod"]."' and td
 
 
 
-
-
-
-
-
-
-
-
-public function BusquedaPorOpciones($comentario){
-  $db = new dbConn();
-
-$a = $db->query("SELECT * FROM ticket WHERE comentario like '%".$comentario."%' and tipo = '".$_SESSION["tipoticket"]."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]." order by id desc");
-      if($a->num_rows > 0){
-    echo '<table id="dtMaterialDesignExample" class="table table-striped" table-sm cellspacing="0" width="100%">
-            <thead>
-              <tr>
-                <th>'.$_SESSION["root_extra"].'</th>
-                <th>Fecha</th>
-                <th>Cajero</th>
-                <th>Cant</th>
-                <th>Producto</th>
-                <th>Total</th>
-              </tr>
-            </thead>
-            <tbody>';
-          foreach ($a as $b) { 
-            echo '<tr>
-                  <td>'.$b["comentario"]. '</td>
-                  <td>'.$b["fecha"]. ' '.$b["hora"]. '</td>
-                  <td>'.$b["cajero"]. ' '.$b["hora"]. '</td>
-                  <td>'.$b["cant"]. '</td>
-                  <td>'.$b["producto"].'</td>
-                  <td>'.$b["total"].'</td>
-                </tr>';          
-          }
-    echo '</table>';
-
-      } else {
-        echo '<div align="center"><img src="assets/img/imagenes/error4.png" alt="Error" class="fluid-img"></div>';
-      } $a->close();  
-
-
-echo '<div class="text-center">';
-echo "SE ENCUENTRA ACTIVA LA OPCION: ";
-
-echo '<div id="vticket">';
-if($_SESSION["tipoticket"] == 1){ echo '<a id="mticket">TICKET</a>'; }
-elseif($_SESSION["tipoticket"] == 2){ echo '<a id="mticket">FACTURA</a>'; }
-elseif($_SESSION["tipoticket"] == 3){ echo '<a id="mticket">CREDITO FISCAL</a>'; }
-elseif($_SESSION["tipoticket"] == 4){ echo '<a id="mticket">NOTA DE CREDITO</a>'; }
-else { echo '<a id="mticket">N/A</a>'; }
-echo "</div>";
-echo "</div>";
-}
 
 } // fin de la clase
 
