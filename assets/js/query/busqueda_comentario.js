@@ -10,7 +10,7 @@ $(document).ready(function(){
     $('#btn-busqueda').click(function(e){ /// historial de cortes
         e.preventDefault();
         $.ajax({
-                url: "application/src/routes.php?op=210",
+                url: "application/src/routes.php?op=211",
                 method: "POST",
                 data: $("#form-busqueda").serialize(),
                 beforeSend: function () {
