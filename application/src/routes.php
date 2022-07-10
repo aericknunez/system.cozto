@@ -1714,14 +1714,7 @@ break;
 
 
 
-case "210": // ventas detallado
-	include_once '../../system/facturar/Search.php';
-	$busqueda = new Search();
-	$busqueda->BusquedaPorOpciones($_POST["key"]);
-break;
-
-
-case "211": // Busqueda comentarios
+case "210": // Busqueda comentarios
 	include_once '../../system/facturar/ReportesFacturas.php';
 	$historial = new ReportesFacturas();
 	if($_POST["fecha1_submit"]){
@@ -1733,6 +1726,12 @@ case "211": // Busqueda comentarios
 	$historial->ReporteF($inicio, $fin, $_POST["tipo"]);
 break;
 
+
+case "211":
+	include_once '../../system/facturar/Search.php';
+	$busqueda = new Search();
+	$busqueda->BusquedaPorOpciones($_POST["key"]);
+break;
 
 
 
