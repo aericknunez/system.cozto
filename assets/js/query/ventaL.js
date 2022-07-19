@@ -492,7 +492,7 @@ function QueryGo(dir){
         })
     })
 
-    $("#btn-comment").keypress(function(e) {//Para deshabilitar el uso de la tecla "Enter"
+    $("#form-comment").keypress(function(e) {//Para deshabilitar el uso de la tecla "Enter"
         if (e.which == 13) {
         return false;
         }
