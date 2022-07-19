@@ -244,7 +244,7 @@ $a = $db->query("SELECT * FROM ticket WHERE comentario like '%".$comentario."%' 
             echo '<tr>
                   <td>'.$b["comentario"]. '</td>
                   <td>'.$b["fecha"]. ' '.$b["hora"]. '</td>
-                  <td>'.$b["cajero"]. ' '.$b["hora"]. '</td>
+                  <td>'. Helpers::GetData("login_userdata", "nombre", "user", $b["cajero"]). '</td>
                   <td>'.$b["cant"]. '</td>
                   <td>'.$b["producto"].'</td>
                   <td>'.$b["total"].'</td>
