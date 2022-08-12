@@ -120,6 +120,7 @@ $a->close();
               $datos["caduca"] = $datox["caduca_submit"];
               $datos["caducaF"] = Fechas::Format($datox["caduca_submit"]);
               $datos["comentarios"] = $datox["comentarios"];
+              $datos["user"] = $_SESSION["user"];
               $datos["fecha"] = date("d-m-Y");
               $datos["hora"] = date("H:i:s");
               $datos["fecha_ingreso"] = Fechas::Format(date("d-m-Y"));

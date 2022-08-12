@@ -542,7 +542,11 @@ static public function GetData($tabla, $campo, $tabla_id, $hash) {
     $db = new dbConn();
 
   if($r = $db->select($campo, $tabla, "WHERE $tabla_id = '".$hash."' and td = ".$_SESSION["td"]."")) { 
-    return $r[$campo]; 
+    if ($r[$campo]) {
+      return $r[$campo]; 
+    } else {
+      return false;
+    }
   } unset($r); 
 
 }

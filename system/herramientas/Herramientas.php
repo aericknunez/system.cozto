@@ -135,6 +135,7 @@ $a->close();
           $datos["caduca"] = $datox["caduca_submit"];
           $datos["caducaF"] = Fechas::Format($datox["caduca_submit"]);
           $datos["comentarios"] = "Producto de inicio de inventario";
+          $datos["user"] = $_SESSION["user"];
           $datos["fecha"] = date("d-m-Y");
           $datos["fecha_ingreso"] = Fechas::Format(date("d-m-Y"));
           $datos["hora"] = date("H:i:s");
@@ -777,6 +778,7 @@ public function Agrega($datos){
     $data["caduca"] = $this->Caduca($datos["cod"]); // buscar la ultima caducidad
     $data["caducaF"] = Fechas::Format($this->Caduca($datos["cod"]));
     $data["comentarios"] = "Ajuste de inventario desde actualizar producto";
+    $datos["user"] = $_SESSION["user"];
     $data["fecha"] = date("d-m-Y");
     $data["hora"] = date("H:i:s");
     $data["td"] = $_SESSION["td"];

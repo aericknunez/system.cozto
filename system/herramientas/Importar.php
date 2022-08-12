@@ -237,6 +237,7 @@ $datax["precio_costo"] = $b["costo"];
 $datax["caduca"] = $b["caducidad"];
 $datax["caducaF"] = Fechas::Format($b["caducidad"]);
 $datax["comentarios"] = "Ingreso desde Excel";
+$datax["user"] = $_SESSION["user"];
 $datax["fecha"] = date("d-m-Y");
 $datax["hora"] = date("H:i:s");
 $datox["fecha_ingreso"] = Fechas::Format(date("d-m-Y"));
