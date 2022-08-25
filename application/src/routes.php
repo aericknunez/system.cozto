@@ -1,5 +1,6 @@
 <?php
 include_once '../common/Helpers.php'; // [Para todo]
+include_once '../common/Encrypt.php';
 include_once '../includes/variables_db.php';
 include_once '../common/Mysqli.php';
 $db = new dbConn();
@@ -10,7 +11,6 @@ $seslog->sec_session_start();
 
 include_once '../common/Alerts.php';
 include_once '../common/Fechas.php';
-include_once '../common/Encrypt.php';
 include_once '../common/Dinero.php';
 
 
@@ -1128,6 +1128,13 @@ include_once '../../system/producto/ProductoOtros.php';
 $cortes = new Corte();
 
 $cortes->Cierre($_POST["efectivo"]);
+
+
+include_once '../phpMailer/Exception.php';
+include_once '../phpMailer/PHPMailer.php';
+include_once '../phpMailer/SMTP.php';
+include_once '../phpMailer/EmailCorte.php';
+EmailCorte::EnviarCorte();
 break;
 
 
@@ -1707,7 +1714,7 @@ break;
 
 
 
-case "210": // ventas detallado
+case "210": // Busqueda comentarios
 	include_once '../../system/facturar/ReportesFacturas.php';
 	$historial = new ReportesFacturas();
 	if($_POST["fecha1_submit"]){
@@ -1719,6 +1726,12 @@ case "210": // ventas detallado
 	$historial->ReporteF($inicio, $fin, $_POST["tipo"]);
 break;
 
+
+case "211":
+	include_once '../../system/facturar/Search.php';
+	$busqueda = new Search();
+	$busqueda->BusquedaPorOpciones($_POST["key"]);
+break;
 
 
 

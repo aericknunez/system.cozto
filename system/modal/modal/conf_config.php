@@ -220,10 +220,28 @@ $r = $db->select("*", "config_master", "where td = ".$_SESSION['td']."")
           </div></td>
     
     <td>
-    <button class="btn btn-info my-4" type="submit" id="btn-config" name="btn-config">Realizar Cambios</button>
-  
+    <div class="switch mt-4">
+        <label>
+         Enviar Emails ||  Off
+          <input type="checkbox" <?php if($r["enviar_email"] == "on") echo "checked"; ?> id="enviar_email" name="enviar_email" >
+          <span class="lever"></span> On 
+        </label>
+      </div></td>
+
     </td>
   </tr>
+
+
+  <tr>
+
+<td>
+<td>
+<button class="btn btn-info my-4" type="submit" id="btn-config" name="btn-config">Realizar Cambios</button>
+
+</td>
+</tr>
+
+
 <?
  unset($r);  
 

@@ -1,0 +1,1 @@
+ALTER TABLE `producto_ingresado` ADD `fecha_ingreso` VARCHAR(20) NOT NULL AFTER `fechaF`;

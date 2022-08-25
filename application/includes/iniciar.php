@@ -1,5 +1,6 @@
 <?php
 include_once '../common/Helpers.php'; // [Para todo]
+include_once '../common/Encrypt.php';
 include_once '../includes/variables_db.php';
 include_once '../common/Mysqli.php';
 $db = new dbConn();
@@ -7,7 +8,6 @@ include_once '../includes/DataLogin.php';
 $seslog = new Login();
 $seslog->sec_session_start();
 
-include_once '../common/Encrypt.php';
 include_once '../common/Alerts.php';
 include_once '../common/Fechas.php';
 include_once '../../system/index/Inicio.php';
@@ -57,6 +57,7 @@ $_SESSION["ver_avatar"] = NULL;
             $_SESSION["caja_apertura"] = $corte->ObtenerHash();
         }
 
+        VerificaFechaProductos();
 
         /// modifaica el sistama de tags
 include_once '../../system/producto/ModificaTags.php';
@@ -180,6 +181,17 @@ $archivos = glob("../../sync/database/*.sql");
 
 
 
+function VerificaFechaProductos(){
+    $db = new dbConn();
+
+    $a = $db->query("SELECT fecha_ingreso, id, fecha FROM producto_ingresado WHERE fecha_ingreso = ''");
+    if ($a->num_rows > 0) {
+        foreach ($a as $b) {
+            $cambio["fecha_ingreso"] = Fechas::Format($b["fecha"]);
+            $db->update("producto_ingresado", $cambio, "WHERE id=" . $b["id"]);
+        }
+    } $a->close();
+}
 
 
 

@@ -19,7 +19,7 @@ $cortes->Contenido();
 
 <div align="center" id="cajas">
 <?php 
-$cortes->CajasAbiertas();
+$cortes->CajasAbiertas(); 
 ?>
 </div>
 

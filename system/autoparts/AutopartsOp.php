@@ -501,6 +501,8 @@ if ($r = $db->select("hash", "ubicacion", "WHERE td = ".$_SESSION["td"]." and pr
         $ins["existencia"] = $data["cantidad"];
         $ins["precio_costo"] = $data["precio_costo"];
         $ins["fecha"] = date("d-m-Y");
+        $ins["fecha_ingreso"] = Fechas::Format(date("d-m-Y"));
+        $ins["user"] = $_SESSION["user"];
         $ins["hora"] = date("H:i:s");
         $ins["td"] = $_SESSION["td"];
         $ins["hash"] = Helpers::HashId();
