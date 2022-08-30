@@ -61,7 +61,8 @@ $oi=$oi+$n1;
 printer_draw_text($handle, "Tel: 7861-9295", 0, $oi);
 
 $oi=$oi+$n1;
-printer_draw_text($handle, "CAJA: 1", 0, $oi);
+printer_draw_text($handle, "Ticket # ". $numero, 0, $oi);
+printer_draw_text($handle, "CAJA: 1", 240, $oi);
 
 ///
 $oi=$oi+$n2;
