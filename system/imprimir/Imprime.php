@@ -121,15 +121,15 @@ class Imprime {
           </tr>
         </thead>
         <tbody>';
-        $n = 0;
+        $n = 1;
         foreach ($a as $b) {
         // obtener el nombre y detalles del producto
     if ($r = $db->select("precio", "producto_precio", "WHERE producto = ".$b["cod"]." and td = ". $_SESSION["td"] ." order by id desc limit 1")) { 
         $precio = $r["precio"]; } unset($r); 
 
-    $ax = $db->query("SELECT count(cant) FROM ticket WHERE cod = '".$b["cod"]."' and td = ". $_SESSION["td"] ."");
+    $ax = $db->query("SELECT sum(cant) FROM ticket WHERE cod = '".$b["cod"]."' and td = ". $_SESSION["td"] ."");
     foreach ($ax as $bx) {
-        $vendidos=$bx["count(cant)"];
+        $vendidos=$bx["sum(cant)"];
     } $ax->close();
 
           echo '<tr>

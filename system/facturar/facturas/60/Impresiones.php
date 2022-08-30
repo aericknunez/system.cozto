@@ -35,15 +35,14 @@ $printer -> setEmphasis(true);
 // $printer->bitImage($logo);
 
 $printer -> setJustification(Printer::JUSTIFY_CENTER);
-$printer->text("ZAPATERIA  DON COJUTE");
+$printer->text("VARIEDADES OSORIO");
 
 $printer -> setTextSize(1, 2);
 $printer -> setEmphasis(false);
 $printer->feed();
-$printer->text("4ta Calle Ote, y 4ta Avenida Sur local 2 - 3,");
-
+$printer->text("Plaza El Punto Local 3, sobre calle principal");
 $printer->feed();
-$printer->text(" Barrio San Juan. Cojutepeque ");
+$printer->text(" San Rafael Cedros ");
 
 // $printer->feed();
 // $printer->text("Tel: 7609-7442");
@@ -351,16 +350,16 @@ $printer->feed();
 
 
 $printer -> setJustification(Printer::JUSTIFY_CENTER);
-$printer->text("ZAPATERIA  DON COJUTE");
+$printer->text("VARIEDADES OSORIO");
 
 
 $printer -> setTextSize(1, 2);
 $printer -> setEmphasis(false);
 $printer->feed();
-$printer->text("4ta Calle Ote, y 4ta Avenida Sur local 2 - 3,");
+$printer->text("Plaza El Punto Local 3, sobre calle principal");
 
 $printer->feed();
-$printer->text(" Barrio San Juan. Cojutepeque ");
+$printer->text("San Rafael Cedros");
 
 
 
@@ -440,6 +439,7 @@ $printer -> text($this->DosCol("FACTURA $: ", 40, Helpers::Format($t_factura), 1
 $printer -> text($this->DosCol("CREDITO FISCAL $: ", 40, Helpers::Format($t_credito), 10));
 $printer -> text($this->DosCol("IMPUESTO $: ", 40, Helpers::Format($t_imp), 10));
 $printer -> text($this->DosCol("TOTAL $: ", 40, Helpers::Format($total), 10));
+$printer -> text($this->DosCol("APERTURA $: ", 38, Helpers::Format($caja_chica), 10));
 
 
 
@@ -644,16 +644,16 @@ $printer->feed();
 /* Items */
 
 $printer -> setJustification(Printer::JUSTIFY_CENTER);
-$printer->text("ZAPATERIA  DON COJUTE");
+$printer->text("VARIEDADES OSORIO");
 
 
 $printer -> setTextSize(1, 2);
 $printer -> setEmphasis(false);
 $printer->feed();
-$printer->text("4ta Calle Ote, y 4ta Avenida Sur local 2 - 3,");
+$printer->text("Plaza El Punto Local 3, sobre calle principal");
 
 $printer->feed();
-$printer->text(" Barrio San Juan. Cojutepeque ");
+$printer->text("San Rafael Cedros ");
 
 
 

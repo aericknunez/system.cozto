@@ -1629,9 +1629,9 @@ echo '<div class="row justify-content-center">
 
 
 
-    $ax = $db->query("SELECT count(cant) FROM ticket WHERE cod = '".$b["cod"]."' and td = ". $_SESSION["td"] ."");
+    $ax = $db->query("SELECT sum(cant) FROM ticket WHERE cod = '".$b["cod"]."' and td = ". $_SESSION["td"] ."");
     foreach ($ax as $bx) {
-        $vendidos=$bx["count(cant)"];
+        $vendidos=$bx["sum(cant)"];
     } $ax->close();
 
           echo '<tr>
