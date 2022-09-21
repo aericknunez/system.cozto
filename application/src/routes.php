@@ -3232,9 +3232,25 @@ case "701": // Ver comentario de producto
 		$msj->GetComment($_REQUEST['iden']);
 break;
 
+case "705": /// busque reapartidor
+	include_once '../../system/ventas/Repartidor.php';
+		$rep = new Repartidor();
+		$rep->RepartidorBusqueda($_POST);
+break;
 
 
+case "706": // select repartidor
+	include_once '../../system/ventas/Repartidor.php';
+		$rep = new Repartidor();
+		$rep->AgregaRepartidor($_POST);
+break;
 
+
+case "707": // del
+	include_once '../../system/ventas/Repartidor.php';
+	$rep = new Repartidor();
+	$rep->DeleteRepartidor();
+break;
 
 
 } // termina switch

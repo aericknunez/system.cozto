@@ -165,6 +165,9 @@ else { return '<a id="mticket">N/A</a>'; }
 			echo '<a href="?modal=cliente_taller" class="btn-floating btn-danger" title="Asignar Cliente"><i class="fas fa-user"></i></a>';
 		}
 
+		if($_SESSION["root_repartidor"] == "on"){
+			echo '<a href="?modal=add_repartidor" class="btn-floating btn-danger" title="Asignar Repartidor"><i class="fas fa-user"></i></a>';
+		}
 		echo '</div>';
 
 
@@ -188,6 +191,11 @@ else { return '<a id="mticket">N/A</a>'; }
 			 $textos = 'Cliente asignado para la Factura: ' . $_SESSION['factura_cliente']. ". Con el Documento: " . $_SESSION['factura_documento'];
 			Alerts::Mensajex($textos,"info",NULL,NULL);
 		}
+
+		if($_SESSION['repartidor_asig']){
+			$textos = 'Repartidor asignado a la Orden: ' . $_SESSION['repartidor_asig'];
+		   Alerts::Mensajex($textos, "info", NULL,NULL);
+	   }
 
 
 

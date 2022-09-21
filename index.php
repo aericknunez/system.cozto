@@ -57,6 +57,5 @@ if ($seslog->login_check() == TRUE) {
 	}
 
 }
-
 $db->close();
 ?>

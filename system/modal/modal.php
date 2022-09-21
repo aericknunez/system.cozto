@@ -74,5 +74,7 @@ if($_REQUEST["modal"]=="respaldar") include_once 'system/modal/modal/respaldar.p
 /// planilla
 if($_REQUEST["modal"]=="editempleado") include_once 'system/modal/modal/editar-empleado.php';
 
+// add repartidor a la factura
+if($_REQUEST["modal"]=="add_repartidor") include_once 'system/modal/modal/repartidor.php';
 
 ?>

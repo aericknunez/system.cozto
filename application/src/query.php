@@ -76,6 +76,10 @@ echo '
 	if($_GET["modal"] == "cliente"){
 	echo '<script type="text/javascript" src="assets/js/query/ventaPop.js?v='.$numero.'"></script>';
 	}
+	// repartidor
+	if($_GET["modal"] == "add_repartidor"){
+		echo '<script type="text/javascript" src="assets/js/query/ventaPop.js?v='.$numero.'"></script>';
+	}
 	if($_GET["modal"] == "oventas"){
 	echo '<script type="text/javascript" src="assets/js/query/ventaPop.js?v='.$numero.'"></script>';
 	}
@@ -522,7 +526,6 @@ elseif(isset($_GET["busquedaOpt"])) {
 	echo '<script type="text/javascript" src="assets/js/query/busqueda_comentario.js?v='.$numero.'"></script>';
 echo '<script type="text/javascript" src="assets/js/query/search.js?v='.$numero.'"></script>';
 } 
-
 
 
 ////////// transferencias
