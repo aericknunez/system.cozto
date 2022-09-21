@@ -292,7 +292,7 @@ $("#repartidor-busquedaR").keyup(function(){ /// para la caja de busqueda
 
 ////////////////
 
-$("body").on("click","#select-cli",function(){
+$("body").on("click","#select-rep",function(){
 var hash = $(this).attr('hash');
 var nombre = $(this).attr('nombre');
     $.post("application/src/routes.php?op=706", {hash:hash, nombre:nombre}, 
