@@ -975,8 +975,15 @@ $_SESSION["cambio_actual_print"] = $efectivo; // solo para imprimir la factura c
            if($a->num_rows > 0){
             echo '<table class="table table-sm table-hover">';
     foreach ($a as $b) {
+					$nombre = $b["nombre"];
+					if($b["documento"] != NULL){
+						$nombre .= " | " . $b["documento"];
+					}
+					if($b["codigo"] != NULL){
+						$nombre .= " | Cod: " . $b["codigo"];
+					}
                echo '<tr>
-                      <td scope="row"><a id="select-cli" hash="'. $b["hash"] .'" nombre="'. $b["nombre"] .'"><div>'. $b["nombre"] .'   ||   '. $b["documento"].'</div></a></td>
+                      <td scope="row"><a id="select-cli" hash="'. $b["hash"] .'" nombre="'. $b["nombre"] .'"><div>'. $nombre .'</div></a></td>
                     </tr>'; 
     }  $a->close();
 
