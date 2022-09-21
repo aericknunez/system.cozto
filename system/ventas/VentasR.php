@@ -971,7 +971,7 @@ $_SESSION["cambio_actual_print"] = $efectivo; // solo para imprimir la factura c
   public function ClienteBusquedaA($dato){ // Busqueda para cliente
     $db = new dbConn();
 
-          $a = $db->query("SELECT * FROM clientes WHERE (nombre like '%".$dato["keyword"]."%' or documento like '%".$dato["keyword"]."%') and td = ".$_SESSION["td"]." limit 10");
+          $a = $db->query("SELECT * FROM clientes WHERE (nombre like '%".$dato["keyword"]."%' or codigo like '%".$dato["keyword"]."%' or documento like '%".$dato["keyword"]."%') and td = ".$_SESSION["td"]." limit 10");
            if($a->num_rows > 0){
             echo '<table class="table table-sm table-hover">';
     foreach ($a as $b) {
