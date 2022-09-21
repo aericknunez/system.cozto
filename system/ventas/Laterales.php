@@ -194,7 +194,7 @@ else { return '<a id="mticket">N/A</a>'; }
 
 		if($_SESSION['repartidor_asig']){
 			$textos = 'Repartidor asignado a la Orden: ' . $_SESSION['repartidor_asig'];
-		   Alerts::Mensajex($textos, "info", NULL,NULL);
+		   Alerts::Mensajex($textos, "warning", NULL,NULL);
 	   }
 
 
