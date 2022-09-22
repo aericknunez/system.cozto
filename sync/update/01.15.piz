@@ -1,2 +1,3 @@
+ALTER TABLE `clientes` ADD `codigo` VARCHAR(100) NOT NULL AFTER `nombre`;
 ALTER TABLE `ticket_orden` ADD `repartidor` VARCHAR(100) NOT NULL AFTER `user`;
 ALTER TABLE `config_root` ADD `repartidor` VARCHAR(100) NOT NULL AFTER `extra`;

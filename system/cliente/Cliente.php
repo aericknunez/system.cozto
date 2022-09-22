@@ -11,6 +11,7 @@ class Clientes {
       if($this->CompruebaForm($datos) == TRUE){ // comprueba si todos los datos requeridos estan llenos
 
                 $datos["nombre"] = strtoupper($datos["nombre"]);
+                $datos["codigo"] = strtoupper($datos["codigo"]);
                 $datos["hash"] = Helpers::HashId();
                 $datos["time"] = Helpers::TimeId();
                 $datos["td"] = $_SESSION["td"];
@@ -121,6 +122,7 @@ class Clientes {
                 <thead>
                   <tr>
                     <th class="th-sm">#</th>
+                    <th class="th-sm">Cod</th>
                     <th class="th-sm">Nombre</th>
                     <th class="th-sm">Documento</th>
                     <th class="th-sm">Telefono</th>
@@ -133,6 +135,7 @@ class Clientes {
               foreach ($a as $b) { ;
                 echo '<tr>
                       <td>'. $n ++ .'</td>
+                      <td>'.$b["codigo"].'</td>
                       <td>'.$b["nombre"].'</td>
                       <td>'.$b["documento"].'</td>
                       <td>'.$b["telefono"].'</td>
@@ -215,7 +218,7 @@ class Clientes {
 
 
 echo '<blockquote class="blockquote bq-primary">
-  <p class="bq-title" mb-0>'.$r["nombre"].'</p>
+  <p class="bq-title" mb-0>'.$r["codigo"].' | '.$r["nombre"].'</p>
 </blockquote>';
 
 echo '  <p  class="mt-1">Documento: <strong>'.$r["documento"].'</strong> </p>';

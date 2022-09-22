@@ -17,17 +17,26 @@ $cliente = new Clientes();
   
   <div class="form-row">
 
-  <div class="col-md-8 mb-2 md-form">
-      <label for="descripcion">* Nombre</label>
+  <div class="col-md-12 mb-2 md-form">
+      <label for="nombre">* Nombre</label>
       <input type="text" class="form-control" id="nombre" name="nombre">
-    </div>
-
-    <div class="col-md-4 mb-2 md-form">
-      <label for="cod">Documento</label>
-      <input type="text" class="form-control" id="documento" name="documento">
-    </div>
-
+   </div>
   </div>
+
+
+  <div class="form-row">
+
+<div class="col-md-6 mb-2 md-form">
+    <label for="codigo">Codigo</label>
+    <input type="text" class="form-control" id="codigo" name="codigo">
+ </div>
+
+  <div class="col-md-6 mb-2 md-form">
+    <label for="cod">Documento</label>
+    <input type="text" class="form-control" id="documento" name="documento">
+  </div>
+
+</div>
 
 
   <div class="form-row">
