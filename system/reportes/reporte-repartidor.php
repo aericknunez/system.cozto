@@ -23,10 +23,4 @@ $repartidor = new Repartidor();
     </div>
 </form> 
 
-<div id="contenido" class="mt-5">
-<?php 
-	// $historial = new Historial;
-	// $historial->HistorialGDiario(date("d-m-Y"));
-
- ?>
-</div>
+<div id="contenido" class="mt-5"> </div>
