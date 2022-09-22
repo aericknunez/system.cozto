@@ -51,6 +51,96 @@ class Repartidor{
             unset($_SESSION["repartidor_asig"]);
       }
 
+      /// obtener los registros de la tabla planilla_empleados para el select
+      public function RepartidorLista(){
+        $db = new dbConn();
+    
+        $a = $db->query("SELECT * FROM planilla_empleados WHERE td = ".$_SESSION["td"]."");
+      echo '<select class="mdb-select dropdown-primary mt-2" id="repartidor" name="repartidor">';
+      echo '<option value="" disabled selected>Seleccione un Repartidor</option>';
+        foreach ($a as $b) {
+            echo '<option value="'. $b["hash"] .'">'. $b["nombre"] .'</option>';
+        } $a->close();
+      echo '</select>';
+      }
+
+
+      public function VerRepartidores(){
+		$db = new dbConn();
+
+            $a = $db->query("select cod, cant, total, producto, pv 
+            from ticket 
+            where cod = '9999999' and edo = 1 and fecha = '".$_POST["fecha_submit"]."' and td = ".$_SESSION['td']." order by cant desc");
+            $especial = NULL;
+            if($a->num_rows > 0){
+            foreach ($a as $b) {
+            $especial .= '<tr>
+                  <th scope="row">'. $b["cant"] . '</th>
+                  <td>'. $b["producto"] . '</td>
+                  <td>'. Helpers::Dinero($b["pv"]) . '</td>
+                  <td>'. Helpers::Dinero($b["total"]) . '</td>
+            </tr>';
+            } 
+            } $a->close();
+
+			$a = $db->query("select cod, sum(cant), sum(total), producto, pv 
+          from ticket 
+          where cod != 8888 and cod != 9999999 and edo = 1 and fecha = '".$_POST["fecha_submit"]."' and td = ".$_SESSION['td']." GROUP BY cod order by sum(cant) desc");
+
+			if($a->num_rows > 0 or $especial){
+				
+			      echo '<h3 class="h3-responsive">PRODUCTOS VENDIDOS DEL DIA :: '.$_POST["fecha_submit"].'</h3>';
+				    
+				echo '<div class="table-responsive">
+				<table class="table table-striped table-sm">
+						<thead>
+					     <tr>
+					       <th>Cant</th>
+					       <th>Producto</th>
+					       <th>Precio</th>
+					       <th>Total</th>
+					     </tr>
+					   </thead>
+
+						<tbody>';
+
+			    foreach ($a as $b) {
+		    
+			   echo '<tr>
+			       <th scope="row">'. $b["sum(cant)"] . '</th>
+			       <td>'. $b["producto"] . '</td>
+			       <td>'. Helpers::Dinero($b["pv"]) . '</td>
+			       <td>'. Helpers::Dinero($b["sum(total)"]) . '</td>
+			     </tr>';
+			    } 
+
+			    $a->close();
+                  echo $especial;
+
+			echo '</tbody>
+				</table></div>';
+			
+			$ar = $db->query("SELECT sum(cant) FROM ticket where edo = 1 and fecha = '".$_POST["fecha_submit"]."' and td = ".$_SESSION['td']."");
+		    foreach ($ar as $br) {
+		     echo "Cantidad de Productos: ". $br["sum(cant)"] . "<br>";
+		    } $ar->close();
+
+		    $ag = $db->query("SELECT sum(total) FROM ticket where edo = 1 and fecha = '".$_POST["fecha_submit"]."' and td = ".$_SESSION['td']."");
+		    foreach ($ag as $bg) { $tot = $bg["sum(total)"];
+		        echo "Total Vendido: ". Helpers::Dinero($bg["sum(total)"]) . "<br>";
+		    } $ag->close();
+
+
+		     echo "Total Agrupado: ". Helpers::Dinero($tot) . "<br>";
+
+		     echo '<div class="text-right"><a href="system/documentos/ventadiaria.php?fecha='.$_POST["fecha_submit"].'" >Descargar Excel</a></div>';
+
+			} else {
+				Alerts::Mensajex("No se encontraron productos para este dia","danger");
+			}
+				
+      }
+
 
 
 } // Termina la lcase

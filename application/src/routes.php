@@ -3246,10 +3246,18 @@ case "706": // select repartidor
 break;
 
 
-case "707": // del
+case "707": // eliminar repartidor
 	include_once '../../system/ventas/Repartidor.php';
 	$rep = new Repartidor();
 	$rep->DeleteRepartidor();
+break;
+
+
+case "708": // listado repartidor
+	include_once '../../system/ventas/Repartidor.php';
+	$rep = new Repartidor();
+	$rep->VerRepartidores();
+
 break;
 
 
