@@ -741,6 +741,7 @@ break;
 case "82": // guardar la venta
 include_once '../../system/ventas/VentasL.php';
 include_once '../../system/ventas/Opciones.php';
+include_once '../../system/ventas/Repartidor.php';
 	$venta = new Ventas();
 	$venta->GuardarOrden();
 break;
@@ -750,6 +751,7 @@ break;
 case "83": // select orden
 include_once '../../system/ventas/VentasL.php';
 include_once '../../system/ventas/Opciones.php';
+include_once '../../system/ventas/Repartidor.php';
 	$venta = new Ventas();
 	$venta->SelectOrden($_POST["orden"]);
 break;
@@ -773,6 +775,10 @@ case "85": // facturar determinar si es rapido o lento
 	   	if(isset($_SESSION["cliente_c"]) or isset($_SESSION["cliente_cli"])){ // agregar el credito
 	   		include_once '../../system/ventas/Opciones.php';	
 	   	}
+		if(isset($_SESSION["repartidor_asig"]) or isset($_SESSION["repartidor_cli"])){ // agregar el credito
+			include_once '../../system/ventas/Repartidor.php';
+		}
+		   
 
 	$venta = new Ventas();
 	$venta->Facturar($_POST);
@@ -788,6 +794,7 @@ case "86": // cancelar toda la orden
 	include_once '../../system/ventas/VentasL.php';
 	}
 include_once '../../system/ventas/Opciones.php';
+include_once '../../system/ventas/Repartidor.php';
 	$venta = new Ventas();
 	$venta->Cancelar();
 
@@ -3232,9 +3239,32 @@ case "701": // Ver comentario de producto
 		$msj->GetComment($_REQUEST['iden']);
 break;
 
+case "705": /// busque reapartidor
+	include_once '../../system/ventas/Repartidor.php';
+		$rep = new Repartidor();
+		$rep->RepartidorBusqueda($_POST);
+break;
 
 
+case "706": // select repartidor
+	include_once '../../system/ventas/Repartidor.php';
+		$rep = new Repartidor();
+		$rep->AgregaRepartidor($_POST);
+break;
 
+
+case "707": // eliminar repartidor
+	include_once '../../system/ventas/Repartidor.php';
+	$rep = new Repartidor();
+	$rep->DeleteRepartidor();
+break;
+
+
+case "708": // listado repartidor
+	include_once '../../system/ventas/Repartidor.php';
+	$rep = new Repartidor();
+	$rep->VerRepartidores($_POST['repartidor'], $_POST['fecha_submit'], true);
+break;
 
 
 } // termina switch

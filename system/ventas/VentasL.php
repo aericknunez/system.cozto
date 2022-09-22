@@ -896,6 +896,10 @@ if($servicio_p != "on"){
 	   		$opciones = new Opciones();
 	   		$opciones->DelCliente();
 	   	}
+		if(isset($_SESSION["repartidor_cli"])){ // guardar el registro del cliente
+			$repartidor = new Repartidor();
+			$repartidor->UnsetRepartidor();
+		}
 
 			$can = $db->query("SELECT * FROM ticket WHERE orden = ".$_SESSION["orden"]." and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."");
 		    
@@ -919,6 +923,10 @@ if($servicio_p != "on"){
 	   		$opciones = new Opciones();
 	   		$opciones->UnsetCliente();
 	   	}	
+		if(isset($_SESSION["repartidor_cli"])){ // guardar el registro del cliente
+			$repartidor = new Repartidor();
+			$repartidor->UnsetRepartidor();
+		}
 
 		$cambios = array();
 	   	$cambios["estado"] = 3;
@@ -954,7 +962,9 @@ $a->close();
 
 		$_SESSION["orden"] = $orden;
    		$opciones = new Opciones();
-   		$opciones->VarCredito();		
+   		$opciones->VarCredito();
+		$repartidor = new Repartidor();
+		$repartidor->VarRepartidor();
 	} else {
 		Alerts::Alerta("error","Error!","El estado de la orden cambió!");
 	}
@@ -1033,6 +1043,10 @@ $a->close();
 	   		$opciones->ConfirmCliente($factura, $_SESSION["cliente_cli"]);
 	   		$opciones->UnsetCliente();
 	   	}
+		if(isset($_SESSION["repartidor_cli"])){
+			$repartidor = new Repartidor();
+			$repartidor->UnsetRepartidor();
+		}
 			if(isset($_SESSION["orden"])) unset($_SESSION["orden"]);
 			if(isset($_SESSION["descuento"])) unset($_SESSION["descuento"]);
 			if(isset($_SESSION["tcredito"])) unset($_SESSION["tcredito"]);
