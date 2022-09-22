@@ -855,6 +855,10 @@ if ($r = $db->select("sum(existencia)", "producto_ingresado", "WHERE existencia 
 	   		$opciones->ConfirmCliente($factura, $_SESSION["cliente_cli"]);
 	   		$opciones->UnsetCliente();
 	   	}
+		if(isset($_SESSION["repartidor_cli"])){
+			$repartidor = new Repartidor();
+			$repartidor->UnsetRepartidor();
+		}
 			if(isset($_SESSION["orden"])) unset($_SESSION["orden"]);
 			if(isset($_SESSION["descuento"])) unset($_SESSION["descuento"]);
 			if(isset($_SESSION["tcredito"])) unset($_SESSION["tcredito"]);

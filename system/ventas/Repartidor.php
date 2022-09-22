@@ -35,8 +35,9 @@ class Repartidor{
     
     
             $cambio = array();
-            $cambio["repartidor"] = $_SESSION["repartidor_asig"];
+            $cambio["repartidor"] = $_SESSION["repartidor_cli"];
             Helpers::UpdateId("ticket_orden", $cambio, "correlativo = '".$_SESSION["orden"]."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."");   
+            Helpers::UpdateId("ticket", $cambio, "orden = '".$_SESSION["orden"]."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."");   
     
       }
 
@@ -46,6 +47,7 @@ class Repartidor{
             $cambio = array();
             $cambio["repartidor"] = NULL;
             Helpers::UpdateId("ticket_orden", $cambio, "correlativo = '".$_SESSION["orden"]."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."");   
+            Helpers::UpdateId("ticket", $cambio, "orden = '".$_SESSION["orden"]."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."");   
             
             unset($_SESSION["repartidor_cli"]);
             unset($_SESSION["repartidor_asig"]);
@@ -141,6 +143,28 @@ class Repartidor{
 				
       }
 
+
+      public function UnsetRepartidor(){
+            if(isset($_SESSION["repartidor_cli"])) unset($_SESSION["repartidor_cli"]);
+            if(isset($_SESSION["repartidor_asig"])) unset($_SESSION["repartidor_asig"]);		
+      }
+
+
+      public function VarRepartidor(){
+            $db = new dbConn();
+
+            if ($r = $db->select("repartidor", "ticket_orden", "WHERE orden = ".$_SESSION["orden"]." and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."")) { 
+                  if($r["repartidor"] != NULL){
+                        $_SESSION["repartidor_cli"] =  $r["repartidor"];
+                  }	    	
+            } unset($r);  
+            if($_SESSION["repartidor_cli"]){
+                  $_SESSION["repartidor_asig"] = Helpers::GetData("planilla_empleados", "nombre", "hash", $_SESSION["repartidor_cli"]);
+            } else {
+                  $this->UnsetRepartidor();
+            }
+
+      }
 
 
 } // Termina la lcase

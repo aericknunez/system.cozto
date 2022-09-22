@@ -1,0 +1,1 @@
+ALTER TABLE `ticket` ADD `repartidor` VARCHAR(100) NOT NULL AFTER `user`;
