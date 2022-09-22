@@ -923,6 +923,10 @@ if($servicio_p != "on"){
 	   		$opciones = new Opciones();
 	   		$opciones->UnsetCliente();
 	   	}	
+		if(isset($_SESSION["repartidor_cli"])){ // guardar el registro del cliente
+			$repartidor = new Repartidor();
+			$repartidor->UnsetRepartidor();
+		}
 
 		$cambios = array();
 	   	$cambios["estado"] = 3;
