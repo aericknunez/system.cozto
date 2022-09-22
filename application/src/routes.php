@@ -741,6 +741,7 @@ break;
 case "82": // guardar la venta
 include_once '../../system/ventas/VentasL.php';
 include_once '../../system/ventas/Opciones.php';
+include_once '../../system/ventas/Repartidor.php';
 	$venta = new Ventas();
 	$venta->GuardarOrden();
 break;
