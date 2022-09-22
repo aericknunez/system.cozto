@@ -173,6 +173,11 @@ if($_SESSION["config_pesaje"] == "on"){
 
  <li><a href="?listadoproductos" class="waves-effect"><i class="fas fa-address-book"></i> Productos Vendidos</a></li>
 
+ <?php
+if($_SESSION['root_repartidor']){ 
+echo '<li><a href="?reporte_repartidor" class="waves-effect"><i class="fas fa-cogs"></i> Reporte Repartidor</a></li>';
+}
+?>
 </ul>
 </div>
 </li>
