@@ -693,6 +693,11 @@ if ($r = $db->select("sum(existencia)", "producto_ingresado", "WHERE existencia 
 	   		$opciones = new Opciones();
 	   		$opciones->DelCliente();
 	   	}
+		if(isset($_SESSION["repartidor_cli"])){ // guardar el registro del cliente
+			$repartidor = new Repartidor();
+			$repartidor->UnsetRepartidor();
+		}
+
 			$can = $db->query("SELECT * FROM ticket WHERE orden = ".$_SESSION["orden"]." and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."");
 		    
 		    foreach ($can as $cancel) {
@@ -855,6 +860,10 @@ if ($r = $db->select("sum(existencia)", "producto_ingresado", "WHERE existencia 
 	   		$opciones->ConfirmCliente($factura, $_SESSION["cliente_cli"]);
 	   		$opciones->UnsetCliente();
 	   	}
+		if(isset($_SESSION["repartidor_cli"])){
+			$repartidor = new Repartidor();
+			$repartidor->UnsetRepartidor();
+		}
 			if(isset($_SESSION["orden"])) unset($_SESSION["orden"]);
 			if(isset($_SESSION["descuento"])) unset($_SESSION["descuento"]);
 			if(isset($_SESSION["tcredito"])) unset($_SESSION["tcredito"]);
