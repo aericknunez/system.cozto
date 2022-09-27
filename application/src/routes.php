@@ -1353,7 +1353,17 @@ case "135": // imprime cuotas de credito
 	$imprimir->CuotaCredito($_POST["hash"]); //
 break; 
 
-
+case "145": // historial ventas x user
+	include_once '../../system/historial/Historial.php';
+	$historial = new Historial;
+	if($_POST["fecha1_submit"]){
+		$inicio = $_POST["fecha1_submit"]; $fin=$_POST["fecha2_submit"];
+	} else {
+		$inicio = date("01-m-Y"); $fin=date("31-m-Y");
+	}
+	
+	$historial->VentasPorUsuario($inicio, $fin, $_POST["usuario"]);
+break;
 
 case "146": // lateral
 include_once '../../system/cotizar/Laterales.php';

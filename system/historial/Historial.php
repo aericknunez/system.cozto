@@ -1069,9 +1069,28 @@ echo '</tbody>
 
 
 
+	public function VentasPorUsuario($inicio, $fin, $usuario = NULL) {
+		$db = new dbConn();
+
+		$primero = Fechas::Format($inicio);
+		$segundo = Fechas::Format($fin);
+
+		Alerts::Mensajex("Imprimir reporte entre las fechas : <strong>" . $primero . " - " . $segundo .  " - " . $usuario . " </strong>","info", '<a href="system/documentos/reportemensual.php?inicio='.$inicio.'&fin='.$fin.'" class="btn btn-success btn-sm">Imprimir</a>');
+
+	}
 
 
+	public function getUsuariosSelect(){
+		$db = new dbConn();
 
+		$a = $db->query("SELECT * FROM login_userdata WHERE td = ".$_SESSION["td"]."");
+		echo '<select class="browser-default form-control my-2" id="usuario" name="usuario">
+		<option value="">Seleccione un Usuario</option>';
+		foreach ($a as $b) {
+			echo '<option value="'.$b["user"].'">'.$b["nombre"].'</option>';
+		} $a->close();
+		echo '</select>';
+	}
 
 
 
