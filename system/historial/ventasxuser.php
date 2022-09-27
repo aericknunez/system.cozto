@@ -26,5 +26,4 @@ include_once 'system/historial/Historial.php';
   </div>
 
 <div id="contenido" class="mt-5">
-
 </div>

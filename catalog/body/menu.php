@@ -54,17 +54,9 @@ if($_SESSION["caja_apertura"] == NULL){ ?>
 <li><a href="?gmensual" class="waves-effect"><i class="fas fa-cogs"></i> Gastos Mensuales</a></li>
 <li><a href="?descuentos" class="waves-effect"><i class="fas fa-cogs"></i> Descuentos Diarios</a></li>
 <li><a href="?utilidades" class="waves-effect"><i class="fas fa-cogs"></i> Utilidades</a></li>
-
 <li><a href="?rmensual" class="waves-effect"><i class="fas fa-cog"></i> Reporte Mensual</a></li>
-
-<li><a href="?listaventa" class="waves-effect"><i class="fas fa-cogs"></i> Listado de ventas</a></li>
-
-<?php
-if($_SESSION['root_repartidor']){ 
-echo '<li><a href="?ventasxuser" class="waves-effect"><i class="fas fa-cogs"></i> Ventas por usuario</a></li>';
-}
-?>
-
+<li></li><a href="?listaventa" class="waves-effect"><i class="fas fa-cogs"></i> Listado de ventas</a></li>
+<li><a href="?ventasxuser" class="waves-effect"><i class="fas fa-cogs"></i> Ventas por usuario</a></li>
 <li><a href="?gra_semanal" class="waves-effect"><i class="fas fa-cog"></i> Grafico Semanal</a></li>
 <li><a href="?gra_mensual" class="waves-effect"><i class="fas fa-cogs"></i> Grafico Mensual</a></li>
 <li><a href="?gra_semestre" class="waves-effect"><i class="fas fa-cogs"></i> Grafico Semestral</a></li>

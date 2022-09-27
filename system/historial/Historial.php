@@ -1161,7 +1161,11 @@ echo '</tbody>
 	public function getUsuariosSelect(){
 		$db = new dbConn();
 
-		$a = $db->query("SELECT * FROM login_userdata WHERE td = ".$_SESSION["td"]."");
+		if ($_SESSION["tipo_cuenta"] == 1) {
+			$a = $db->query("SELECT * FROM login_userdata WHERE td = ".$_SESSION["td"]."");
+		} else {
+			$a = $db->query("SELECT * FROM login_userdata WHERE td = ".$_SESSION["td"]." and tipo != 1");
+		}
 		echo '<select class="browser-default form-control my-2" id="usuario" name="usuario">
 		<option value="">Seleccione un Usuario</option>';
 		foreach ($a as $b) {
