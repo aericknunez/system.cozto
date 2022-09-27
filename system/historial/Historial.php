@@ -1075,9 +1075,87 @@ echo '</tbody>
 		$primero = Fechas::Format($inicio);
 		$segundo = Fechas::Format($fin);
 
-		Alerts::Mensajex("Imprimir reporte entre las fechas : <strong>" . $primero . " - " . $segundo .  " - " . $usuario . " </strong>","info", '<a href="system/documentos/reportemensual.php?inicio='.$inicio.'&fin='.$fin.'" class="btn btn-success btn-sm">Imprimir</a>');
+		if($usuario != NULL){
+			$usuario = "and user = '$usuario'";
+		} else {
+			$usuario = NULL;
+		}
+	
+		$a = $db->query("select cod, cant, total, producto, pv 
+			from ticket 
+			where cod = '9999999' and edo = 1 and fechaF BETWEEN '$primero' and '$segundo' $usuario and td = ".$_SESSION['td']." order by cant desc");
+			$especial = NULL;
+			if($a->num_rows > 0){
+				foreach ($a as $b) {
+			$especial .= '<tr>
+				<th scope="row">'. $b["cant"] . '</th>
+				<td>'. $b["producto"] . '</td>
+				<td>'. Helpers::Dinero($b["pv"]) . '</td>
+				<td>'. Helpers::Dinero($b["total"]) . '</td>
+				</tr>';
+				} 
+			} $a->close();
 
-	}
+			$a = $db->query("select cod, sum(cant), sum(total), producto, pv 
+          from ticket 
+          where cod != 8888 and cod != 9999999 and edo = 1 and fechaF BETWEEN '$primero' and '$segundo' $usuario and td = ".$_SESSION['td']." GROUP BY cod order by sum(cant) desc");
+
+			if($a->num_rows > 0 or $especial){
+				
+				echo '<h3 class="h3-responsive">PRODUCTOS VENDIDOS</h3>';
+			
+				    
+				echo '<div class="table-responsive">
+				<table class="table table-striped table-sm">
+						<thead>
+					     <tr>
+					       <th>Cant</th>
+					       <th>Producto</th>
+					       <th>Precio</th>
+					       <th>Total</th>
+					     </tr>
+					   </thead>
+
+						<tbody>';
+
+			    foreach ($a as $b) {
+		    
+			   echo '<tr>
+			       <th scope="row">'. $b["sum(cant)"] . '</th>
+			       <td>'. $b["producto"] . '</td>
+			       <td>'. Helpers::Dinero($b["pv"]) . '</td>
+			       <td>'. Helpers::Dinero($b["sum(total)"]) . '</td>
+			     </tr>';
+			    } 
+
+			    $a->close();
+				echo $especial;
+
+			echo '</tbody>
+				</table></div>';	
+
+			$ar = $db->query("SELECT sum(cant) FROM ticket where edo = 1 and fechaF BETWEEN '$primero' and '$segundo' $usuario and td = ".$_SESSION['td']."");
+		    foreach ($ar as $br) {
+		     echo "Cantidad de Productos: ". $br["sum(cant)"] . "<br>";
+		    } $ar->close();
+
+		    $ag = $db->query("SELECT sum(total) FROM ticket where edo = 1 and fechaF BETWEEN '$primero' and '$segundo' $usuario and td = ".$_SESSION['td']."");
+		    foreach ($ag as $bg) { $tot = $bg["sum(total)"];
+		        echo "Total Vendido: ". Helpers::Dinero($bg["sum(total)"]) . "<br>";
+		    } $ag->close();
+
+
+		     echo "Total Agrupado: ". Helpers::Dinero($tot) . "<br>";
+
+		    //  echo '<div class="text-right"><a href="system/documentos/ventadiaria.php?fecha='.$fecha.'" >Descargar Excel</a></div>';
+
+			} else {
+				Alerts::Mensajex("No se encontraron productos para este dia","danger");
+			}
+					
+
+	} // termina la funcion
+
 
 
 	public function getUsuariosSelect(){
