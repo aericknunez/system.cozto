@@ -175,6 +175,8 @@ if($_SESSION['root_repartidor']){
 echo '<li><a href="?reporte_repartidor" class="waves-effect"><i class="fas fa-cogs"></i> Reporte Repartidor</a></li>';
 }
 ?>
+ <li><a href="?estadistica_costos" class="waves-effect"><i class="fas fa-address-book"></i> Estadistica de costos</a></li>
+
 </ul>
 </div>
 </li>

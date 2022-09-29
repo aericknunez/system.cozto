@@ -195,6 +195,9 @@ elseif(isset($_GET["reporte_repartidor"])) {
 elseif(isset($_GET["proagregar"])) {
 echo '<script type="text/javascript" src="assets/js/query/producto.js?v='.$numero.'"></script>';
 }
+elseif(isset($_GET["estadistica_costos"])) {
+echo '<script type="text/javascript" src="assets/js/query/estadistica_costos.js?v='.$numero.'"></script>';
+}
 elseif(isset($_GET["proaverias"])) {
 echo '<script type="text/javascript" src="assets/js/query/producto.js?v='.$numero.'"></script>';
 } 
