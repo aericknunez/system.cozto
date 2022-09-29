@@ -1,12 +1,5 @@
 <?php 
 defined('BASEPATH') OR exit('No direct script access allowed');
-
-include_once 'application/common/Alerts.php';
-include_once 'system/producto/ProUpdate.php';
-$producto = new ProUpdate(); 
-
-include_once 'system/ventas/Productos.php';
-$opciones = new Productos(); 
 ?>
 
 
@@ -20,48 +13,8 @@ $opciones = new Productos();
 </div>
 
 
-
-
-<?php if($_REQUEST["key"] != NULL){ 
-  
-  if ($r = $db->select("*", "producto", "WHERE cod = '".$_REQUEST["key"]."' and td = ".$_SESSION["td"]."")) { 
-
-$cod = $r["cod"];
-$descripcion = $r["descripcion"];  
-$caduca = $r["caduca"]; 
-$dependiente = $r["dependiente"]; 
-$compuesto = $r["compuesto"]; 
-$servicio = $r["servicio"]; 
-}  unset($r); 
-
-
-if($dependiente == "on" or $compuesto == "on" or $servicio == "on"){
-  Alerts::Mensajex("Este producto no tiene costo de compra","danger");
-} else {
-
-
-if($cod != NULL){
-
-echo '<h2 class="h2-responsive">'.$descripcion .'</h2>';
-  ?>
-
 <div class="row">
-    <div class="col-md-6 btn-outline-black z-depth-2" id="origencategoria">         
-    <div id="msj"></div>
-
-
+    <div class="col z-depth-2" id="vista">  Holasss       
     </div>
-    <div class="col-md-6 btn-outline-black z-depth-2" id="destinoproductoagrega">
-
-  </div>
-   
 </div>  <!-- row -->
 
-<? } else {
- echo "No se ha encontrado este producto";
-}
-
-} 
-
-}
-?>

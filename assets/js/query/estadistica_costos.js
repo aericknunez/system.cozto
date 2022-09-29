@@ -19,10 +19,21 @@ $(document).ready(function(){
 
 
 	$("body").on("click","#select-agrega",function(){
-		var cod = $(this).attr('cod');
-		var descripcion = $(this).attr('descripcion');
 		$("#muestra-agregar-busqueda").hide();
-		window.location.href="?estadistica_costos&key=" + cod;
+		var cod = $(this).attr('cod');
+        var op = "710";
+        var dataString = 'op='+op+'&cod='+cod;
+        $.ajax({
+            type: "POST",
+            url: "application/src/routes.php",
+            data: dataString,
+            beforeSend: function () {
+               $("#vista").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt=""></div>');
+            },
+            success: function(data) {            
+                $("#vista").html(data); // lo que regresa de la busquea         
+            }
+        });
 	});
 
 

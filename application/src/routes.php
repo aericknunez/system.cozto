@@ -3277,6 +3277,12 @@ case "708": // listado repartidor
 break;
 
 
+case "710": // estadistica costos
+	include_once '../../system/reportes/Reportes.php';
+	$historial = new Reportes();
+	$historial->EstadisticaCostos($_POST["cod"]);
+break;
+
 } // termina switch
 
 

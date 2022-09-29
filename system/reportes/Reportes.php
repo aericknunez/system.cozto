@@ -507,10 +507,83 @@ echo '</tbody>
 
 
 
+private function CalcularUtilidad($cantidad, $precio_costo, $precio_venta) {
+	$utilidad = $precio_venta - $precio_costo;
+	$utilidad = $utilidad * $cantidad;
+	return $utilidad;
+
+} // termina la funcion
+
+private function ObtenerPrecioVenta($precio_actual, $cod){
+	$db = new dbConn();
+
+	if($precio_actual == NULL or $precio_actual == 0){
+		if ($r = $db->select("precio", "producto_precio", 
+			"WHERE producto = '$cod' and cant = 1 and td = ".$_SESSION['td']."")) { 
+		$precio = $r["precio"];
+		} unset($r);  
+		return $precio;
+	}
+	return $precio_actual;
+}
 
 
+public function EstadisticaCostos($cod) {
+ 	$db = new dbConn();
+	$a = $db->query("SELECT * FROM producto_ingresado WHERE producto = '$cod' and td = ".$_SESSION['td']." order by time desc");
+	if ($a->num_rows > 0) {
+	echo '
+	<h3 class="h3-responsive">' .Helpers::GetData("producto", "descripcion", "cod", $cod).'</h3>
+	<div class="table-responsive text-nowrap">
+	<table class="table table-striped table-sm table-bordered">
+	  <thead>
+	   <tr>
+		 <th>Fecha</th>			       
+		 <th>Cantidad</th>
+		 <th>Existencia</th>
+		 <th>Precio Costo</th>
+		 <th>Precio Venta</th>
+		 <th>Utilidad Unit</th>
+		 <th>Utilidad</th>
+		 <th>Usuario</th>
+	   </tr>
+	 </thead>
+	 <tbody>';
+  
+  foreach ($a as $b) {
+  $getPrecioVenta = $this->ObtenerPrecioVenta($b["precio_venta"], $cod);
+  $utilidad = $this->CalcularUtilidad($b["cant"], $b["precio_costo"], $getPrecioVenta);
+  echo '<tr class="text-black font-weight-bold">
+		 <th>'.$b["fecha"].' - '.$b["hora"].'</th>					       
+		 <th>'.$b["cant"].'</th>
+		 <th>'.$b["existencia"].'</th>
+		 <th>'.Helpers::Dinero($b["precio_costo"]).'</th>
+		 <th>'.Helpers::Dinero($getPrecioVenta).'</th>
+		 <th>'.Helpers::Dinero($getPrecioVenta - $b["precio_costo"]).'</th>
+		 <th>'.Helpers::Dinero($utilidad).'</th>
+		 <th>'.Helpers::GetData("login_userdata", "nombre", "user", $b["user"]).'</th>  
+	   </tr>';
+  }    
+  
+  echo '<tr>
+			<th>Fecha</th>			       
+			<th>Cantidad</th>
+			<th>Existencia</th>
+			<th>Precio Costo</th>
+			<th>Precio Venta</th>
+			<th>Utilidad Unit</th>
+			<th>Utilidad</th>
+			<th>Usuario</th>
+		</tr>';
+  
+  
+  echo '</tbody>
+  </table></div>';
 
-
+	} else {
+		Alerts::Alerta("error","Error!","No hay datos para mostrar!");
+	} $a->close();
+}
 
 
 
