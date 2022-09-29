@@ -130,6 +130,12 @@ $r = $db->select("*", "config_root", "where td = ".$_SESSION['td']."");
               if(Encrypt::Decrypt($r["repartidor"],$_SESSION['secret_key']) == "") echo "Inactivo"; ?></td>
      </tr> 
 
+     <tr>
+       <td>Activar Precio por Lote</td>
+       <td><? if(Encrypt::Decrypt($r["precio_lote"],$_SESSION['secret_key']) == "on") echo "Activado";
+              if(Encrypt::Decrypt($r["precio_lote"],$_SESSION['secret_key']) == "") echo "Inactivo"; ?></td>
+     </tr> 
+
 <?
  unset($r);  
    ?>

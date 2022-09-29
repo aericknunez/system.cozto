@@ -118,16 +118,19 @@ $producto-> ListarUbicaciones();
       </div>       
     </div>
 
+    <?php
+    if($_SESSION['root_precio_lote']){
+    ?>
     <div class="col-md-12 mb-1 md-form">
       <div class="row">
-
         <div class="col-6 mt-3">
           <input type="number" step="any" class="form-control" id="precio_venta" name="precio_venta" placeholder="Precio Venta">
         </div>
-
       </div>       
     </div>
-
+<?php
+}
+?>
 
   <div class="form-row">
     

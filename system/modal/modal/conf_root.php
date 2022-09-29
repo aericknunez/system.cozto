@@ -194,10 +194,21 @@ $r = $db->select("*", "config_root", "where td = ".$_SESSION['td']."")
             </label>
           </div>
     </td>
-  <td><button class="btn btn-info my-4" type="submit" id="btn-root" name="btn-root">Realizar Cambios</button></td>
-
+    <td>
+          <div class="switch mt-4">
+            <label>
+             Precio lote ||  Off
+              <input type="checkbox" <?php if(Encrypt::Decrypt($r["precio_lote"],$_SESSION['secret_key']) == "on") echo "checked"; ?> id="precio_lote" name="precio_lote" >
+              <span class="lever"></span> On 
+            </label>
+          </div>
+    </td>
   </tr>
 
+  <tr>
+      <td></td>
+      <td><button class="btn btn-info my-4" type="submit" id="btn-root" name="btn-root">Realizar Cambios</button></td>
+  </tr>
 
   
 <?
