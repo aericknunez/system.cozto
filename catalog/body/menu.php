@@ -61,6 +61,7 @@ if($_SESSION["caja_apertura"] == NULL){ ?>
 <li><a href="?gra_mensual" class="waves-effect"><i class="fas fa-cogs"></i> Grafico Mensual</a></li>
 <li><a href="?gra_semestre" class="waves-effect"><i class="fas fa-cogs"></i> Grafico Semestral</a></li>
 <li><a href="?gra_clientes" class="waves-effect"><i class="fas fa-cogs"></i> Grafico de Clientes</a></li>
+<li><a href="?estadistica_costos" class="waves-effect"><i class="fas fa-address-book"></i> Estadistica de costos</a></li>
 
 </ul>
 </div>
@@ -175,7 +176,6 @@ if($_SESSION['root_repartidor']){
 echo '<li><a href="?reporte_repartidor" class="waves-effect"><i class="fas fa-cogs"></i> Reporte Repartidor</a></li>';
 }
 ?>
- <li><a href="?estadistica_costos" class="waves-effect"><i class="fas fa-address-book"></i> Estadistica de costos</a></li>
 
 </ul>
 </div>

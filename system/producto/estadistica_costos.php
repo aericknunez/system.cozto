@@ -14,7 +14,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 
 <div class="row">
-    <div class="col z-depth-2" id="vista">  Holasss       
+    <div class="col z-depth-2" id="vista">      
     </div>
 </div>  <!-- row -->
 
