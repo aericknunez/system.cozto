@@ -1,0 +1,1 @@
+ALTER TABLE `config_root` ADD `precio_lote` VARCHAR(100) NOT NULL AFTER `repartidor`;
