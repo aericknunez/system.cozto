@@ -1166,10 +1166,13 @@ echo '</tbody>
 		} else {
 			$a = $db->query("SELECT * FROM login_userdata WHERE td = ".$_SESSION["td"]." and tipo != 1");
 		}
-		echo '<select class="browser-default form-control my-2" id="usuario" name="usuario">
-		<option value="">Seleccione un Usuario</option>';
+		echo '<select class="browser-default form-control my-2" id="usuario" name="usuario"'; 
+		if($_SESSION["tipo_cuenta"] == 2 or $_SESSION["tipo_cuenta"] == 3 or $_SESSION["tipo_cuenta"] == 4) { echo ' disabled'; }
+		echo '>';
 		foreach ($a as $b) {
-			echo '<option value="'.$b["user"].'">'.$b["nombre"].'</option>';
+			echo '<option value="'.$b["user"].'"'; 
+			if ($b['user'] == $_SESSION["user"]) { echo "selected"; }
+			echo '>'.$b["nombre"].'</option>';
 		} $a->close();
 		echo '</select>';
 	}
