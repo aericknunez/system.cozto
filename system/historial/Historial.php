@@ -1078,7 +1078,12 @@ echo '</tbody>
 		if($user != NULL){
 			$usuario = "and user = '$user'";
 		} else {
-			$usuario = NULL;
+			if($_SESSION["tipo_cuenta"] == 2 or $_SESSION["tipo_cuenta"] == 3 or $_SESSION["tipo_cuenta"] == 4) { 
+				$usuario = "and user = '".$_SESSION["user"]."'";
+			} else {
+				$usuario = NULL;
+
+			}
 		}
 	
 		$a = $db->query("select cod, cant, total, producto, pv 
