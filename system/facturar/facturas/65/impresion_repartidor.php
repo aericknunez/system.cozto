@@ -47,7 +47,7 @@ $repartidor = new Repartidor();
             <div id="receipt-data">
 
                 <?php
-                $repartidor->VerRepartidores($_GET["repartidor"], $_GET["fecha"]);
+                $repartidor->VerRepartidores($_GET["repartidor"], $_GET["fecha"], false, $_GET["type"]);
                 ?>
                 <div style="clear:both;"></div>
             </div>

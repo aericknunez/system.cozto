@@ -153,7 +153,7 @@ class Repartidor{
 		    } $ar->close();
 
                 if ($imp == TRUE) {
-                  echo '<div class="text-right"><a href="system/facturar/facturas/'.$_SESSION["td"].'/impresion_repartidor.php?fecha='.$date.'&repartidor='.$rep.'" target="blank" >Imprimir</a></div>';
+                  echo '<div class="text-right"><a href="system/facturar/facturas/'.$_SESSION["td"].'/impresion_repartidor.php?fecha='.$date.'&repartidor='.$rep.'&type='.$type.'" target="blank" >Imprimir</a></div>';
                 }
 		     
 
