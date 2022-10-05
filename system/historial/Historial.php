@@ -1069,14 +1069,14 @@ echo '</tbody>
 
 
 
-	public function VentasPorUsuario($inicio, $fin, $usuario = NULL) {
+	public function VentasPorUsuario($inicio, $fin, $user = NULL) {
 		$db = new dbConn();
 
 		$primero = Fechas::Format($inicio);
 		$segundo = Fechas::Format($fin);
 
-		if($usuario != NULL){
-			$usuario = "and user = '$usuario'";
+		if($user != NULL){
+			$usuario = "and user = '$user'";
 		} else {
 			$usuario = NULL;
 		}
@@ -1168,7 +1168,9 @@ echo '</tbody>
 		}
 		echo '<select class="browser-default form-control my-2" id="usuario" name="usuario"'; 
 		if($_SESSION["tipo_cuenta"] == 2 or $_SESSION["tipo_cuenta"] == 3 or $_SESSION["tipo_cuenta"] == 4) { echo ' disabled'; }
-		echo '>';
+		echo '>
+		<option value="">TODOS LOS USUARIOS</option>
+		';
 		foreach ($a as $b) {
 			echo '<option value="'.$b["user"].'"'; 
 			if ($b['user'] == $_SESSION["user"]) { echo "selected"; }
