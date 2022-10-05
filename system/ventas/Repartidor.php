@@ -58,8 +58,8 @@ class Repartidor{
         $db = new dbConn();
     
         $a = $db->query("SELECT * FROM planilla_empleados WHERE td = ".$_SESSION["td"]."");
-      echo '<select class="mdb-select dropdown-primary mt-2" id="repartidor" name="repartidor">';
-      echo '<option value="" disabled selected>Seleccione un Repartidor</option>';
+      echo '<select class="browser-default form-control my-2" id="repartidor" name="repartidor">';
+      echo '<option value="" disabled selected>Seleccione un usuario</option>';
         foreach ($a as $b) {
             echo '<option value="'. $b["hash"] .'">'. $b["nombre"] .'</option>';
         } $a->close();
@@ -67,12 +67,18 @@ class Repartidor{
       }
 
 
-      public function VerRepartidores($rep, $date, $imp = false){
+      public function VerRepartidores($rep, $date, $imp = false, $type){
 		$db = new dbConn();
 
             if($rep){
-                  $repart = "repartidor = '".$rep."' and";
-                  $nombre_repartidor = 'REPARTIDOR: '. Helpers::GetData("planilla_empleados", "nombre", "hash", $rep) .' | ';
+                  if ($type == 1) {
+                        $repart = "repartidor = '".$rep."' and";
+                        $nombre_repartidor = 'REPARTIDOR: '. Helpers::GetData("planilla_empleados", "nombre", "hash", $rep) .' | ';
+                  } else {
+                        $repart = "user = '".$rep."' and";
+                        $nombre_repartidor = 'VENDEDOR: '. Helpers::GetData("login_userdata", "nombre", "hash", $rep) .' | ';
+                  }
+                  
             } else {
                $repart = null;
                $nombre_repartidor = null;

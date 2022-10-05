@@ -3273,7 +3273,7 @@ break;
 case "708": // listado repartidor
 	include_once '../../system/ventas/Repartidor.php';
 	$rep = new Repartidor();
-	$rep->VerRepartidores($_POST['repartidor'], $_POST['fecha_submit'], true);
+	$rep->VerRepartidores($_POST['repartidor'], $_POST['fecha_submit'], true, $_POST['tipo']);
 break;
 
 

@@ -7,20 +7,28 @@ $repartidor = new Repartidor();
 ?>
 
 
-<form name="form-repartidores" method="post" id="form-repartidores">
-    <div class="row justify-content-center border">
-    <div class="col-4">
-      <input placeholder="Seleccione una Fecha" type="text" id="fecha" name="fecha" class="form-control datepicker my-2">
+
+
+<div class="row justify-content-md-center">
+    <div class="col-12 col-md-auto">
+        <form name="form-repartidores" method="post" id="form-repartidores">
+        <input placeholder="Seleccione una Fecha" type="text" id="fecha" name="fecha" class="form-control datepicker my-2">
+        <select class="browser-default form-control my-2" name="tipo" id="tipo">
+            <option value="1">Repartidor</option>
+            <option value="2">Vendedor</option>
+        </select>
+        <?php
+            $repartidor->RepartidorLista();
+        ?>
     </div>
-    <div class="col-4">
-    <?php
-    $repartidor->RepartidorLista();
-    ?>
+  </div>
+
+
+  <div class="row justify-content-md-center">
+    <div class="col-12 col-md-auto text-center">
+    <button class="btn btn-info my-2 btn-rounded btn-sm waves-effect" type="submit" id="btn-repartidores" name="btn-repartidores">Mostra Datos</button>
+      </form> 
     </div>
-    <div class="col-4">
-      <button class="btn btn-info my-2 btn-rounded btn-sm waves-effect" type="submit" id="btn-repartidores" name="btn-repartidores">Mostra Datos</button>
-    </div>
-    </div>
-</form> 
+  </div>
 
 <div id="contenido" class="mt-5"> </div>
