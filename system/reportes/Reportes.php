@@ -544,7 +544,7 @@ public function EstadisticaCostos($cod) {
 		 <th>Precio Costo</th>
 		 <th>Precio Venta</th>
 		 <th>Utilidad Unit</th>
-		 <th>Utilidad</th>
+		 <th>Porcentaje</th>
 		 <th>Usuario</th>
 	   </tr>
 	 </thead>
@@ -560,7 +560,7 @@ public function EstadisticaCostos($cod) {
 		 <th>'.Helpers::Dinero($b["precio_costo"]).'</th>
 		 <th>'.Helpers::Dinero($getPrecioVenta).'</th>
 		 <th>'.Helpers::Dinero($getPrecioVenta - $b["precio_costo"]).'</th>
-		 <th>'.Helpers::Dinero($utilidad).'</th>
+		 <th>'.Helpers::porcentaje($b["precio_costo"], $getPrecioVenta).' %</th>
 		 <th>'.Helpers::GetData("login_userdata", "nombre", "user", $b["user"]).'</th>  
 	   </tr>';
   }    
@@ -572,7 +572,7 @@ public function EstadisticaCostos($cod) {
 			<th>Precio Costo</th>
 			<th>Precio Venta</th>
 			<th>Utilidad Unit</th>
-			<th>Utilidad</th>
+			<th>Porcentaje</th>
 			<th>Usuario</th>
 		</tr>';
   

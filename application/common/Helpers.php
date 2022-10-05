@@ -319,6 +319,16 @@ static public function ImpuestoDesc($numero, $impuestos){
     }
 
 
+    static public function Porcentaje($compra, $venta){ /// obtiene que porcentaje de descuento se aplicara segun total y cantidad a descontar
+      if (isset($compra) && isset($venta)) {
+        $nume = ($venta / $compra) * 100;
+        return number_format($nume - 100, 2,'.',',');
+      } else {
+        return number_format(0, 2,'.',',');
+      }
+    }
+
+
 
     static public function DescuentoTotalCot($numero){ 
         $num = $_SESSION['descuento_cot'] / 100;
