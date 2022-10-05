@@ -320,7 +320,7 @@ static public function ImpuestoDesc($numero, $impuestos){
 
 
     static public function Porcentaje($compra, $venta){ /// obtiene que porcentaje de descuento se aplicara segun total y cantidad a descontar
-      if (isset($compra) && isset($venta)) {
+      if ($compra > 0 && $venta > 0) {
         $nume = ($venta / $compra) * 100;
         return number_format($nume - 100, 2,'.',',');
       } else {
