@@ -71,7 +71,7 @@ class Laterales{
 	elseif($_SESSION["tipoticket"] == 2){ echo '<a id="mticket">FACTURA</a>'; }
 	elseif($_SESSION["tipoticket"] == 3){ echo '<a id="mticket">CREDITO FISCAL</a>'; }
 	elseif($_SESSION["tipoticket"] == 4){ echo '<a id="mticket">NOTA DE CREDITO</a>'; }
-	else { echo '<a id="mticket">N/A</a>'; }
+	elseif($_SESSION["tipoticket"] == 0){ echo '<a id="mticket">N/A</a>'; }
 
 		}
 
@@ -84,7 +84,7 @@ if($_SESSION["tipoticket"] == 1){ return '<a id="mticket">TICKET</a>'; }
 elseif($_SESSION["tipoticket"] == 2){ return '<a id="mticket">FACTURA</a>'; }
 elseif($_SESSION["tipoticket"] == 3){ return '<a id="mticket">CREDITO FISCAL</a>'; }
 elseif($_SESSION["tipoticket"] == 4){ return '<a id="mticket">NOTA DE CREDITO</a>'; }
-else { return '<a id="mticket">N/A</a>'; }
+elseif($_SESSION["tipoticket"] == 0){ return '<a id="mticket">N/A</a>'; }
 }
 
 
