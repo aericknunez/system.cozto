@@ -59,12 +59,24 @@ class Repartidor{
     
         $a = $db->query("SELECT * FROM planilla_empleados WHERE td = ".$_SESSION["td"]."");
       echo '<select class="browser-default form-control my-2" id="repartidor" name="repartidor">';
-      echo '<option value="" disabled selected>Seleccione un usuario</option>';
+      echo '<option value="" disabled selected>Seleccione un Repartidor</option>';
         foreach ($a as $b) {
             echo '<option value="'. $b["hash"] .'">'. $b["nombre"] .'</option>';
         } $a->close();
       echo '</select>';
       }
+
+      public function UserLista(){
+            $db = new dbConn();
+        
+            $a = $db->query("SELECT * FROM login_userdata WHERE tipo!=1 and td = ".$_SESSION["td"]."");
+          echo '<select class="browser-default form-control my-2" id="vendedor" name="vendedor">';
+          echo '<option value="" disabled selected>Seleccione un usuario</option>';
+            foreach ($a as $b) {
+                echo '<option value="'. $b["hash"] .'">'. $b["nombre"] .'</option>';
+            } $a->close();
+          echo '</select>';
+          }
 
 
       public function VerRepartidores($rep, $date, $imp = false, $type){

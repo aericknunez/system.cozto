@@ -17,9 +17,17 @@ $repartidor = new Repartidor();
             <option value="1">Repartidor</option>
             <option value="2">Vendedor</option>
         </select>
+        <div id="userlista">
+        <?php
+            $repartidor->UserLista();
+        ?>
+        </div>
+        <div id="repartidorLista">
         <?php
             $repartidor->RepartidorLista();
         ?>
+        </div>
+
     </div>
   </div>
 

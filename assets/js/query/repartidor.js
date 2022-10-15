@@ -36,6 +36,20 @@ $(document).ready(function(){
 		})
 	});
 
+	$("#userlista").hide();
+
+	$("#tipo").change(function(){
+		var id=$(this).val();
+
+		if(id == 1){ // se muestra numero de factura
+			$("#userlista").hide();
+			$("#repartidorLista").show();
+
+		} else {
+			$("#repartidorLista").hide();
+			$("#userlista").show();
+		}
+	});
 
 
 
