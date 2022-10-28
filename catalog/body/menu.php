@@ -35,11 +35,12 @@ if($_SESSION["caja_apertura"] == NULL){ ?>
 
 
 
-<?php if($_SESSION["tipo_cuenta"] == 1 or $_SESSION["tipo_cuenta"] == 5) { ?>
 
 <li><a class="collapsible-header waves-effect arrow-r"><i class="fas fa-cog"></i> HISTORIAL<i class="fa fa-angle-down rotate-icon"></i></a>
 <div class="collapsible-body">
 <ul class="list-unstyled">
+
+<?php if($_SESSION["tipo_cuenta"] == 1 or $_SESSION["tipo_cuenta"] == 5) { ?>
 
 <li><a href="?consolidado" class="waves-effect"><i class="fas fa-cogs"></i> Consolidado Diario</a></li>
 
@@ -54,22 +55,20 @@ if($_SESSION["caja_apertura"] == NULL){ ?>
 <li><a href="?gmensual" class="waves-effect"><i class="fas fa-cogs"></i> Gastos Mensuales</a></li>
 <li><a href="?descuentos" class="waves-effect"><i class="fas fa-cogs"></i> Descuentos Diarios</a></li>
 <li><a href="?utilidades" class="waves-effect"><i class="fas fa-cogs"></i> Utilidades</a></li>
-
 <li><a href="?rmensual" class="waves-effect"><i class="fas fa-cog"></i> Reporte Mensual</a></li>
-
-<li><a href="?listaventa" class="waves-effect"><i class="fas fa-cogs"></i> Listado de ventas</a></li>
-
-
+<li></li><a href="?listaventa" class="waves-effect"><i class="fas fa-cogs"></i> Listado de ventas</a></li>
 <li><a href="?gra_semanal" class="waves-effect"><i class="fas fa-cog"></i> Grafico Semanal</a></li>
 <li><a href="?gra_mensual" class="waves-effect"><i class="fas fa-cogs"></i> Grafico Mensual</a></li>
 <li><a href="?gra_semestre" class="waves-effect"><i class="fas fa-cogs"></i> Grafico Semestral</a></li>
 <li><a href="?gra_clientes" class="waves-effect"><i class="fas fa-cogs"></i> Grafico de Clientes</a></li>
+<li><a href="?estadistica_costos" class="waves-effect"><i class="fas fa-address-book"></i> Estadistica de costos</a></li>
+<?php } ?>
+<li><a href="?ventasxuser" class="waves-effect"><i class="fas fa-cogs"></i> Ventas por usuario</a></li>
 
 </ul>
 </div>
 </li>
 
-<?php } ?>
 
 
 
@@ -172,6 +171,12 @@ if($_SESSION["config_pesaje"] == "on"){
  <?php }   ?>
 
  <li><a href="?listadoproductos" class="waves-effect"><i class="fas fa-address-book"></i> Productos Vendidos</a></li>
+
+ <?php
+if($_SESSION['root_repartidor']){ 
+echo '<li><a href="?reporte_repartidor" class="waves-effect"><i class="fas fa-cogs"></i> Reporte Repartidor</a></li>';
+}
+?>
 
 </ul>
 </div>

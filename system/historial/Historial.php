@@ -1069,9 +1069,120 @@ echo '</tbody>
 
 
 
+	public function VentasPorUsuario($inicio, $fin, $user = NULL) {
+		$db = new dbConn();
+
+		$primero = Fechas::Format($inicio);
+		$segundo = Fechas::Format($fin);
+
+		if($user != NULL){
+			$usuario = "and user = '$user'";
+		} else {
+			if($_SESSION["tipo_cuenta"] == 2 or $_SESSION["tipo_cuenta"] == 3 or $_SESSION["tipo_cuenta"] == 4) { 
+				$usuario = "and user = '".$_SESSION["user"]."'";
+			} else {
+				$usuario = NULL;
+
+			}
+		}
+	
+		$a = $db->query("select cod, cant, total, producto, pv 
+			from ticket 
+			where cod = '9999999' and edo = 1 and fechaF BETWEEN '$primero' and '$segundo' $usuario and td = ".$_SESSION['td']." order by cant desc");
+			$especial = NULL;
+			if($a->num_rows > 0){
+				foreach ($a as $b) {
+			$especial .= '<tr>
+				<th scope="row">'. $b["cant"] . '</th>
+				<td>'. $b["producto"] . '</td>
+				<td>'. Helpers::Dinero($b["pv"]) . '</td>
+				<td>'. Helpers::Dinero($b["total"]) . '</td>
+				</tr>';
+				} 
+			} $a->close();
+
+			$a = $db->query("select cod, sum(cant), sum(total), producto, pv 
+          from ticket 
+          where cod != 8888 and cod != 9999999 and edo = 1 and fechaF BETWEEN '$primero' and '$segundo' $usuario and td = ".$_SESSION['td']." GROUP BY cod order by sum(cant) desc");
+
+			if($a->num_rows > 0 or $especial){
+				
+				echo '<h3 class="h3-responsive">PRODUCTOS VENDIDOS</h3>';
+			
+				    
+				echo '<div class="table-responsive">
+				<table class="table table-striped table-sm">
+						<thead>
+					     <tr>
+					       <th>Cant</th>
+					       <th>Producto</th>
+					       <th>Precio</th>
+					       <th>Total</th>
+					     </tr>
+					   </thead>
+
+						<tbody>';
+
+			    foreach ($a as $b) {
+		    
+			   echo '<tr>
+			       <th scope="row">'. $b["sum(cant)"] . '</th>
+			       <td>'. $b["producto"] . '</td>
+			       <td>'. Helpers::Dinero($b["pv"]) . '</td>
+			       <td>'. Helpers::Dinero($b["sum(total)"]) . '</td>
+			     </tr>';
+			    } 
+
+			    $a->close();
+				echo $especial;
+
+			echo '</tbody>
+				</table></div>';	
+
+			$ar = $db->query("SELECT sum(cant) FROM ticket where edo = 1 and fechaF BETWEEN '$primero' and '$segundo' $usuario and td = ".$_SESSION['td']."");
+		    foreach ($ar as $br) {
+		     echo "Cantidad de Productos: ". $br["sum(cant)"] . "<br>";
+		    } $ar->close();
+
+		    $ag = $db->query("SELECT sum(total) FROM ticket where edo = 1 and fechaF BETWEEN '$primero' and '$segundo' $usuario and td = ".$_SESSION['td']."");
+		    foreach ($ag as $bg) { $tot = $bg["sum(total)"];
+		        echo "Total Vendido: ". Helpers::Dinero($bg["sum(total)"]) . "<br>";
+		    } $ag->close();
+
+
+		     echo "Total Agrupado: ". Helpers::Dinero($tot) . "<br>";
+
+		    //  echo '<div class="text-right"><a href="system/documentos/ventadiaria.php?fecha='.$fecha.'" >Descargar Excel</a></div>';
+
+			} else {
+				Alerts::Mensajex("No se encontraron productos para este dia","danger");
+			}
+					
+
+	} // termina la funcion
 
 
 
+	public function getUsuariosSelect(){
+		$db = new dbConn();
+
+		if ($_SESSION["tipo_cuenta"] == 1) {
+			$a = $db->query("SELECT * FROM login_userdata WHERE td = ".$_SESSION["td"]."");
+		} else {
+			$a = $db->query("SELECT * FROM login_userdata WHERE td = ".$_SESSION["td"]." and tipo != 1");
+		}
+		echo '<select class="browser-default form-control my-2" id="usuario" name="usuario"'; 
+		if($_SESSION["tipo_cuenta"] == 2 or $_SESSION["tipo_cuenta"] == 3 or $_SESSION["tipo_cuenta"] == 4) { echo ' disabled'; }
+		echo '>
+		<option value="">TODOS LOS USUARIOS</option>
+		';
+		foreach ($a as $b) {
+			echo '<option value="'.$b["user"].'"'; 
+			if ($b['user'] == $_SESSION["user"]) { echo "selected"; }
+			echo '>'.$b["nombre"].'</option>';
+		} $a->close();
+		echo '</select>';
+	}
 
 
 

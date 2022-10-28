@@ -1,0 +1,1 @@
+ALTER TABLE `facturar_opciones` ADD `ninguno` VARCHAR(5) NOT NULL AFTER `id`;

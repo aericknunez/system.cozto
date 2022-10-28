@@ -27,6 +27,7 @@ elseif(isset($_GET["vencimientos"])) include_once 'system/producto/vencimientos.
 elseif(isset($_GET["compuestos"])) include_once 'system/producto/compuestos.php'; 
 elseif(isset($_GET["pesaje"])) include_once 'system/producto/pesajes.php'; 
 elseif(isset($_GET["listadoproductos"])) include_once 'system/producto/productoresumen.php'; 
+elseif(isset($_GET["estadistica_costos"])) include_once 'system/producto/estadistica_costos.php'; 
 // rapido
 elseif(isset($_GET["ingresorapido"])) include_once 'system/herramientas/ingresarrapido.php'; 
 elseif(isset($_GET["modificarproducto"])) include_once 'system/herramientas/productos.php'; 
@@ -96,6 +97,7 @@ elseif(isset($_GET["listaventa"])) include_once 'system/historial/listaventa.php
 elseif(isset($_GET["cortez"])) include_once 'system/historial/cortez.php'; 
 elseif(isset($_GET["movimientos"])) include_once 'system/historial/movimientos.php'; 
 elseif(isset($_GET["rmensual"])) include_once 'system/historial/reportemensual.php'; 
+elseif(isset($_GET["ventasxuser"])) include_once 'system/historial/ventasxuser.php'; 
 
 // reportes
 elseif(isset($_GET["ventadetalle"])) include_once 'system/reportes/ventasdetalle.php'; 
@@ -103,6 +105,7 @@ elseif(isset($_GET["ventaagrupado"])) include_once 'system/reportes/ventaagrupad
 elseif(isset($_GET["gastodetallado"])) include_once 'system/reportes/gastodetallado.php'; 
 elseif(isset($_GET["ingresos"])) include_once 'system/reportes/ingresos.php'; 
 elseif(isset($_GET["raverias"])) include_once 'system/reportes/averias.php'; 
+elseif(isset($_GET["reporte_repartidor"])) include_once 'system/reportes/reporte-repartidor.php'; 
 
 
 

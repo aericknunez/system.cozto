@@ -1,6 +1,23 @@
 $(document).ready(function()
 {
 
+	$("body").on("click","#ninguno",function(){ /// para el los botones de opciones
+
+		if($(this).attr('checked')){ // es por que estaba activo
+			$('#ninguno').removeAttr("checked","checked");
+			var dir = 'op=450&iden=ninguno&edo=0';
+		} 
+		else {
+			$('#ninguno').attr("checked","checked");
+			var dir = 'op=450&iden=ninguno&edo=1';
+		}
+	
+	QueryGo(dir);	
+	
+	});
+
+
+
 	$("body").on("click","#ax0",function(){ /// para el los botones de opciones
 
 		if($(this).attr('checked')){ // es por que estaba activo

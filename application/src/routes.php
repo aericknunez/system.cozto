@@ -741,6 +741,7 @@ break;
 case "82": // guardar la venta
 include_once '../../system/ventas/VentasL.php';
 include_once '../../system/ventas/Opciones.php';
+include_once '../../system/ventas/Repartidor.php';
 	$venta = new Ventas();
 	$venta->GuardarOrden();
 break;
@@ -750,6 +751,7 @@ break;
 case "83": // select orden
 include_once '../../system/ventas/VentasL.php';
 include_once '../../system/ventas/Opciones.php';
+include_once '../../system/ventas/Repartidor.php';
 	$venta = new Ventas();
 	$venta->SelectOrden($_POST["orden"]);
 break;
@@ -773,6 +775,10 @@ case "85": // facturar determinar si es rapido o lento
 	   	if(isset($_SESSION["cliente_c"]) or isset($_SESSION["cliente_cli"])){ // agregar el credito
 	   		include_once '../../system/ventas/Opciones.php';	
 	   	}
+		if(isset($_SESSION["repartidor_asig"]) or isset($_SESSION["repartidor_cli"])){ // agregar el credito
+			include_once '../../system/ventas/Repartidor.php';
+		}
+		   
 
 	$venta = new Ventas();
 	$venta->Facturar($_POST);
@@ -788,6 +794,7 @@ case "86": // cancelar toda la orden
 	include_once '../../system/ventas/VentasL.php';
 	}
 include_once '../../system/ventas/Opciones.php';
+include_once '../../system/ventas/Repartidor.php';
 	$venta = new Ventas();
 	$venta->Cancelar();
 
@@ -1346,7 +1353,17 @@ case "135": // imprime cuotas de credito
 	$imprimir->CuotaCredito($_POST["hash"]); //
 break; 
 
-
+case "145": // historial ventas x user
+	include_once '../../system/historial/Historial.php';
+	$historial = new Historial;
+	if($_POST["fecha1_submit"]){
+		$inicio = $_POST["fecha1_submit"]; $fin=$_POST["fecha2_submit"];
+	} else {
+		$inicio = date("01-m-Y"); $fin=date("31-m-Y");
+	}
+	
+	$historial->VentasPorUsuario($inicio, $fin, $_POST["usuario"]);
+break;
 
 case "146": // lateral
 include_once '../../system/cotizar/Laterales.php';
@@ -3232,10 +3249,44 @@ case "701": // Ver comentario de producto
 		$msj->GetComment($_REQUEST['iden']);
 break;
 
+case "705": /// busque reapartidor
+	include_once '../../system/ventas/Repartidor.php';
+		$rep = new Repartidor();
+		$rep->RepartidorBusqueda($_POST);
+break;
 
 
+case "706": // select repartidor
+	include_once '../../system/ventas/Repartidor.php';
+		$rep = new Repartidor();
+		$rep->AgregaRepartidor($_POST);
+break;
 
 
+case "707": // eliminar repartidor
+	include_once '../../system/ventas/Repartidor.php';
+	$rep = new Repartidor();
+	$rep->DeleteRepartidor();
+break;
+
+
+case "708": // listado repartidor
+	include_once '../../system/ventas/Repartidor.php';
+	$rep = new Repartidor();
+	if ($_POST['tipo'] == 1) {
+		$data = $_POST['repartidor'];
+	} else {
+		$data = $_REQUEST['vendedor'];
+	}
+	$rep->VerRepartidores($data, $_POST['fecha_submit'], true, $_POST['tipo']);
+break;
+
+
+case "710": // estadistica costos
+	include_once '../../system/reportes/Reportes.php';
+	$historial = new Reportes();
+	$historial->EstadisticaCostos($_POST["cod"]);
+break;
 
 } // termina switch
 

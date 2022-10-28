@@ -76,6 +76,10 @@ echo '
 	if($_GET["modal"] == "cliente"){
 	echo '<script type="text/javascript" src="assets/js/query/ventaPop.js?v='.$numero.'"></script>';
 	}
+	// repartidor
+	if($_GET["modal"] == "add_repartidor"){
+		echo '<script type="text/javascript" src="assets/js/query/ventaPop.js?v='.$numero.'"></script>';
+	}
 	if($_GET["modal"] == "oventas"){
 	echo '<script type="text/javascript" src="assets/js/query/ventaPop.js?v='.$numero.'"></script>';
 	}
@@ -185,8 +189,14 @@ echo '<script type="text/javascript" src="assets/js/query/producto.js?v='.$numer
 	}
 	
 } 
+elseif(isset($_GET["reporte_repartidor"])) {
+	echo '<script type="text/javascript" src="assets/js/query/repartidor.js?v='.$numero.'"></script>';
+	}
 elseif(isset($_GET["proagregar"])) {
 echo '<script type="text/javascript" src="assets/js/query/producto.js?v='.$numero.'"></script>';
+}
+elseif(isset($_GET["estadistica_costos"])) {
+echo '<script type="text/javascript" src="assets/js/query/estadistica_costos.js?v='.$numero.'"></script>';
 }
 elseif(isset($_GET["proaverias"])) {
 echo '<script type="text/javascript" src="assets/js/query/producto.js?v='.$numero.'"></script>';
@@ -382,7 +392,11 @@ echo '<script type="text/javascript" src="assets/js/query/historial.js?v='.$nume
 elseif(isset($_GET["rmensual"])) {
 echo '<script type="text/javascript" src="assets/js/query/historial.js?v='.$numero.'"></script>';
 } 
-
+elseif(isset($_GET["ventasxuser"])) {
+echo '<script type="text/javascript" src="assets/js/query/historial.js?v='.$numero.'"></script>';
+} 
+	
+	
 
 
 /// reportes
@@ -522,7 +536,6 @@ elseif(isset($_GET["busquedaOpt"])) {
 	echo '<script type="text/javascript" src="assets/js/query/busqueda_comentario.js?v='.$numero.'"></script>';
 echo '<script type="text/javascript" src="assets/js/query/search.js?v='.$numero.'"></script>';
 } 
-
 
 
 ////////// transferencias
