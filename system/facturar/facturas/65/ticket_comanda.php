@@ -107,7 +107,7 @@ if($totalregistros > 0){
                     <?php echo "Dirección: ".$direccion; ?>
               <!--  <?php echo $municipio; ?><br>-->
                     <?php echo $comentarios; ?><br> 
-                    <?php echo "Teléfono: ". $telefono; ?>
+                    <?php echo "Teléfono: ". $telefono; ?><br> 
                     <?php echo "Vendedor : " .Helpers::GetData("login_userdata", "nombre", "user", $b["user"]); ?>
                     
                     <div style="clear:both;"></div>
