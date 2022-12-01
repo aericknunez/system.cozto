@@ -18,6 +18,7 @@ if ($seslog->login_check() == TRUE) {
 
         $totalregistros =$a->num_rows;
         $datos = "";
+        
    
     foreach ($a as $b) { 
 
@@ -132,8 +133,8 @@ if($totalregistros > 0){
                         </tbody>
                         <tfoot>
                             <tr>
-                                <th colspan="2">SubTotal</th>
-                                <th colspan="2" class="text-right"><?php echo Helpers::Dinero($stotal) ?></th>
+                            <!--<th colspan="2">SubTotal</th>
+                                <th colspan="2" class="text-right"><?php echo Helpers::Dinero($stotal) ?></th> -->
                             </tr>
 <!--                             <tr>
                                 <th colspan="2">IVA</th>
