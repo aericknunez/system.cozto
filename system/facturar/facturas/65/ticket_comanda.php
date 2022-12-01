@@ -18,6 +18,7 @@ if ($seslog->login_check() == TRUE) {
 
         $totalregistros =$a->num_rows;
         $datos = "";
+        
    
     foreach ($a as $b) { 
 
@@ -107,7 +108,7 @@ if($totalregistros > 0){
                     <?php echo "Dirección: ".$direccion; ?>
               <!--  <?php echo $municipio; ?><br>-->
                     <?php echo $comentarios; ?><br> 
-                    <?php echo "Teléfono: ". $telefono; ?>
+                    <?php echo "Teléfono: ". $telefono; ?><br> 
                     <?php echo "Vendedor : " .Helpers::GetData("login_userdata", "nombre", "user", $b["user"]); ?>
                     
                     <div style="clear:both;"></div>
@@ -132,8 +133,8 @@ if($totalregistros > 0){
                         </tbody>
                         <tfoot>
                             <tr>
-                                <th colspan="2">SubTotal</th>
-                                <th colspan="2" class="text-right"><?php echo Helpers::Dinero($stotal) ?></th>
+                            <!--<th colspan="2">SubTotal</th>
+                                <th colspan="2" class="text-right"><?php echo Helpers::Dinero($stotal) ?></th> -->
                             </tr>
 <!--                             <tr>
                                 <th colspan="2">IVA</th>
