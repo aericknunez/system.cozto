@@ -216,7 +216,7 @@ elseif($_SESSION["tipoticket"] == 0){ return '<a id="mticket">N/A</a>'; }
  	public function ObtenerOrdenes(){ // listado de ordenes
  		$db = new dbConn();
 
-		if ($_SESSION['root_restringir_ordenes'] == "on") {
+		if ($_SESSION['root_restringir_ordenes'] == "on" and $_SESSION["tipo_cuenta"] == 4) {
 			$userQuery = 'and user = "' . $_SESSION['user'] . '"';
 		} else {
 			$userQuery = '';
