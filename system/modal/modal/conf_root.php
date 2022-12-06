@@ -206,7 +206,15 @@ $r = $db->select("*", "config_root", "where td = ".$_SESSION['td']."")
   </tr>
 
   <tr>
-      <td></td>
+      <td>
+          <div class="switch mt-4">
+            <label>
+             Restringir Ordenes ||  Off
+              <input type="checkbox" <?php if(Encrypt::Decrypt($r["restringir_ordenes"],$_SESSION['secret_key']) == "on") echo "checked"; ?> id="restringir_ordenes" name="restringir_ordenes" >
+              <span class="lever"></span> On 
+            </label>
+          </div>
+      </td>
       <td><button class="btn btn-info my-4" type="submit" id="btn-root" name="btn-root">Realizar Cambios</button></td>
   </tr>
 
