@@ -136,11 +136,6 @@ $r = $db->select("*", "config_root", "where td = ".$_SESSION['td']."");
               if(Encrypt::Decrypt($r["precio_lote"],$_SESSION['secret_key']) == "") echo "Inactivo"; ?></td>
      </tr> 
 
-     <tr>
-       <td>Restringir ordenes de otro usuarios</td>
-       <td><? if(Encrypt::Decrypt($r["restringir_ordenes"],$_SESSION['secret_key']) == "on") echo "Activado";
-              if(Encrypt::Decrypt($r["restringir_ordenes"],$_SESSION['secret_key']) == "") echo "Inactivo"; ?></td>
-     </tr> 
 <?
  unset($r);  
    ?>

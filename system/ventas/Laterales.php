@@ -216,13 +216,7 @@ elseif($_SESSION["tipoticket"] == 0){ return '<a id="mticket">N/A</a>'; }
  	public function ObtenerOrdenes(){ // listado de ordenes
  		$db = new dbConn();
 
-		if ($_SESSION['root_restringir_ordenes'] == "on" and $_SESSION["tipo_cuenta"] == 4) {
-			$userQuery = 'and user = "' . $_SESSION['user'] . '"';
-		} else {
-			$userQuery = '';
-		}
-
- 		    $a = $db->query("SELECT * FROM ticket_orden WHERE estado = 3 $userQuery and td = ".$_SESSION["td"]."");
+ 		    $a = $db->query("SELECT * FROM ticket_orden WHERE estado = 3 and td = ".$_SESSION["td"]."");
 
 	 		    if($a->num_rows > 0){
 	 		    	echo '<ul class="list-group">
@@ -250,7 +244,7 @@ elseif($_SESSION["tipoticket"] == 0){ return '<a id="mticket">N/A</a>'; }
 
 
  
-  		    $a = $db->query("SELECT * FROM ticket_orden WHERE estado = 1 $userQuery and td = ".$_SESSION["td"]."");
+  		    $a = $db->query("SELECT * FROM ticket_orden WHERE estado = 1 and td = ".$_SESSION["td"]."");
 
 	 		    if($a->num_rows > 0){
 	 		    	echo '<ul class="list-group">
