@@ -30,9 +30,12 @@ if($_SESSION['repartidor_asig']){
 }
  ?>  
 </div>
+
 <!-- ./  content -->
       </div>
       <div class="modal-footer">
+      
+          <a href="?modal=add_fecha" class="btn btn-danger btn-rounded btn-sm">Entrega</a>
           <a href="?addempleado" class="btn btn-secondary btn-rounded">Agregar Empleado</a>
           <a href="?" class="btn btn-primary btn-rounded">Regresar</a>
     

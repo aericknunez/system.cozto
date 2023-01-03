@@ -80,6 +80,10 @@ echo '
 	if($_GET["modal"] == "add_repartidor"){
 		echo '<script type="text/javascript" src="assets/js/query/ventaPop.js?v='.$numero.'"></script>';
 	}
+	// FECHA DE ENTREGA
+	if($_GET["modal"] == "add_fecha"){
+		echo '<script type="text/javascript" src="assets/js/query/fecha_entrega.js?v='.$numero.'"></script>';
+	}
 	if($_GET["modal"] == "oventas"){
 	echo '<script type="text/javascript" src="assets/js/query/ventaPop.js?v='.$numero.'"></script>';
 	}

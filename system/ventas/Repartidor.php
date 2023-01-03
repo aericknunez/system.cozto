@@ -109,7 +109,7 @@ class Repartidor{
 
             $a = $db->query("select cod, cant, total, producto, pv 
             from ticket 
-            where $repart cod = '9999999' and edo = 1 and fecha = '".$date."' and td = ".$_SESSION['td']." order by cant desc");
+            where $repart cod = '9999999' and edo = 1 and entrega = '".$date."' and td = ".$_SESSION['td']." order by cant desc");
             $especial = NULL;
             if($a->num_rows > 0){
             foreach ($a as $b) {
@@ -124,7 +124,7 @@ class Repartidor{
 
 			$a = $db->query("select cod, sum(cant), sum(total), producto, pv 
           from ticket 
-          where $repart cod != 8888 and cod != 9999999 and edo = 1 and fecha = '".$date."' and td = ".$_SESSION['td']." GROUP BY cod order by sum(cant) desc");
+          where $repart cod != 8888 and cod != 9999999 and edo = 1 and entrega = '".$date."' and td = ".$_SESSION['td']." GROUP BY cod order by sum(cant) desc");
 
 			if($a->num_rows > 0 or $especial){
 				
@@ -159,7 +159,7 @@ class Repartidor{
 			echo '</tbody>
 				</table></div>';
 			
-			$ar = $db->query("SELECT sum(cant) FROM ticket where $repart edo = 1 and fecha = '".$date."' and td = ".$_SESSION['td']."");
+			$ar = $db->query("SELECT sum(cant) FROM ticket where $repart edo = 1 and entrega = '".$date."' and td = ".$_SESSION['td']."");
 		    foreach ($ar as $br) {
 		     echo "Cantidad de Productos: ". $br["sum(cant)"] . "<br>";
 		    } $ar->close();
@@ -196,6 +196,24 @@ class Repartidor{
                   $this->UnsetRepartidor();
             }
 
+      }
+
+
+
+      public function cambiarFechaEntrega($fecha){
+            $cambio = array();
+            $cambio["entrega"] = $fecha;
+            $cambio["entregaF"] = Fechas::Format($fecha);
+            Helpers::UpdateId("ticket", $cambio, "orden = '".$_SESSION["orden"]."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."");   
+      }
+
+
+      public function getFechaRepartir(){
+            $db = new dbConn();
+            if ($r = $db->select("entrega", "ticket", "WHERE orden = '".$_SESSION["orden"]."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."")) { 
+                 $entrega = $r["entrega"]; 
+            }  unset($r);  
+            echo $entrega;
       }
 
 

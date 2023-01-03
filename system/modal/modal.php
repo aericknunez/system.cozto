@@ -77,4 +77,7 @@ if($_REQUEST["modal"]=="editempleado") include_once 'system/modal/modal/editar-e
 // add repartidor a la factura
 if($_REQUEST["modal"]=="add_repartidor") include_once 'system/modal/modal/repartidor.php';
 
+
+// add fecha de entrega a la factura
+if($_REQUEST["modal"]=="add_fecha") include_once 'system/modal/modal/establecer_entrega.php';
 ?>

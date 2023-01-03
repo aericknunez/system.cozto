@@ -1,0 +1,1 @@
+ALTER TABLE `ticket` ADD `entrega` VARCHAR(50) NOT NULL AFTER `fechaF`, ADD `entregaF` VARCHAR(50) NOT NULL AFTER `entrega`;

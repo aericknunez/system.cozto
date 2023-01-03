@@ -3288,6 +3288,24 @@ case "710": // estadistica costos
 	$historial->EstadisticaCostos($_POST["cod"]);
 break;
 
+
+case "711": // estadistica costos
+	include_once '../../system/ventas/Repartidor.php';
+	$rep = new Repartidor();
+	$rep->cambiarFechaEntrega($_POST["fecha_submit"]);
+	echo $_POST["fecha_submit"];
+break;
+
+case "712": // estadistica costos
+	include_once '../../system/ventas/Repartidor.php';
+	$rep = new Repartidor();
+	$rep->getFechaRepartir();
+break;
+
+
+
+
+
 } // termina switch
 
 
