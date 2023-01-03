@@ -239,7 +239,9 @@ elseif($_SESSION["tipoticket"] == 0){ return '<a id="mticket">N/A</a>'; }
 	 		    		} else {
 	 		    			echo 'Usuario: ' . $b["empleado"];
 	 		    		}
-
+						if($b["repartidor"] != NULL){
+							echo '<span class="badge badge-primary badge-pill"><i class="fas fa-truck"></i></span>';
+						}
 	 		    	echo ' | '. $b["fecha"].' '. $b["hora"].'</a>
 
 	 		    	<a href="system/facturar/facturas/'.$_SESSION["td"].'/ticket_comanda.php?orden='.$b["correlativo"].'" target="_blank"> <span class="badge badge-success badge-pill"><i class="fas fa-print fa-lg pt-1 pb-1"></i></span></a>
