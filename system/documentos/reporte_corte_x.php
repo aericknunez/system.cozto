@@ -26,7 +26,7 @@ if ($r = $db->select("*", "corte_diario", "WHERE hash = '$hash'")) {
   $cierre = $r["cierre"];
   $fecha = $r["fecha"];
   $caja_chica = $r["caja_chica"];
-  $efectivo = $r["efectivo"];
+  $efectivo = $r["efectivo_ingresado"];
   $total = $r["total"];
   $t_efectivo = $r["t_efectivo"];
   $t_tarjeta = $r["t_tarjeta"];
