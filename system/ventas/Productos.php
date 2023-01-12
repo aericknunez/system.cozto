@@ -81,8 +81,8 @@ echo '<section class="my-2">
 
       <p class="dark-grey-text">';
  
-if($servicio == "on"){
-Alerts::Mensajex("Puede agregar la cantidad de servios que desee","success");
+if($servicio == "on" or $_SESSION["config_agotado"] == ""){
+Alerts::Mensajex("Puede agregar la cantidad que desee","success");
 
 echo '<div class="md-form md-outline form-sm col-md-2">';
 echo '<label for="cantidad">Cantidad</label>
