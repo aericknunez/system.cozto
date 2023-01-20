@@ -73,7 +73,7 @@ class Repartidor{
           echo '<select class="browser-default form-control my-2" id="vendedor" name="vendedor">';
           echo '<option value="" disabled selected>Seleccione un usuario</option>';
             foreach ($a as $b) {
-                echo '<option value="'. $b["hash"] .'">'. $b["nombre"] .'</option>';
+                echo '<option value="'. $b["user"] .'">'. $b["nombre"] .'</option>';
             } $a->close();
           echo '</select>';
           }
@@ -88,7 +88,7 @@ class Repartidor{
                         $nombre_repartidor = 'REPARTIDOR: '. Helpers::GetData("planilla_empleados", "nombre", "hash", $rep) .' | ';
                   } else {
                         $repart = "user = '".$rep."' and";
-                        $nombre_repartidor = 'VENDEDOR: '. Helpers::GetData("login_userdata", "nombre", "hash", $rep) .' | ';
+                        $nombre_repartidor = 'VENDEDOR: '. Helpers::GetData("login_userdata", "nombre", "user", $rep) .' | ';
                   }
                   
             } else {
