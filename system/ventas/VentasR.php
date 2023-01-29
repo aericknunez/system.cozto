@@ -12,7 +12,7 @@ class Ventas{
    		$datos["cod"] = $datos["codigox"];
    	}
 
-  		if($this->FiltroAgotado($datos["cod"]) == TRUE){
+  		if($this->FiltroAgotado($datos["cod"]) == TRUE ){
 
 			if ($this->ObtenerCantidad($datos["cod"]) != NULL) {
 						if($_SESSION["orden"] == NULL){ $this->AddOrden(); }
@@ -43,16 +43,20 @@ class Ventas{
 
 
 public function FiltroAgotado($cod){
-	if ($_SESSION["config_agotado"] == "on") { // on restringido
-		if ($this->ObtenerCantidad($cod) > $this->ObtenerCantidadTicket($cod)) {
-			return TRUE;
-		} else {
-			return FALSE;
-		}
-	} else {
+	if ($this->IsSercicio($cod)==TRUE){
 		return TRUE;
+			}else{
+				if ($_SESSION["config_agotado"] == "on") { // on restringido
+					if ($this->ObtenerCantidad($cod) > $this->ObtenerCantidadTicket($cod)) {
+						return TRUE;
+					} else {
+						return FALSE;
+					}
+				} else {
+					return TRUE;
+				}
+			}
 	}
-}
 
 
    public function RestaVenta($datos){ // Rapida

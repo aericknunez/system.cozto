@@ -23,9 +23,13 @@ $segundo = Fechas::Format($_REQUEST["fin"]);
 // $objPHPExcel->getColumnDimension('C')->setAutoSize(true);
 
 
-$a = $db->query("SELECT * FROM ticket WHERE time BETWEEN '$primero' AND '$segundo' and edo = 1 and td = ".$_SESSION['td']." order by time desc");
+if($primero == $segundo){
+	$a = $db->query("SELECT * FROM ticket WHERE fechaF = '$segundo' and edo = 1 and td = ".$_SESSION['td']." order by time desc");
+} else {
+	$a = $db->query("SELECT * FROM ticket WHERE time BETWEEN '$primero' AND '$segundo' and edo = 1 and td = ".$_SESSION['td']." order by time desc");
+}
 
-    if($a->num_rows > 0){
+   if ($a->num_rows > 0) {
 
 require_once '../../application/common/PHPExcel.php';
 
@@ -101,8 +105,8 @@ $objPHPExcel->setActiveSheetIndex(0)
 
 
 
-$columnas = array('A','B','C','D','E','F','G');
-$numeros = array('H','I','J','K','L','M','N','O');
+$columnas = array('A','B','C','D','E','F','G','O');
+$numeros = array('H','I','J','K','L','M','N');
 
 // establece ceros numerocico las filas numerocas
 foreach($numeros as $columnID) {
