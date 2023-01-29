@@ -141,11 +141,16 @@ $r = $db->select("*", "config_root", "where td = ".$_SESSION['td']."");
        <td><? if(Encrypt::Decrypt($r["restringir_ordenes"],$_SESSION['secret_key']) == "on") echo "Activado";
               if(Encrypt::Decrypt($r["restringir_ordenes"],$_SESSION['secret_key']) == "") echo "Inactivo"; ?></td>
      </tr> 
+
+     <tr>
+       <td>Activar cambiar empleado (debe estar activo Repartidor)</td>
+       <td><? if(Encrypt::Decrypt($r["asignar_empleado"],$_SESSION['secret_key']) == "on") echo "Activado";
+              if(Encrypt::Decrypt($r["asignar_empleado"],$_SESSION['secret_key']) == "") echo "Inactivo"; ?></td>
+     </tr> 
+
 <?
  unset($r);  
    ?>
    </tbody>
 </table>
-
-
 <a href="?modal=conf_root" class="btn btn-indigo">Cambiar configuraciones<i class="fa fa-cog ml-2"></i></a>

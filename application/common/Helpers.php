@@ -344,6 +344,12 @@ static public function ImpuestoDesc($numero, $impuestos){
      } 
 
 
+    static public function RepartidorOrEmpleado(){
+      if ($_SESSION["root_asignar_empleado"]) {
+         return "Empleado";
+      }
+      return "Repartidor";
+    }
 
 
 

@@ -30,22 +30,30 @@ class Repartidor{
             $_SESSION["repartidor_cli"] = $dato["hash"];
             $_SESSION["repartidor_asig"] = $dato["nombre"];
      
-            $texto = 'Repartidor asignado para la Orden: ' . $_SESSION['repartidor_asig']. ".";
-            Alerts::Mensajex($texto,"danger",'<a id="quitar-repartidorA" op="707" class="btn btn-danger btn-rounded">Quitar Repartidor</a>', null);
+            $texto = Helpers::RepartidorOrEmpleado() . ' asignado para la Orden: ' . $_SESSION['repartidor_asig']. ".";
+            Alerts::Mensajex($texto,"danger",'<a id="quitar-repartidorA" op="707" class="btn btn-danger btn-rounded">Quitar '. Helpers::RepartidorOrEmpleado() .'</a>', null);
     
     
             $cambio = array();
-            $cambio["repartidor"] = $_SESSION["repartidor_cli"];
+            if ($_SESSION["root_asignar_empleado"]) {
+                  $cambio["user"] = $_SESSION["repartidor_cli"];
+            } else {
+                  $cambio["repartidor"] = $_SESSION["repartidor_cli"];
+            }
             Helpers::UpdateId("ticket_orden", $cambio, "correlativo = '".$_SESSION["orden"]."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."");   
             Helpers::UpdateId("ticket", $cambio, "orden = '".$_SESSION["orden"]."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."");   
     
       }
 
 
-      public function DeleteRepartidor(){ // agrega  cliente
+      public function DeleteRepartidor(){
     
             $cambio = array();
-            $cambio["repartidor"] = NULL;
+            if ($_SESSION["root_asignar_empleado"]) {
+                  $cambio["user"] = $_SESSION["user"];
+            } else {
+                  $cambio["repartidor"] = NULL;
+            }
             Helpers::UpdateId("ticket_orden", $cambio, "correlativo = '".$_SESSION["orden"]."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."");   
             Helpers::UpdateId("ticket", $cambio, "orden = '".$_SESSION["orden"]."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."");   
             

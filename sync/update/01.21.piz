@@ -1,0 +1,1 @@
+ALTER TABLE `config_root` ADD `asignar_empleado` VARCHAR(100) NOT NULL AFTER `restringir_ordenes`;
