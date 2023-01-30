@@ -24,9 +24,9 @@ $segundo = Fechas::Format($_REQUEST["fin"]);
 
 
 if($primero == $segundo){
-  $a = $db->query("SELECT * FROM producto_ingresado WHERE fechaF = '$segundo' and td = ".$_SESSION['td']." order by time desc");
+  $a = $db->query("SELECT * FROM producto_ingresado WHERE fecha_ingreso = '$segundo' and td = ".$_SESSION['td']." order by fechaF ASC");
 } else {
-  $a = $db->query("SELECT * FROM producto_ingresado WHERE time BETWEEN '$primero' AND '$segundo' and td = ".$_SESSION['td']." order by time desc");
+  $a = $db->query("SELECT * FROM producto_ingresado WHERE fecha_ingreso BETWEEN '$primero' AND '$segundo' and td = ".$_SESSION['td']." order by fechaF ASC");
 }
 
     if($a->num_rows > 0){
