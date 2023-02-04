@@ -8,12 +8,24 @@ class Repartidor{
      public function RepartidorBusqueda($dato){ // Busqueda para cliente
         $db = new dbConn();
     
-              $a = $db->query("SELECT * FROM planilla_empleados WHERE (nombre like '%".$dato["keyword"]."%' or documento like '%".$dato["keyword"]."%') and td = ".$_SESSION["td"]." limit 10");
+
+
+              if ($_SESSION["root_asignar_empleado"]) {
+                  $a = $db->query("SELECT * FROM login_userdata WHERE (nombre like '%".$dato["keyword"]."%' or user like '%".$dato["keyword"]."%') and tipo !=1 and td = ".$_SESSION["td"]." limit 10");
+            } else {
+                  $a = $db->query("SELECT * FROM planilla_empleados WHERE (nombre like '%".$dato["keyword"]."%' or documento like '%".$dato["keyword"]."%') and td = ".$_SESSION["td"]." limit 10");
+            }
+
                if($a->num_rows > 0){
                 echo '<table class="table table-sm table-hover">';
                     foreach ($a as $b) {
+                              if ($_SESSION["root_asignar_empleado"]) {
+                                    $hash = $b["user"];
+                              } else {
+                                    $hash = $b["hash"];
+                              }
                             echo '<tr>
-                                    <td scope="row"><a id="select-rep" hash="'. $b["hash"] .'" nombre="'. $b["nombre"] .'"><div>'. $b["nombre"] .'   ||   '. $b["documento"].'</div></a></td>
+                                    <td scope="row"><a id="select-rep" hash="'. $hash .'" nombre="'. $b["nombre"] .'"><div>'. $b["nombre"] .'   ||   '. $b["documento"].'</div></a></td>
                                     </tr>'; 
                     }  $a->close();
     
