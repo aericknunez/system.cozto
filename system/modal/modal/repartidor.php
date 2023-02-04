@@ -42,11 +42,11 @@ if($_SESSION['repartidor_asig']){
       <?php
             if (!$_SESSION["root_asignar_empleado"]) { ?>
               <a href="?modal=add_fecha" class="btn btn-danger btn-rounded btn-sm">Entrega</a>
+              <a href="?addempleado" class="btn btn-secondary btn-rounded">Nuevo Empleado</a>
       <?php
         }
       ?>
           
-          <a href="?addempleado" class="btn btn-secondary btn-rounded">Nuevo Empleado</a>
           <a href="?" class="btn btn-primary btn-rounded">Regresar</a>
     
       </div>
