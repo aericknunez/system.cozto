@@ -6,7 +6,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">
-          DATOS DE LA FACTURA</h5>
+          DATOS DEL CREDITO FISCAL</h5>
       </div>
       <div class="modal-body">
 <!-- ./  content -->
