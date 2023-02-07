@@ -1106,10 +1106,15 @@ echo '</tbody>
           where cod != 8888 and cod != 9999999 and edo = 1 and fechaF BETWEEN '$primero' and '$segundo' $usuario and td = ".$_SESSION['td']." GROUP BY cod order by sum(cant) desc");
 
 			if($a->num_rows > 0 or $especial){
-				
-				echo '<h3 class="h3-responsive">PRODUCTOS VENDIDOS</h3>';
-			
-				    
+
+				if($user==NULL){
+
+				echo strtoupper('<h5 >Productos Vendidos del: '.$inicio.' al '.$fin.'</h5>');
+			}else{
+				echo strtoupper('<h5 >'.Helpers::GetData("login_userdata", "nombre", "user", $user).'</h5>');
+				echo strtoupper('<h5 >Productos Vendidos del: '.$inicio.' al '.$fin.'</h5>');
+			}
+					    
 				echo '<div class="table-responsive">
 				<table class="table table-striped table-sm">
 						<thead>
@@ -1152,6 +1157,8 @@ echo '</tbody>
 
 		     echo "Total Agrupado: ". Helpers::Dinero($tot) . "<br>";
 
+			 echo '<div class="text-right"><a href="system/documentos/ventasxusuario.php?inicio='.$inicio.'&fin='.$fin. '&user='.$user.'" >Descargar Excel</a></div>';
+
 		    //  echo '<div class="text-right"><a href="system/documentos/ventadiaria.php?fecha='.$fecha.'" >Descargar Excel</a></div>';
 
 			} else {
@@ -1182,6 +1189,7 @@ echo '</tbody>
 			echo '>'.$b["nombre"].'</option>';
 		} $a->close();
 		echo '</select>';
+		
 	}
 
 
