@@ -330,7 +330,7 @@ if($_SESSION["root_tipo_sistema"] != 1) {
 <div class="collapsible-body">
 <ul class="list-unstyled">
 
-<li><a href="?clienteadd" class="waves-effect"><i class="fas fa-user"></i> Agrega Cliente</a></li>
+<li><a href="?clienteadd" class="waves-effect"><i class="fas fa-user"></i> Agregar Cliente</a></li>
 <li><a href="?clientever" class="waves-effect"><i class="fas fa-address-book"></i> Ver Cliente</a></li>
 
 </ul>
@@ -403,7 +403,7 @@ echo '<li><a href="application/src/routes.php?op=510"  class="waves-effect"><i c
 } ?>
 
 <li><a href="?reportef" class="waves-effect"><i class="fas fa-cogs"></i> Facturas Emitidas</a></li>
-<li><a href="?mod_nit" class="waves-effect"><i class="fas fa-cogs"></i> Agregar Clientes</a></li>
+<li><a href="?mod_nit" class="waves-effect"><i class="fas fa-cogs"></i> Agregar Cliente Credito F.</a></li>
 <?php
 if($_SESSION['root_comment_ticket'] == "on") {
 ?>

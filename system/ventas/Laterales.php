@@ -44,8 +44,8 @@ class Laterales{
 			    <!--Panel-->
 			    <div class="card">
 			        <div class="card-body">
-			            <h4 class="card-title">TOTAL '. $_SESSION['config_moneda_simbolo'] .'</h4>
-			            <p class="black-text display-3"> '. $this->ObtenerTotal($orden) .'</p>
+			            <h4 class="card-title">TOTAL</h4>
+			            <p class="black-text display-3"> '. $_SESSION['config_moneda_simbolo'] ." ". $this->ObtenerTotal($orden) .'</p>
 			            <div id="vticket">'. $this->NombreTicket() .'</div>
 			        </div>
 			    </div>
@@ -148,7 +148,7 @@ elseif($_SESSION["tipoticket"] == 0){ return '<a id="mticket">N/A</a>'; }
 
 
 		if($_SESSION['cliente_credito'] == NULL and $_SESSION['cliente_asig'] == NULL and $_SESSION["root_taller"] != "on"){
-		echo '<a href="?modal=dfactura" class="btn-floating btn-secondary" title="Datos Factura"><i class="fas fa-file-invoice-dollar"></i></a>';
+		echo '<a href="?modal=dfactura" class="btn-floating btn-secondary" title="Datos Credito Fiscal"><i class="fas fa-file-invoice-dollar"></i></a>';
 		}
 		
 		echo '<a href="?modal=oventas" class="btn-floating btn-success" title="Venta Especial"><i class="fas fa-donate"></i></a>';
@@ -157,7 +157,7 @@ elseif($_SESSION["tipoticket"] == 0){ return '<a id="mticket">N/A</a>'; }
 		// echo '<a href="?modal=agrupado" class="btn-floating btn-info" title="Venta Agrupada"><i class="fas fa-donate"></i></a>';
 
 		if($_SESSION['cliente_credito'] == NULL and $_SESSION['factura_cliente'] == NULL and $_SESSION["root_taller"] != "on"){
-			echo '<a href="?modal=cliente" class="btn-floating btn-warning" title="Asignar Cliente"><i class="fas fa-user"></i></a>';
+			echo '<a href="?modal=cliente" class="btn-floating btn-warning" title="Datos Factura"><i class="fas fa-user"></i></a>';
 		}
 
 
@@ -166,7 +166,7 @@ elseif($_SESSION["tipoticket"] == 0){ return '<a id="mticket">N/A</a>'; }
 		}
 
 		if($_SESSION["root_repartidor"] == "on"){
-			echo '<a href="?modal=add_repartidor" class="btn-floating btn-danger" title="Asignar Repartidor"><i class="fas fa-user"></i></a>';
+			echo '<a href="?modal=add_repartidor" class="btn-floating btn-danger" title= '."Asignar".Helpers::RepartidorOrEmpleado().'><i class="fas fa-user"></i></a>';
 		}
 		echo '</div>';
 
@@ -188,7 +188,7 @@ elseif($_SESSION["tipoticket"] == 0){ return '<a id="mticket">N/A</a>'; }
 		}
 
 		if($_SESSION['factura_cliente']){
-			 $textos = 'Cliente asignado para la Factura: ' . $_SESSION['factura_cliente']. ". Con el Documento: " . $_SESSION['factura_documento'];
+			 $textos = 'Cliente asignado al Credito Fiscal: ' . $_SESSION['factura_cliente']. ". Con el Documento: " . $_SESSION['factura_documento'];
 			Alerts::Mensajex($textos,"info",NULL,NULL);
 		}
 

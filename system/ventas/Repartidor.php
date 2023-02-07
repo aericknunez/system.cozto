@@ -131,6 +131,7 @@ class Repartidor{
             from ticket 
             where $repart cod = '9999999' and edo = 1 and entrega = '".$date."' and td = ".$_SESSION['td']." order by cant desc");
             $especial = NULL;
+            $total = 0;
             if($a->num_rows > 0){
             foreach ($a as $b) {
             $especial .= '<tr>
@@ -170,18 +171,26 @@ class Repartidor{
 			       <td>'. $b["producto"] . '</td>
 			       <td>'. Helpers::Dinero($b["pv"]) . '</td>
 			       <td>'. Helpers::Dinero($b["sum(total)"]) . '</td>
-			     </tr>';
+			       </tr>';
+                                            
+                       $total = $total + $b["sum(total)"];
 			    } 
 
 			    $a->close();
                   echo $especial;
-
+                   
+                  echo '<tr>
+                  <td></td>
+                  <td></td>
+                  <td>'. "Total Vendido".'</td>
+                  <td>'. Helpers::Dinero($total) . '</td>
+                  </tr>';
 			echo '</tbody>
 				</table></div>';
 			
 			$ar = $db->query("SELECT sum(cant) FROM ticket where $repart edo = 1 and entrega = '".$date."' and td = ".$_SESSION['td']."");
 		    foreach ($ar as $br) {
-		     echo "Cantidad de Productos: ". $br["sum(cant)"] . "<br>";
+		     echo "Cantidad de Productos: ". $br["sum(cant)"] . "<br>";          
 		    } $ar->close();
 
                 if ($imp == TRUE) {
