@@ -135,7 +135,7 @@ Alerts::Mensajex("CAJA APERTURADA CORRECTAMENTE","success", '<a href="?" class="
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">
-         SELECCIONE TIPO DE DOCUMENTO</h5>
+         SELECCIONE TIPO DE DOCUMENTO<a id="btnCorrelativo" class="">+</a></h5>
          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -147,8 +147,7 @@ Alerts::Mensajex("CAJA APERTURADA CORRECTAMENTE","success", '<a href="?" class="
 <!-- ./  content -->
       </div>
 
-<div class="modal-footer justify-content-between">
-<a id="btnCorrelativo" class="btn btn-sm btn-secondary btn-rounded">*</a>
+<div class="modal-footer justify-content-end">
 <a id="cerrarmodal" class="btn btn-primary btn-rounded" data-dismiss="modal">Regresar</a>
 </div>
 
