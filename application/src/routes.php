@@ -3303,6 +3303,17 @@ case "712": // estadistica costos
 break;
 
 
+case "713":
+	include_once '../../system/ventas/Correlativos.php';
+	$rep = new Correlativos();
+	$rep->setCorrelativo($_POST['correlativo']);
+break;
+
+case "714":
+	if($_SESSION['newCorrelativo']) {
+		echo "Correlativo: " . $_SESSION['newCorrelativo'];
+	}
+break;
 
 
 

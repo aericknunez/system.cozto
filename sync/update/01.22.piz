@@ -1,0 +1,18 @@
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
+
+CREATE TABLE `ticket_set_correlativo` (
+  `id` int(6) NOT NULL,
+  `correlativo` int(6) NOT NULL,
+  `hash` varchar(12) NOT NULL,
+  `time` int(12) NOT NULL,
+  `td` int(6) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+ALTER TABLE `ticket_set_correlativo`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `ticket_set_correlativo`
+  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT;
