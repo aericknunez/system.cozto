@@ -123,6 +123,16 @@ $r = $db->select("*", "config_master", "where td = ".$_SESSION['td']."")
      </tr>
 
      <tr>
+       <td>Numero de lineas Factura</td>
+       <td><? echo $r["lineasf"]; ?></td>    
+     </tr>
+
+     <tr>
+       <td>Numero de lineas Credito Fiscal</td>
+       <td><? echo $r["lineascf"]; ?></td>    
+     </tr>
+
+     <tr>
        <td>Multicaja</td>
        <td><? if($r["multicaja"] == "on") echo "Activado"; else echo "Inactivo"; ?></td>    
      </tr>

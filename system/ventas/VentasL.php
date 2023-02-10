@@ -704,6 +704,14 @@ Helpers::UpdateId("ubicacion_asig", $cambio, "ubicacion = '".$datos["ubicacion"]
 		    $a = $db->query("SELECT * FROM ticket WHERE orden = ".$_SESSION["orden"]." and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."");
 
 		    if($a->num_rows > 0){
+
+				if($a->num_rows >= $_SESSION["lineasf"] && $_SESSION["tipoticket"] == 2 )
+
+				 echo Alerts::Mensajex('Ha llegado al limite de lineas de la factura', 'danger');
+
+				else if($a->num_rows >= $_SESSION["lineascf"] && $_SESSION["tipoticket"] == 3)
+
+				 echo Alerts::Mensajex('Ha llegado al limite de lineas del Credito Fiscal', 'danger');
 		    		echo '<div class="table-responsive">
 		    		<table class="table table-striped table-sm">
 					  <thead>
