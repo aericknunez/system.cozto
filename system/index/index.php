@@ -135,7 +135,7 @@ Alerts::Mensajex("CAJA APERTURADA CORRECTAMENTE","success", '<a href="?" class="
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">
-         SELECCIONE TIPO DE DOCUMENTO<a id="btnCorrelativo" class="">+</a></h5>
+         SELECCIONE TIPO DE DOCUMENTO<a id="btnCorrelativo" class="">*</a></h5>
          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -147,7 +147,7 @@ Alerts::Mensajex("CAJA APERTURADA CORRECTAMENTE","success", '<a href="?" class="
 <!-- ./  content -->
       </div>
 
-<div class="modal-footer justify-content-end">
+<div class="modal-footer">
 <a id="cerrarmodal" class="btn btn-primary btn-rounded" data-dismiss="modal">Regresar</a>
 </div>
 
@@ -171,7 +171,7 @@ Alerts::Mensajex("CAJA APERTURADA CORRECTAMENTE","success", '<a href="?" class="
 <div class="row justify-content-md-center">
     <div class="col-12 col-md-auto">
       <?php
-      Alerts::Mensaje('Ingrese el número del último documento emitido. Hacer esto no hay retorno', 'info');
+      Alerts::Mensajex('Ingrese el número del último documento emitido. Hacer esto no tiene retorno', 'info');
       ?>
         <form name="form-correlativo" method="post" id="form-correlativo">
         <input placeholder="Correlativo" type="number" id="correlativo" name="correlativo" class="form-control datepicker my-2">

@@ -232,7 +232,11 @@ $(document).ready(function(){
 			url: "application/src/routes.php?op=48",
 			method: "POST",
 			data: $("#form-productoagrega").serialize(),
+			beforeSend: function () {
+				$('#btn-productoagrega').html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>Loading...').addClass('disabled');
+			},
 			success: function(data){
+				$('#btn-productoagrega').html('Guardar').removeClass('disabled');	
 				$("#form-productoagrega").trigger("reset");
 				$("#destinoproductoagrega").html(data);			
 			}
