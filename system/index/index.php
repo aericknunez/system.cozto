@@ -135,7 +135,7 @@ Alerts::Mensajex("CAJA APERTURADA CORRECTAMENTE","success", '<a href="?" class="
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">
-         SELECCIONE TIPO DE DOCUMENTO</h5>
+         SELECCIONE TIPO DE DOCUMENTO<a id="btnCorrelativo" class="">*</a></h5>
          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -155,3 +155,39 @@ Alerts::Mensajex("CAJA APERTURADA CORRECTAMENTE","success", '<a href="?" class="
   </div>
 </div>
 <!-- ./  Modal -->
+
+<div class="modal" id="ModalCorrelativo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"  data-backdrop="true">
+  <div class="modal-dialog modal-md" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">
+         AGREGAR NUEVO CORRELATIVO</h5>
+         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" align="center">
+<!-- ./  content -->
+<div class="row justify-content-md-center">
+    <div class="col-12 col-md-auto">
+      <?php
+      Alerts::Mensajex('Ingrese el número del último documento emitido. Hacer esto no tiene retorno', 'info');
+      ?>
+        <form name="form-correlativo" method="post" id="form-correlativo">
+        <input placeholder="Correlativo" type="number" id="correlativo" name="correlativo" class="form-control datepicker my-2">
+        <button class="btn btn-info my-2 btn-rounded btn-sm waves-effect" type="submit" id="btn-correlativo" name="btn-correlativo">Asignar</button>
+      </form> 
+    </div>
+  </div>
+<div id="contenidocorrelativo">
+</div>
+<!-- ./  content -->
+      </div>
+
+<div class="modal-footer">
+<a id="cerrarmodal" class="btn btn-primary btn-rounded" data-dismiss="modal">Cerrar</a>
+</div>
+
+    </div>
+  </div>
+</div>

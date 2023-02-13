@@ -560,7 +560,43 @@ function QueryGo(dir){
 
 
 
+    $("body").on("click","#btnCorrelativo",function(){ 
+        $('#ModalTicket').modal('hide');
+        $('#ModalCorrelativo').modal('show');
 
+        var op = "714";
+        var dataString = 'op='+op;
+
+        $.ajax({
+            type: "POST",
+            url: "application/src/routes.php",
+            data: dataString,
+            beforeSend: function () {
+               $("#contenidocorrelativo").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt=""></div>');
+            },
+            success: function(data) {            
+                $("#contenidocorrelativo").html(data); // lo que regresa de la busquea 
+            }
+        }); 
+
+    });
+
+    $('#btn-correlativo').click(function(e){ /// cambia la cantidad de los productos
+        e.preventDefault();
+        $.ajax({
+            url: "application/src/routes.php?op=713",
+            method: "POST",
+            data: $("#form-correlativo").serialize(),
+            beforeSend: function () {
+                $('#btn-correlativo').html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>Loading...').addClass('disabled');
+            },
+            success: function(data){
+               $('#btn-correlativo').html('Asignar').removeClass('disabled');
+               $("#form-correlativo").trigger("reset");
+               $("#contenidocorrelativo").html(data);
+            }
+        })
+    })
 
 
 }); // termina query
