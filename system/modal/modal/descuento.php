@@ -24,6 +24,19 @@
               <input type="text" class="form-control" id="descuento" name="descuento" required>
             </div>
 
+              <?php
+              if ($_SESSION['config_restringir_descuento']) {
+              ?>
+              <div class="col-md-8 mb-2 md-form">
+
+              <label for="codigo_seguridad">Codigo de seguridad</label>
+              <input type="text" class="form-control" id="codigo_seguridad" name="codigo_seguridad" placeholder="87FE85">
+              </div>
+
+              <?php
+                }
+              ?>
+
           <div class="col-md-4 mb-4 md-form">
               <button class="btn-floating btn-sm btn-secondary" type="submit" id="btn-descuento"><i class="fas fa-plus"></i></button> %
             </div>

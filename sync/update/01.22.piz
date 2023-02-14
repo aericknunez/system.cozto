@@ -1,0 +1,1 @@
+ALTER TABLE `config_master` ADD `restringir_descuento` VARCHAR(3) NOT NULL AFTER `descuento`;
