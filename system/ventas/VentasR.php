@@ -845,6 +845,7 @@ if ($r = $db->select("sum(existencia)", "producto_ingresado", "WHERE existencia 
  		// configuro el tipo de pago
  		if(isset($_SESSION["cliente_c"])) $tpago = 3;
  		elseif(isset($_SESSION["tcredito"])) $tpago = 2;
+		elseif($_SESSION["tipoticket"] == 8) $tpago = 8;
  		else $tpago = 1;
 
 	    $cambio = array();

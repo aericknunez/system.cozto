@@ -106,14 +106,14 @@ public function TiposTicketActivos(){ // esta funcion obtiene los ticket activos
 
 if($_SESSION["tx"] == 0){
 
-    if ($r = $db->select("ninguno, ax0, bx0, dx0, ex0", "facturar_opciones", "WHERE td = ".$_SESSION["td"]."")) { 
-        $ninguno = $r["ninguno"]; $ax = $r["ax0"]; $bx = $r["bx0"]; $dx = $r["dx0"]; $ex = $r["ex0"];
+    if ($r = $db->select("nota_envio, ninguno, ax0, bx0, dx0, ex0", "facturar_opciones", "WHERE td = ".$_SESSION["td"]."")) { 
+        $envio = $r["nota_envio"]; $ninguno = $r["ninguno"]; $ax = $r["ax0"]; $bx = $r["bx0"]; $dx = $r["dx0"]; $ex = $r["ex0"];
     } unset($r);  
 
 } else {
     
-    if ($r = $db->select("ninguno, ax1, bx1, dx1, ex1", "facturar_opciones", "WHERE td = ".$_SESSION["td"]."")) { 
-        $ninguno = $r["ninguno"]; $ax = $r["ax1"]; $bx = $r["bx1"]; $dx = $r["dx1"]; $ex = $r["ex1"];
+    if ($r = $db->select("nota_envio, ninguno, ax1, bx1, dx1, ex1", "facturar_opciones", "WHERE td = ".$_SESSION["td"]."")) { 
+        $envio = $r["nota_envio"]; $ninguno = $r["ninguno"]; $ax = $r["ax1"]; $bx = $r["bx1"]; $dx = $r["dx1"]; $ex = $r["ex1"];
     } unset($r);  
 }
 
@@ -134,7 +134,9 @@ if($ninguno == 1){
 	echo '<a id="opticket" tipo="0" class="btn btn-elegant">Ninguno</a>';
 }
 
-
+if($envio == 1){
+	echo '<a id="opticket" tipo="8" class="btn btn-success">Nota Envio</a>';
+}
 
 }// termina le funcion
 
