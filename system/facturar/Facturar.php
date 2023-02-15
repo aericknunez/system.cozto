@@ -12,6 +12,9 @@ class Facturar{
 			case "ninguno":
 				$cambio["ninguno"] = $data["edo"];
 				break;
+			case "nota_envio":
+					$cambio["nota_envio"] = $data["edo"];
+				break;
 			case "ax0":
 				$cambio["ax0"] = $data["edo"];
 				break;

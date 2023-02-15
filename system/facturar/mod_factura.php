@@ -153,6 +153,22 @@ $r = $db->select("*", "facturar_opciones", "where td = ".$_SESSION['td']."");
           </div>
        </td> 
      </tr>
+
+     <tr>
+       <td>Nota de Envio</td>
+       <td>
+       </td>
+       <td>
+          <div class="switch">
+            <label>
+             Off
+              <input type="checkbox" <?php if($r["nota_envio"] == "1") echo 'checked = "checked"'; ?> id="nota_envio" name="nota_envio" >
+              <span class="lever"></span> 
+             On 
+            </label>
+          </div>
+       </td> 
+     </tr>
 <?
  unset($r);  
    ?>
