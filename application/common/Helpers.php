@@ -57,6 +57,14 @@ class Helpers{
         return $hash;
     }
 
+    public static function CodigoValidacionDescuento(){ // codigo de 6 digitos que cambia cada hora
+      $hora_actual = intval(date("H"));
+	    $numero = sha1($hora_actual);
+	    $codigoDescuento = substr($numero, 0, 6);  
+
+      return $codigoDescuento;
+  }
+
 
 
     public static function DBVersion(){ // version de la base de datos
