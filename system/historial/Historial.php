@@ -1206,60 +1206,63 @@ public function NotasEnvio($fecha) {
 
    if ($a->num_rows > 0) {
 
-	  echo '<h3 class="h3-responsive">NOTAS DE ENVIO</h3>
-	  <div class="table-responsive text-nowrap">
-	  <table class="table table-striped table-sm table-bordered">
+	echo '<h3 class="h3-responsive">NOTAS DE ENVIO</h3>
+	<div class="table-responsive text-nowrap">
+	<table class="table table-striped table-sm table-bordered">
 
-		<thead>
-	     <tr>
-	       <th>Orden</th>
-	       <th>Fecha</th>
-	       <th>Hora</th>					       
-	       <th>Empleado</th>
-	     </tr>
-	   </thead>
-	   <tbody>';
+	  <thead>
+	   <tr>
+		 <th>N°</th>
+		 <th>Fecha</th>
+		 <th>Hora</th>					       
+		 <th>Empleado</th>
+	   </tr>
+	 </thead>
+	 <tbody>';
 
-    foreach ($a as $b) {
+  foreach ($a as $b) {
 
-	echo '<tr class="text-black font-weight-bold">
-		   <th>'.$b["correlativo"].'</th>					       
-		   <th>'.$b["fecha"].'</th>					       
-		   <th>'.$b["hora"].'</th>
-		   <th>'.$b["empleado"].'</th>
-		 </tr>';
+  echo '<tr class="text-black font-weight-bold">
+		 <th>'. Helpers::GetData("ticket_num", "num_fac", "orden", $b["correlativo"]) .'</th>					       
+		 <th>'.$b["fecha"].'</th>					       
+		 <th>'.$b["hora"].'</th>
+		 <th>'.$b["empleado"].'</th>
+	   </tr>';
 
-	$x = $db->query("SELECT * FROM ticket WHERE orden = ".$b["correlativo"]." and tipo_pago = 8 and td = ".$_SESSION['td']." order by time desc");
-	
-	$tot = 0;
-	foreach ($x as $y) {
-		$tot = $tot + $y["total"];
-		echo '<tr class="text-black">
-				<th>Cod</th>					       
-				<th>Cantidad</th>					       
-				<th>Producto</th>
-				<th>Total</th>
-			</tr>';
-		echo '<tr class="text-black">
-			   <th>'.$y["cod"].'</th>					       
-			   <th>'.$y["cant"].'</th>					       
-			   <th>'.$y["producto"].'</th>
-			   <th>'.Helpers::Dinero($y["total"]).'</th>
-			 </tr>';
-		echo '<tr class="text-black">
-			 <th></th>					       
-			 <th></th>					       
-			 <th>TOTAL</th>
-			 <th>'.Helpers::Dinero($tot).'</th>
+  $x = $db->query("SELECT * FROM ticket WHERE orden = ".$b["correlativo"]." and tipo_pago = 8 and td = ".$_SESSION['td']." order by time desc");
+  
+  $tot = 0;
+
+  echo '<tr class="text-black">
+			  <th>Cod</th>					       
+			  <th>Cantidad</th>					       
+			  <th>Producto</th>
+			  <th>Total</th>
+		  </tr>';
+  foreach ($x as $y) {
+	  $tot = $tot + $y["total"];
+	  
+	  echo '<tr class="text-black">
+			 <th>'.$y["cod"].'</th>					       
+			 <th>'.$y["cant"].'</th>					       
+			 <th>'.$y["producto"].'</th>
+			 <th>'.Helpers::Dinero($y["total"]).'</th>
 		   </tr>';
-		} $x->close();
+	  } $x->close();
 
-    }  
+	  echo '<tr class="text-black">
+			  <th></th>					       
+			  <th></th>					       
+			  <th>TOTAL</th>
+			  <th>'.Helpers::Dinero($tot).'</th>
+			  </tr>';
 
+  }  
+  
+  
 
 echo '</tbody>
-	</table></div>';
-
+  </table></div>';
 
   } else {
 	Alerts::Mensajex("No se encontraron registros para este dia","danger");
