@@ -245,7 +245,14 @@ $r = $db->select("*", "config_master", "where td = ".$_SESSION['td']."")
 
   <tr>
 
-<td>
+  <td><div class="switch mt-4">
+            <label>
+             Restringir Descuentos ||  Off
+          <input type="checkbox" <?php if($r["restringir_descuento"] == "on") echo "checked"; ?> id="restringir_descuento" name="restringir_descuento" >
+              <span class="lever"></span> On 
+            </label>
+          </div>
+  </td>
 <td>
 <button class="btn btn-info my-4" type="submit" id="btn-config" name="btn-config">Realizar Cambios</button>
 

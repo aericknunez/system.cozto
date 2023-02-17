@@ -840,8 +840,16 @@ case "94": // aplicar descuento
 include_once '../../system/ventas/Laterales.php';
 include_once '../../system/ventas/VentasR.php';
 	$venta = new Ventas();
+	$venta->AplicarDescuento();
 
-if($_POST["descuento"] != NULL and is_numeric($_POST["descuento"])){
+	if ($_SESSION['config_restringir_descuento']) {
+		if (Helpers::CodigoValidacionDescuento()!= $_POST['codigo_seguridad']) {
+			echo "Ingrese un código de seguridad válido";
+			return ;
+		}
+	}
+
+	if($_POST["descuento"] != NULL and is_numeric($_POST["descuento"])){
 
 		if($_SESSION["descuento"] != NULL){// se ya se ha aplicado descuento a toda la factura
 			$_SESSION["descuentox"] = $_SESSION["descuento"];
@@ -884,13 +892,20 @@ break;
 
 
 case "95": // aplicar descuento a factura
+	if ($_SESSION['config_restringir_descuento']) {
+		if (Helpers::CodigoValidacionDescuento()!= $_POST['codigo_seguridad']) {
+			echo "Ingrese un código de seguridad válido";
+			return ;
+		}
+	}
+	
 if($_POST["descuento"] != NULL and is_numeric($_POST["descuento"])){
 	$_SESSION["descuento"] = $_POST["descuento"];
 
 	include_once '../../system/ventas/Laterales.php';
 	include_once '../../system/ventas/VentasR.php';
 	$venta = new Ventas();
-	$venta->AplicarDescuento();	
+	$venta->AplicarDescuento();
 	} else {
 		Alerts::Alerta("error","Error!","Revise sus datos!");
 	}	

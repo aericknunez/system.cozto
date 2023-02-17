@@ -44,6 +44,7 @@ class Config{
 	    $cambio["multicaja"] = $data["multicaja"];
 	    $cambio["mayorista"] = $data["mayorista"];
 	    $cambio["descuento"] = $data["descuento"];
+	    $cambio["restringir_descuento"] = $data["restringir_descuento"];
 	    $cambio["sonido"] = $data["sonido"];
 	    $cambio["pesaje"] = $data["pesaje"];
 	    $cambio["agotado"] = $data["agotado"];
@@ -141,6 +142,7 @@ class Config{
 			$_SESSION['config_multicaja'] = $r["multicaja"];
 			$_SESSION['config_mayorista'] = $r["mayorista"];
 			$_SESSION['config_descuento'] = $r["descuento"];
+			$_SESSION['config_restringir_descuento'] = $r["restringir_descuento"];
 			$_SESSION['config_sonido'] = $r["sonido"];
 			$_SESSION['config_pesaje'] = $r["pesaje"];
 			$_SESSION['config_agotado'] = $r["agotado"];

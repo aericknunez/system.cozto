@@ -316,9 +316,11 @@ $('#ModalBalanza').on('shown.bs.modal', function() { // para autofocus en el mod
             success: function(data){
                $('#btn-Ddescuento').html('Agregar').removeClass('disabled');
                $("#form-Ddescuento").trigger("reset");
-               $('#ModalDescuento').modal('hide');
+            //    $('#ModalDescuento').modal('hide');
                $("#ver").load('application/src/routes.php?op=93'); // ver productos de la orden 
                $("#lateral").load('application/src/routes.php?op=70'); // caraga el lateral
+               $('#ver-descuento').html(data);
+
             }
         })
     })

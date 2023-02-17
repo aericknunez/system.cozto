@@ -81,6 +81,14 @@ $ventas->VerProducto();
 
 
         <input class="form-control form-control-lg" type="number" step="any" min="1" placeholder="Descuento %" id="descuento" name="descuento" autofocus>
+        <?php
+          if ($_SESSION['config_restringir_descuento']) {
+        ?>
+        <input class="form-control form-control-lg" type="text" id="codigo_seguridad" name="codigo_seguridad" placeholder="Codigo de Seguridad">
+        <?php
+          }
+        ?>
+
         <input type="hidden" id="dcantidad" name="dcantidad" value="">
         <input type="hidden" id="dcodigo" name="dcodigo" value="">
          <button class="btn aqua-gradient btn-rounded btn-sm" type="submit" id="btn-Ddescuento" name="btn-Ddescuento">Agregar</button>
