@@ -845,6 +845,7 @@ if ($r = $db->select("sum(existencia)", "producto_ingresado", "WHERE existencia 
  		// configuro el tipo de pago
  		if(isset($_SESSION["cliente_c"])) $tpago = 3;
  		elseif(isset($_SESSION["tcredito"])) $tpago = 2;
+		elseif($_SESSION["tipoticket"] == 8) $tpago = 8;
  		else $tpago = 1;
 
 	    $cambio = array();
@@ -857,6 +858,7 @@ if ($r = $db->select("sum(existencia)", "producto_ingresado", "WHERE existencia 
 	   	$cambios = array();
 	   	$cambios["estado"] = 2;
 	   	$cambios["cajero"] = $_SESSION["user"];
+		$cambios['tipo_pago'] = $tpago;
 	   	Helpers::UpdateId("ticket_orden", $cambios, "correlativo = ".$_SESSION["orden"]." and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."");  
 
 	   	$this->DescontarProducto($factura);

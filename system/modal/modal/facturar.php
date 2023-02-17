@@ -59,10 +59,16 @@ echo '<div class="display-4 text-center font-weight-bold">'. Helpers::Dinero($to
     <?php } else { ?>
      
      <div class="form-group row justify-content-center align-items-center">
+      <?php
+        if (!$_SESSION["tipoticket"] == 8) {
+      ?>
       <div class="col-xs-2">
         <label for="ex1">Efectivo</label>
         <input name="efectivo" type="number" id="efectivo" size="8" maxlength="8" class="form-control" placeholder="0.00" step="any" required autofocus />
       </div>
+      <?php
+        }
+      ?>
     </div>
     <input type="image" src="assets/img/imagenes/print.png"  id="btn-facturar" name="btn-facturar" >
     
@@ -84,7 +90,7 @@ echo '<div class="display-4 text-center font-weight-bold">'. Helpers::Dinero($to
       <div class="clearfix modal-footer">
         
         <div id="botones-imprimir" class="float-left">
-        <?php if(!isset($_SESSION["cliente_c"])) { ?>
+        <?php if(!isset($_SESSION["cliente_c"]) and !$_SESSION["tipoticket"] == 8) { ?>
           <a href="<?php echo $dir; ?>" id="btn-te" class="btn btn-secondary btn-rounded"><?php echo $txt; ?></a>
         <?php } ?>
         </div>

@@ -17,6 +17,22 @@ $(document).ready(function()
 	});
 
 
+	$("body").on("click","#nota_envio",function(){ /// para el los botones de opciones
+
+		if($(this).attr('checked')){ // es por que estaba activo
+			$('#nota_envio').removeAttr("checked","checked");
+			var dir = 'op=450&iden=nota_envio&edo=0';
+		} 
+		else {
+			$('#nota_envio').attr("checked","checked");
+			var dir = 'op=450&iden=nota_envio&edo=1';
+		}
+	
+	QueryGo(dir);	
+	
+	});
+
+
 
 	$("body").on("click","#ax0",function(){ /// para el los botones de opciones
 

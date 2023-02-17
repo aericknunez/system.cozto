@@ -98,6 +98,7 @@ elseif(isset($_GET["cortez"])) include_once 'system/historial/cortez.php';
 elseif(isset($_GET["movimientos"])) include_once 'system/historial/movimientos.php'; 
 elseif(isset($_GET["rmensual"])) include_once 'system/historial/reportemensual.php'; 
 elseif(isset($_GET["ventasxuser"])) include_once 'system/historial/ventasxuser.php'; 
+elseif(isset($_GET["nota_envio"])) include_once 'system/historial/nota_envio.php'; 
 
 // reportes
 elseif(isset($_GET["ventadetalle"])) include_once 'system/reportes/ventasdetalle.php'; 
