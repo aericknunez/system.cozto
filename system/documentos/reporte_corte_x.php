@@ -189,7 +189,7 @@ $objPHPExcel->setActiveSheetIndex(0)
 
 
 
-$a = $db->query("SELECT * FROM ticket WHERE time BETWEEN '$aperturaF' AND '$cierreF' and edo = 1 and td = ".$_SESSION['td']." order by time desc");
+$a = $db->query("SELECT * FROM ticket WHERE time BETWEEN '$aperturaF' AND '$cierreF' and edo = 1 and tipo_pago != 8 and td = ".$_SESSION['td']." order by time desc");
 
 if($a->num_rows > 0){
 

@@ -25,7 +25,7 @@ $segundo = Fechas::Format($_REQUEST["fin"]);
 
 $a = $db->query("select cod, sum(cant), sum(total), producto, pv, fecha 
                             from ticket 
-                            where cod != 8888 and edo = 1 and time BETWEEN '$primero' AND '$segundo' and td = ".$_SESSION['td']." GROUP BY cod order by sum(cant) desc");
+                            where cod != 8888 and edo = 1 and time BETWEEN '$primero' AND '$segundo' and tipo_pago != 8 and td = ".$_SESSION['td']." GROUP BY cod order by sum(cant) desc");
 
     if($a->num_rows > 0){
 

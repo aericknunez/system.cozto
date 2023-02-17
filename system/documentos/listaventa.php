@@ -29,7 +29,7 @@ if($fecha != NULL){
 // $objPHPExcel->getColumnDimension('C')->setAutoSize(true);
 
 
-$a = $db->query("SELECT * FROM ticket WHERE fecha = '$fecha' and td = ".$_SESSION["td"]." order by time desc");
+$a = $db->query("SELECT * FROM ticket WHERE fecha = '$fecha' and tipo_pago != 8 and td = ".$_SESSION["td"]." order by time desc");
 
 
     if($a->num_rows > 0){

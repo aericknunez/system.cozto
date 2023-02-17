@@ -11,7 +11,7 @@ class Historial{
 
 $a = $db->query("select cod, cant, total, producto, pv 
 from ticket 
-where cod = '9999999' and edo = 1 and fecha = '$fecha' and td = ".$_SESSION['td']." order by cant desc");
+where cod = '9999999' and edo = 1 and fecha = '$fecha' and tipo_pago != 8 and td = ".$_SESSION['td']." order by cant desc");
 $especial = NULL;
 if($a->num_rows > 0){
     foreach ($a as $b) {
@@ -26,7 +26,7 @@ if($a->num_rows > 0){
 
 			$a = $db->query("select cod, sum(cant), sum(total), producto, pv 
           from ticket 
-          where cod != 8888 and cod != 9999999 and edo = 1 and fecha = '$fecha' and td = ".$_SESSION['td']." GROUP BY cod order by sum(cant) desc");
+          where cod != 8888 and cod != 9999999 and edo = 1 and fecha = '$fecha' and tipo_pago != 8 and td = ".$_SESSION['td']." GROUP BY cod order by sum(cant) desc");
 
 			if($a->num_rows > 0 or $especial){
 				
@@ -66,12 +66,12 @@ echo $especial;
 				</table></div>';
 			
 
-			$ar = $db->query("SELECT sum(cant) FROM ticket where edo = 1 and fecha = '$fecha' and td = ".$_SESSION['td']."");
+			$ar = $db->query("SELECT sum(cant) FROM ticket where edo = 1 and fecha = '$fecha' and tipo_pago != 8 and td = ".$_SESSION['td']."");
 		    foreach ($ar as $br) {
 		     echo "Cantidad de Productos: ". $br["sum(cant)"] . "<br>";
 		    } $ar->close();
 
-		    $ag = $db->query("SELECT sum(total) FROM ticket where edo = 1 and fecha = '$fecha' and td = ".$_SESSION['td']."");
+		    $ag = $db->query("SELECT sum(total) FROM ticket where edo = 1 and fecha = '$fecha' and tipo_pago != 8 and td = ".$_SESSION['td']."");
 		    foreach ($ag as $bg) { $tot = $bg["sum(total)"];
 		        echo "Total Vendido: ". Helpers::Dinero($bg["sum(total)"]) . "<br>";
 		    } $ag->close();
@@ -96,7 +96,7 @@ echo $especial;
 
 $a = $db->query("select cod, cant, total, producto, pv 
 from ticket 
-where cod = '9999999' and edo = 1 and fecha like '%$fechax' and td = ".$_SESSION['td']." order by cant desc");
+where cod = '9999999' and edo = 1 and fecha like '%$fechax' and tipo_pago != 8 and td = ".$_SESSION['td']." order by cant desc");
 $especial = NULL;
 if($a->num_rows > 0){
     foreach ($a as $b) {
@@ -111,7 +111,7 @@ if($a->num_rows > 0){
 
 $a = $db->query("select cod, sum(cant), sum(total), producto, pv, fecha 
                   from ticket 
-                  where cod != 8888 and cod != 9999999 and edo = 1 and fecha like '%$fechax' and td = ".$_SESSION['td']." GROUP BY cod order by sum(cant) desc");
+                  where cod != 8888 and cod != 9999999 and edo = 1 and fecha like '%$fechax' and tipo_pago != 8 and td = ".$_SESSION['td']." GROUP BY cod order by sum(cant) desc");
 		if($a->num_rows > 0 or $especial){
 						echo '<h3 class="h3-responsive">PRODUCTOS VENDIDOS</h3>
 						<div class="table-responsive">
@@ -143,13 +143,13 @@ $a = $db->query("select cod, sum(cant), sum(total), producto, pv, fecha
 			    echo '</tbody>
 				</table></div>';
 
-			$ar = $db->query("SELECT sum(cant) FROM ticket where cod != 8888 and edo = 1 and fecha like '%$fechax' and td = ".$_SESSION['td']."");
+			$ar = $db->query("SELECT sum(cant) FROM ticket where cod != 8888 and edo = 1 and fecha like '%$fechax' and tipo_pago != 8 and td = ".$_SESSION['td']."");
 		    foreach ($ar as $br) {
 		     echo "Cantidad de Productos: ". $br["sum(cant)"] . "<br>";
 		    } $ar->close();
 
 
-		    $ag = $db->query("SELECT sum(total) FROM ticket where cod != 8888 and edo = 1 and fecha like '%$fechax' and td = ".$_SESSION['td']."");
+		    $ag = $db->query("SELECT sum(total) FROM ticket where cod != 8888 and edo = 1 and fecha like '%$fechax' and tipo_pago != 8 and td = ".$_SESSION['td']."");
 		    foreach ($ag as $bg) { $tot = $bg["sum(total)"];
 		        echo "Total Vendido: ". Helpers::Dinero($bg["sum(total)"]) . "<br>";
 		    } $ag->close();
@@ -870,7 +870,7 @@ public function VerAbonosCuentas($fecha) { //leva el control del autoincremento 
 	public function ListaVenta($fecha, $type = NULL) {
 		$db = new dbConn();
 
-        $a = $db->query("SELECT * FROM ticket WHERE fecha = '$fecha' and td = ".$_SESSION["td"]." order by time desc");
+        $a = $db->query("SELECT * FROM ticket WHERE fecha = '$fecha' and tipo_pago != 8 and td = ".$_SESSION["td"]." order by time desc");
 
 			if($a->num_rows > 0){
 				
@@ -915,12 +915,12 @@ public function VerAbonosCuentas($fecha) { //leva el control del autoincremento 
 				</table></div>';
 			
 
-			$ar = $db->query("SELECT sum(cant) FROM ticket where edo = 1 and fecha = '$fecha' and td = ".$_SESSION['td']."");
+			$ar = $db->query("SELECT sum(cant) FROM ticket where edo = 1 and fecha = '$fecha' and tipo_pago != 8 and td = ".$_SESSION['td']."");
 		    foreach ($ar as $br) {
 		     echo "Cantidad de Productos: ". $br["sum(cant)"] . "<br>";
 		    } $ar->close();
 
-		    $ag = $db->query("SELECT sum(total) FROM ticket where edo = 1 and fecha = '$fecha' and td = ".$_SESSION['td']."");
+		    $ag = $db->query("SELECT sum(total) FROM ticket where edo = 1 and fecha = '$fecha' and tipo_pago != 8 and td = ".$_SESSION['td']."");
 		    foreach ($ag as $bg) { $tot = $bg["sum(total)"];
 		        echo "Total Vendido: ". Helpers::Dinero($bg["sum(total)"]) . "<br>";
 		    } $ag->close();
@@ -1088,7 +1088,7 @@ echo '</tbody>
 	
 		$a = $db->query("select cod, cant, total, producto, pv 
 			from ticket 
-			where cod = '9999999' and edo = 1 and fechaF BETWEEN '$primero' and '$segundo' $usuario and td = ".$_SESSION['td']." order by cant desc");
+			where cod = '9999999' and edo = 1 and fechaF BETWEEN '$primero' and '$segundo' $usuario and tipo_pago != 8 and td = ".$_SESSION['td']." order by cant desc");
 			$especial = NULL;
 			if($a->num_rows > 0){
 				foreach ($a as $b) {
@@ -1103,7 +1103,7 @@ echo '</tbody>
 
 			$a = $db->query("select cod, sum(cant), sum(total), producto, pv 
           from ticket 
-          where cod != 8888 and cod != 9999999 and edo = 1 and fechaF BETWEEN '$primero' and '$segundo' $usuario and td = ".$_SESSION['td']." GROUP BY cod order by sum(cant) desc");
+          where cod != 8888 and cod != 9999999 and edo = 1 and fechaF BETWEEN '$primero' and '$segundo' $usuario and tipo_pago != 8 and td = ".$_SESSION['td']." GROUP BY cod order by sum(cant) desc");
 
 			if($a->num_rows > 0 or $especial){
 
@@ -1144,12 +1144,12 @@ echo '</tbody>
 			echo '</tbody>
 				</table></div>';	
 
-			$ar = $db->query("SELECT sum(cant) FROM ticket where edo = 1 and fechaF BETWEEN '$primero' and '$segundo' $usuario and td = ".$_SESSION['td']."");
+			$ar = $db->query("SELECT sum(cant) FROM ticket where edo = 1 and fechaF BETWEEN '$primero' and '$segundo' $usuario and tipo_pago != 8 and td = ".$_SESSION['td']."");
 		    foreach ($ar as $br) {
 		     echo "Cantidad de Productos: ". $br["sum(cant)"] . "<br>";
 		    } $ar->close();
 
-		    $ag = $db->query("SELECT sum(total) FROM ticket where edo = 1 and fechaF BETWEEN '$primero' and '$segundo' $usuario and td = ".$_SESSION['td']."");
+		    $ag = $db->query("SELECT sum(total) FROM ticket where edo = 1 and fechaF BETWEEN '$primero' and '$segundo' $usuario and tipo_pago != 8 and td = ".$_SESSION['td']."");
 		    foreach ($ag as $bg) { $tot = $bg["sum(total)"];
 		        echo "Total Vendido: ". Helpers::Dinero($bg["sum(total)"]) . "<br>";
 		    } $ag->close();
