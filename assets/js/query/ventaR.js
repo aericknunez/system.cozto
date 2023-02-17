@@ -490,7 +490,7 @@ function QueryGo(dir){
             data: dataString,
             success: function(data) {            
                 $('#ModalTicket').modal('hide');
-                $("#vticket").html(data); // lo que regresa de la busquea 
+                $("#lateral").load('application/src/routes.php?op=70'); // caraga el lateral
             }
         }); 
     });

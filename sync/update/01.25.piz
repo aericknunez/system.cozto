@@ -1,0 +1,1 @@
+ALTER TABLE `config_master` ADD `lineasf` INT(2) NULL DEFAULT NULL AFTER `enviar_email`, ADD `lineascf` INT(2) NULL DEFAULT NULL AFTER `lineasf`;
