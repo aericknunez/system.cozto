@@ -1039,6 +1039,7 @@ $a->close();
 	   	$cambios = array();
 	   	$cambios["estado"] = 2;
 	   	$cambios["cajero"] = $_SESSION["user"];
+		$cambios['tipo_pago'] = $tpago;
 	   	Helpers::UpdateId("ticket_orden", $cambios, "correlativo = ".$_SESSION["orden"]." and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."");  
 
 	   	$this->FacturaResult($factura, $datos["efectivo"]);

@@ -1,0 +1,1 @@
+ALTER TABLE `ticket_orden` ADD `tipo_pago` INT(2) NOT NULL AFTER `cajero`;

@@ -88,6 +88,9 @@ if($_SESSION["td"] == 10){
 	if($_SESSION["tipoticket"] == 4){
 		$imprimir->Exportacion($efectivo, $factura);
 	}
+	if($_SESSION["tipoticket"] == 8){
+		$imprimir->NotaEnvio($efectivo, $factura);
+	}
 	if($_SESSION["tipoticket"] == 0){
 		$imprimir->Ninguno();
 	}
