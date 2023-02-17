@@ -64,6 +64,7 @@ if($_SESSION["caja_apertura"] == NULL){ ?>
 <li><a href="?estadistica_costos" class="waves-effect"><i class="fas fa-address-book"></i> Estadistica de costos</a></li>
 <?php } ?>
 <li><a href="?ventasxuser" class="waves-effect"><i class="fas fa-cogs"></i> Ventas por usuario</a></li>
+<li><a href="?nota_envio" class="waves-effect"><i class="fas fa-cogs"></i> Notas de envio</a></li>
 
 </ul>
 </div>
