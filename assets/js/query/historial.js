@@ -376,6 +376,24 @@ $(document).ready(function()
 
 
 
+		$('#btn-envio').click(function(e){ /// para el formulario
+			$("#form-envio").hide();
+			MuestraLoader();
+			e.preventDefault();
+			$.ajax({
+				url: "application/src/routes.php?op=137",
+				method: "POST",
+				data: $("#form-envio").serialize(),
+				success: function(data){
+					$("#contenido").html(data);
+					$("#form-envio").trigger("reset");
+					$("#form-envio").show();
+					EscondeLoader();
+				}
+			})
+		})
+	
+		
 
 
 });

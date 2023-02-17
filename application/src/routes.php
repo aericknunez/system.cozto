@@ -1353,6 +1353,17 @@ case "135": // imprime cuotas de credito
 	$imprimir->CuotaCredito($_POST["hash"]); //
 break; 
 
+
+case "137": // nota envio
+	include_once '../../system/historial/Historial.php';
+	$historial = new Historial;
+	
+	if($_POST["fecha_submit"] == NULL){ $fecha = date("d-m-Y"); 
+	} else { $fecha = $_POST["fecha_submit"]; }
+	
+	$historial->NotasEnvio($fecha);
+break;
+
 case "145": // historial ventas x user
 	include_once '../../system/historial/Historial.php';
 	$historial = new Historial;
