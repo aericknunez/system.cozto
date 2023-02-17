@@ -704,6 +704,7 @@ Helpers::UpdateId("ubicacion_asig", $cambio, "ubicacion = '".$datos["ubicacion"]
 		    $a = $db->query("SELECT * FROM ticket WHERE orden = ".$_SESSION["orden"]." and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."");
 
 		    if($a->num_rows > 0){
+
 		    		echo '<div class="table-responsive">
 		    		<table class="table table-striped table-sm">
 					  <thead>

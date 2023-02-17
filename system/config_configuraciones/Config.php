@@ -39,6 +39,8 @@ class Config{
 	    $cambio["cambio_tx"] = $data["cambio_tx"];
 	    $cambio["dias_vencimiento"] = $data["dias_vencimiento"];
 	    $cambio["dias_cotizacion"] = $data["dias_cotizacion"];
+		$cambio["lineasf"] = $data["lineasf"];
+	    $cambio["lineascf"] = $data["lineascf"];
 	    $cambio["multicaja"] = $data["multicaja"];
 	    $cambio["mayorista"] = $data["mayorista"];
 	    $cambio["descuento"] = $data["descuento"];
@@ -134,6 +136,8 @@ class Config{
 			$_SESSION['config_cambio_tx'] = $r["cambio_tx"];
 			$_SESSION['config_dias_vencimiento'] = $r["dias_vencimiento"];
 			$_SESSION['config_dias_cotizacion'] = $r["dias_cotizacion"];
+			$_SESSION['lineasf'] = $r["lineasf"];
+			$_SESSION['lineascf'] = $r["lineascf"];
 			$_SESSION['config_multicaja'] = $r["multicaja"];
 			$_SESSION['config_mayorista'] = $r["mayorista"];
 			$_SESSION['config_descuento'] = $r["descuento"];

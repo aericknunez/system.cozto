@@ -51,6 +51,9 @@ class Laterales{
 			    </div>
 			</div>';
 			echo '<hr>';
+
+			$this->RestriccionProductosPorFactura();
+
  	}
 
 
@@ -288,6 +291,21 @@ elseif($_SESSION["tipoticket"] == 0){ return '<a id="mticket">N/A</a>'; }
  	}
 
 
+	public function RestriccionProductosPorFactura(){
+
+		if ($_SESSION["lineasf"] or $_SESSION["lineascf"]) {
+			$db = new dbConn();
+			$a = $db->query("SELECT * FROM ticket WHERE orden = ".$_SESSION["orden"]." and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."");
+
+			if($a->num_rows >= $_SESSION["lineasf"] && $_SESSION["tipoticket"] == 2 && $_SESSION["lineasf"]!= 0)
+			echo Alerts::Mensajex('Ha llegado al limite de lineas de la factura', 'danger');
+
+			if($a->num_rows >= $_SESSION["lineascf"] && $_SESSION["tipoticket"] == 3 && $_SESSION["lineascf"]!= 0)
+			echo Alerts::Mensajex('Ha llegado al limite de lineas del Credito Fiscal', 'danger');
+		$a->close();
+		}
+
+	}
 
 
 

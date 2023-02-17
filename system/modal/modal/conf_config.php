@@ -159,6 +159,17 @@ $r = $db->select("*", "config_master", "where td = ".$_SESSION['td']."")
 
   </tr>
 
+  <tr>
+    <td><small id="lineasf" class="form-text text-muted mb-1">
+        Numero de lineas Factura
+    </small><input type="text" id="lineasf" name="lineasf" class="form-control mb-1" placeholder="Numero de lineas Factura" value="<? echo $r["lineasf"]; ?>"></td>
+
+    <td><small id="lineascf" class="form-text text-muted mb-1">
+    Numero de lineas Credito Fiscal
+    </small><input type="text" id="lineascf" name="lineascf" class="form-control mb-1" placeholder="Numero de lineas Credito Fiscal" value="<? echo $r["lineascf"]; ?>"></td>
+
+  </tr>
+
 
   <tr>
 
