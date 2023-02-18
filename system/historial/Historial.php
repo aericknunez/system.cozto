@@ -348,7 +348,7 @@ echo '</tbody>
 		$primero = Fechas::Format($inicio);
 		$segundo = Fechas::Format($fin);
 
-    $d = $db->selectGroup("producto, cod", "ticket", "WHERE fechaF BETWEEN '$primero' and '$segundo' and td = ". $_SESSION["td"] ." GROUP BY cod");
+    $d = $db->selectGroup("producto, cod", "ticket", "WHERE fechaF BETWEEN '$primero' and '$segundo' and tipo_pago != 8 and td = ". $_SESSION["td"] ." GROUP BY cod");
     if ($d->num_rows > 0) {
 
 	  echo '<div class="table-responsive">
