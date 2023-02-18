@@ -60,7 +60,7 @@ echo '<div class="display-4 text-center font-weight-bold">'. Helpers::Dinero($to
      
      <div class="form-group row justify-content-center align-items-center">
       <?php
-        if (!$_SESSION["tipoticket"] == 8) {
+        if ($_SESSION["tipoticket"] != 8) {
       ?>
       <div class="col-xs-2">
         <label for="ex1">Efectivo</label>
