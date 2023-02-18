@@ -17,7 +17,7 @@ class Search{
 
 
 if($edox == 2){
-  Alerts::Mensajex("La factura " .$factura . " ha sido anulada", "danger");
+  Alerts::Mensajex(Helpers::TipoFacturaVentas($_SESSION["tipoticket"])." N° " .$factura . " ha sido anulado/a", "danger");
 }
 
 
@@ -104,7 +104,7 @@ $cantidad = $a->num_rows;
 $a->close();  
 
 		if($cantidad > 0){
-		Alerts::Mensajex("Factura No. " . $factura, "info");
+		Alerts::Mensajex(Helpers::TipoFacturaVentas($_SESSION["tipoticket"])." No. " . $factura, "info");
 
 		echo '<div align="center">';
 
@@ -130,7 +130,7 @@ if($edox == 2){
 
 
 		} else {
-		Alerts::Mensajex("La factura " .$factura . " no ha sido encontrada", "danger");
+		Alerts::Mensajex(Helpers::TipoFacturaVentas($_SESSION["tipoticket"])." N° " .$factura . " no ha sido encontrado/a", "danger");
 
 		}
 
