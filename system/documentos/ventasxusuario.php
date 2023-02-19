@@ -37,11 +37,11 @@ if($user != NULL){
 
     $a = $db->query("select cod, sum(cant), sum(total), producto, pv, sum(descuento)
     from ticket 
-    where cod != 8888 and cod != 9999999 and edo = 1 and fechaF BETWEEN '$primero' and '$segundo' $usuario and td = ".$_SESSION['td']." GROUP BY cod order by sum(cant) desc");
+    where cod != 8888 and cod != 9999999 and edo = 1 and fechaF BETWEEN '$primero' and '$segundo' $usuario and tipo_pago != 8 and td = ".$_SESSION['td']." GROUP BY cod order by sum(cant) desc");
 
     $ax = $db->query("select cod, cant, total, producto, pv 
 			from ticket 
-			where cod = '9999999' and edo = 1 and fechaF BETWEEN '$primero' and '$segundo' $usuario and td = ".$_SESSION['td']." order by cant desc");
+			where cod = '9999999' and edo = 1 and fechaF BETWEEN '$primero' and '$segundo' $usuario and tipo_pago != 8 and td = ".$_SESSION['td']." order by cant desc");
 			$especial = NULL;
 
     if($a->num_rows > 0){
