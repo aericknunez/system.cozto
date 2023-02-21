@@ -519,6 +519,162 @@ printer_close($handle);
 
 
 
+public function NotaEnvio($efectivo, $numero){
+  $db = new dbConn();
+
+$txt1   = "15"; 
+$txt2   = "5";
+$txt3   = "0";
+$txt4   = "0";
+$n1   = "15";
+$n2   = "18";
+$n3   = "30";
+$n4   = "0";
+
+
+$col1 = 30;
+$col2 = 75;
+$col3 = 460; //400
+$col4 = 550; //565
+$col5 = 500;
+// $print
+$print = "FACTURA";
+
+$handle = printer_open($print);
+printer_set_option($handle, PRINTER_MODE, "RAW");
+
+printer_start_doc($handle, "Mi Documento");
+printer_start_page($handle);
+
+
+$font = printer_create_font("Arial", $txt1, $txt2, PRINTER_FW_NORMAL, false, false, false, 0);
+printer_select_font($handle, $font);
+
+
+
+$oi=120;
+//// comienza la factura
+
+$oi=$oi+$n1+25;
+printer_draw_text($handle, date("d") . "                  " . Fechas::MesEscrito(date("m")) ."                  " . date("Y"), 400, $oi);
+  
+
+$oi=120;
+
+
+if ($r = $db->select("orden", "ticket_num", "WHERE num_fac = '$numero' and tx = " . $_SESSION["tx"] . " and tipo = ".$_SESSION["tipoticket"]." and td = " .  $_SESSION["td"])) { 
+    $orden = $r["orden"];
+} unset($r);
+
+    if ($r = $db->select("cliente", "ticket_cliente", "WHERE orden = '$orden' and factura = '$numero' and tx = " . $_SESSION["tx"] . " and td = " .  $_SESSION["td"])) { 
+        $hashcliente = $r["cliente"];
+    } unset($r);  
+
+
+    if ($r = $db->select("nombre, documento, direccion", "clientes", "WHERE hash = '$hashcliente' and td = " .  $_SESSION["td"])) { 
+        $nombre = $r["nombre"];
+        $documento = $r["documento"];
+        $direccion = $r["direccion"];
+    } unset($r);  
+
+
+$oi=$oi+$n1+25;
+printer_draw_text($handle, $nombre, 65, $oi);
+
+$oi=$oi+$n1;
+printer_draw_text($handle, $direccion, 85, $oi+15);
+
+$oi=$oi+$n1+2;
+printer_draw_text($handle, $documento, 105, $oi);
+printer_draw_text($handle, "x", 350, $oi+18);
+
+
+$oi=307; // salto de linea
+
+$a = $db->query("select cod, cant, producto, pv, total, fecha, hora, num_fac from ticket where num_fac = '".$numero."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]." and tipo = ".$_SESSION["tipoticket"]." group by cod");
+  
+    foreach ($a as $b) {
+ 
+ $fechaf=$b["fecha"];
+ $horaf=$b["hora"];
+ $num_fac=$b["num_fac"];
+
+          $oi=$oi+$n2;
+          printer_draw_text($handle, $b["cant"], $col1, $oi);
+          printer_draw_text($handle, $b["producto"], $col2, $oi);
+          printer_draw_text($handle, $b["pv"], $col3, $oi);
+          printer_draw_text($handle, $b["total"], $col4, $oi);
+
+
+
+    }    $a->close();
+
+
+if ($sx = $db->select("sum(stotal), sum(imp), sum(total)", "ticket", "WHERE num_fac = '".$numero."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]." and tipo = ".$_SESSION["tipoticket"]."")) { 
+       $stotalx=$sx["sum(stotal)"];
+       $impx=$sx["sum(imp)"];
+       $totalx=$sx["sum(total)"];
+    } unset($sx); 
+ 
+/// salto de linea
+$oi=875;
+
+
+// valores en letras
+printer_draw_text($handle, Dinero::DineroEscrito($totalx), $col2, $oi);
+// echo wordwrap($cadena, 15, "<br>" ,FALSE);
+
+
+// volores numericos
+printer_draw_text($handle, Helpers::Format($totalx), $col4, $oi);
+
+
+
+$oi=$oi+$n1;
+// printer_draw_text($handle, Helpers::Format($impx), $col4, $oi);
+// printer_draw_text($handle, Helpers::Format(Helpers::Impuesto(Helpers::STotal($totalx, $_SESSION['config_imp']), $_SESSION['config_imp'])), $col4, $oi);
+
+
+//$oi=$oi+$n1+$n1;
+//printer_draw_text($handle, Helpers::Format($totalx), $col4, $oi);
+
+
+//$oi=$oi+$n1+$n1;
+//printer_draw_text($handle, Helpers::Format($totalx), $col4, $oi+48);
+
+
+// $oi=$oi+$n3+$n1;
+// printer_draw_text($handle, "Sub Total " . $_SESSION['config_moneda_simbolo'] . ":", 185, $oi);
+// printer_draw_text($handle, Helpers::Format(Helpers::STotal($subtotalf, $_SESSION['config_imp'])), 320, $oi);
+
+
+// $oi=$oi+$n1;
+// printer_draw_text($handle, "15% Impu. " . $_SESSION['config_moneda_simbolo'] . ":", 175, $oi);
+// printer_draw_text($handle, Helpers::Format(Helpers::Impuesto(Helpers::STotal($subtotalf, $_SESSION['config_imp']), $_SESSION['config_imp'])), 320, $oi);
+
+
+
+
+// $oi=$oi+$n1;
+// printer_draw_text($handle, "Total " . $_SESSION['config_moneda_simbolo'] . ":", 232, $oi);
+// printer_draw_text($handle, Helpers::Format($subtotalf), 320, $oi);
+
+
+
+
+
+printer_delete_font($font);
+///
+printer_end_page($handle);
+printer_end_doc($handle);
+printer_close($handle);
+
+
+
+
+}  
+
+
 
 
 
