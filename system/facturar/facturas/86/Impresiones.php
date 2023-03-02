@@ -1,4 +1,4 @@
- <?php  
+ <?php
 use Mike42\Escpos\EscposImage;
 use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
 use Mike42\Escpos\Printer;
@@ -6,13 +6,17 @@ use Mike42\Escpos\Printer;
 
 
 class Impresiones{
-    public function __construct() { 
-     } 
+    public function __construct() {
+     }
 
 
+public function Ticket($efectivo, $numero){
+$this->Ticket2($efectivo, $numero);
+$this->Ticket2($efectivo, $numero);
+}
 
 
- public function Ticket($efectivo, $numero){
+ public function Ticket2($efectivo, $numero){
   $db = new dbConn();
   $nombre_impresora = "TICKET";
   // $img  = "C:/AppServ/www/pizto/assets/img/logo_factura/abrego.jpg";
@@ -37,14 +41,12 @@ $printer -> setLineSpacing(80);
 $printer -> setJustification(Printer::JUSTIFY_CENTER);
 $printer->text("MINI SUPER 24/7 EL DIVINO NIÑO");
 
-
+$printer->feed();
+$printer->text("JAYUMI S.A. DE C.V.");
 $printer->feed();
 $printer->text("4 calle ote. local c-1, San Martin de Porres");
 $printer->feed();
 $printer->text("San Francisco Menendez");
-
-$printer->feed();
-$printer->text("Tel: 2429-1054");
 
 $printer->feed();
 $printer->text("NRC: 285464-2 NIT: 0108-091019-101-0");
@@ -58,16 +60,6 @@ $printer->text("Giro:Otros servicios relacionados con la salud NCP");
 
 // $printer->feed();
 // $printer->text("GIRO: Clinica Veterinaria y venta de productos Agropecuarios");
-
-
-// $printer->feed();
-// $printer->text("Autorizacion: ASC-15041-036310-2021");
-
-// $printer->feed();
-// $printer->text("DEL: 21SV00000001-1  AL: 21SV00000001-50000");
-
-// $printer->feed();
-// $printer->text("FECHA DE AUTORIZACION: 09/01/2021");
 
 $printer->feed();
 $printer->text("CAJA: 1.  TICKET NUMERO: " . $numero);
@@ -91,9 +83,9 @@ $subtotalf = 0;
 $productos = 0;
 
 $a = $db->query("select cod, cant, producto, pv, total, fecha, hora, num_fac from ticket where num_fac = '".$numero."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]." and tipo = ".$_SESSION["tipoticket"]." group by cod");
-  
+
     foreach ($a as $b) {
- 
+
 $printer -> text($this->Item($b["cant"], substr($b["producto"], 0, 38), $b["pv"], $b["total"]));
 
 $subtotalf = $subtotalf + $b["total"];
@@ -103,10 +95,10 @@ $productos = $productos + $b["cant"];
 
 
 
-if ($sx = $db->select("sum(total)", "ticket", "WHERE num_fac = '".$numero."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."  and tipo = ".$_SESSION["tipoticket"]."" )) { 
+if ($sx = $db->select("sum(total)", "ticket", "WHERE num_fac = '".$numero."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."  and tipo = ".$_SESSION["tipoticket"]."" )) {
        $stotalx=$sx["sum(total)"];
-    } unset($sx); 
- 
+    } unset($sx);
+
 
 
 
@@ -153,26 +145,38 @@ $printer->feed();
 
 
 
-if ($x = $db->select("fecha, hora", "ticket", "WHERE num_fac = '".$numero."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."  and tipo = ".$_SESSION["tipoticket"]."" )) { 
+if ($x = $db->select("fecha, hora", "ticket", "WHERE num_fac = '".$numero."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."  and tipo = ".$_SESSION["tipoticket"]."" )) {
 $fechaf=$x["fecha"];
 $horaf=$x["hora"];
-} unset($x); 
+} unset($x);
+
 
 $printer->feed();
-$printer -> text($this->DosCol($fechaf, 30, $horaf, 20));
+$printer -> text($this->DosCol("Fecha: ".$fechaf, 30, "Hora: ".$horaf, 20));
 
 
 // $printer->feed();
 // $printer->text("SERIE: 2UA329130D");
 
-
+$printer -> setJustification(Printer::JUSTIFY_CENTER);
 $printer->feed();
 $printer -> text("Cajero: " . $_SESSION['nombre']);
 
 $printer->feed();
-$printer -> setJustification(Printer::JUSTIFY_CENTER);
+$printer->text("SERIE N°: 19NA00000001");
+$printer->feed();
+$printer->text("Resolución N°: 30109-RES-CR-72782-2019");
+$printer->feed();
+$printer->text("RANGO AUTORIZADO DEL 1 AL 100000");
+$printer->feed();
+$printer->text("FECHA DE AUTORIZACION: 19/12/2019");
+
+
+$printer->feed();
+$printer->feed();
 $printer -> text("GRACIAS POR SU PREFERENCIA...");
-$printer -> setJustification();
+$printer->feed();
+
 
 
 
@@ -188,12 +192,10 @@ $printer->close();
 
 
 
-
-
  public function Factura($efectivo, $numero){
   $db = new dbConn();
 
-$txt1   = "15"; 
+$txt1   = "15";
 $txt2   = "5";
 $txt3   = "0";
 $txt4   = "0";
@@ -228,25 +230,25 @@ $oi=120;
 
 $oi=$oi+$n1;
 printer_draw_text($handle, date("d") . "          " . Fechas::MesEscrito(date("m")) ."               " . date("Y"), 290, $oi);
-  
+
 
 $oi=120;
 
 
-if ($r = $db->select("orden", "ticket_num", "WHERE num_fac = '$numero' and tx = " . $_SESSION["tx"] . " and tipo = ".$_SESSION["tipoticket"]." and td = " .  $_SESSION["td"])) { 
+if ($r = $db->select("orden", "ticket_num", "WHERE num_fac = '$numero' and tx = " . $_SESSION["tx"] . " and tipo = ".$_SESSION["tipoticket"]." and td = " .  $_SESSION["td"])) {
     $orden = $r["orden"];
 } unset($r);
 
-    if ($r = $db->select("cliente", "ticket_cliente", "WHERE orden = '$orden' and factura = '$numero' and tx = " . $_SESSION["tx"] . " and td = " .  $_SESSION["td"])) { 
+    if ($r = $db->select("cliente", "ticket_cliente", "WHERE orden = '$orden' and factura = '$numero' and tx = " . $_SESSION["tx"] . " and td = " .  $_SESSION["td"])) {
         $hashcliente = $r["cliente"];
-    } unset($r);  
+    } unset($r);
 
 
-    if ($r = $db->select("nombre, documento, direccion", "clientes", "WHERE hash = '$hashcliente' and td = " .  $_SESSION["td"])) { 
+    if ($r = $db->select("nombre, documento, direccion", "clientes", "WHERE hash = '$hashcliente' and td = " .  $_SESSION["td"])) {
         $nombre = $r["nombre"];
         $documento = $r["documento"];
         $direccion = $r["direccion"];
-    } unset($r);  
+    } unset($r);
 
 
 $oi=$oi+$n1+30;
@@ -263,9 +265,9 @@ printer_draw_text($handle, "x", 350, $oi+18);
 $oi=260; // salto de linea
 
 $a = $db->query("select cod, cant, producto, pv, total, fecha, hora, num_fac from ticket where num_fac = '".$numero."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]." and tipo = ".$_SESSION["tipoticket"]." group by cod");
-  
+
     foreach ($a as $b) {
- 
+
  $fechaf=$b["fecha"];
  $horaf=$b["hora"];
  $num_fac=$b["num_fac"];
@@ -281,12 +283,12 @@ $a = $db->query("select cod, cant, producto, pv, total, fecha, hora, num_fac fro
     }    $a->close();
 
 
-if ($sx = $db->select("sum(stotal), sum(imp), sum(total)", "ticket", "WHERE num_fac = '".$numero."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]." and tipo = ".$_SESSION["tipoticket"]."")) { 
+if ($sx = $db->select("sum(stotal), sum(imp), sum(total)", "ticket", "WHERE num_fac = '".$numero."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]." and tipo = ".$_SESSION["tipoticket"]."")) {
        $stotalx=$sx["sum(stotal)"];
        $impx=$sx["sum(imp)"];
        $totalx=$sx["sum(total)"];
-    } unset($sx); 
- 
+    } unset($sx);
+
 /// salto de linea
 $oi=560;
 
@@ -352,7 +354,7 @@ printer_close($handle);
  public function CreditoFiscal($efectivo, $numero){
   $db = new dbConn();
 
-$txt1   = "15"; 
+$txt1   = "15";
 $txt2   = "5";
 $txt3   = "0";
 $txt4   = "0";
@@ -395,19 +397,19 @@ $oi=$oi+$n1;
 
 $oi=186;
 
-  if ($r = $db->select("documento", "facturar_documento_factura", "WHERE factura = '$numero' and tx = " . $_SESSION["tx"] . " and td = " .  $_SESSION["td"] . " order by time desc limit 1" )) { 
+  if ($r = $db->select("documento", "facturar_documento_factura", "WHERE factura = '$numero' and tx = " . $_SESSION["tx"] . " and td = " .  $_SESSION["td"] . " order by time desc limit 1" )) {
       $documento = $r["documento"];
-  } unset($r);  
+  } unset($r);
 
 
 
-    if ($r = $db->select("cliente, giro, registro, direccion, departamento", "facturar_documento", "WHERE documento = '$documento' and td = " .  $_SESSION["td"])) { 
+    if ($r = $db->select("cliente, giro, registro, direccion, departamento", "facturar_documento", "WHERE documento = '$documento' and td = " .  $_SESSION["td"])) {
         $cliente = $r["cliente"];
         $giro = $r["giro"];
         $registro = $r["registro"];
         $direccion = $r["direccion"];
         $departamento = $r["departamento"];
-    } unset($r);  
+    } unset($r);
 
 
 
@@ -428,9 +430,9 @@ printer_draw_text($handle, "CONTADO", 418, $oi+65);
 $oi=387; // salto de linea
 
 $a = $db->query("select cod, cant, producto, pv, stotal, total, fecha, hora, num_fac from ticket where num_fac = '".$numero."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]." and tipo = ".$_SESSION["tipoticket"]." group by cod");
-  
+
     foreach ($a as $b) {
- 
+
  $fechaf=$b["fecha"];
  $horaf=$b["hora"];
  $num_fac=$b["num_fac"];
@@ -448,12 +450,12 @@ $a = $db->query("select cod, cant, producto, pv, stotal, total, fecha, hora, num
     }    $a->close();
 
 
-if ($sx = $db->select("sum(stotal), sum(imp), sum(total)", "ticket", "WHERE num_fac = '".$numero."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]." and tipo = ".$_SESSION["tipoticket"]."")) { 
+if ($sx = $db->select("sum(stotal), sum(imp), sum(total)", "ticket", "WHERE num_fac = '".$numero."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]." and tipo = ".$_SESSION["tipoticket"]."")) {
        $stotalx=$sx["sum(stotal)"];
        $impx=$sx["sum(imp)"];
        $totalx=$sx["sum(total)"];
-    } unset($sx); 
- 
+    } unset($sx);
+
 /// salto de linea
 $oi=720;
 
@@ -614,9 +616,9 @@ $printer -> setBarcodeHeight(100);
 $printer->setBarcodeTextPosition(Printer::BARCODE_TEXT_BELOW);
     $printer -> barcode($a, Printer::BARCODE_CODE128);
 
-if ($r = $db->select("descripcion", "producto", "WHERE cod = '$numero' and td = ".$_SESSION["td"]."")) { 
+if ($r = $db->select("descripcion", "producto", "WHERE cod = '$numero' and td = ".$_SESSION["td"]."")) {
 $pro = $r["descripcion"];
-} unset($r);  
+} unset($r);
 
 $printer -> feed(1);
 
@@ -694,7 +696,7 @@ $printer->text("MINI SUPER 24/7 EL DIVINO NIÑO");
 
 
 //// obtener lor datos del corte
-if ($r = $db->select("*", "corte_diario", "WHERE hash = '$hash'")) { 
+if ($r = $db->select("*", "corte_diario", "WHERE hash = '$hash'")) {
   $aperturaF = $r["aperturaF"];
   $cierreF = $r["cierreF"];
   $apertura = $r["apertura"];
@@ -711,7 +713,7 @@ if ($r = $db->select("*", "corte_diario", "WHERE hash = '$hash'")) {
   $diferencia = $r["diferencia"];
   $user = $r["user"];
 
-} unset($r);  
+} unset($r);
 
 
 
@@ -734,21 +736,21 @@ $printer -> text("_______________________________________________________");
 $printer->feed();
 
 
-if ($r = $db->select("sum(stotal)", "ticket", "WHERE edo = 1 and tipo = 1 and td = ".$_SESSION["td"]." and time BETWEEN '".$aperturaF."' and '".$cierreF."'")) { 
+if ($r = $db->select("sum(stotal)", "ticket", "WHERE edo = 1 and tipo = 1 and td = ".$_SESSION["td"]." and time BETWEEN '".$aperturaF."' and '".$cierreF."'")) {
     $t_ticket = $r["sum(stotal)"];
-} unset($r);  
+} unset($r);
 
-if ($r = $db->select("sum(stotal)", "ticket", "WHERE edo = 1 and tipo = 2 and td = ".$_SESSION["td"]." and time BETWEEN '".$aperturaF."' and '".$cierreF."'")) { 
+if ($r = $db->select("sum(stotal)", "ticket", "WHERE edo = 1 and tipo = 2 and td = ".$_SESSION["td"]." and time BETWEEN '".$aperturaF."' and '".$cierreF."'")) {
     $t_factura = $r["sum(stotal)"];
-} unset($r);  
+} unset($r);
 
-if ($r = $db->select("sum(stotal)", "ticket", "WHERE edo = 1 and tipo = 3 and td = ".$_SESSION["td"]." and time BETWEEN '".$aperturaF."' and '".$cierreF."'")) { 
+if ($r = $db->select("sum(stotal)", "ticket", "WHERE edo = 1 and tipo = 3 and td = ".$_SESSION["td"]." and time BETWEEN '".$aperturaF."' and '".$cierreF."'")) {
     $t_credito = $r["sum(stotal)"];
-} unset($r);  
+} unset($r);
 
-if ($r = $db->select("sum(imp)", "ticket", "WHERE edo = 1 and td = ".$_SESSION["td"]." and time BETWEEN '".$aperturaF."' and '".$cierreF."'")) { 
+if ($r = $db->select("sum(imp)", "ticket", "WHERE edo = 1 and td = ".$_SESSION["td"]." and time BETWEEN '".$aperturaF."' and '".$cierreF."'")) {
     $t_imp = $r["sum(imp)"];
-} unset($r);  
+} unset($r);
 
 
 $printer -> text($this->DosCol("TICKET $: ", 40, Helpers::Format($t_ticket), 10));
@@ -782,7 +784,7 @@ $printer->feed();
 // TICKET - subtotal, iva, total, hora
 if($t_ticket > 0){
 
-  $printer -> text("TICKETS"); 
+  $printer -> text("TICKETS");
   $printer->feed();
   $printer -> text($this->Col4("HORA - TICKET", 0,  "SUBTOTAL", 15,  "IVA", 10, "TOTAL", 10));
 
@@ -790,11 +792,11 @@ if($t_ticket > 0){
       $cant_t = $a->num_rows;
       foreach ($a as $b) {
 
-  if ($r = $db->select("sum(stotal), sum(imp), sum(total)", "ticket", "WHERE num_fac = '".$b["num_fac"]."' and tipo = 1 and td = ".$_SESSION["td"]."")) { 
+  if ($r = $db->select("sum(stotal), sum(imp), sum(total)", "ticket", "WHERE num_fac = '".$b["num_fac"]."' and tipo = 1 and td = ".$_SESSION["td"]."")) {
       $stotalt = $r["sum(stotal)"];
       $impt = $r["sum(imp)"];
       $totalt = $r["sum(total)"];
-  } unset($r);  
+  } unset($r);
 
   $printer -> text($this->Col4($b["hora"] . " - " . $b["num_fac"],0 ,  $stotalt, 15,  $impt, 10, $totalt, 10));
   }  $a->close();
@@ -811,11 +813,11 @@ if($t_factura > 0){
       $cant_f = $a->num_rows;
       foreach ($a as $b) {
 
-  if ($r = $db->select("sum(stotal), sum(imp), sum(total)", "ticket", "WHERE num_fac = '".$b["num_fac"]."' and tipo = 2 and td = ".$_SESSION["td"]."")) { 
+  if ($r = $db->select("sum(stotal), sum(imp), sum(total)", "ticket", "WHERE num_fac = '".$b["num_fac"]."' and tipo = 2 and td = ".$_SESSION["td"]."")) {
       $stotalp = $r["sum(stotal)"];
       $impp = $r["sum(imp)"];
       $totalp = $r["sum(total)"];
-  } unset($r);  
+  } unset($r);
 
   $printer -> text($this->Col4($b["hora"] . " - " . $b["num_fac"],0 ,  $stotalp, 15,  $impp, 10, $totalp, 10));
 
@@ -833,11 +835,11 @@ if($t_credito > 0){
     $cant_c = $a->num_rows;
       foreach ($a as $b) {
 
-  if ($r = $db->select("sum(stotal), sum(imp), sum(total)", "ticket", "WHERE num_fac = '".$b["num_fac"]."' and tipo = 3 and td = ".$_SESSION["td"]."")) { 
+  if ($r = $db->select("sum(stotal), sum(imp), sum(total)", "ticket", "WHERE num_fac = '".$b["num_fac"]."' and tipo = 3 and td = ".$_SESSION["td"]."")) {
       $stotalc = $r["sum(stotal)"];
       $impc = $r["sum(imp)"];
       $totalc = $r["sum(total)"];
-  } unset($r);  
+  } unset($r);
 
   $printer -> text($this->Col4($b["hora"] . " - " . $b["num_fac"],0 ,  $stotalc, 15,  $impc, 10, $totalc, 10));
   }  $a->close();
@@ -849,11 +851,11 @@ if($t_credito > 0){
 $printer -> text("_______________________________________________________");
 $printer->feed();
 // VENTA TOTAL - subtotal, iva, total
-  if ($r = $db->select("sum(stotal), sum(imp), sum(total)", "ticket", "WHERE edo = 1 and td = ".$_SESSION["td"]." and time BETWEEN '".$aperturaF."' and '".$cierreF."'")) { 
+  if ($r = $db->select("sum(stotal), sum(imp), sum(total)", "ticket", "WHERE edo = 1 and td = ".$_SESSION["td"]." and time BETWEEN '".$aperturaF."' and '".$cierreF."'")) {
       $st = $r["sum(stotal)"];
       $im = $r["sum(imp)"];
       $to = $r["sum(total)"];
-  } unset($r);  
+  } unset($r);
 
   $printer -> text($this->Col4("VENTA TOTAL",0 ,  "SUBTOTAL", 15,  "IVA", 10, "TOTAL", 10));
 
@@ -897,7 +899,7 @@ $printer -> text("_______________________________________________________");
 $printer->feed();
 
 $ax = $db->query("select nombre, cantidad FROM gastos WHERE time BETWEEN '".$aperturaF."' and '".$cierreF."' and td = ".$_SESSION["td"]." and edo = 1");
-  
+
 foreach ($ax as $bx) {
 $printer -> text($this->Item($bx["nombre"], NULL, NULL ,$bx["cantidad"]));
 }   $ax->close();
@@ -905,9 +907,9 @@ $printer -> text($this->Item($bx["nombre"], NULL, NULL ,$bx["cantidad"]));
 ///////////////
 
 
-if ($r = $db->select("nombre", "login_userdata", "WHERE user = '".$user."' and td = ".$_SESSION["td"]."")) { 
+if ($r = $db->select("nombre", "login_userdata", "WHERE user = '".$user."' and td = ".$_SESSION["td"]."")) {
       $cajero = $r["nombre"];
-  } unset($r);  
+  } unset($r);
 
 $printer->feed();
 $printer->text("CAJERO: " . $cajero);
@@ -992,22 +994,22 @@ $printer -> text("_______________________________________________________");
 $printer->feed();
 
 
-if ($r = $db->select("sum(stotal)", "ticket", "WHERE edo = 1 and tipo = 1 and td = ".$_SESSION["td"]." and fecha = '$fechax'")) { 
+if ($r = $db->select("sum(stotal)", "ticket", "WHERE edo = 1 and tipo = 1 and td = ".$_SESSION["td"]." and fecha = '$fechax'")) {
     $t_ticket = $r["sum(stotal)"];
-} unset($r);  
+} unset($r);
 
-if ($r = $db->select("sum(stotal)", "ticket", "WHERE edo = 1 and tipo = 2 and td = ".$_SESSION["td"]." and fecha = '$fechax'")) { 
+if ($r = $db->select("sum(stotal)", "ticket", "WHERE edo = 1 and tipo = 2 and td = ".$_SESSION["td"]." and fecha = '$fechax'")) {
     $t_factura = $r["sum(stotal)"];
-} unset($r);  
+} unset($r);
 
-if ($r = $db->select("sum(stotal)", "ticket", "WHERE edo = 1 and tipo = 3 and td = ".$_SESSION["td"]." and fecha = '$fechax'")) { 
+if ($r = $db->select("sum(stotal)", "ticket", "WHERE edo = 1 and tipo = 3 and td = ".$_SESSION["td"]." and fecha = '$fechax'")) {
     $t_credito = $r["sum(stotal)"];
-} unset($r);  
+} unset($r);
 
-if ($r = $db->select("sum(imp), sum(total)", "ticket", "WHERE edo = 1 and td = ".$_SESSION["td"]." and fecha = '$fechax'")) { 
+if ($r = $db->select("sum(imp), sum(total)", "ticket", "WHERE edo = 1 and td = ".$_SESSION["td"]." and fecha = '$fechax'")) {
     $t_imp = $r["sum(imp)"];
     $total = $r["sum(total)"];
-} unset($r);  
+} unset($r);
 
 
 $printer -> text($this->DosCol("TICKET $: ", 40, Helpers::Format($t_ticket), 10));
@@ -1026,13 +1028,13 @@ $printer -> text("_______________________________________________________");
 $printer->feed();
 
 
-if ($r = $db->select("sum(total)", "ticket", "WHERE edo = 1 and tipo_pago = 1 and td = ".$_SESSION["td"]." and fecha = '$fechax'")) { 
+if ($r = $db->select("sum(total)", "ticket", "WHERE edo = 1 and tipo_pago = 1 and td = ".$_SESSION["td"]." and fecha = '$fechax'")) {
     $t_efectivo = $r["sum(total)"];
-} unset($r);  
+} unset($r);
 
-if ($r = $db->select("sum(total)", "ticket", "WHERE edo = 1 and tipo_pago = 2 and td = ".$_SESSION["td"]." and fecha = '$fechax'")) { 
+if ($r = $db->select("sum(total)", "ticket", "WHERE edo = 1 and tipo_pago = 2 and td = ".$_SESSION["td"]." and fecha = '$fechax'")) {
     $t_tarjeta = $r["sum(total)"];
-} unset($r);  
+} unset($r);
 
 
 $printer -> text($this->DosCol("EFECTIVO $: ", 40, Helpers::Format($t_efectivo), 10));
@@ -1049,7 +1051,7 @@ $printer->feed();
 // TICKET - subtotal, iva, total, hora
 if($t_ticket > 0){
 
-  $printer -> text("TICKETS"); 
+  $printer -> text("TICKETS");
   $printer->feed();
   $printer -> text($this->Col4("HORA - TICKET", 0,  "SUBTOTAL", 15,  "IVA", 10, "TOTAL", 10));
 
@@ -1057,11 +1059,11 @@ if($t_ticket > 0){
       $cant_t = $a->num_rows;
       foreach ($a as $b) {
 
-  if ($r = $db->select("sum(stotal), sum(imp), sum(total)", "ticket", "WHERE num_fac = '".$b["num_fac"]."' and tipo = 1 and td = ".$_SESSION["td"]."")) { 
+  if ($r = $db->select("sum(stotal), sum(imp), sum(total)", "ticket", "WHERE num_fac = '".$b["num_fac"]."' and tipo = 1 and td = ".$_SESSION["td"]."")) {
       $stotalt = $r["sum(stotal)"];
       $impt = $r["sum(imp)"];
       $totalt = $r["sum(total)"];
-  } unset($r);  
+  } unset($r);
 
   $printer -> text($this->Col4($b["hora"] . " - " . $b["num_fac"],0 ,  $stotalt, 15,  $impt, 10, $totalt, 10));
   }  $a->close();
@@ -1078,11 +1080,11 @@ if($t_factura > 0){
       $cant_f = $a->num_rows;
       foreach ($a as $b) {
 
-  if ($r = $db->select("sum(stotal), sum(imp), sum(total)", "ticket", "WHERE num_fac = '".$b["num_fac"]."' and tipo = 2 and td = ".$_SESSION["td"]."")) { 
+  if ($r = $db->select("sum(stotal), sum(imp), sum(total)", "ticket", "WHERE num_fac = '".$b["num_fac"]."' and tipo = 2 and td = ".$_SESSION["td"]."")) {
       $stotalp = $r["sum(stotal)"];
       $impp = $r["sum(imp)"];
       $totalp = $r["sum(total)"];
-  } unset($r);  
+  } unset($r);
 
   $printer -> text($this->Col4($b["hora"] . " - " . $b["num_fac"],0 ,  $stotalp, 15,  $impp, 10, $totalp, 10));
 
@@ -1100,11 +1102,11 @@ if($t_credito > 0){
     $cant_c = $a->num_rows;
       foreach ($a as $b) {
 
-  if ($r = $db->select("sum(stotal), sum(imp), sum(total)", "ticket", "WHERE num_fac = '".$b["num_fac"]."' and tipo = 3 and td = ".$_SESSION["td"]."")) { 
+  if ($r = $db->select("sum(stotal), sum(imp), sum(total)", "ticket", "WHERE num_fac = '".$b["num_fac"]."' and tipo = 3 and td = ".$_SESSION["td"]."")) {
       $stotalc = $r["sum(stotal)"];
       $impc = $r["sum(imp)"];
       $totalc = $r["sum(total)"];
-  } unset($r);  
+  } unset($r);
 
   $printer -> text($this->Col4($b["hora"] . " - " . $b["num_fac"],0 ,  $stotalc, 15,  $impc, 10, $totalc, 10));
   }  $a->close();
@@ -1116,11 +1118,11 @@ if($t_credito > 0){
 $printer -> text("_______________________________________________________");
 $printer->feed();
 // VENTA TOTAL - subtotal, iva, total
-  if ($r = $db->select("sum(stotal), sum(imp), sum(total)", "ticket", "WHERE edo = 1 and td = ".$_SESSION["td"]." and fecha = '$fechax'")) { 
+  if ($r = $db->select("sum(stotal), sum(imp), sum(total)", "ticket", "WHERE edo = 1 and td = ".$_SESSION["td"]." and fecha = '$fechax'")) {
       $st = $r["sum(stotal)"];
       $im = $r["sum(imp)"];
       $to = $r["sum(total)"];
-  } unset($r);  
+  } unset($r);
 
   $printer -> text($this->Col4("VENTA TOTAL",0 ,  "SUBTOTAL", 15,  "IVA", 10, "TOTAL", 10));
 
@@ -1178,7 +1180,7 @@ $printer->close();
             $leftCols = $leftCols / 2 - $rightCols / 2;
         }
         $left = str_pad($cant . " " . $name, $leftCols) ;
-        
+
         $sign = ($dollarSign ? '$ ' : '');
 
         $total = str_pad($sign . $total, $rightCols, ' ', STR_PAD_LEFT);
@@ -1189,7 +1191,7 @@ $printer->close();
 
 
  public function DosCol($izquierda = '', $iz, $derecha = '', $der){
-        $left = str_pad($izquierda, $iz, ' ', STR_PAD_LEFT) ;      
+        $left = str_pad($izquierda, $iz, ' ', STR_PAD_LEFT) ;
         $right = str_pad($derecha, $der, ' ', STR_PAD_LEFT);
         return "$left$right\n";
     }
