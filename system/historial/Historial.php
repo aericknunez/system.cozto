@@ -985,7 +985,7 @@ public function MovimientosProducto($inicio, $fin, $type = NULL) {
 		$segundo = Fechas::Format($fin);
 
 if($primero == $segundo){
-  $a = $db->query("SELECT * FROM producto_ingresado WHERE producto = '".$_SESSION["cod_search"]."' and fechaF = '$segundo' and td = ".$_SESSION['td']." order by time desc");
+  $a = $db->query("SELECT * FROM  WHERE producto = '".$_SESSION["cod_search"]."' and fechaF = '$segundo' and td = ".$_SESSION['td']." order by time desc");
 } else {
   $a = $db->query("SELECT * FROM producto_ingresado WHERE producto = '".$_SESSION["cod_search"]."' and time BETWEEN '$primero' AND '$segundo' and td = ".$_SESSION['td']." order by time desc");
 }
