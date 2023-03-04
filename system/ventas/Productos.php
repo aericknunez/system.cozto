@@ -14,7 +14,7 @@ class Productos{
             foreach ($a as $b) {
                        echo '<tr>
                               <td scope="row"><a id="select-p" cod="'. $b["cod"] .'" descripcion="'. $b["descripcion"] .'"><div>
-                              '. $b["cod"] .'  || '. $b["descripcion"] .'</div></a></td>
+                              '. $b["cod"] .'  || '. $b["descripcion"] .' || '.'Precio: '.Helpers::Dinero(Helpers::GetData("producto_precio","precio","producto", $b["cod"] )).'</div></a></td>
                             </tr>'; 
             }  
                         echo '<tr>
