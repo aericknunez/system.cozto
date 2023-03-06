@@ -29,12 +29,12 @@ if($fechax != NULL){
 // $objPHPExcel->getColumnDimension('C')->setAutoSize(true);
 $ax = $db->query("select cod, cant, total, producto, pv 
 from ticket 
-where cod = '9999999' and edo = 1 and fecha = '$fecha' and td = ".$_SESSION['td']." order by cant desc");
+where cod = '9999999' and edo = 1 and fecha = '$fecha' and tipo_pago != 8 and td = ".$_SESSION['td']." order by cant desc");
 $especial = NULL;
 
 $a = $db->query("select cod, sum(cant), sum(total), producto, pv, fecha 
                             from ticket 
-                            where cod != 8888 and cod != 9999999 and edo = 1 and fecha like '%$fechax' and td = ".$_SESSION['td']." GROUP BY cod order by sum(cant) desc");
+                            where cod != 8888 and cod != 9999999 and edo = 1 and fecha like '%$fechax' and tipo_pago != 8 and td = ".$_SESSION['td']." GROUP BY cod order by sum(cant) desc");
 
     if($a->num_rows > 0 or $ax->num_rows > 0){
 

@@ -14,9 +14,9 @@ public function VentasDetallado($inicio, $fin, $type = NULL) {
 		$segundo = Fechas::Format($fin);
 
 if($primero == $segundo){
-	$a = $db->query("SELECT * FROM ticket WHERE fechaF = '$segundo' and edo = 1 and td = ".$_SESSION['td']." order by time desc");
+	$a = $db->query("SELECT * FROM ticket WHERE fechaF = '$segundo' and edo = 1 and tipo_pago != 8 and td = ".$_SESSION['td']." order by time desc");
 } else {
-	$a = $db->query("SELECT * FROM ticket WHERE time BETWEEN '$primero' AND '$segundo' and edo = 1 and td = ".$_SESSION['td']." order by time desc");
+	$a = $db->query("SELECT * FROM ticket WHERE time BETWEEN '$primero' AND '$segundo' and edo = 1 and tipo_pago != 8 and td = ".$_SESSION['td']." order by time desc");
 }
 
    if ($a->num_rows > 0) {
@@ -118,11 +118,11 @@ public function VentasAgrupado($inicio, $fin, $type = NULL) {
 
 if($primero == $segundo){
 $a = $db->query("select cod, sum(cant), sum(total), producto, pv, pc, sum(descuento) FROM ticket WHERE 
-	fechaF = '$segundo' and edo = 1 and td = ".$_SESSION['td']." 
+	fechaF = '$segundo' and edo = 1 and tipo_pago != 8 and td = ".$_SESSION['td']." 
 	GROUP BY cod order by sum(cant) desc");
 } else {
 $a = $db->query("select cod, sum(cant), sum(total), producto, pv, pc, sum(descuento) FROM ticket WHERE 
-	time BETWEEN '$primero' AND '$segundo' and edo = 1 and td = ".$_SESSION['td']." 
+	time BETWEEN '$primero' AND '$segundo' and edo = 1 and tipo_pago != 8 and td = ".$_SESSION['td']." 
 	GROUP BY cod order by sum(cant) desc");
 }
 

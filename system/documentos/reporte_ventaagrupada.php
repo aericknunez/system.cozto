@@ -25,11 +25,11 @@ $segundo = Fechas::Format($_REQUEST["fin"]);
 
 if($primero == $segundo){
 $a = $db->query("select cod, sum(cant), sum(total), producto, pv, pc, sum(descuento) FROM ticket WHERE 
-  fechaF = '$segundo' and edo = 1 and td = ".$_SESSION['td']." 
+  fechaF = '$segundo' and edo = 1 and tipo_pago != 8 and td = ".$_SESSION['td']." 
   GROUP BY cod order by sum(cant) desc");
 } else {
 $a = $db->query("select cod, sum(cant), sum(total), producto, pv, pc, sum(descuento) FROM ticket WHERE 
-  time BETWEEN '$primero' AND '$segundo' and edo = 1 and td = ".$_SESSION['td']." 
+  time BETWEEN '$primero' AND '$segundo' and edo = 1 and tipo_pago != 8 and td = ".$_SESSION['td']." 
   GROUP BY cod order by sum(cant) desc");
 }
 

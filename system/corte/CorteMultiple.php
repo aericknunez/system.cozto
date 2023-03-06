@@ -126,7 +126,7 @@ $pro->EmparejaExistencias();
 
 	public function Productos(){
 		$db = new dbConn();
-	    $a = $db->query("SELECT sum(cant) FROM ticket WHERE cajero = '".$_SESSION["user"]."' and edo = 1 and td = ".$_SESSION["td"]." and time BETWEEN '".$this->GetInicio()."' and '".Helpers::TimeId()."'");
+	    $a = $db->query("SELECT sum(cant) FROM ticket WHERE cajero = '".$_SESSION["user"]."' and edo = 1 and tipo_pago != 8 and td = ".$_SESSION["td"]." and time BETWEEN '".$this->GetInicio()."' and '".Helpers::TimeId()."'");
 		    foreach ($a as $b) {
 		     return $b["sum(cant)"];
 		    } $a->close();
@@ -136,7 +136,7 @@ $pro->EmparejaExistencias();
 
 	public function Clientes(){
 		$db = new dbConn();
-		$a = $db->query("SELECT * FROM ticket_orden WHERE cajero = '".$_SESSION["user"]."' and td = ".$_SESSION["td"]." and time BETWEEN '".$this->GetInicio()."' and '".Helpers::TimeId()."'");
+		$a = $db->query("SELECT * FROM ticket_orden WHERE cajero = '".$_SESSION["user"]."' and tipo_pago != 8 and td = ".$_SESSION["td"]." and time BETWEEN '".$this->GetInicio()."' and '".Helpers::TimeId()."'");
 		return $a->num_rows;
 		$a->close();
 
@@ -145,7 +145,7 @@ $pro->EmparejaExistencias();
 
 	public function Tx(){
 		$db = new dbConn();
-	    $a = $db->query("SELECT sum(total) FROM ticket WHERE cajero = '".$_SESSION["user"]."' and edo = 1 and td = ".$_SESSION["td"]." and time BETWEEN '".$this->GetInicio()."' and '".Helpers::TimeId()."' and tx = 1");
+	    $a = $db->query("SELECT sum(total) FROM ticket WHERE cajero = '".$_SESSION["user"]."' and edo = 1 and tipo_pago != 8 and td = ".$_SESSION["td"]." and time BETWEEN '".$this->GetInicio()."' and '".Helpers::TimeId()."' and tx = 1");
 		    foreach ($a as $b) {
 		     $total=$b["sum(total)"];
 		    } $a->close();
@@ -156,7 +156,7 @@ $pro->EmparejaExistencias();
 
 	public function NoTx(){
 		$db = new dbConn();
-	    $a = $db->query("SELECT sum(total) FROM ticket WHERE cajero = '".$_SESSION["user"]."' and edo = 1 and td = ".$_SESSION["td"]." and time BETWEEN '".$this->GetInicio()."' and '".Helpers::TimeId()."' and tx = 0");
+	    $a = $db->query("SELECT sum(total) FROM ticket WHERE cajero = '".$_SESSION["user"]."' and edo = 1 and tipo_pago != 8 and td = ".$_SESSION["td"]." and time BETWEEN '".$this->GetInicio()."' and '".Helpers::TimeId()."' and tx = 0");
 		    foreach ($a as $b) {
 		     $total=$b["sum(total)"];
 		    } $a->close();
@@ -167,7 +167,7 @@ $pro->EmparejaExistencias();
 
 	public function Total(){
 		$db = new dbConn();
-	    $a = $db->query("SELECT sum(total) FROM ticket WHERE cajero = '".$_SESSION["user"]."' and edo = 1 and td = ".$_SESSION["td"]." and time BETWEEN '".$this->GetInicio()."' and '".Helpers::TimeId()."'");
+	    $a = $db->query("SELECT sum(total) FROM ticket WHERE cajero = '".$_SESSION["user"]."' and edo = 1 and tipo_pago != 8 and td = ".$_SESSION["td"]." and time BETWEEN '".$this->GetInicio()."' and '".Helpers::TimeId()."'");
 		    foreach ($a as $b) {
 		     return $b["sum(total)"];
 		    } $a->close();

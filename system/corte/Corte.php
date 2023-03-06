@@ -9,7 +9,7 @@ class Corte{
 
 	public function VentaHoy($fecha){
 		$db = new dbConn();
-	    $a = $db->query("SELECT sum(total) FROM ticket WHERE edo = 1 and td = ".$_SESSION["td"]." and fecha = '$fecha'");
+	    $a = $db->query("SELECT sum(total) FROM ticket WHERE edo = 1 and tipo_pago != 8 and td = ".$_SESSION["td"]." and fecha = '$fecha'");
 		    foreach ($a as $b) {
 		     return $b["sum(total)"];
 		    } $a->close();
@@ -18,7 +18,7 @@ class Corte{
  /// para ver las ventas de un mes especifico // eje feha 05-2019
  	public function VentaMes($fecha){
 		$db = new dbConn();
-	    $a = $db->query("SELECT sum(total) FROM ticket WHERE edo = 1 and td = ".$_SESSION["td"]." and fecha like '%-$fecha'");
+	    $a = $db->query("SELECT sum(total) FROM ticket WHERE edo = 1 and tipo_pago != 8 and td = ".$_SESSION["td"]." and fecha like '%-$fecha'");
 		    foreach ($a as $b) {
 		     return $b["sum(total)"];
 		    } $a->close();
@@ -27,7 +27,7 @@ class Corte{
 
 	public function ProductosHoy($fecha){
 		$db = new dbConn();
-	    $a = $db->query("SELECT sum(cant) FROM ticket WHERE edo = 1 and td = ".$_SESSION["td"]." and fecha = '$fecha'");
+	    $a = $db->query("SELECT sum(cant) FROM ticket WHERE edo = 1 and tipo_pago != 8 and td = ".$_SESSION["td"]." and fecha = '$fecha'");
 		    foreach ($a as $b) {
 		     return $b["sum(cant)"];
 		    } $a->close();
@@ -66,7 +66,7 @@ class Corte{
 
 	public function TotalTx($fecha){
 		$db = new dbConn();
-	    $a = $db->query("SELECT sum(total) FROM ticket WHERE edo = 1 and td = ".$_SESSION["td"]." and fecha = '$fecha' and tx = 1");
+	    $a = $db->query("SELECT sum(total) FROM ticket WHERE edo = 1 and tipo_pago != 8 and td = ".$_SESSION["td"]." and fecha = '$fecha' and tx = 1");
 		    foreach ($a as $b) {
 		     $total=$b["sum(total)"];
 		    } $a->close();
@@ -76,7 +76,7 @@ class Corte{
 
 	public function TotalNoTx($fecha){
 		$db = new dbConn();
-	    $a = $db->query("SELECT sum(total) FROM ticket WHERE edo = 1 and td = ".$_SESSION["td"]." and fecha = '$fecha' and tx = 0");
+	    $a = $db->query("SELECT sum(total) FROM ticket WHERE edo = 1 and tipo_pago != 8 and td = ".$_SESSION["td"]." and fecha = '$fecha' and tx = 0");
 		    foreach ($a as $b) {
 		     $total=$b["sum(total)"];
 		    } $a->close();

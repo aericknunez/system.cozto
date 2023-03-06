@@ -24,9 +24,9 @@ $segundo = Fechas::Format($_REQUEST["fin"]);
 
 
 if($primero == $segundo){
-	$a = $db->query("SELECT * FROM ticket WHERE fechaF = '$segundo' and edo = 1 and td = ".$_SESSION['td']." order by time desc");
+	$a = $db->query("SELECT * FROM ticket WHERE fechaF = '$segundo' and edo = 1 and tipo_pago != 8 and td = ".$_SESSION['td']." order by time desc");
 } else {
-	$a = $db->query("SELECT * FROM ticket WHERE time BETWEEN '$primero' AND '$segundo' and edo = 1 and td = ".$_SESSION['td']." order by time desc");
+	$a = $db->query("SELECT * FROM ticket WHERE time BETWEEN '$primero' AND '$segundo' and edo = 1 and tipo_pago != 8 and td = ".$_SESSION['td']." order by time desc");
 }
 
    if ($a->num_rows > 0) {

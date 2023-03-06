@@ -189,7 +189,7 @@ $objPHPExcel->setActiveSheetIndex(0)
 
 
 
-$a = $db->query("SELECT * FROM ticket WHERE time BETWEEN '$aperturaF' AND '$cierreF' and edo = 1 and td = ".$_SESSION['td']." order by time desc");
+$a = $db->query("SELECT * FROM ticket WHERE time BETWEEN '$aperturaF' AND '$cierreF' and edo = 1 and tipo_pago != 8 and td = ".$_SESSION['td']." order by time desc");
 
 if($a->num_rows > 0){
 
@@ -202,11 +202,12 @@ $objPHPExcel->setActiveSheetIndex(0)
             ->setCellValue('E15', 'CODIGO')
             ->setCellValue('F15', 'CANTIDAD')
             ->setCellValue('G15', 'PRODUCTO')
-            ->setCellValue('H15', 'PRECIO UNITARIO')
-            ->setCellValue('I15', 'PRECIO TOTAL')
-            ->setCellValue('J15', 'DESCUENTO')
-            ->setCellValue('K15', 'MONTO TOTAL')
-            ->setCellValue('L15', 'PAGO');
+            ->setCellValue('H15', 'PRECIO')
+            ->setCellValue('I15', 'PRECIO UNITARIO')
+            ->setCellValue('J15', 'PRECIO TOTAL')
+            ->setCellValue('K15', 'DESCUENTO')
+            ->setCellValue('L15', 'MONTO TOTAL')
+            ->setCellValue('M15', 'PAGO');
  
 
 $fila = 15;   
@@ -223,12 +224,13 @@ $objPHPExcel->setActiveSheetIndex(0)
           ->setCellValue('D' . $fila, $reporte->CategoriaProducto($b["cod"]))
           ->setCellValue('E' . $fila, $b["cod"])
           ->setCellValue('F' . $fila, $b["cant"])
-          ->setCellValue('G' . $fila, $b["producto"])
-          ->setCellValue('H' . $fila, $b["pv"])
-          ->setCellValue('I' . $fila, $total)
-          ->setCellValue('J' . $fila, $b["descuento"])
-          ->setCellValue('K' . $fila, $b["total"])
-          ->setCellValue('L' . $fila, Helpers::TipoPago($b["tipo_pago"]));
+          ->setCellValue('G' . $fila, $b["producto"]) 
+          ->setCellValue('H' . $fila, Helpers::GetData("producto_precio", "precio", "producto", $b["cod"] ))
+          ->setCellValue('I' . $fila, $b["pv"])
+          ->setCellValue('J' . $fila, $total)
+          ->setCellValue('K' . $fila, $b["descuento"])
+          ->setCellValue('L' . $fila, $b["total"])
+          ->setCellValue('M' . $fila, Helpers::TipoPago($b["tipo_pago"]));
  
 
         } 
@@ -236,8 +238,8 @@ $objPHPExcel->setActiveSheetIndex(0)
 
 
 
-$columnas = array('A','B','C','D','E','F','G','L');
-$numeros = array('H','I','J','K');
+$columnas = array('A','B','C','D','E','F','G');
+$numeros = array('H','I','J','K','L');
 
 // establece ceros numerocico las filas numerocas
 foreach($numeros as $columnID) {
