@@ -41,23 +41,27 @@ $_SESSION["ver_avatar"] = NULL;
 
             } unset($r);
 
-            if(VerificaDataInicial() == FALSE){
-                    // inserto ubicacion predeterminada
-                    AddDataInicial();
-            }
 
-            BuscaDatosSistema();
+if (XSERV != "datos.hibridosv.com/") {
 
-        $configuracion = new Config;
-        $configuracion->CrearVariables(); // creo el resto de variables del sistema
 
-        /// reviso si la caja esta aperturada en este usuario
-        $corte = new Corte();
-        if($corte->ComprobarApertura() == TRUE){
-            $_SESSION["caja_apertura"] = $corte->ObtenerHash();
-        }
+if(VerificaDataInicial() == FALSE){
+        // inserto ubicacion predeterminada
+        AddDataInicial();
+}
 
-        VerificaFechaProductos();
+BuscaDatosSistema();
+
+$configuracion = new Config;
+$configuracion->CrearVariables(); // creo el resto de variables del sistema
+
+/// reviso si la caja esta aperturada en este usuario
+$corte = new Corte();
+if($corte->ComprobarApertura() == TRUE){
+$_SESSION["caja_apertura"] = $corte->ObtenerHash();
+}
+
+VerificaFechaProductos();
 
         /// modifaica el sistama de tags
 include_once '../../system/producto/ModificaTags.php';
@@ -79,11 +83,12 @@ if($_SESSION['root_plataforma'] == 0 and Helpers::ServerDomain() == TRUE){
 }
       
 
-        $inicia = new Inicio;
-        $inicia->Caduca(); // revisa si ha caducado
+$inicia = new Inicio;
+$inicia->Caduca(); // revisa si ha caducado
 
         header("location: ../../");
- }
+}
+}
 
 
     function BuscaDatosSistema(){
