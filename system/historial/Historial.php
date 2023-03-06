@@ -983,11 +983,32 @@ public function MovimientosProducto($inicio, $fin, $type = NULL) {
 		$db = new dbConn();
 		$primero = Fechas::Format($inicio);
 		$segundo = Fechas::Format($fin);
+		$diaA = strtotime('+1 day', strtotime($fin));
+		$diaA = date('d-m-Y', $diaA);
+		$tercero = Fechas::Format($diaA);
+		$productosV = 0;
+		$productosA = 0;
+		$productosI = 0;
+		$productosN = 0;
+		
 
 if($primero == $segundo){
-  $a = $db->query("SELECT * FROM  WHERE producto = '".$_SESSION["cod_search"]."' and fechaF = '$segundo' and td = ".$_SESSION['td']." order by time desc");
+  $a = $db->query("SELECT * FROM  producto_ingresado WHERE producto = '".$_SESSION["cod_search"]."' and fecha_ingreso = '$segundo' and td = ".$_SESSION['td']." order by time desc");
+  
+  $ax = $db->query("SELECT * FROM ticket WHERE fechaF = '$segundo'  and edo = 1 and cod='".$_SESSION["cod_search"]."' and tipo_pago != 8 and td = ".$_SESSION['td']." order by time desc");
+
+  $ay = $db->query("SELECT * FROM producto_averias WHERE fecha = '$fin' and producto ='".$_SESSION["cod_search"]."' and td = ".$_SESSION['td']." order by time desc");
+  
+  $x = $db->query("SELECT * FROM ticket WHERE fechaF = '$segundo' and cod ='".$_SESSION["cod_search"]."' and tipo_pago = 8 and td = ".$_SESSION['td']." order by time desc");
+
 } else {
-  $a = $db->query("SELECT * FROM producto_ingresado WHERE producto = '".$_SESSION["cod_search"]."' and time BETWEEN '$primero' AND '$segundo' and td = ".$_SESSION['td']." order by time desc");
+  $a = $db->query("SELECT * FROM producto_ingresado WHERE producto = '".$_SESSION["cod_search"]."' and time BETWEEN '$primero' AND '$tercero' and td = ".$_SESSION['td']." order by fecha desc");
+  
+  $ax = $db->query("SELECT * FROM ticket WHERE time BETWEEN '$primero' AND '$tercero' and edo = 1 and cod='".$_SESSION["cod_search"]."' and tipo_pago != 8 and td = ".$_SESSION['td']." order by time desc");
+
+  $ay = $db->query("SELECT * FROM producto_averias WHERE time BETWEEN '$primero' AND '$tercero' and producto='".$_SESSION["cod_search"]."' and td = ".$_SESSION['td']." order by time desc");
+
+  $x = $db->query("SELECT * FROM ticket WHERE time BETWEEN '$primero' AND '$tercero' and cod ='".$_SESSION["cod_search"]."' and tipo_pago = 8 and td = ".$_SESSION['td']." order by time desc");
 }
 
 
@@ -1005,6 +1026,7 @@ if($primero == $segundo){
 	       <th>Cantidad</th>
 	       <th>Precio de Costo</th>
 	       <th>Proveedor</th>
+		   <th>Comentarios</th>
 	       <th>Caduca</th>
 	       <th>Usuario</th>
 	     </tr>
@@ -1013,27 +1035,31 @@ if($primero == $segundo){
 
     foreach ($a as $b) {
 
-	echo '<tr class="text-black font-weight-bold">
-		   <th>'.$b["fecha"].' - '.$b["hora"].'</th>					       
+		$productosI = $productosI + $b["cant"];
+
+	echo ' <tr class="text-black font-weight-bold">
+		   <th>'.$b["fecha"].'</th>					       
 		   <th>'.$b["producto"]. ' - ' .Helpers::GetData("producto", "descripcion", "cod", $b["producto"]).'</th>
 		   <th>'.$b["documento"].'</th>
 		   <th>'.$b["cant"].'</th>
 		   <th>'.Helpers::Dinero($b["precio_costo"]).'</th>
 		   <th>'.Helpers::GetData("proveedores", "nombre", "hash", $b["proveedor"]).'</th>
+		   <th>'.$b["comentarios"].'</th>
 		   <th>'.$b["caduca"].'</th>
 		   <th>'.Helpers::GetData("login_userdata", "nombre", "user", $b["user"]).'</th>  
 		 </tr>';
     }    
 
 	echo '<tr>
-	       <th>Fecha</th>
-	       <th>Producto</th>					       
-	       <th>No Documento</th>
-	       <th>Cantidad</th>
-	       <th>Precio de Costo</th>
-	       <th>Proveedor</th>
-	       <th>Caduca</th>
-	       <th>Usuario</th>
+	       <th></th>
+	       <th></th>					       
+	       <th>Total</th>
+	       <th>'.Helpers::Format($productosI).'</th>
+	       <th></th>
+	       <th></th>
+		   <th></th>
+	       <th></th>
+	       <th></th>
 		  </tr>';
 
 
@@ -1041,11 +1067,156 @@ echo '</tbody>
 	</table></div>';
 
 
-  } $a->close();
+  $a->close(); }
+
+  if ($ax->num_rows > 0) {
+
+	echo '<h3><br></h3>
+	<h3 class="h3-responsive">REPORTE DE VENTAS DETALLADO</h3>
+	<div class="table-responsive text-nowrap">
+	<table class="table table-striped table-sm table-bordered">
+
+	  <thead>
+	   <tr>
+		 <th>Fecha</th>	
+		 <th>No Documento</th>				       
+		 <th>Codigo</th>
+		 <th>Cantidad</th>
+		 <th>Producto</th>
+		 <th>Precio U.</th>
+		 <th>Descuento</th>
+		 <th>Monto Total</th>
+	   </tr>
+	 </thead>
+	 <tbody>';
+
+  foreach ($ax as $bx) {
+
+	  $productosV = $productosV + $bx["cant"];
+	  $totalcosto = $bx["pc"] * $bx["cant"];
+	  $total = $bx["pv"] * $bx["cant"];
+	  $ganancia = $bx["total"] - $totalcosto;
+	  @$porcentaje = ($ganancia / $bx["total"])*100;
+  echo '<tr>
+		 <th>'.$bx["fecha"].'</th>					       
+		 <th class="text-center">'.$bx["num_fac"].'</th>
+		 <th>'.$bx["cod"].'</th>
+		 <th>'.$bx["cant"].'</th>
+		 <th>'.$bx["producto"].'</th>
+		 <th>'.Helpers::Dinero($bx["pv"]).'</th>
+		 <th>'.Helpers::Dinero($bx["descuento"]).'</th>
+		 <th>'.Helpers::Dinero($bx["total"]).'</th>
+	   </tr>';
+  }
+
+echo'<tr>
+  		<th></th>	
+  		<th></th>				       
+  		<th>Total</th>
+  		<th>'.Helpers::Format($productosV).'</th>
+  		<th></th>
+  		<th></th>
+ 		<th></th>
+  		<th></th>
+	</tr>';
+
+echo '</tbody>
+  </table></div>';
+
+
+
+
+$ax->close(); } 
+
+
+if ($ay->num_rows > 0) {
+
+	echo '<h3><br></h3>
+	<h3 class="h3-responsive">REPORTE DE PRODUCTOS AVERIADOS</h3>
+	<div class="table-responsive text-nowrap">
+	<table class="table table-striped table-sm table-bordered">
+  
+	  <thead>
+	   <tr>
+		 <th>Fecha</th>
+		 <th>Producto</th>					       
+		 <th>Cantidad</th>
+		 <th>Comentario</th>
+		 <th>Usuario</th>
+	   </tr>
+	 </thead>
+	 <tbody>';
+  
+  foreach ($ay as $by) {
+
+	$productosA = $productosA + $by["cant"];
+  
+  echo '<tr class="text-black font-weight-bold">
+		 <th>'.$by["fecha"].'</th>					       
+		 <th>'.$by["producto"]. ' - ' .Helpers::GetData("producto", "descripcion", "cod", $by["producto"]).'</th>
+		 <th>'.$by["cant"].'</th>
+		 <th>'.$by["comentarios"].'</th>
+		 <th>'.Helpers::GetData("login_userdata", "nombre", "user", $by["usuario"]).'</th>  
+	   </tr>';
+  }    
+  
+  echo '<tr>
+		  <th></th>
+		  <th>Total</th>					       
+		  <th>'.Helpers::Format($productosA).'</th>
+		  <th></th>
+		  <th></th>
+		</tr>';
+  
+  
+  echo '</tbody>
+  </table></div>';
+  
+
+   $ay->close(); }
+
+   if ($x->num_rows > 0) {
+
+	echo '<h3><br></h3>
+	<h3 class="h3-responsive">NOTAS DE ENVIO</h3>
+	<div class="table-responsive text-nowrap">
+	<table class="table table-striped table-sm table-bordered">
+	<tr class="text-black">
+	<th>Cod</th>					       
+	<th>Cantidad</th>					       
+	<th>Producto</th>
+	<th>Total</th>
+	</tr>';
+
+  
+  foreach ($x as $y) {
+
+	$productosN = $productosN + $y["cant"];
+	  
+	  echo '<tr class="text-black">
+			 <th>'.$y["cod"].'</th>					       
+			 <th>'.$y["cant"].'</th>					       
+			 <th>'.$y["producto"].'</th>
+			 <th>'.Helpers::Dinero($y["total"]).'</th>
+		   </tr>';
+	  } 
+
+	  echo '<tr class="text-black">
+			  <th>Total</th>					       
+			  <th>'.Helpers::Format($productosN).'</th>					       
+			  <th></th>
+			  <th></th>
+			  </tr>';
+
+echo '</tbody>
+  </table></div>';
+
+ $x->close();
 		
 
-} // termina la funcion
+ }// termina la funcion
 
+}
 
 
 
