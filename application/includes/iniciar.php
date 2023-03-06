@@ -42,18 +42,17 @@ $_SESSION["ver_avatar"] = NULL;
             } unset($r);
 
 
+        if(VerificaDataInicial() == FALSE){
+                // inserto ubicacion predeterminada
+                AddDataInicial();
+        }
+    
+        BuscaDatosSistema();
+
+        $configuracion = new Config;
+        $configuracion->CrearVariables(); // creo el resto de variables del sistema
+
     if (XSERV != "datos.hibridosv.com/") {
-
-
-    if(VerificaDataInicial() == FALSE){
-            // inserto ubicacion predeterminada
-            AddDataInicial();
-    }
-
-    BuscaDatosSistema();
-
-    $configuracion = new Config;
-    $configuracion->CrearVariables(); // creo el resto de variables del sistema
 
     /// reviso si la caja esta aperturada en este usuario
     $corte = new Corte();
