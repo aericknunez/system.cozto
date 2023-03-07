@@ -991,6 +991,16 @@ $printer->feed();
 
 $printer -> setJustification(Printer::JUSTIFY_CENTER);
 $printer->text("MINI SUPER 24/7 EL DIVINO NIÑO");
+$printer->feed();
+$printer->text("JAYUMI S.A. DE C.V.");
+$printer->feed();
+$printer->text("4 calle ote. local c-1, San Martin de Porres");
+$printer->feed();
+$printer->text("San Francisco Menendez");
+$printer->feed();
+$printer->text("NRC: 285464-2 NIT: 0108-091019-101-0");
+$printer->feed();
+$printer->text("Giro:Otros servicios relacionados con la salud NCP");
 $printer->text("CAJA: 1.");
 
 
@@ -1398,23 +1408,23 @@ $printer->feed();
 
 $printer -> setJustification(Printer::JUSTIFY_CENTER);
 $printer->text("MINI SUPER 24/7 EL DIVINO NIÑO");
-
-
-
-
+$printer->feed();
+$printer->text("JAYUMI S.A. DE C.V.");
+$printer->feed();
+$printer->text("4 calle ote. local c-1, San Martin de Porres");
+$printer->feed();
+$printer->text("San Francisco Menendez");
+$printer->feed();
+$printer->text("NRC: 285464-2 NIT: 0108-091019-101-0");
+$printer->feed();
+$printer->text("Giro:Otros servicios relacionados con la salud NCP");
+$printer->text("CAJA: 1.");
 
 // $printer->feed();
 // $printer->text("NIT: 1010-291061-002-4   NRC: 33274-7");
 
 // $printer->feed();
 // $printer->text("GIRO: Clinica Veterinaria y venta de productos Agropecuarios");
-
-
-$printer->feed();
-$printer->text("CAJA: 1.");
-
-
-
 
 
 $printer->feed();
