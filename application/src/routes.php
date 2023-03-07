@@ -840,7 +840,6 @@ case "94": // aplicar descuento
 include_once '../../system/ventas/Laterales.php';
 include_once '../../system/ventas/VentasR.php';
 	$venta = new Ventas();
-	$venta->AplicarDescuento();
 
 	if ($_SESSION['config_restringir_descuento']) {
 		if (Helpers::CodigoValidacionDescuento()!= $_POST['codigo_seguridad']) {

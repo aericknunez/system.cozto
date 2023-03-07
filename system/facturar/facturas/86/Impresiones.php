@@ -5,6 +5,7 @@ use Mike42\Escpos\Printer;
 
 
 
+
 class Impresiones{
     public function __construct() {
      }
@@ -513,7 +514,166 @@ printer_close($handle);
 
 }
 
+public function NotaEnvio($efectivo, $numero){
+  $db = new dbConn();
+  $nombre_impresora = "TICKET";
+  // $img  = "C:/AppServ/www/pizto/assets/img/logo_factura/abrego.jpg";
 
+
+$connector = new WindowsPrintConnector($nombre_impresora);
+$printer = new Printer($connector);
+$printer -> initialize();
+
+$printer -> setFont(Printer::FONT_B);
+// $printer -> selectPrintMode(Printer::MODE_DOUBLE_HEIGHT);
+// $printer -> selectPrintMode(Printer::MODE_DOUBLE_WIDTH);
+
+$printer -> setTextSize(1, 2);
+$printer -> setLineSpacing(80);
+
+
+// $printer -> setJustification(Printer::JUSTIFY_CENTER);
+// $logo = EscposImage::load($img, false);
+// $printer->bitImage($logo);
+
+$printer -> setJustification(Printer::JUSTIFY_CENTER);
+$printer->text("MINI SUPER 24/7 EL DIVINO NIÑO");
+
+$printer->feed();
+$printer->text("JAYUMI S.A. DE C.V.");
+$printer->feed();
+$printer->text("4 calle ote. local c-1, San Martin de Porres");
+$printer->feed();
+$printer->text("San Francisco Menendez");
+
+$printer->feed();
+$printer->text("NRC: 285464-2 NIT: 0108-091019-101-0");
+$printer->feed();
+$printer->text("Giro:Otros servicios relacionados con la salud NCP");
+//$printer->text("de Construccion y articulos conexos ");
+
+
+// $printer->feed();
+// $printer->text("NIT: 1010-291061-002-4   NRC: 33274-7");
+
+// $printer->feed();
+// $printer->text("GIRO: Clinica Veterinaria y venta de productos Agropecuarios");
+
+$printer->feed();
+$printer->text("NOTA DE ENVIO NUMERO: " . $numero);
+
+
+/* Stuff around with left margin */
+$printer->feed();
+$printer -> setJustification(Printer::JUSTIFY_LEFT);
+$printer -> text("_______________________________________________________");
+$printer -> setJustification(Printer::JUSTIFY_LEFT);
+$printer->feed();
+/* Items */
+
+$printer -> setJustification(Printer::JUSTIFY_LEFT);
+$printer -> setEmphasis(true);
+$printer -> text($this->Item("Cant", 'Producto', 'Precio', 'Total'));
+$printer -> setEmphasis(false);
+
+
+$subtotalf = 0;
+$productos = 0;
+
+$a = $db->query("select cod, cant, producto, pv, total, fecha, hora, num_fac from ticket where num_fac = '".$numero."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]." and tipo = ".$_SESSION["tipoticket"]." group by cod");
+
+    foreach ($a as $b) {
+
+$printer -> text($this->Item($b["cant"], substr($b["producto"], 0, 38), $b["pv"], $b["total"]));
+
+$subtotalf = $subtotalf + $b["total"];
+$productos = $productos + $b["cant"];
+
+}    $a->close();
+
+
+
+if ($sx = $db->select("sum(total)", "ticket", "WHERE num_fac = '".$numero."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."  and tipo = ".$_SESSION["tipoticket"]."" )) {
+       $stotalx=$sx["sum(total)"];
+    } unset($sx);
+
+
+
+
+$printer -> text("_______________________________________________________");
+$printer->feed();
+
+$printer -> text("Cantidad de productos: " . $productos);
+$printer->feed();
+
+
+// $printer -> text($this->DosCol("Sub Total " . $_SESSION['config_moneda_simbolo'] . ":", 40, Helpers::Format(Helpers::STotal($subtotalf, $_SESSION['config_imp'])), 10));
+$printer -> text($this->DosCol("Sub Total  " . $_SESSION['config_moneda_simbolo'] . ":", 40, Helpers::Format($subtotalf), 10));
+
+
+
+// $printer -> text($this->DosCol("IVA " . $_SESSION['config_moneda_simbolo'] . ":", 40, Helpers::Format(Helpers::Impuesto(Helpers::STotal($subtotalf, $_SESSION['config_imp']), $_SESSION['config_imp'])), 10));
+
+
+$printer -> text($this->DosCol("TOTAL " . $_SESSION['config_moneda_simbolo'] . ":", 40, Helpers::Format($subtotalf), 10));
+
+
+
+$printer -> text("_______________________________________________________");
+$printer->feed();
+
+
+//efectivo
+if($efectivo == NULL){
+  $efectivo = $xtotal;
+}
+
+
+
+$printer -> text($this->DosCol("Efectivo " . $_SESSION['config_moneda_simbolo'] . ":", 40, Helpers::Format($efectivo), 10));
+
+//cambio
+$cambios = $efectivo - $subtotalf;
+$printer -> text($this->DosCol("Cambio " . $_SESSION['config_moneda_simbolo'] . ":", 40, Helpers::Format($cambios), 10));
+
+
+$printer -> text("_______________________________________________________");
+$printer->feed();
+
+
+
+
+if ($x = $db->select("fecha, hora", "ticket", "WHERE num_fac = '".$numero."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."  and tipo = ".$_SESSION["tipoticket"]."" )) {
+$fechaf=$x["fecha"];
+$horaf=$x["hora"];
+} unset($x);
+
+
+$printer->feed();
+$printer -> text($this->DosCol("Fecha: ".$fechaf, 30, "Hora: ".$horaf, 20));
+
+
+// $printer->feed();
+// $printer->text("SERIE: 2UA329130D");
+
+$printer -> setJustification(Printer::JUSTIFY_CENTER);
+$printer->feed();
+$printer -> text("Cajero: " . $_SESSION['nombre']);
+
+$printer->feed();
+/*$printer->text("SERIE N°: 19NA00000001");
+$printer->feed();
+$printer->text("Resolución N°: 30109-RES-CR-72782-2019");
+$printer->feed();
+$printer->text("RANGO AUTORIZADO DEL 1 AL 100000");
+$printer->feed();
+$printer->text("FECHA DE AUTORIZACION: 19/12/2019");*/
+$printer->feed();
+$printer->feed();
+$printer->cut();
+$printer->close();
+
+}
 
 
 
@@ -544,17 +704,177 @@ printer_close($handle);
 
 
 
- public function Ninguno(){
+ public function Ninguno($efectivo, $numero){
+  $db = new dbConn();
+  $nombre_impresora = "TICKET";
+  // $img  = "C:/AppServ/www/pizto/assets/img/logo_factura/abrego.jpg";
 
-$nombre_impresora = "TICKET";
 
 $connector = new WindowsPrintConnector($nombre_impresora);
 $printer = new Printer($connector);
+$printer -> initialize();
+
+$printer -> setFont(Printer::FONT_B);
+// $printer -> selectPrintMode(Printer::MODE_DOUBLE_HEIGHT);
+// $printer -> selectPrintMode(Printer::MODE_DOUBLE_WIDTH);
+
+$printer -> setTextSize(1, 2);
+$printer -> setLineSpacing(80);
+
+
+// $printer -> setJustification(Printer::JUSTIFY_CENTER);
+// $logo = EscposImage::load($img, false);
+// $printer->bitImage($logo);
+
+$printer -> setJustification(Printer::JUSTIFY_CENTER);
+$printer->text("MINI SUPER 24/7 EL DIVINO NIÑO");
+
+$printer->feed();
+$printer->text("JAYUMI S.A. DE C.V.");
+$printer->feed();
+$printer->text("4 calle ote. local c-1, San Martin de Porres");
+$printer->feed();
+$printer->text("San Francisco Menendez");
+
+$printer->feed();
+$printer->text("NRC: 285464-2 NIT: 0108-091019-101-0");
+$printer->feed();
+$printer->text("Giro:Otros servicios relacionados con la salud NCP");
+//$printer->text("de Construccion y articulos conexos ");
+
+
+// $printer->feed();
+// $printer->text("NIT: 1010-291061-002-4   NRC: 33274-7");
+
+// $printer->feed();
+// $printer->text("GIRO: Clinica Veterinaria y venta de productos Agropecuarios");
+
+$printer->feed();
+$printer->text("CAJA: 2.  TICKET NUMERO: " . $numero);
+
+
+/* Stuff around with left margin */
+$printer->feed();
+$printer -> setJustification(Printer::JUSTIFY_LEFT);
+$printer -> text("_______________________________________________________");
+$printer -> setJustification(Printer::JUSTIFY_LEFT);
+$printer->feed();
+/* Items */
+
+$printer -> setJustification(Printer::JUSTIFY_LEFT);
+$printer -> setEmphasis(true);
+$printer -> text($this->Item("Cant", 'Producto', 'Precio', 'Total'));
+$printer -> setEmphasis(false);
+
+
+$subtotalf = 0;
+$productos = 0;
+
+$a = $db->query("select cod, cant, producto, pv, total, fecha, hora, num_fac from ticket where num_fac = '".$numero."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]." and tipo = ".$_SESSION["tipoticket"]." group by cod");
+
+    foreach ($a as $b) {
+
+$printer -> text($this->Item($b["cant"], substr($b["producto"], 0, 38), $b["pv"], $b["total"]));
+
+$subtotalf = $subtotalf + $b["total"];
+$productos = $productos + $b["cant"];
+
+}    $a->close();
+
+
+
+if ($sx = $db->select("sum(total)", "ticket", "WHERE num_fac = '".$numero."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."  and tipo = ".$_SESSION["tipoticket"]."" )) {
+       $stotalx=$sx["sum(total)"];
+    } unset($sx);
+
+
+
+
+$printer -> text("_______________________________________________________");
+$printer->feed();
+
+$printer -> text("Cantidad de productos: " . $productos);
+$printer->feed();
+
+
+// $printer -> text($this->DosCol("Sub Total " . $_SESSION['config_moneda_simbolo'] . ":", 40, Helpers::Format(Helpers::STotal($subtotalf, $_SESSION['config_imp'])), 10));
+$printer -> text($this->DosCol("Sub Total  " . $_SESSION['config_moneda_simbolo'] . ":", 40, Helpers::Format($subtotalf), 10));
+
+
+
+// $printer -> text($this->DosCol("IVA " . $_SESSION['config_moneda_simbolo'] . ":", 40, Helpers::Format(Helpers::Impuesto(Helpers::STotal($subtotalf, $_SESSION['config_imp']), $_SESSION['config_imp'])), 10));
+
+
+$printer -> text($this->DosCol("TOTAL " . $_SESSION['config_moneda_simbolo'] . ":", 40, Helpers::Format($subtotalf), 10));
+
+
+
+$printer -> text("_______________________________________________________");
+$printer->feed();
+
+
+//efectivo
+if($efectivo == NULL){
+  $efectivo = $xtotal;
+}
+
+
+
+$printer -> text($this->DosCol("Efectivo " . $_SESSION['config_moneda_simbolo'] . ":", 40, Helpers::Format($efectivo), 10));
+
+//cambio
+$cambios = $efectivo - $subtotalf;
+$printer -> text($this->DosCol("Cambio " . $_SESSION['config_moneda_simbolo'] . ":", 40, Helpers::Format($cambios), 10));
+
+
+$printer -> text("_______________________________________________________");
+$printer->feed();
+
+
+
+
+if ($x = $db->select("fecha, hora", "ticket", "WHERE num_fac = '".$numero."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."  and tipo = ".$_SESSION["tipoticket"]."" )) {
+$fechaf=$x["fecha"];
+$horaf=$x["hora"];
+} unset($x);
+
+
+$printer->feed();
+$printer -> text($this->DosCol("Fecha: ".$fechaf, 30, "Hora: ".$horaf, 20));
+
+
+// $printer->feed();
+// $printer->text("SERIE: 2UA329130D");
+
+$printer -> setJustification(Printer::JUSTIFY_CENTER);
+$printer->feed();
+$printer -> text("Cajero: " . $_SESSION['nombre']);
+
+$printer->feed();
+/*$printer->text("SERIE N°: 19NA00000001");
+$printer->feed();
+$printer->text("Resolución N°: 30109-RES-CR-72782-2019");
+$printer->feed();
+$printer->text("RANGO AUTORIZADO DEL 1 AL 100000");
+$printer->feed();
+$printer->text("FECHA DE AUTORIZACION: 19/12/2019");*/
+
+
+$printer->feed();
+$printer->feed();
+$printer -> text("GRACIAS POR SU PREFERENCIA...");
+$printer->feed();
+
+
+
+
+
+$printer->feed();
+$printer->cut();
 $printer->pulse();
 $printer->close();
 
-
-}   /// termina /.;ninguno
+}  /// termina /.;ninguno
 
 
 
@@ -631,22 +951,13 @@ $printer -> close();
 
 }
 
+public function CorteX($hash){
 
+  $this->CorteX2($hash);
+  $this->CorteNinguno($hash);
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
- public function CorteX($hash){ // imprime el resumen del ultimo corte
+ public function CorteX2($hash){ // imprime el resumen del ultimo corte
   $db = new dbConn();
 
 
@@ -680,6 +991,17 @@ $printer->feed();
 
 $printer -> setJustification(Printer::JUSTIFY_CENTER);
 $printer->text("MINI SUPER 24/7 EL DIVINO NIÑO");
+$printer->feed();
+$printer->text("JAYUMI S.A. DE C.V.");
+$printer->feed();
+$printer->text("4 calle ote. local c-1, San Martin de Porres");
+$printer->feed();
+$printer->text("San Francisco Menendez");
+$printer->feed();
+$printer->text("NRC: 285464-2 NIT: 0108-091019-101-0");
+$printer->feed();
+$printer->text("Giro:Otros servicios relacionados con la salud NCP");
+$printer->text("CAJA: 1.");
 
 
 
@@ -691,7 +1013,7 @@ $printer->text("MINI SUPER 24/7 EL DIVINO NIÑO");
 
 
 // $printer->feed();
-// $printer->text("CAJA: 1.");
+
 
 
 
@@ -715,13 +1037,13 @@ if ($r = $db->select("*", "corte_diario", "WHERE hash = '$hash'")) {
 
 } unset($r);
 
-
-
-$printer->feed();
-$printer->text("FECHA: " .  Fechas::FechaEscrita($fecha));
+$dateA = date('d-m-Y H:i:s', $aperturaF);
+$dateC = date('d-m-Y H:i:s', $cierreF);
 
 $printer->feed();
-$printer->text("APERTURA: " .$apertura. "  CIERRE: " . $cierre);
+$printer->text("APERTURA: " .$dateA);
+$printer->feed();
+$printer->text("CIERRE: " .$dateC);
 $printer->feed();
 
 
@@ -748,16 +1070,19 @@ if ($r = $db->select("sum(stotal)", "ticket", "WHERE edo = 1 and tipo = 3 and td
     $t_credito = $r["sum(stotal)"];
 } unset($r);
 
-if ($r = $db->select("sum(imp)", "ticket", "WHERE edo = 1 and td = ".$_SESSION["td"]." and time BETWEEN '".$aperturaF."' and '".$cierreF."'")) {
+if ($r = $db->select("sum(imp)", "ticket", "WHERE edo = 1 and tipo !=0 and td = ".$_SESSION["td"]." and time BETWEEN '".$aperturaF."' and '".$cierreF."'")) {
     $t_imp = $r["sum(imp)"];
 } unset($r);
 
+if ($r = $db->select("sum(total)", "ticket", "WHERE edo = 1 and tipo = 0 and td = ".$_SESSION["td"]." and time BETWEEN '".$aperturaF."' and '".$cierreF."'")) {
+  $t_ticketN = $r["sum(total)"];
+} unset($r);
 
 $printer -> text($this->DosCol("TICKET $: ", 40, Helpers::Format($t_ticket), 10));
 $printer -> text($this->DosCol("FACTURA $: ", 40, Helpers::Format($t_factura), 10));
 $printer -> text($this->DosCol("CREDITO FISCAL $: ", 40, Helpers::Format($t_credito), 10));
 $printer -> text($this->DosCol("IMPUESTO $: ", 40, Helpers::Format($t_imp), 10));
-$printer -> text($this->DosCol("TOTAL $: ", 40, Helpers::Format($total), 10));
+$printer -> text($this->DosCol("TOTAL $: ", 40, Helpers::Format($total-$t_ticketN), 10));
 
 
 
@@ -769,9 +1094,9 @@ $printer -> text("_______________________________________________________");
 $printer->feed();
 
 
-$printer -> text($this->DosCol("EFECTIVO $: ", 40, Helpers::Format($t_efectivo), 10));
+$printer -> text($this->DosCol("EFECTIVO $: ", 40, Helpers::Format($t_efectivo-$t_ticketN), 10));
 $printer -> text($this->DosCol("TARJETA DE CREDITO $: ", 40, Helpers::Format($t_tarjeta), 10));
-$printer -> text($this->DosCol("TOTAL $: ", 40, Helpers::Format($total), 10));
+$printer -> text($this->DosCol("TOTAL $: ", 40, Helpers::Format($total-$t_ticketN), 10));
 $printer -> text($this->DosCol("DIFERENCIA $: ", 40, Helpers::Format($diferencia), 10));
 
 
@@ -782,69 +1107,67 @@ $printer -> text("_______________________________________________________");
 $printer->feed();
 
 // TICKET - subtotal, iva, total, hora
-if($t_ticket > 0){
+if($t_ticket >= 0){
 
   $printer -> text("TICKETS");
   $printer->feed();
-  $printer -> text($this->Col4("HORA - TICKET", 0,  "SUBTOTAL", 15,  "IVA", 10, "TOTAL", 10));
 
-  $a = $db->query("SELECT num_fac, hora FROM ticket_num WHERE edo = 1 and tipo = 1 and td = ".$_SESSION["td"]." and time BETWEEN '".$aperturaF."' and '".$cierreF."'");
-      $cant_t = $a->num_rows;
-      foreach ($a as $b) {
-
-  if ($r = $db->select("sum(stotal), sum(imp), sum(total)", "ticket", "WHERE num_fac = '".$b["num_fac"]."' and tipo = 1 and td = ".$_SESSION["td"]."")) {
-      $stotalt = $r["sum(stotal)"];
-      $impt = $r["sum(imp)"];
-      $totalt = $r["sum(total)"];
-  } unset($r);
-
-  $printer -> text($this->Col4($b["hora"] . " - " . $b["num_fac"],0 ,  $stotalt, 15,  $impt, 10, $totalt, 10));
+  $a = $db->query("SELECT num_fac, hora FROM ticket_num WHERE edo = 1 and tipo = 1 and td = ".$_SESSION["td"]." and time BETWEEN '".$aperturaF."' and '".$cierreF."' order by num_fac asc LIMIT 1");
+  $pri = mysqli_fetch_array($a); 
+  $c = $db->query("SELECT num_fac, hora FROM ticket_num WHERE edo = 1 and tipo = 1 and td = ".$_SESSION["td"]." and time BETWEEN '".$aperturaF."' and '".$cierreF."' order by num_fac desc LIMIT 1");
+  $seg = mysqli_fetch_array($c);     
+  $cant_t = $a->num_rows;
+  $primero = $pri["num_fac"];
+  $ultimo = $seg["num_fac"];
+      
+  $printer -> text("Del : " .$primero. " al " .$ultimo);
+  $printer->feed();
   }  $a->close();
 
-}
+
 // FACTURA - subtotal, iva, total, hora
-if($t_factura > 0){
+if($t_factura >= 0){
 
   $printer -> text("FACTURAS");
   $printer->feed();
-  $printer -> text($this->Col4("HORA - FACTURA", 0,  "SUBTOTAL", 15,  "IVA", 10, "TOTAL", 10));
 
-  $a = $db->query("SELECT num_fac, hora FROM ticket_num WHERE edo = 1 and tipo = 2 and td = ".$_SESSION["td"]." and time BETWEEN '".$aperturaF."' and '".$cierreF."'");
+
+  $a = $db->query("SELECT num_fac, hora FROM ticket_num WHERE edo = 1 and tipo = 2 and td = ".$_SESSION["td"]." and time BETWEEN '".$aperturaF."' and '".$cierreF."' order by num_fac asc LIMIT 1");
+  $pri = mysqli_fetch_array($a); 
+  $c = $db->query("SELECT num_fac, hora FROM ticket_num WHERE edo = 1 and tipo = 2 and td = ".$_SESSION["td"]." and time BETWEEN '".$aperturaF."' and '".$cierreF."' order by num_fac desc LIMIT 1");
+  $seg = mysqli_fetch_array($c);  
       $cant_f = $a->num_rows;
-      foreach ($a as $b) {
-
-  if ($r = $db->select("sum(stotal), sum(imp), sum(total)", "ticket", "WHERE num_fac = '".$b["num_fac"]."' and tipo = 2 and td = ".$_SESSION["td"]."")) {
-      $stotalp = $r["sum(stotal)"];
-      $impp = $r["sum(imp)"];
-      $totalp = $r["sum(total)"];
-  } unset($r);
-
-  $printer -> text($this->Col4($b["hora"] . " - " . $b["num_fac"],0 ,  $stotalp, 15,  $impp, 10, $totalp, 10));
+  $primero = $pri["num_fac"];
+  $ultimo = $seg["num_fac"];
+      
+  $printer -> text("Del : " .$primero. " al " .$ultimo);
+  $printer->feed();
+     
 
   }  $a->close();
 
-}
+
 // CCF - subtotal, iva, total, hora
-if($t_credito > 0){
+if($t_credito >= 0){
 
   $printer -> text("CREDITO FISCAL");
   $printer->feed();
-  $printer -> text($this->Col4("HORA - CCF", 0,  "SUBTOTAL", 15,  "IVA", 10, "TOTAL", 10));
 
-  $a = $db->query("SELECT num_fac, hora FROM ticket_num WHERE edo = 1 and tipo = 3 and td = ".$_SESSION["td"]." and time BETWEEN '".$aperturaF."' and '".$cierreF."'");
+  $a = $db->query("SELECT num_fac, hora FROM ticket_num WHERE edo = 1 and tipo = 2 and td = ".$_SESSION["td"]." and time BETWEEN '".$aperturaF."' and '".$cierreF."' order by num_fac asc LIMIT 1");
+  $pri = mysqli_fetch_array($a); 
+  $c = $db->query("SELECT num_fac, hora FROM ticket_num WHERE edo = 1 and tipo = 2 and td = ".$_SESSION["td"]." and time BETWEEN '".$aperturaF."' and '".$cierreF."' order by num_fac desc LIMIT 1");
+  $seg = mysqli_fetch_array($c); 
     $cant_c = $a->num_rows;
-      foreach ($a as $b) {
+  $primero = $pri["num_fac"];
+  $ultimo = $seg["num_fac"];
+        
+  $printer -> text("Del : " .$primero. " al " .$ultimo);
+  $printer->feed();
+     
 
-  if ($r = $db->select("sum(stotal), sum(imp), sum(total)", "ticket", "WHERE num_fac = '".$b["num_fac"]."' and tipo = 3 and td = ".$_SESSION["td"]."")) {
-      $stotalc = $r["sum(stotal)"];
-      $impc = $r["sum(imp)"];
-      $totalc = $r["sum(total)"];
-  } unset($r);
-
-  $printer -> text($this->Col4($b["hora"] . " - " . $b["num_fac"],0 ,  $stotalc, 15,  $impc, 10, $totalc, 10));
   }  $a->close();
 
-}
+
 
 
 
@@ -865,7 +1188,7 @@ $printer->feed();
 
 
 $printer->feed();
-$printer -> text("DETALLES");
+/*$printer -> text("DETALLES");
 $printer->feed();
 $printer -> text("_______________________________________________________");
 $printer->feed();
@@ -907,9 +1230,131 @@ $printer -> text($this->Item($bx["nombre"], NULL, NULL ,$bx["cantidad"]));
 ///////////////
 
 
-if ($r = $db->select("nombre", "login_userdata", "WHERE user = '".$user."' and td = ".$_SESSION["td"]."")) {
-      $cajero = $r["nombre"];
-  } unset($r);
+
+  } unset($r); */
+  if ($r = $db->select("nombre", "login_userdata", "WHERE user = '".$user."' and td = ".$_SESSION["td"]."")) {
+    $cajero = $r["nombre"];}
+
+$printer->feed();
+$printer->text("CAJERO: " . $cajero);
+
+
+$printer->feed();
+$printer->cut();
+$printer->close();
+
+
+}
+
+public function CorteNinguno($hash){ // imprime el resumen de las ventas con ticket ninguno
+  $db = new dbConn();
+
+
+
+  $nombre_impresora = "TICKET";
+
+
+$connector = new WindowsPrintConnector($nombre_impresora);
+$printer = new Printer($connector);
+$printer -> initialize();
+
+$printer -> setFont(Printer::FONT_B);
+
+$printer -> setTextSize(1, 2);
+$printer -> setLineSpacing(80);
+
+$printer -> setJustification(Printer::JUSTIFY_LEFT);
+
+
+$printer -> text("CORTE X");
+
+
+/* Stuff around with left margin */
+$printer->feed();
+$printer -> setJustification(Printer::JUSTIFY_CENTER);
+$printer -> text("_______________________________________________________");
+$printer -> setJustification(Printer::JUSTIFY_LEFT);
+$printer->feed();
+/* Items */
+
+
+$printer -> setJustification(Printer::JUSTIFY_CENTER);
+$printer->text("MINI SUPER 24/7 EL DIVINO NIÑO");
+$printer->feed();
+$printer->text("CAJA: 2.");
+
+//// obtener lor datos del corte
+if ($r = $db->select("*", "corte_diario", "WHERE hash = '$hash'")) {
+  $aperturaF = $r["aperturaF"];
+  $cierreF = $r["cierreF"];
+  $apertura = $r["apertura"];
+  $cierre = $r["cierre"];
+  $fecha = $r["fecha"];
+  $caja_chica = $r["caja_chica"];
+  $efectivo = $r["efectivo"];
+  $total = $r["total"];
+  $t_efectivo = $r["t_efectivo"];
+  $t_tarjeta = $r["t_tarjeta"];
+  $t_credito = $r["t_credito"];
+  $gastos = $r["gastos"];
+  $abonos = $r["abonos"];
+  $diferencia = $r["diferencia"];
+  $user = $r["user"];
+
+} unset($r);
+
+$dateA = date('d-m-Y H:i:s', $aperturaF);
+$dateC = date('d-m-Y H:i:s', $cierreF);
+
+$printer->feed();
+$printer->text("APERTURA: " .$dateA);
+$printer->feed();
+$printer->text("CIERRE: " .$dateC);
+$printer->feed();
+
+$printer -> text("VENTAS");
+$printer->feed();
+$printer -> text("_______________________________________________________");
+$printer->feed();
+
+
+if ($r = $db->select("sum(total)", "ticket", "WHERE edo = 1 and tipo = 0 and td = ".$_SESSION["td"]." and time BETWEEN '".$aperturaF."' and '".$cierreF."'")) {
+    $t_ticket = $r["sum(total)"];
+} unset($r);
+
+$printer -> text($this->DosCol("TICKET CAJA 2 $: ", 40, Helpers::Format($t_ticket), 10));
+
+$printer->feed();
+$printer -> text("CORRELATIVOS");
+$printer->feed();
+$printer -> text("_______________________________________________________");
+$printer->feed();
+
+// TICKET - subtotal, iva, total, hora
+if($t_ticket >= 0){
+
+  $printer -> text("TICKETS CAJA 2");
+  $printer->feed();
+
+  $a = $db->query("SELECT num_fac, hora FROM ticket_num WHERE edo = 1 and tipo = 0 and td = ".$_SESSION["td"]." and time BETWEEN '".$aperturaF."' and '".$cierreF."' order by num_fac asc LIMIT 1");
+  $pri = mysqli_fetch_array($a); 
+  $c = $db->query("SELECT num_fac, hora FROM ticket_num WHERE edo = 1 and tipo = 0 and td = ".$_SESSION["td"]." and time BETWEEN '".$aperturaF."' and '".$cierreF."' order by num_fac desc LIMIT 1");
+  $seg = mysqli_fetch_array($c);     
+  $cant_t = $a->num_rows;
+  $primero = $pri["num_fac"];
+  $ultimo = $seg["num_fac"];
+      
+  $printer -> text("Del : " .$primero. " al " .$ultimo);
+  $printer->feed();
+  }  $a->close();
+
+
+
+$printer -> text("_______________________________________________________");
+$printer->feed();
+
+  if ($r = $db->select("nombre", "login_userdata", "WHERE user = '".$user."' and td = ".$_SESSION["td"]."")) {
+    $cajero = $r["nombre"];}
 
 $printer->feed();
 $printer->text("CAJERO: " . $cajero);
@@ -963,23 +1408,23 @@ $printer->feed();
 
 $printer -> setJustification(Printer::JUSTIFY_CENTER);
 $printer->text("MINI SUPER 24/7 EL DIVINO NIÑO");
-
-
-
-
+$printer->feed();
+$printer->text("JAYUMI S.A. DE C.V.");
+$printer->feed();
+$printer->text("4 calle ote. local c-1, San Martin de Porres");
+$printer->feed();
+$printer->text("San Francisco Menendez");
+$printer->feed();
+$printer->text("NRC: 285464-2 NIT: 0108-091019-101-0");
+$printer->feed();
+$printer->text("Giro:Otros servicios relacionados con la salud NCP");
+$printer->text("CAJA: 1.");
 
 // $printer->feed();
 // $printer->text("NIT: 1010-291061-002-4   NRC: 33274-7");
 
 // $printer->feed();
 // $printer->text("GIRO: Clinica Veterinaria y venta de productos Agropecuarios");
-
-
-$printer->feed();
-$printer->text("CAJA: 1.");
-
-
-
 
 
 $printer->feed();
@@ -1053,65 +1498,67 @@ if($t_ticket > 0){
 
   $printer -> text("TICKETS");
   $printer->feed();
-  $printer -> text($this->Col4("HORA - TICKET", 0,  "SUBTOTAL", 15,  "IVA", 10, "TOTAL", 10));
 
-  $a = $db->query("SELECT num_fac, hora FROM ticket_num WHERE edo = 1 and tipo = 1 and td = ".$_SESSION["td"]." and fecha = '$fechax'");
-      $cant_t = $a->num_rows;
-      foreach ($a as $b) {
+  $a = $db->query("SELECT num_fac, hora FROM ticket_num WHERE edo = 1 and tipo = 1 and td = ".$_SESSION["td"]." and fecha = '$fechax' order by num_fac asc limit 1");
+  $pri = mysqli_fetch_array($a); 
+  $c = $db->query("SELECT num_fac, hora FROM ticket_num WHERE edo = 1 and tipo = 1 and td = ".$_SESSION["td"]." and fecha = '$fechax' order by num_fac desc limit 1");
+  $seg = mysqli_fetch_array($c);   
+  $cant_t = $a->num_rows;
 
-  if ($r = $db->select("sum(stotal), sum(imp), sum(total)", "ticket", "WHERE num_fac = '".$b["num_fac"]."' and tipo = 1 and td = ".$_SESSION["td"]."")) {
-      $stotalt = $r["sum(stotal)"];
-      $impt = $r["sum(imp)"];
-      $totalt = $r["sum(total)"];
-  } unset($r);
+  $primero = $pri["num_fac"];
+  $ultimo = $seg["num_fac"];
 
-  $printer -> text($this->Col4($b["hora"] . " - " . $b["num_fac"],0 ,  $stotalt, 15,  $impt, 10, $totalt, 10));
-  }  $a->close();
+  $printer -> text("Del : " .$primero. " al " .$ultimo);
+  $printer->feed();
+  $a->close();  
+  $c->close(); } 
 
-}
+
 // FACTURA - subtotal, iva, total, hora
 if($t_factura > 0){
 
   $printer -> text("FACTURAS");
   $printer->feed();
-  $printer -> text($this->Col4("HORA - FACTURA", 0,  "SUBTOTAL", 15,  "IVA", 10, "TOTAL", 10));
 
-  $a = $db->query("SELECT num_fac, hora FROM ticket_num WHERE edo = 1 and tipo = 2 and td = ".$_SESSION["td"]." and fecha = '$fechax'");
-      $cant_f = $a->num_rows;
-      foreach ($a as $b) {
 
-  if ($r = $db->select("sum(stotal), sum(imp), sum(total)", "ticket", "WHERE num_fac = '".$b["num_fac"]."' and tipo = 2 and td = ".$_SESSION["td"]."")) {
-      $stotalp = $r["sum(stotal)"];
-      $impp = $r["sum(imp)"];
-      $totalp = $r["sum(total)"];
-  } unset($r);
+  $a = $db->query("SELECT num_fac, hora FROM ticket_num WHERE edo = 1 and tipo = 2 and td = ".$_SESSION["td"]." and fecha = '$fechax'order by num_fac asc limit 1");
+  $pri = mysqli_fetch_array($a); 
+  $c = $db->query("SELECT num_fac, hora FROM ticket_num WHERE edo = 1 and tipo = 2 and td = ".$_SESSION["td"]." and fecha = '$fechax'order by num_fac desc limit 1");
+  $seg = mysqli_fetch_array($c); 
+  $cant_f = $a->num_rows;
+  
+  $primero = $pri["num_fac"];
+  $ultimo = $seg["num_fac"];
 
-  $printer -> text($this->Col4($b["hora"] . " - " . $b["num_fac"],0 ,  $stotalp, 15,  $impp, 10, $totalp, 10));
+  $printer -> text("Del : " .$primero. " al " .$ultimo);
+  $printer->feed();
 
-  }  $a->close();
+   $a->close();
+   $c->close();} 
 
-}
+
 // CCF - subtotal, iva, total, hora
 if($t_credito > 0){
 
   $printer -> text("CREDITO FISCAL");
   $printer->feed();
-  $printer -> text($this->Col4("HORA - CCF", 0,  "SUBTOTAL", 15,  "IVA", 10, "TOTAL", 10));
 
-  $a = $db->query("SELECT num_fac, hora FROM ticket_num WHERE edo = 1 and tipo = 3 and td = ".$_SESSION["td"]." and fecha = '$fechax'");
-    $cant_c = $a->num_rows;
-      foreach ($a as $b) {
+  $a = $db->query("SELECT num_fac, hora FROM ticket_num WHERE edo = 1 and tipo = 3 and td = ".$_SESSION["td"]." and fecha = '$fechax' order by num_fact asc limit 1");
+  $pri = mysqli_fetch_array($a); 
+  $c = $db->query("SELECT num_fac, hora FROM ticket_num WHERE edo = 1 and tipo = 3 and td = ".$_SESSION["td"]." and fecha = '$fechax' order by num_fact asc limit 1");
+  $seg = mysqli_fetch_array($c); 
 
-  if ($r = $db->select("sum(stotal), sum(imp), sum(total)", "ticket", "WHERE num_fac = '".$b["num_fac"]."' and tipo = 3 and td = ".$_SESSION["td"]."")) {
-      $stotalc = $r["sum(stotal)"];
-      $impc = $r["sum(imp)"];
-      $totalc = $r["sum(total)"];
-  } unset($r);
+  $cant_c = $a->num_rows;
+  $primero = $pri["num_fac"];
+  $ultimo = $seg["num_fac"];
 
-  $printer -> text($this->Col4($b["hora"] . " - " . $b["num_fac"],0 ,  $stotalc, 15,  $impc, 10, $totalc, 10));
-  }  $a->close();
+  $printer -> text("Del : " .$primero. " al " .$ultimo);
+  $printer->feed();
+     
+  $a->close(); 
+  $c->close(); } 
 
-}
+
 
 
 
