@@ -41,49 +41,53 @@ $_SESSION["ver_avatar"] = NULL;
 
             } unset($r);
 
-            if(VerificaDataInicial() == FALSE){
-                    // inserto ubicacion predeterminada
-                    AddDataInicial();
-            }
 
-            BuscaDatosSistema();
+        if(VerificaDataInicial() == FALSE){
+                // inserto ubicacion predeterminada
+                AddDataInicial();
+        }
+    
+        BuscaDatosSistema();
 
         $configuracion = new Config;
         $configuracion->CrearVariables(); // creo el resto de variables del sistema
 
-        /// reviso si la caja esta aperturada en este usuario
-        $corte = new Corte();
-        if($corte->ComprobarApertura() == TRUE){
-            $_SESSION["caja_apertura"] = $corte->ObtenerHash();
-        }
+    if (XSERV != "datos.hibridosv.com/") {
 
-        VerificaFechaProductos();
+    /// reviso si la caja esta aperturada en este usuario
+    $corte = new Corte();
+    if($corte->ComprobarApertura() == TRUE){
+    $_SESSION["caja_apertura"] = $corte->ObtenerHash();
+    }
 
-        /// modifaica el sistama de tags
-include_once '../../system/producto/ModificaTags.php';
-$tags = new ModificaTags;
-$tags->EjecutarCambios(); 
+    VerificaFechaProductos();
 
-
-
-
-// agrego el tipo de ticket predeterminado
-if ($r = $db->select("predeterminado", "facturar_opciones", "WHERE td = ".$_SESSION["td"]."")) { 
-    $_SESSION["tipoticket"] = $r["predeterminado"];
-}  unset($r);  
+            /// modifaica el sistama de tags
+    include_once '../../system/producto/ModificaTags.php';
+    $tags = new ModificaTags;
+    $tags->EjecutarCambios(); 
 
 
 
-if($_SESSION['root_plataforma'] == 0 and Helpers::ServerDomain() == TRUE){
- ImportFtp(); 
+
+    // agrego el tipo de ticket predeterminado
+    if ($r = $db->select("predeterminado", "facturar_opciones", "WHERE td = ".$_SESSION["td"]."")) { 
+        $_SESSION["tipoticket"] = $r["predeterminado"];
+    }  unset($r);  
+
+
+
+    if($_SESSION['root_plataforma'] == 0 and Helpers::ServerDomain() == TRUE){
+    ImportFtp(); 
+    }
+        
 }
-      
 
-        $inicia = new Inicio;
-        $inicia->Caduca(); // revisa si ha caducado
+    $inicia = new Inicio;
+    $inicia->Caduca(); // revisa si ha caducado
 
-        header("location: ../../");
- }
+            header("location: ../../");
+}
 
 
     function BuscaDatosSistema(){
