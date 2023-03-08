@@ -18,6 +18,8 @@ if ($seslog->login_check() == TRUE) {
 
         $totalregistros =$a->num_rows;
         $datos = "";
+        $comentarios = "";
+        
         
    
     foreach ($a as $b) { 
@@ -30,10 +32,11 @@ if ($r = $db->select("medida", "producto", "WHERE cod = '".$b["cod"]."' and td =
         $unidad = $r["abreviacion"];
     } unset($r);  
 
-
+$comentarios .= $b["comentario"];
 
  $datos .= '<tr>
                 <td class="text-left">'. Helpers::Entero($b["cant"]) .' '.$unidad.'</td>
+                <td>'. $b["cod"] .'</td> 
                 <td>'. $b["producto"] .'</td>                                
                 <td class="text-right">'. $b["pv"] .'</td>
                 <td class="text-right">'. $b["total"] .'</td>
@@ -95,7 +98,6 @@ if($totalregistros > 0){
             $direccion = $r["direccion"];
             $municipio = $r["municipio"];
             $telefono = $r["telefono"];
-            $comentarios = $r["comentarios"];
             $codigo = $r["codigo"];
     } unset($r);  
 ?>
@@ -109,14 +111,13 @@ if($totalregistros > 0){
                     <?php echo "Teléfono: ". $telefono; ?><br> 
                     <?php echo "Nota :".$comentarios; ?><br> 
                     <?php echo "Vendedor : " .Helpers::GetData("login_userdata", "nombre", "user", $b["user"]); ?>
-                    
                     <div style="clear:both;"></div>
                     <table class="table table-striped table-condensed" style="padding-top: -10px;">
                         <thead>
                             <tr>
                                 <th class="text-center">Cant</th>
+                                <th class="text-center">Código</th>
                                 <th class="text-center">Descripción</th>
-                                
                                 <th class="text-center">Precio</th>
                                 <th class="text-center">Subtotal</th>
                             </tr>
@@ -140,7 +141,7 @@ if($totalregistros > 0){
                                 <th colspan="2" class="text-right"><?php echo Helpers::Dinero($imp) ?></th>
                             </tr>   -->                                        
                                 <tr>
-                                    <th colspan="2">Total</th>
+                                    <th colspan="3">Total</th>
                                     <th colspan="2" class="text-right"><?php echo Helpers::Dinero($total) ?></th>
                                 </tr>
                         </tfoot>
