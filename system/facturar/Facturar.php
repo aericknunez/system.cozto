@@ -92,7 +92,7 @@ if($_SESSION["td"] == 10){
 		$imprimir->NotaEnvio($efectivo, $factura);
 	}
 	if($_SESSION["tipoticket"] == 0){
-		$imprimir->Ninguno();
+		$imprimir->Ninguno($efectivo, $factura);
 	}
 }
 

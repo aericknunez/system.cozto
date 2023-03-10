@@ -1,4 +1,5 @@
 <?php 
+
 class Search{
 
 
@@ -170,7 +171,22 @@ if ($r = $db->select("cantidad", "producto", "WHERE cod = '".$b["cod"]."' and td
     Helpers::UpdateId("producto", $cambiox, "cod = '".$b["cod"]."' and td = ".$_SESSION["td"]."");
 
 
+          //Actualizar Ubicaciones al eliminar una factura cuando tipo de venta es por codigo
+          if($_SESSION ["tipo_inicio"]==1){
 
+              if ($r = $db->select("hash", "ubicacion", "WHERE predeterminada = 1 and td = ".$_SESSION["td"]."")) { 
+                $hashpredet = $r["hash"];
+            } unset($r);  
+
+            if ($r = $db->select("cant", "ubicacion_asig", "WHERE producto = '".$b["cod"]."' and ubicacion = '$hashpredet' and td = ".$_SESSION["td"]."")) { 
+                $cantpredet = $r["cant"];
+            } unset($r);  
+            
+            $cambio = array();
+            $cambio["cant"] = $cantpredet + $b["cant"];
+            Helpers::UpdateId("ubicacion_asig", $cambio, "producto = '".$b["cod"]."' and ubicacion = '".$hashpredet."' and td = ".$_SESSION["td"]."");   
+
+          }
 
 
 // pra actualizar las  caracteristicas y las ubicaciones
