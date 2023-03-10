@@ -189,7 +189,8 @@ $a = $db->query("select cod, sum(cant), sum(total), producto, pv, fecha
 
 						<thead>
 					     <tr>
-					       <th>Fecha</th>
+					       <th>Apertura</th>
+						   <th>Cierre</th>
 					       <th>Productos</th>					       
 					       <th class="d-none d-md-block">Clientes</th>
 					       <th>Apertura</th>
@@ -218,6 +219,8 @@ $a = $db->query("select cod, sum(cant), sum(total), producto, pv, fecha
 				    foreach ($a as $b) {
 				
 				if($b["edo"] == 2){
+				$dateA = date('d-m-Y H:i:s', $b["aperturaF"]);
+				$dateC = date('d-m-Y H:i:s', $b["cierreF"]);
 				$xproductos=$xproductos+$b["productos"];
 				$xclientes=$xclientes+$b["clientes"];
 				$cajachica=$cajachica+$b["caja_chica"];
@@ -233,7 +236,8 @@ $a = $db->query("select cod, sum(cant), sum(total), producto, pv, fecha
 				$colores='class="text-danger"';	
 				} 
 				  echo '<tr '.$colores.'>
-				       <th scope="row"><a id="imprimir_corte" hash="'. $b["hash"] . '">'. $b["fecha"] . '</a></th>
+				       <th scope="row"><a id="imprimir_corte" hash="'. $b["hash"] . '">'.$dateA.'</a></th>
+					   <td>'. $dateC. '</td>
 				       <td>'. $b["productos"] . '</td>
 				       <td class="d-none d-md-block">'. $b["clientes"] . '</td>
 				       <td>'. Helpers::Dinero($b["caja_chica"]) . '</td>
@@ -251,6 +255,7 @@ $a = $db->query("select cod, sum(cant), sum(total), producto, pv, fecha
 
 			if($type == NULL){
 			echo '<tr class="light-blue lighten-4">
+				   <td></td>
 			       <th scope="row">Totales</th>
 			       <td>'. $xproductos . '</td>
 			       <td class="d-none d-md-block">'. $xclientes . '</td>
