@@ -475,7 +475,12 @@ if ($r = $db->select("sum(existencia)", "producto_ingresado", "WHERE existencia 
 		$db = new dbConn();
 
 	if ($r = $db->select("cantidad", "producto", "WHERE cod = '$cod' and td = ".$_SESSION["td"]."")){ 
-        return $r["cantidad"];
+
+		if($r["cantidad"] < 0){
+			Alerts::Alerta("warning","Alerta!","Producto en negativo!");
+			}
+		return $r["cantidad"];
+			
     	} unset($r); 
     }
 
