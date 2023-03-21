@@ -29,8 +29,6 @@ if($primero == $segundo){
 	     <tr>
 	       <th>Fecha</th>					       
 	       <th>No Documento</th>
-	       <th>Cliente</th>
-	       <th>Categoria</th>
 	       <th>Codigo</th>
 	       <th>Cantidad</th>
 	       <th>Producto</th>
@@ -54,8 +52,6 @@ if($primero == $segundo){
 	echo '<tr>
 		   <th>'.$b["fecha"].'</th>					       
 		   <th class="text-center">'.$b["num_fac"].'</th>
-		   <th>'.$this->ClienteProducto($b["orden"]).'</th>
-		   <th>'.$this->CategoriaProducto($b["cod"]).'</th>
 		   <th>'.$b["cod"].'</th>
 		   <th>'.$b["cant"].'</th>
 		   <th>'.$b["producto"].'</th>
