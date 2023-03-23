@@ -156,7 +156,7 @@ elseif($_SESSION["tipoticket"] == 0){ return '<a id="mticket">N/A</a>'; }
 		echo '<a href="?modal=dfactura" class="btn-floating btn-secondary" title="Datos Credito Fiscal"><i class="fas fa-file-invoice-dollar"></i></a>';
 		}
 		
-		echo '<a href="?modal=oventas" class="btn-floating btn-success" title="Venta Especial"><i class="fas fa-donate"></i></a>';
+		if($_SESSION['config_otras_ventas'] == 1) echo '<a href="?modal=oventas" class="btn-floating btn-success" title="Venta Especial"><i class="fas fa-donate"></i></a>';
 
 
 		// echo '<a href="?modal=agrupado" class="btn-floating btn-info" title="Venta Agrupada"><i class="fas fa-donate"></i></a>';

@@ -1418,6 +1418,7 @@ $printer->feed();
 $printer->text("NRC: 285464-2 NIT: 0108-091019-101-0");
 $printer->feed();
 $printer->text("Giro:Otros servicios relacionados con la salud NCP");
+$printer->feed();
 $printer->text("CAJA: 1.");
 
 // $printer->feed();
@@ -1429,7 +1430,6 @@ $printer->text("CAJA: 1.");
 
 $printer->feed();
 $printer->text("FECHA: " .  Fechas::FechaEscrita($fechax));
-
 
 
 $printer->feed();
@@ -1464,7 +1464,12 @@ $printer -> text($this->DosCol("IMPUESTO $: ", 40, Helpers::Format($t_imp), 10))
 $printer -> text($this->DosCol("TOTAL $: ", 40, Helpers::Format($total), 10));
 
 
+if($a = $db->query("SELECT sum(abono) FROM creditos_abonos WHERE fecha = '$fechax' and td = ".$_SESSION["td"]." and edo = 1")){
+    $abono = mysqli_fetch_array($a); 
+    $abonos = $abono["sum(abono)"];
+}$a->close();
 
+$printer -> text($this->DosCol("ABONOS $: ", 40, Helpers::Format($abonos), 10));
 
 $printer->feed();
 $printer -> text("PAGOS");

@@ -41,6 +41,7 @@ if($dir == "asc") $dir2 = "desc";
             <th class="th-sm">Abonado</th>
             <th class="th-sm">Saldo</th>
             <th class="th-sm"><a id="paginador" op="114" iden="1" orden="fecha" dir="'.$dir2.'">Fecha</a></th>
+            <th class="th-sm">Ultimo abono</th>
             <th class="th-sm"><a id="paginador" op="114" iden="1" orden="edo" dir="'.$dir2.'">Estado</a></th>
             <th class="th-sm">Ver</th>
           </tr>
@@ -62,6 +63,7 @@ if($dir == "asc") $dir2 = "desc";
                       <td>'. Helpers::Dinero($abonado) .'</td>
                       <td>'. Helpers::Dinero($saldo) .'</td>
                       <td>'.$b["fecha"]. ' | ' . $b["hora"].'</td>
+                      <td>'.$this->UltimoAbono($b["hash"]).'</td>
                       <td>'.Helpers::EstadoCredito($b["edo"]) . '</td>
                       <td><a id="xver" op="109" credito="'. $b["hash"] .'" orden="'. $b["orden"] .'" factura="'. $b["factura"] .'" tx="'. $b["tx"] .'"><i class="fas fa-search fa-lg green-text"></i></a>';
                       
@@ -157,6 +159,16 @@ $page <= 1 ? $enable = 'disabled' : $enable = '';
 
     if ($r = $db->select("sum(abono)", "creditos_abonos", "WHERE credito = '$credito' and edo = 1 and td = ".$_SESSION["td"]."")) { 
             return $r["sum(abono)"];
+        }  unset($r);  
+    
+  }
+
+  public function UltimoAbono($credito){ // total abonos
+    $db = new dbConn();
+
+    if ($r = $db->query("SELECT * FROM creditos_abonos WHERE credito = '$credito' and edo = 1 and td = ".$_SESSION["td"]." order by id desc")); { 
+      $abono = mysqli_fetch_array($r); 
+      return $abono["fecha"] ."  ". $abono["hora"] ;
         }  unset($r);  
     
   }
@@ -400,6 +412,7 @@ if($dir == "asc") $dir2 = "desc";
             <th class="th-sm">Abonado</th>
             <th class="th-sm">Saldo</th>
             <th class="th-sm"><a id="paginador" op="104" iden="1" orden="fecha" dir="'.$dir2.'">Fecha</a></th>
+            <th class="th-sm">Ultimo abono</th>
             <th class="th-sm"><a id="paginador" op="104" iden="1" orden="edo" dir="'.$dir2.'">Estado</a></th>
             <th class="th-sm">Ver</th>
           </tr>
@@ -423,6 +436,7 @@ if($dir == "asc") $dir2 = "desc";
                       <td>'. Helpers::Dinero($abonado) .'</td>
                       <td>'. Helpers::Dinero($saldo) .'</td>
                       <td>'.$b["fecha"]. ' | ' . $b["hora"].'</td>
+                      <td>'.$this->UltimoAbono($b["hash"]).'</td>
                       <td>'.Helpers::EstadoCredito($b["edo"]) . '</td>
                       <td><a id="xver" op="109" credito="'. $b["hash"] .'" orden="'. $b["orden"] .'" factura="'. $b["factura"] .'" tx="'. $b["tx"] .'"><i class="fas fa-search fa-lg green-text"></i></a>';
                       
@@ -554,6 +568,7 @@ $page <= 1 ? $enable = 'disabled' : $enable = '';
             <th class="th-sm">Abonado</th>
             <th class="th-sm">Saldo</th>
             <th class="th-sm">Fecha</th>
+            <th class="th-sm">Ultimo abono</th>
             <th class="th-sm">Estado</th>
             <th class="th-sm">Ver</th>
           </tr>
@@ -579,6 +594,7 @@ $page <= 1 ? $enable = 'disabled' : $enable = '';
                       <td>'. Helpers::Dinero($abonado) .'</td>
                       <td>'. Helpers::Dinero($saldo) .'</td>
                       <td>'.$b["fecha"]. ' | ' . $b["hora"].'</td>
+                      <td>'.$this->UltimoAbono($b["hash"]).'</td>
                       <td>'.Helpers::EstadoCredito($b["edo"]) . '</td>
                       <td>
                       <a id="xver" op="109" credito="'. $b["hash"] .'" orden="'. $b["orden"] .'" factura="'. $b["factura"] .'" tx="'. $b["tx"] .'"><i class="fas fa-search fa-lg green-text"></i></a></td>
