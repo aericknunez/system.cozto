@@ -764,11 +764,14 @@ Helpers::UpdateId("ubicacion_asig", $cambio, "ubicacion = '".$datos["ubicacion"]
 		    } $a->close();
 
 		} else {
-			echo '<div class="text-center">Ingrese un producto</div>';
-			echo '<div class="text-center">
-			<a href="?modal=oventas" class="btn-floating btn-success" title="Venta Especial"><i class="fas fa-donate"></i></a>
-			</div>';
-		}    
+			
+			if($_SESSION['config_otras_ventas'] == 1){ 
+				echo '<div class="text-center">';
+				echo '<div class="text-center">Ingrese un producto</div>';
+				echo '<a href="?modal=oventas" class="btn-floating btn-success" title="Venta Especial"><i class="fas fa-donate"></i></a></div>';
+				}
+				
+		}  
 	}
 
 

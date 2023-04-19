@@ -29,8 +29,6 @@ if($primero == $segundo){
 	     <tr>
 	       <th>Fecha</th>					       
 	       <th>No Documento</th>
-	       <th>Cliente</th>
-	       <th>Categoria</th>
 	       <th>Codigo</th>
 	       <th>Cantidad</th>
 	       <th>Producto</th>
@@ -54,8 +52,6 @@ if($primero == $segundo){
 	echo '<tr>
 		   <th>'.$b["fecha"].'</th>					       
 		   <th class="text-center">'.$b["num_fac"].'</th>
-		   <th>'.$this->ClienteProducto($b["orden"]).'</th>
-		   <th>'.$this->CategoriaProducto($b["cod"]).'</th>
 		   <th>'.$b["cod"].'</th>
 		   <th>'.$b["cant"].'</th>
 		   <th>'.$b["producto"].'</th>
@@ -73,8 +69,6 @@ if($primero == $segundo){
 	echo '<tr>
 	       <th>Fecha</th>					       
 	       <th>No Documento</th>
-	       <th>Cliente</th>
-	       <th>Categoria</th>
 	       <th>Codigo</th>
 	       <th>Cantidad</th>
 	       <th>Producto</th>
@@ -135,7 +129,6 @@ echo '<div class="table-responsive text-nowrap">
 <table class="table table-striped table-sm table-bordered">
 		<thead>
 	     <tr>
-	       <th>Categoria</th>
 	       <th>Codigo</th>
 	       <th>Cantidad</th>
 	       <th>Producto</th>
@@ -156,7 +149,6 @@ echo '<div class="table-responsive text-nowrap">
     	@$porcentaje = ($ganancia / $b["total"])*100;
 
    echo '<tr>
-       <th scope="row">'. $this->CategoriaProducto($b["cod"]) . '</th>
        <td>'. $b["cod"] . '</td>
        <td class="text-right">'. $b["sum(cant)"] . '</td>
        <td>'. $b["producto"] . '</td>
@@ -170,7 +162,6 @@ echo '<div class="table-responsive text-nowrap">
     $a->close();
 
 		echo '<tr>
-		       <th>Categoria</th>
 		       <th>Codigo</th>
 		       <th>Cantidad</th>
 		       <th>Producto</th>

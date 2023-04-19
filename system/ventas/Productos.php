@@ -14,7 +14,7 @@ class Productos{
             foreach ($a as $b) {
                        echo '<tr>
                               <td scope="row"><a id="select-p" cod="'. $b["cod"] .'" descripcion="'. $b["descripcion"] .'"><div>
-                              '. $b["cod"] .'  || '. $b["descripcion"] .'</div></a></td>
+                              '. $b["cod"] .'  || '. $b["descripcion"] .' || '.'Precio: '.Helpers::Dinero(Helpers::GetData("producto_precio","precio","producto", $b["cod"] )).'</div></a></td>
                             </tr>'; 
             }  
                         echo '<tr>
@@ -81,7 +81,7 @@ echo '<section class="my-2">
 
       <p class="dark-grey-text">';
  
-if($servicio == "on" or $_SESSION["config_agotado"] == ""){
+if($servicio == "on"){
 Alerts::Mensajex("Puede agregar la cantidad que desee","success");
 
 echo '<div class="md-form md-outline form-sm col-md-2">';
@@ -89,17 +89,34 @@ echo '<label for="cantidad">Cantidad</label>
   <input id="cantidad" name="cantidad" class="form-control form-control-sm" type="number" value="1" step="any" min="1">';  
 echo '</div>';
 
-
+// or 
 
 } else {
 
-    if($cantidad <= 0){
+  if($cantidad <= 0 && $_SESSION["config_agotado"] == ""){
+
+
+        
+        echo '<div class="md-form md-outline form-sm col-md-2">';
+        
+        ($cantidad <= 0) ? $value = 1 : $value = 0;
+
+        echo '<label for="cantidad">Cantidad</label>
+              <input id="cantidad" name="cantidad" class="form-control form-control-sm" type="number" value="'.$value.'" step="any" min="1">';
+        echo '</div>';
+
+        $this->CompruebaCaracteristicas($dato["cod"]);
+        $this->CompruebaUbicaciones($dato["cod"]);
+      }
+
+  if($cantidad <= 0 && $_SESSION["config_agotado"] == "on"){
+    
        Alerts::Mensajex("No hay productos disponibles en inventario","danger",$boton,$boton2);
-    }
+     }
 
-    ($cantidad > 0) ? $value = 1 : $value = 0;
+       ($cantidad > 0) ? $value = 1 : $value = 0;
 
-    echo '<div class="md-form md-outline form-sm col-md-2">';
+       echo '<div class="md-form md-outline form-sm col-md-2">';
 
 
 if($cantidad <= 0){

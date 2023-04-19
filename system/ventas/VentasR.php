@@ -475,7 +475,12 @@ if ($r = $db->select("sum(existencia)", "producto_ingresado", "WHERE existencia 
 		$db = new dbConn();
 
 	if ($r = $db->select("cantidad", "producto", "WHERE cod = '$cod' and td = ".$_SESSION["td"]."")){ 
-        return $r["cantidad"];
+
+		if($r["cantidad"] < 0){
+			Alerts::Alerta("warning","Alerta!","Producto en negativo!");
+			}
+		return $r["cantidad"];
+			
     	} unset($r); 
     }
 
@@ -601,10 +606,11 @@ if ($r = $db->select("sum(existencia)", "producto_ingresado", "WHERE existencia 
 		    $this->Sonar();
 		} else {
 			echo '<div class="text-center">Ingrese un producto</div>
-			<div align="center"><a data-toggle="modal" data-target="#ModalBusqueda" class="btn-floating btn-primary"><i class="fas fa-search"></i></a>
-			
-			<a href="?modal=oventas" class="btn-floating btn-success" title="Venta Especial"><i class="fas fa-donate"></i></a>';
-			
+			<div align="center"><a data-toggle="modal" data-target="#ModalBusqueda" class="btn-floating btn-primary"><i class="fas fa-search"></i></a>';
+	
+			if($_SESSION['config_otras_ventas'] == 1){ 
+			echo '<a href="?modal=oventas" class="btn-floating btn-success" title="Venta Especial"><i class="fas fa-donate"></i></a>';
+			}
 			if($_SESSION["config_pesaje"] == "on"){ // para buscar productos pesados
  			echo '<a id="xbalanza" class="btn-floating btn-danger" title="Buscar Producto"><i class="fas fa-balance-scale"></i></a>';
  			}
