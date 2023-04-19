@@ -101,6 +101,7 @@ class ProUpdate{
 
   public function ProAgrega($datox, $cargaPro = NULL){ // lo que viede del formulario principal
     $db = new dbConn();
+    $kardex = new Kardex();
 
   
           if($datox["precio"] != NULL and $datox["cantidad"] != NULL and $datox["cantidad"] != 0){
@@ -155,6 +156,7 @@ Helpers::UpdateId("ubicacion_asig", $cambiox, "ubicacion = '".$predet."' and pro
 //
 
 $this->CaracteristicaAgrega($datox["cod"], $datox["caracteristica"], $hashin);
+$kardex->IngresarProductoKardex($datox["cod"], $datox["cantidad"], $hashin, $datox["precio"]);
 
                     //////////// 
                 Alerts::Alerta("success","Realizado!","Registro creado exitosamente!");
@@ -405,6 +407,8 @@ public function CaracteristicaAveria($cod, $caracteristicas, $hashin){
 
   public function DelProAgrega($hash, $producto){ // elimina precio
     $db = new dbConn();
+    $kardex = new Kardex();
+
     // debo actualizar el total (cantidad) de producto
       if ($r = $db->select("cantidad", "producto", "WHERE cod = '".$producto."' and td = ".$_SESSION["td"]."")) { 
           $canti = $r["cantidad"];
@@ -452,6 +456,7 @@ $cantubi = $r["cant"];
       } else {
         Alerts::Alerta("error","Error!","La fecha del los producto que quiere borrar no coincide!");
       }
+      $kardex->EliminaProductoKardex($hash);
       $this->VerAgrega($producto);
   }
 

@@ -421,7 +421,10 @@ echo '<script type="text/javascript" src="assets/js/query/reportes.js?v='.$numer
 elseif(isset($_GET["raverias"])) {
 	echo '<script type="text/javascript" src="assets/js/query/reportes.js?v='.$numero.'"></script>';
 } 
-	
+elseif(isset($_GET["kardex"])) {
+	echo '<script type="text/javascript" src="assets/js/query/reportes.js?v='.$numero.'"></script>';
+} 
+		
 
 
 

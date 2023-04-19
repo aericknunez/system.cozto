@@ -181,6 +181,7 @@ break;
 
 case "21": // agrega mas productos al inventario
 include_once '../../system/producto/Productos.php';
+include_once '../../system/reportes/Kardex.php';
 	$productos = new Productos;
 	$productos->IngresarProducto($_POST);
 break;
@@ -464,6 +465,8 @@ break;
 
 case "48": 
 include_once '../../system/producto/ProUpdate.php';
+include_once '../../system/reportes/Kardex.php';
+
 	$productos = new ProUpdate;
 	$productos->ProAgrega($_POST);
 
@@ -474,6 +477,8 @@ break;
 
 case "49": // elimina producto
 include_once '../../system/producto/ProUpdate.php';
+include_once '../../system/reportes/Kardex.php';
+
 	$productos = new ProUpdate;
 	$productos->DelProAgrega($_REQUEST["hash"], $_REQUEST["producto"]);
 break;
@@ -2241,6 +2246,7 @@ break;
 
 case "426": // busca para pesaje de productos
 include_once '../../system/producto/Pesaje.php';
+
 	$pesaje = new Pesaje(); 
 	$pesaje->AddProducto($_POST);
 break;
@@ -2580,6 +2586,8 @@ break;
 
 case "560":  /// agragar producto rapido
 include_once '../../system/herramientas/Herramientas.php';
+include_once '../../system/reportes/Kardex.php';
+
 	$fast = new Herramientas(); 
 	$fast->AddProducto($_POST);
 break;
@@ -2588,6 +2596,8 @@ break;
 
 case "561":  /// borrar producto
 include_once '../../system/herramientas/Herramientas.php';
+include_once '../../system/reportes/Kardex.php';
+
 	$prod = new Herramientas(); 
 	$prod->DelProducto($_POST["iden"]);
 break;
@@ -3339,6 +3349,12 @@ case "714":
 	if($_SESSION['newCorrelativo']) {
 		echo "Correlativo: " . $_SESSION['newCorrelativo'];
 	}
+break;
+
+case "715":
+	include_once '../../system/reportes/Kardex.php';
+	$kardex = new Kardex();
+	$kardex->verDatos($_POST['cod'], $_POST["mes"] . "-" . $_POST["ano"]);
 break;
 
 

@@ -1069,6 +1069,9 @@ $a->close();
 			if(isset($_SESSION["orden"])) unset($_SESSION["orden"]);
 			if(isset($_SESSION["descuento"])) unset($_SESSION["descuento"]);
 			if(isset($_SESSION["tcredito"])) unset($_SESSION["tcredito"]);
+
+			$kardex = new Kardex();
+			$kardex->InsertVenta($factura, $_SESSION["tipoticket"]);
    }
 
 

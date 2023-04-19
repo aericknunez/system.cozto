@@ -125,6 +125,8 @@ $a->close();
 
   public function IngresarProducto($datox){ // ingresa un nuevo lote de productos
       $db = new dbConn();
+      $kardex = new Kardex();
+
             // debo actualizar el total (cantidad) de producto
                                 
           $datos = array();
@@ -140,9 +142,10 @@ $a->close();
           $datos["fecha_ingreso"] = Fechas::Format(date("d-m-Y"));
           $datos["hora"] = date("H:i:s");
           $datos["td"] = $_SESSION["td"];
-          $datos["hash"] = Helpers::HashId();
+          $datos["hash"] = $hash = Helpers::HashId();
           $datos["time"] = Helpers::TimeId();
           $db->insert("producto_ingresado", $datos);
+          $kardex->IngresarProductoKardex($datox["producto"], $datox["cantidad"], $hash, $datox["precio_costo"]);
 
 
  if ($r = $db->select("hash", "ubicacion", "WHERE predeterminada = '1' and td = ". $_SESSION["td"] ."")) { 
@@ -248,6 +251,7 @@ $a->close();
           Helpers::DeleteId("producto_tags", "producto='$cod' and td = ". $_SESSION["td"] ."");
           Helpers::DeleteId("ubicacion_asig", "producto='$cod' and td = ". $_SESSION["td"] ."");
           Helpers::DeleteId("marca_asig", "producto='$cod' and td = ". $_SESSION["td"] ."");
+          Helpers::DeleteId("kardex", "cod='$cod' and td = ". $_SESSION["td"] ."");
 
 
       $a = $db->query("SELECT imagen FROM producto_imagenes WHERE producto='$cod' and td = ". $_SESSION["td"] ."");
@@ -766,6 +770,7 @@ Helpers::UpdateId("ubicacion_asig", $asig, "ubicacion = '$predet' and producto='
 
 public function Agrega($datos){
       $db = new dbConn();
+      $kardex = new Kardex();
 
     $cantidad = $datos["establecido"] - $datos["cantidad"];
 
@@ -774,7 +779,7 @@ public function Agrega($datos){
     $data["producto"] = $datos["cod"];
     $data["cant"] = $cantidad;
     $data["existencia"] = $cantidad;
-    $data["precio_costo"] = $this->ObtenerPrecioCosto($datos["cod"]); // buscar precio costo
+    $data["precio_costo"] = $valor = $this->ObtenerPrecioCosto($datos["cod"]); // buscar precio costo
     $data["caduca"] = $this->Caduca($datos["cod"]); // buscar la ultima caducidad
     $data["caducaF"] = Fechas::Format($this->Caduca($datos["cod"]));
     $data["comentarios"] = "Ajuste de inventario desde actualizar producto";
@@ -782,9 +787,11 @@ public function Agrega($datos){
     $data["fecha"] = date("d-m-Y");
     $data["hora"] = date("H:i:s");
     $data["td"] = $_SESSION["td"];
-    $data["hash"] = Helpers::HashId();
+    $data["hash"] = $hash = Helpers::HashId();
     $data["time"] = Helpers::TimeId();
     if ($db->insert("producto_ingresado", $data)) {
+      $kardex->IngresarProductoKardex($datos["cod"], $cantidad, $hash, $valor);
+
 
 // se actualiza la cantidad de los productos
 $cambio = array();

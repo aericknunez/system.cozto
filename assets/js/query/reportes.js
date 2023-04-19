@@ -118,6 +118,23 @@ $(document).ready(function()
 
 
 
+		$('#btn-mensual').click(function(e){ /// kardex
+			e.preventDefault();
+			$.ajax({
+					url: "application/src/routes.php?op=715",
+					method: "POST",
+					data: $("#form-mensual").serialize(),
+					beforeSend: function () {
+						$('#btn-mensual').html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>Loading...').addClass('disabled');
+					},
+					success: function(data){
+						$('#btn-mensual').html('Mostrar Datos').removeClass('disabled');	      
+						$("#form-mensual").trigger("reset");
+						$("#contenido").html(data);	
+					}
+				})
+			});
+			
 
 
 

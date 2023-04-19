@@ -105,6 +105,7 @@ $a->close();
 
   public function IngresarProducto($datox){ // ingresa un nuevo lote de productos
       $db = new dbConn();
+      $kardex = new Kardex();
           if($datox["precio_costo"] != NULL){
 
             // debo actualizar el total (cantidad) de producto
@@ -125,9 +126,10 @@ $a->close();
               $datos["hora"] = date("H:i:s");
               $datos["fecha_ingreso"] = Fechas::Format(date("d-m-Y"));
               $datos["td"] = $_SESSION["td"];
-              $datos["hash"] = Helpers::HashId();
+              $datos["hash"] = $hash = Helpers::HashId();
               $datos["time"] = Helpers::TimeId();
               if ($db->insert("producto_ingresado", $datos)) {
+                $kardex->IngresarProductoKardex($datox["producto"], $canti, $hash, $datox["precio_costo"]);
                  echo '<script>
                   window.location.href="?modal=proadd&key='. $datox["producto"] .'&step=2&com='. $datox["com"] .'&dep='. $datox["dep"] .'";
                   </script>'; 
@@ -1329,7 +1331,9 @@ if($b["compuesto"] == "on"){
                       <td>'.$b["subcategoria"].'</td>
                       <td>'.$precio.'</td>
                       <td class="d-none d-md-block">'.$b["existencia_minima"].'</td>
-                      <td><a id="xver" op="55" key="'.$b["cod"].'"><i class="fas fa-search fa-lg green-text"></i></a>';
+                      <td>
+                      <a href="?kardex&key='.$b["cod"].'"><i class="fab fa-korvue fa-lg blue-text"></i></a>
+                      <a id="xver" op="55" key="'.$b["cod"].'"><i class="fas fa-search fa-lg green-text ml-3"></i></a>';
 
 // aqui iria el  de borrar producto
 if($_SESSION["tipo_cuenta"] == 1 or $_SESSION["tipo_cuenta"] == 5){
@@ -2200,6 +2204,7 @@ $a->close();
           Helpers::DeleteId("producto_tags", "producto='$cod' and td = ". $_SESSION["td"] ."");
           Helpers::DeleteId("ubicacion_asig", "producto='$cod' and td = ". $_SESSION["td"] ."");
           Helpers::DeleteId("marca_asig", "producto='$cod' and td = ". $_SESSION["td"] ."");
+          Helpers::DeleteId("kardex", "cod='$cod' and td = ". $_SESSION["td"] ."");
 
 
       $a = $db->query("SELECT imagen FROM producto_imagenes WHERE producto='$cod' and td = ". $_SESSION["td"] ."");
