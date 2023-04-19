@@ -867,6 +867,9 @@ if ($r = $db->select("sum(existencia)", "producto_ingresado", "WHERE existencia 
 
 	   	$this->Empareja($factura);
 
+		// $kardex = new Kardex();
+		// $kardex->InsertVenta($factura, $_SESSION["tipoticket"]);
+
 	   	if(isset($_SESSION["cliente_c"])){ // agregar el credito
 	   		$opciones = new Opciones();
 	   		$opciones->ConfirmCredito($factura, $_SESSION["cliente_c"]);
@@ -1199,9 +1202,6 @@ public function GetComment($iden){
     } unset($r);  
 
 }
-
-
-
 
 
 

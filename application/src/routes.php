@@ -778,7 +778,8 @@ case "85": // facturar determinar si es rapido o lento
 		if(isset($_SESSION["repartidor_asig"]) or isset($_SESSION["repartidor_cli"])){ // agregar el credito
 			include_once '../../system/ventas/Repartidor.php';
 		}
-		   
+	
+	// include_once '../../system/reportes/Kardex.php';
 
 	$venta = new Ventas();
 	$venta->Facturar($_POST);
