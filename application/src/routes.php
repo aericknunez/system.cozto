@@ -2728,6 +2728,8 @@ break;
 
 case "582": // borrrar factura
 include_once '../../system/facturar/Search.php';
+include_once '../../system/reportes/Kardex.php';
+
 	$data = new Search(); 
 	$data->BorrarFactura($_SESSION["search"]);
 break;

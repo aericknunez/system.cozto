@@ -144,6 +144,7 @@ if($edox == 2){
 
 public function BorrarFactura($factura){
     $db = new dbConn();
+    $kardex = new Kardex();
 
     $cambio = array();
     $cambio["edo"] = 2;
@@ -157,7 +158,7 @@ public function BorrarFactura($factura){
 
 
 /// solo regresar la cantidad al inventario // esto deberia cambiar y llevarse todo lo necesario
-  $a = $db->query("SELECT cant, cod, hash FROM ticket WHERE num_fac = '$factura' and tipo = '".$_SESSION["tipoticket"]."' and td = ".$_SESSION["td"]."");
+  $a = $db->query("SELECT cant, cod, hash, pv FROM ticket WHERE num_fac = '$factura' and tipo = '".$_SESSION["tipoticket"]."' and td = ".$_SESSION["td"]."");
   foreach ($a as $b) {
 
 // obtener cant de producto
@@ -220,7 +221,7 @@ if ($r = $db->select("cantidad", "producto", "WHERE cod = '".$b["cod"]."' and td
   } $c->close();
 
 
-
+  $kardex->EliminaFacturaKardex($b["cod"], $b["cant"], $b["hash"], $b["pv"]);
   } $a->close();
 /////////////
 }

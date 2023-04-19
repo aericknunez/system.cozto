@@ -11,15 +11,14 @@ class Kardex{
 // public function InsertKardex($cod, $detalle, $iden, $valor, $cantidad, $total) {
     public function InsertVenta($factura, $tipo) {
         $db = new dbConn();
-
         $a = $db->query("SELECT * FROM ticket WHERE num_fac = '$factura' and tipo = '$tipo' and td = ".$_SESSION["td"]."");
 
         if($a->num_rows > 0){
             foreach ($a as $b) {
                 $tcantidad = Helpers::GetData('producto','cantidad','cod', $b['cod']);
                 $cantInitial = $tcantidad + $b['cant'];
-                $this->comprobarInicial($b['cod'], null, "Inventario Inicial", $b['pv'], $cantInitial, $b['pv'] * $cantInitial, null, null, $cantInitial);
-                $this->InsertarDatos($b['cod'], $b['hash'], "Venta", $b['pv'], null, null, $b['cant'], $b['total'], $tcantidad);   
+                $this->comprobarInicial($b['cod'], null, "Inventario Inicial", $this->precioUnitario($b['cod']), $cantInitial, $this->precioUnitario($b['cod']) * $cantInitial, null, null, $cantInitial);
+                $this->InsertarDatos($b['cod'], $b['hash'], "Venta", $this->precioUnitario($b['cod']), null, null, $b['cant'], $b['total'], $tcantidad);   
             }
         } 
         
@@ -45,7 +44,8 @@ class Kardex{
 
   public function IngresarProductoKardex($cod, $cantidad, $hash, $valor){
     $tcantidad = Helpers::GetData('producto','cantidad','cod', $cod);
-    $this->InsertarDatos($cod, $hash, "Ingreso de Producto", $valor, $cantidad, $cantidad * $valor, 0, 0, $tcantidad);   
+    $this->comprobarInicial($cod, null, "Inventario Inicial", $this->precioUnitario($cod), null, null, null, null, null);
+    $this->InsertarDatos($cod, $hash, "Ingreso de Producto", $this->precioUnitario($cod), $cantidad, $cantidad * $this->precioUnitario($cod), 0, 0, $tcantidad);   
 
   }
 
@@ -53,6 +53,11 @@ class Kardex{
     Helpers::DeleteId("kardex", "iden = '$hash' and td = ".$_SESSION["td"]."");
   }
 
+
+  public function EliminaFacturaKardex($cod, $cantidad, $hash, $valor){
+    $tcantidad = Helpers::GetData('producto','cantidad','cod', $cod);
+    $this->InsertarDatos($cod, $hash, "Devolución de producto", $this->precioUnitario($cod), $cantidad, $cantidad * $this->precioUnitario($cod), 0, 0, $tcantidad);   
+  }
 
   public function InsertarDatos($cod, $iden, $detalle, $valor, $ecantidad, $etotal, $scantidad, $stotal, $tcantidad){
 	$db = new dbConn();
@@ -83,6 +88,13 @@ class Kardex{
   }
 
 
+  public function precioUnitario($cod){
+    $db = new dbConn();
+    if ($r = $db->select("precio", "producto_precio", "WHERE cant = 1 and producto = '$cod' and td = ".$_SESSION["td"]."")) { 
+        $precio = $r["precio"];
+    } unset($r);
+    return $precio;
+  }
 
 
   public function verDatos($cod, $fecha){
@@ -116,12 +128,12 @@ class Kardex{
       <th scope="row">'. $b["fecha"] .'</th>
       <td>'. $b["detalle"] .'</td>
       <td>'. Helpers::Dinero($b["valor_unitario"]) .'</td>
-      <td>'. Helpers::Format($b["entrada_cantidad"]) .'</td>
+      <td>'. Helpers::Entero($b["entrada_cantidad"]) .'</td>
       <td>'. Helpers::Dinero($b["entrada_total"]) .'</td>
-      <td>'. Helpers::Format($b["salida_cantidad"]) .'</td>
+      <td>'. Helpers::Entero($b["salida_cantidad"]) .'</td>
       <td>'. Helpers::Dinero($b["salida_total"]) .'</td>
-      <td>'. Helpers::Format($b["saldo_cantidad"]) .'</td>
-      <td>'. Helpers::Dinero($b["saldo_total"]) .'</td>
+      <td>'. Helpers::Entero($b["saldo_cantidad"]) .'</td>
+      <td><strong>'. Helpers::Dinero($b["saldo_total"]) .'</strong></td>
     </tr>';
     }
 echo '
