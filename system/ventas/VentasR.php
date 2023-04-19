@@ -766,7 +766,7 @@ if ($r = $db->select("sum(existencia)", "producto_ingresado", "WHERE existencia 
 	public function DescontarProducto($factura) { // Descuenta los productods del inventario segun factura
 		$db = new dbConn();
 
-	    $ax = $db->query("SELECT * FROM ticket WHERE num_fac = '$factura' and tipo = ".$_SESSION["tipoticket"]." and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."");
+	    $ax = $db->query("SELECT * FROM ticket WHERE num_fac = '$factura' and tipo = '".$_SESSION["tipoticket"]."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."");
 	    foreach ($ax as $bx) {
 
 		// primero verifico si el producto es un compuesto. si es compuesto o dependiente actualizo todos los productos que este conlleva . si es un servicio no se hace nada
@@ -873,9 +873,6 @@ if ($r = $db->select("sum(existencia)", "producto_ingresado", "WHERE existencia 
 
 	   	$this->Empareja($factura);
 
-		// $kardex = new Kardex();
-		// $kardex->InsertVenta($factura, $_SESSION["tipoticket"]);
-
 	   	if(isset($_SESSION["cliente_c"])){ // agregar el credito
 	   		$opciones = new Opciones();
 	   		$opciones->ConfirmCredito($factura, $_SESSION["cliente_c"]);
@@ -893,6 +890,9 @@ if ($r = $db->select("sum(existencia)", "producto_ingresado", "WHERE existencia 
 			if(isset($_SESSION["orden"])) unset($_SESSION["orden"]);
 			if(isset($_SESSION["descuento"])) unset($_SESSION["descuento"]);
 			if(isset($_SESSION["tcredito"])) unset($_SESSION["tcredito"]);
+
+			$kardex = new Kardex();
+			$kardex->InsertVenta($factura, $_SESSION["tipoticket"]);
    }
 
 

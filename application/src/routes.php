@@ -779,7 +779,7 @@ case "85": // facturar determinar si es rapido o lento
 			include_once '../../system/ventas/Repartidor.php';
 		}
 	
-	// include_once '../../system/reportes/Kardex.php';
+	include_once '../../system/reportes/Kardex.php';
 
 	$venta = new Ventas();
 	$venta->Facturar($_POST);

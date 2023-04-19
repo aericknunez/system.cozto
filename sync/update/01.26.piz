@@ -1,10 +1,12 @@
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
+
 CREATE TABLE `kardex` (
   `id` int(6) NOT NULL,
   `cod` varchar(50) NOT NULL,
   `detalle` varchar(50) NOT NULL,
+  `iden` varchar(12) NOT NULL,
   `valor_unitario` float(10,4) NOT NULL,
   `entrada_cantidad` float(10,4) NOT NULL,
   `entrada_total` float(10,4) NOT NULL,
@@ -20,12 +22,8 @@ CREATE TABLE `kardex` (
   `td` int(12) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-
 ALTER TABLE `kardex`
   ADD PRIMARY KEY (`id`);
 
-
 ALTER TABLE `kardex`
   MODIFY `id` int(6) NOT NULL AUTO_INCREMENT;
-
-ALTER TABLE `kardex` ADD `iden` INT(6) NOT NULL AFTER `detalle`;

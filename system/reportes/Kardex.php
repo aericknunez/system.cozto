@@ -12,15 +12,18 @@ class Kardex{
     public function InsertVenta($factura, $tipo) {
         $db = new dbConn();
 
-        $a = $db->query("SELECT * FROM ticket WHERE fatura = ".$factura." and tipo = ".$tipo." and td = ".$_SESSION["td"]."");
+        $a = $db->query("SELECT * FROM ticket WHERE num_fac = '$factura' and tipo = '$tipo' and td = ".$_SESSION["td"]."");
 
         if($a->num_rows > 0){
             foreach ($a as $b) {
                 $tcantidad = Helpers::GetData('producto','cantidad','cod', $b['cod']);
-                $this->comprobarInicial($b['cod'], null, "Inventario Inicial", $b['pv'], $b['cant'], $b['total'], null, null, $tcantidad);
-                $this->InsertarDatos($b['cod'], $b['hash'], "Venta", $b['pv'], $b['cant'], $b['total'], null, null, $tcantidad);   
+                $cantInitial = $tcantidad + $b['cant'];
+                $this->comprobarInicial($b['cod'], null, "Inventario Inicial", $b['pv'], $cantInitial, $b['pv'] * $cantInitial, null, null, $cantInitial);
+                $this->InsertarDatos($b['cod'], $b['hash'], "Venta", $b['pv'], null, null, $b['cant'], $b['total'], $tcantidad);   
             }
-        } $a->close();
+        } 
+        
+        $a->close();
 
 
   }
