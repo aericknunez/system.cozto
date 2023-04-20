@@ -518,6 +518,11 @@ include_once '../../system/producto/Productos.php';
 	$productos->VerTodosProductos($_POST["iden"], $_POST["orden"], $_POST["dir"]);
 break;
 
+case "54-b": // ver los productos de la busqueda paginados
+	include_once '../../system/producto/Productos.php';
+		$productos = new Productos;
+		$productos->VerProductosSearch($_POST["iden"], $_POST["orden"], $_POST["dir"], $_SESSION["psearch"]);
+	break;
 
 
 case "54x": // ver todos los producto de la busqueda

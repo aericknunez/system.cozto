@@ -1456,17 +1456,17 @@ $a = $db->query("SELECT producto.cod, producto.descripcion, producto.cantidad, p
         <table class="table table-sm table-striped">
       <thead>
         <tr>
-          <th class="th-sm"><a id="paginador" op="54" iden="1" orden="producto.cod" dir="'.$dir2.'">Cod</a></th>';
+          <th class="th-sm"><a id="paginador" op="54-b" iden="1" orden="producto.cod" dir="'.$dir2.'">Cod</a></th>';
 
           if($this->CompruebaSiMarca() == TRUE){
             echo '<th class="th-sm"><a >Marca</a></th>';
           }
 
-        echo '<th class="th-sm"><a id="paginador" op="54" iden="1" orden="producto.descripcion" dir="'.$dir2.'">Producto</a></th>
-          <th class="th-sm"><a id="paginador" op="54" iden="1" orden="producto.cantidad" dir="'.$dir2.'">Cantidad</a></th>
-          <th class="th-sm"><a id="paginador" op="54" iden="1" orden="producto.categoria" dir="'.$dir2.'">Categoria</a></th>
+        echo '<th class="th-sm"><a id="paginador" op="54-b" iden="1" orden="producto.descripcion" dir="'.$dir2.'">Producto</a></th>
+          <th class="th-sm"><a id="paginador" op="54-b" iden="1" orden="producto.cantidad" dir="'.$dir2.'">Cantidad</a></th>
+          <th class="th-sm"><a id="paginador" op="54-b" iden="1" orden="producto.categoria" dir="'.$dir2.'">Categoria</a></th>
           <th class="th-sm">Precio</th>
-          <th class="th-sm d-none d-md-block"><a id="paginador" op="54" iden="1" orden="producto.existencia_minima" dir="'.$dir2.'">Minimo</a></th>
+          <th class="th-sm d-none d-md-block"><a id="paginador" op="54-b" iden="1" orden="producto.existencia_minima" dir="'.$dir2.'">Minimo</a></th>
           <th class="th-sm">Ver</th>
         </tr>
       </thead>
@@ -1549,29 +1549,29 @@ echo $total_rows . " Registros encontrados";
 $page <= 1 ? $enable = 'disabled' : $enable = '';
   echo '<ul class="pagination pagination-sm justify-content-center">
   <li class="page-item '.$enable.'">
-      <a class="page-link" id="paginador" op="54" iden="1" orden="'.$orden.'" dir="'.$dir.'">&lt;&lt;</a>
+      <a class="page-link" id="paginador" op="54-b" iden="1" orden="'.$orden.'" dir="'.$dir.'">&lt;&lt;</a>
     </li>';
   
   $page>1 ? $pagina = $page-1 : $pagina = 1;
   echo '<li class="page-item '.$enable.'">
-      <a class="page-link" id="paginador" op="54" iden="'.$pagina.'" orden="'.$orden.'" dir="'.$dir.'">&lt;</a>
+      <a class="page-link" id="paginador" op="54-b" iden="'.$pagina.'" orden="'.$orden.'" dir="'.$dir.'">&lt;</a>
     </li>';
 
   for($i=$start; $i<=$end; $i++) {
     $i == $page ? $pagina =  'active' : $pagina = '';
     echo '<li class="page-item '.$pagina.'">
-      <a class="page-link" id="paginador" op="54" iden="'.$i.'" orden="'.$orden.'" dir="'.$dir.'">'.$i.'</a>
+      <a class="page-link" id="paginador" op="54-b" iden="'.$i.'" orden="'.$orden.'" dir="'.$dir.'">'.$i.'</a>
     </li>';
   }
 
   $page >= $total_pages ? $enable = 'disabled' : $enable = '';
   $page < $total_pages ? $pagina = ($page+1) : $pagina = $total_pages;
   echo '<li class="page-item '.$enable.'">
-      <a class="page-link" id="paginador" op="54" iden="'.$pagina.'" orden="'.$orden.'" dir="'.$dir.'">&gt;</a>
+      <a class="page-link" id="paginador" op="54-b" iden="'.$pagina.'" orden="'.$orden.'" dir="'.$dir.'">&gt;</a>
     </li>';
 
   echo '<li class="page-item '.$enable.'">
-      <a class="page-link" id="paginador" op="54" iden="'.$total_pages.'" orden="'.$orden.'" dir="'.$dir.'">&gt;&gt;</a>
+      <a class="page-link" id="paginador" op="54-b" iden="'.$total_pages.'" orden="'.$orden.'" dir="'.$dir.'">&gt;&gt;</a>
     </li>
 
     </ul>';
