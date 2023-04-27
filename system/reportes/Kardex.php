@@ -18,7 +18,7 @@ class Kardex{
                 $tcantidad = Helpers::GetData('producto','cantidad','cod', $b['cod']);
                 $cantInitial = $tcantidad + $b['cant'];
                 $this->comprobarInicial($b['cod'], null, "Inventario Inicial", $this->precioUnitario($b['cod']), $cantInitial, $this->precioUnitario($b['cod']) * $cantInitial, null, null, $cantInitial);
-                $this->InsertarDatos($b['cod'], $b['hash'], "Venta", $this->precioUnitario($b['cod']), null, null, $b['cant'], $b['total'], $tcantidad);   
+                $this->InsertarDatos($b['cod'], $b['hash'], "Venta", $this->costoPromedio($b['cod']), null, null, $b['cant'], $this->costoPromedio($b['cod']) * $b['cant'], $tcantidad);   
             }
         } 
         
@@ -45,7 +45,14 @@ class Kardex{
   public function IngresarProductoKardex($cod, $cantidad, $hash, $valor){
     $tcantidad = Helpers::GetData('producto','cantidad','cod', $cod);
     $this->comprobarInicial($cod, null, "Inventario Inicial", $this->precioUnitario($cod), null, null, null, null, null);
-    $this->InsertarDatos($cod, $hash, "Ingreso de Producto", $this->precioUnitario($cod), $cantidad, $cantidad * $this->precioUnitario($cod), 0, 0, $tcantidad);   
+    $this->InsertarDatos($cod, $hash, "Ingreso de Producto", $this->costoPromedio($cod), $cantidad, $cantidad * $valor, 0, 0, $tcantidad);   
+
+  }
+
+  public function IngresarProductoAveriaKardex($cod, $cantidad, $hash){
+    $tcantidad = Helpers::GetData('producto','cantidad','cod', $cod);
+    $tcantidad = $tcantidad - $cantidad;
+    $this->InsertarDatos($cod, $hash, "Producto Averiado", $this->costoPromedio($cod), 0, 0, $cantidad, $cantidad * $this->costoPromedio($cod), $tcantidad);   
 
   }
 
@@ -56,7 +63,7 @@ class Kardex{
 
   public function EliminaFacturaKardex($cod, $cantidad, $hash, $valor){
     $tcantidad = Helpers::GetData('producto','cantidad','cod', $cod);
-    $this->InsertarDatos($cod, $hash, "Devolución de producto", $this->precioUnitario($cod), $cantidad, $cantidad * $this->precioUnitario($cod), 0, 0, $tcantidad);   
+    $this->InsertarDatos($cod, $hash, "Devolución de producto", $this->costoPromedio($cod), $cantidad, $cantidad * $this->costoPromedio($cod), 0, 0, $tcantidad);   
   }
 
   public function InsertarDatos($cod, $iden, $detalle, $valor, $ecantidad, $etotal, $scantidad, $stotal, $tcantidad){
@@ -96,27 +103,52 @@ class Kardex{
     return $precio;
   }
 
+  public function costoPromedio($cod){
+    $db = new dbConn();
+    $valorTotal = 0;
+    $cantidadTotal = 0;
+   
+    if ($r = $db->query("SELECT existencia, precio_costo FROM producto_ingresado WHERE existencia > 0 and producto = $cod and td = ".$_SESSION["td"]."")) { 
+      if($r->num_rows == 0){
+        $costoPromedio = 0;
+        }
+            if($r->num_rows > 0){
+                foreach ($r as $s) {
+                    $valorTotal = $valorTotal + ($s["existencia"] * $s["precio_costo"]);
+                    $cantidadTotal = $cantidadTotal + $s["existencia"];
+                }
+                    $costoPromedio = $valorTotal / $cantidadTotal;
+               } unset($r);
+        }
+          return $costoPromedio;
+        }
+
 
   public function verDatos($cod, $fecha){
     $db = new dbConn();
 
-    $a = $db->query("SELECT * FROM kardex WHERE cod = '$cod' and fecha like '%$fecha' and td = ". $_SESSION["td"] ." order by fechaF desc");
+    $a = $db->query("SELECT * FROM kardex WHERE cod = '$cod' and fecha like '%$fecha' and td = ". $_SESSION["td"] ." order by fechaF asc");
     if($a->num_rows > 0){
 
-    echo ' <h3 class="h3-responsive">'.Helpers::GetData('producto', 'descripcion', 'cod', $cod).'</h3>
+    echo ' <h3 class="h3-responsive">PRODUCTO : '. Helpers::GetData('producto', 'descripcion', 'cod', $cod).'</h3>
+           <h3 class="h3-responsive">MÉTODO: COSTO PROMEDIO PONDERADO</h3>
         <div class="table-responsive">
-        <table class="table table-sm table-striped">
+        <table class="table table-sm table-striped border ">
     <thead>
+        <th class= "border" colspan="3">Código: '.$cod.'</th>
+        <th class= "border text-center" colspan="2">Entradas</th>
+        <th class= "border text-center" colspan="2">Salidas</th>
+        <th class= "text-center" colspan="2">Saldos</th>
         <tr>
-        <th scope="col">Fecha</th>
-        <th scope="col">Detalle</th>
-        <th scope="col">Precio Unitario</th>
-        <th scope="col">Entrada Cantidad</th>
-        <th scope="col">Entrada Total</th>
-        <th scope="col">Salida Cantidad</th>
-        <th scope="col">Salida Total</th>
-        <th scope="col">Saldo Cantidad</th>
-        <th scope="col">Saldo Total</th>
+        <th class= "border" scope="col">Fecha</th>
+        <th class= "border" scope="col">Detalle</th>
+        <th class= "border" scope="col">Costo U</th>
+        <th class= "border" scope="col">Cantidad</th>
+        <th class= "border" scope="col">Total</th>
+        <th class= "border" scope="col">Cantidad</th>
+        <th class= "border" scope="col">Total</th>
+        <th class= "border" scope="col">Cantidad</th>
+        <th scope="col">Total</th>
 
         </tr>
     </thead>
@@ -125,14 +157,14 @@ class Kardex{
     foreach ($a as $b) {
     
     echo '<tr>
-      <th scope="row">'. $b["fecha"] .'</th>
-      <td>'. $b["detalle"] .'</td>
-      <td>'. Helpers::Dinero($b["valor_unitario"]) .'</td>
-      <td>'. Helpers::Entero($b["entrada_cantidad"]) .'</td>
-      <td>'. Helpers::Dinero($b["entrada_total"]) .'</td>
-      <td>'. Helpers::Entero($b["salida_cantidad"]) .'</td>
-      <td>'. Helpers::Dinero($b["salida_total"]) .'</td>
-      <td>'. Helpers::Entero($b["saldo_cantidad"]) .'</td>
+      <th class= "border" scope="row">'. $b["fecha"] .'</th>
+      <td class= "border">'. $b["detalle"] .'</td>
+      <td class= "border"> $ '. Helpers::Format4D($b["valor_unitario"]) .'</td>
+      <td class= "border">'. Helpers::Entero($b["entrada_cantidad"]) .'</td>
+      <td class= "border">'. Helpers::Dinero($b["entrada_total"]) .'</td>
+      <td class= "border">'. Helpers::Entero($b["salida_cantidad"]) .'</td>
+      <td class= "border">'. Helpers::Dinero($b["salida_total"]) .'</td>
+      <td class= "border">'. Helpers::Entero($b["saldo_cantidad"]) .'</td>
       <td><strong>'. Helpers::Dinero($b["saldo_total"]) .'</strong></td>
     </tr>';
     }
@@ -142,7 +174,7 @@ echo '
 </table></div>';
 
 
- echo '<div class="text-right"><a href="">Descargar Excel</a></div>';
+ //echo '<div class="text-right"><a href="">Descargar Excel</a></div>';
 
 } else {
 Alerts::Mensajex("No se encontraron registros","danger",null, null);

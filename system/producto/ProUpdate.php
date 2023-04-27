@@ -486,6 +486,7 @@ public function AgregaBusqueda($dato){ // Busqueda para compuestos
 //////////////// averias
   public function AddAveria($datox, $cargaPro = NULL){ // lo que viede del formulario principal
     $db = new dbConn();
+    $kardex = new Kardex();
 
           if($datox["cantidad"] != NULL){
               $datos = array();
@@ -500,6 +501,7 @@ public function AgregaBusqueda($dato){ // Busqueda para compuestos
               $datos["hash"] = $hashin;
               $datos["time"] = Helpers::TimeId();
               if ($db->insert("producto_averias", $datos)) {
+                  $kardex->IngresarProductoAveriaKardex($datox["cod"], $datos["cant"], $hashin);
                 // debo actualizar el total (cantidad) de producto
                     if ($r = $db->select("cantidad", "producto", "WHERE cod = '".$datox["cod"]."' and td = ".$_SESSION["td"]."")) { 
                         $canti = $r["cantidad"];
@@ -597,6 +599,7 @@ $this->CaracteristicaAveria($datox["cod"], $datox["caracteristica"], $hashin);
 
   public function DelAveria($hash, $producto){ // elimina precio
     $db = new dbConn();
+    $kardex = new Kardex();
     // debo actualizar el total (cantidad) de producto
         if ($r = $db->select("cantidad", "producto", "WHERE cod = '".$producto."' and td = ".$_SESSION["td"]."")) { 
             $canti = $r["cantidad"];
@@ -645,7 +648,9 @@ $cantubi = $r["cant"];
       } else {
         Alerts::Alerta("error","Error!","La fecha del los producto que quiere borrar no coincide!");
       }
+      $kardex->EliminaProductoKardex($hash);
       $this->VerAveria($producto);
+      
   }
 
 
