@@ -13,7 +13,7 @@ class Impresiones{
 
 public function Ticket($efectivo, $numero){
 $this->Ticket2($efectivo, $numero);
-$this->Ticket2($efectivo, $numero);
+//$this->Ticket2($efectivo, $numero);
 }
 
 
@@ -1025,7 +1025,7 @@ if ($r = $db->select("*", "corte_diario", "WHERE hash = '$hash'")) {
   $cierre = $r["cierre"];
   $fecha = $r["fecha"];
   $caja_chica = $r["caja_chica"];
-  $efectivo = $r["efectivo"];
+  $efectivo = $r["efectivo_ingresado"];
   $total = $r["total"];
   $t_efectivo = $r["t_efectivo"];
   $t_tarjeta = $r["t_tarjeta"];
@@ -1097,6 +1097,8 @@ $printer->feed();
 $printer -> text($this->DosCol("EFECTIVO $: ", 40, Helpers::Format($t_efectivo-$t_ticketN), 10));
 $printer -> text($this->DosCol("TARJETA DE CREDITO $: ", 40, Helpers::Format($t_tarjeta), 10));
 $printer -> text($this->DosCol("TOTAL $: ", 40, Helpers::Format($total-$t_ticketN), 10));
+$printer -> text($this->DosCol("APERTURA $: ", 40, Helpers::Format($caja_chica), 10));
+$printer -> text($this->DosCol("EFECTIVO INGRESADO $: ", 40, Helpers::Format($efectivo), 10));
 $printer -> text($this->DosCol("DIFERENCIA $: ", 40, Helpers::Format($diferencia), 10));
 
 
