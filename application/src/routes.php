@@ -495,6 +495,7 @@ break;
 
 case "51": 
 include_once '../../system/producto/ProUpdate.php';
+include_once '../../system/reportes/Kardex.php';
 	$productos = new ProUpdate;
 	$productos->AddAveria($_POST);
 break;
@@ -503,6 +504,7 @@ break;
 
 case "52": // elimina averias
 include_once '../../system/producto/ProUpdate.php';
+include_once '../../system/reportes/Kardex.php';
 	$productos = new ProUpdate;
 	$productos->DelAveria($_REQUEST["hash"], $_REQUEST["producto"]);
 break;

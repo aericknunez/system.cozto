@@ -39,7 +39,7 @@ include_once 'system/reportes/Kardex.php';
 
  <input type="hidden" id="cod" name="cod" value="<? echo $_REQUEST["key"] ?>" />
   <div class="row justify-content-center">
-    <button class="btn btn-info my-2 btn-rounded btn-sm waves-effect" type="submit" id="btn-mensual" name="btn-mensual">Mostra Datos</button>
+    <button class="btn btn-info my-2 btn-rounded btn-sm waves-effect" type="submit" id="btn-mensual" name="btn-mensual">Mostrar Datos</button>
 
       </form> 
   </div>
