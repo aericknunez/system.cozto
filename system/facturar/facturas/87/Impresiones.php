@@ -63,7 +63,7 @@ $printer->text("Giro:Otros servicios relacionados con la salud NCP");
 // $printer->text("GIRO: Clinica Veterinaria y venta de productos Agropecuarios");
 
 $printer->feed();
-$printer->text("CAJA: 1.  TICKET NUMERO: " . $numero);
+$printer->text("CAJA: 2.  TICKET NUMERO: " . $numero);
 
 
 /* Stuff around with left margin */
