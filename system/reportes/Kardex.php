@@ -31,7 +31,7 @@ class Kardex{
 
   public function comprobarInicial($cod, $iden, $detalle, $valor, $ecantidad, $etotal, $scantidad, $stotal, $tcantidad){
 	$db = new dbConn();
-    $a = $db->query("SELECT 'cod' FROM kardex WHERE cod = ".$cod." and td = ".$_SESSION["td"]."");
+    $a = $db->query("SELECT 'cod' FROM kardex WHERE cod = '$cod' and td = ".$_SESSION["td"]."");
     $cant = $a->num_rows;
     $a->close();
 
@@ -108,7 +108,7 @@ class Kardex{
     $valorTotal = 0;
     $cantidadTotal = 0;
    
-    if ($r = $db->query("SELECT existencia, precio_costo FROM producto_ingresado WHERE existencia > 0 and producto = $cod and td = ".$_SESSION["td"]."")) { 
+    if ($r = $db->query("SELECT existencia, precio_costo FROM producto_ingresado WHERE existencia > 0 and producto = '$cod' and td = ".$_SESSION["td"]."")) { 
       if($r->num_rows == 0){
         $costoPromedio = 0;
         }
