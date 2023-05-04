@@ -31,8 +31,8 @@ public function Apertura($efectivo){
 		Alerts::Alerta("error","Error!","Introduzca la cantidad de apertura de caja!");
 	}
 
-$pro = new ProductoOtros();
-$pro->EmparejaExistencias();
+//$pro = new ProductoOtros();
+//$pro->EmparejaExistencias();
 
 }
 
@@ -72,8 +72,8 @@ public function Cierre($efectivo){
       	Alerts::Alerta("error","Error!","Algo Ocurrió!");
       }          
 
-$pro = new ProductoOtros(); // empareja la cantidad de productos del precio de costo
-$pro->EmparejaExistencias();
+//$pro = new ProductoOtros(); // empareja la cantidad de productos del precio de costo
+//$pro->EmparejaExistencias();
 
   } else {
     Alerts::Alerta("error","Error!","Faltan Datos!");
