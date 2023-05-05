@@ -47,7 +47,9 @@ $printer->text("Ilopango, San Salvador");
 $printer->feed();
 $printer->text("NRC: 276550-0 NIT: 0607-070981-104-5");
 $printer->feed();
-$printer->text("Giro: Prestamistas y Casas de Empeño");
+$printer->text("Giro: Venta al por menor de Medicamentos Farmaceuticos");
+$printer->feed();
+$printer->text("y articulos de uso Médico, Odontológico y Veterinario");
 
 // $printer->feed();
 // $printer->text("Tel: 7609-7442");
@@ -375,7 +377,9 @@ $printer->text("Ilopango, San Salvador");
 $printer->feed();
 $printer->text("NRC: 276550-0 NIT: 0607-070981-104-5");
 $printer->feed();
-$printer->text("Giro: Prestamistas y Casas de Empeño");
+$printer->text("Giro: Venta al por menor de Medicamentos Farmaceuticos");
+$printer->feed();
+$printer->text("y articulos de uso Médico, Odontológico y Veterinario");
 
 
 
@@ -678,7 +682,9 @@ $printer->text("Ilopango, San Salvador");
 $printer->feed();
 $printer->text("NRC: 276550-0 NIT: 0607-070981-104-5");
 $printer->feed();
-$printer->text("Giro: Prestamistas y Casas de Empeño");
+$printer->text("Giro: Venta al por menor de Medicamentos Farmaceuticos");
+$printer->feed();
+$printer->text("y articulos de uso Médico, Odontológico y Veterinario");
 
 
 
