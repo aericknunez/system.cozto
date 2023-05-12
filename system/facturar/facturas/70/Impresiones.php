@@ -40,10 +40,16 @@ $printer->text("FARMACIA JEHOVA RAFAH");
 $printer -> setTextSize(1, 2);
 $printer -> setEmphasis(false);
 $printer->feed();
-$printer->text("Carretera Panamericana kilometro 10");
+$printer->text("Carretera Panamericana kilometro 11");
 
 $printer->feed();
 $printer->text("Ilopango, San Salvador");
+$printer->feed();
+$printer->text("NRC: 276550-0 NIT: 0607-070981-104-5");
+$printer->feed();
+$printer->text("Giro: Venta al por menor de Medicamentos Farmaceuticos");
+$printer->feed();
+$printer->text("y articulos de uso Médico, Odontológico y Veterinario");
 
 // $printer->feed();
 // $printer->text("Tel: 7609-7442");
@@ -149,6 +155,16 @@ $printer -> text($this->DosCol($fechaf, 30, $horaf, 20));
 
 $printer->feed();
 $printer -> text("Cajero: " . $_SESSION['nombre']);
+$printer->feed();
+$printer->text("SERIE N°: 23DS0010000");
+$printer->feed();
+$printer->text("Resolución N°: 15002-RES-CR-30513-2023");
+$printer->feed();
+$printer->text("N° de Autorización: ASC-15041-049780-2023");
+$printer->feed();
+$printer->text("RANGO AUTORIZADO DEL 1 AL 100000");
+$printer->feed();
+$printer->text("FECHA DE AUTORIZACION: 20/04/2023");
 
 $printer->feed();
 $printer -> setJustification(Printer::JUSTIFY_CENTER);
@@ -354,11 +370,16 @@ $printer -> setJustification(Printer::JUSTIFY_CENTER);
 $printer->text("FARMACIA JEHOVA RAFAH");
 
 $printer->feed();
-$printer->text("Carretera Panamericana kilometro 10");
+$printer->text("Carretera Panamericana kilometro 11");
 
 $printer->feed();
 $printer->text("Ilopango, San Salvador");
-
+$printer->feed();
+$printer->text("NRC: 276550-0 NIT: 0607-070981-104-5");
+$printer->feed();
+$printer->text("Giro: Venta al por menor de Medicamentos Farmaceuticos");
+$printer->feed();
+$printer->text("y articulos de uso Médico, Odontológico y Veterinario");
 
 
 
@@ -593,7 +614,16 @@ if ($r = $db->select("nombre", "login_userdata", "WHERE user = '".$user."' and t
 
 $printer->feed();
 $printer->text("CAJERO: " . $cajero);
-
+$printer->feed();
+$printer->text("SERIE N°: 23DS0010000");
+$printer->feed();
+$printer->text("Resolución N°: 15002-RES-CR-30513-2023");
+$printer->feed();
+$printer->text("N° de Autorización: ASC-15041-049780-2023");
+$printer->feed();
+$printer->text("RANGO AUTORIZADO DEL 1 AL 100000");
+$printer->feed();
+$printer->text("FECHA DE AUTORIZACION: 20/04/2023");
 
 $printer->feed();
 $printer->cut();
@@ -645,10 +675,16 @@ $printer -> setJustification(Printer::JUSTIFY_CENTER);
 $printer->text("FARMACIA JEHOVA RAFAH");
 
 $printer->feed();
-$printer->text("Carretera Panamericana kilometro 10");
+$printer->text("Carretera Panamericana kilometro 11");
 
 $printer->feed();
 $printer->text("Ilopango, San Salvador");
+$printer->feed();
+$printer->text("NRC: 276550-0 NIT: 0607-070981-104-5");
+$printer->feed();
+$printer->text("Giro: Venta al por menor de Medicamentos Farmaceuticos");
+$printer->feed();
+$printer->text("y articulos de uso Médico, Odontológico y Veterinario");
 
 
 
@@ -828,8 +864,16 @@ $printer -> text($this->Col4("TICKETS",0 ,  "", 0,  Helpers::Entero($cant_t), 28
 $printer -> text($this->Col4("FACTURAS",0 ,  "", 0,  Helpers::Entero($cant_f), 27, Helpers::Format($t_factura), 20));
 $printer -> text($this->Col4("CREDITO FISCAL",0 ,  "", 0,  Helpers::Entero($cant_c), 21, Helpers::Format($t_credito), 20));
 
-
-
+$printer->feed();
+$printer->text("SERIE N°: 23DS0010000");
+$printer->feed();
+$printer->text("Resolución N°: 15002-RES-CR-30513-2023");
+$printer->feed();
+$printer->text("N° de Autorización: ASC-15041-049780-2023");
+$printer->feed();
+$printer->text("RANGO AUTORIZADO DEL 1 AL 100000");
+$printer->feed();
+$printer->text("FECHA DE AUTORIZACION: 20/04/2023");
 
 
 $printer->feed();
