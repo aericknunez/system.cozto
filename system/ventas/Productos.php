@@ -8,7 +8,7 @@ class Productos{
   public function Busqueda($dato){ // Busqueda para busqueda lenta
     $db = new dbConn();
       if($dato["keyword"] != NULL){
-             $a = $db->query("SELECT * FROM producto WHERE (cod like '%".$dato["keyword"]."%' or descripcion like '%".$dato["keyword"]."%') and td = ".$_SESSION["td"]." order by descripcion limit 10 " );
+             $a = $db->query("SELECT * FROM producto WHERE (cod like '%".$dato["keyword"]."%' or descripcion like '%".$dato["keyword"]."%') and td = ".$_SESSION["td"]." limit 10");
                 if($a->num_rows > 0){
                     echo '<table class="table table-striped table-sm table-hover">';
             foreach ($a as $b) {
