@@ -399,12 +399,7 @@ $precio_costo = $herramientas->ObtenerPrecioCosto($x["cod"]);
     } 
     unset($r);
 
-
-// obtengo el numero de registros
-$a = $db->query("SELECT pv FROM ticket WHERE cod = '".$x["cod"]."' and td = ". $_SESSION["td"] ." and fechaF BETWEEN '$primero' and '$segundo'");
-$preg = $a->num_rows;
-$a->close();
-    @$precioventa = $vpv / $preg;
+    @$precioventa = $vtotal / $vcantidad;
 
 // utilidad
 $ut = $precioventa - $precio_costo;
