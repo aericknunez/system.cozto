@@ -728,6 +728,7 @@ $db = new dbConn();
 
 public function Averias($datos){
       $db = new dbConn();
+      $kardex = new Kardex();
 
     $cantidad = $datos["cantidad"] - $datos["establecido"];
 
@@ -742,7 +743,7 @@ public function Averias($datos){
     $data["hash"] = Helpers::HashId();
     $data["time"] = Helpers::TimeId();
     if ($db->insert("producto_averias", $data)) {
-
+      $kardex->IngresarProductoAveriaKardex($datos["cod"], $cantidad, Helpers::HashId());
 // se actualiza la cantidad de los productos
 $cambio = array();
 $cambio["cantidad"] = $datos["establecido"];
@@ -790,14 +791,14 @@ public function Agrega($datos){
     $data["hash"] = $hash = Helpers::HashId();
     $data["time"] = Helpers::TimeId();
     if ($db->insert("producto_ingresado", $data)) {
-      $kardex->IngresarProductoKardex($datos["cod"], $cantidad, $hash, $valor);
+
 
 
 // se actualiza la cantidad de los productos
 $cambio = array();
 $cambio["cantidad"] = $datos["establecido"];
 Helpers::UpdateId("producto", $cambio, "cod='".$datos["cod"]."' and td = ".$_SESSION["td"]."");        
-
+$kardex->IngresarProductoKardex($datos["cod"], $cantidad, $hash, $valor);
 
   // ubicacion predeterminada
 if ($r = $db->select("hash", "ubicacion", "WHERE predeterminada = '1' and td = ".$_SESSION["td"]."")) { 

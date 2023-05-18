@@ -2681,6 +2681,7 @@ break;
 case "570":  /// cambiar cantidad producto
 include_once '../../system/herramientas/Herramientas.php';
 include_once '../../system/producto/Productos.php';
+include_once '../../system/reportes/Kardex.php';
 	$prod = new Herramientas(); 
 	$prod->CambiarCantidad($_POST);
 break;
