@@ -129,6 +129,14 @@ $control = new Controles();
     </div>
 
     <div class="col-xl-3 col-md-6 mb-4  col-sm-6 col-6">
+      <div class="card-counter success">
+        <i class="fas fa-dollar-sign"></i>
+        <span class="count-numbers"><h5 class="font-weight-bold"><?php echo Helpers::Dinero($control->ValorInventario()); ?></h5></span>
+        <span class="count-name">Valor Inventario</span>
+      </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6 mb-4  col-sm-6 col-6">
       <div class="card-counter info">
         <i class="fa fa-users"></i>
         <span class="count-numbers"><h5 class="font-weight-bold"><?php echo Helpers::Dinero($control->DescuentosHoy(date("d-m-Y"))); ?></h5></span>
@@ -136,12 +144,7 @@ $control = new Controles();
       </div>
     </div>
 
-
-  </div>
-
-<?php if(($_SESSION['config_restringir_descuento'])): ?>
-
-<div class="row">
+    <?php if(($_SESSION['config_restringir_descuento'])): ?>
 
 <div class="col-xl-3 col-md-6 mb-4  col-sm-6 col-6">
   <div class="card-counter light">
@@ -152,8 +155,6 @@ $control = new Controles();
 </div>
 <?php endif ;?>
 
-</div>
-
-
+  </div>
 
 <canvas id="barChart" class="mb-4"></canvas>
