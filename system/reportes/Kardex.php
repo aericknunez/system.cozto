@@ -44,7 +44,7 @@ class Kardex{
 
   public function IngresarProductoKardex($cod, $cantidad, $hash, $valor){
     $tcantidad = Helpers::GetData('producto','cantidad','cod', $cod);
-    $this->comprobarInicial($cod, null, "Inventario Inicial", $this->precioUnitario($cod), null, null, null, null, null);
+    $this->comprobarInicial($cod, null, "Inventario Inicial", $this->costoPromedio($cod), null, null, null, null, null);
     $this->InsertarDatos($cod, $hash, "Ingreso de Producto", $this->costoPromedio($cod), $cantidad, $cantidad * $valor, 0, 0, $tcantidad);   
 
   }
