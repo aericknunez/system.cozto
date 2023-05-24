@@ -3111,6 +3111,7 @@ break;
 case "650": // aceptar orden
 include_once '../../system/transferencias/Transferencias.php';
 include_once '../../system/producto/ProUpdate.php';
+include_once '../../system/reportes/Kardex.php';
 	$trans = new Transferencias();
 	$trans->AceptarOrden(URL_TRANSFERENCIA .'?op=12&hash=' . $_REQUEST["hash"], $_REQUEST["hash"]);
 break;
@@ -3177,6 +3178,7 @@ break;
 case "658": // enviar orden de productos a la nube
 include_once '../../system/transferencias/Transferencias.php';
 include_once '../../system/producto/ProUpdate.php';
+include_once '../../system/reportes/Kardex.php';
 	$trans = new Transferencias();
 	$trans->EnviarOrden(URL_TRANSFERENCIA .'?op=11');
 break;
@@ -3194,6 +3196,7 @@ break;
 case "660": // devolver Productos de orden cancelada
 include_once '../../system/transferencias/Transferencias.php';
 include_once '../../system/producto/ProUpdate.php';
+include_once '../../system/reportes/Kardex.php';
 	$trans = new Transferencias();
 	$trans->DevolverProductos(URL_TRANSFERENCIA .'?op=22&hash=' . $_REQUEST["hash"], $_REQUEST["hash"]);
 break;
