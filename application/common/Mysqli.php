@@ -5,11 +5,11 @@ if (!class_exists('dbConn')):
     class dbConn {
     
 		private $select, $update, $delete, $result;
-		public $charset = 'ANSI';
+		public $charset = 'utf8mb4';
                
         // CONNECT
         public function conn() {
-			$this->db_connect = new mysqli($this->HOST, $this->USER, $this->PASSWORD, $this->DATABASE);
+			$this->db_connect = new mysqli($this->HOST, $this->USER, $this->PASSWORD, $this->DATABASE, 3307);
 			if ($this->db_connect->connect_error) {
 				die("Error de en la Base de Datos!");
 				return;

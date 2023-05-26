@@ -45,9 +45,9 @@ define("URL_TRANSFERENCIA", "https://coztoapi.hibridosv.com/");
 
 define("HOST", "localhost"); 							//35.225.56.157 The host you want to connect to. 
 define("USER", "root"); 								// The database username. 
-define("PASSWORD", "erick"); 							// The database password. 
-define("DATABASE", "cozto_ventas"); 
-define("XSERV", "http://localhost/cozto/");	
+define("PASSWORD", ""); 							// The database password. 
+define("DATABASE", "cozto"); 
+define("XSERV", "http://template.test");	
 define("TYPE", "Local");
 
 define("URL_TRANSFERENCIA", "http://localhost/coztoapi/");

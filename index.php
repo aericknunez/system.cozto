@@ -8,7 +8,7 @@ $db = new dbConn();
 $seslog = new Login();
 $seslog->sec_session_start();
 
-
+print_r($_SESSION);
 
 if ($seslog->login_check() == TRUE) {
     include_once 'catalog/index.php';
