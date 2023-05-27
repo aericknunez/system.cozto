@@ -156,5 +156,6 @@ $control = new Controles();
 <?php endif ;?>
 
   </div>
+</div>
 
 <canvas id="barChart" class="mb-4"></canvas>
