@@ -351,9 +351,9 @@ public function ProductoIngresado($inicio, $fin, $type = NULL) {
 		$segundo = Fechas::Format($fin);
 
 if($primero == $segundo){
-  $a = $db->query("SELECT * FROM producto_ingresado WHERE fecha_ingreso = '$segundo' and td = ".$_SESSION['td']." order by fechaF ASC");
+  $a = $db->query("SELECT * FROM producto_ingresado WHERE fecha_ingreso = '$segundo' and td = ".$_SESSION['td']." order by fecha_ingreso ASC");
 } else {
-  $a = $db->query("SELECT * FROM producto_ingresado WHERE fecha_ingreso BETWEEN '$primero' AND '$segundo' and td = ".$_SESSION['td']." order by fechaF ASC");
+  $a = $db->query("SELECT * FROM producto_ingresado WHERE fecha_ingreso BETWEEN '$primero' AND '$segundo' and td = ".$_SESSION['td']." order by fecha_ingreso ASC");
 }
 
 
@@ -442,9 +442,9 @@ public function ProductoAveriado($inicio, $fin, $type = NULL) {
 	$segundo = Fechas::Format($fin);
 
 if($primero == $segundo){
-$a = $db->query("SELECT * FROM producto_averias WHERE time = '$segundo' and td = ".$_SESSION['td']." order by time desc");
+$a = $db->query("SELECT * FROM producto_averias WHERE time = '$segundo' and td = ".$_SESSION['td']." order by time ASC");
 } else {
-$a = $db->query("SELECT * FROM producto_averias WHERE time BETWEEN '$primero' AND '$segundo' and td = ".$_SESSION['td']." order by time desc");
+$a = $db->query("SELECT * FROM producto_averias WHERE time BETWEEN '$primero' AND '$segundo' and td = ".$_SESSION['td']." order by time ASC");
 }
 
 

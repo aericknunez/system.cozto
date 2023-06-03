@@ -164,11 +164,11 @@ $printer->feed();
 $printer -> text("Cajero: " . $_SESSION['nombre']);
 
 $printer->feed();
-$printer->text("SERIE N°: 19NA00000001");
+$printer->text("SERIE N°: 23NA00000001");
 $printer->feed();
-$printer->text("Resolución N°: 30109-RES-CR-72782-2019");
+$printer->text("Resolución N°: 30109-RES-CR-38872-2023");
 $printer->feed();
-$printer->text("RANGO AUTORIZADO DEL 1 AL 100000");
+$printer->text("RANGO AUTORIZADO DEL 1 AL 200000");
 $printer->feed();
 $printer->text("FECHA DE AUTORIZACION: 19/12/2019");
 
