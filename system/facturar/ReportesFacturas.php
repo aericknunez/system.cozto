@@ -31,6 +31,7 @@ if($type == NULL or $type == 0){
 	       <th>Fecha</th>
 	       <th>Tipo</th>					       
 	       <th>Numero</th>
+		   <th>Cliente</th>
 	       <th>Tipo Pago</th>
 	       <th>Cajero</th>
 	       <th>Productos</th>
@@ -40,19 +41,23 @@ if($type == NULL or $type == 0){
 	   <tbody>';
 
     foreach ($a as $b) {
-
-$ag = $db->query("SELECT sum(cant), sum(total), cajero, tipo_pago FROM ticket where edo = 1 and num_fac = '".$b["num_fac"]."' and tipo = '".$b["tipo"]."' and td = ".$_SESSION['td']."");
+	$numeroFactura = $b["num_fac"];
+$ag = $db->query("SELECT sum(cant), sum(total), cajero, tipo_pago, orden, tipo FROM ticket where edo = 1 and num_fac = '".$b["num_fac"]."' and tipo = '".$b["tipo"]."' and td = ".$_SESSION['td']."");
 foreach ($ag as $bg) { 
 	$cant = $bg["sum(cant)"];
 	$total = $bg["sum(total)"];
 	$cajero = $bg["cajero"];
 	$tipo_pago = $bg["tipo_pago"];
+	$orden = $bg["orden"];
+	$tipo = $bg["tipo"];
+	
 } $ag->close();
 
 	echo '<tr>
 		   <th>'.$b["fecha"].' '.$b["hora"].'</th>					       
 		   <th>'.Helpers::TipoFacturaVentas($b["tipo"]).'</th>
 		   <th>'.$b["num_fac"].'</th>
+		   <th>'.$this->ClienteProducto($orden, $tipo, $numeroFactura).'</th>
 		   <th>'.Helpers::TipoPago($tipo_pago).'</th>
 		   <th>'.$this->CajeroVentas($cajero).'</th>
 		   <th>'.$cant.'</th>
@@ -64,6 +69,7 @@ foreach ($ag as $bg) {
 	       <th>Fecha</th>
 	       <th>Tipo</th>					       
 	       <th>Numero</th>
+		   <th>Cliente</th>
 	       <th>Tipo Pago</th>
 	       <th>Cajero</th>
 	       <th>Productos</th>
@@ -80,7 +86,28 @@ echo '</tbody>
 
 } // termina la funcion
 
+public function ClienteProducto($orden, $tipo, $numeroFactura) {
+	$db = new dbConn();
 
+if ($tipo == 2){
+	if ($r = $db->select("cliente", "ticket_cliente", 
+	"WHERE orden = '$orden' and td = ".$_SESSION['td']."")) { 
+		$cliente = $r["cliente"];
+	} unset($r);  
+
+	if ($r = $db->select("nombre", "clientes", 
+		"WHERE hash = '$cliente' and td = ".$_SESSION['td']."")) { 
+	return $r["nombre"];
+	} unset($r);  
+}
+if ($tipo == 3){
+	if ($r = $db->select("cliente", "facturar_documento_factura", 
+		"WHERE factura = '$numeroFactura' and td = ".$_SESSION['td']."")) { 
+	return $r["cliente"];
+		} unset($r);  
+}
+
+}
 
 
 
