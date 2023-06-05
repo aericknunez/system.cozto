@@ -1001,7 +1001,7 @@ $printer->feed();
 $printer->text("NRC: 285464-2 NIT: 0108-091019-101-0");
 $printer->feed();
 $printer->text("Giro:Otros servicios relacionados con la salud NCP");
-$printer->text("CAJA: 1.");
+$printer->text("CAJA: 2.");
 
 
 
@@ -1421,7 +1421,7 @@ $printer->text("NRC: 285464-2 NIT: 0108-091019-101-0");
 $printer->feed();
 $printer->text("Giro:Otros servicios relacionados con la salud NCP");
 $printer->feed();
-$printer->text("CAJA: 1.");
+$printer->text("CAJA: 2.");
 
 // $printer->feed();
 // $printer->text("NIT: 1010-291061-002-4   NRC: 33274-7");
