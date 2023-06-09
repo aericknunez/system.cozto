@@ -170,7 +170,7 @@ $printer->text("Resolución N°: 30109-RES-CR-38872-2023");
 $printer->feed();
 $printer->text("RANGO AUTORIZADO DEL 1 AL 200000");
 $printer->feed();
-$printer->text("FECHA DE AUTORIZACION: 19/12/2019");
+$printer->text("FECHA DE AUTORIZACION: 31/05/2023");
 
 
 $printer->feed();
