@@ -453,7 +453,7 @@ echo '<div class="row mt-4">
 </div>';
 
 echo '<p>Producto Fabricados/Instalados, entrega de 8 a 15 dias hábiles, después de entregado el 60% de anticipo.</p>
-<p>Precios Incluyen IVA y estan sujetos a cambios sin precio aviso.</p>
+<p>Precios Incluyen IVA y estan sujetos a cambios sin previo aviso.</p>
 <p>Cheque a nombre de DDALTEC S.A. DE C.V.</p>
 <p>Cualquier consulta estamos a la orden.</p>';
 
