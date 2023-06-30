@@ -364,7 +364,7 @@ echo '<div class="row">
            Teléfono: '. $_SESSION['config_telefono'] .'
            </h3></div>
            <div><h3>
-           WhatsApp: 7944 5330
+           WhatsApp: 7262 8353
            </h3></div>
 
    </div>
