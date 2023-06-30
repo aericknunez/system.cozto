@@ -212,7 +212,15 @@ elseif($_SESSION["tipoticket"] == 0){ return '<a id="mticket">N/A</a>'; }
  		$db = new dbConn();
 
  		    if ($r = $db->select("sum(total)", "ticket", "WHERE orden = '$orden' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."")) { 
-		        return $r["sum(total)"];
+		        
+				if($_SESSION["gran_contribuyente"] == 1){
+					return Helpers::Format($r["sum(total)"] - ($r["sum(total)"]*0.01));
+				}else{
+
+					return $r["sum(total)"];
+				}
+				
+				
 		    }  unset($r);  
  		
  	}

@@ -870,6 +870,9 @@ if ($r = $db->select("sum(existencia)", "producto_ingresado", "WHERE existencia 
 	   	$this->DescontarProducto($factura);
 	   	$this->FacturaResult($factura, $datos["efectivo"]);
 	   	$this->RegistroDocumento($factura);
+		if($_SESSION["gran_contribuyente"] == 1){
+			$this->AplicarRetencion();
+		}
 
 	   	$this->Empareja($factura);
 
@@ -890,6 +893,7 @@ if ($r = $db->select("sum(existencia)", "producto_ingresado", "WHERE existencia 
 			if(isset($_SESSION["orden"])) unset($_SESSION["orden"]);
 			if(isset($_SESSION["descuento"])) unset($_SESSION["descuento"]);
 			if(isset($_SESSION["tcredito"])) unset($_SESSION["tcredito"]);
+			if(isset($_SESSION["gran_contribuyente"])) unset($_SESSION["gran_contribuyente"]);
 
 			$kardex = new Kardex();
 			$kardex->InsertVenta($factura, $_SESSION["tipoticket"]);
@@ -1060,7 +1064,7 @@ $_SESSION["cambio_actual_print"] = $efectivo; // solo para imprimir la factura c
             echo '<table class="table table-sm table-hover">';
     foreach ($a as $b) {
                echo '<tr>
-                      <td scope="row"><a id="select-d" documento="'. $b["documento"] .'" cliente="'. $b["cliente"] .'"><div>'. $b["cliente"] .'</div></a></td>
+                      <td scope="row"><a id="select-d" documento="'. $b["documento"] .'" cliente="'. $b["cliente"] .'" contribuyente="'. $b["tipo_contribuyente"] .'"><div>'. $b["cliente"] .'</div></a></td>
                     </tr>'; 
     }  $a->close();
 
@@ -1076,10 +1080,17 @@ $_SESSION["cambio_actual_print"] = $efectivo; // solo para imprimir la factura c
   public function AgregaDocumento($dato){ // Busqueda para documento
     $db = new dbConn();
 
+		$grancontribuyente = $_POST["contribuyente"];
+		if ($grancontribuyente == 1){
+			$_SESSION["gran_contribuyente"] = 1;
+		}else{
+			unset($_SESSION["gran_contribuyente"]);
+		}
+
        	$_SESSION["factura_cliente"] = $_POST["cliente"];
 		$_SESSION["factura_documento"] = $_POST["documento"];
   		
-  		$texto = $_SESSION['config_nombre_documento']. ": " . $_SESSION["factura_documento"] . "<br> Cliente: " . $_SESSION["factura_cliente"];
+  		$texto = $_SESSION['config_nombre_documento']. ": " . $_SESSION["factura_documento"] . "<br> Cliente: " . $_SESSION["factura_cliente"] ."<br> Gran Contribuyente:".$_SESSION["gran_contribuyente"];
 		Alerts::Mensajex($texto,"danger",'<a id="quitar-documento" op="102" class="btn btn-danger btn-rounded">Quitar '.$_SESSION["config_nombre_documento"].'</a>',$boton2);
 
   }
@@ -1209,6 +1220,22 @@ public function GetComment($iden){
 
 }
 
+
+public function AplicarRetencion() { //Aplica el descuento a los productos
+	$db = new dbConn();
+				
+		$r = $db->query("SELECT * FROM ticket WHERE orden = ".$_SESSION["orden"]." and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."");
+
+		if($r->num_rows > 0){
+			foreach ($r as $s) {
+				$total = $s["total"];
+				$cambio = array();
+   				$cambio["retencion"] = $total * 0.01;
+				Helpers::UpdateId("ticket", $cambio,  "hash = '".$s["hash"]."' and td = ".$_SESSION["td"]."");
+			}
+		} $r->close();
+
+}
 
 
 

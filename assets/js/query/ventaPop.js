@@ -122,7 +122,8 @@ $(document).ready(function(){
     $("body").on("click","#select-d",function(){
     var documento = $(this).attr('documento');
     var cliente = $(this).attr('cliente');
-        $.post("application/src/routes.php?op=101", {documento:documento, cliente:cliente}, 
+    var contribuyente = $(this).attr('contribuyente');
+        $.post("application/src/routes.php?op=101", {documento:documento, cliente:cliente, contribuyente:contribuyente,}, 
         function(data){
             $("#muestra-documento").hide();
             $("#ver").html(data); // lo que regresa de la busquea 
