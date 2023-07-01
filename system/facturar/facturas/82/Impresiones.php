@@ -388,7 +388,7 @@ $oi=$oi+$n1;
 
 $oi=70;
 
-  if ($r = $db->select("documento", "facturar_documento_factura", "WHERE factura = '$numero' and tx = " . $_SESSION["tx"] . " and td = " .  $_SESSION["td"] . " order by time desc limit 1" )) { 
+  if ($r = $db->select("documento", "facturar_documento_factura", "WHERE factura = '$numero' and tipo = ".$_SESSION["tipoticket"]." and tx = " . $_SESSION["tx"] . " and td = " .  $_SESSION["td"] . " order by time desc limit 1" )) { 
       $documento = $r["documento"];
   } unset($r);  
 
