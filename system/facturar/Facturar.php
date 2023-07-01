@@ -45,6 +45,18 @@ class Facturar{
 			case "ex1":
 				$cambio["ex1"] = $data["edo"];
 				break;
+			case "fx0":
+				$cambio["fx0"] = $data["edo"];
+				break;
+			case "fx1":
+				$cambio["fx1"] = $data["edo"];
+				break;
+			case "gx0":
+				$cambio["gx0"] = $data["edo"];
+				break;
+			case "gx1":
+				$cambio["gx1"] = $data["edo"];
+				break;
 		}
 
 
@@ -82,7 +94,13 @@ if($_SESSION["td"] == 10){
 	if($_SESSION["tipoticket"] == 2){
 		$imprimir->Factura($efectivo, $factura);
 	}
+	if($_SESSION["tipoticket"] == 12){
+		$imprimir->Factura($efectivo, $factura);
+	}
 	if($_SESSION["tipoticket"] == 3){
+		$imprimir->CreditoFiscal($efectivo, $factura);
+	}
+	if($_SESSION["tipoticket"] == 13){
 		$imprimir->CreditoFiscal($efectivo, $factura);
 	}
 	if($_SESSION["tipoticket"] == 4){
@@ -112,14 +130,14 @@ public function TiposTicketActivos(){ // esta funcion obtiene los ticket activos
 
 if($_SESSION["tx"] == 0){
 
-    if ($r = $db->select("nota_envio, ninguno, ax0, bx0, dx0, ex0", "facturar_opciones", "WHERE td = ".$_SESSION["td"]."")) { 
-        $envio = $r["nota_envio"]; $ninguno = $r["ninguno"]; $ax = $r["ax0"]; $bx = $r["bx0"]; $dx = $r["dx0"]; $ex = $r["ex0"];
+    if ($r = $db->select("nota_envio, ninguno, ax0, bx0, dx0, ex0, fx0, gx0", "facturar_opciones", "WHERE td = ".$_SESSION["td"]."")) { 
+        $envio = $r["nota_envio"]; $ninguno = $r["ninguno"]; $ax = $r["ax0"]; $bx = $r["bx0"]; $dx = $r["dx0"]; $ex = $r["ex0"]; $fx = $r["fx0"]; $gx = $r["gx0"];
     } unset($r);  
 
 } else {
     
-    if ($r = $db->select("nota_envio, ninguno, ax1, bx1, dx1, ex1", "facturar_opciones", "WHERE td = ".$_SESSION["td"]."")) { 
-        $envio = $r["nota_envio"]; $ninguno = $r["ninguno"]; $ax = $r["ax1"]; $bx = $r["bx1"]; $dx = $r["dx1"]; $ex = $r["ex1"];
+    if ($r = $db->select("nota_envio, ninguno, ax1, bx1, dx1, ex1, fx1, gx1", "facturar_opciones", "WHERE td = ".$_SESSION["td"]."")) { 
+        $envio = $r["nota_envio"]; $ninguno = $r["ninguno"]; $ax = $r["ax1"]; $bx = $r["bx1"]; $dx = $r["dx1"]; $ex = $r["ex1"]; $fx = $r["fx1"]; $gx = $r["gx1"];
     } unset($r);  
 }
 
@@ -129,6 +147,14 @@ echo '<a id="opticket" tipo="1" class="btn btn-cyan">Ticket</a>';
 if($ex == 1){
 echo '<a id="opticket" tipo="3" class="btn btn-brown">Credito Fiscal</a>';
 }
+if($fx == 1){
+echo '<a id="opticket" tipo="12" class="btn btn-succeess">Factura 2</a>';
+}
+
+if($gx == 1){
+echo '<a id="opticket" tipo="13" class="btn btn-danger">Credito Fiscal 2</a>';
+}
+
 if($bx == 1){
 echo '<a id="opticket" tipo="2" class="btn btn-indigo">Factura</a>';
 }

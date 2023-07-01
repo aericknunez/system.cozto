@@ -414,7 +414,7 @@ static public function ImpuestoDesc($numero, $impuestos){
 
 ////////////////////////////// Nuevos Hash $id = base_convert(microtime(false), 10, 36);
 public static function HashId(){
-  $id = $_SESSION["td"] . "-" . date("d-m-Y-H:i:s") . rand(1,999999999);
+  $id = $_SESSION["td"] . "-" . date("d-m-Y-H:i:s") . rand(1,9999);
   $iden = sha1($id);
   $hash = substr($iden,0,10);
   return $hash;

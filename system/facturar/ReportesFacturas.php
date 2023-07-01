@@ -89,7 +89,7 @@ echo '</tbody>
 public function ClienteProducto($orden, $tipo, $numeroFactura) {
 	$db = new dbConn();
 
-if ($tipo == 2){
+if ($tipo == 2 or $tipo == 12){
 	if ($r = $db->select("cliente", "ticket_cliente", 
 	"WHERE orden = '$orden' and td = ".$_SESSION['td']."")) { 
 		$cliente = $r["cliente"];
@@ -100,7 +100,7 @@ if ($tipo == 2){
 	return $r["nombre"];
 	} unset($r);  
 }
-if ($tipo == 3){
+if ($tipo == 3 or $tipo == 13){
 	if ($r = $db->select("cliente", "facturar_documento_factura", 
 		"WHERE factura = '$numeroFactura' and td = ".$_SESSION['td']."")) { 
 	return $r["cliente"];
@@ -120,14 +120,14 @@ public function TiposTicketActivos(){ // esta funcion obtiene los ticket activos
 
 if($_SESSION["tx"] == 0){
 
-    if ($r = $db->select("ax0, bx0, dx0, ex0", "facturar_opciones", "WHERE td = ".$_SESSION["td"]."")) { 
-        $ax = $r["ax0"]; $bx = $r["bx0"]; $dx = $r["dx0"]; $ex = $r["ex0"];
+    if ($r = $db->select("ax0, bx0, dx0, ex0, fx0, gx0", "facturar_opciones", "WHERE td = ".$_SESSION["td"]."")) { 
+        $ax = $r["ax0"]; $bx = $r["bx0"]; $dx = $r["dx0"]; $ex = $r["ex0"]; $fx = $r["fx0"]; $gx = $r["gx0"];
     } unset($r);  
 
 } else {
     
-    if ($r = $db->select("ax1, bx1, dx1, ex1", "facturar_opciones", "WHERE td = ".$_SESSION["td"]."")) { 
-        $ax = $r["ax1"]; $bx = $r["bx1"]; $dx = $r["dx1"]; $ex = $r["ex1"];
+    if ($r = $db->select("ax1, bx1, dx1, ex1, fx1, gx1", "facturar_opciones", "WHERE td = ".$_SESSION["td"]."")) { 
+        $ax = $r["ax1"]; $bx = $r["bx1"]; $dx = $r["dx1"]; $ex = $r["ex1"]; $fx = $r["fx1"]; $gx = $r["gx1"];
     } unset($r);  
 }
 
@@ -149,12 +149,24 @@ echo '<div class="custom-control custom-radio custom-control-inline">
 	  <label class="custom-control-label" for="3">C. Fiscal</label>
 	</div>';
 }
+if($gx == 1){
+	echo '<div class="custom-control custom-radio custom-control-inline">
+		  <input type="radio" class="custom-control-input" id="13" name="tipo" value="13">
+		  <label class="custom-control-label" for="13">C. Fiscal 2</label>
+		</div>';
+	}
 if($bx == 1){
 echo '<div class="custom-control custom-radio custom-control-inline">
 	  <input type="radio" class="custom-control-input" id="2" name="tipo" value="2">
 	  <label class="custom-control-label" for="2">Factura</label>
 	</div>';
 }
+if($fx == 1){
+	echo '<div class="custom-control custom-radio custom-control-inline">
+		  <input type="radio" class="custom-control-input" id="12" name="tipo" value="12">
+		  <label class="custom-control-label" for="12">Factura 2</label>
+		</div>';
+	}
 if($dx == 1){
 echo '<div class="custom-control custom-radio custom-control-inline">
 	  <input type="radio" class="custom-control-input" id="4" name="tipo" value="4">

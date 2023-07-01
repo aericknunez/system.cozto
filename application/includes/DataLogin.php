@@ -106,7 +106,7 @@ class Login {
 
 
 	public  function NewUser(){
-	  $id = $_SESSION["td"] . "-" . date("d-m-Y-H:i:s") . rand(1,999999999);
+	  $id = $_SESSION["td"] . "-" . date("d-m-Y-H:i:s") . rand(1,9999);
 	  $iden = sha1($id);
 	  $hash = substr($iden,0,6);
 	  return $hash;
