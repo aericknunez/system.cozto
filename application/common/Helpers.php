@@ -185,6 +185,9 @@ class Helpers{
     if($string == "3") return 'Credito Fiscal';
     if($string == "4") return 'Nota Exportación';
     if($string == "8") return 'Nota de Envío';
+    if($string == "12") return 'Factura';
+    if($string == "13") return 'Credito Fiscal';
+    
     }
 
 
