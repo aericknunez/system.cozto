@@ -202,6 +202,22 @@ $(document).ready(function()
 	});
 
 
+	$("body").on("click","#fx0",function(){ /// para el los botones de opciones
+
+		if($(this).attr('checked')){ // es por que estaba activo
+			$('#fx0').removeAttr("checked","checked");
+			var dir = 'op=450&iden=fx0&edo=0';
+		} 
+		else {
+			$('#fx0').attr("checked","checked");
+			var dir = 'op=450&iden=fx0&edo=1';
+		}
+	
+	QueryGo(dir);	
+	
+	});
+
+
 	$("body").on("click","#fx1",function(){ /// para el los botones de opciones
 
 		if($(this).attr('checked')){ // es por que estaba activo
@@ -211,6 +227,21 @@ $(document).ready(function()
 		else {
 			$('#fx1').attr("checked","checked");
 			var dir = 'op=450&iden=fx1&edo=1';
+		}
+	
+	QueryGo(dir);	
+	
+	});
+
+	$("body").on("click","#gx0",function(){ /// para el los botones de opciones
+
+		if($(this).attr('checked')){ // es por que estaba activo
+			$('#gx0').removeAttr("checked","checked");
+			var dir = 'op=450&iden=gx0&edo=0';
+		} 
+		else {
+			$('#gx0').attr("checked","checked");
+			var dir = 'op=450&iden=gx0&edo=1';
 		}
 	
 	QueryGo(dir);	
@@ -232,7 +263,6 @@ $(document).ready(function()
 	QueryGo(dir);	
 	
 	});
-
 
 
 function QueryGo(dir){
