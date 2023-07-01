@@ -72,7 +72,9 @@ class Laterales{
 
 	if($_SESSION["tipoticket"] == 1){ echo '<a id="mticket">TICKET</a>'; }
 	elseif($_SESSION["tipoticket"] == 2){ echo '<a id="mticket">FACTURA</a>'; }
+	elseif($_SESSION["tipoticket"] == 12){ echo '<a id="mticket">FACTURA 2</a>'; }
 	elseif($_SESSION["tipoticket"] == 3){ echo '<a id="mticket">CREDITO FISCAL</a>'; }
+	elseif($_SESSION["tipoticket"] == 13){ echo '<a id="mticket">CREDITO FISCAL 2</a>'; }
 	elseif($_SESSION["tipoticket"] == 4){ echo '<a id="mticket">NOTA DE CREDITO</a>'; }
 	elseif($_SESSION["tipoticket"] == 8){ echo '<a id="mticket">NOTA DE ENVIO</a>'; }
 	elseif($_SESSION["tipoticket"] == 0){ echo '<a id="mticket">N/A</a>'; }
@@ -86,7 +88,9 @@ public function NombreTicket(){ // selecciona el tipo de documento a emitir
 // 0 ninguno, 1 ticket, 2 factura, 3 credito fiscal
 if($_SESSION["tipoticket"] == 1){ return '<a id="mticket">TICKET</a>'; }
 elseif($_SESSION["tipoticket"] == 2){ return '<a id="mticket">FACTURA</a>'; }
+elseif($_SESSION["tipoticket"] == 12){ return '<a id="mticket">FACTURA 2</a>'; }
 elseif($_SESSION["tipoticket"] == 3){ return '<a id="mticket">CREDITO FISCAL</a>'; }
+elseif($_SESSION["tipoticket"] == 13){ return '<a id="mticket">CREDITO FISCAL 2</a>'; }
 elseif($_SESSION["tipoticket"] == 4){ return '<a id="mticket">NOTA DE CREDITO</a>'; }
 elseif($_SESSION["tipoticket"] == 8){ return '<a id="mticket">NOTA DE ENVIO</a>'; }
 elseif($_SESSION["tipoticket"] == 0){ return '<a id="mticket">N/A</a>'; }

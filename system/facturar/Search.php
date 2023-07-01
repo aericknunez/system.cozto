@@ -76,7 +76,9 @@ echo "SE ENCUENTRA ACTIVA LA OPCION: ";
 echo '<div id="vticket">';
   if($_SESSION["tipoticket"] == 1){ echo '<a id="mticket">TICKET</a>'; }
   elseif($_SESSION["tipoticket"] == 2){ echo '<a id="mticket">FACTURA</a>'; }
+  elseif($_SESSION["tipoticket"] == 12){ echo '<a id="mticket">FACTURA 2</a>'; }
   elseif($_SESSION["tipoticket"] == 3){ echo '<a id="mticket">CREDITO FISCAL</a>'; }
+  elseif($_SESSION["tipoticket"] == 13){ echo '<a id="mticket">CREDITO FISCAL 2</a>'; }
   elseif($_SESSION["tipoticket"] == 4){ echo '<a id="mticket">NOTA DE CREDITO</a>'; }
   elseif($_SESSION["tipoticket"] == 8){ echo '<a id="mticket">NOTA DE ENVIO</a>'; }
   else { echo '<a id="mticket">N/A</a>'; }
@@ -281,7 +283,9 @@ echo "SE ENCUENTRA ACTIVA LA OPCION: ";
 echo '<div id="vticket">';
 if($_SESSION["tipoticket"] == 1){ echo '<a id="mticket">TICKET</a>'; }
 elseif($_SESSION["tipoticket"] == 2){ echo '<a id="mticket">FACTURA</a>'; }
+elseif($_SESSION["tipoticket"] == 12){ echo '<a id="mticket">FACTURA 2</a>'; }
 elseif($_SESSION["tipoticket"] == 3){ echo '<a id="mticket">CREDITO FISCAL</a>'; }
+elseif($_SESSION["tipoticket"] == 13){ echo '<a id="mticket">CREDITO FISCAL 2</a>'; }
 elseif($_SESSION["tipoticket"] == 4){ echo '<a id="mticket">NOTA DE CREDITO</a>'; }
 elseif($_SESSION["tipoticket"] == 8){ echo '<a id="mticket">NOTA DE ENVIO</a>'; }
 else { echo '<a id="mticket">N/A</a>'; }
