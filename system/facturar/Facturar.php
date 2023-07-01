@@ -148,7 +148,7 @@ if($ex == 1){
 echo '<a id="opticket" tipo="3" class="btn btn-brown">Credito Fiscal</a>';
 }
 if($fx == 1){
-echo '<a id="opticket" tipo="12" class="btn btn-succeess">Factura 2</a>';
+echo '<a id="opticket" tipo="12" class="btn btn-success">Factura 2</a>';
 }
 
 if($gx == 1){
