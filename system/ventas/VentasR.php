@@ -871,11 +871,11 @@ if ($r = $db->select("sum(existencia)", "producto_ingresado", "WHERE existencia 
 	   	Helpers::UpdateId("ticket_orden", $cambios, "correlativo = ".$_SESSION["orden"]." and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."");  
 
 	   	$this->DescontarProducto($factura);
-	   	$this->FacturaResult($factura, $datos["efectivo"]);
-	   	$this->RegistroDocumento($factura);
-		if($_SESSION["gran_contribuyente"] == 1){
+		   if($_SESSION["gran_contribuyente"] == 1){
 			$this->AplicarRetencion();
 		}
+	   	$this->FacturaResult($factura, $datos["efectivo"]);
+	   	$this->RegistroDocumento($factura);
 
 	   	$this->Empareja($factura);
 
@@ -909,9 +909,17 @@ if ($r = $db->select("sum(existencia)", "producto_ingresado", "WHERE existencia 
    public function FacturaResult($factura, $efectivo){
   		$db = new dbConn();
 
-    $a = $db->query("SELECT sum(stotal), sum(imp), sum(total) FROM ticket WHERE num_fac = '$factura' and orden = ".$_SESSION["orden"]." and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."");
+    $a = $db->query("SELECT sum(stotal), sum(imp), sum(retencion), sum(total) FROM ticket WHERE num_fac = '$factura' and orden = ".$_SESSION["orden"]." and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."");
 		    foreach ($a as $b) {
-		     $stotal=$b["sum(stotal)"]; $imp=$b["sum(imp)"]; $total=$b["sum(total)"];
+		     $stotal=$b["sum(stotal)"]; 
+			 $imp=$b["sum(imp)"]; 
+			 $retencion=$b["sum(retencion)"]; 
+
+			 if($retencion > 0){
+				$total = $b["sum(total)"] - $retencion;
+			}else{
+				$total = $b["sum(total)"];
+			}
 		    } $a->close();
 
 if($efectivo == NULL){
