@@ -193,7 +193,10 @@ elseif($_SESSION["tipoticket"] == 0){ return '<a id="mticket">N/A</a>'; }
 		}
 
 		if($_SESSION['factura_cliente']){
-			 $textos = 'Cliente asignado al Credito Fiscal: ' . $_SESSION['factura_cliente']. ". Con el Documento: " . $_SESSION['factura_documento'];
+			if($_SESSION["gran_contribuyente"]){
+				$mensaje = '<br> El Cliente seleccionado es gran contribuyente por lo que se le realizará una retencion del 1%';
+			}
+			 $textos = 'Cliente asignado al Credito Fiscal: ' . $_SESSION['factura_cliente']. ". Con el Documento: " . $_SESSION['factura_documento'] .$mensaje;
 			Alerts::Mensajex($textos,"info",NULL,NULL);
 		}
 

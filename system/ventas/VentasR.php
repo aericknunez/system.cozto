@@ -713,7 +713,10 @@ if ($r = $db->select("sum(existencia)", "producto_ingresado", "WHERE existencia 
 			$repartidor = new Repartidor();
 			$repartidor->UnsetRepartidor();
 		}
-
+		if(isset($_SESSION["factura_cliente"])){ // eliminar variables de cliente credito fiscal
+			$opciones = new Opciones();
+			$opciones->DelCliente();
+		}
 			$can = $db->query("SELECT * FROM ticket WHERE orden = ".$_SESSION["orden"]." and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."");
 		    
 		    foreach ($can as $cancel) {
@@ -1083,6 +1086,7 @@ $_SESSION["cambio_actual_print"] = $efectivo; // solo para imprimir la factura c
 		$grancontribuyente = $_POST["contribuyente"];
 		if ($grancontribuyente == 1){
 			$_SESSION["gran_contribuyente"] = 1;
+			$mensaje = '<br> El Cliente seleccionado es gran contribuyente por lo que se le realizará una retencion del 1%';
 		}else{
 			unset($_SESSION["gran_contribuyente"]);
 		}
@@ -1090,7 +1094,7 @@ $_SESSION["cambio_actual_print"] = $efectivo; // solo para imprimir la factura c
        	$_SESSION["factura_cliente"] = $_POST["cliente"];
 		$_SESSION["factura_documento"] = $_POST["documento"];
   		
-  		$texto = $_SESSION['config_nombre_documento']. ": " . $_SESSION["factura_documento"] . "<br> Cliente: " . $_SESSION["factura_cliente"] ."<br> Gran Contribuyente:".$_SESSION["gran_contribuyente"];
+  		$texto = $_SESSION['config_nombre_documento']. ": " . $_SESSION["factura_documento"] . "<br> Cliente: " . $_SESSION["factura_cliente"] .$mensaje;
 		Alerts::Mensajex($texto,"danger",'<a id="quitar-documento" op="102" class="btn btn-danger btn-rounded">Quitar '.$_SESSION["config_nombre_documento"].'</a>',$boton2);
 
   }

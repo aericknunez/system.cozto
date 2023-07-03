@@ -114,7 +114,12 @@ class Opciones{
 
  	public function UnsetCliente(){
 			if(isset($_SESSION["cliente_cli"])) unset($_SESSION["cliente_cli"]);
-			if(isset($_SESSION["cliente_asig"])) unset($_SESSION["cliente_asig"]);		
+			if(isset($_SESSION["cliente_asig"])) unset($_SESSION["cliente_asig"]);
+			if(isset($_SESSION["factura_cliente"])) unset($_SESSION["factura_cliente"]);
+			if(isset($_SESSION["factura_documento"])) unset($_SESSION["factura_documento"]);
+			if(isset($_SESSION["gran_contribuyente"])) unset($_SESSION["gran_contribuyente"]);
+
+	
  	}
 
 
