@@ -915,7 +915,7 @@ if ($r = $db->select("sum(existencia)", "producto_ingresado", "WHERE existencia 
 			 $imp=$b["sum(imp)"]; 
 			 $retencion=$b["sum(retencion)"]; 
 
-			 if($retencion > 0){
+			 if($retencion > 0 && $stotal + $imp >= 100){
 				$total = $b["sum(total)"] - $retencion;
 			}else{
 				$total = $b["sum(total)"];
@@ -1237,8 +1237,8 @@ public function AplicarRetencion() { //Aplica el descuento a los productos
 	$db = new dbConn();
 				
 		$r = $db->query("SELECT * FROM ticket WHERE orden = ".$_SESSION["orden"]." and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."");
-
-		if($r->num_rows > 0){
+		$a = $db->select("sum(total)", "ticket", "WHERE orden = ".$_SESSION["orden"]." and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."");
+		if($r->num_rows > 0 && $a["sum(total)"] >= 100){
 			foreach ($r as $s) {
 				$total = $s["total"];
 				$cambio = array();
