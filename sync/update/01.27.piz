@@ -1,0 +1,3 @@
+ALTER TABLE `clientes` ADD `tipo_contribuyente` INT(1) NOT NULL AFTER `comentarios`;
+ALTER TABLE `facturar_documento` ADD `tipo_contribuyente` INT(1) NOT NULL AFTER `departamento`;
+ALTER TABLE `ticket` ADD `retencion` FLOAT(4,2) NOT NULL AFTER `imp`;
