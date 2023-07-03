@@ -1033,7 +1033,7 @@ $_SESSION["cambio_actual_print"] = $efectivo; // solo para imprimir la factura c
 						$nombre .= " | Cod: " . $b["codigo"];
 					}
                echo '<tr>
-                      <td scope="row"><a id="select-cli" hash="'. $b["hash"] .'" nombre="'. $b["nombre"] .'"><div>'. $nombre .'</div></a></td>
+                      <td scope="row"><a id="select-cli" hash="'. $b["hash"] .'" nombre="'. $b["nombre"] .' " contribuyente="'. $b["tipo_contribuyente"] .'""><div>'. $nombre .'</div></a></td>
                     </tr>'; 
     }  $a->close();
 
@@ -1053,8 +1053,15 @@ $_SESSION["cambio_actual_print"] = $efectivo; // solo para imprimir la factura c
 		
 		$opciones = new Opciones(); // guarda registro
 	   	$opciones->AddCliente(); 
+		$grancontribuyente = $_POST["contribuyente"];
+		   if ($grancontribuyente == 1){
+			   $_SESSION["gran_contribuyente"] = 1;
+			   $mensaje = '<br> El Cliente seleccionado es gran contribuyente por lo que se le realizará una retencion del 1%';
+		   }else{
+			   unset($_SESSION["gran_contribuyente"]);
+		   }
 
-  		$texto = 'Cliente asignado para la Factura: ' . $_SESSION['cliente_asig']. ".";
+  		$texto = 'Cliente asignado para la Factura: ' . $_SESSION['cliente_asig']. $mensaje. ".";
 		Alerts::Mensajex($texto,"danger",'<a id="quitar-clienteA" op="89" class="btn btn-danger btn-rounded">Quitar Cliente</a>',$boton2);
 
 

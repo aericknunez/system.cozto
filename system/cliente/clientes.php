@@ -95,6 +95,17 @@ $cliente = new Clientes();
 
   </div>
 
+  <div class="form-row">
+
+    <div class="col-md-12 mb-1 md-form">
+    <input class="form-check-input" type="checkbox" value="1" name="tipo_contribuyente" id="tipo_contribuyente" >
+    <label class="form-check-label" for="tipo_contribuyente">
+    Gran Contribuyente
+    </label>
+    </div>
+
+  </div>
+
 
 
   <div class="form-row">

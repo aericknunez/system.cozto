@@ -202,7 +202,8 @@ $(document).ready(function(){
     $("body").on("click","#select-cli",function(){
     var hash = $(this).attr('hash');
     var nombre = $(this).attr('nombre');
-        $.post("application/src/routes.php?op=88", {hash:hash, nombre:nombre}, 
+    var contribuyente = $(this).attr('contribuyente');
+        $.post("application/src/routes.php?op=88", {hash:hash, nombre:nombre, contribuyente:contribuyente}, 
         function(data){
             $("#muestra-busquedaA").hide();
             $("#ver").html(data); // lo que regresa de la busquea 

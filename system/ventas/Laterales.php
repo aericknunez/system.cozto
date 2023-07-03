@@ -188,13 +188,16 @@ elseif($_SESSION["tipoticket"] == 0){ return '<a id="mticket">N/A</a>'; }
 			Alerts::Mensajex($textos,"success",NULL,NULL);
 		}
 		if($_SESSION['cliente_asig']){
-			 $textos = 'Cliente asignado para la Factura: ' . $_SESSION['cliente_asig']. ".";
+			if($_SESSION["gran_contribuyente"]){
+				$mensaje = '<br> El Cliente seleccionado es gran contribuyente por lo que se le realizará una retencion del 1% si la venta es mayor o igual a $100.00 dólares';
+			}
+			 $textos = 'Cliente asignado para la Factura: ' . $_SESSION['cliente_asig']. $mensaje. ".";
 			Alerts::Mensajex($textos,"info",NULL,NULL);
 		}
 
 		if($_SESSION['factura_cliente']){
 			if($_SESSION["gran_contribuyente"]){
-				$mensaje = '<br> El Cliente seleccionado es gran contribuyente por lo que se le realizará una retencion del 1%';
+				$mensaje = '<br> El Cliente seleccionado es gran contribuyente por lo que se le realizará una retencion del 1% si la venta es mayor o igual a $100.00 dólares';
 			}
 			 $textos = 'Cliente asignado al Credito Fiscal: ' . $_SESSION['factura_cliente']. ". Con el Documento: " . $_SESSION['factura_documento'] .$mensaje;
 			Alerts::Mensajex($textos,"info",NULL,NULL);
@@ -222,7 +225,6 @@ elseif($_SESSION["tipoticket"] == 0){ return '<a id="mticket">N/A</a>'; }
 
 					return $r["sum(total)"];
 				}
-				
 				
 		    }  unset($r);  
  		
