@@ -939,6 +939,10 @@ if($servicio_p != "on"){
 			$repartidor = new Repartidor();
 			$repartidor->UnsetRepartidor();
 		}
+		if(isset($_SESSION["factura_cliente"])){ // borra las variables del cliente asignado al guardar la orden
+			$opciones = new Opciones();
+			$opciones->UnsetCliente();
+		}	
 
 		$cambios = array();
 	   	$cambios["estado"] = 3;
