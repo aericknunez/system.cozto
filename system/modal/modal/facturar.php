@@ -95,7 +95,7 @@ echo '<div class="display-4 text-center font-weight-bold">'. Helpers::Dinero($to
         <?php } ?>
         </div>
         <div class="float-right">
-          <a href="?" class="btn btn-primary btn-rounded">Regresar</a>
+          <a href="?" id="btn-regresar" class="btn btn-primary btn-rounded">Regresar</a>
         </div>
     
       </div>

@@ -13,11 +13,13 @@ $.ajax({
         data: $("#form-facturar").serialize(),
         beforeSend: function () {
            $("#formularios").hide();
+           $("#btn-regresar").hide()
            $("#btn-te").hide(); // esconde boton tarjeta y efectivo 
-           $("#resultado").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt=""></div>');
+           $("#resultado").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt="">Procesando venta por favor espere... </div>');
         },
         success: function(data){
             $("#formularios").hide();
+            $("#btn-regresar").show()
             $("#btn-te").hide(); // esconde boton tarjeta y efectivo
             $("#form-facturar").trigger("reset");
             $("#resultado").html(data);     
@@ -44,13 +46,15 @@ $.ajax({
         data: $("#form-facturar").serialize(),
         beforeSend: function () {
            $("#formularios").hide();
+           $("#btn-regresar").hide()
            $("#btn-te").hide(); // esconde boton tarjeta y efectivo 
            $("#botones-imprimir").html('<div class="row justify-content-center" >Imprimiendo</div>');
-           $("#resultado").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt=""></div>');
+           $("#resultado").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt="">Procesando venta por favor espere... </div>');
         },
         success: function(data){
             $("#form-facturar").trigger("reset");
             $("#formularios").hide();
+            $("#btn-regresar").show()
             $("#btn-te").hide(); // esconde boton tarjeta y efectivo
             $("#resultado").html(data);     
 
