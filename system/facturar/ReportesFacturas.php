@@ -7,11 +7,14 @@ public function ReporteF($inicio, $fin, $type = NULL) {
 		$db = new dbConn();
 		$primero = Fechas::Format($inicio);
 		$segundo = Fechas::Format($fin);
+		$diaA = strtotime('+1 day', $segundo);
+		$diaA = date('d-m-Y', $diaA);
+		$tercero = Fechas::Format($diaA);
 
 if($primero == $segundo){
 	$sqlx = "fecha = '$inicio'";
 } else {
-	$sqlx = "time BETWEEN '$primero' AND '$segundo'";
+	$sqlx = "time BETWEEN '$primero' AND '$tercero'";
 }
 
 if($type == NULL or $type == 0){
@@ -79,7 +82,7 @@ foreach ($ag as $bg) {
 
 echo '</tbody>
 	</table></div>';
-
+	echo '<div class="text-right"><a href="system/documentos/facturas_emitidas.php?inicio='.$inicio.'&fin='.$fin.'" >Descargar Excel</a></div>';
 
   } $a->close();
 		
