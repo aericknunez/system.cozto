@@ -579,6 +579,28 @@ static public function GetData($tabla, $campo, $tabla_id, $hash) {
 
 }
 
+public function ClienteProducto($orden, $tipo, $numeroFactura) {
+	$db = new dbConn();
+
+if ($tipo == 2){
+	if ($r = $db->select("cliente", "ticket_cliente", 
+	"WHERE orden = '$orden' and td = ".$_SESSION['td']."")) { 
+		$cliente = $r["cliente"];
+	} unset($r);  
+
+	if ($r = $db->select("nombre", "clientes", 
+		"WHERE hash = '$cliente' and td = ".$_SESSION['td']."")) { 
+	return $r["nombre"];
+	} unset($r);  
+}
+if ($tipo == 3){
+	if ($r = $db->select("cliente", "facturar_documento_factura", 
+		"WHERE factura = '$numeroFactura' and td = ".$_SESSION['td']."")) { 
+	return $r["cliente"];
+		} unset($r);  
+}
+
+}
 
 
 
