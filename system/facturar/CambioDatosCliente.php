@@ -39,6 +39,7 @@ class CambioDatosCliente{
               <th class="th-sm">REGISTRO</th>
               <th class="th-sm">DIRECCION</th>
               <th class="th-sm">Ver</th>
+              <th class="th-sm">Eliminar</th>
             </tr>
           </thead>
           <tbody>';
@@ -50,6 +51,7 @@ class CambioDatosCliente{
                         <td>'.$b["giro"].'</td>
                         <td>'.$b["registro"].'</td>
                         <td>'.$b["direccion"].', '.$b["departamento"].'</td>
+                        <td><a id="xver" op="68-CF" key="'.$b["documento"].'"><i class="fas fa-search fa-lg green-text"></i></a></td>
 
                         <td><a id="xdelete"  iden="'. $b["hash"] .'" op="321"><i class="fas fa-trash fa-lg red-text ml-2"></i></a>';
   
@@ -135,7 +137,61 @@ class CambioDatosCliente{
     }
 
 
-
+    public function VistaClienteCF($data){
+      $db = new dbConn();
+     if ($r = $db->select("*", "facturar_documento", "WHERE documento = '".$data["key"]."' and td = ".$_SESSION["td"]."")) { 
+  
+  
+  echo '<blockquote class="blockquote bq-primary">
+  <p class="bq-title" mb-0>'.$r["cliente"].'</p>
+  </blockquote>';
+  
+  echo '  <p  class="mt-1">Documento: <strong>'.$r["documento"].'</strong> </p>';
+  echo '  <p  class="mt-1">Giro: <strong>'.$r["giro"].'</strong> </p>';
+  echo '  <p  class="mt-1">Dirección: <strong>'.$r["direccion"].'</strong> </p>';
+  echo '  <p  class="mt-1">Departamento: <strong>'.$r["departamento"].'</strong> </p>';
+  
+        }  unset($r); 
+  
+  
+  
+   $a = $db->query("SELECT * FROM facturar_documento_factura WHERE documento = '".$data["key"]."' and td = ".$_SESSION["td"]."");
+    $cf = $a->num_rows;  // numero de facturas
+    $total = 0;
+  
+  echo '<div class="card-group">
+    <!--Panel-->
+    <div class="card ml-3 mr-2">
+        <div class="card-body text-center">
+            <h5 class="card-title">Credito Fiscal Registrados</h5>
+            <h1 class="display-1">'. $cf .'</h1>
+        </div>
+        <div class="card-footer">
+            <small class="text-muted"><a href="?cliente_facturas&tipo=3&key='.$data["key"].'">Ver Creditos Fiscales</a></small>
+        </div>
+    </div>
+    <!--/.Panel-->
+  
+    <!--Panel
+    <div class="card ml-2 mr-3">
+        <div class="card-body text-center">
+            <h5 class="card-title">Total</h5>
+            <h1 class="display-5">'. Helpers::Dinero($total) .'</h1>
+        </div>
+        <div class="card-footer">
+            <small class="text-muted"><a href="?creditosvercliente&key='.$data["key"].'"></a></small>
+        </div>
+    </div>
+ Panel-->
+  
+  </div>';
+  
+  
+  
+  
+  }
+  
+  
 
 
 
