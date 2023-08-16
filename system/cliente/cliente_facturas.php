@@ -12,7 +12,11 @@ $cliente = new Clientes();
 
 
 <div id="destinocliente">
-   <?php $cliente->ClienteFacturas($_REQUEST["key"]); ?>
+   <?php if($_REQUEST["tipo"] == 3){
+      $cliente->ClienteFacturascf($_REQUEST["key"]); 
+    }else{
+      $cliente->ClienteFacturas($_REQUEST["key"]); 
+     }?>
 </div>
 
 

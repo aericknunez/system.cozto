@@ -662,6 +662,11 @@ include_once '../../system/cliente/Cliente.php';
 	$cliente->VistaCliente($_POST);
 break;
 
+case "68-CF": // ver cliente credito fiscal
+	include_once '../../system/facturar/CambioDatosCliente.php';
+		$cliente = new CambioDatosCliente;
+		$cliente->VistaClienteCF($_POST);
+	break;
 
 
 
@@ -670,6 +675,12 @@ include_once '../../system/cliente/Cliente.php';
 	$cliente = new Clientes;
 	$cliente->VerFacturaCliente($_POST["factura"], $_POST["tx"]);
 break;
+
+case "68-2": // ver credito fiscal cliente
+	include_once '../../system/cliente/Cliente.php';
+		$cliente = new Clientes;
+		$cliente->VerFacturaClientecf($_POST["factura"], $_POST["tx"]);
+	break;
 
 
 

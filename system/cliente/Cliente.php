@@ -321,7 +321,7 @@ $a = $db->query("SELECT * FROM ticket_cliente WHERE cliente = '$cliente' and td 
                       <td>'.$b["factura"].'</td>
                       <td>'.$b["fecha"].'</td>
                       <td>'.$b["hora"].'</td>
-                      <td>'.$cajero.'</td>
+                      <td>'.Helpers::GetData("login_userdata", "nombre", "user", $cajero).'</td>
                       <td><a id="xverfactura" op="68-1" factura="'.$b["factura"].'"  tx="'.$b["tx"].'"><i class="fas fa-search fa-lg green-text"></i></a></td>
                     </tr>';          
               }
@@ -398,7 +398,105 @@ $a = $db->query("SELECT * FROM ticket WHERE num_fac = '$factura' and tx = '$tx' 
 
   }
 
+  public function ClienteFacturascf($cliente){ //Cliente credito Fiscal
+    $db = new dbConn();
 
+$a = $db->query("SELECT * FROM facturar_documento_factura WHERE documento = '$cliente' and td = ".$_SESSION["td"]." order by id desc");
+        if($a->num_rows > 0){
+      echo '<table id="dtMaterialDesignExample" class="table table-striped" table-sm cellspacing="0" width="100%">
+              <thead>
+                <tr>
+                  <th class="th-sm">#</th>
+                  <th class="th-sm">Credito Fiscal</th>
+                  <th class="th-sm">Fecha</th>
+                  <th class="th-sm">Cajero</th>
+                  <th class="th-sm">Ver</th>
+                </tr>
+              </thead>
+              <tbody>';
+        $n = 1;
+            foreach ($a as $b) { 
+
+                  if ($r = $db->select("cajero, tipo_pago", "ticket", "WHERE num_fac = '".$b["factura"]."' and tx = '".$b["tx"]."' and td = ".$_SESSION["td"]."")) { 
+                      $cajero = $r["cajero"];
+                      $fecha = date('d-m-Y H:i:s', $b["time"]);
+                  } unset($r); 
+
+              echo '<tr>
+                    <td>'. $n ++ .'</td>
+                    <td>'.$b["factura"].'</td>
+                    <td>'.$fecha.'</td>
+                    <td>'.Helpers::GetData("login_userdata", "nombre", "user", $cajero).'</td>
+                    <td><a id="xverfactura" op="68-2" factura="'.$b["factura"].'"  tx="'.$b["tx"].'"><i class="fas fa-search fa-lg green-text"></i></a></td>
+                  </tr>';          
+            }
+      echo '</tbody>
+              <tfoot>
+                <tr>
+                  <th>#</th>
+                  <th>Credito Fiscal</th>
+                  <th>Fecha</th>
+                  <th>Cajero</th>
+                  <th>Ver</th>
+                </tr>
+              </tfoot>
+            </table>';
+
+        } else {
+          Alerts::Mensajex("No se encontraron facturas registradas en este usuario","danger");
+        }$a->close();  
+
+}
+
+public function VerFacturaClientecf($factura, $tx){
+  $db = new dbConn();
+
+$a = $db->query("SELECT * FROM ticket WHERE num_fac = '$factura' and tx = '$tx' and tipo = '3' and td = ".$_SESSION["td"]." order by id desc");
+      if($a->num_rows > 0){
+    echo '<table id="dtMaterialDesignExample" class="table table-striped" table-sm cellspacing="0" width="100%">
+            <thead>
+              <tr>
+                <th>Cant</th>
+                <th>Producto</th>
+                <th>Precio</th>
+                <th>SubTotal</th>
+                <th>Imp</th>
+                <th>Descuento</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+            <tbody>';
+            $pv = 0; $st = 0; $im = 0; $de = 0; $to = 0;
+          foreach ($a as $b) { 
+            $pv = $pv + $b["pv"]; $st = $st+$b["stotal"]; 
+            $im = $im+$b["imp"]; $de = $de+$b["descuento"]; $to = $to+$b["total"];
+            echo '<tr>
+                  <td>'.$b["cant"]. '</td>
+                  <td>'.$b["producto"].'</td>
+                  <td>'.$b["pv"].'</td>
+                  <td>'.$b["stotal"].'</td>
+                  <td>'.$b["imp"].'</td>
+                  <td>'.$b["descuento"].'</td>
+                  <td>'.$b["total"].'</td>
+                </tr>';          
+          }
+    echo '</tbody>
+            <tfoot>
+              <tr>
+                <th></th>
+                <th>Total: </th>
+                <th>' . $pv . '</th>
+                <th>' . $st . '</th>
+                <th>' . $im . '</th>
+                <th>' . $de . '</th>
+                <th>' . $to . '</th>
+              </tr>
+            </tfoot>
+          </table>';
+
+      } $a->close();  
+
+}
 
 
 
