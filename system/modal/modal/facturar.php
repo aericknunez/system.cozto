@@ -18,7 +18,7 @@ if ($_REQUEST["t"] == 1) {
         <h5 class="modal-title" id="exampleModalLabel">
           FACTURAR VENTA</h5>
       </div>
-      <a href="?">
+      <a href="?" id="link-to">
       <div class="modal-body">
 <!-- ./  content -->
 
