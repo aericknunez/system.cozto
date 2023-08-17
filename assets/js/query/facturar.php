@@ -15,14 +15,14 @@ $.ajax({
            $("#formularios").hide();
            $("#btn-regresar").hide()
            $("#btn-te").hide(); // esconde boton tarjeta y efectivo 
-           $("#link-to").hide(); // esconde link para no regresar
+           $("#link-to").addClass('disabled'); // esconde link para no regresar
            $("#resultado").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt="">Procesando venta por favor espere... </div>');
         },
         success: function(data){
             $("#formularios").hide();
             $("#btn-regresar").show()
             $("#btn-te").hide(); // esconde boton tarjeta y efectivo
-            $("#link-to").show(); // muestr link para  regresar
+            $("#link-to").removeClass('disabled'); // muestr link para  regresar
             $("#form-facturar").trigger("reset");
             $("#resultado").html(data);     
             $("#botones-imprimir").load('application/src/routes.php?op=120'); // caraga los botones / imprimir          
@@ -50,7 +50,7 @@ $.ajax({
            $("#formularios").hide();
            $("#btn-regresar").hide()
            $("#btn-te").hide(); // esconde boton tarjeta y efectivo 
-           $("#link-to").hide(); // esconde link para no regresar
+           $("#link-to").addClass('disabled'); // esconde link para no regresar
            $("#botones-imprimir").html('<div class="row justify-content-center" >Imprimiendo</div>');
            $("#resultado").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt="">Procesando venta por favor espere... </div>');
         },
@@ -59,7 +59,7 @@ $.ajax({
             $("#formularios").hide();
             $("#btn-regresar").show()
             $("#btn-te").hide(); // esconde boton tarjeta y efectivo
-            $("#link-to").show(); // muestr link para  regresar
+            $("#link-to").removeClass('disabled'); // muestr link para  regresar
             $("#resultado").html(data);     
 
             <?php
