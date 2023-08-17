@@ -81,7 +81,7 @@ echo '<div class="display-4 text-center font-weight-bold">'. Helpers::Dinero($to
 <?php } else {
   echo '<p class="text-center font-weight-bold">No se encuentran productos pendientes a facturar en esta orden</p></a>';
 } ?>
-<a href="?">
+<a href="?" id="link-to">
 <div id="resultado"></div>
 </a>
 <!-- ./  content -->
