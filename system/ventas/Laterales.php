@@ -197,7 +197,7 @@ elseif($_SESSION["tipoticket"] == 0){ return '<a id="mticket">N/A</a>'; }
 
 		if($_SESSION['factura_cliente']){
 			if($_SESSION["gran_contribuyente"]){
-				$mensaje = '<br> El Cliente seleccionado es gran contribuyente por lo que se le realizará una retencion del 1% si la venta es mayor o igual a $100.00 dólares';
+				$mensaje = '<br> El Cliente seleccionado es gran contribuyente por lo que se le realizará una retencion del 1% ';
 			}
 			 $textos = 'Cliente asignado al Credito Fiscal: ' . $_SESSION['factura_cliente']. ". Con el Documento: " . $_SESSION['factura_documento'] .$mensaje;
 			Alerts::Mensajex($textos,"info",NULL,NULL);
@@ -219,7 +219,7 @@ elseif($_SESSION["tipoticket"] == 0){ return '<a id="mticket">N/A</a>'; }
 
  		    if ($r = $db->select("sum(total)", "ticket", "WHERE orden = '$orden' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."")) { 
 		        
-				if($_SESSION["gran_contribuyente"] == 1 && $r["sum(total)"] >= 100){
+				if($_SESSION["gran_contribuyente"] == 1){
 					return Helpers::Format($r["sum(total)"] - ($r["sum(total)"]*0.01));
 				}else{
 
