@@ -1244,7 +1244,6 @@ public function AplicarRetencion() { //Aplica el descuento a los productos
 	$db = new dbConn();
 				
 		$r = $db->query("SELECT * FROM ticket WHERE orden = ".$_SESSION["orden"]." and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."");
-		$a = $db->select("sum(total)", "ticket", "WHERE orden = ".$_SESSION["orden"]." and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."");
 		if($r->num_rows > 0 ){
 			foreach ($r as $s) {
 				$total = $s["total"];
