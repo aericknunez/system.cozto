@@ -1,22 +1,43 @@
 $(document).ready(function(){
 
-// busqueda actualizar
-	$("#producto-busqueda").keyup(function(){ /// para la caja de busqueda
+    function delay(callback, ms) {
+        var timer = 0;
+        return function() {
+          var context = this, args = arguments;
+          clearTimeout(timer);
+          timer = setTimeout(function () {
+            callback.apply(context, args);
+          }, ms || 0);
+        };
+      }
+      
+      
+      // Example usage:
+      
+      $('#producto-busqueda').keyup(delay(function (e) {
+        Search();
+      }, 700));
+    
+    
+      function Search(){
 		$.ajax({
-		type: "POST",
-		url: "application/src/routes.php?op=75",
-		data:'keyword='+$(this).val(),
-		beforeSend: function(){
-			$("#muestra-busqueda").css("background","#FFF url(assets/img/LoaderIcon.gif) no-repeat 550px");
-		},
-		success: function(data){
-			$("#muestra-busqueda").show();
-			$("#muestra-busqueda").html(data);
-			$("#producto-busqueda").css("background","#FFF");
-			Esconder();
-		}
-		});
-	});
+            type: "POST",
+            url: "application/src/routes.php?op=75",
+            data:'keyword='+$(this).val(),
+            beforeSend: function(){
+                $("#muestra-busqueda").css("background","#FFF url(assets/img/LoaderIcon.gif) no-repeat 550px");
+            },
+            success: function(data){
+                $("#muestra-busqueda").show();
+                $("#muestra-busqueda").html(data);
+                $("#producto-busqueda").css("background","#FFF");
+                Esconder();
+            }
+            });
+    }
+// busqueda actualizar
+
+
 
 $("#p-busqueda").keypress(function(e) {//Para deshabilitar el uso de la tecla "Enter"
 if (e.which == 13) {
