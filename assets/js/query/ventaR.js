@@ -151,9 +151,9 @@ function delay(callback, ms) {
   
   // Example usage:
   
-  $('#producto-busqueda').keyup(delay(function (e) {
-    Search();
-  }, 700));
+//   $('#producto-busqueda').keyup(delay(function (e) {
+//     Search();
+//   }, 700));
 
 
   function Search(){
@@ -172,7 +172,21 @@ function delay(callback, ms) {
         });
 }
 /////////////
-
+$("#producto-busqueda").keyup(function(){ /// para la caja de busqueda
+    $.ajax({
+    type: "POST",
+    url: "application/src/routes.php?op=" + Btags(),
+    data:'keyword='+$(this).val(),
+    beforeSend: function(){
+        $("#muestra-busqueda").css("background","#FFF url(assets/img/LoaderIcon.gif) no-repeat 550px");
+    },
+    success: function(data){
+        $("#muestra-busqueda").show();
+        $("#muestra-busqueda").html(data);
+        $("#producto-busqueda").css("background","#FFF");
+    }
+    });
+});
 
 
     $("body").on("click","#cancel-p",function(){
