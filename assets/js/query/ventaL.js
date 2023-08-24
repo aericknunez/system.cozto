@@ -23,7 +23,7 @@ $(document).ready(function(){
 		$.ajax({
             type: "POST",
             url: "application/src/routes.php?op=75",
-            data:'keyword='+$(this).val(),
+            data:'keyword='+$('#producto-busqueda').val(),
             beforeSend: function(){
                 $("#muestra-busqueda").css("background","#FFF url(assets/img/LoaderIcon.gif) no-repeat 550px");
             },
