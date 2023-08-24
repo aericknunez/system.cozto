@@ -137,9 +137,27 @@ $(document).ready(function(){
 
 
 //// buscar productos
+function delay(callback, ms) {
+    var timer = 0;
+    return function() {
+      var context = this, args = arguments;
+      clearTimeout(timer);
+      timer = setTimeout(function () {
+        callback.apply(context, args);
+      }, ms || 0);
+    };
+  }
+  
+  
+  // Example usage:
+  
+  $('#producto-busqueda').keyup(delay(function (e) {
+    Search();
+  }, 700));
 
-    $("#producto-busqueda").keyup(function(){ /// para la caja de busqueda
-        $.ajax({
+
+  function Search(){
+    $.ajax({
         type: "POST",
         url: "application/src/routes.php?op=" + Btags(),
         data:'keyword='+$(this).val(),
@@ -152,7 +170,8 @@ $(document).ready(function(){
             $("#producto-busqueda").css("background","#FFF");
         }
         });
-    });
+}
+/////////////
 
 
 
