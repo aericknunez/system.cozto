@@ -1510,8 +1510,9 @@ $cantidad = $b["cantidad"];
                     <td>'.$b["subcategoria"].'</td>
                     <td>'.$precio.'</td>
                     <td class="d-none d-md-block">'.$b["existencia_minima"].'</td>
-                    <td><a id="xver" op="55" key="'.$b["cod"].'"><i class="fas fa-search fa-lg green-text"></i></a>';
-
+                    <td>
+                      <a href="?kardex&key='.$b["cod"].'"><i class="fab fa-korvue fa-lg blue-text"></i></a>
+                      <a id="xver" op="55" key="'.$b["cod"].'"><i class="fas fa-search fa-lg green-text ml-3"></i></a>';
 // aqui iria el  de borrar producto
 if($_SESSION["tipo_cuenta"] == 1 or $_SESSION["tipo_cuenta"] == 5){
   echo '<a id="delpro" op="550" iden="'.$b["cod"].'"> <i class="fas fa-trash fa-lg red-text ml-3"></i></a>';
