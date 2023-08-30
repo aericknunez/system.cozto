@@ -191,6 +191,8 @@ $objPHPExcel->setActiveSheetIndex(0)
 
 $a = $db->query("SELECT * FROM ticket WHERE time BETWEEN '$aperturaF' AND '$cierreF' and edo = 1 and tipo_pago != 8 and td = ".$_SESSION['td']." order by time desc");
 
+$c = $db->query("SELECT * FROM creditos_abonos WHERE time BETWEEN '$aperturaF' AND '$cierreF' and edo = 1  and td = ".$_SESSION['td']." order by time desc");
+
 if($a->num_rows > 0){
 
 // Add encabezado
@@ -207,8 +209,12 @@ $objPHPExcel->setActiveSheetIndex(0)
             ->setCellValue('J15', 'PRECIO TOTAL')
             ->setCellValue('K15', 'DESCUENTO')
             ->setCellValue('L15', 'MONTO TOTAL')
-            ->setCellValue('M15', 'PAGO');
- 
+            ->setCellValue('M15', 'PAGO')
+            ->setCellValue('P15', 'FECHA')
+            ->setCellValue('Q15', 'HORA')
+            ->setCellValue('R15', 'NOMBRE')
+            ->setCellValue('S15', 'ABONO')
+            ->setCellValue('T15', 'PAGO');
 
 $fila = 15;   
    foreach ($a as $b) {
@@ -235,11 +241,22 @@ $objPHPExcel->setActiveSheetIndex(0)
 
         } 
 
+$fila = 15; 
+    foreach ($c as $d) {
+      
+      $fila = $fila + 1; 
+      $objPHPExcel->setActiveSheetIndex(0)
+                ->setCellValue('P' . $fila, $d["fecha"])
+                ->setCellValue('Q' . $fila, $d["hora"])
+                ->setCellValue('R' . $fila, $d["nombre"])
+                ->setCellValue('S' . $fila, $d["abono"])
+                ->setCellValue('T' . $fila, Helpers::TipoPago($d["tipo_pago"]));
+       
+              } 
 
 
-
-$columnas = array('A','B','C','D','E','F','G');
-$numeros = array('H','I','J','K','L');
+$columnas = array('A','B','C','D','E','F','G','P','Q','R');
+$numeros = array('H','I','J','K','L', 'S');
 
 // establece ceros numerocico las filas numerocas
 foreach($numeros as $columnID) {
