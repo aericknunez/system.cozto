@@ -912,6 +912,10 @@ if($servicio_p != "on"){
 			$repartidor = new Repartidor();
 			$repartidor->UnsetRepartidor();
 		}
+		if(isset($_SESSION["factura_cliente"])){ // eliminar variables de cliente credito fiscal
+			$opciones = new Opciones();
+			$opciones->DelCliente();
+		}
 
 			$can = $db->query("SELECT * FROM ticket WHERE orden = ".$_SESSION["orden"]." and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."");
 		    
@@ -939,6 +943,10 @@ if($servicio_p != "on"){
 			$repartidor = new Repartidor();
 			$repartidor->UnsetRepartidor();
 		}
+		if(isset($_SESSION["factura_cliente"])){ // borra las variables del cliente asignado al guardar la orden
+			$opciones = new Opciones();
+			$opciones->UnsetCliente();
+		}	
 
 		$cambios = array();
 	   	$cambios["estado"] = 3;
@@ -1046,6 +1054,9 @@ $a->close();
 		$cambios['tipo_pago'] = $tpago;
 	   	Helpers::UpdateId("ticket_orden", $cambios, "correlativo = ".$_SESSION["orden"]." and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."");  
 
+		if($_SESSION["gran_contribuyente"] == 1){
+			$this->AplicarRetencion();
+		}
 	   	$this->FacturaResult($factura, $datos["efectivo"]);
 	   	$this->RegistroDocumento($factura);
 
@@ -1069,6 +1080,7 @@ $a->close();
 			if(isset($_SESSION["orden"])) unset($_SESSION["orden"]);
 			if(isset($_SESSION["descuento"])) unset($_SESSION["descuento"]);
 			if(isset($_SESSION["tcredito"])) unset($_SESSION["tcredito"]);
+			if(isset($_SESSION["gran_contribuyente"])) unset($_SESSION["gran_contribuyente"]);
 
 			$kardex = new Kardex();
 			$kardex->InsertVenta($factura, $_SESSION["tipoticket"]);
@@ -1081,9 +1093,17 @@ $a->close();
    public function FacturaResult($factura, $efectivo){
   		$db = new dbConn();
 
-    $a = $db->query("SELECT sum(stotal), sum(imp), sum(total) FROM ticket WHERE num_fac = '$factura' and orden = ".$_SESSION["orden"]." and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."");
+    $a = $db->query("SELECT sum(stotal), sum(imp), sum(retencion), sum(total) FROM ticket WHERE num_fac = '$factura' and orden = ".$_SESSION["orden"]." and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."");
 		    foreach ($a as $b) {
-		     $stotal=$b["sum(stotal)"]; $imp=$b["sum(imp)"]; $total=$b["sum(total)"];
+		     $stotal=$b["sum(stotal)"]; 
+			 $imp=$b["sum(imp)"];
+			 $retencion=$b["sum(retencion)"]; 
+
+			 if($retencion > 0 && $stotal + $imp >= 100){
+				$total = $b["sum(total)"] - $retencion;
+			}else{
+				$total = $b["sum(total)"];
+			}
 		    } $a->close();
 
 if($efectivo == NULL){
@@ -1218,6 +1238,21 @@ $existencia = $y["existencia"];
 
 }
 
+public function AplicarRetencion() { //Aplica el descuento a los productos
+	$db = new dbConn();
+				
+		$r = $db->query("SELECT * FROM ticket WHERE orden = ".$_SESSION["orden"]." and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."");
+		$a = $db->select("sum(total)", "ticket", "WHERE orden = ".$_SESSION["orden"]." and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."");
+
+		if($r->num_rows > 0 && $a["sum(total)"] >= 100){
+			foreach ($r as $s) {
+				$total = $s["total"];
+				$cambio = array();
+   				$cambio["retencion"] = $total * 0.01;
+				Helpers::UpdateId("ticket", $cambio,  "hash = '".$s["hash"]."' and td = ".$_SESSION["td"]."");
+			}
+		} $r->close();
+}
 
 
 

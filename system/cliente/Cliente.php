@@ -45,7 +45,7 @@ class Clientes {
               $datos["time"] = Helpers::TimeId();
               $hash = $datos["hash"];
               if (Helpers::UpdateId("clientes", $datos, "hash = '$hash' and td = ".$_SESSION["td"]."")) {
-                  Alerts::Alerta("success","Realizado!","Cambio realizado exitsamente!");
+                  Alerts::Alerta("success","Realizado!","Cambio realizado exitosamente!");
                   echo '<script>
                         window.location.href="?clientever"
                       </script>';

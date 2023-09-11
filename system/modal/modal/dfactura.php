@@ -24,6 +24,11 @@ if(isset($_REQUEST["add"])){
 
 <input type="text" id="direccion" name="direccion" autocomplete="off" class="form-control mb-3" placeholder="Direccion"> 
 <input type="text" id="departamento" name="departamento" autocomplete="off" class="form-control mb-3" placeholder="Departamento"> 
+  <input class="form-check-input" type="checkbox" value="1" name="tipo_contribuyente" id="tipo_contribuyente" >
+  <label class="form-check-label" for="tipo_contribuyente">
+    Gran Contribuyente
+  </label>
+
 
 <button class="btn btn-info btn-block my-4" type="submit" id="btn-documento" name="btn-documento"><?php echo "Agregar " . $_SESSION['config_nombre_documento']; ?></button>
 </form>

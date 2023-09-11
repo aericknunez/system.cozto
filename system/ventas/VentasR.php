@@ -713,7 +713,10 @@ if ($r = $db->select("sum(existencia)", "producto_ingresado", "WHERE existencia 
 			$repartidor = new Repartidor();
 			$repartidor->UnsetRepartidor();
 		}
-
+		if(isset($_SESSION["factura_cliente"])){ // eliminar variables de cliente credito fiscal
+			$opciones = new Opciones();
+			$opciones->DelCliente();
+		}
 			$can = $db->query("SELECT * FROM ticket WHERE orden = ".$_SESSION["orden"]." and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."");
 		    
 		    foreach ($can as $cancel) {
@@ -868,6 +871,9 @@ if ($r = $db->select("sum(existencia)", "producto_ingresado", "WHERE existencia 
 	   	Helpers::UpdateId("ticket_orden", $cambios, "correlativo = ".$_SESSION["orden"]." and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."");  
 
 	   	$this->DescontarProducto($factura);
+		   if($_SESSION["gran_contribuyente"] == 1){
+			$this->AplicarRetencion();
+		}
 	   	$this->FacturaResult($factura, $datos["efectivo"]);
 	   	$this->RegistroDocumento($factura);
 
@@ -890,6 +896,7 @@ if ($r = $db->select("sum(existencia)", "producto_ingresado", "WHERE existencia 
 			if(isset($_SESSION["orden"])) unset($_SESSION["orden"]);
 			if(isset($_SESSION["descuento"])) unset($_SESSION["descuento"]);
 			if(isset($_SESSION["tcredito"])) unset($_SESSION["tcredito"]);
+			if(isset($_SESSION["gran_contribuyente"])) unset($_SESSION["gran_contribuyente"]);
 
 			$kardex = new Kardex();
 			$kardex->InsertVenta($factura, $_SESSION["tipoticket"]);
@@ -902,9 +909,17 @@ if ($r = $db->select("sum(existencia)", "producto_ingresado", "WHERE existencia 
    public function FacturaResult($factura, $efectivo){
   		$db = new dbConn();
 
-    $a = $db->query("SELECT sum(stotal), sum(imp), sum(total) FROM ticket WHERE num_fac = '$factura' and orden = ".$_SESSION["orden"]." and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."");
+    $a = $db->query("SELECT sum(stotal), sum(imp), sum(retencion), sum(total) FROM ticket WHERE num_fac = '$factura' and orden = ".$_SESSION["orden"]." and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."");
 		    foreach ($a as $b) {
-		     $stotal=$b["sum(stotal)"]; $imp=$b["sum(imp)"]; $total=$b["sum(total)"];
+		     $stotal=$b["sum(stotal)"]; 
+			 $imp=$b["sum(imp)"]; 
+			 $retencion=$b["sum(retencion)"]; 
+
+			 if($retencion > 0 ){
+				$total = $b["sum(total)"] - $retencion;
+			}else{
+				$total = $b["sum(total)"];
+			}
 		    } $a->close();
 
 if($efectivo == NULL){
@@ -1018,7 +1033,7 @@ $_SESSION["cambio_actual_print"] = $efectivo; // solo para imprimir la factura c
 						$nombre .= " | Cod: " . $b["codigo"];
 					}
                echo '<tr>
-                      <td scope="row"><a id="select-cli" hash="'. $b["hash"] .'" nombre="'. $b["nombre"] .'"><div>'. $nombre .'</div></a></td>
+                      <td scope="row"><a id="select-cli" hash="'. $b["hash"] .'" nombre="'. $b["nombre"] .' " contribuyente="'. $b["tipo_contribuyente"] .'""><div>'. $nombre .'</div></a></td>
                     </tr>'; 
     }  $a->close();
 
@@ -1038,8 +1053,15 @@ $_SESSION["cambio_actual_print"] = $efectivo; // solo para imprimir la factura c
 		
 		$opciones = new Opciones(); // guarda registro
 	   	$opciones->AddCliente(); 
+		$grancontribuyente = $_POST["contribuyente"];
+		   if ($grancontribuyente == 1){
+			   $_SESSION["gran_contribuyente"] = 1;
+			   $mensaje = '<br> El Cliente seleccionado es gran contribuyente por lo que se le realizará una retencion del 1%';
+		   }else{
+			   unset($_SESSION["gran_contribuyente"]);
+		   }
 
-  		$texto = 'Cliente asignado para la Factura: ' . $_SESSION['cliente_asig']. ".";
+  		$texto = 'Cliente asignado para la Factura: ' . $_SESSION['cliente_asig']. $mensaje. ".";
 		Alerts::Mensajex($texto,"danger",'<a id="quitar-clienteA" op="89" class="btn btn-danger btn-rounded">Quitar Cliente</a>',$boton2);
 
 
@@ -1060,7 +1082,7 @@ $_SESSION["cambio_actual_print"] = $efectivo; // solo para imprimir la factura c
             echo '<table class="table table-sm table-hover">';
     foreach ($a as $b) {
                echo '<tr>
-                      <td scope="row"><a id="select-d" documento="'. $b["documento"] .'" cliente="'. $b["cliente"] .'"><div>'. $b["cliente"] .'</div></a></td>
+                      <td scope="row"><a id="select-d" documento="'. $b["documento"] .'" cliente="'. $b["cliente"] .'" contribuyente="'. $b["tipo_contribuyente"] .'"><div>'. $b["cliente"] .'</div></a></td>
                     </tr>'; 
     }  $a->close();
 
@@ -1076,10 +1098,18 @@ $_SESSION["cambio_actual_print"] = $efectivo; // solo para imprimir la factura c
   public function AgregaDocumento($dato){ // Busqueda para documento
     $db = new dbConn();
 
+		$grancontribuyente = $_POST["contribuyente"];
+		if ($grancontribuyente == 1){
+			$_SESSION["gran_contribuyente"] = 1;
+			$mensaje = '<br> El Cliente seleccionado es gran contribuyente por lo que se le realizará una retencion del 1%';
+		}else{
+			unset($_SESSION["gran_contribuyente"]);
+		}
+
        	$_SESSION["factura_cliente"] = $_POST["cliente"];
 		$_SESSION["factura_documento"] = $_POST["documento"];
   		
-  		$texto = $_SESSION['config_nombre_documento']. ": " . $_SESSION["factura_documento"] . "<br> Cliente: " . $_SESSION["factura_cliente"];
+  		$texto = $_SESSION['config_nombre_documento']. ": " . $_SESSION["factura_documento"] . "<br> Cliente: " . $_SESSION["factura_cliente"] .$mensaje;
 		Alerts::Mensajex($texto,"danger",'<a id="quitar-documento" op="102" class="btn btn-danger btn-rounded">Quitar '.$_SESSION["config_nombre_documento"].'</a>',$boton2);
 
   }
@@ -1209,6 +1239,21 @@ public function GetComment($iden){
 
 }
 
+
+public function AplicarRetencion() { //Aplica el descuento a los productos
+	$db = new dbConn();
+				
+		$r = $db->query("SELECT * FROM ticket WHERE orden = ".$_SESSION["orden"]." and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."");
+		if($r->num_rows > 0 ){
+			foreach ($r as $s) {
+				$total = $s["total"];
+				$cambio = array();
+   				$cambio["retencion"] = $total * 0.01;
+				Helpers::UpdateId("ticket", $cambio,  "hash = '".$s["hash"]."' and td = ".$_SESSION["td"]."");
+			}
+		} $r->close();
+
+}
 
 
 

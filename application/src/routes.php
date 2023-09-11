@@ -1016,6 +1016,7 @@ break;
 case "102":  // quitar documneto
 unset($_SESSION["factura_cliente"]);
 unset($_SESSION["factura_documento"]);
+unset($_SESSION["gran_contribuyente"]);
 break;
 
 
