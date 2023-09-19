@@ -2752,7 +2752,7 @@ include_once '../../system/facturar/Search.php';
 include_once '../../system/reportes/Kardex.php';
 
 	$data = new Search(); 
-	$data->BorrarFactura($_SESSION["search"]);
+	$data->BorrarFactura($_SESSION["search"], $_POST["orden"]);
 break;
 
 
