@@ -3,6 +3,9 @@ $(document).ready(function(){
 
  ///////////// llamar modal para eliminar elemento
     $("body").on("click","#xdelete",function(){ 
+        var orden = $(this).attr('orden');
+         
+        $('#borrar-factura').attr("orden",orden);
       
         $('#ConfirmDelete').modal('show');
     });
@@ -12,7 +15,9 @@ $(document).ready(function(){
     $("body").on("click","#borrar-factura",function(){ 
         $('#ConfirmDelete').modal('hide');
         var op = "582";
-        var dataString = 'op='+op;
+        var orden = $(this).attr('orden');
+        var dataString = 'op='+op+'&orden='+orden;
+        console.log(dataString);
 
         $.ajax({
             type: "POST",
@@ -23,7 +28,7 @@ $(document).ready(function(){
             },
             success: function(data) {            
                 $("#detallesf").load('application/src/routes.php?op=580');
-                $("#mensajef").load('application/src/routes.php?op=581');
+               // $("#mensajef").load('application/src/routes.php?op=581');
             }
         }); 
 
@@ -70,7 +75,7 @@ $(document).ready(function(){
                 $('#ModalTicket').modal('hide');
                 $("#vticket").html(data); // lo que regresa de la busquea 
                 $("#detallesf").load('application/src/routes.php?op=580');
-                $("#mensajef").load('application/src/routes.php?op=581');
+               // $("#mensajef").load('application/src/routes.php?op=581');
             }
         }); 
     });

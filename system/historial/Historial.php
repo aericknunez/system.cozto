@@ -295,7 +295,7 @@ $a = $db->query("select cod, sum(cant), sum(total), producto, pv, fecha
 public function HistorialCortesZ($fechax) {
 		$db = new dbConn();
 
-$a = $db->query("SELECT fecha, sum(stotal) as subtotal, sum(imp) as imp, sum(total) as total, count(num_fac) as cantidad FROM ticket WHERE fecha like '%$fechax' and td = ". $_SESSION["td"] ."  GROUP by fecha");
+$a = $db->query("SELECT fecha, sum(stotal) as subtotal, sum(imp) as imp, sum(total) as total, count(num_fac) as cantidad FROM ticket WHERE fecha like '%$fechax' and edo = 1 and td = ". $_SESSION["td"] ."  GROUP by fecha");
 
 if($a->num_rows > 0){
 
