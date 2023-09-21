@@ -1383,7 +1383,7 @@ $printer->close();
   $db = new dbConn();
 
 
-  $nombre_impresora = "EPSON";
+  $nombre_impresora = "TICKET";
 
 
 $connector = new WindowsPrintConnector($nombre_impresora);
