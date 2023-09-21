@@ -1383,7 +1383,7 @@ $printer->close();
   $db = new dbConn();
 
 
-  $nombre_impresora = "TICKET";
+  $nombre_impresora = "EPSON";
 
 
 $connector = new WindowsPrintConnector($nombre_impresora);
@@ -1598,9 +1598,83 @@ $printer -> text($this->Col4("TICKETS",0 ,  "", 0,  Helpers::Entero($cant_t), 28
 $printer -> text($this->Col4("FACTURAS",0 ,  "", 0,  Helpers::Entero($cant_f), 27, Helpers::Format($t_factura), 20));
 $printer -> text($this->Col4("CREDITO FISCAL",0 ,  "", 0,  Helpers::Entero($cant_c), 21, Helpers::Format($t_credito), 20));
 
+$printer->feed();
+$printer -> text("DOCUMENTOS ANULADOS");
+$printer->feed();
+$printer -> text("____________________________________________________________");
+$printer->feed();
 
+// TICKET - subtotal, iva, total, hora
+if($t_ticket > 0){
 
+  $printer -> text("TICKETS"); 
+  $printer->feed();
+  $printer -> text($this->Col4("HORA - TICKET", 0,  "SUBTOTAL", 15,  "IVA", 15, "TOTAL", 15));
 
+  $a = $db->query("SELECT num_fac, hora FROM ticket_num WHERE edo = 2 and tipo = 1 and td = ".$_SESSION["td"]." and fecha = '$fechax'");
+      $cant_t = $a->num_rows;
+      $subTotalAnulado = 0;
+      $impAnulados = 0;
+      $totalAnulado = 0 ;
+      foreach ($a as $b) {
+          if ($r = $db->select("sum(stotal), sum(imp), sum(total)", "ticket", "WHERE num_fac = '".$b["num_fac"]."' and tipo = 1 and td = ".$_SESSION["td"]."")) { 
+              $stotalt = $r["sum(stotal)"];
+              $impt = $r["sum(imp)"];
+              $totalt = $r["sum(total)"];
+              $subTotalAnulado = $subTotalAnulado + $r["sum(stotal)"];
+              $impAnulados = $impAnulados+ $r["sum(imp)"];
+              $totalAnulado = $totalAnulado + $r["sum(total)"];
+          } unset($r);  
+
+  $printer -> text($this->Col4($b["hora"] . " - " . $b["num_fac"],0 ,  $stotalt, 15,  $impt, 15, $totalt, 15));
+  }  $a->close();
+
+  $printer -> text($this->Col4(" TOTAL ", 15 ,  $subTotalAnulado, 15,  $impAnulados, 15, $totalAnulado, 15));
+
+}
+// FACTURA - subtotal, iva, total, hora
+if($t_factura > 0){
+
+  $printer -> text("FACTURAS");
+  $printer->feed();
+  $printer -> text($this->Col4("HORA - FACTURA", 0,  "SUBTOTAL", 15,  "IVA", 15, "TOTAL", 15));
+
+  $a = $db->query("SELECT num_fac, hora FROM ticket_num WHERE edo = 2 and tipo = 2 and td = ".$_SESSION["td"]." and fecha = '$fechax'");
+      $cant_f = $a->num_rows;
+      foreach ($a as $b) {
+
+  if ($r = $db->select("sum(stotal), sum(imp), sum(total)", "ticket", "WHERE num_fac = '".$b["num_fac"]."' and tipo = 2 and td = ".$_SESSION["td"]."")) { 
+      $stotalp = $r["sum(stotal)"];
+      $impp = $r["sum(imp)"];
+      $totalp = $r["sum(total)"];
+  } unset($r);  
+
+  $printer -> text($this->Col4($b["hora"] . " - " . $b["num_fac"],0 ,  $stotalp, 15,  $impp, 15, $totalp, 15));
+
+  }  $a->close();
+
+}
+// CCF - subtotal, iva, total, hora
+if($t_credito > 0){
+
+  $printer -> text("CREDITO FISCAL");
+  $printer->feed();
+  $printer -> text($this->Col4("HORA - CCF", 0,  "SUBTOTAL", 15,  "IVA", 15, "TOTAL", 15));
+
+  $a = $db->query("SELECT num_fac, hora FROM ticket_num WHERE edo = 2 and tipo = 3 and td = ".$_SESSION["td"]." and fecha = '$fechax'");
+    $cant_c = $a->num_rows;
+      foreach ($a as $b) {
+
+  if ($r = $db->select("sum(stotal), sum(imp), sum(total)", "ticket", "WHERE num_fac = '".$b["num_fac"]."' and tipo = 3 and td = ".$_SESSION["td"]."")) { 
+      $stotalc = $r["sum(stotal)"];
+      $impc = $r["sum(imp)"];
+      $totalc = $r["sum(total)"];
+  } unset($r);  
+
+  $printer -> text($this->Col4($b["hora"] . " - " . $b["num_fac"],0 ,  $stotalc, 15,  $impc, 15, $totalc, 15));
+  }  $a->close();
+
+}
 
 $printer->feed();
 $printer->cut();
