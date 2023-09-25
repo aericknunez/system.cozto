@@ -16,6 +16,7 @@ if($_REQUEST["modal"]=="img_negocio") include_once 'system/modal/modal/imagen_ne
 if($_REQUEST["modal"]=="editproveedor") include_once 'system/modal/modal/editar-proveedor.php';
 
 if($_REQUEST["modal"]=="editcliente") include_once 'system/modal/modal/editar-cliente.php';
+if($_REQUEST["modal"]=="editclientecf") include_once 'system/modal/modal/editar-clientecf.php';
 
 // facturar
 if($_REQUEST["modal"]=="facturar") include_once 'system/modal/modal/facturar.php';

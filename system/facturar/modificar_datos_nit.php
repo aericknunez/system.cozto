@@ -38,7 +38,7 @@ $client = new CambioDatosCliente();
       </div>
       <div class="modal-footer">
 
-<!--<a href="" id="btn-pro" class="btn btn-secondary btn-rounded">Modificar Datos</a> -->
+<a href="" id="btn-pro" class="btn btn-secondary btn-rounded">Modificar Datos</a>
 <a id="cerrarmodal" class="btn btn-primary btn-rounded" data-dismiss="modal">Regresar</a>
 
           

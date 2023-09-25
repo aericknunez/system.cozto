@@ -654,6 +654,11 @@ include_once '../../system/cliente/Cliente.php';
 	$cliente->UpCliente($_POST);
 break;
 
+case "67-CF": // actualizar cliente credito Fiscal
+include_once '../../system/cliente/Cliente.php';
+	$cliente = new Clientes;
+	$cliente->EditarClientecf($_POST);
+break;
 
 
 case "68": // ver cliente
