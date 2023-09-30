@@ -73,6 +73,9 @@ echo '
 	if($_GET["modal"] == "dfactura"){
 	echo '<script type="text/javascript" src="assets/js/query/ventaPop.js?v='.$numero.'"></script>';
 	}
+	if($_GET["modal"] == "editclientecf"){
+		echo '<script type="text/javascript" src="assets/js/query/mod_nit.js?v='.$numero.'"></script>';
+	}
 	if($_GET["modal"] == "cliente"){
 	echo '<script type="text/javascript" src="assets/js/query/ventaPop.js?v='.$numero.'"></script>';
 	}

@@ -29,7 +29,7 @@ class CambioDatosCliente{
    $a = $db->query("SELECT * FROM facturar_documento WHERE td = ".$_SESSION["td"]." order by ".$orden." ".$dir." limit $offset, $limit");
         
         if($a->num_rows > 0){
-            echo '<div class="responsive">
+            echo '<div class="table table-responsive">
             <table class="table table-sm table-striped">
           <thead>
             <tr>
@@ -38,8 +38,8 @@ class CambioDatosCliente{
               <th class="th-sm">GIRO</th>
               <th class="th-sm">REGISTRO</th>
               <th class="th-sm">DIRECCION</th>
-              <th class="th-sm">Ver</th>
-              <th class="th-sm">Eliminar</th>
+              <th class="th-xs">Ver</th>
+              <th class="th-xs">Eliminar</th>
             </tr>
           </thead>
           <tbody>';
