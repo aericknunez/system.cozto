@@ -29,7 +29,7 @@ $parametros["cajero"] = $_SESSION['nombre'];
 
 if($_SESSION["tipoticket"] == 1){
 
-if ($r = $db->select("cliente", "ticket_cliente", "WHERE factura = '".$parametros["num_fac"]."' and tx = " . $_SESSION["tx"] . " and td = " .  $_SESSION["td"])) { 
+if ($r = $db->select("cliente", "ticket_cliente", "WHERE factura = '".$parametros["num_fac"]."' and orden = '".$_SESSION["orden_print"]."' and tx = " . $_SESSION["tx"] . " and td = " .  $_SESSION["td"])) { 
 $hashcliente = $r["cliente"];
 } unset($r);  
 
