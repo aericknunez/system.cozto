@@ -36,38 +36,28 @@ $printer -> setLineSpacing(80);
 
 $printer -> setJustification(Printer::JUSTIFY_CENTER);
 $printer->text("FARMACIA MARLENE");
-
-
 $printer->feed();
 $printer->text("Calle 15 de Septiembre #16, Barrio San Pedro");
 $printer->feed();
 $printer->text("Metapán, Santa Ana");
-
 $printer->feed();
 $printer->text("Tel: 2442-0554 y 2402-1027");
-
-
 $printer->feed();
-//$printer->text("Giro: Venta al por mayor de otros productos ");
-//$printer->text("de Construccion y articulos conexos ");
-
-
-// $printer->feed();
-// $printer->text("NIT: 1010-291061-002-4   NRC: 33274-7");
-
-// $printer->feed();
-// $printer->text("GIRO: Clinica Veterinaria y venta de productos Agropecuarios");
-
-
-// $printer->feed();
-// $printer->text("Autorizacion: ASC-15041-036310-2021");
-
-// $printer->feed();
-// $printer->text("DEL: 21SV00000001-1  AL: 21SV00000001-50000");
-
-// $printer->feed();
-// $printer->text("FECHA DE AUTORIZACION: 09/01/2021");
-
+$printer->text("CONTRIBUYENTE: YANIRA IVETH SANCHEZ DE MONGE");
+$printer->feed();
+$printer->text("NRC: 29633-3 NIT: 0207-100473-101-0");
+$printer->feed();
+$printer->text("Giro:Venta de roductos Farmaceuticos y Medicinales");
+$printer->feed();
+$printer->text("Resolución N°: 30108-RES-CR-71217-2023");
+$printer->feed();
+$printer->text("Autorizacion N°: ASC-15041-049973-2023");
+$printer->feed();
+$printer->text("SERIE N°: 23AS00000001");
+$printer->feed();
+$printer->text("RANGO AUTORIZADO DEL 1 AL 1000000");
+$printer->feed();
+$printer->text("FECHA DE AUTORIZACION: 09/05/2023");
 $printer->feed();
 $printer->text("CAJA: 1.  TICKET NUMERO: " . $numero);
 
@@ -162,14 +152,11 @@ $printer -> text($this->DosCol($fechaf, 30, $horaf, 20));
 
 $printer->feed();
 $printer -> text("Cajero: " . $_SESSION['nombre']);
-
 $printer->feed();
 $printer -> setJustification(Printer::JUSTIFY_CENTER);
 $printer -> text("GRACIAS POR SU PREFERENCIA...");
+$printer->feed();
 $printer -> setJustification();
-
-
-
 
 $printer->feed();
 $printer->cut();
@@ -674,36 +661,24 @@ $printer->feed();
 
 $printer -> setJustification(Printer::JUSTIFY_CENTER);
 $printer->text("FARMACIA MARLENE");
-
-
-
-
-//$printer->feed();
-//$printer->text("Salida a San Julian, Barrio Veracruz");
-//$printer->feed();
-//$printer->text("Cuisnahuat, Sonsonate");
-
-//$printer->feed();
-//$printer->text("Tel: 7609-7442");
-
-
-//$printer->feed();
-//$printer->text("Giro: Venta al por menor de Materiales ");
-//$printer->text("de Construccion y articulos conexos ");
-
-
-
-// $printer->feed();
-// $printer->text("NIT: 1010-291061-002-4   NRC: 33274-7");
-
-// $printer->feed();
-// $printer->text("GIRO: Clinica Veterinaria y venta de productos Agropecuarios");
-
-
+$printer->feed();
+$printer->text("CONTRIBUYENTE: YANIRA IVETH SANCHEZ DE MONGE");
+$printer->feed();
+$printer->text("NRC: 29633-3 NIT: 0207-100473-101-0");
+$printer->feed();
+$printer->text("Giro:Venta de roductos Farmaceuticos y Medicinales");
+$printer->feed();
+$printer->text("Resolución N°: 30108-RES-CR-71217-2023");
+$printer->feed();
+$printer->text("Autorizacion N°: ASC-15041-049973-2023");
+$printer->feed();
+$printer->text("SERIE N°: 23AS00000001");
+$printer->feed();
+$printer->text("RANGO AUTORIZADO DEL 1 AL 1000000");
+$printer->feed();
+$printer->text("FECHA DE AUTORIZACION: 09/05/2023");
 $printer->feed();
 $printer->text("CAJA: 1.");
-
-
 
 //// obtener lor datos del corte
 if ($r = $db->select("*", "corte_diario", "WHERE hash = '$hash'")) { 
@@ -972,41 +947,27 @@ $printer->feed();
 /* Items */
 
 $printer -> setJustification(Printer::JUSTIFY_CENTER);
-$printer->text("FARMACIA MARLENI");
-
-
-
-
-//$printer->feed();
-//$printer->text("Salida a San Julian, Barrio Veracruz");
-//$printer->feed();
-//$printer->text("Cuisnahuat, Sonsonate");
-
-//$printer->feed();
-//$printer->text("Tel: 7609-7442");
-
-//$printer->text("Giro: Venta al por menor de Materiales ");
-//$printer->text("de Construccion y articulos conexos ");
-
-
-// $printer->feed();
-// $printer->text("NIT: 1010-291061-002-4   NRC: 33274-7");
-
-// $printer->feed();
-// $printer->text("GIRO: Clinica Veterinaria y venta de productos Agropecuarios");
-
-
+$printer->text("FARMACIA MARLENE");
+$printer->feed();
+$printer->text("CONTRIBUYENTE: YANIRA IVETH SANCHEZ DE MONGE");
+$printer->feed();
+$printer->text("NRC: 29633-3 NIT: 0207-100473-101-0");
+$printer->feed();
+$printer->text("Giro:Venta de roductos Farmaceuticos y Medicinales");
+$printer->feed();
+$printer->text("Resolución N°: 30108-RES-CR-71217-2023");
+$printer->feed();
+$printer->text("Autorizacion N°: ASC-15041-049973-2023");
+$printer->feed();
+$printer->text("SERIE N°: 23AS00000001");
+$printer->feed();
+$printer->text("RANGO AUTORIZADO DEL 1 AL 1000000");
+$printer->feed();
+$printer->text("FECHA DE AUTORIZACION: 09/05/2023");
 $printer->feed();
 $printer->text("CAJA: 1.");
-
-
-
-
-
 $printer->feed();
 $printer->text("FECHA: " .  Fechas::FechaEscrita($fechax));
-
-
 
 $printer->feed();
 $printer -> text("VENTAS");
