@@ -942,6 +942,7 @@ echo '<div class="display-4 text-center font-weight-bold">'. Helpers::Dinero($ca
 
 $_SESSION["factura_actual_print"] = $factura; // solo para imprimir la factura correcta
 $_SESSION["cambio_actual_print"] = $efectivo; // solo para imprimir la factura correcta
+$_SESSION["orden_actual_print"] = $_SESSION["orden"];// solo para imprimir la factura correcta
 
 
 // echo '<hr>
