@@ -1215,7 +1215,7 @@ case "120": // mostar los botones imprimir factura
 	$fac->ObtenerEstadoFactura($_SESSION["cambio_actual_print"], $_SESSION["factura_actual_print"]);
 
 // elimino las dos variables
-unset($_SESSION["factura_actual_print"], $_SESSION["cambio_actual_print"]);
+unset($_SESSION["factura_actual_print"], $_SESSION["cambio_actual_print"], $_SESSION["orden_actual_print"]);
 break;
 
 
