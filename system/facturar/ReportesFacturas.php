@@ -102,7 +102,7 @@ echo '</tbody>
 public function ClienteProducto($orden, $tipo, $numeroFactura) {
 	$db = new dbConn();
 
-if ($tipo == 2 or $tipo == 12){
+if ($tipo == 1 || $tipo == 2 || $tipo == 12){
 	if ($r = $db->select("cliente", "ticket_cliente", 
 	"WHERE orden = '$orden' and td = ".$_SESSION['td']."")) { 
 		$cliente = $r["cliente"];
@@ -113,7 +113,7 @@ if ($tipo == 2 or $tipo == 12){
 	return $r["nombre"];
 	} unset($r);  
 }
-if ($tipo == 3 or $tipo == 13){
+if ($tipo == 3 || $tipo == 13){
 	if ($r = $db->select("cliente", "facturar_documento_factura", 
 		"WHERE factura = '$numeroFactura' and tipo = ".$tipo." and td = ".$_SESSION['td']."")) { 
 	return $r["cliente"];
