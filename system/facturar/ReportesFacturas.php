@@ -115,7 +115,7 @@ if ($tipo == 1 || $tipo == 2 || $tipo == 12){
 }
 if ($tipo == 3 || $tipo == 13){
 	if ($r = $db->select("cliente", "facturar_documento_factura", 
-		"WHERE factura = '$numeroFactura' and tipo = ".$tipo." and td = ".$_SESSION['td']."")) { 
+		"WHERE factura = '$numeroFactura' and tipo = ".$tipo." and td = ".$_SESSION['td']." order by id desc limit 1" )) { 
 	return $r["cliente"];
 		} unset($r);  
 }
