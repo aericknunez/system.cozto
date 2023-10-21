@@ -56,7 +56,7 @@ $objPHPExcel->setActiveSheetIndex(0)
             ->setCellValue('F1', 'PRECIO')
             ->setCellValue('G1', 'EXISTENCIA MINIMA')
             ->setCellValue('H1', 'MARCA')
-            ->setCellValue('I1', 'CANTIDAD VENDIDO');
+            ->setCellValue('I1', '');
  
 
 
@@ -89,9 +89,9 @@ if($b["compuesto"] == "on"){
 
 
 // productos vendidos
-if ($r = $db->select("sum(cant) as cantidad", "ticket", "WHERE cod = '".$b["cod"]."' and td = ". $_SESSION["td"] ."")) {
+/* if ($r = $db->select("sum(cant) as cantidad", "ticket", "WHERE cod = '".$b["cod"]."' and td = ". $_SESSION["td"] ."")) {
 $vcantidad = $r["cantidad"];
-}  unset($r);
+}  unset($r); */
 
 //marca
 if ($r = $db->select("marca", "marca_asig", "WHERE producto = '".$b["cod"]."' and td =".$_SESSION["td"]."")) { 
@@ -117,7 +117,7 @@ $objPHPExcel->setActiveSheetIndex(0)
           ->setCellValue('F' . $fila, $precio)
           ->setCellValue('G' . $fila, $b["existencia_minima"])
           ->setCellValue('H' . $fila, $marca)
-          ->setCellValue('I' . $fila, Helpers::Entero($vcantidad));
+          ->setCellValue('I' . $fila, '');
  
 
         } 
