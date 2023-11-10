@@ -47,6 +47,7 @@ if($dir == "asc") $dir2 = "desc";
           </tr>
         </thead>
         <tbody>';
+        $TotalCreditosPendientes = 0;
         foreach ($a as $b) {
         // obtener el nombre y detalles del producto
     if ($r = $db->select("*", "pro_dependiente", "WHERE iden = ".$b["producto"]." and td = ". $_SESSION["td"] ."")) { 
@@ -55,6 +56,7 @@ if($dir == "asc") $dir2 = "desc";
           $total = $this->ObtenerTotal($b["factura"], $b["tx"], $b["orden"]);
           $abonado = $this->TotalAbono($b["hash"]);
           $saldo = $total - $abonado;
+          $TotalCreditosPendientes += $saldo;
           
           echo '<tr>
                       <td>'.$b["nombre"].'</td>
@@ -99,7 +101,7 @@ if($dir == "asc") $dir2 = "desc";
   }
 
 /// se establece cuanto es el total en credito pendiente
-echo '<div class="font-weight-bold">Total Credito Pendiente: ' . Helpers::Dinero($this->TotalCreditoOtorgado() - $this->TotalAbonoRealiado()) . '</div><br>';
+echo '<div class="font-weight-bold">Total Credito Pendiente: ' . Helpers::Dinero($TotalCreditosPendientes) . '</div><br>';
 
 
 echo $total_rows . " Registros encontrados";
@@ -418,6 +420,7 @@ if($dir == "asc") $dir2 = "desc";
           </tr>
         </thead>
         <tbody>';
+        $TotalCreditosPendientes = 0;
         foreach ($a as $b) {
         // obtener el nombre y detalles del producto
     if ($r = $db->select("*", "pro_dependiente", "WHERE iden = ".$b["producto"]." and td = ". $_SESSION["td"] ."")) { 
@@ -427,6 +430,7 @@ if($dir == "asc") $dir2 = "desc";
         $total = $this->ObtenerTotal($b["factura"], $b["tx"], $b["orden"]);
         $abonado = $this->TotalAbono($b["hash"]);
         $saldo = $total - $abonado;
+        $TotalCreditosPendientes += $saldo;
 
 
           echo '<tr>
@@ -472,7 +476,7 @@ if($dir == "asc") $dir2 = "desc";
   }
 
 /// se establece cuanto es el total en credito pendiente
-echo '<div class="font-weight-bold">Total Credito Pendiente: ' . Helpers::Dinero($this->TotalCreditoOtorgado() - $this->TotalAbonoRealiado()) . '</div><br>';
+echo '<div class="font-weight-bold">Total Credito Pendiente: ' . Helpers::Dinero($TotalCreditosPendientes) . '</div><br>';
 
 echo $total_rows . " Registros encontrados";
 
@@ -597,8 +601,11 @@ $page <= 1 ? $enable = 'disabled' : $enable = '';
                       <td>'.$this->UltimoAbono($b["hash"]).'</td>
                       <td>'.Helpers::EstadoCredito($b["edo"]) . '</td>
                       <td>
-                      <a id="xver" op="109" credito="'. $b["hash"] .'" orden="'. $b["orden"] .'" factura="'. $b["factura"] .'" tx="'. $b["tx"] .'"><i class="fas fa-search fa-lg green-text"></i></a></td>
-                    </tr>';
+                      <a id="xver" op="109" credito="'. $b["hash"] .'" orden="'. $b["orden"] .'" factura="'. $b["factura"] .'" tx="'. $b["tx"] .'"><i class="fas fa-search fa-lg green-text"></i></a>';
+                      if ($abonado == 0) {
+                        echo '<a id="delete" credito="'. $b["hash"] .'" orden="'. $b["orden"] .'" factura="'. $b["factura"] .'" tx="'. $b["tx"] .'"  tipo="1"><i class="fas fa-trash fa-lg red-text ml-2"></i></a>';
+                      }
+                    echo '</td></tr>';
         }
         echo '</tbody>
         </table>';
@@ -712,7 +719,7 @@ foreach ($c as $d) {
 
 } $a->close();
 /////////////
-
+Alerts::Alerta("success","Credito Eliminado Correctamente","");
 if ($tipo == 1) {
   $this->VerCredito(1, "factura", "desc");
 } else {
