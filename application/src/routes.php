@@ -654,6 +654,11 @@ include_once '../../system/cliente/Cliente.php';
 	$cliente->UpCliente($_POST);
 break;
 
+case "67-CF": // actualizar cliente credito Fiscal
+include_once '../../system/cliente/Cliente.php';
+	$cliente = new Clientes;
+	$cliente->EditarClientecf($_POST);
+break;
 
 
 case "68": // ver cliente
@@ -1210,7 +1215,7 @@ case "120": // mostar los botones imprimir factura
 	$fac->ObtenerEstadoFactura($_SESSION["cambio_actual_print"], $_SESSION["factura_actual_print"]);
 
 // elimino las dos variables
-unset($_SESSION["factura_actual_print"], $_SESSION["cambio_actual_print"]);
+unset($_SESSION["factura_actual_print"], $_SESSION["cambio_actual_print"], $_SESSION["orden_actual_print"]);
 break;
 
 
@@ -2752,7 +2757,7 @@ include_once '../../system/facturar/Search.php';
 include_once '../../system/reportes/Kardex.php';
 
 	$data = new Search(); 
-	$data->BorrarFactura($_SESSION["search"]);
+	$data->BorrarFactura($_SESSION["search"], $_POST["orden"]);
 break;
 
 

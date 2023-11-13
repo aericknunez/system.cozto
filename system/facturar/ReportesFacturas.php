@@ -18,9 +18,9 @@ if($primero == $segundo){
 }
 
 if($type == NULL or $type == 0){
-  $a = $db->query("SELECT * FROM ticket_num WHERE edo = 1 and $sqlx and td = ".$_SESSION['td']." order by time desc");	
+  $a = $db->query("SELECT * FROM ticket_num WHERE $sqlx and td = ".$_SESSION['td']." order by time desc");	
 } else {
-  $a = $db->query("SELECT * FROM ticket_num WHERE tipo = '$type' and edo = 1 and $sqlx and td = ".$_SESSION['td']." order by time desc");
+  $a = $db->query("SELECT * FROM ticket_num WHERE tipo = '$type' and $sqlx and td = ".$_SESSION['td']." order by time desc");
 }
 
    if ($a->num_rows > 0) {
@@ -34,6 +34,7 @@ if($type == NULL or $type == 0){
 	       <th>Fecha</th>
 	       <th>Tipo</th>					       
 	       <th>Numero</th>
+		   <th>Estado</th>
 		   <th>Cliente</th>
 	       <th>Tipo Pago</th>
 	       <th>Cajero</th>
@@ -45,7 +46,7 @@ if($type == NULL or $type == 0){
 
     foreach ($a as $b) {
 	$numeroFactura = $b["num_fac"];
-$ag = $db->query("SELECT sum(cant), sum(total), cajero, tipo_pago, orden, tipo FROM ticket where edo = 1 and num_fac = '".$b["num_fac"]."' and tipo = '".$b["tipo"]."' and td = ".$_SESSION['td']."");
+$ag = $db->query("SELECT sum(cant), sum(total), cajero, tipo_pago, orden, tipo FROM ticket where num_fac = '".$b["num_fac"]."' and orden = '".$b["orden"]."' and tipo = '".$b["tipo"]."' and td = ".$_SESSION['td']."");
 foreach ($ag as $bg) { 
 	$cant = $bg["sum(cant)"];
 	$total = $bg["sum(total)"];
@@ -53,13 +54,21 @@ foreach ($ag as $bg) {
 	$tipo_pago = $bg["tipo_pago"];
 	$orden = $bg["orden"];
 	$tipo = $bg["tipo"];
+	if($b["edo"] == 1){
+		$estado = "Activo";
+		$class = "";
+	}else{
+		$estado = "Anulado";
+		$class = "text-danger";
+	}
 	
 } $ag->close();
 
-	echo '<tr>
+	echo '<tr class = "'.$class.'" >
 		   <th>'.$b["fecha"].' '.$b["hora"].'</th>					       
 		   <th>'.Helpers::TipoFacturaVentas($b["tipo"]).'</th>
 		   <th>'.$b["num_fac"].'</th>
+		   <th>'.$estado.'</th>
 		   <th>'.$this->ClienteProducto($orden, $tipo, $numeroFactura).'</th>
 		   <th>'.Helpers::TipoPago($tipo_pago).'</th>
 		   <th>'.$this->CajeroVentas($cajero).'</th>
@@ -72,6 +81,7 @@ foreach ($ag as $bg) {
 	       <th>Fecha</th>
 	       <th>Tipo</th>					       
 	       <th>Numero</th>
+		   <th>Estado</th>
 		   <th>Cliente</th>
 	       <th>Tipo Pago</th>
 	       <th>Cajero</th>
@@ -92,7 +102,7 @@ echo '</tbody>
 public function ClienteProducto($orden, $tipo, $numeroFactura) {
 	$db = new dbConn();
 
-if ($tipo == 2 or $tipo == 12){
+if ($tipo == 1 || $tipo == 2 || $tipo == 12){
 	if ($r = $db->select("cliente", "ticket_cliente", 
 	"WHERE orden = '$orden' and td = ".$_SESSION['td']."")) { 
 		$cliente = $r["cliente"];
@@ -103,9 +113,9 @@ if ($tipo == 2 or $tipo == 12){
 	return $r["nombre"];
 	} unset($r);  
 }
-if ($tipo == 3 or $tipo == 13){
+if ($tipo == 3 || $tipo == 13){
 	if ($r = $db->select("cliente", "facturar_documento_factura", 
-		"WHERE factura = '$numeroFactura' and tipo = ".$tipo." and td = ".$_SESSION['td']."")) { 
+		"WHERE factura = '$numeroFactura' and tipo = ".$tipo." and td = ".$_SESSION['td']." order by id desc limit 1" )) { 
 	return $r["cliente"];
 		} unset($r);  
 }

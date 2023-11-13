@@ -10,22 +10,28 @@ class Search{
   public function DestalleFactura($factura){
       $db = new dbConn();
 
+  $ordenes = $db->query("SELECT * FROM ticket_num WHERE num_fac = '$factura' and tipo = '".$_SESSION["tipoticket"]."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."");
+          if($ordenes->num_rows > 0){
 
-// para poner que ha sido eliminada la factura
-    if ($r = $db->select("edo", "ticket_num", "WHERE num_fac = '$factura' and tipo = '".$_SESSION["tipoticket"]."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."")) { 
-        $edox = $r["edo"];
-    } unset($r);  
-
-
-if($edox == 2){
-  Alerts::Mensajex(Helpers::TipoFacturaVentas($_SESSION["tipoticket"])." N° " .$factura . " ha sido anulado/a", "danger");
-}
-
-
-$a = $db->query("SELECT * FROM ticket WHERE num_fac = '$factura' and tipo = '".$_SESSION["tipoticket"]."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]." order by id desc");
-          if($a->num_rows > 0){
-        echo '<table id="dtMaterialDesignExample" class="table table-striped" table-sm cellspacing="0" width="100%">
-                <thead>
+            foreach($ordenes as $orden)
+            {
+              if($orden['edo'] == 2){
+                Alerts::Mensajex(Helpers::TipoFacturaVentas($_SESSION["tipoticket"])." N° " .$factura . " orden N° " .$orden['orden']." ha sido anulado/a", "danger");
+              }else{
+                Alerts::Mensajex(Helpers::TipoFacturaVentas($_SESSION["tipoticket"])." No. " . $factura." orden N° " .$orden['orden']  ,"info");
+              } 
+              echo '<table id="dtMaterialDesignExample" class="table table-striped" table-sm cellspacing="0" width="100%">
+              
+                <div class="card-body d-flex p-0 m-0">';
+                if($orden['edo'] == 2){
+                  echo '<a class="btn-floating btn-lg grey darken-1 waves-effect waves-light ml-auto" title="Imprimir Factura"><i class="fas fa-print"></i></a>';
+                  echo '<a class="btn-floating btn-lg grey darken-1 waves-effect waves-light" title="Elimiar Factura"><i class="fas fa-trash-alt"></i></a>';
+                } else {
+                  echo '<a id="imprimir" class="btn-floating btn-lg btn-mdb-color waves-effect waves-light ml-auto" title="Imprimir Factura"><i class="fas fa-print"></i></a>';
+                  echo '<a id="xdelete" orden="'.$orden['orden'].'" class="btn-floating btn-lg btn-danger waves-effect waves-light " title="Elimiar Factura"><i class="fas fa-trash-alt"></i></a>';
+                };
+               '</div>';
+           echo '<thead>
                   <tr>
                     <th>Cant</th>
                     <th>Producto</th>
@@ -37,38 +43,49 @@ $a = $db->query("SELECT * FROM ticket WHERE num_fac = '$factura' and tipo = '".$
                   </tr>
                 </thead>
                 <tbody>';
-                $pv = 0; $st = 0; $im = 0; $de = 0; $to = 0;
-              foreach ($a as $b) { 
-                $pv = $pv + $b["pv"]; $st = $st+$b["stotal"]; 
-                $im = $im+$b["imp"]; $de = $de+$b["descuento"]; $to = $to+$b["total"];
-                echo '<tr>
-                      <td>'.$b["cant"]. '</td>
-                      <td>'.$b["producto"].'</td>
-                      <td>'.$b["pv"].'</td>
-                      <td>'.$b["stotal"].'</td>
-                      <td>'.$b["imp"].'</td>
-                      <td>'.$b["descuento"].'</td>
-                      <td>'.$b["total"].'</td>
-                    </tr>';          
-              }
-        echo '</tbody>
-                <tfoot>
-                  <tr>
-                    <th></th>
-                    <th>Total: </th>
-                    <th>' . $pv . '</th>
-                    <th>' . $st . '</th>
-                    <th>' . $im . '</th>
-                    <th>' . $de . '</th>
-                    <th>' . $to . '</th>
-                  </tr>
-                </tfoot>
-              </table>';
-
+              $productos = $db->query("SELECT * FROM ticket WHERE orden = ".$orden["orden"]." and tipo = '".$_SESSION["tipoticket"]."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."");
+                    $pv = 0; 
+                    $st = 0; 
+                    $im = 0; 
+                    $de = 0; 
+                    $to = 0;
+                    foreach($productos as $producto)
+                    {
+                        $pv = $pv + $producto["pv"]; 
+                        $st = $st + $producto["stotal"]; 
+                        $im = $im + $producto["imp"]; 
+                        $de = $de + $producto["descuento"]; 
+                        $to = $to + $producto["total"];
+                        echo '<tr>
+                              <td>'.$producto["cant"]. '</td>
+                              <td>'.$producto["producto"].'</td>
+                              <td>'.$producto["pv"].'</td>
+                              <td>'.$producto["stotal"].'</td>
+                              <td>'.$producto["imp"].'</td>
+                              <td>'.$producto["descuento"].'</td>
+                              <td>'.$producto["total"].'</td>
+                            </tr>';      
+                    }                                   
+                  echo '</tbody>
+                  <tfoot>
+                    <tr>
+                      <th></th>
+                      <th>Total: </th>
+                      <th>' .Helpers::Format($pv). '</th>
+                      <th>' .Helpers::Format($st) . '</th>
+                      <th>' .Helpers::Format($im) . '</th>
+                      <th>' .Helpers::Format($de) . '</th>
+                      <th>' .Helpers::Format($to) . '</th>
+                    </tr>
+                  </tfoot>
+                </table>
+                <hr class="bg-danger border-2 border-top border-danger">';
+                
+            }  $productos->close();  
           } else {
-          	echo '<div align="center"><img src="assets/img/imagenes/error4.png" alt="Error" class="fluid-img"></div>';
-          } $a->close();  
-
+            Alerts::Mensajex(Helpers::TipoFacturaVentas($_SESSION["tipoticket"])." N° " .$factura . " no ha sido encontrado/a", "danger");
+        
+            } $ordenes->close();
 
 echo '<div class="text-center">';
 echo "SE ENCUENTRA ACTIVA LA OPCION: ";
@@ -84,7 +101,8 @@ echo '<div id="vticket">';
   else { echo '<a id="mticket">N/A</a>'; }
 echo "</div>";
 echo "</div>";
-  }
+
+        }      
 
 
 
@@ -144,23 +162,23 @@ if($edox == 2){
 
 
 
-public function BorrarFactura($factura){
+public function BorrarFactura($factura, $orden){
     $db = new dbConn();
     $kardex = new Kardex();
 
     $cambio = array();
     $cambio["edo"] = 2;
-    Helpers::UpdateId("ticket", $cambio, "num_fac = '$factura' and tipo = '".$_SESSION["tipoticket"]."' and td = ".$_SESSION["td"]."");      
+    Helpers::UpdateId("ticket", $cambio, "num_fac = '$factura' and orden = '$orden' and tipo = '".$_SESSION["tipoticket"]."' and td = ".$_SESSION["td"]."");      
     
     $cambio2 = array();
     $cambio2["edo"] = 2;
-    Helpers::UpdateId("ticket_num", $cambio2, "num_fac = '$factura' and tipo = '".$_SESSION["tipoticket"]."' and td = ".$_SESSION["td"]."");      
+    Helpers::UpdateId("ticket_num", $cambio2, "num_fac = '$factura' and orden = '$orden' and tipo = '".$_SESSION["tipoticket"]."' and td = ".$_SESSION["td"]."");      
  
 
 
 
 /// solo regresar la cantidad al inventario // esto deberia cambiar y llevarse todo lo necesario
-  $a = $db->query("SELECT cant, cod, hash, pv FROM ticket WHERE num_fac = '$factura' and tipo = '".$_SESSION["tipoticket"]."' and td = ".$_SESSION["td"]."");
+  $a = $db->query("SELECT cant, cod, hash, pv FROM ticket WHERE num_fac = '$factura' and orden = '$orden' and tipo = '".$_SESSION["tipoticket"]."' and td = ".$_SESSION["td"]."");
   foreach ($a as $b) {
 
 // obtener cant de producto

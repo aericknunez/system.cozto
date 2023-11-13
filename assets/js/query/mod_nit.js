@@ -79,7 +79,6 @@ $("body").on("click","#xver",function(){
     var key = $(this).attr('key');
     var op = $(this).attr('op');
     var dataString = 'op='+op+'&key='+key;
-    console.log(dataString);
 
     $.ajax({
         type: "POST",
@@ -93,11 +92,26 @@ $("body").on("click","#xver",function(){
         }
     });
 
-    $('#btn-pro').attr("href",'?modal=editcliente&key='+key);
+    $('#btn-pro').attr("href",'?modal=editclientecf&key='+key);
     
 });
 
-
+//editar cliente credito fiscal
+$('#btn-documento').click(function(e){ /// Nuevo Documento
+    e.preventDefault();
+    $.ajax({
+        url: "application/src/routes.php?op=67-CF",
+        method: "POST",
+        data: $("#form-documento").serialize(),
+        beforeSend: function () {
+           $("#ver").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt=""></div>');
+        },
+        success: function(data){
+            $("#form-documento").trigger("reset");
+             $("#ver").html(data); // lo que regresa de la busquea 
+        }
+    })
+})
 
 
 

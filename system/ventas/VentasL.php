@@ -1077,13 +1077,14 @@ $a->close();
 			$repartidor = new Repartidor();
 			$repartidor->UnsetRepartidor();
 		}
+			$kardex = new Kardex();
+			$kardex->InsertVenta($factura, $_SESSION["tipoticket"], $_SESSION["orden"]);
 			if(isset($_SESSION["orden"])) unset($_SESSION["orden"]);
 			if(isset($_SESSION["descuento"])) unset($_SESSION["descuento"]);
 			if(isset($_SESSION["tcredito"])) unset($_SESSION["tcredito"]);
 			if(isset($_SESSION["gran_contribuyente"])) unset($_SESSION["gran_contribuyente"]);
 
-			$kardex = new Kardex();
-			$kardex->InsertVenta($factura, $_SESSION["tipoticket"]);
+			
    }
 
 

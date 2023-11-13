@@ -295,7 +295,7 @@ $a = $db->query("select cod, sum(cant), sum(total), producto, pv, fecha
 public function HistorialCortesZ($fechax) {
 		$db = new dbConn();
 
-$a = $db->query("SELECT fecha, sum(stotal) as subtotal, sum(imp) as imp, sum(total) as total, count(num_fac) as cantidad FROM ticket WHERE fecha like '%$fechax' and td = ". $_SESSION["td"] ."  GROUP by fecha");
+$a = $db->query("SELECT fecha, sum(stotal) as subtotal, sum(imp) as imp, sum(total) as total, count(num_fac) as cantidad FROM ticket WHERE fecha like '%$fechax' and edo = 1 and td = ". $_SESSION["td"] ."  GROUP by fecha");
 
 if($a->num_rows > 0){
 
@@ -311,18 +311,26 @@ echo '<h3 class="h3-responsive">RESUMEN MENSUAL</h3>';
 		       <th>Sub Total</th>					       
 		       <th>Impuesto</th>
 		       <th>Total</th>
+			   <th>Anulado</th>
 		       <th>Imprimir</th>
 		     </tr>
 		   </thead>
 
 		   <tbody>';
-foreach ($a as $b) {	
+foreach ($a as $b) {
+
+	$r = $db->select("sum(total) as total", "ticket", "WHERE fecha like '%".$b["fecha"]."' and edo = 2 and td = ". $_SESSION["td"] ." ");
+		$total = $r["total"];
+		unset($r);
+
+	
   	echo '<tr>
 	       <th scope="row">'. $b["fecha"] . '</th>
 	       <td>'. $b["cantidad"] . '</td>
 	       <td>'. Helpers::Dinero($b["subtotal"]) . '</td>
 	       <td>'. Helpers::Dinero($b["imp"]) . '</td>
 	       <td>'. Helpers::Dinero($b["total"]) . '</td>
+		   <td>'. Helpers::Dinero($total) . '</td>
 	       <td><a id="imprimir_cortez" fecha="'. $b["fecha"] . '"><i class="fa fa-print blue-text fa-lg"></i></a></td>
 	     </tr>';
 

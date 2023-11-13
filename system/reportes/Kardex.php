@@ -9,9 +9,9 @@ class Kardex{
 
 // codigo, detalle, iden, valor_unitario, cantidad, total
 // public function InsertKardex($cod, $detalle, $iden, $valor, $cantidad, $total) {
-    public function InsertVenta($factura, $tipo) {
+    public function InsertVenta($factura, $tipo, $orden) {
         $db = new dbConn();
-        $a = $db->query("SELECT * FROM ticket WHERE num_fac = '$factura' and tipo = '$tipo' and td = ".$_SESSION["td"]."");
+        $a = $db->query("SELECT * FROM ticket WHERE num_fac = '$factura' and orden = '$orden' and tipo = '$tipo' and td = ".$_SESSION["td"]."");
 
         if($a->num_rows > 0){
             foreach ($a as $b) {

@@ -24,7 +24,7 @@ $busqueda->DestalleFactura($_SESSION["search"]);
 
 <?php 
 
-$busqueda->BotonesFactura($_SESSION["search"]);
+//$busqueda->BotonesFactura($_SESSION["search"]);
  ?>
   </div>
 </div>

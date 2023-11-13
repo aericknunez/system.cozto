@@ -766,10 +766,10 @@ if ($r = $db->select("sum(existencia)", "producto_ingresado", "WHERE existencia 
 	}
 
 
-	public function DescontarProducto($factura) { // Descuenta los productods del inventario segun factura
+	public function DescontarProducto($factura, $orden) { // Descuenta los productods del inventario segun factura
 		$db = new dbConn();
 
-	    $ax = $db->query("SELECT * FROM ticket WHERE num_fac = '$factura' and tipo = '".$_SESSION["tipoticket"]."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."");
+	    $ax = $db->query("SELECT * FROM ticket WHERE num_fac = '$factura' and orden = '$orden'  and tipo = '".$_SESSION["tipoticket"]."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."");
 	    foreach ($ax as $bx) {
 
 		// primero verifico si el producto es un compuesto. si es compuesto o dependiente actualizo todos los productos que este conlleva . si es un servicio no se hace nada
@@ -870,7 +870,7 @@ if ($r = $db->select("sum(existencia)", "producto_ingresado", "WHERE existencia 
 		$cambios['tipo_pago'] = $tpago;
 	   	Helpers::UpdateId("ticket_orden", $cambios, "correlativo = ".$_SESSION["orden"]." and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."");  
 
-	   	$this->DescontarProducto($factura);
+	   	$this->DescontarProducto($factura, $_SESSION["orden"]);
 		   if($_SESSION["gran_contribuyente"] == 1){
 			$this->AplicarRetencion();
 		}
@@ -893,13 +893,15 @@ if ($r = $db->select("sum(existencia)", "producto_ingresado", "WHERE existencia 
 			$repartidor = new Repartidor();
 			$repartidor->UnsetRepartidor();
 		}
+
+			$kardex = new Kardex();
+			$kardex->InsertVenta($factura, $_SESSION["tipoticket"], $_SESSION["orden"]);
 			if(isset($_SESSION["orden"])) unset($_SESSION["orden"]);
 			if(isset($_SESSION["descuento"])) unset($_SESSION["descuento"]);
 			if(isset($_SESSION["tcredito"])) unset($_SESSION["tcredito"]);
 			if(isset($_SESSION["gran_contribuyente"])) unset($_SESSION["gran_contribuyente"]);
 
-			$kardex = new Kardex();
-			$kardex->InsertVenta($factura, $_SESSION["tipoticket"]);
+			
    }
 
 
@@ -940,6 +942,7 @@ echo '<div class="display-4 text-center font-weight-bold">'. Helpers::Dinero($ca
 
 $_SESSION["factura_actual_print"] = $factura; // solo para imprimir la factura correcta
 $_SESSION["cambio_actual_print"] = $efectivo; // solo para imprimir la factura correcta
+$_SESSION["orden_actual_print"] = $_SESSION["orden"];// solo para imprimir la factura correcta
 
 
 // echo '<hr>

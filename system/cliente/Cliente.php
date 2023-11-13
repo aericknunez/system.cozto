@@ -196,6 +196,28 @@ class Clientes {
   }
 
   }
+//Editar Cliente de Credito Fiscal
+  public function EditarClientecf($datos){ 
+    $db = new dbConn();
+
+    if($datos["documento"] != NULL && $datos["cliente"] != NULL){ // comprueba datos
+      $datos["cliente"] = strtoupper($datos["cliente"]); // paso a mayusculas
+      $hash = $datos["hash"];
+      $datos["time"] = Helpers::TimeId();
+      $datos["td"] = $_SESSION["td"];
+      if ($datos["tipo_contribuyente"] == 1){
+          $datos["tipo_contribuyente"] = 1;
+      }else{
+          $datos["tipo_contribuyente"] = 0;
+      }
+          if (Helpers::UpdateId("facturar_documento", $datos, "hash = '$hash' and td = ".$_SESSION["td"]."")) {
+              Alerts::Alerta("success","Realizado!","Cambio realizado exitosamente!");
+              echo '<script> window.location.href="?mod_nit"</script>';
+          }           
+          } else {
+        Alerts::Alerta("error","Error!","Faltan Datos!");
+      }
+}
 
 /// verifica que no exista el numero de documento
   public function VerificaDocumento($documento){ // productde  de la tabla ticket
