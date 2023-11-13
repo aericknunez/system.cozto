@@ -34,10 +34,11 @@ if($_SESSION["tipoticket"] == 0){
     } unset($r);  
     
     
-    if ($r = $db->select("nombre, documento, direccion", "clientes", "WHERE hash = '".$hashcliente."' and td = " .  $_SESSION["td"])) { 
+    if ($r = $db->select("nombre, documento, direccion, telefono", "clientes", "WHERE hash = '".$hashcliente."' and td = " .  $_SESSION["td"])) { 
     $parametros["nombre"] = $r["nombre"];
     $parametros["documento"] = $r["documento"];
     $parametros["direccion"] = $r["direccion"];
+    $parametros["telefono"] = $r["telefono"];
     } unset($r);  
     
     
@@ -66,10 +67,11 @@ $hashcliente = $r["cliente"];
 } unset($r);  
 
 
-if ($r = $db->select("nombre, documento, direccion", "clientes", "WHERE hash = '".$hashcliente."' and td = " .  $_SESSION["td"])) { 
+if ($r = $db->select("nombre, documento, direccion, telefono", "clientes", "WHERE hash = '".$hashcliente."' and td = " .  $_SESSION["td"])) { 
 $parametros["nombre"] = $r["nombre"];
 $parametros["documento"] = $r["documento"];
 $parametros["direccion"] = $r["direccion"];
+$parametros["telefono"] = $r["telefono"];
 } unset($r);  
 
 
