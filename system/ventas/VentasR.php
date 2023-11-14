@@ -917,7 +917,7 @@ if ($r = $db->select("sum(existencia)", "producto_ingresado", "WHERE existencia 
 			 $imp=$b["sum(imp)"]; 
 			 $retencion=$b["sum(retencion)"]; 
 
-			 if($retencion > 0 ){
+			 if($retencion > 0 && $stotal + $imp >= 100 ){
 				$total = $b["sum(total)"] - $retencion;
 			}else{
 				$total = $b["sum(total)"];
@@ -1059,7 +1059,7 @@ $_SESSION["orden_actual_print"] = $_SESSION["orden"];// solo para imprimir la fa
 		$grancontribuyente = $_POST["contribuyente"];
 		   if ($grancontribuyente == 1){
 			   $_SESSION["gran_contribuyente"] = 1;
-			   $mensaje = '<br> El Cliente seleccionado es gran contribuyente por lo que se le realizará una retencion del 1%';
+			   $mensaje = '<br> El Cliente seleccionado es gran contribuyente por lo que se le realizará una retención del 1% si la venta es mayor o igual a $100.00 dólares';
 		   }else{
 			   unset($_SESSION["gran_contribuyente"]);
 		   }
@@ -1104,7 +1104,7 @@ $_SESSION["orden_actual_print"] = $_SESSION["orden"];// solo para imprimir la fa
 		$grancontribuyente = $_POST["contribuyente"];
 		if ($grancontribuyente == 1){
 			$_SESSION["gran_contribuyente"] = 1;
-			$mensaje = '<br> El Cliente seleccionado es gran contribuyente por lo que se le realizará una retencion del 1%';
+			$mensaje = '<br> El Cliente seleccionado es gran contribuyente por lo que se le realizará una retencion del 1% si la venta es mayor o igual a $100.00 dólares si la venta es mayor o igual a $100.00 dólares';
 		}else{
 			unset($_SESSION["gran_contribuyente"]);
 		}
@@ -1247,7 +1247,8 @@ public function AplicarRetencion() { //Aplica el descuento a los productos
 	$db = new dbConn();
 				
 		$r = $db->query("SELECT * FROM ticket WHERE orden = ".$_SESSION["orden"]." and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."");
-		if($r->num_rows > 0 ){
+		$a = $db->select("sum(total)", "ticket", "WHERE orden = ".$_SESSION["orden"]." and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."");
+		if($r->num_rows > 0 && $a["sum(total)"] >= 100 ){
 			foreach ($r as $s) {
 				$total = $s["total"];
 				$cambio = array();
