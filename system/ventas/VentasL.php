@@ -1235,36 +1235,38 @@ $existencia = $y["existencia"];
 
 public function AplicarRetencion() { //Aplica la retencion del 1% a los productos con ventas a grandes contribuyentes
 	$db = new dbConn();
-				
-		$r = $db->query("SELECT * FROM ticket WHERE orden = ".$_SESSION["orden"]." and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."");
-		$a = $db->select("sum(stotal), sum(total)", "ticket", "WHERE orden = ".$_SESSION["orden"]." and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."");
-
-		if($r->num_rows > 0 && $a["sum(stotal)"] >= 100){
-			foreach ($r as $s) {
-				$stotal = $s["stotal"];
+		// Obtener productos y subtotal		
+		$productos = $db->query("SELECT * FROM ticket WHERE orden = ".$_SESSION["orden"]." and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."");
+		$subTotal = $db->select("sum(stotal)", "ticket", "WHERE orden = ".$_SESSION["orden"]." and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."");
+		
+		  // Aplicar retención a cada producto
+		if($productos->num_rows > 0 && $subTotal["sum(stotal)"] >= 100){
+			foreach ($productos as $producto) {
+				$sTotal = $producto["stotal"];
 				$cambio = array();
-   				$cambio["retencion"] = $stotal * 0.01;
-				Helpers::UpdateId("ticket", $cambio,  "hash = '".$s["hash"]."' and td = ".$_SESSION["td"]."");
+   				$cambio["retencion"] = $sTotal * 0.01;
+				Helpers::UpdateId("ticket", $cambio,  "hash = '".$producto["hash"]."' and td = ".$_SESSION["td"]."");
 			}
-		} $r->close();
+		} $productos->close();
 
 	$this->restarRetencion();
 }
 
 public function restarRetencion() { //Resta la retencion del 1% a los productos con ventas a grandes contribuyentes
 	$db = new dbConn();
-				
-		$r = $db->query("SELECT * FROM ticket WHERE orden = ".$_SESSION["orden"]." and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."");
-
-		if($r->num_rows > 0 ){
-			foreach ($r as $s) {
-				$total = $s["total"];
-				$retencion = $s["retencion"];
+		// Obtener productos	
+		$productos = $db->query("SELECT * FROM ticket WHERE orden = ".$_SESSION["orden"]." and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."");
+		
+		// Restar la retencion al total del producto
+		if($productos->num_rows > 0 ){
+			foreach ($productos as $producto) {
+				$total = $producto["total"];
+				$retencion = $producto["retencion"];
 				$cambio = array();
    				$cambio["total"] = $total-$retencion;
-				Helpers::UpdateId("ticket", $cambio,  "hash = '".$s["hash"]."' and td = ".$_SESSION["td"]."");
+				Helpers::UpdateId("ticket", $cambio,  "hash = '".$producto["hash"]."' and td = ".$_SESSION["td"]."");
 			}
-		} $r->close();
+		} $productos->close();
 }
 
 
