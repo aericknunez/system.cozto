@@ -1233,7 +1233,7 @@ $existencia = $y["existencia"];
 
 }
 
-public function AplicarRetencion() { //Aplica el descuento a los productos
+public function AplicarRetencion() { //Aplica la retencion del 1% a los productos con ventas a grandes contribuyentes
 	$db = new dbConn();
 				
 		$r = $db->query("SELECT * FROM ticket WHERE orden = ".$_SESSION["orden"]." and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."");
@@ -1242,10 +1242,26 @@ public function AplicarRetencion() { //Aplica el descuento a los productos
 		if($r->num_rows > 0 && $a["sum(stotal)"] >= 100){
 			foreach ($r as $s) {
 				$stotal = $s["stotal"];
-				$total = $s["total"];
 				$cambio = array();
    				$cambio["retencion"] = $stotal * 0.01;
-				$cambio["total"] = $total-$cambio["retencion"];
+				Helpers::UpdateId("ticket", $cambio,  "hash = '".$s["hash"]."' and td = ".$_SESSION["td"]."");
+			}
+		} $r->close();
+
+	$this->restarRetencion();
+}
+
+public function restarRetencion() { //Resta la retencion del 1% a los productos con ventas a grandes contribuyentes
+	$db = new dbConn();
+				
+		$r = $db->query("SELECT * FROM ticket WHERE orden = ".$_SESSION["orden"]." and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."");
+
+		if($r->num_rows > 0 ){
+			foreach ($r as $s) {
+				$total = $s["total"];
+				$retencion = $s["retencion"];
+				$cambio = array();
+   				$cambio["total"] = $total-$retencion;
 				Helpers::UpdateId("ticket", $cambio,  "hash = '".$s["hash"]."' and td = ".$_SESSION["td"]."");
 			}
 		} $r->close();
