@@ -1094,17 +1094,11 @@ $a->close();
    public function FacturaResult($factura, $efectivo){
   		$db = new dbConn();
 
-    $a = $db->query("SELECT sum(stotal), sum(imp), sum(retencion), sum(total) FROM ticket WHERE num_fac = '$factura' and orden = ".$_SESSION["orden"]." and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."");
+    $a = $db->query("SELECT sum(stotal), sum(imp), sum(total) FROM ticket WHERE num_fac = '$factura' and orden = ".$_SESSION["orden"]." and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."");
 		    foreach ($a as $b) {
 		     $stotal=$b["sum(stotal)"]; 
 			 $imp=$b["sum(imp)"];
-			 $retencion=$b["sum(retencion)"]; 
-
-			 if($retencion > 0 && $stotal + $imp >= 100){
-				$total = $b["sum(total)"] - $retencion;
-			}else{
-				$total = $b["sum(total)"];
-			}
+			 $total = $b["sum(total)"];
 		    } $a->close();
 
 if($efectivo == NULL){
@@ -1243,13 +1237,15 @@ public function AplicarRetencion() { //Aplica el descuento a los productos
 	$db = new dbConn();
 				
 		$r = $db->query("SELECT * FROM ticket WHERE orden = ".$_SESSION["orden"]." and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."");
-		$a = $db->select("sum(total)", "ticket", "WHERE orden = ".$_SESSION["orden"]." and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."");
+		$a = $db->select("sum(stotal), sum(total)", "ticket", "WHERE orden = ".$_SESSION["orden"]." and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."");
 
-		if($r->num_rows > 0 && $a["sum(total)"] >= 100){
+		if($r->num_rows > 0 && $a["sum(stotal)"] >= 100){
 			foreach ($r as $s) {
+				$stotal = $s["stotal"];
 				$total = $s["total"];
 				$cambio = array();
-   				$cambio["retencion"] = $total * 0.01;
+   				$cambio["retencion"] = $stotal * 0.01;
+				$cambio["total"] = $total-$cambio["retencion"];
 				Helpers::UpdateId("ticket", $cambio,  "hash = '".$s["hash"]."' and td = ".$_SESSION["td"]."");
 			}
 		} $r->close();
