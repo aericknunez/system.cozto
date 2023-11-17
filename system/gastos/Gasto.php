@@ -28,6 +28,8 @@ class Gastos {
 			    $datos["tipo_pago"] = $data["pago"];
 			    $datos["cuenta_banco"] = $data["banco"];
 			    $datos["categoria"] = $data["categoria"];
+				$datos["proveedor"] = $data["proveedor"];
+				$datos["fecha_gasto"] = $data["fecha_gasto"];
 			    $datos["hash"] = Helpers::HashId();
 				$datos["time"] = Helpers::TimeId();
 			    $datos["td"] = $_SESSION["td"];
