@@ -36,9 +36,11 @@ if ($r = $db->select("*", "corte_diario", "WHERE hash = '$hash'")) {
   $diferencia = $r["diferencia"];
   $user = $r["user"];
 
-} unset($r);  
+} unset($r); 
 
-
+if ($abonosx = $db->select("sum(abono)", "creditos_abonos", "WHERE edo = 1 and tipo_pago = 1 and td = ".$_SESSION["td"]." and time BETWEEN '".$aperturaF."' and '".$cierreF."'")){  
+    $abonosEfectivo = $abonosx["sum(abono)"];
+}unset($abonosx); 
 
 
 require_once '../../application/common/PHPExcel.php';
@@ -79,7 +81,8 @@ $objPHPExcel->setActiveSheetIndex(0)
             ->setCellValue('I1', 'VENTA TOTAL')
             ->setCellValue('J1', 'GASTOS')
             ->setCellValue('K1', 'ABONOS')
-            ->setCellValue('L1', 'DIFERENCIA EFECTIVO');
+            ->setCellValue('L1', 'DIFERENCIA EFECTIVO')
+            ->setCellValue('M1', 'EFECTIVO EN CAJA');
  
 
  $objPHPExcel->setActiveSheetIndex(0)
@@ -94,7 +97,8 @@ $objPHPExcel->setActiveSheetIndex(0)
             ->setCellValue('I2', $total)
             ->setCellValue('J2', $gastos)
             ->setCellValue('K2', $abonos)
-            ->setCellValue('L2', $diferencia);
+            ->setCellValue('L2', $diferencia)
+            ->setCellValue('M2', $caja_chica+$t_efectivo+$abonosEfectivo-$gastos);
  
 
 
