@@ -3390,6 +3390,27 @@ break;
 
 
 
+
+case "720":
+	if ($_SESSION['aplicar_credito_sin_factura'] == 1) {
+		unset($_SESSION['aplicar_credito_sin_factura']);
+		echo "Desactivado";
+	} else {
+		$_SESSION['aplicar_credito_sin_factura'] = 1;
+		echo "Activado";
+	}
+break;
+
+case "721":
+	if($_SESSION['aplicar_credito_sin_factura'] == 1) {
+		echo "Activado";
+	} else {
+		echo "Desactivado";
+	}
+break;
+
+
+
 } // termina switch
 
 

@@ -188,7 +188,15 @@ elseif($_SESSION["tipoticket"] == 0){ return '<a id="mticket">N/A</a>'; }
 			Alerts::Mensajex($texto,"danger",NULL,NULL);
 		}
 		if($_SESSION['cliente_credito']){
-			 $textos = 'Cliente asignado para credito: ' . $_SESSION['cliente_credito']. ".";
+
+			if($_SESSION['credito_sin_factura']){
+				echo "<div class='text-center'> 
+				<div id='credito-sin-factura' class='btn btn-success btn-sm'>Credito sin factura</div>
+				<div id='ver-credito-sin-factura' class='font-weight-bold'></div>
+				</div>";	
+			}
+
+			$textos = 'Cliente asignado para credito: ' . $_SESSION['cliente_credito']. ".";
 			Alerts::Mensajex($textos,"success",NULL,NULL);
 		}
 		if($_SESSION['cliente_asig']){

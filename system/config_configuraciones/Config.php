@@ -176,6 +176,7 @@ class Config{
 			$_SESSION['root_precio_lote'] = $root["precio_lote"];
 			$_SESSION['root_restringir_ordenes'] = $root["restringir_ordenes"];
 			$_SESSION['root_asignar_empleado'] = $root["asignar_empleado"];
+			$_SESSION['credito_sin_factura'] = $root["credito_sin_factura"];
      
 			} unset($root);
 			$_SESSION['root_tipo_sistema'] = $encrypt->Decrypt(
@@ -228,6 +229,7 @@ class Config{
 
 			$_SESSION['credito_sin_factura'] = $encrypt->Decrypt(
 			$_SESSION['credito_sin_factura'],$_SESSION['secret_key']);
+
 			if ($encrypt->Decrypt($_SESSION['root_tarjeta'],$_SESSION['secret_key'])) {
 				$_SESSION['root_tarjeta'] = 'Cheque';
 			} else {

@@ -578,4 +578,36 @@ function QueryGo(dir){
 
 
 
+    $("body").on("click","#credito-sin-factura",function(){
+        var op = "720";
+        var dataString = 'op='+op;
+
+        $.ajax({
+            type: "POST",
+            url: "application/src/routes.php",
+            data: dataString,
+            success: function(data) {            
+                $("#ver-credito-sin-factura").html(data); // lo que regresa de la busquea 
+            }
+        });
+    });   
+
+
+    function VerCreditoSinFactura(){
+        var op = "721";
+        var dataString = 'op='+op;
+
+        $.ajax({
+            type: "POST",
+            url: "application/src/routes.php",
+            data: dataString,
+            success: function(data) {            
+                $("#ver-credito-sin-factura").html(data); // lo que regresa de la busquea 
+            }
+        });
+       }
+       
+       VerCreditoSinFactura();
+
+
 }); // termina query
