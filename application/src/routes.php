@@ -1207,12 +1207,17 @@ break;
 
 
 case "120": // mostar los botones imprimir factura
+
+	// si no es credito con factura
+	if (!isset($_SESSION['aplicar_credito_sin_factura'])) {
+
 	include_once '../../system/facturar/Facturar.php'; // obtiene el estado de la factura tx, local o web
 	include_once '../../system/facturar/facturas/'.$_SESSION["td"].'/Impresiones.php'; // tiene las 
 	require_once ('../ticket/autoload.php'); 
 
 	$fac = new Facturar();
 	$fac->ObtenerEstadoFactura($_SESSION["cambio_actual_print"], $_SESSION["factura_actual_print"]);
+	}
 
 // elimino las dos variables
 unset($_SESSION["factura_actual_print"], $_SESSION["cambio_actual_print"], $_SESSION["orden_actual_print"]);
@@ -2574,9 +2579,12 @@ break;
 
 
 case "546":  /// Load data para facturar web
-include_once '../../system/facturar/FacturarWeb.php';
+/// lo llamo solo si no es creditos sin factura
+if (!isset($_SESSION['aplicar_credito_sin_factura'])) {
+	include_once '../../system/facturar/FacturarWeb.php';
 	$data = new FacturarWeb(); 
 	$data->TicketWeb();
+}
 
 // elimino las dos variables
 unset($_SESSION["factura_actual_print"], $_SESSION["cambio_actual_print"]);

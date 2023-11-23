@@ -739,7 +739,7 @@ if ($r = $db->select("sum(existencia)", "producto_ingresado", "WHERE existencia 
 	public function AddTicketNum($efectivo) { //leva el control del autoincremento de los clientes
 		$db = new dbConn();
 
-		if($_SESSION['aplicar_credito_sin_factura'] == 1) {
+		if($_SESSION['aplicar_credito_sin_factura'] == 1 and $_SESSION['cliente_credito']) {
 			$tipoticket = 99;
 		} else {
 			$tipoticket = $_SESSION["tipoticket"];
@@ -865,7 +865,7 @@ if ($r = $db->select("sum(existencia)", "producto_ingresado", "WHERE existencia 
 
 	    $cambio = array();
 	   	$cambio["num_fac"] = $factura;
-	   	$cambio["tipo"] = ($_SESSION['aplicar_credito_sin_factura'] == 1) ? 99 :$_SESSION["tipoticket"];;
+	   	$cambio["tipo"] = ($_SESSION['aplicar_credito_sin_factura'] == 1 and $_SESSION['cliente_credito']) ? 99 : $_SESSION["tipoticket"];;
 	   	$cambio["tipo_pago"] = $tpago;
 	   	$cambio["cajero"] = $_SESSION["user"];
 	   	Helpers::UpdateId("ticket", $cambio, "orden = ".$_SESSION["orden"]." and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."");  
