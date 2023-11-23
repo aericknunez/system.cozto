@@ -58,9 +58,14 @@ if($dir == "asc") $dir2 = "desc";
           $saldo = $total - $abonado;
           $TotalCreditosPendientes += $saldo;
           
+          if ($r = $db->select("tipo", "ticket_num", "WHERE num_fac = ".$b["factura"]." and orden = ".$b["orden"]." and td = ". $_SESSION["td"] ."")) { 
+            $tipo = $r["tipo"]; } unset($r); 
+
+            if($tipo == 99){ $factura = "N/A"; } else { $factura = $b["factura"];}
+              
           echo '<tr>
                       <td>'.$b["nombre"].'</td>
-                      <td class="d-none d-md-block">'.$b["factura"].'</td>
+                      <td class="d-none d-md-block">'. $factura.'</td>
                       <td>'. Helpers::Dinero($total) .'</td>
                       <td>'. Helpers::Dinero($abonado) .'</td>
                       <td>'. Helpers::Dinero($saldo) .'</td>
@@ -72,8 +77,9 @@ if($dir == "asc") $dir2 = "desc";
                       if ($abonado == 0) {
                         echo '<a id="delete" credito="'. $b["hash"] .'" orden="'. $b["orden"] .'" factura="'. $b["factura"] .'" tx="'. $b["tx"] .'"  tipo="1"><i class="fas fa-trash fa-lg red-text ml-2"></i></a>';
                       }
-
-                      
+                      if($tipo == 99 and $saldo == 0){ 
+                        echo '<a title="Facturar" href="?modal=faturar_credito&cre='.$b["hash"].'&orden='.$b["orden"].'&factura='.$b["factura"].'&tx='.$b["tx"].'"><i class="fa fa-check-square fa-lg blue-text ml-2"></i></a>';
+                       }
                       echo '</td>
                     </tr>';
         }
@@ -432,10 +438,14 @@ if($dir == "asc") $dir2 = "desc";
         $saldo = $total - $abonado;
         $TotalCreditosPendientes += $saldo;
 
+        if ($r = $db->select("tipo", "ticket_num", "WHERE num_fac = ".$b["factura"]." and orden = ".$b["orden"]." and td = ". $_SESSION["td"] ."")) { 
+          $tipo = $r["tipo"]; } unset($r); 
+
+          if($tipo == 99){ $factura = "N/A"; } else { $factura = $b["factura"];}
 
           echo '<tr>
                       <td>'.$b["nombre"].'</td>
-                      <td class="d-none d-md-block">'.$b["factura"].'</td>
+                      <td class="d-none d-md-block">'.$factura.'</td>
                       <td>'. Helpers::Dinero($total) .'</td>
                       <td>'. Helpers::Dinero($abonado) .'</td>
                       <td>'. Helpers::Dinero($saldo) .'</td>
@@ -448,7 +458,10 @@ if($dir == "asc") $dir2 = "desc";
                         echo '<a id="delete" credito="'. $b["hash"] .'" orden="'. $b["orden"] .'" factura="'. $b["factura"] .'" tx="'. $b["tx"] .'" tipo="2"><i class="fas fa-trash fa-lg red-text ml-2"></i></a>';
                       }
 
-                      
+                      if($tipo == 99 and $saldo == 0){ 
+                        '<a href="?modal=faturar_credito&cre='.$b["hash"].'&orden='.$b["orden"].'&factura='.$b["factura"].'&tx='.$b["tx"].'"><i class="fas fa-trash fa-lg blue-text ml-2"></i></a>';
+                       }
+
                       echo '</td>
                     </tr>';
         }
@@ -591,9 +604,15 @@ $page <= 1 ? $enable = 'disabled' : $enable = '';
 
         $saldox = $saldox + $saldo;
 
+        if ($r = $db->select("tipo", "ticket_num", "WHERE num_fac = ".$b["factura"]." and orden = ".$b["orden"]." and td = ". $_SESSION["td"] ."")) { 
+          $tipo = $r["tipo"]; } unset($r); 
+
+          if($tipo == 99){ $factura = "N/A"; } else { $factura = $b["factura"];}
+
+
           echo '<tr>
                       <td>'.$b["nombre"].'</td>
-                      <td class="d-none d-md-block">'.$b["factura"].'</td>
+                      <td class="d-none d-md-block">'.$factura.'</td>
                       <td>'. Helpers::Dinero($total) .'</td>
                       <td>'. Helpers::Dinero($abonado) .'</td>
                       <td>'. Helpers::Dinero($saldo) .'</td>
@@ -604,6 +623,10 @@ $page <= 1 ? $enable = 'disabled' : $enable = '';
                       <a id="xver" op="109" credito="'. $b["hash"] .'" orden="'. $b["orden"] .'" factura="'. $b["factura"] .'" tx="'. $b["tx"] .'"><i class="fas fa-search fa-lg green-text"></i></a>';
                       if ($abonado == 0) {
                         echo '<a id="delete" credito="'. $b["hash"] .'" orden="'. $b["orden"] .'" factura="'. $b["factura"] .'" tx="'. $b["tx"] .'"  tipo="1"><i class="fas fa-trash fa-lg red-text ml-2"></i></a>';
+                      }
+
+                      if($tipo == 99 and $saldo == 0){ 
+                        '<a href="?modal=faturar_credito&cre='.$b["hash"].'&orden='.$b["orden"].'&factura='.$b["factura"].'&tx='.$b["tx"].'"><i class="fas fa-trash fa-lg blue-text ml-2"></i></a>';
                       }
                     echo '</td></tr>';
         }

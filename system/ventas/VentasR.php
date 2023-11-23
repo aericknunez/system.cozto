@@ -739,7 +739,13 @@ if ($r = $db->select("sum(existencia)", "producto_ingresado", "WHERE existencia 
 	public function AddTicketNum($efectivo) { //leva el control del autoincremento de los clientes
 		$db = new dbConn();
 
-	    if ($r = $db->select("num_fac", "ticket_num", "WHERE tipo = '".$_SESSION["tipoticket"]."' and td = ".$_SESSION["td"]." and tx = ".$_SESSION["tx"]." order by id desc limit 1")) { 
+		if($_SESSION['aplicar_credito_sin_factura'] == 1) {
+			$tipoticket = 99;
+		} else {
+			$tipoticket = $_SESSION["tipoticket"];
+		}
+
+	    if ($r = $db->select("num_fac", "ticket_num", "WHERE tipo = '".$tipoticket."' and td = ".$_SESSION["td"]." and tx = ".$_SESSION["tx"]." order by id desc limit 1")) { 
 			if($_SESSION['newCorrelativo']){
 				$ultimoorden = $_SESSION['newCorrelativo'];
 				unset($_SESSION['newCorrelativo']);
@@ -756,7 +762,7 @@ if ($r = $db->select("sum(existencia)", "producto_ingresado", "WHERE existencia 
 		    $datos["efectivo"] = $efectivo;
 		    $datos["edo"] = 1;
 		    $datos["tx"] = $_SESSION["tx"];
-		    $datos["tipo"] = $_SESSION["tipoticket"];
+		    $datos["tipo"] = $tipoticket;
 		    $datos["hash"] = Helpers::HashId();
 		    $datos["time"] = Helpers::TimeId();
 		    $datos["td"] = $_SESSION["td"];
@@ -859,7 +865,7 @@ if ($r = $db->select("sum(existencia)", "producto_ingresado", "WHERE existencia 
 
 	    $cambio = array();
 	   	$cambio["num_fac"] = $factura;
-	   	$cambio["tipo"] = $_SESSION["tipoticket"];
+	   	$cambio["tipo"] = ($_SESSION['aplicar_credito_sin_factura'] == 1) ? 99 :$_SESSION["tipoticket"];;
 	   	$cambio["tipo_pago"] = $tpago;
 	   	$cambio["cajero"] = $_SESSION["user"];
 	   	Helpers::UpdateId("ticket", $cambio, "orden = ".$_SESSION["orden"]." and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."");  

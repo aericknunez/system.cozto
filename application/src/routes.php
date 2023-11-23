@@ -3409,6 +3409,22 @@ case "721":
 	}
 break;
 
+case "722":
+	if ($r = $db->select("num_fac", "ticket_num", "WHERE tipo = ".$_REQUEST['tipo']." and td = ".$_SESSION["td"]." and tx = ".$_SESSION["tx"]." order by id desc limit 1")) { 
+		$ultimoorden = $r["num_fac"];
+	} unset($r); 
+
+	$cambios = array();
+	$cambios["num_fac"] = $ultimoorden + 1;
+	$cambios["tipo"] = $_REQUEST['tipo'];
+	// $cambio["time"] = Helpers::TimeId();
+	Helpers::UpdateId("ticket", $cambios, "num_fac=".$_REQUEST['factura']." and orden=".$_REQUEST['orden']." and tx = ".$_REQUEST["tx"]." and td = ".$_SESSION["td"]."");
+	Helpers::UpdateId("ticket_num", $cambios, "num_fac=".$_REQUEST['factura']." and orden=".$_REQUEST['orden']." and tx = ".$_REQUEST["tx"]." and td = ".$_SESSION["td"]."");
+	header("location: ../../?creditos");
+break;
+
+
+
 
 
 } // termina switch
