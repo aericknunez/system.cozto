@@ -193,7 +193,7 @@ $(document).ready(function(){
 		var orden = $(this).attr('orden');
 		var tipo = $(this).attr('tipo');
         var dataString = 'op='+op+'&tx='+tx+'&credito='+credito+'&orden='+orden+'&factura='+factura+'&tipo='+tipo;
-
+		$('#ConfirmDelete').modal('hide');
         $.ajax({
             type: "POST",
             url: "application/src/routes.php",
