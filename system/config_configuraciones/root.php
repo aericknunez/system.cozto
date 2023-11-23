@@ -148,6 +148,12 @@ $r = $db->select("*", "config_root", "where td = ".$_SESSION['td']."");
               if(Encrypt::Decrypt($r["asignar_empleado"],$_SESSION['secret_key']) == "") echo "Inactivo"; ?></td>
      </tr> 
 
+     <tr>
+       <td>Permitir dar creditos sin factura</td>
+       <td><? if(Encrypt::Decrypt($r["credito_sin_factura"],$_SESSION['secret_key']) == "on") echo "Activado";
+              if(Encrypt::Decrypt($r["credito_sin_factura"],$_SESSION['secret_key']) == "") echo "Inactivo"; ?></td>
+     </tr> 
+
 <?
  unset($r);  
    ?>

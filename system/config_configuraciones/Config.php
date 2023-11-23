@@ -89,6 +89,7 @@ class Config{
 	    $cambio["precio_lote"] = Encrypt::Encrypt($data["precio_lote"],$_SESSION['secret_key']);
 	    $cambio["restringir_ordenes"] = Encrypt::Encrypt($data["restringir_ordenes"],$_SESSION['secret_key']);
 	    $cambio["asignar_empleado"] = Encrypt::Encrypt($data["asignar_empleado"],$_SESSION['secret_key']);
+	    $cambio["credito_sin_factura"] = Encrypt::Encrypt($data["credito_sin_factura"],$_SESSION['secret_key']);
 	    $cambio["time"] = Helpers::TimeId();
 	    if (Helpers::UpdateId("config_root", $cambio, "td = ".$_SESSION["td"]."")) {
 	    	$this->CrearVariables();
@@ -225,6 +226,8 @@ class Config{
 			$_SESSION['root_asignar_empleado'] = $encrypt->Decrypt(
 			$_SESSION['root_asignar_empleado'],$_SESSION['secret_key']);
 
+			$_SESSION['credito_sin_factura'] = $encrypt->Decrypt(
+			$_SESSION['credito_sin_factura'],$_SESSION['secret_key']);
 			if ($encrypt->Decrypt($_SESSION['root_tarjeta'],$_SESSION['secret_key'])) {
 				$_SESSION['root_tarjeta'] = 'Cheque';
 			} else {
