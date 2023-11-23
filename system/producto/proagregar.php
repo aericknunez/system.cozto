@@ -73,12 +73,17 @@ echo '<h2 class="h2-responsive">'.$descripcion .'</h2>';
 
   <div class="form-row">
     
-    <div class="col-md-6 mb-1 md-form">
-      <label for="cantidad">* Precio de Costo</label>
+    <div class="col-md-4 mb-1 md-form">
+      <label for="precio">* Precio de Costo</label>
       <input type="number" step="any" class="form-control" id="precio" name="precio" required>
     </div>
 
-    <div class="col-md-6 mb-1 md-form">
+    <div class="col-md-4 md-form">
+      <input class="form-check-input" type="checkbox" value="1" name="iva" id="iva" >
+      <label for="iva">Más IVA</label>
+    </div>
+
+    <div class="col-md-4 mb-1 md-form">
       <label for="cantidad">* Cantidad</label>
       <input type="number" step="any" class="form-control" id="cantidad" name="cantidad" required>
     </div>

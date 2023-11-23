@@ -103,14 +103,18 @@ class ProUpdate{
     $db = new dbConn();
     $kardex = new Kardex();
 
-  
+  if($datox["iva"] == 1){
+    $costo = $datox["precio"] * 1.13;
+  }else{
+    $costo = $datox["precio"];
+  }
           if($datox["precio"] != NULL and $datox["cantidad"] != NULL and $datox["cantidad"] != 0){
               $datos = array();
               $hashin = Helpers::HashId();
               $datos["producto"] = $datox["cod"];
               $datos["cant"] = $datox["cantidad"];
               $datos["existencia"] = $datox["cantidad"];
-              $datos["precio_costo"] = $datox["precio"];
+              $datos["precio_costo"] = $costo;
               $datos["caduca"] = $datox["caduca_submit"];
               $datos["caducaF"] = Fechas::Format($datox["caduca_submit"]);
               $datos["comentarios"] = $datox["comentarios"];
