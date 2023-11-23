@@ -35,9 +35,9 @@ if($primero == $segundo){
 }
 
 if($type == NULL or $type == 0){
-  $a = $db->query("SELECT * FROM ticket_num WHERE edo = 1 and $sqlx and td = ".$_SESSION['td']." order by time desc");	
+  $a = $db->query("SELECT * FROM ticket_num WHERE $sqlx and td = ".$_SESSION['td']." order by time desc");	
 } else {
-  $a = $db->query("SELECT * FROM ticket_num WHERE  edo = 1 and $sqlx and td = ".$_SESSION['td']." order by time desc");
+  $a = $db->query("SELECT * FROM ticket_num WHERE $sqlx and td = ".$_SESSION['td']." order by time desc");
 }
 
    if ($a->num_rows > 0) {
@@ -69,25 +69,42 @@ $objPHPExcel->setActiveSheetIndex(0)
             ->setCellValue('A1', 'FECHA')
             ->setCellValue('B1', 'TIPO')
             ->setCellValue('C1', 'NUMERO')
-            ->setCellValue('D1', 'CLIENTE')
-            ->setCellValue('E1', 'TIPO PAGO')
-            ->setCellValue('F1', 'CAJERO')
-            ->setCellValue('G1', 'PRODUCTOS')
-            ->setCellValue('H1', 'TOTAL');
+            ->setCellValue('D1', 'ESTADO')
+            ->setCellValue('E1', 'REGISTRO CLIENTE')
+            ->setCellValue('F1', 'CLIENTE')
+            ->setCellValue('G1', 'TIPO PAGO')
+            ->setCellValue('H1', 'CAJERO')
+            ->setCellValue('I1', 'PRODUCTOS')
+            ->setCellValue('J1', 'MONTO GRAVADO')
+            ->setCellValue('K1', 'IVA')
+            ->setCellValue('L1', 'TOTAL');
  
 
 $fila = 1;   
    foreach ($a as $b) {
+    if($b["edo"] == 1){
+      $estado = "Activo";
+    }else{
+      $estado = "Anulado";
+    }
 
-    $numeroFactura = $b["num_fac"];
-$ag = $db->query("SELECT sum(cant), sum(total), cajero, tipo_pago, orden, tipo FROM ticket where edo = 1 and num_fac = '".$b["num_fac"]."' and tipo = '".$b["tipo"]."' and td = ".$_SESSION['td']."");
+$numeroFactura = $b["num_fac"];
+$ag = $db->query("SELECT sum(cant), sum(total), sum(stotal), sum(imp), cajero, tipo_pago, orden, tipo FROM ticket where num_fac = '".$b["num_fac"]."' and tipo = '".$b["tipo"]."' and td = ".$_SESSION['td']."");
 foreach ($ag as $bg) { 
 	$cant = $bg["sum(cant)"];
 	$total = $bg["sum(total)"];
+  $stotal = $bg["sum(stotal)"];
+  $impuestos = $bg["sum(imp)"];
 	$cajero = $bg["cajero"];
 	$tipo_pago = $bg["tipo_pago"];
 	$orden = $bg["orden"];
 	$tipo = $bg["tipo"];
+  $cliente = Helpers::ClienteProducto($orden, $tipo, $numeroFactura);
+  if( $tipo == 3){
+    $registro = Helpers::GetData("facturar_documento", "registro", "cliente", $cliente);
+  }else{
+    $registro = " ";
+  }
 	
 } $ag->close();
  
@@ -98,11 +115,15 @@ $objPHPExcel->setActiveSheetIndex(0)
           ->setCellValue('A' . $fila, $b["fecha"].' '.$b["hora"])
           ->setCellValue('B' . $fila, Helpers::TipoFacturaVentas($b["tipo"]))
           ->setCellValue('C' . $fila, $b["num_fac"])
-          ->setCellValue('D' . $fila, Helpers::ClienteProducto($orden, $tipo, $numeroFactura))
-          ->setCellValue('E' . $fila, Helpers::TipoPago($tipo_pago))
-          ->setCellValue('F' . $fila, Helpers::GetData("login_userdata", "nombre", "user", $cajero))
-          ->setCellValue('G' . $fila, $cant)
-          ->setCellValue('H' . $fila, $total);
+          ->setCellValue('D' . $fila, $estado)
+          ->setCellValue('E' . $fila, $registro)
+          ->setCellValue('F' . $fila, $cliente)
+          ->setCellValue('G' . $fila, Helpers::TipoPago($tipo_pago))
+          ->setCellValue('H' . $fila, Helpers::GetData("login_userdata", "nombre", "user", $cajero))
+          ->setCellValue('I' . $fila, $cant)
+          ->setCellValue('J' . $fila, $stotal)
+          ->setCellValue('K' . $fila, $impuestos)
+          ->setCellValue('L' . $fila, $total);
  
 
         } 
@@ -110,8 +131,8 @@ $objPHPExcel->setActiveSheetIndex(0)
 
 
 
-$columnas = array('A','B','C','D','E','F','G','H');
-$numeros = array('H');
+$columnas = array('A','B','C','D','E','F','G','H','I','J','K','L');
+$numeros = array('J','K','L');
 
 // establece ceros numerocico las filas numerocas
 foreach($numeros as $columnID) {
