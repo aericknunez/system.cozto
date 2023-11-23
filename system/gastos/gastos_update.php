@@ -16,7 +16,7 @@ if($_SESSION["caja_apertura"] != NULL){ // comprobacion de corte
 
 <form class="text-center border border-light p-3" id="form-gastos" name="form-gastos">
     
-<input type="text"  id="gasto" name="gasto" class="form-control mb-3" placeholder="Gasto">
+<input type="text"  id="gasto" name="gasto" class="form-control mb-3" placeholder="Descripción">
 
 
 <select class="browser-default custom-select mb-3" id="tipo" name="tipo">
@@ -77,12 +77,21 @@ echo Helpers::SelectData("* Categoria", "gastos_categorias", "hash", "categoria"
 </div>
 
 
-
-
 Descripci&oacuten
 <textarea type="text" id="descripcion" name="descripcion" class="form-control mb-3"></textarea>
 
 <input type="number" min="0" step="any" id="cantidad" name="cantidad" class="form-control mb-3" placeholder="Cantidad">
+
+<div class= "row" id="otrosdatos">
+<div class="col-6">
+  <select  class="browser-default custom-select mb-4" id="proveedor" name="proveedor">
+      <?php echo Helpers::SelectData("Proveedor", "proveedores", "hash", "nombre"); ?>
+  </select>
+</div>
+<div class="col-6 ">
+    <input type="date" class="form-control" name="fecha_gasto" id="fecha-gasto" value="<?php echo date('Y-m-d') ?>">
+</div>
+</div>
 <button class="btn btn-info my-4" type="submit" id="btn-gastos" name="btn-gastos">Agregar Gasto</button>
  </form>
 

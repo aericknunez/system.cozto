@@ -1,0 +1,1 @@
+ALTER TABLE `gastos` ADD `proveedor` VARCHAR(255) NULL DEFAULT NULL AFTER `categoria`, ADD `fecha_gasto` DATE NULL DEFAULT NULL AFTER `proveedor`;

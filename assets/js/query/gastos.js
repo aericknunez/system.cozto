@@ -209,11 +209,13 @@ $("#tipo").change(function(){
         $('#nofactura').attr("value", "");
         $('#tipo_comprobante').attr("value", "");
         $("#elcomprobante").show();
+        $("#otrosdatos").show();
     } else {
         $('#nofactura').attr("value", "");
         $('#nofactura').attr("type", "hidden");
         $('#tipo_comprobante').attr("value", "");
         $("#elcomprobante").hide();
+        $("#otrosdatos").hide();
     }
    
 });

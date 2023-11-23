@@ -56,45 +56,71 @@ $objPHPExcel->getDefaultStyle()->getFont()->setName('Arial')
 
 // Add encabezado
 $objPHPExcel->setActiveSheetIndex(0)
-            ->setCellValue('A1', 'FECHA')
+            ->setCellValue('A1', 'FECHA INGRESO')
             ->setCellValue('B1', 'TIPO')
-            ->setCellValue('C1', 'NO DOCUMENTO')
-            ->setCellValue('D1', 'DOCUMENTO')
-            ->setCellValue('E1', 'GRUPO GASTO')
-            ->setCellValue('F1', 'GASTO')
-            ->setCellValue('G1', 'DESCRIPCION')
-            ->setCellValue('H1', 'TIPO PAGO')
-            ->setCellValue('I1', 'CUENTA')
-            ->setCellValue('J1', 'MONTO');
+            ->setCellValue('C1', 'DOCUMENTO')
+            ->setCellValue('D1', 'NO DOCUMENTO')
+            ->setCellValue('E1', 'FECHA COMPRA/GASTO')
+            ->setCellValue('F1', 'REGISTRO CONTRIBUYENTE')
+            ->setCellValue('G1', 'PROVEEDOR')
+            ->setCellValue('H1', 'GRUPO GASTO')
+            ->setCellValue('I1', 'GASTO')
+            ->setCellValue('J1', 'DESCRIPCION')
+            ->setCellValue('K1', 'TIPO PAGO')
+            ->setCellValue('L1', 'CUENTA')
+            ->setCellValue('M1', 'SUBTOTAL')
+            ->setCellValue('N1', 'IMPUESTO')
+            ->setCellValue('O1', 'TOTAL');
 
 
 $fila = 1;   
    foreach ($a as $b) {
+$proveedor = $b["proveedor"];
+$nombreProveedor = Helpers::GetData("proveedores", "nombre", "hash", $proveedor);
+$registroProveedor =  Helpers::GetData("proveedores", "registro", "hash", $proveedor);
+if($registroProveedor == FALSE) {
+  $registroProveedor = " ";
+}else{
+   $registroProveedor;
+  }
 
 if($b["edo"] != 0){ $total = $total + $b["cantidad"]; $colores='class="text-black font-weight-bold"'; } 
 else { $colores='class="text-danger font-weight-light"';}
+
+$fecha = strtotime($b["fecha_gasto"]);
+
+if($fecha == FALSE) {
+  $fechaGasto = " ";
+}else{
+  $fechaGasto = date('d-m-Y', $fecha);
+}
 
 
 $fila = $fila + 1; 
 $objPHPExcel->setActiveSheetIndex(0)
           ->setCellValue('A' . $fila, $b["fecha"])
           ->setCellValue('B' . $fila, Gasto($b["tipo"]))
-          ->setCellValue('C' . $fila, $b["no_factura"])
-          ->setCellValue('D' . $fila, DocumentoPago($b["tipo_comprobante"]))
-          ->setCellValue('E' . $fila, $reporte->CategoriaGastos($b["categoria"]))
-          ->setCellValue('F' . $fila, $b["nombre"])
-          ->setCellValue('G' . $fila, $b["descripcion"])
-          ->setCellValue('H' . $fila, TipoPagoGasto($b["tipo_pago"]))
-          ->setCellValue('I' . $fila, $reporte->CuentaGastos($b["cuenta_banco"]))
-          ->setCellValue('J' . $fila, $b["cantidad"]);
+          ->setCellValue('C' . $fila, DocumentoPago($b["tipo_comprobante"]))
+          ->setCellValue('D' . $fila, $b["no_factura"])
+          ->setCellValue('E' . $fila, $fechaGasto)
+          ->setCellValue('F' . $fila, $registroProveedor)
+          ->setCellValue('G' . $fila, $nombreProveedor)
+          ->setCellValue('H' . $fila, $reporte->CategoriaGastos($b["categoria"]))
+          ->setCellValue('I' . $fila, $b["nombre"])
+          ->setCellValue('J' . $fila, $b["descripcion"])
+          ->setCellValue('K' . $fila, TipoPagoGasto($b["tipo_pago"]))
+          ->setCellValue('L' . $fila, $reporte->CuentaGastos($b["cuenta_banco"]))
+          ->setCellValue('M' . $fila, $b["cantidad"]/1.13)
+          ->setCellValue('N' . $fila, ($b["cantidad"]/1.13)*0.13)
+          ->setCellValue('O' . $fila, $b["cantidad"]);
  
         } 
 
 
 
 
-$columnas = array('A','B','C','D','E','F','G','H','I');
-$numeros = array('J');
+$columnas = array('A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P');
+$numeros = array('M','N','O');
 
 // establece ceros numerocico las filas numerocas
 foreach($numeros as $columnID) {
