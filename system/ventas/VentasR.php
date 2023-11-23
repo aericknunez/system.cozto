@@ -911,17 +911,11 @@ if ($r = $db->select("sum(existencia)", "producto_ingresado", "WHERE existencia 
    public function FacturaResult($factura, $efectivo){
   		$db = new dbConn();
 
-    $a = $db->query("SELECT sum(stotal), sum(imp), sum(retencion), sum(total) FROM ticket WHERE num_fac = '$factura' and orden = ".$_SESSION["orden"]." and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."");
+    $a = $db->query("SELECT sum(stotal), sum(imp), sum(total) FROM ticket WHERE num_fac = '$factura' and orden = ".$_SESSION["orden"]." and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."");
 		    foreach ($a as $b) {
 		     $stotal=$b["sum(stotal)"]; 
 			 $imp=$b["sum(imp)"]; 
-			 $retencion=$b["sum(retencion)"]; 
-
-			 if($retencion > 0 ){
-				$total = $b["sum(total)"] - $retencion;
-			}else{
-				$total = $b["sum(total)"];
-			}
+			 $total = $b["sum(total)"];
 		    } $a->close();
 
 if($efectivo == NULL){
@@ -1059,7 +1053,7 @@ $_SESSION["orden_actual_print"] = $_SESSION["orden"];// solo para imprimir la fa
 		$grancontribuyente = $_POST["contribuyente"];
 		   if ($grancontribuyente == 1){
 			   $_SESSION["gran_contribuyente"] = 1;
-			   $mensaje = '<br> El Cliente seleccionado es gran contribuyente por lo que se le realizará una retencion del 1%';
+			   $mensaje = '<br> El Cliente seleccionado es gran contribuyente por lo que se le realizará una retención del 1% si la venta es mayor o igual a $100.00 dólares en su valor neto';
 		   }else{
 			   unset($_SESSION["gran_contribuyente"]);
 		   }
@@ -1104,7 +1098,7 @@ $_SESSION["orden_actual_print"] = $_SESSION["orden"];// solo para imprimir la fa
 		$grancontribuyente = $_POST["contribuyente"];
 		if ($grancontribuyente == 1){
 			$_SESSION["gran_contribuyente"] = 1;
-			$mensaje = '<br> El Cliente seleccionado es gran contribuyente por lo que se le realizará una retencion del 1%';
+			$mensaje = '<br> El Cliente seleccionado es gran contribuyente por lo que se le realizará una retencion del 1% si la venta es mayor o igual a $100.00 dólares si la venta es mayor o igual a $100.00 dólares en su valor neto';
 		}else{
 			unset($_SESSION["gran_contribuyente"]);
 		}
@@ -1243,21 +1237,41 @@ public function GetComment($iden){
 }
 
 
-public function AplicarRetencion() { //Aplica el descuento a los productos
+public function AplicarRetencion() { //Aplica la retencion del 1% a los productos con ventas a grandes contribuyentes
 	$db = new dbConn();
-				
-		$r = $db->query("SELECT * FROM ticket WHERE orden = ".$_SESSION["orden"]." and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."");
-		if($r->num_rows > 0 ){
-			foreach ($r as $s) {
-				$total = $s["total"];
+		// Obtener productos y subtotal		
+		$productos = $db->query("SELECT * FROM ticket WHERE orden = ".$_SESSION["orden"]." and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."");
+		$subTotal = $db->select("sum(stotal)", "ticket", "WHERE orden = ".$_SESSION["orden"]." and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."");
+		
+		  // Aplicar retención a cada producto
+		if($productos->num_rows > 0 && $subTotal["sum(stotal)"] >= 100){
+			foreach ($productos as $producto) {
+				$sTotal = $producto["stotal"];
 				$cambio = array();
-   				$cambio["retencion"] = $total * 0.01;
-				Helpers::UpdateId("ticket", $cambio,  "hash = '".$s["hash"]."' and td = ".$_SESSION["td"]."");
+   				$cambio["retencion"] = $sTotal * 0.01;
+				Helpers::UpdateId("ticket", $cambio,  "hash = '".$producto["hash"]."' and td = ".$_SESSION["td"]."");
 			}
-		} $r->close();
+		} $productos->close();
 
+	$this->restarRetencion();
 }
 
+public function restarRetencion() { //Resta la retencion del 1% a los productos con ventas a grandes contribuyentes
+	$db = new dbConn();
+		// Obtener productos	
+		$productos = $db->query("SELECT * FROM ticket WHERE orden = ".$_SESSION["orden"]." and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."");
+		
+		// Restar la retencion al total del producto
+		if($productos->num_rows > 0 ){
+			foreach ($productos as $producto) {
+				$total = $producto["total"];
+				$retencion = $producto["retencion"];
+				$cambio = array();
+   				$cambio["total"] = $total-$retencion;
+				Helpers::UpdateId("ticket", $cambio,  "hash = '".$producto["hash"]."' and td = ".$_SESSION["td"]."");
+			}
+		} $productos->close();
+}
 
 
 } // Termina la lcase

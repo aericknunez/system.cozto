@@ -42,9 +42,10 @@ if($_SESSION["tipoticket"] == 0){
     } unset($r);  
     
     
-    if ($sx = $db->select("sum(stotal), sum(imp), sum(total)", "ticket", "WHERE num_fac = '".$parametros["num_fac"]."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]." and tipo = ".$_SESSION["tipoticket"]."")) { 
+    if ($sx = $db->select("sum(stotal), sum(imp), sum(retencion), sum(total)", "ticket", "WHERE num_fac = '".$parametros["num_fac"]."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]." and tipo = ".$_SESSION["tipoticket"]."")) { 
            $parametros["stotal"]=$sx["sum(stotal)"];
            $parametros["imp"]=$sx["sum(imp)"];
+           $parametros["totalRetencion"]=$sx["sum(retencion)"];
            $parametros["total"]=$sx["sum(total)"];
         } unset($sx); 
      
@@ -75,9 +76,10 @@ $parametros["telefono"] = $r["telefono"];
 } unset($r);  
 
 
-if ($sx = $db->select("sum(stotal), sum(imp), sum(total)", "ticket", "WHERE num_fac = '".$parametros["num_fac"]."' and orden = '".$_SESSION["orden_print"]."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]." and tipo = ".$_SESSION["tipoticket"]."")) { 
+if ($sx = $db->select("sum(stotal), sum(imp), sum(retencion), sum(total)", "ticket", "WHERE num_fac = '".$parametros["num_fac"]."' and orden = '".$_SESSION["orden_print"]."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]." and tipo = ".$_SESSION["tipoticket"]."")) { 
        $parametros["stotal"]=$sx["sum(stotal)"];
        $parametros["imp"]=$sx["sum(imp)"];
+       $parametros["totalRetencion"]=$sx["sum(retencion)"];
        $parametros["total"]=$sx["sum(total)"];
     } unset($sx); 
  
@@ -131,9 +133,10 @@ $parametros["telefono"] = $r["telefono"];
 
 
 
-if ($sx = $db->select("sum(stotal), sum(imp), sum(total)", "ticket", "WHERE num_fac = '".$parametros["num_fac"]."' and orden = '".$_SESSION["orden_print"]."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]." and tipo = ".$_SESSION["tipoticket"]."")) { 
+if ($sx = $db->select("sum(stotal), sum(imp), sum(retencion), sum(total)", "ticket", "WHERE num_fac = '".$parametros["num_fac"]."' and orden = '".$_SESSION["orden_print"]."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]." and tipo = ".$_SESSION["tipoticket"]."")) { 
        $parametros["stotal"]=$sx["sum(stotal)"];
        $parametros["imp"]=$sx["sum(imp)"];
+       $parametros["totalRetencion"]=$sx["sum(retencion)"];
        $parametros["total"]=$sx["sum(total)"];
     } unset($sx); 
  
@@ -171,9 +174,10 @@ if($_SESSION["tipoticket"] == 3){
 
 
 
-if ($sx = $db->select("sum(stotal), sum(imp), sum(total)", "ticket", "WHERE num_fac = '".$parametros["num_fac"]."' and orden = '".$_SESSION["orden_print"]."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]." and tipo = ".$_SESSION["tipoticket"]."")) { 
+if ($sx = $db->select("sum(stotal), sum(imp), sum(retencion), sum(total)", "ticket", "WHERE num_fac = '".$parametros["num_fac"]."' and orden = '".$_SESSION["orden_print"]."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]." and tipo = ".$_SESSION["tipoticket"]."")) { 
        $parametros["stotal"]=$sx["sum(stotal)"];
        $parametros["imp"]=$sx["sum(imp)"];
+       $parametros["totalRetencion"]=$sx["sum(retencion)"];
        $parametros["total"]=$sx["sum(total)"];
     } unset($sx); 
  
@@ -202,6 +206,7 @@ $parametros["direccion"] = $r["direccion"];
 if ($sx = $db->select("sum(stotal), sum(imp), sum(total)", "ticket", "WHERE num_fac = '".$parametros["num_fac"]."' and orden = '".$_SESSION["orden_print"]."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]." and tipo = ".$_SESSION["tipoticket"]."")) { 
        $parametros["stotal"]=$sx["sum(stotal)"];
        $parametros["imp"]=$sx["sum(imp)"];
+       $parametros["totalRetencion"]=$sx["sum(retencion)"];
        $parametros["total"]=$sx["sum(total)"];
     } unset($sx); 
  
