@@ -12,12 +12,16 @@ class Impresiones{
 
 
 public function Ticket($efectivo, $numero){
-$this->Ticket2($efectivo, $numero);
+$ip = Helpers::GetIp();
+if($ip == "192.168.0.197"){
+$this->ticketCaja2($efectivo, $numero);
 //$this->Ticket2($efectivo, $numero);
-}
+}else{
+  $this->ticketCaja1($efectivo, $numero);
+}}
 
 
- public function Ticket2($efectivo, $numero){
+ public function TicketCaja1($efectivo, $numero){
   $db = new dbConn();
   $nombre_impresora = "TICKET";
   // $img  = "C:/AppServ/www/pizto/assets/img/logo_factura/abrego.jpg";
@@ -83,7 +87,7 @@ $printer -> setEmphasis(false);
 $subtotalf = 0;
 $productos = 0;
 
-$a = $db->query("select cod, cant, producto, pv, total, fecha, hora, num_fac from ticket where num_fac = '".$numero."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]." and tipo = ".$_SESSION["tipoticket"]." group by cod");
+$a = $db->query("select cod, cant, producto, pv, total, fecha, hora, num_fac from ticket where num_fac = '".$numero."' and orden = '".$_SESSION["orden_actual_print"]."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]." and tipo = ".$_SESSION["tipoticket"]." group by cod");
 
     foreach ($a as $b) {
 
@@ -96,7 +100,7 @@ $productos = $productos + $b["cant"];
 
 
 
-if ($sx = $db->select("sum(total)", "ticket", "WHERE num_fac = '".$numero."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."  and tipo = ".$_SESSION["tipoticket"]."" )) {
+if ($sx = $db->select("sum(total)", "ticket", "WHERE num_fac = '".$numero."' and orden = '".$_SESSION["orden_actual_print"]."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."  and tipo = ".$_SESSION["tipoticket"]."" )) {
        $stotalx=$sx["sum(total)"];
     } unset($sx);
 
@@ -146,7 +150,7 @@ $printer->feed();
 
 
 
-if ($x = $db->select("fecha, hora", "ticket", "WHERE num_fac = '".$numero."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."  and tipo = ".$_SESSION["tipoticket"]."" )) {
+if ($x = $db->select("fecha, hora", "ticket", "WHERE num_fac = '".$numero."' and orden = '".$_SESSION["orden_actual_print"]."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."  and tipo = ".$_SESSION["tipoticket"]."" )) {
 $fechaf=$x["fecha"];
 $horaf=$x["hora"];
 } unset($x);
@@ -154,6 +158,180 @@ $horaf=$x["hora"];
 
 $printer->feed();
 $printer -> text($this->DosCol("Fecha: ".$fechaf, 30, "Hora: ".$horaf, 20));
+
+
+// $printer->feed();
+// $printer->text("SERIE: 2UA329130D");
+
+$printer -> setJustification(Printer::JUSTIFY_CENTER);
+$printer->feed();
+$printer -> text("Cajero: " . $_SESSION['nombre']);
+
+$printer->feed();
+$printer->text("SERIE N°: 23NA00000001");
+$printer->feed();
+$printer->text("Resolución N°: 30109-RES-CR-38872-2023");
+$printer->feed();
+$printer->text("RANGO AUTORIZADO DEL 1 AL 200000");
+$printer->feed();
+$printer->text("FECHA DE AUTORIZACION: 31/05/2023");
+
+
+$printer->feed();
+$printer->feed();
+$printer -> text("GRACIAS POR SU PREFERENCIA...");
+$printer->feed();
+
+
+
+
+
+$printer->feed();
+$printer->cut();
+$printer->pulse();
+$printer->close();
+
+}
+
+public function ticketCaja2($efectivo, $numero){
+  $db = new dbConn();
+  $nombre_impresora = "CAJA2";
+  // $img  = "C:/AppServ/www/pizto/assets/img/logo_factura/abrego.jpg";
+
+
+$connector = new WindowsPrintConnector($nombre_impresora);
+$printer = new Printer($connector);
+$printer -> initialize();
+
+$printer -> setFont(Printer::FONT_A);
+$printer -> selectPrintMode(Printer::MODE_DOUBLE_HEIGHT);
+$printer -> selectPrintMode(Printer::MODE_DOUBLE_WIDTH);
+
+$printer -> setTextSize(1, 1);
+$printer -> setLineSpacing(40);
+
+
+// $printer -> setJustification(Printer::JUSTIFY_CENTER);
+// $logo = EscposImage::load($img, false);
+// $printer->bitImage($logo);
+
+$printer -> setJustification(Printer::JUSTIFY_CENTER);
+$printer->text("MINI SUPER 24/7 EL DIVINO NIÑO");
+
+$printer->feed();
+$printer->text("JAYUMI S.A. DE C.V.");
+$printer->feed();
+$printer->text("4 calle ote. local c-1, San Martin de Porres");
+$printer->feed();
+$printer->text("San Francisco Menendez");
+
+$printer->feed();
+$printer->text("NRC: 285464-2 NIT: 0108-091019-101-0");
+$printer->feed();
+$printer->text("Giro:Otros servicios relacionados con la");
+$printer->feed();
+$printer->text("salud NCP");
+//$printer->text("de Construccion y articulos conexos ");
+
+
+// $printer->feed();
+// $printer->text("NIT: 1010-291061-002-4   NRC: 33274-7");
+
+// $printer->feed();
+// $printer->text("GIRO: Clinica Veterinaria y venta de productos Agropecuarios");
+
+$printer->feed();
+$printer->text("CAJA: 2.  TICKET NUMERO: " . $numero);
+
+
+/* Stuff around with left margin */
+$printer->feed();
+$printer -> setJustification(Printer::JUSTIFY_LEFT);
+$printer -> text("_____________________________________________");
+$printer -> setJustification(Printer::JUSTIFY_LEFT);
+$printer->feed();
+/* Items */
+
+$printer -> setJustification(Printer::JUSTIFY_LEFT);
+$printer -> setEmphasis(true);
+$printer -> text($this->Item2("Cant", 'Producto', 'Precio', 'Total'));
+$printer -> setEmphasis(false);
+
+
+$subtotalf = 0;
+$productos = 0;
+
+$a = $db->query("select cod, cant, producto, pv, total, fecha, hora, num_fac from ticket where num_fac = '".$numero."' and orden = '".$_SESSION["orden_actual_print"]."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]." and tipo = ".$_SESSION["tipoticket"]." group by cod");
+
+    foreach ($a as $b) {
+
+$printer -> text($this->Item2($b["cant"], substr($b["producto"], 0, 28), $b["pv"], $b["total"]));
+
+$subtotalf = $subtotalf + $b["total"];
+$productos = $productos + $b["cant"];
+
+}    $a->close();
+
+
+
+if ($sx = $db->select("sum(total)", "ticket", "WHERE num_fac = '".$numero."' and orden = '".$_SESSION["orden_actual_print"]."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."  and tipo = ".$_SESSION["tipoticket"]."" )) {
+       $stotalx=$sx["sum(total)"];
+    } unset($sx);
+
+
+
+
+$printer -> text("_____________________________________________");
+$printer->feed();
+
+$printer -> text("Cantidad de productos: " . $productos);
+$printer->feed();
+
+
+// $printer -> text($this->DosCol("Sub Total " . $_SESSION['config_moneda_simbolo'] . ":", 40, Helpers::Format(Helpers::STotal($subtotalf, $_SESSION['config_imp'])), 10));
+$printer -> text($this->DosCol2("Sub Total  " . $_SESSION['config_moneda_simbolo'] . ":", 30, Helpers::Format($subtotalf), 10));
+
+
+
+// $printer -> text($this->DosCol("IVA " . $_SESSION['config_moneda_simbolo'] . ":", 40, Helpers::Format(Helpers::Impuesto(Helpers::STotal($subtotalf, $_SESSION['config_imp']), $_SESSION['config_imp'])), 10));
+
+
+$printer -> text($this->DosCol2("TOTAL " . $_SESSION['config_moneda_simbolo'] . ":", 30, Helpers::Format($subtotalf), 10));
+
+
+
+$printer -> text("_____________________________________________");
+$printer->feed();
+
+
+//efectivo
+if($efectivo == NULL){
+  $efectivo = $xtotal;
+}
+
+
+
+$printer -> text($this->DosCol2("Efectivo " . $_SESSION['config_moneda_simbolo'] . ":", 30, Helpers::Format($efectivo), 10));
+
+//cambio
+$cambios = $efectivo - $subtotalf;
+$printer -> text($this->DosCol2("Cambio " . $_SESSION['config_moneda_simbolo'] . ":", 30, Helpers::Format($cambios), 10));
+
+
+$printer -> text("_____________________________________________");
+$printer->feed();
+
+
+
+
+if ($x = $db->select("fecha, hora", "ticket", "WHERE num_fac = '".$numero."' and orden = '".$_SESSION["orden_actual_print"]."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."  and tipo = ".$_SESSION["tipoticket"]."" )) {
+$fechaf=$x["fecha"];
+$horaf=$x["hora"];
+} unset($x);
+
+
+$printer->feed();
+$printer -> text($this->DosCol2("Fecha: ".$fechaf, 20, "Hora: ".$horaf, 20));
 
 
 // $printer->feed();
@@ -770,7 +948,7 @@ $printer -> setEmphasis(false);
 $subtotalf = 0;
 $productos = 0;
 
-$a = $db->query("select cod, cant, producto, pv, total, fecha, hora, num_fac from ticket where num_fac = '".$numero."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]." and tipo = ".$_SESSION["tipoticket"]." group by cod");
+$a = $db->query("select cod, cant, producto, pv, total, fecha, hora, num_fac from ticket where num_fac = '".$numero."' and orden = '".$_SESSION["orden_actual_print"]."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]." and tipo = ".$_SESSION["tipoticket"]." group by cod");
 
     foreach ($a as $b) {
 
@@ -783,7 +961,7 @@ $productos = $productos + $b["cant"];
 
 
 
-if ($sx = $db->select("sum(total)", "ticket", "WHERE num_fac = '".$numero."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."  and tipo = ".$_SESSION["tipoticket"]."" )) {
+if ($sx = $db->select("sum(total)", "ticket", "WHERE num_fac = '".$numero."' and orden = '".$_SESSION["orden_actual_print"]."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."  and tipo = ".$_SESSION["tipoticket"]."" )) {
        $stotalx=$sx["sum(total)"];
     } unset($sx);
 
@@ -833,7 +1011,7 @@ $printer->feed();
 
 
 
-if ($x = $db->select("fecha, hora", "ticket", "WHERE num_fac = '".$numero."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."  and tipo = ".$_SESSION["tipoticket"]."" )) {
+if ($x = $db->select("fecha, hora", "ticket", "WHERE num_fac = '".$numero."' and orden = '".$_SESSION["orden_actual_print"]."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."  and tipo = ".$_SESSION["tipoticket"]."" )) {
 $fechaf=$x["fecha"];
 $horaf=$x["hora"];
 } unset($x);
@@ -959,10 +1137,14 @@ public function CorteX($hash){
 
  public function CorteX2($hash){ // imprime el resumen del ultimo corte
   $db = new dbConn();
-
-
-
-  $nombre_impresora = "TICKET";
+  $ip = Helpers::GetIp();
+  if($ip == "192.168.0.197"){
+    $nombre_impresora = "CAJA2";
+    $caja = "CAJA: 2";
+  }else{
+    $nombre_impresora = "TICKET";
+    $caja = "CAJA: 1";
+  }
 
 
 $connector = new WindowsPrintConnector($nombre_impresora);
@@ -1001,7 +1183,8 @@ $printer->feed();
 $printer->text("NRC: 285464-2 NIT: 0108-091019-101-0");
 $printer->feed();
 $printer->text("Giro:Otros servicios relacionados con la salud NCP");
-$printer->text("CAJA: 1.");
+$printer->feed();
+$printer->text($caja);
 
 
 
@@ -1239,6 +1422,8 @@ $printer -> text($this->Item($bx["nombre"], NULL, NULL ,$bx["cantidad"]));
 
 $printer->feed();
 $printer->text("CAJERO: " . $cajero);
+$printer->feed();
+$printer->feed();
 
 
 $printer->feed();
@@ -1251,9 +1436,12 @@ $printer->close();
 public function CorteNinguno($hash){ // imprime el resumen de las ventas con ticket ninguno
   $db = new dbConn();
 
-
-
-  $nombre_impresora = "TICKET";
+  $ip = Helpers::GetIp();
+  if($ip == "192.168.0.197"){
+    $nombre_impresora = "CAJA2";
+  }else{
+    $nombre_impresora = "TICKET";
+  }
 
 
 $connector = new WindowsPrintConnector($nombre_impresora);
@@ -1360,7 +1548,8 @@ $printer->feed();
 
 $printer->feed();
 $printer->text("CAJERO: " . $cajero);
-
+$printer->feed();
+$printer->feed();
 
 $printer->feed();
 $printer->cut();
@@ -1381,10 +1570,12 @@ $printer->close();
 
  public function CorteZ($fechax){ // imprime el resumen del ultimo corte
   $db = new dbConn();
-
-
-  $nombre_impresora = "TICKET";
-
+  $ip = Helpers::GetIp();
+  if($ip == "192.168.0.197"){
+    $nombre_impresora = "CAJA2";
+  }else{
+    $nombre_impresora = "TICKET";
+  }
 
 $connector = new WindowsPrintConnector($nombre_impresora);
 $printer = new Printer($connector);
@@ -1734,6 +1925,38 @@ $printer->close();
         return "$la1$la2$la3$la4\n";
     }
 
+    public function Item2($cant,  $name = '', $price = '', $total = '', $dollarSign = false){
+      $rightCols = 8;
+      $leftCols = 28;
+      if ($dollarSign) {
+          $leftCols = $leftCols / 2 - $rightCols / 2;
+      }
+      $left = str_pad($cant . " " . $name, $leftCols) ;
+
+      $sign = ($dollarSign ? '$ ' : '');
+
+      $total = str_pad($sign . $total, $rightCols, ' ', STR_PAD_LEFT);
+      $right = str_pad($sign . $price, $rightCols, ' ', STR_PAD_LEFT);
+      return "$left$right$total\n";
+  }
+
+
+
+public function DosCol2($izquierda = '', $iz, $derecha = '', $der){
+      $left = str_pad($izquierda, $iz, ' ', STR_PAD_LEFT) ;
+      $right = str_pad($derecha, $der, ' ', STR_PAD_LEFT);
+      return "$left$right\n";
+  }
+
+
+
+public function Col42($col1, $esp1,  $col2, $esp2, $col3, $esp3,  $col4,$esp4){
+      $la1 = str_pad($col1, $esp1, ' ', STR_PAD_LEFT);
+      $la2 = str_pad($col2, $esp2, ' ', STR_PAD_LEFT);
+      $la3 = str_pad($col3, $esp3, ' ', STR_PAD_LEFT);
+      $la4 = str_pad($col4, $esp4, ' ', STR_PAD_LEFT);
+      return "$la1$la2$la3$la4\n";
+  }
 
 
 
