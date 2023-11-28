@@ -7,9 +7,11 @@ class VerCotizaciones{
             $this->IndustriasFF($cot);
         }
         if ($_SESSION['td'] == 91) { // 91  DDALTEC
-              $this->ddaltec($cot);
-          
-        } else {
+              $this->ddaltec($cot);  
+        } 
+        if ($_SESSION['td'] == 102) { //  102 PUBLI-INK
+          $this->publiInk($cot);
+        }else {
             $this->general($cot);
         }
     }
@@ -460,6 +462,138 @@ echo '<p>Producto Fabricados/Instalados, entrega de 8 a 15 dias hábiles, despu�
 
 }
 
+public function publiInk($cotizacion){
+  $db = new dbConn();
+  
+
+if ($r = $db->select("cliente, fecha, correlativo, caduca", "cotizaciones_data", "WHERE id = '".$cotizacion."' and td = ". $_SESSION["td"] ."")) { 
+$cliente = $r["cliente"]; 
+$fecha = $r["fecha"]; 
+$correlativo = $r["correlativo"]; 
+$caduca = $r["caduca"]; 
+} unset($r); 
+
+if ($r = $db->select("*", "clientes", "WHERE hash = '".$cliente."' and td = ". $_SESSION["td"] ."")) { 
+$nombre = $r["nombre"];
+$documento = $r["documento"];
+$direccion = $r["direccion"];
+$municipio = $r["municipio"];
+$departamento = $r["departamento"];
+} unset($r); 
+
+echo '<div class="row">
+ <div class="col-8">
+         <div class="text-center">
+         <h3></h3>
+         </div>
+         <div><h3>
+         </h3></div>
+         <div><h3>
+         </h3></div>
+         
+
+ </div>
+
+   <div class="col-4 text-right">
+   <img alt="" src="'.XSERV.'assets/img/logo/'.$_SESSION['config_imagen'].'" height="150" id="logo-neg" class="img-fluid" />
+   </div>
+</div>
+
+<hr />';
+
+echo '<div class="row">
+ <div class="col-8">
+         <div>
+         <h4>Cliente: '. $nombre .'</h4>
+         <h5>PRESENTE</h5>
+         <h5>Por medio de la presente, someto a consideración nuestra oferta de servicio:</h5>
+         </div>
+         <div><h4>
+         </h4></div>
+
+ </div>
+   <div class="col-4 text-right">
+  
+      <div>
+         <h4>Creada : '. $fecha .'</h4>
+        </div>
+ <div>
+         <h4>Cotización : '. $correlativo .'</h4>
+        </div>
+   </div>
+</div>
+
+
+<pre>Detalles de la cotización</pre>';
+
+$a = $db->query("SELECT * FROM cotizaciones WHERE cotizacion = '".$correlativo."' and td = ".$_SESSION["td"]."");
+
+   if($a->num_rows > 0){
+       echo '<table class="table table-striped table-sm">
+       <thead>
+         <tr>
+           <th scope="col">Cant</th>
+           <th scope="col">Producto</th>
+           <th scope="col">Precio</th>
+           <th scope="col">Subtotal</th>
+           <th scope="col">Impuesto</th>
+           <th scope="col">Total</th>
+         </tr>
+       </thead>
+       <tbody>';
+       $pv = 0; $st=0; $im=0; $to=0;
+       foreach ($a as $b) {
+       $pv = $pv + $b["pv"]; 
+       $st = $st + $b["stotal"]; 
+       $im = $im + $b["imp"]; 
+       $to = $to + $b["total"];
+       echo '<tr>
+             <th scope="row">'.$b["cant"].'</th>
+             <td>'.$b["producto"].'</td>
+             <td>'.$b["pv"].'</td>
+             <td>'.$b["stotal"].'</td>
+             <td>'.$b["imp"].'</td>
+             <td>'.$b["total"].'</td>
+           </tr>';
+       }
+       echo '<tr>
+             <td></td>
+             <td>Total</td>
+             <th>'.Helpers::Dinero($pv).'</th>
+             <th>'.Helpers::Dinero($st).'</th>
+             <th>'.Helpers::Dinero($im).'</th>
+             <th>'.Helpers::Dinero($to).'</th>
+           </tr>';
+
+       echo '</tbody>
+         </table>';
+   }  $a->close();
+
+
+echo '<div class="row mt-4">
+ <div class="col-12">
+         <div>
+         <h3> Cotización válida hasta el: '. Fechas::FechaEscrita($caduca) .'</h3>
+         </div>
+ </div>
+</div>';
+
+echo '<ul>
+  <li>Para contratar nuestros servicios necesitamos el 50% del monto total a pagar por anticipado, dejando el completo a contra entrega de lo contratado.</li>
+  <li>Anticipe a su orden si desea crédito fiscal o factura consumidor final.</li>
+  <li>Precios sujetos a cambios sin previo aviso, y sujetos a disponibilidad, tiempos de entrega  (15 dias hábiles aproximadamente)</li>
+  <li>Nuestra oferta tiene vigencia de 15 días hábiles.</li>
+  <li>Cheque a nombre de Ileana Vanessa Pérez de Chicas.</li>
+  <li>Precios incluyen iva.</li>
+</ul>';
+
+echo '<footer>
+   <div class="col-4 text-right" style="position: absolute;bottom: 0; width: 100%;">
+   <img alt="" src="'.XSERV.'assets/img/logo_factura/publi-ink.jpg" width="1100" />
+   </div>
+   </footer>';
+
+}
 
 
 
