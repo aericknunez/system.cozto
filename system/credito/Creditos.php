@@ -80,6 +80,9 @@ if($dir == "asc") $dir2 = "desc";
                       if($tipo == 99 and $saldo == 0){ 
                         echo '<a title="Facturar" href="?modal=faturar_credito&cre='.$b["hash"].'&orden='.$b["orden"].'&factura='.$b["factura"].'&tx='.$b["tx"].'"><i class="fa fa-check-square fa-lg blue-text ml-2"></i></a>';
                        }
+                       if($saldo == 0){ 
+                        echo '<a id="imprimir" orden="'. $b["orden"] .'" factura="'. $b["factura"] .'"><i class="fas fa-print"></i></a>';
+                       }
                       echo '</td>
                     </tr>';
         }
@@ -461,7 +464,9 @@ if($dir == "asc") $dir2 = "desc";
                       if($tipo == 99 and $saldo == 0){ 
                         '<a href="?modal=faturar_credito&cre='.$b["hash"].'&orden='.$b["orden"].'&factura='.$b["factura"].'&tx='.$b["tx"].'"><i class="fas fa-trash fa-lg blue-text ml-2"></i></a>';
                        }
-
+                       if($saldo == 0){ 
+                        echo '<a id="imprimir" orden="'. $b["orden"] .'" factura="'. $b["factura"] .'"><i class="fas fa-print"></i></a>';
+                       }
                       echo '</td>
                     </tr>';
         }
@@ -628,6 +633,9 @@ $page <= 1 ? $enable = 'disabled' : $enable = '';
                       if($tipo == 99 and $saldo == 0){ 
                         '<a href="?modal=faturar_credito&cre='.$b["hash"].'&orden='.$b["orden"].'&factura='.$b["factura"].'&tx='.$b["tx"].'"><i class="fas fa-trash fa-lg blue-text ml-2"></i></a>';
                       }
+                      if($saldo == 0){ 
+                        echo '<a id="imprimir" orden="'. $b["orden"] .'" factura="'. $b["factura"] .'"><i class="fas fa-print"></i></a>';
+                       }
                     echo '</td></tr>';
         }
         echo '</tbody>

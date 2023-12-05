@@ -2819,6 +2819,41 @@ Alerts::Mensajex("ADVERTENCIA! Se detecto activo la opción de producto agrupado
 break;
 
 
+case "587": // imprimir factura
+	include_once '../../system/facturar/Facturar.php'; // obtiene el estado de la factura tx, local o web
+	include_once '../../system/facturar/facturas/'.$_SESSION["td"].'/Impresiones.php'; // tiene las 
+	require_once ('../ticket/autoload.php'); 
+
+if ($r = $db->select("efectivo, tipo", "ticket_num", "WHERE num_fac = '".$_POST["factura"]."' and orden = '".$_POST["orden"]."' and td = ".$_SESSION["td"]."")) { 
+   	$_SESSION["cambio_actual_print"] = $r["efectivo"];
+	$_SESSION["tipoticket"] = $r["tipo"];
+} unset($r);  
+
+	$fac = new Facturar();
+	$fac->ObtenerEstadoFactura($_SESSION["cambio_actual_print"], $_POST["factura"]);
+	Alerts::Alerta("success","Imprimiendo!","Imprimiendo Factura");
+
+// elimino las dos variables
+unset($_SESSION["cambio_actual_print"]);
+break;
+
+
+case "588":  /// imprimir factura Web desde creditos
+	include_once '../../system/facturar/FacturarWeb.php';
+	
+	if ($r = $db->select("tipo, efectivo", "ticket_num", "WHERE num_fac = '".$_POST["factura"]."' and orden = '".$_POST["orden"]."' and td = ".$_SESSION["td"]."")) { 
+	   $_SESSION["orden_print"] = $_POST["orden"]; 
+	   $_SESSION["cambio_actual_print"] = $r["efectivo"];
+	   $_SESSION["tipoticket"] = $r["tipo"];
+	} unset($r);  
+	
+		$data = new FacturarWeb(); 
+		$data->TicketWeb();
+	
+	// elimino las dos variables
+	unset($_SESSION["orden_print"], $_SESSION["cambio_actual_print"]);
+	break;
+
 
 case "597": // Seleccionar viehiculo
 	include_once '../../system/taller/Taller.php';

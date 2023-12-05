@@ -306,16 +306,19 @@ echo '
 elseif(isset($_GET["creditos"])) {
 echo '<script type="text/javascript" src="assets/js/query/paginador.js?v='.$numero.'"></script>';
 echo '<script type="text/javascript" src="assets/js/query/credito.js?v='.$numero.'"></script>';
+include_once 'assets/js/query/ImprimirCredito.php';
 } 
 
 elseif(isset($_GET["creditospendientes"])) {
 echo '<script type="text/javascript" src="assets/js/query/paginador.js?v='.$numero.'"></script>';
 echo '<script type="text/javascript" src="assets/js/query/credito.js?v='.$numero.'"></script>';
+include_once 'assets/js/query/ImprimirCredito.php';
 } 
 
 elseif(isset($_GET["creditosvercliente"])) {
 echo '<script type="text/javascript" src="assets/js/query/paginador.js?v='.$numero.'"></script>';
 echo '<script type="text/javascript" src="assets/js/query/credito.js?v='.$numero.'"></script>';
+include_once 'assets/js/query/ImprimirCredito.php';
 } 
 
 
