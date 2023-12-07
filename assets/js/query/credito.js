@@ -159,32 +159,6 @@ $(document).ready(function(){
 
 
 
-
-	$("body").on("click","#printAbono",function(){
-        var op = $(this).attr('op');
-		var hash = $(this).attr('hash');
-        var dataString = 'op='+op+'&hash='+hash;
-
-        $.ajax({
-            type: "POST",
-            url: "application/src/routes.php",
-            data: dataString,
-            beforeSend: function () {
-               $("#printAbono").html('<i class="fas fa-sync fa-spin fa-lg green-text"></i>');
-            },
-            success: function(data) {            
-                $("#msj").html(data); // lo que regresa de la busquea 
-				$("#printAbono").html('<i class="fa fa-print fa-lg blue-text"></i>');				
-            }
-        });
-    });  
-
-
-
-
-
-
-
 	$("body").on("click","#deletex",function(){
         var op = '136';
 		var credito = $(this).attr('credito');
