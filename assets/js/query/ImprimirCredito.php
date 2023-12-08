@@ -28,22 +28,26 @@ if($_SESSION["root_plataforma"] == 0){
 
 <script>
     $("body").on("click","#imprimir",function(){ 
-        LoadData();
+        var orden = $(this).attr('orden');
+        var factura = $(this).attr('factura');
+        LoadData(orden, factura);
     });
 
 
 
 
 
-function LoadData(){
+function LoadData(orden, factura){
+    var dataString = 'orden='+orden+'&factura='+factura;
     $.ajax({
         type: "POST",
         url: "application/src/routes.php?op=588",
+        data: dataString,
         datatype: 'json',
         success: function(data) {  
             var datos = data;  
             var json = $.parseJSON(datos);
-            // console.log(json);        
+           // console.log(json);        
             LoadImprimir(json);
         }
     });

@@ -49,7 +49,20 @@ if($_SESSION["tipoticket"] == 0){
            $parametros["total"]=$sx["sum(total)"];
         } unset($sx); 
      
-    
+        if(isset($_SESSION['credito_sin_factura'])) { 
+
+            if ($r = $db->select("hash", "creditos", "WHERE factura = '".$parametros["num_fac"]."' and orden = '".$_SESSION["orden_print"]."' and tx = " . $_SESSION["tx"] . " and td = " .  $_SESSION["td"])) { 
+                $credito = $r["hash"];
+            } unset($r);  
+            
+            $parametros["credito"] = $credito;
+            
+            if ($abonos = $db->select("sum(abono)", "creditos_abonos", "WHERE credito = '".$credito."' and edo = 1 and td = ".$_SESSION["td"]."")){  
+                $totalAbonos = $abonos["sum(abono)"];
+            }unset($abonos); 
+        
+            $parametros["abonos"] = $totalAbonos;
+        }
     /// sistema - cliente
     $parametros["c_cliente"] = $_SESSION["config_cliente"];
     $parametros["c_propietario"] = $_SESSION["config_propietario"];
@@ -83,7 +96,20 @@ if ($sx = $db->select("sum(stotal), sum(imp), sum(retencion), sum(total)", "tick
        $parametros["total"]=$sx["sum(total)"];
     } unset($sx); 
  
+    if(isset($_SESSION['credito_sin_factura'])) { 
 
+        if ($r = $db->select("hash", "creditos", "WHERE factura = '".$parametros["num_fac"]."' and orden = '".$_SESSION["orden_print"]."' and tx = " . $_SESSION["tx"] . " and td = " .  $_SESSION["td"])) { 
+            $credito = $r["hash"];
+        } unset($r);  
+        
+        $parametros["credito"] = $credito;
+        
+        if ($abonos = $db->select("sum(abono)", "creditos_abonos", "WHERE credito = '".$credito."' and edo = 1 and td = ".$_SESSION["td"]."")){  
+            $totalAbonos = $abonos["sum(abono)"];
+        }unset($abonos); 
+    
+        $parametros["abonos"] = $totalAbonos;
+    }
 /// sistema - cliente
 $parametros["c_cliente"] = $_SESSION["config_cliente"];
 $parametros["c_propietario"] = $_SESSION["config_propietario"];
@@ -102,10 +128,6 @@ if ($r = $db->select("cliente", "ticket_cliente", "WHERE factura = '".$parametro
 $hashcliente = $r["cliente"];
 } unset($r);  
 
-
-
-
-
 if($_SESSION["root_taller"] == "on") { 
 
     if ($r = $db->select("documento", "facturar_documento_factura", "WHERE factura = '".$parametros["num_fac"]."' and tx = " . $_SESSION["tx"] . " and td = " .  $_SESSION["td"])) { 
@@ -123,13 +145,29 @@ if($_SESSION["root_taller"] == "on") {
     } unset($r);  
 }
 
-
 if ($r = $db->select("nombre, documento, direccion, telefono", "clientes", "WHERE hash = '".$hashcliente."' and td = " .  $_SESSION["td"])) { 
 $parametros["nombre"] = $r["nombre"];
 $parametros["documento"] = $r["documento"];
 $parametros["direccion"] = $r["direccion"];
 $parametros["telefono"] = $r["telefono"];
-} unset($r);  
+} unset($r); 
+
+$parametros["hashcliente"] = $hashcliente;
+
+if(isset($_SESSION['credito_sin_factura'])) { 
+
+    if ($r = $db->select("hash", "creditos", "WHERE factura = '".$parametros["num_fac"]."' and orden = '".$_SESSION["orden_print"]."' and tx = " . $_SESSION["tx"] . " and td = " .  $_SESSION["td"])) { 
+        $credito = $r["hash"];
+    } unset($r);  
+    
+    $parametros["credito"] = $credito;
+    
+    if ($abonos = $db->select("sum(abono)", "creditos_abonos", "WHERE credito = '".$credito."' and edo = 1 and td = ".$_SESSION["td"]."")){  
+        $totalAbonos = $abonos["sum(abono)"];
+    }unset($abonos); 
+
+    $parametros["abonos"] = $totalAbonos;
+}
 
 
 
@@ -171,7 +209,20 @@ if($_SESSION["tipoticket"] == 3){
         } unset($r);  
     }
 
+    if(isset($_SESSION['credito_sin_factura'])) { 
 
+        if ($r = $db->select("hash", "creditos", "WHERE factura = '".$parametros["num_fac"]."' and orden = '".$_SESSION["orden_print"]."' and tx = " . $_SESSION["tx"] . " and td = " .  $_SESSION["td"])) { 
+            $credito = $r["hash"];
+        } unset($r);  
+        
+        $parametros["credito"] = $credito;
+        
+        if ($abonos = $db->select("sum(abono)", "creditos_abonos", "WHERE credito = '".$credito."' and edo = 1 and td = ".$_SESSION["td"]."")){  
+            $totalAbonos = $abonos["sum(abono)"];
+        }unset($abonos); 
+    
+        $parametros["abonos"] = $totalAbonos;
+    }
 
 
 if ($sx = $db->select("sum(stotal), sum(imp), sum(retencion), sum(total)", "ticket", "WHERE num_fac = '".$parametros["num_fac"]."' and orden = '".$_SESSION["orden_print"]."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]." and tipo = ".$_SESSION["tipoticket"]."")) { 
