@@ -275,7 +275,7 @@ public function VerAbonos($credito) { //leva el control del autoincremento de lo
                       if($n == 1 and $b["fecha"] == date("d-m-Y")){
                         echo '<td>
                         <a id="delabono" hash="'.$b["hash"].'" op="108" credito="'.$b["credito"].'" orden="'.$orden.'" factura="'.$factura.'" tx="'.$tx.'"><i class="fa fa-minus-circle fa-lg red-text"></i></a>
-                        <a class="ml-2" id="printAbono" hash="'.$b["credito"].'" op="135"><i class="fa fa-print fa-lg blue-text"></i></a>
+                        <a class="ml-2" id="printAbono" hash="'.$b["credito"].'"><i class="fa fa-print fa-lg blue-text"></i></a>
                         </td>';
                       } else {
                       echo '<td><i class="fa fa-ban fa-lg green-text"></i></td>';

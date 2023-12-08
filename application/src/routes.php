@@ -1049,11 +1049,7 @@ include_once '../../system/credito/Creditos.php';
 break;
 
 
-case "136": // Borrar credito
-	include_once '../../system/credito/Creditos.php';
-		$credito = new Creditos;
-		$credito->BorrarFactura($_POST['factura'], $_POST['orden'], $_POST['tx'], $_POST['credito'], $_POST['tipo']);
-break;
+
 
 
 case "105": // agrega abono
@@ -1403,6 +1399,13 @@ case "135": // imprime cuotas de credito
 break; 
 
 
+case "136": // Borrar credito
+	include_once '../../system/credito/Creditos.php';
+		$credito = new Creditos;
+		$credito->BorrarFactura($_POST['factura'], $_POST['orden'], $_POST['tx'], $_POST['credito'], $_POST['tipo']);
+break;
+
+
 case "137": // nota envio
 	include_once '../../system/historial/Historial.php';
 	$historial = new Historial;
@@ -1412,6 +1415,15 @@ case "137": // nota envio
 	
 	$historial->NotasEnvio($fecha);
 break;
+
+
+
+case "138": // imprime cuotas de credito en web
+    include_once '../../system/facturar/ImprimirAbonosWeb.php';
+    $imprimir = new ImprimirAbonosWeb(); 
+	return $imprimir->AbonosWeb($_POST["hash"]); //
+break; 
+
 
 case "145": // historial ventas x user
 	include_once '../../system/historial/Historial.php';

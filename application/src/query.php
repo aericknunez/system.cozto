@@ -99,6 +99,7 @@ echo '
 // abono
 	if($_GET["modal"] == "abonos"){
 	echo '<script type="text/javascript" src="assets/js/query/credito.js?v='.$numero.'"></script>';
+	include_once 'assets/js/query/ImprimirAbono.php';
 	}
 // abonos cuentas
 	if($_GET["modal"] == "abonos_cuentas"){
@@ -307,18 +308,21 @@ elseif(isset($_GET["creditos"])) {
 echo '<script type="text/javascript" src="assets/js/query/paginador.js?v='.$numero.'"></script>';
 echo '<script type="text/javascript" src="assets/js/query/credito.js?v='.$numero.'"></script>';
 include_once 'assets/js/query/ImprimirCredito.php';
+include_once 'assets/js/query/ImprimirAbono.php';
 } 
 
 elseif(isset($_GET["creditospendientes"])) {
 echo '<script type="text/javascript" src="assets/js/query/paginador.js?v='.$numero.'"></script>';
 echo '<script type="text/javascript" src="assets/js/query/credito.js?v='.$numero.'"></script>';
 include_once 'assets/js/query/ImprimirCredito.php';
+include_once 'assets/js/query/ImprimirAbono.php';
 } 
 
 elseif(isset($_GET["creditosvercliente"])) {
 echo '<script type="text/javascript" src="assets/js/query/paginador.js?v='.$numero.'"></script>';
 echo '<script type="text/javascript" src="assets/js/query/credito.js?v='.$numero.'"></script>';
 include_once 'assets/js/query/ImprimirCredito.php';
+include_once 'assets/js/query/ImprimirAbono.php';
 } 
 
 
