@@ -2787,7 +2787,8 @@ case "583": // imprimir factura
 	include_once '../../system/facturar/facturas/'.$_SESSION["td"].'/Impresiones.php'; // tiene las 
 	require_once ('../ticket/autoload.php'); 
 
-if ($r = $db->select("efectivo", "ticket_num", "WHERE num_fac = '".$_SESSION["search"]."' and tipo = '".$_SESSION["tipoticket"]."' and td = ".$_SESSION["td"]."")) { 
+if ($r = $db->select("orden, efectivo", "ticket_num", "WHERE num_fac = '".$_SESSION["search"]."' and tipo = '".$_SESSION["tipoticket"]."' and td = ".$_SESSION["td"]."")) { 
+	$_SESSION["orden_actual_print"] = $r["orden"]; 
    	$_SESSION["cambio_actual_print"] = $r["efectivo"];
 } unset($r);  
 
@@ -2796,7 +2797,7 @@ if ($r = $db->select("efectivo", "ticket_num", "WHERE num_fac = '".$_SESSION["se
 	Alerts::Alerta("success","Imprimiendo!","Imprimiendo Factura");
 
 // elimino las dos variables
-unset($_SESSION["cambio_actual_print"]);
+unset($_SESSION["orden_actual_print"], $_SESSION["cambio_actual_print"]);
 break;
 
 
