@@ -56,6 +56,7 @@ if($_REQUEST["modal"]=="edit_vehiculo_taller") include_once 'system/modal/modal/
 
 // creditos
 if($_REQUEST["modal"]=="abonos") include_once 'system/modal/modal/creditos_abonos.php';
+if($_REQUEST["modal"]=="faturar_credito") include_once 'system/modal/modal/faturar_credito.php';
 
 if($_REQUEST["modal"]=="cre_prodcuto") include_once 'system/modal/modal/creditos_producto.php';
 

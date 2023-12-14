@@ -226,6 +226,21 @@ $r = $db->select("*", "config_root", "where td = ".$_SESSION['td']."")
       </td>
   </tr>
 
+  <tr>
+      <td>
+          <div class="switch mt-4">
+            <label>
+             Permitir creditos sin factura ||  Off
+              <input type="checkbox" <?php if(Encrypt::Decrypt($r["credito_sin_factura"],$_SESSION['secret_key']) == "on") echo "checked"; ?> id="credito_sin_factura" name="credito_sin_factura" >
+              <span class="lever"></span> On 
+            </label>
+          </div>
+      </td>
+      <td>
+
+      </td>
+  </tr>
+
 
   <tr>
       <td>

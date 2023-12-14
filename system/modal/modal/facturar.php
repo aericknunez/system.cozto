@@ -45,6 +45,10 @@ echo '<div class="display-4 text-center font-weight-bold">'. Helpers::Dinero($to
     </div>
     <input type="image" src="assets/img/imagenes/credito.png"  id="btn-facturar" name="btn-facturar" >
     
+    <?php if($_SESSION['aplicar_credito_sin_factura'] == 1) { echo '<div class="text-danger font-weight-bold">
+      Este credito se facturará al final de la cancelación</div>'; } ?>
+    
+    
      <?php } elseif(isset($_SESSION["tcredito"])) { ?>
 
      <div class="form-group row justify-content-center align-items-center">

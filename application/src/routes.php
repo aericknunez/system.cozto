@@ -1049,11 +1049,7 @@ include_once '../../system/credito/Creditos.php';
 break;
 
 
-case "136": // Borrar credito
-	include_once '../../system/credito/Creditos.php';
-		$credito = new Creditos;
-		$credito->BorrarFactura($_POST['factura'], $_POST['orden'], $_POST['tx'], $_POST['credito'], $_POST['tipo']);
-break;
+
 
 
 case "105": // agrega abono
@@ -1207,12 +1203,17 @@ break;
 
 
 case "120": // mostar los botones imprimir factura
+
+	// si no es credito con factura
+	if (!isset($_SESSION['aplicar_credito_sin_factura'])) {
+
 	include_once '../../system/facturar/Facturar.php'; // obtiene el estado de la factura tx, local o web
 	include_once '../../system/facturar/facturas/'.$_SESSION["td"].'/Impresiones.php'; // tiene las 
 	require_once ('../ticket/autoload.php'); 
 
 	$fac = new Facturar();
 	$fac->ObtenerEstadoFactura($_SESSION["cambio_actual_print"], $_SESSION["factura_actual_print"]);
+	}
 
 // elimino las dos variables
 unset($_SESSION["factura_actual_print"], $_SESSION["cambio_actual_print"], $_SESSION["orden_actual_print"]);
@@ -1398,6 +1399,13 @@ case "135": // imprime cuotas de credito
 break; 
 
 
+case "136": // Borrar credito
+	include_once '../../system/credito/Creditos.php';
+		$credito = new Creditos;
+		$credito->BorrarFactura($_POST['factura'], $_POST['orden'], $_POST['tx'], $_POST['credito'], $_POST['tipo']);
+break;
+
+
 case "137": // nota envio
 	include_once '../../system/historial/Historial.php';
 	$historial = new Historial;
@@ -1407,6 +1415,15 @@ case "137": // nota envio
 	
 	$historial->NotasEnvio($fecha);
 break;
+
+
+
+case "138": // imprime cuotas de credito en web
+    include_once '../../system/facturar/ImprimirAbonosWeb.php';
+    $imprimir = new ImprimirAbonosWeb(); 
+	return $imprimir->AbonosWeb($_POST["hash"]); //
+break; 
+
 
 case "145": // historial ventas x user
 	include_once '../../system/historial/Historial.php';
@@ -2574,9 +2591,12 @@ break;
 
 
 case "546":  /// Load data para facturar web
-include_once '../../system/facturar/FacturarWeb.php';
+/// lo llamo solo si no es creditos sin factura
+if (!isset($_SESSION['aplicar_credito_sin_factura'])) {
+	include_once '../../system/facturar/FacturarWeb.php';
 	$data = new FacturarWeb(); 
 	$data->TicketWeb();
+}
 
 // elimino las dos variables
 unset($_SESSION["factura_actual_print"], $_SESSION["cambio_actual_print"]);
@@ -2810,6 +2830,41 @@ Alerts::Mensajex("ADVERTENCIA! Se detecto activo la opción de producto agrupado
 }
 break;
 
+
+case "587": // imprimir factura
+	include_once '../../system/facturar/Facturar.php'; // obtiene el estado de la factura tx, local o web
+	include_once '../../system/facturar/facturas/'.$_SESSION["td"].'/Impresiones.php'; // tiene las 
+	require_once ('../ticket/autoload.php'); 
+
+if ($r = $db->select("efectivo, tipo", "ticket_num", "WHERE num_fac = '".$_POST["factura"]."' and orden = '".$_POST["orden"]."' and td = ".$_SESSION["td"]."")) { 
+   	$_SESSION["cambio_actual_print"] = $r["efectivo"];
+	$_SESSION["tipoticket"] = $r["tipo"];
+} unset($r);  
+
+	$fac = new Facturar();
+	$fac->ObtenerEstadoFactura($_SESSION["cambio_actual_print"], $_POST["factura"]);
+	Alerts::Alerta("success","Imprimiendo!","Imprimiendo Factura");
+
+// elimino las dos variables
+unset($_SESSION["cambio_actual_print"]);
+break;
+
+
+case "588":  /// imprimir factura Web desde creditos
+	include_once '../../system/facturar/FacturarWeb.php';
+	
+	if ($r = $db->select("tipo, efectivo", "ticket_num", "WHERE num_fac = '".$_POST["factura"]."' and orden = '".$_POST["orden"]."' and td = ".$_SESSION["td"]."")) { 
+	   $_SESSION["orden_print"] = $_POST["orden"]; 
+	   $_SESSION["cambio_actual_print"] = $r["efectivo"];
+	   $_SESSION["tipoticket"] = $r["tipo"];
+	} unset($r);  
+	
+		$data = new FacturarWeb(); 
+		$data->TicketWeb();
+	
+	// elimino las dos variables
+	unset($_SESSION["orden_print"], $_SESSION["cambio_actual_print"]);
+	break;
 
 
 case "597": // Seleccionar viehiculo
@@ -3387,6 +3442,43 @@ case "715":
 	$kardex = new Kardex();
 	$kardex->verDatos($_POST['cod'], $_POST["mes"] . "-" . $_POST["ano"]);
 break;
+
+
+
+
+case "720":
+	if ($_SESSION['aplicar_credito_sin_factura'] == 1) {
+		unset($_SESSION['aplicar_credito_sin_factura']);
+		echo "Desactivado";
+	} else {
+		$_SESSION['aplicar_credito_sin_factura'] = 1;
+		echo "Activado";
+	}
+break;
+
+case "721":
+	if($_SESSION['aplicar_credito_sin_factura'] == 1) {
+		echo "Activado";
+	} else {
+		echo "Desactivado";
+	}
+break;
+
+case "722":
+	if ($r = $db->select("num_fac", "ticket_num", "WHERE tipo = ".$_REQUEST['tipo']." and td = ".$_SESSION["td"]." and tx = ".$_SESSION["tx"]." order by id desc limit 1")) { 
+		$ultimoorden = $r["num_fac"];
+	} unset($r); 
+
+	$cambios = array();
+	$cambios["num_fac"] = $ultimoorden + 1;
+	$cambios["tipo"] = $_REQUEST['tipo'];
+	// $cambio["time"] = Helpers::TimeId();
+	Helpers::UpdateId("ticket", $cambios, "num_fac=".$_REQUEST['factura']." and orden=".$_REQUEST['orden']." and tx = ".$_REQUEST["tx"]." and td = ".$_SESSION["td"]."");
+	Helpers::UpdateId("ticket_num", $cambios, "num_fac=".$_REQUEST['factura']." and orden=".$_REQUEST['orden']." and tx = ".$_REQUEST["tx"]." and td = ".$_SESSION["td"]."");
+	header("location: ../../?creditos");
+break;
+
+
 
 
 
