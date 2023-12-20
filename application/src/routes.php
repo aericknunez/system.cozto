@@ -864,7 +864,6 @@ include_once '../../system/ventas/VentasR.php';
 break;
 
 
-
 case "94": // aplicar descuento
 include_once '../../system/ventas/Laterales.php';
 include_once '../../system/ventas/VentasR.php';
@@ -914,7 +913,8 @@ $total = ($pv * $_POST["dcantidad"]) + $d;
 
 	} else {
 		Alerts::Alerta("error","Error!","Revise sus datos!");
-	}	
+	}
+
 break;
 
 
@@ -1501,6 +1501,56 @@ include_once '../../system/cotizar/CotizarR.php';
 	$cot->AplicarDescuento();
 break;
 
+
+case "155-1": // aplicar descuento a producto en cotizacion
+	include_once '../../system/cotizar/Laterales.php';
+	include_once '../../system/cotizar/CotizarR.php';
+	$cot = new Cotizar();
+
+	if ($_SESSION['config_restringir_descuento']) {
+		if (Helpers::CodigoValidacionDescuento() != $_POST['codigo_seguridad']) {
+			echo "Ingrese un código de seguridad válido";
+			return;
+		}
+	}
+
+	if ($_POST["descuento"] != NULL and is_numeric($_POST["descuento"])) {
+
+		if ($_SESSION["descuento_cotx"] != NULL) { // se ya se ha aplicado descuento a toda la factura
+			$_SESSION["descuento_cot"] = $_SESSION["ddescuento_cotx"];
+			unset($_SESSION["descuento_cotx"]);
+		}
+
+		if ($_SESSION["tipo_descuento"] != NULL) { // si es cantidad establecida
+			// obtener el total del producto 
+			if ($r = $db->select("pv, descuento", "cotizaciones", "WHERE cotizacion = '" . $_SESSION["cotizacion"] . "' and cod = '" . $_POST["dcodigo"] . "' and td = " . $_SESSION["td"] . "")) {
+				$pv = $r["pv"];
+				$d = $r["descuento"];
+			}
+			unset($r);
+
+			$total = ($pv * $_POST["dcantidad"]) + $d;
+
+			$_SESSION["descuento_cot"] = Helpers::PorcentajeDescuento($total, $_POST["descuento"]);
+		} else { // si es porcentaje
+			$_SESSION["descuento_cot"] = $_POST["descuento"];
+		}
+
+		$datos["cantidad"] = $_POST["dcantidad"];
+		$datos["cod"] = $_POST["dcodigo"];
+		$cot->Actualiza($datos, 1);
+
+		unset($_SESSION["descuento"]);
+
+		if ($_SESSION["descuento_cot"] != NULL) { // se ya se ha aplicado descuento a toda la factura
+			$_SESSION["descuento_cotx"] = $_SESSION["descuento_cot"];
+			unset($_SESSION["descuento_cot"]);
+		}
+	} else {
+		Alerts::Alerta("error", "Error!", "Revise sus datos!");
+	}
+
+break;
 
 
 case "156": // quitar descuento

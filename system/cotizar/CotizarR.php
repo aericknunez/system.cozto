@@ -101,9 +101,7 @@ class Cotizar{
 
 	}
 
-
-
-
+	
 	public function Agregar($datos) { // agrega el producto
 		$db = new dbConn();
 
@@ -306,6 +304,7 @@ $_SESSION["venta_agrupado"] = TRUE;
 		    $a = $db->query("SELECT * FROM cotizaciones WHERE cotizacion = ".$_SESSION["cotizacion"]." and td = ".$_SESSION["td"]."");
 
 		    if($a->num_rows > 0){
+				
 		    		echo '<table class="table table-striped table-sm">
 					  <thead>
 					    <tr>
@@ -320,13 +319,16 @@ $_SESSION["venta_agrupado"] = TRUE;
 					  </thead>
 					  <tbody>';
 		    		foreach ($a as $b) {
+						@$porcentaje = (($b["descuento"] * 100) / ($b["total"] + $b["descuento"]));
 		    		   echo '<tr>
 						      <th scope="row"><a href="?modal=cantidadc&cant='.$b["cant"].'&cod='.$b["cod"].'">'.$b["cant"].'</a></th>
 						      <td>'.$b["producto"].'</td>
 						      <td>'.$b["pv"].'</td>
 						      <td>'.$b["stotal"].'</td>
 						      <td>'.$b["imp"].'</td>
-						      <td>'.$b["total"].'</td>
+							  <td>
+							  <a id="xdescuento" dcodigo="'.$b["cod"].'" dcantidad="'.$b["cant"].'" ddescuento="'.$b["descuento"].'" dporcentaje="'.$porcentaje.'">'.$b["total"].'</a>
+						      </td>
 			    			<td><a id="modcant" op="151" cod="'.$b["cod"].'"><i class="fas fa-minus-circle red-text fa-lg"></i></a>  <a id="modcant" op="150" cod="'.$b["cod"].'"><i class="fas fa-plus-circle green-text fa-lg"></i></a></td>
 			    			<td><a id="borrar-ticket" op="152" hash="'.$b["hash"].'"><i class="fas fa-times-circle red-text fa-lg"></i></a></td>
 					</tr>';

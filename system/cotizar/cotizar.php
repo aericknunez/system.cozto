@@ -186,3 +186,62 @@ if ($cot->cuentaMateriales() > 0) {
   </div>
 </div>
 <!-- ./  Modal -->
+
+
+<!-- Modal -->
+<div class="modal bounceIn" id="ModalDescuento" tabindex="-1" role="dialog" aria-labelledby="ModalDescuento"
+  aria-hidden="true" data-backdrop="false">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">DESCUENTO A PRODUCTO</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+<!-- CONTENIDO -->
+<div align="center">
+  <div class="col-md-12 z-depth-2 justify-content-center">
+      <div class="md-form mt-0">
+        <form id="form-Ddescuento">
+
+<div class="mb-5 row">
+            <div class="switch">
+            <label>
+             Porcentaje
+              <input type="checkbox" <?php if($_SESSION['tipo_descuento'] == "1") echo 'checked = "checked"'; ?> id="prop" name="prop" >
+              <span class="lever"></span> 
+             Cantidad 
+            </label>
+          </div>
+
+</div>
+<div id="load"></div>
+
+        <input class="form-control form-control-lg" type="number" step="any" min="1" placeholder="Descuento" id="descuento" name="descuento" autofocus>
+        <?php
+          if ($_SESSION['config_restringir_descuento']) {
+        ?>
+        <input class="form-control form-control-lg" type="text" id="codigo_seguridad" name="codigo_seguridad" placeholder="Codigo de Seguridad">
+        <?php
+          }
+        ?>
+        
+        <input type="hidden" id="dcantidad" name="dcantidad" value="">
+        <input type="hidden" id="dcodigo" name="dcodigo" value="">
+         <button class="btn aqua-gradient btn-rounded btn-sm" type="submit" id="btn-Ddescuento" name="btn-Ddescuento">Agregar</button>
+        </form>
+      </div>
+  </div>
+</div>
+<div id="ver-descuento"></div>
+<div id="ver-btndescuento" align="center"></div>
+<!-- CONTENIDO -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>

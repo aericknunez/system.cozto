@@ -464,9 +464,98 @@ $('#ModalBusqueda').on('shown.bs.modal', function() { // para autofocus en el mo
             });
         });      
     
+        // llamar modal descuento
+        $("body").on("click","#xdescuento",function(){ 
+        
+            $('#ModalDescuento').modal('show');
+            
+            var ddescuento = $(this).attr('ddescuento');
+            var dcantidad = $(this).attr('dcantidad');
+            var dcodigo = $(this).attr('dcodigo');
+            var porcentaje = $(this).attr('dporcentaje');
+    
+            $('#dcodigo').attr("value", dcodigo);
+            $('#dcantidad').attr("value", dcantidad);
+    
+            if(ddescuento != "0.00"){
+                $('#ver-descuento').html('<div class="border border-light alert alert-success alert-dismissible"><div align="center">El total descuento en este producto es: $'+ddescuento+' ('+porcentaje+'%)<br></div></div>');
+                $('#ver-btndescuento').html('<a id="del-descuento" dcantidad="'+dcantidad+'" dcodigo="'+dcodigo+'" ddescuento="0" class="btn btn-danger btn-rounded waves-effect waves-light">Quitar Descuento</a>');
+                $('#ver-btndescuento').show();
+            } else {
+                $('#ver-descuento').html('<div class="border border-light alert alert-danger alert-dismissible"><div align="center">No se ha aplicado descuento a este producto</div></div>');
+                $('#ver-btndescuento').hide();
+            }
+        });
     
 
-        
+        $('#btn-Ddescuento').click(function(e){ /// cambia la cantidad de los productos
+            e.preventDefault();
+            $.ajax({
+                url: "application/src/routes.php?op=155-1",
+                method: "POST",
+                data: $("#form-Ddescuento").serialize(),
+                beforeSend: function () {
+                    $('#btn-Ddescuento').html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>Loading...').addClass('disabled');
+                },
+                success: function(data){
+                   $('#btn-Ddescuento').html('Agregar').removeClass('disabled');
+                   $("#form-Ddescuento").trigger("reset");
+                //    $('#ModalDescuento').modal('hide');
+                   $("#ver").load('application/src/routes.php?op=153'); // ver productos de la orden 
+                   $("#lateral").load('application/src/routes.php?op=146'); // caraga el lateral
+                   $('#ver-descuento').html(data);
+    
+                }
+            })
+        })
+    
+
+        /// cambiar tipo de descuento para porcentaje o cantidad
+    $("body").on("click","#prop",function(){ /// para el los botones de opciones
+
+        if($(this).attr('checked')){ // es por que estaba activo
+            $('#prop').removeAttr("checked","checked");
+            var dir = 'op=154&edo=0';
+        } 
+        else {
+            $('#prop').attr("checked","checked");
+            var dir = 'op=154&edo=1';
+        }
+    
+    QueryGo(dir);   
+    
+    });
+
+function QueryGo(dir){
+
+        var dataString = dir;
+
+        $.ajax({
+            type: "POST",
+            url: "application/src/routes.php",
+            data: dataString,
+            beforeSend: function () {
+               $("#load").html('<div class="row justify-content-md-center" ><img src="assets/img/load.gif" alt=""></div>');
+            },
+            success: function(data) {            
+                $("#load").html(data); // lo que regresa de la busquea 
+            }
+
+    });      
+}
+
+$("body").on("click","#del-descuento",function(){
+    var dcantidad = $(this).attr('dcantidad');
+    var dcodigo = $(this).attr('dcodigo');
+    var descuento = $(this).attr('ddescuento');
+       
+        $.post("application/src/routes.php?op=155-1", {dcantidad:dcantidad, dcodigo:dcodigo, descuento:descuento}, 
+        function(data){
+               $('#ModalDescuento').modal('hide');
+               $("#ver").load('application/src/routes.php?op=153'); // ver productos de la orden 
+               $("#lateral").load('application/src/routes.php?op=146'); // caraga el lateral
+        });
+    });
 
 
 
