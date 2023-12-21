@@ -147,6 +147,12 @@ include("../../system/producto/ImagenesSuccess.php");
 	$imgs->BorrarImagen($_REQUEST['hash'], "../../assets/img/productos/" . $_SESSION["td"] . "/", $_REQUEST['producto']);
 break;
 
+case "17-1"://borrar imgen cotizacion
+	include("../../system/cotizar/ImagenesSuccess.php");
+		$imgs = new Success();
+		$imgs->BorrarImagen($_REQUEST['hash'], "../../assets/img/cotizacionesimg/" . $_SESSION["td"] . "/", $_REQUEST['cotizacion']);
+	break;
+
 
 
 case "18": 
@@ -1696,6 +1702,33 @@ $imgs = new Success();
 	}	
 break;
 
+case "174-1": // Imagen cotizacion
+	include("../common/Imagenes.php");
+		$imagen = new upload($_FILES['archivo']);
+	include("../../system/cotizar/ImagenesSuccess.php");
+	$imgs = new Success();
+	
+		if($imagen->uploaded) {
+			if($imagen->image_src_y > 800 or $imagen->image_src_x > 800){ // si ancho o alto es mayir a 800
+				$imagen->image_resize         		= true; // default is true
+				$imagen->image_ratio        		= true; // para que se ajuste dependiendo del ancho definido
+				$imagen->image_x              		= 400; // para el ancho a cortar
+				$imagen->image_y              		= 400; // para el alto a cortar
+			}
+			$imagen->file_new_name_body   		= Helpers::TimeId() . "-" . $_SESSION["td"]; // agregamos un nuevo nombre
+			// $imagen->image_watermark      		= 'watermark.png'; // marcado de agua
+			// $imagen->image_watermark_position 	= 'BR'; // donde se ub icara el marcado de agua. Bottom Right		
+			$imagen->process('../../assets/img/cotizacionesimg/' . $_SESSION["td"] . '/');	
+	
+			$imgs->SaveImg($_POST['codigo'], $imagen->file_dst_name, $_POST['descripcion']);
+	
+		} // [file_dst_name] nombre de la imagen
+		else {
+		  echo 'error : ' . $imagen->error;
+		  $imgs->VerImagenGasto($_POST['codigo']);
+		}	
+	break;
+
 
 
 case "175": 
@@ -1705,6 +1738,13 @@ include("../../system/gastos/ImagenesSuccess.php");
 	$imgs->ImagenesGasto($_REQUEST['gasto']);
 break;
 
+case "175-1": // imagenes de la cotizacion
+	include("../../system/cotizar/ImagenesSuccess.php");
+		$imgs = new Success();
+		$imgs->VerImagenCotizacion($_REQUEST['cotizacion'], $_REQUEST['iden']);
+		$imgs->ImagenesCotizacion($_REQUEST['cotizacion']);
+	break;
+
 
 
 case "176": 
@@ -1713,6 +1753,13 @@ include("../../system/gastos/ImagenesSuccess.php");
 	$imgs->VerImagenGasto($_REQUEST['gasto'], $_REQUEST['iden']);
 	$imgs->ImagenesGasto($_REQUEST['gasto']);
 break;
+
+case "176-1": 
+	include("../../system/cotizar/ImagenesSuccess.php");
+		$imgs = new Success();
+		$imgs->VerImagenCotizacion($_REQUEST['cotizacion'], $_REQUEST['iden']);
+		$imgs->ImagenesCotizacion($_REQUEST['cotizacion']);
+	break;
 
 
 

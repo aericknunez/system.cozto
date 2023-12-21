@@ -578,6 +578,8 @@ $a = $db->query("SELECT * FROM cotizaciones WHERE cotizacion = '".$correlativo."
          </table>';
    }  $a->close();
 
+$this->VerImagenCotizacion($correlativo);
+
 
 echo '<div class="row mt-4">
  <div class="col-12">
@@ -605,11 +607,19 @@ echo '<footer>
 }
 
 
+public function VerImagenCotizacion($cotizacion) {
+  $db = new dbConn();
 
-
-
-
-
+  $r = $db->query("SELECT imagen, descripcion FROM cotizaciones_images WHERE cotizacion = '$cotizacion' and td = ".$_SESSION["td"]."");
+      if($r->num_rows > 0){
+        foreach($r as $img){
+          echo '<div id="mostrarimagen" style="text-align: center;">';
+          echo '<img src="'.XSERV.'assets/img/cotizacionesimg/'  . $_SESSION["td"] . '/' .$img["imagen"].'" class="img-fluid" style="display: inline-block; max-width: 400px; height: auto;">';
+          echo '<br>' . $img["descripcion"] . '</div>';
+        }
+      }       
+      unset($r);  
+}
 
 
 } // Termina la lcase

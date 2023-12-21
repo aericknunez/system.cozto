@@ -558,5 +558,83 @@ $("body").on("click","#del-descuento",function(){
     });
 
 
+    ///////////// llamar modal para agregar imagen
+    $("body").on("click","#imagen",function(){ 
+        
+        $('#ModalAddImg').modal('show');
+        $('#formulario').hide();
+        var iden = $(this).attr('iden');
+     
+        $('#codigo').attr("value",iden);
+
+        CargaImagen(iden);
+    });
+
+    function CargaImagen(iden){ // Extrae los datos del perfil cuando es invocada la funcion
+        $.ajax({
+            url: "application/src/routes.php?op=175-1&cotizacion="+iden,
+            method: "POST",
+            success: function(data){
+                $("#imagenCot").html(data);         
+            }
+        });
+    }
+
+    $("body").on("click","#showform",function(){ 
+        $('#formulario').toggle();
+    });
+
+        
+    $("body").on("click","#verimagen",function(){ 
+         var iden = $(this).attr('iden');
+         var cotizacion = $(this).attr('cotizacion');
+         console.log(iden);
+         $.ajax({
+                url: "application/src/routes.php?op=176-1&iden="+iden+"&cotizacion="+cotizacion,
+                method: "POST",
+                success: function(data){
+                    $("#imagenCot").html(data);         
+                }
+            });
+    });
+
+
+//////agregar imagen
+    $("#btn-img").click(function (event) {
+        event.preventDefault();
+        var form = $('#form-img')[0];
+        var data = new FormData(form);
+        var iden = $(this).attr('codigo');
+
+        $.ajax({
+            type: "POST",
+            enctype: 'multipart/form-data',
+            url: "application/src/routes.php?op=174-1",
+            data: data,
+            processData: false,
+            contentType: false,
+            cache: false,
+            timeout: 600000,
+            beforeSend: function () {
+                $('#btn-img').html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>Loading...').addClass('disabled');
+            },
+            success: function (data) {
+                $('#btn-img').html('Subir Imagen').removeClass('disabled');
+                $("#imagenCot").html(data);
+                $("#form-img").trigger("reset");
+                $('#formulario').hide();
+            },
+        });
+    });
+
+    $("body").on("click","#borrar-img",function(){ // borrar Imagen
+        var op = $(this).attr('op');
+        var hash = $(this).attr('hash');
+        var cotizacion = $(this).attr('cotizacion');
+                $.post("application/src/routes.php", {op:op, hash:hash, cotizacion:cotizacion}, function(data){
+                $("#imagenCot").html(data);
+                });
+        });
+
 
 }); // termina query
