@@ -1,0 +1,22 @@
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+CREATE TABLE `cotizaciones_images` (
+  `id` int(6) NOT NULL,
+  `cotizacion` int(5) NOT NULL,
+  `imagen` varchar(100) NOT NULL,
+  `descripcion` varchar(255) NOT NULL,
+  `fecha` varchar(30) NOT NULL,
+  `fechaF` varchar(30) NOT NULL,
+  `hora` varchar(30) NOT NULL,
+  `hash` varchar(12) NOT NULL,
+  `time` int(12) NOT NULL,
+  `td` int(2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+ALTER TABLE `cotizaciones_images`
+  ADD PRIMARY KEY (`id`);
+ALTER TABLE `cotizaciones_images`
+  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
+
+
+ALTER TABLE `cotizaciones` CHANGE `producto` `producto` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
