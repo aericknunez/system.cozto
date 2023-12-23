@@ -35,8 +35,9 @@ if($_SESSION["caja_apertura"] == NULL){ ?>
 
 
 
-
+<?php if($_SESSION["td"] == 65 or $_SESSION["tipo_cuenta"] == 1 or $_SESSION["tipo_cuenta"] == 5 ) { ?>
 <li><a class="collapsible-header waves-effect arrow-r"><i class="fas fa-cog"></i> HISTORIAL<i class="fa fa-angle-down rotate-icon"></i></a>
+<?php } ?>
 <div class="collapsible-body">
 <ul class="list-unstyled">
 
