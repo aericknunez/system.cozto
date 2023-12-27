@@ -32,17 +32,20 @@ $("body").on("click","#printAbono",function(){
 
 <script>
     $("body").on("click","#printAbono",function(){ 
-        LoadData();
+        var hash = $(this).attr('hash');
+        LoadData(hash);
     });
 
 
 
 
 
-function LoadData(){
+function LoadData(hash){
+    var dataString = 'hash='+hash;
     $.ajax({
         type: "POST",
         url: "application/src/routes.php?op=138", // verificar ruta
+        data: dataString,
         datatype: 'json',
         success: function(data) {  
             var datos = data;  

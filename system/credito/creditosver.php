@@ -12,7 +12,7 @@ $credito = new Creditos();
 
 
 <div id="contenido">
-   <?php $credito->VerCredito(1, "factura", "desc"); ?>
+   <?php $credito->VerCredito(1, "time", "desc"); ?>
 </div>
 
 

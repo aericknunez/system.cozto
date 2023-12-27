@@ -745,7 +745,7 @@ if ($r = $db->select("sum(existencia)", "producto_ingresado", "WHERE existencia 
 			$tipoticket = $_SESSION["tipoticket"];
 		}
 
-	    if ($r = $db->select("num_fac", "ticket_num", "WHERE tipo = '".$tipoticket."' and td = ".$_SESSION["td"]." and tx = ".$_SESSION["tx"]." order by id desc limit 1")) { 
+	    if ($r = $db->select("num_fac", "ticket_num", "WHERE tipo = '".$tipoticket."' and td = ".$_SESSION["td"]." and tx = ".$_SESSION["tx"]." order by time desc limit 1")) { 
 			if($_SESSION['newCorrelativo']){
 				$ultimoorden = $_SESSION['newCorrelativo'];
 				unset($_SESSION['newCorrelativo']);
