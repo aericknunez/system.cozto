@@ -9,7 +9,7 @@ class Creditos{
   public function VerCredito($npagina, $orden, $dir){
       $db = new dbConn();
 
-  $limit = 35;
+  $limit = 15;
   $adjacents = 2;
   if($npagina == NULL) $npagina = 1;
   $a = $db->query("SELECT * FROM creditos WHERE td = ". $_SESSION['td'] ."");

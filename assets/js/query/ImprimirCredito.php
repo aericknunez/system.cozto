@@ -30,14 +30,14 @@ if($_SESSION["root_plataforma"] == 0){
     $("body").on("click","#imprimir",function(){ 
         var orden = $(this).attr('orden');
         var factura = $(this).attr('factura');
-        LoadData(orden, factura);
+        LoadDataCredito(orden, factura);
     });
 
 
 
 
 
-function LoadData(orden, factura){
+function LoadDataCredito(orden, factura){
     var dataString = 'orden='+orden+'&factura='+factura;
     $.ajax({
         type: "POST",
