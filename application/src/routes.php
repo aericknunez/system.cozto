@@ -3466,7 +3466,7 @@ case "721":
 break;
 
 case "722":
-	if ($r = $db->select("num_fac", "ticket_num", "WHERE tipo = ".$_REQUEST['tipo']." and td = ".$_SESSION["td"]." and tx = ".$_SESSION["tx"]." order by id desc limit 1")) { 
+	if ($r = $db->select("num_fac", "ticket_num", "WHERE tipo = ".$_REQUEST['tipo']." and td = ".$_SESSION["td"]." and tx = ".$_SESSION["tx"]." order by time desc limit 1")) { 
 		$ultimoorden = $r["num_fac"];
 	} unset($r); 
 
@@ -3474,10 +3474,17 @@ case "722":
 	$cambios["num_fac"] = $ultimoorden + 1;
 	$cambios["tipo"] = $_REQUEST['tipo'];
 	// $cambio["time"] = Helpers::TimeId();
+
+	$cambiox = array();
+	$cambiox["factura"] = $ultimoorden + 1;
+
 	Helpers::UpdateId("ticket", $cambios, "num_fac=".$_REQUEST['factura']." and orden=".$_REQUEST['orden']." and tx = ".$_REQUEST["tx"]." and td = ".$_SESSION["td"]."");
 	Helpers::UpdateId("ticket_num", $cambios, "num_fac=".$_REQUEST['factura']." and orden=".$_REQUEST['orden']." and tx = ".$_REQUEST["tx"]." and td = ".$_SESSION["td"]."");
+	Helpers::UpdateId("ticket_cliente", $cambiox, "factura=".$_REQUEST['factura']." and orden=".$_REQUEST['orden']." and td = ".$_SESSION["td"]."");
+	Helpers::UpdateId("creditos", $cambiox, "factura=".$_REQUEST['factura']." and orden=".$_REQUEST['orden']." and td = ".$_SESSION["td"]."");
 	header("location: ../../?creditos");
 break;
+
 
 
 

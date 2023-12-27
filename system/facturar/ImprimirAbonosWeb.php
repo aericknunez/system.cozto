@@ -18,7 +18,13 @@ if ($r = $db->select("*", "creditos", "WHERE hash = '".$credito."' and td= " . $
     $parametros["fecha"] = $r["fecha"];
 }  unset($r);  
 
+$productos = array();
+$x = $db->query("SELECT * FROM ticket WHERE num_fac = '".$parametros["factura"]."' and orden = '".$parametros["orden"]."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."");
+foreach ($x as $z) {
+     $productos[] = $z;
+} $x->close();
 
+$parametros["productos"] = $productos;
 $parametros["tipoticket"] = 99;
 $parametros["identidad"] = $_SESSION["td"];
 $parametros["config_imp"] = $_SESSION['config_imp'];
