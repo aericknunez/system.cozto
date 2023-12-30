@@ -1006,7 +1006,7 @@ $a->close();
 			$tipoticket = $_SESSION["tipoticket"];
 		}
 
-	    if ($r = $db->select("num_fac", "ticket_num", "WHERE tipo = '".$tipoticket."' and td = ".$_SESSION["td"]." and tx = ".$_SESSION["tx"]." order by time desc limit 1")) { 
+	    if ($r = $db->select("num_fac", "ticket_num", "WHERE tipo = '".$tipoticket."' and edo = 1 and td = ".$_SESSION["td"]." and tx = ".$_SESSION["tx"]." order by time desc limit 1")) { 
 			if($_SESSION['newCorrelativo']){
 				$ultimoorden = $_SESSION['newCorrelativo'];
 				unset($_SESSION['newCorrelativo']);
