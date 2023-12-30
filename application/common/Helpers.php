@@ -579,9 +579,9 @@ static public function GetData($tabla, $campo, $tabla_id, $hash) {
 
 }
 
-public function ClienteProducto($orden, $tipo, $numeroFactura) {
+public function ClienteProducto($orden, $tipo, $numeroFactura, $time) {
 	$db = new dbConn();
-
+$timemas = $time + 60;
 if ($tipo == 2){
 	if ($r = $db->select("cliente", "ticket_cliente", 
 	"WHERE orden = '$orden' and td = ".$_SESSION['td']."")) { 
@@ -595,7 +595,7 @@ if ($tipo == 2){
 }
 if ($tipo == 3){
 	if ($r = $db->select("cliente", "facturar_documento_factura", 
-		"WHERE factura = '$numeroFactura' and td = ".$_SESSION['td']."")) { 
+		"WHERE factura = '$numeroFactura' and td = ".$_SESSION['td']." and time BETWEEN ".$time." and ".$timemas."")) { 
 	return $r["cliente"];
 		} unset($r);  
 }

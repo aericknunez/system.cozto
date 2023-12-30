@@ -99,7 +99,7 @@ foreach ($ag as $bg) {
 	$tipo_pago = $bg["tipo_pago"];
 	$orden = $bg["orden"];
 	$tipo = $bg["tipo"];
-  $cliente = Helpers::ClienteProducto($orden, $tipo, $numeroFactura);
+  $cliente = Helpers::ClienteProducto($orden, $tipo, $numeroFactura, $b["time"]);
   if( $tipo == 3){
     $registro = Helpers::GetData("facturar_documento", "registro", "cliente", $cliente);
   }else{

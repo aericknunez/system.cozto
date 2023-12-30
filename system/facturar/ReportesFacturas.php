@@ -69,7 +69,7 @@ foreach ($ag as $bg) {
 		   <th>'.Helpers::TipoFacturaVentas($b["tipo"]).'</th>
 		   <th>'.$b["num_fac"].'</th>
 		   <th>'.$estado.'</th>
-		   <th>'.$this->ClienteProducto($orden, $tipo, $numeroFactura).'</th>
+		   <th>'.$this->ClienteProducto($orden, $tipo, $numeroFactura, $b["time"]).'</th>
 		   <th>'.Helpers::TipoPago($tipo_pago).'</th>
 		   <th>'.$this->CajeroVentas($cajero).'</th>
 		   <th>'.$cant.'</th>
@@ -99,9 +99,9 @@ echo '</tbody>
 
 } // termina la funcion
 
-public function ClienteProducto($orden, $tipo, $numeroFactura) {
+public function ClienteProducto($orden, $tipo, $numeroFactura, $time) {
 	$db = new dbConn();
-
+$timemas = $time + 60;
 if ($tipo == 1 || $tipo == 2 || $tipo == 12){
 	if ($r = $db->select("cliente", "ticket_cliente", 
 	"WHERE orden = '$orden' and td = ".$_SESSION['td']."")) { 
@@ -113,12 +113,12 @@ if ($tipo == 1 || $tipo == 2 || $tipo == 12){
 	return $r["nombre"];
 	} unset($r);  
 }
-if ($tipo == 3 || $tipo == 13){
+ if ($tipo == 3 || $tipo == 13){
 	if ($r = $db->select("cliente", "facturar_documento_factura", 
-		"WHERE factura = '$numeroFactura' and tipo = ".$tipo." and td = ".$_SESSION['td']." order by id desc limit 1" )) { 
+		"WHERE factura = '$numeroFactura' and tipo = ".$tipo." and td = ".$_SESSION['td']." and time BETWEEN ".$time." and ".$timemas."  order by id desc limit 1" )) { 
 	return $r["cliente"];
 		} unset($r);  
-}
+} 
 
 }
 
