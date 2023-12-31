@@ -2696,6 +2696,23 @@ include_once '../../system/producto/Productos.php';
 	$prod->AjustedeInventario($_POST["iden"], $_POST["orden"], $_POST["dir"]);
 break;
 
+case "567x": // ver todos los producto de la busqueda
+	$_SESSION["asearch"] = $_POST["keyword"];
+
+	include_once '../../system/herramientas/Herramientas.php';
+	include_once '../../system/producto/Productos.php';
+	$prod = new Herramientas(); 
+
+	if($_SESSION["asearch"] == NULL){
+		$prod->AjustedeInventario(1, "id", "asc");
+	} else {
+		$prod->AjustedeInventarioSearch(1, "id", "asc", $_SESSION["asearch"] );
+	}
+	
+break;
+
+
+
 
 
 case "568":  /// IniciarAjuste

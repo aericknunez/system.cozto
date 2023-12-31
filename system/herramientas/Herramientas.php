@@ -478,6 +478,7 @@ $op="567";
   producto.cod not in (select ajuste_inventario.cod from ajuste_inventario WHERE time > $timeinicio) and td = ".$_SESSION["td"]." order by ".$orden." ".$dir." limit $offset, $limit");
       
       if($a->num_rows > 0){
+          echo '<h2 class="h2-responsive float-right"><a id="buscarProducto" class="btn-floating btn-info btn-sm mb-3" title="Buscar"><i class="fas fa-search"></i></a></h2>';
           echo '<div class="table-responsive">
           <table class="table table-sm table-striped">
         <thead>
@@ -573,6 +574,78 @@ echo '<div class="text-right">
 
   } // termina productos
 
+public function AjustedeInventarioSearch($npagina, $orden, $dir, $search){
+    $db = new dbConn();
+    $producto = new Productos(); 
+
+    $timeinicio = Helpers::GetData("ajuste_inventario_activate", "inicio", "edo", 1);
+
+
+$limit = 20;
+$adjacents = 2;
+if($npagina == NULL) $npagina = 1;
+$a = $db->query("SELECT * FROM producto WHERE producto.dependiente != 'on' and producto.servicio != 'on' and producto.cod NOT IN (SELECT ajuste_inventario.cod FROM ajuste_inventario WHERE time > $timeinicio) and td = ".$_SESSION["td"]."");
+$total_rows = $a->num_rows;
+$a->close();
+
+$total_pages = ceil($total_rows / $limit);
+
+if(isset($npagina) && $npagina != NULL) {
+  $page = $npagina;
+  $offset = $limit * ($page-1);
+} else {
+  $page = 1;
+  $offset = 0;
+}
+
+
+$a = $db->query("SELECT cod as codigo, descripcion, cantidad FROM producto WHERE  producto.dependiente != 'on' and producto.servicio != 'on' and 
+producto.cod not in (select ajuste_inventario.cod from ajuste_inventario WHERE time > $timeinicio) and td = ".$_SESSION["td"]." AND (cod LIKE '%".$search."%' OR descripcion LIKE '%".$search."%') order by ".$orden." ".$dir." limit $offset, $limit");
+$productos = $a->num_rows;
+    if($a->num_rows > 0){
+        echo '<h2 class="h2-responsive float-right"><a id="buscarProducto" class="btn-floating btn-info btn-sm mb-3" title="Buscar"><i class="fas fa-search"></i></a></h2>';
+        echo '<div class="table-responsive">
+        <table class="table table-sm table-striped">
+      <thead>
+        <tr>
+          <th class="th-sm">Cod</th>
+          <th class="th-sm">Producto</th>
+          <th class="th-sm">Cantidad</th>
+          <th class="th-sm">Ver</th>
+        </tr>
+      </thead>
+      <tbody>';
+      foreach ($a as $b) {
+      // obtener el nombre y detalles del producto
+
+if ($r = $db->select("precio", "producto_precio", "WHERE producto = ".$b["cod"]." and td = ". $_SESSION["td"] ."")) { 
+      $precio = $r["precio"]; } unset($r); 
+
+
+        echo '<tr>
+                    <td>'.$b["codigo"].'</td>
+                    <td>'.$b["descripcion"].'</td>
+                    <td>'.$b["cantidad"].'</td>
+                    <td><a id="modificarcantidad" op="569" key="'.$b["codigo"].'"><i class="fas fa-pen fa-lg red-text"></i></a>
+
+                    | <a id="establecercantidad" op="571" key="'.$b["codigo"].'"><i class="fas fa-thumbs-up fa-lg blue-text"></i></a>';
+                    echo '</td>
+                  </tr>';
+      }
+      echo '</tbody>
+      </table>
+      </div>';
+
+
+    }
+      $a->close();
+
+echo $productos . " Productos encontrados.";
+echo '<div class="text-right">
+        <a href="?ajustedeinventario" class="btn btn-primary btn-rounded btn-sm">Regresar</a>
+      </div>';
+
+} // termina busqueda
 
 
 
