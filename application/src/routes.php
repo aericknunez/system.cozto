@@ -3483,7 +3483,7 @@ case "721":
 break;
 
 case "722":
-	if ($r = $db->select("num_fac", "ticket_num", "WHERE tipo = ".$_REQUEST['tipo']." and td = ".$_SESSION["td"]." and tx = ".$_SESSION["tx"]." order by time desc limit 1")) { 
+	if ($r = $db->select("num_fac", "ticket_num", "WHERE tipo = ".$_REQUEST['tipo']." and edo = 1 and td = ".$_SESSION["td"]." and tx = ".$_SESSION["tx"]." order by time desc limit 1")) { 
 		$ultimoorden = $r["num_fac"];
 	} unset($r); 
 
