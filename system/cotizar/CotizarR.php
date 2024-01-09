@@ -101,9 +101,7 @@ class Cotizar{
 
 	}
 
-
-
-
+	
 	public function Agregar($datos) { // agrega el producto
 		$db = new dbConn();
 
@@ -306,6 +304,7 @@ $_SESSION["venta_agrupado"] = TRUE;
 		    $a = $db->query("SELECT * FROM cotizaciones WHERE cotizacion = ".$_SESSION["cotizacion"]." and td = ".$_SESSION["td"]."");
 
 		    if($a->num_rows > 0){
+				
 		    		echo '<table class="table table-striped table-sm">
 					  <thead>
 					    <tr>
@@ -320,13 +319,16 @@ $_SESSION["venta_agrupado"] = TRUE;
 					  </thead>
 					  <tbody>';
 		    		foreach ($a as $b) {
+						@$porcentaje = (($b["descuento"] * 100) / ($b["total"] + $b["descuento"]));
 		    		   echo '<tr>
 						      <th scope="row"><a href="?modal=cantidadc&cant='.$b["cant"].'&cod='.$b["cod"].'">'.$b["cant"].'</a></th>
 						      <td>'.$b["producto"].'</td>
 						      <td>'.$b["pv"].'</td>
 						      <td>'.$b["stotal"].'</td>
 						      <td>'.$b["imp"].'</td>
-						      <td>'.$b["total"].'</td>
+							  <td>
+							  <a id="xdescuento" dcodigo="'.$b["cod"].'" dcantidad="'.$b["cant"].'" ddescuento="'.$b["descuento"].'" dporcentaje="'.$porcentaje.'">'.$b["total"].'</a>
+						      </td>
 			    			<td><a id="modcant" op="151" cod="'.$b["cod"].'"><i class="fas fa-minus-circle red-text fa-lg"></i></a>  <a id="modcant" op="150" cod="'.$b["cod"].'"><i class="fas fa-plus-circle green-text fa-lg"></i></a></td>
 			    			<td><a id="borrar-ticket" op="152" hash="'.$b["hash"].'"><i class="fas fa-times-circle red-text fa-lg"></i></a></td>
 					</tr>';
@@ -359,6 +361,14 @@ $_SESSION["venta_agrupado"] = TRUE;
 
 		Helpers::DeleteId("cotizaciones_data", "correlativo = '$cotizacion' and td = ".$_SESSION["td"]."");
 		$this->DelMateriales();
+
+		$imagenesCot = $db->query("SELECT imagen FROM cotizaciones_images WHERE cotizacion = '$cotizacion' and td = ".$_SESSION["td"]."");
+			if($imagenesCot->num_rows > 0){
+            foreach ($imagenesCot as $imagenCot) {
+				$this->BorrarImagen($imagenCot["imagen"], '../../assets/img/cotizacionesimg/' . $_SESSION["td"] . '/', $cotizacion);
+            	}
+			}; 
+        $imagenesCot->close();
 		
 		if(isset($_SESSION["cotizacion"])) unset($_SESSION["cotizacion"]);
 		if(isset($_SESSION["descuento_cot"])) unset($_SESSION["descuento_cot"]);
@@ -507,7 +517,7 @@ $_SESSION["venta_agrupado"] = TRUE;
 		 $can->close();
 
 		echo '<script>
-			window.location.href="?cotizar"
+			window.location.href="?cotizaciones"
 		</script>';
 	}
 	
@@ -563,6 +573,7 @@ if($dir == "asc") $dir2 = "desc";
             <th class="th-sm"><a id="paginador" op="'.$op.'" iden="1" orden="fecha" dir="'.$dir2.'">Fecha</a></th>
             <th class="th-sm"><a id="paginador" op="'.$op.'" iden="1" orden="caduca" dir="'.$dir2.'">Caduca</a></th>
             <th class="th-sm">Estado</th>
+			<th class="th-sm">Imagen</th>
             <th class="th-sm">Ver</th>
           </tr>
         </thead>
@@ -584,6 +595,9 @@ if($dir == "asc") $dir2 = "desc";
                       <td>'.$b["fecha"].'</td>
                       <td>'.$b["caduca"].'</td>
                       <td>'.$edo.'</td>
+					  <td><a id="imagen" iden="'.$b["correlativo"].'">
+				      <span class="badge green"><i class="fas fa-image" aria-hidden="true"></i></span>
+				      </a></td>
                       <td><a id="xver" op="160" key="'.$b["id"].'" cotizacion="'.$b["correlativo"].'"><i class="fas fa-search fa-lg green-text"></i></a></td>
                     </tr>';
         }
@@ -768,6 +782,19 @@ public function DelMaterial($hash){
 	return $num;
 	
    }
+
+   public function BorrarImagen($img, $src, $cotizacion){ // borrar imagenes del producto
+      
+	if (Helpers::DeleteId("cotizaciones_images", "imagen='$img' and td=".$_SESSION["td"]."")) {
+		 if (file_exists($src. $img)) {
+			 unlink($src . $img);
+		  Alerts::Alerta("success","Eliminado!","Imagen Eliminada!");   
+		 }
+		 Alerts::Alerta("danger","Advertencia!","Eliminada del registro!");
+	} else {
+	  Alerts::Alerta("error","Error!","Ocurrio algo Inesperado!");
+	}
+}
 
 
 

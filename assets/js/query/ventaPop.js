@@ -149,10 +149,11 @@ $(document).ready(function(){
         });
     });                 
 
-
+  
 
     $('#btn-documento').click(function(e){ /// Nuevo Documento
         e.preventDefault();
+        if(validarFormularioNit() == true) {
         $.ajax({
             url: "application/src/routes.php?op=103",
             method: "POST",
@@ -162,12 +163,29 @@ $(document).ready(function(){
             },
             success: function(data){
                 $("#form-documento").trigger("reset");
-                 $("#ver").html(data); // lo que regresa de la busquea 
+                $("#ver").html(data); // lo que regresa de la busquea 
             }
         })
-    })
+}})
 
+function validarFormularioNit() {
+    var cliente = document.getElementById('cliente');
+    var documento = document.getElementById('documento');
+    var giro = document.getElementById('giro');
+    var registro = document.getElementById('registro');
+    var direccion = document.getElementById('direccion');
+    var departamento = document.getElementById('departamento');
+    var errorMensaje = document.getElementById('error-mensaje');
 
+    // Verificar que ningún campo esté vacío
+    if (cliente.value === '' || documento.value === '' || giro.value === '' || registro.value === '' || direccion.value === '' || departamento.value === '') {
+        errorMensaje.textContent = 'Por favor, complete todos los campos.';
+        return false; // Evitar el envío del formulario
+    } else {
+        errorMensaje.textContent = ''; // Limpiar el mensaje de error si todo está bien
+        return true;
+    }
+}
 
 
 

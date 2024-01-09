@@ -14,6 +14,7 @@
 if(isset($_REQUEST["add"])){
 ?>
 <h3><?php echo "NUEVO " . $_SESSION['config_nombre_documento']; ?></h3>
+<span class="alert-danger" id="error-mensaje" style="display: block; text-align: center; margin-top: 10px;"></span>
 
 <form class="text-center border border-light p-3" id="form-documento" name="form-documento"> 
 <input type="text" id="cliente" name="cliente" autocomplete="off" class="form-control mb-3" placeholder="Cliente">  

@@ -528,16 +528,17 @@ echo '<div class="row">
 
 $a = $db->query("SELECT * FROM cotizaciones WHERE cotizacion = '".$correlativo."' and td = ".$_SESSION["td"]."");
 
+
    if($a->num_rows > 0){
-       echo '<table class="table table-striped table-sm">
+       echo '<table class="table table-striped">
        <thead>
          <tr>
            <th scope="col">Cant</th>
            <th scope="col">Producto</th>
-           <th scope="col">Precio</th>
-           <th scope="col">Subtotal</th>
-           <th scope="col">Impuesto</th>
-           <th scope="col">Total</th>
+           <th scope="col">Precio Unitario</th>
+           <th scope="col" width="100">Subtotal</th>
+           <th scope="col" width="100">Impuesto</th>
+           <th scope="col" width="100">Total</th>
          </tr>
        </thead>
        <tbody>';
@@ -555,6 +556,14 @@ $a = $db->query("SELECT * FROM cotizaciones WHERE cotizacion = '".$correlativo."
              <td>'.$b["imp"].'</td>
              <td>'.$b["total"].'</td>
            </tr>';
+        if($b["descuento"] > 0){
+          echo '<tr>
+                   <th scope="row"></th>
+                   <td>DESCUENTO $'.$b["descuento"].'</td>
+                </tr>';
+        }
+       
+
        }
        echo '<tr>
              <td></td>
@@ -568,6 +577,8 @@ $a = $db->query("SELECT * FROM cotizaciones WHERE cotizacion = '".$correlativo."
        echo '</tbody>
          </table>';
    }  $a->close();
+
+$this->VerImagenCotizacion($correlativo);
 
 
 echo '<div class="row mt-4">
@@ -596,11 +607,19 @@ echo '<footer>
 }
 
 
+public function VerImagenCotizacion($cotizacion) {
+  $db = new dbConn();
 
-
-
-
-
+  $r = $db->query("SELECT imagen, descripcion FROM cotizaciones_images WHERE cotizacion = '$cotizacion' and td = ".$_SESSION["td"]."");
+      if($r->num_rows > 0){
+        foreach($r as $img){
+          echo '<div id="mostrarimagen" style="text-align: center;">';
+          echo '<img src="'.XSERV.'assets/img/cotizacionesimg/'  . $_SESSION["td"] . '/' .$img["imagen"].'" class="img-fluid" style="display: inline-block; max-width: 400px; height: auto;">';
+          echo '<br>' . $img["descripcion"] . '</div>';
+        }
+      }       
+      unset($r);  
+}
 
 
 } // Termina la lcase
