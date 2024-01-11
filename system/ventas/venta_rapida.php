@@ -24,7 +24,7 @@ $ventas = new Ventas();
 <div id="ver">
 <?php 
 $ventas->VerProducto();	
-print_r($_SESSION);
+// print_r($_SESSION);
 // echo Helpers::UUID();
  ?>
 </div>  <!--  Aqui ira el resultado de lo precesado -->

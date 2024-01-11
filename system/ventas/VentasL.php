@@ -1025,6 +1025,7 @@ $a->close();
 		    $datos["edo"] = 1;
 		    $datos["tx"] = $_SESSION["tx"];
 		    $datos["tipo"] = $tipoticket;
+		    $datos["codigo_generacion"] = Helpers::UUID();
 		    $datos["hash"] = Helpers::HashId();
 		    $datos["time"] = Helpers::TimeId();
 		    $datos["td"] = $_SESSION["td"];

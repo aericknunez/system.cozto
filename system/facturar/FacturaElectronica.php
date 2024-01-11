@@ -271,12 +271,12 @@ $datos['nit'] = "02072103861029";
 $datos['activo'] = true;
 $datos['passwordPri'] = "ericknunez";
 $datos['id_sistema'] = "D45CD5DD-8831-46F7-85C0-2BBF378A9AEE";
-$datos['idEnvio'] = 2;
+$datos['idEnvio'] = 2; // numero de orden (string)
 $datos['dteJson']['identificacion']['version'] = 3;
 $datos['dteJson']['identificacion']['ambiente'] = "00";
 
 $datos['dteJson']['identificacion']['numeroControl'] = "DTE-03-00000000-000000000000001";
-$datos['dteJson']['identificacion']['codigoGeneracion'] = "D45CD5DD-8831-46F7-9210-2DA27724254E";
+$datos['dteJson']['identificacion']['codigoGeneracion'] = "D45CD5DD-8831-46F7-9210-2DA27724254E"; // codigo de cada ticket_num
 $datos['dteJson']['identificacion']['tipoDte'] = "03";
 
 echo json_encode($datos);

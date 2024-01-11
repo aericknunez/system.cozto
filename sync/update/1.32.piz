@@ -1,1 +1,4 @@
 ALTER TABLE `config_root` ADD `factura_electronica` VARCHAR(100) NOT NULL AFTER `credito_sin_factura`;
+
+ALTER TABLE `ticket_num` ADD `codigo_generacion` VARCHAR(100) NOT NULL AFTER `tipo`;
+
