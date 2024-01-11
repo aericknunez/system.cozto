@@ -237,7 +237,13 @@ $r = $db->select("*", "config_root", "where td = ".$_SESSION['td']."")
           </div>
       </td>
       <td>
-
+      <div class="switch mt-4">
+            <label>
+             Activar Factura Electronica ||  Off
+              <input type="checkbox" <?php if(Encrypt::Decrypt($r["factura_electronica"],$_SESSION['secret_key']) == "on") echo "checked"; ?> id="factura_electronica" name="factura_electronica" >
+              <span class="lever"></span> On 
+            </label>
+          </div>
       </td>
   </tr>
 

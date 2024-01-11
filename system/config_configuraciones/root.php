@@ -154,6 +154,12 @@ $r = $db->select("*", "config_root", "where td = ".$_SESSION['td']."");
               if(Encrypt::Decrypt($r["credito_sin_factura"],$_SESSION['secret_key']) == "") echo "Inactivo"; ?></td>
      </tr> 
 
+     <tr>
+       <td>Activar Facturacion Electronica</td>
+       <td><? if(Encrypt::Decrypt($r["factura_electronica"],$_SESSION['secret_key']) == "on") echo "Activado";
+              if(Encrypt::Decrypt($r["factura_electronica"],$_SESSION['secret_key']) == "") echo "Inactivo"; ?></td>
+     </tr> 
+
 <?
  unset($r);  
    ?>

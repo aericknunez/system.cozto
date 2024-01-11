@@ -5,7 +5,6 @@ $tventa = 2;
 
 include_once 'system/ventas/VentasL.php';
 $ventas = new Ventas(); 
-
 ?>
 <div align="center">
   <div class="col-md-6 z-depth-2 justify-content-center">

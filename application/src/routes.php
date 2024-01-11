@@ -2690,9 +2690,15 @@ break;
 case "546":  /// Load data para facturar web
 /// lo llamo solo si no es creditos sin factura
 if (!isset($_SESSION['aplicar_credito_sin_factura'])) {
-	include_once '../../system/facturar/FacturarWeb.php';
-	$data = new FacturarWeb(); 
-	$data->TicketWeb();
+	if ($_SESSION["root_factura_electronica"] == "on") {
+		include_once '../../system/facturar/FacturaElectronica.php';
+		$data = new FacturaElectronica(); 
+		$data->DTE();
+	} else {
+		include_once '../../system/facturar/FacturarWeb.php';
+		$data = new FacturarWeb(); 
+		$data->TicketWeb();
+	}
 }
 
 // elimino las dos variables

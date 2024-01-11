@@ -86,9 +86,13 @@ function LoadData(){
         datatype: 'json',
         success: function(data) {  
             var datos = data;  
-            var json = $.parseJSON(datos);
-            // console.log(json);        
-            LoadImprimir(json);
+            <?php if ($_SESSION["root_factura_electronica"] == "on") { ?>
+                var json = datos;
+                sendDTE(json);
+                <? } else { ?>
+                var json = $.parseJSON(datos);
+                LoadImprimir(json);
+            <? } ?>
         }
     });
 }
@@ -105,12 +109,34 @@ function LoadImprimir(parametros){
            $("#botones-imprimir").html('<div class="row justify-content-center" >Espere... </div>');
         },
         success: function(data) {            
-            $("#botones-imprimir").html('<div class="row justify-content-center" >Realizado!</div>');
-            // $("#botones-imprimir").html(data); // lo que regresa de la busquea         
+            // $("#botones-imprimir").html('<div class="row justify-content-center" >Realizado!</div>');
+            $("#botones-imprimir").html(data); // lo que regresa de la busquea         
         }
     });
    
 }
+
+function sendDTE(parametros){
+
+    console.log("Datos: ", parametros)
+    $.ajax({
+        type: "POST",
+        url: "http://billing.test:8080/api/documents",
+        data: parametros,
+        dataType: 'json',
+        contentType: "application/json",
+        beforeSend: function () {
+           $("#botones-imprimir").html('<div class="row justify-content-center" >Espere... </div>');
+        },
+        success: function(data) {            
+            // $("#botones-imprimir").html('<div class="row justify-content-center" >Realizado!</div>');
+            $("#botones-imprimir").html(data?.message); // lo que regresa de la busquea        
+            console.log("Retorno: ", data?.message)
+        }
+    });
+   
+}
+
 
 
 
