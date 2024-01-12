@@ -349,8 +349,8 @@ static public function ImpuestoDesc($numero, $impuestos){
         return $numer;
     }
 
-   static  public function NFactura($numero){ 
-        $numero1=str_pad($numero, 8, "0", STR_PAD_LEFT);
+   static  public function NFactura($numero, $cantidad = 8){ 
+        $numero1=str_pad($numero, $cantidad, "0", STR_PAD_LEFT);
         $format="000-001-01-$numero1";
         return $format;
      } 
