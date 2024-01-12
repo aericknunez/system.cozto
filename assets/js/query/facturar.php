@@ -51,7 +51,7 @@ $.ajax({
            $("#btn-regresar").hide()
            $("#btn-te").hide(); // esconde boton tarjeta y efectivo 
            $("#link-to").addClass('disabled'); // esconde link para no regresar
-           $("#botones-imprimir").html('<div class="row justify-content-center" >Imprimiendo</div>');
+           $("#botones-imprimir").html('<div class="row justify-content-center" >Procesando</div>');
            $("#resultado").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt="">Procesando venta por favor espere... </div>');
         },
         success: function(data){
@@ -130,7 +130,7 @@ function sendDTE(parametros){
         },
         success: function(data) {            
             // $("#botones-imprimir").html('<div class="row justify-content-center" >Realizado!</div>');
-            $("#botones-imprimir").html(data?.message); // lo que regresa de la busquea        
+            $("#botones-imprimir").html(data?.message ? data.message : data?.estado ? data.estado : "Error!"); // lo que regresa de la busquea        
             console.log("Retorno: ", data?.message)
         }
     });
