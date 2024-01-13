@@ -3464,7 +3464,9 @@ case "685": // key
 		$search->Search();
 break;
 
-
+case "686":
+	echo Helpers::generarSelectMunicipios($_POST['iden']);
+break;
 
 case "690": // agrega materiales a la cotizacion
 	include_once '../../system/cotizar/CotizarR.php';

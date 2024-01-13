@@ -90,32 +90,58 @@ $datos['dteJson']['emisor'] = null;
 
 ///  formateando cliente
 if($_SESSION["tipoticket"] == 3){
-	$datos['dteJson']['receptor']['nit'] = "05110402951018";
-	$datos['dteJson']['receptor']['nrc'] = "830860";
-	$datos['dteJson']['receptor']['nombre'] = "BANCO PROMERICA, S.A.";
-	$datos['dteJson']['receptor']['codActividad'] = "64190";
-	$datos['dteJson']['receptor']['descActividad'] = "BANCOS";
-	$datos['dteJson']['receptor']['nombreComercial'] = "BANCO PROMERICA, S.A.";
-	$datos['dteJson']['receptor']['direccion']['departamento'] = "05";
-	$datos['dteJson']['receptor']['direccion']['municipio'] = "01";
-	$datos['dteJson']['receptor']['direccion']['complemento'] = "Edificio Promerica,La Gran Via";
-	$datos['dteJson']['receptor']['telefono'] = "60623821";
-	$datos['dteJson']['receptor']['correo'] = "juanperez@gmail.com";
+
+	if ($r = $db->select("documento", "facturar_documento_factura", "WHERE factura = '".$orden_num_fac."' and tx = " . $_SESSION["tx"] . " and td = " .  $_SESSION["td"]." order by id desc limit 1")) { 
+        $documento = $r["documento"];
+    } unset($r); 
+
+	if($_SESSION["root_taller"] == "on") { 
+        if ($r = $db->select("*", "taller_cliente", "WHERE nit = '$documento' and td = " .  $_SESSION["td"])) { 
+			$cliente = $r; 
+			$document = $r['nit']; 
+		} unset($r);  
+    } else {
+        if ($r = $db->select("*", "facturar_documento", "WHERE documento = '$documento' and td = " .  $_SESSION["td"])) { 
+			$cliente = $r; 
+			$document = $r['documento']; 
+		} unset($r);  
+    }
+
+	$datos['dteJson']['receptor']['nit'] = Helpers::FormatNIT($document);
+	$datos['dteJson']['receptor']['nrc'] =  Helpers::FormatNIT($cliente['registro']);
+	$datos['dteJson']['receptor']['nombre'] = $cliente['cliente'];
+	$datos['dteJson']['receptor']['codActividad'] = "10005";
+	// $datos['dteJson']['receptor']['codActividad'] = "64190";
+	$datos['dteJson']['receptor']['descActividad'] = $cliente['giro'];
+	// $datos['dteJson']['receptor']['descActividad'] = "BANCOS";
+	$datos['dteJson']['receptor']['nombreComercial'] = $cliente['cliente'];
+	$datos['dteJson']['receptor']['direccion']['departamento'] = $cliente['departamento'];
+	$datos['dteJson']['receptor']['direccion']['municipio'] = $cliente['municipio'];
+	$datos['dteJson']['receptor']['direccion']['complemento'] = $cliente['direccion'];
+	$datos['dteJson']['receptor']['telefono'] = $cliente['telefono1'];;
+	$datos['dteJson']['receptor']['correo'] = $cliente['email'];;
 
    }
    if($_SESSION["tipoticket"] == 2){
+	if ($r = $db->select("cliente", "ticket_cliente", 
+	"WHERE factura = '".$orden_num_fac."' and orden = '".$_SESSION["orden_print"]."' and tx = " . $_SESSION["tx"] . " and td = " .  $_SESSION["td"])) { 
+		$hashcliente = $r["cliente"];
+		} unset($r);  
 
-	$datos['dteJson']['receptor']['tipoDocumento'] = "13";
-	$datos['dteJson']['receptor']['numDocumento'] = "03548695-8";
+	if ($r = $db->select("*", "clientes", 
+	"WHERE hash = '".$hashcliente."' and td = " .  $_SESSION["td"])) { $cliente = $r; } unset($r); 
+	//36:nit, 13:dui,03:pasaporte, 37:otro
+	$datos['dteJson']['receptor']['tipoDocumento'] = (strlen(Helpers::FormatDui($cliente['documento'])) == 10) ? "13" : "36"; 
+	$datos['dteJson']['receptor']['numDocumento'] = (strlen(Helpers::FormatDui($cliente['documento'])) == 10) ? Helpers::FormatDui($cliente['documento']) : Helpers::FormatNIT($cliente['documento']);
 	$datos['dteJson']['receptor']['nrc'] = null;
-	$datos['dteJson']['receptor']['nombre'] = "Pablito El Loco";
+	$datos['dteJson']['receptor']['nombre'] = $cliente['nombre'];
 	$datos['dteJson']['receptor']['codActividad'] = null;
 	$datos['dteJson']['receptor']['descActividad'] = null;
-	$datos['dteJson']['receptor']['direccion']['departamento'] = "05";
-	$datos['dteJson']['receptor']['direccion']['municipio'] = "01";
-	$datos['dteJson']['receptor']['direccion']['complemento'] = "Edificio Promerica,La Gran Via";
-	$datos['dteJson']['receptor']['telefono'] = "60623821";
-	$datos['dteJson']['receptor']['correo'] = "juanperez@gmail.com";
+	$datos['dteJson']['receptor']['direccion']['departamento'] = $cliente['departamento'];
+	$datos['dteJson']['receptor']['direccion']['municipio'] = $cliente['municipio'];
+	$datos['dteJson']['receptor']['direccion']['complemento'] = $cliente['direccion'];
+	$datos['dteJson']['receptor']['telefono'] = $cliente['telefono'];
+	$datos['dteJson']['receptor']['correo'] = $cliente['email'];
 
    }
 

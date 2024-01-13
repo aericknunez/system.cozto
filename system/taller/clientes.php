@@ -70,7 +70,9 @@ $taller = new Taller();
         <option value="1">Departamento</option>
       </select> -->
       <label for="departamento">Departamento</label>
-      <input type="text" class="form-control" id="departamento" name="departamento">
+      <?
+        echo Helpers::generarSelectDepartamentos();
+      ?>
     </div>
 
 
@@ -80,7 +82,10 @@ $taller = new Taller();
         <option value="1">Municipio</option>
       </select> -->
       <label for="municipio">Municipio</label>
-      <input type="text" class="form-control" id="municipio" name="municipio">
+      <select class="mdb-select md-form colorful-select dropdown-dark" name="municipio" id="municipio">
+      <option>Municipio</option>
+      </select>
+
     </div>
 
   </div>

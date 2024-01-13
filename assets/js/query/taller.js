@@ -18,6 +18,21 @@ $(document).ready(function(){
 
     $('.mdb-select').materialSelect();
 
+    
+    $("#departamento").change(function(){
+        var id=$(this).val();
+        var dataString = 'op=686&iden='+ id;
+  
+          $.ajax({
+            type: "POST",
+            url: "application/src/routes.php",
+            data: dataString,
+            success: function(data) {            
+                $("#municipio").html(data); // lo que regresa de la busquea 
+            }
+        });  
+
+    });
 
 
 /// Nueva cuenta

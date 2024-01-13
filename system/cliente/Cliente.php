@@ -175,20 +175,19 @@ class Clientes {
 
         $datos["giro"] = $datos["giro"];
         $datos["registro"] = $datos["registro"];
+        $datos["hash"] = Helpers::HashId();
+        $datos["time"] = Helpers::TimeId();
+        $datos["td"] = $_SESSION["td"];
+        if ($db->insert("facturar_documento", $datos)) {
 
-                $datos["hash"] = Helpers::HashId();
-                $datos["time"] = Helpers::TimeId();
-                $datos["td"] = $_SESSION["td"];
-                if ($db->insert("facturar_documento", $datos)) {
+            Alerts::Alerta("success","Realizado!","Registro realizado correctamente!");  
 
-                    Alerts::Alerta("success","Realizado!","Registro realizado correctamente!");  
-
-                            $_SESSION["factura_cliente"] = $datos["cliente"];
-                            $_SESSION["factura_documento"] = $datos["documento"];
-                              
-                              $texto = $_SESSION['config_nombre_documento']. ": " . $_SESSION["factura_documento"] . "<br> Cliente: " . $_SESSION["factura_cliente"];
-                            Alerts::Mensajex($texto,"danger",'<a id="quitar-documento" op="102" class="btn btn-danger btn-rounded">Quitar '.$_SESSION["config_nombre_documento"].'</a>',$boton2);
-                }
+                    $_SESSION["factura_cliente"] = $datos["cliente"];
+                    $_SESSION["factura_documento"] = $datos["documento"];
+                      
+                      $texto = $_SESSION['config_nombre_documento']. ": " . $_SESSION["factura_documento"] . "<br> Cliente: " . $_SESSION["factura_cliente"];
+                    Alerts::Mensajex($texto,"danger",'<a id="quitar-documento" op="102" class="btn btn-danger btn-rounded">Quitar '.$_SESSION["config_nombre_documento"].'</a>',$boton2);
+        }
 
         } else {
           Alerts::Alerta("error","Error!","Faltan Datos!");

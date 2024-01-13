@@ -2,3 +2,20 @@ ALTER TABLE `config_root` ADD `factura_electronica` VARCHAR(100) NOT NULL AFTER 
 
 ALTER TABLE `ticket_num` ADD `codigo_generacion` VARCHAR(100) NOT NULL AFTER `tipo`;
 
+ALTER TABLE `facturar_documento` ADD `municipio` VARCHAR(100) NOT NULL AFTER `departamento`;
+
+CREATE TABLE `factura_electronica` (
+  `id` int(11) NOT NULL,
+  `nit` varchar(20) NOT NULL,
+  `password` varchar(100) NOT NULL,
+  `id_sistema` varchar(50) NOT NULL,
+  `ambiente` varchar(2) NOT NULL,
+  `hash` varchar(12) NOT NULL,
+  `time` int(12) NOT NULL,
+  `td` int(6) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+ALTER TABLE `factura_electronica`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `id` (`id`);

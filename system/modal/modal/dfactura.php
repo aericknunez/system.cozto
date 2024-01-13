@@ -24,7 +24,13 @@ if(isset($_REQUEST["add"])){
 <input type="text" id="registro" name="registro" autocomplete="off" class="form-control mb-3" placeholder="Registro"> 
 
 <input type="text" id="direccion" name="direccion" autocomplete="off" class="form-control mb-3" placeholder="Direccion"> 
-<input type="text" id="departamento" name="departamento" autocomplete="off" class="form-control mb-3" placeholder="Departamento"> 
+<?
+echo Helpers::generarSelectDepartamentos();
+?>
+<select class="mdb-select md-form colorful-select dropdown-dark" name="municipio" id="municipio">
+<option>Municipio</option>
+</select>
+
   <input class="form-check-input" type="checkbox" value="1" name="tipo_contribuyente" id="tipo_contribuyente" >
   <label class="form-check-label" for="tipo_contribuyente">
     Gran Contribuyente

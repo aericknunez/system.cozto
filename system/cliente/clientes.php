@@ -58,12 +58,16 @@ $cliente = new Clientes();
 
     <div class="col-md-6 mb-2 md-form">
       <label for="cod">Departamento</label>
-      <input type="text" class="form-control" id="departamento" name="departamento">
+      <?
+        echo Helpers::generarSelectDepartamentos();
+      ?>
     </div>
 
   <div class="col-md-6 mb-2 md-form">
       <label for="descripcion">Municipio</label>
-      <input type="text" class="form-control" id="municipio" name="municipio">
+      <select class="mdb-select md-form colorful-select dropdown-dark" name="municipio" id="municipio">
+      <option>Municipio</option>
+      </select>
     </div>
 
   </div>

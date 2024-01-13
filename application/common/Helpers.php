@@ -363,7 +363,71 @@ static public function ImpuestoDesc($numero, $impuestos){
       return "Repartidor";
     }
 
+    static public function FormatDui($cadena){
+      $doc = str_replace('-', '', $cadena);
+      $posicion = strlen($doc) - 1; // Obtener la posición antes del último número 
+      $miCadenaConGuion = substr_replace($doc, "-", $posicion, 0);
+      return $miCadenaConGuion; 
+    }
 
+    static public function FormatNIT($cadena){
+      return str_replace('-', '', $cadena);
+    }
+
+
+    static public function generarSelectDepartamentos() {
+      $url = "assets/js/el-salvador.json";
+      $jsonData = file_get_contents($url);
+      $data = json_decode($jsonData, true);
+      // return $data;
+      // Construye el array para el formulario select
+      $options = [];
+      foreach ($data['departamentos'] as $departamento) {
+          $options[$departamento['id']] = $departamento['nombre'];
+      }
+  
+      // Crea el formulario select con opciones dinámicas
+      $selectHtml = '<select class="mdb-select md-form colorful-select dropdown-dark" name="departamento" id="departamento">';
+      foreach ($options as $id => $nombre) {
+          $selectHtml .= "<option value=\"$id\">$nombre</option>";
+      }
+      $selectHtml .= '</select>';
+  
+      return $selectHtml;
+  }
+
+
+  static public function generarSelectMunicipios($idDepartamento) {
+    $url = "http://localhost/system.cozto/assets/js/el-salvador.json";
+    $jsonData = file_get_contents($url);
+    $data = json_decode($jsonData, true);
+
+    // Buscar el departamento por ID
+    $departamentoSeleccionado = null;
+    foreach ($data['departamentos'] as $departamento) {
+        if ($departamento['id'] == $idDepartamento) {
+            $departamentoSeleccionado = $departamento;
+            break;
+        }
+    }
+
+    if ($departamentoSeleccionado === null) {
+        return '<p>Departamento no encontrado</p>';
+    }
+
+    $options = [];
+    foreach ($departamentoSeleccionado['municipios'] as $municipio) {
+        $options[$municipio['id_mun']] = $municipio['nombre'];
+    }
+
+    $selectHtml = '';
+    foreach ($options as $idMunicipio => $nombre) {
+        $muni = substr($idMunicipio, -2);
+        $selectHtml .= "<option value='$muni'>$nombre</option>";
+    }
+
+    return $selectHtml;
+}
 
 ///////////// para usos de control de usuario ////////
     static public function GetIp(){
