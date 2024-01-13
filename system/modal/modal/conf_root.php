@@ -247,6 +247,13 @@ $r = $db->select("*", "config_root", "where td = ".$_SESSION['td']."")
       </td>
   </tr>
 
+  <tr>
+       <td><small id="id_sistema" class="form-text text-muted mb-1">
+       ID Sistema DTE
+    </small><input type="text" id="id_sistema" name="id_sistema" class="form-control mb-1" placeholder="ID Sistema DTE (UUID)" value="<? echo Encrypt::Decrypt($r["id_sistema"],$_SESSION['secret_key']); ?>"></td>
+       <td></td>
+  </tr>
+
 
   <tr>
       <td>

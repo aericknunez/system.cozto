@@ -9,16 +9,7 @@ public function DTE(){
 
 if ($r = $db->select("*", "ticket_num", "WHERE orden = '".$_SESSION["orden_print"]."' and tx = ".$_SESSION["tx"]." and td = " .  $_SESSION["td"])) { 
     $orden_codigo_generacion = $r["codigo_generacion"];
-    $orden_fecha = $r["fecha"];
-    $orden_hora = $r["hora"];
     $orden_num_fac = $r["num_fac"];
-} unset($r);  
-
-if ($r = $db->select("*", "factura_electronica", "WHERE td = " .  $_SESSION["td"])) { 
-    $cliente_nit = $r["nit"];
-    $cliente_password = $r["password"];
-    $cliente_id_sistema = $r["id_sistema"];
-    $cliente_ambiente = $r["ambiente"];
 } unset($r);  
 
 $productos = array();
@@ -55,10 +46,7 @@ foreach ($x as $z) {
 } $x->close();
 
 $datos = array();
-$datos['nit'] = $cliente_nit;
-$datos['activo'] = true;
-$datos['passwordPri'] = $cliente_password;
-$datos['id_sistema'] = $cliente_id_sistema;
+$datos['id_sistema'] = $_SESSION['root_id_sistema'];
 $datos['idEnvio'] = $orden_num_fac; // numero de orden (string)
 
    if($_SESSION["tipoticket"] == 3){
@@ -71,7 +59,6 @@ $datos['idEnvio'] = $orden_num_fac; // numero de orden (string)
    }
 
 $datos['dteJson']['identificacion']['version'] = $version;
-$datos['dteJson']['identificacion']['ambiente'] = $cliente_ambiente;
 $datos['dteJson']['identificacion']['tipoDte'] = $tipoDte;
 $datos['dteJson']['identificacion']['numeroControl'] = "DTE-".$tipoDte."-00000000-" . str_pad($orden_num_fac, 15, "0", STR_PAD_LEFT);
 $datos['dteJson']['identificacion']['codigoGeneracion'] = $orden_codigo_generacion; // codigo de cada ticket_num
