@@ -3468,6 +3468,13 @@ case "686":
 	echo Helpers::generarSelectMunicipios($_POST['iden']);
 break;
 
+case "687":
+	include_once '../common/phpqrcode/qrlib.php';
+	include_once '../../system/facturar/ReportesFacturas.php';
+	$cot = new ReportesFacturas();
+	$cot->DetallesFacturaElectronica($_POST);
+break;
+
 case "690": // agrega materiales a la cotizacion
 	include_once '../../system/cotizar/CotizarR.php';
 		$cot = new Cotizar();

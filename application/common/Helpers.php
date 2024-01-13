@@ -93,6 +93,15 @@ class Helpers{
     if($string == "5") return '<div class="text-primary-color-dark font-weight-bold">Incompleto</div>';
     }
 
+    static public function StatusFactura($status){
+      switch ($status) {
+        case '1': return 'Recibido';
+        case '2': return 'Firmado';
+        case '3': return 'Rechazado';
+        case '4': return 'Procesado';
+      }
+    }
+
 
 
     static public function Gasto($string) {

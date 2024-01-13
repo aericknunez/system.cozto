@@ -34,7 +34,24 @@ $(document).ready(function(){
 	});
 
 
-
+    $("body").on("click","#ver-factura",function(){ // llamar nada mas a los productos
+        $('#ModalVerFactura').modal('show'); 
+		var cod = $(this).attr('cod');
+		var sistema = $(this).attr('sistema');
+        var op = "687";
+        var dataString = 'op='+op+'&cod='+cod+'&sistema='+sistema;
+        $.ajax({
+            type: "POST",
+            url: "application/src/routes.php",
+            data: dataString,
+            beforeSend: function () {
+               $("#detalles").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt=""></div>');
+            },
+            success: function(data) {            
+                $("#detalles").html(data); // lo que regresa de la busquea 
+            }
+        }); 
+    });
 
 
 

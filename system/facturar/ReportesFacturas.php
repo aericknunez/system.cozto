@@ -66,8 +66,8 @@ foreach ($ag as $bg) {
 
 	echo '<tr class = "'.$class.'" >
 		   <th>'.$b["fecha"].' '.$b["hora"].'</th>					       
-		   <th>'.Helpers::TipoFacturaVentas($b["tipo"]).'</th>
-		   <th>'.$b["num_fac"].'</th>
+		   <th><a id="ver-factura" cod="'. $b["codigo_generacion"] .'" sistema="'.$_SESSION['root_id_sistema'].'">'.Helpers::TipoFacturaVentas($b["tipo"]).'</a></th>
+		   <th><a id="ver-factura" cod="'. $b["codigo_generacion"] .'" sistema="'.$_SESSION['root_id_sistema'].'">'.$b["num_fac"].'</a></th>
 		   <th>'.$estado.'</th>
 		   <th>'.$this->ClienteProducto($orden, $tipo, $numeroFactura, $b["time"]).'</th>
 		   <th>'.Helpers::TipoPago($tipo_pago).'</th>
@@ -204,6 +204,40 @@ public function CajeroVentas($user) {
 }
 
 
+public function DetallesFacturaElectronica($data) {
+	if (!$data['sistema']) {
+		echo '<div class="font-bold red-text text-center justify-content-center"><strong>
+		ESTE SISTEMA NO ESTA GENERANDO FACTURACION ELECTRONICA
+		</strong></div>';
+		echo '</div>';
+		return;
+	}
+	$url = 'https://api-factura-electronica.hibridosv.com/api/documents/'. $data['cod'].'/'.$data['sistema'];
+	$curl = curl_init($url);
+	curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);  // Desactivar la verificación del certificado SSL
+	$response = curl_exec($curl);
+
+	if (curl_errno($curl)) {
+		echo 'Error al realizar la solicitud: ' . curl_error($curl);
+		return ;
+	}
+	curl_close($curl);
+	
+	$response = json_decode($response, true);
+	$contenido = 'https://admin.factura.gob.sv/consultaPublica?ambiente='.$response['documento_json']['identificacion']['ambiente'].'&codGen='.$response['documento_json']['identificacion']['codigoGeneracion'].'&fechaEmi='. $response['documento_json']['identificacion']['fecEmi'];
+
+$archivoQR = "../../assets/img/mi_codigo_qr.png";
+$tamaño = 5; // Ajusta según tus necesidades
+QRcode::png($contenido, $archivoQR, QR_ECLEVEL_L, $tamaño);
+echo '<div class="p-4">';
+echo '<img src="assets/img/mi_codigo_qr.png" alt="Código QR" width="400">';
+
+echo '<div class="font-bold red-text text-center justify-content-center"><strong>
+Estado: '.Helpers::StatusFactura($response['status']).'</strong></div>';
+echo '</div>';
+
+}
 
 
 
