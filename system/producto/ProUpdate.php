@@ -395,6 +395,10 @@ public function CaracteristicaAveria($cod, $caracteristicas, $hashin){
       if ($r = $db->select("cantidad", "producto", "WHERE cod = '$producto' and td = ".$_SESSION["td"]."")) { 
        Alerts::Mensajex("La cantidad actual de productos es: " . Helpers::Format($r["cantidad"]),'success',$boton,$boton2);
       }  unset($r);
+
+      if ($r = $db->select("precio", "producto_precio", "WHERE producto = '$producto' and td = ".$_SESSION["td"]." limit 1")) { 
+        Alerts::Mensajex("El precio de venta es: " . Helpers::Dinero($r["precio"]),'success',$boton,$boton2);
+       }  unset($r);
         
   }
 
