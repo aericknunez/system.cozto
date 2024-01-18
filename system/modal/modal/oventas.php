@@ -10,6 +10,8 @@
 <div class="row d-flex justify-content-center">
   <div class="col-md-12">
 <form class="text-center border border-light p-3" id="form-oventas" name="form-oventas">
+  
+<input type="number" step="any" name="cantidad" id="cantidad" class="form-control mb-3" placeholder="Cantidad">
 
 <input type="text" name="producto" id="producto" class="form-control mb-3" placeholder="Producto">
 
