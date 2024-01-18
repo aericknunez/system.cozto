@@ -243,7 +243,7 @@ $page <= 1 ? $enable = 'disabled' : $enable = '';
 public function VerAbonos($credito) { //leva el control del autoincremento de los clientes
     $db = new dbConn();
         
-        $a = $db->query("SELECT * FROM creditos_abonos WHERE credito = '$credito' and edo = 1 and td = ".$_SESSION["td"]." order by id desc");
+        $a = $db->query("SELECT * FROM creditos_abonos WHERE credito = '$credito'  and td = ".$_SESSION["td"]." order by id desc");
 
         if($a->num_rows > 0){
 
@@ -265,17 +265,22 @@ public function VerAbonos($credito) { //leva el control del autoincremento de lo
             <tbody>';
             $n = 1;
             foreach ($a as $b) {
-            echo '<tr>
+              if($b["edo"] == 1){
+                $class= " ";
+                } else {
+                $class= "text-danger";	
+                } 
+            echo '<tr class = "'.$class.'">
                   <th scope="row">'.$b["nombre"].'</th>
                   <td>'.Helpers::Dinero($b["abono"]).'</td>
                   <td>'.Helpers::TipoPago($b["tipo_pago"]).'</td>
                   <td>'.$b["fecha"].'</td>
                   <td>'.$b["hora"].'</td>';
 
-                      if($n == 1 and $b["fecha"] == date("d-m-Y")){
+                      if($n == 1 and $b["fecha"] == date("d-m-Y") and $b["edo"] == 1 ){
                         echo '<td>
                         <a id="delabono" hash="'.$b["hash"].'" op="108" credito="'.$b["credito"].'" orden="'.$orden.'" factura="'.$factura.'" tx="'.$tx.'"><i class="fa fa-minus-circle fa-lg red-text"></i></a>
-                        <a class="ml-2" id="printAbono" hash="'.$b["credito"].'"><i class="fa fa-print fa-lg blue-text"></i></a>
+                        <a class="ml-2" id="printAbono" hash="'.$b["credito"].'" ><i class="fa fa-print fa-lg blue-text"></i></a>
                         </td>';
                       } else {
                       echo '<td><i class="fa fa-ban fa-lg green-text"></i></td>';
