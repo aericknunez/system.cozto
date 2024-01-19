@@ -255,7 +255,7 @@ public function AgregarProductoEspecial($datos) { // agrega el producto Especial
 
 if($datos["precio"] != NULL and $datos["producto"] != NULL){
 
-$stot=Helpers::STotal($datos["precio"], $_SESSION['config_imp']);
+$stot=Helpers::STotal($datos["precio"], $_SESSION['config_imp']) * $datos["cantidad"]; 
 $im=Helpers::Impuesto($stot, $_SESSION['config_imp']);
 
 if($datos["agrupado"] == NULL){
@@ -267,7 +267,7 @@ $_SESSION["venta_agrupado"] = TRUE;
 
 	$datox = array();
 	$datox["cod"] = $codigog;
-	$datox["cant"] = 1;
+	$datox["cant"] = $datos["cantidad"];
 	$datox["producto"] = strtoupper($datos["producto"]);
 	$datox["pv"] = $datos["precio"];  				   
 	$datox["stotal"] = $stot;	    				   
