@@ -76,30 +76,12 @@ class Controles{
 
 	public function ValorInventario(){
 		$db = new dbConn();
-		$ValorInventario = 0;
-		$a = $db->query("SELECT cod, cantidad FROM producto WHERE td = ".$_SESSION["td"]."");
-		foreach ($a as $b) {
-			$cod = $b["cod"];
-			$cantidad = $b["cantidad"];
-			if ($r = $db->query("SELECT existencia, precio_costo FROM producto_ingresado WHERE existencia > 0 and producto = '$cod' and td = ".$_SESSION["td"]."")) {
-				if ($r->num_rows > 0) {
-						$valorTotal = 0;
-						$cantidadTotal = 0;
-						foreach ($r as $s) {
-							$valorTotal = $valorTotal + ($s["existencia"] * $s["precio_costo"]);
-							$cantidadTotal = $cantidadTotal + $s["existencia"];
-						}
-						$costoPromedio = $valorTotal / $cantidadTotal;
-				}else {
-						$costoPromedio = 0 ; 
-					  }
-				unset($r);
-
+			$a = $db->query("SELECT sum(saldo_total) FROM kardex WHERE (cod, time) IN (SELECT cod, MAX(time) FROM kardex GROUP BY cod) AND td = ".$_SESSION["td"]."");
+			foreach($a as $b){
+				$ValorInventario = $b["sum(saldo_total)"];
+			}$a->close();
+			return $ValorInventario;
 			}
-			$ValorInventario = $ValorInventario + ($cantidad * $costoPromedio);
-		}$a->close();
-		return $ValorInventario;
-	}
 
 } // Termina la lcase
 ?>
