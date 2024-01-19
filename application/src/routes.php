@@ -1223,6 +1223,7 @@ case "120": // mostar los botones imprimir factura
 
 // elimino las dos variables
 unset($_SESSION["factura_actual_print"], $_SESSION["cambio_actual_print"], $_SESSION["orden_actual_print"]);
+if(isset($_SESSION['aplicar_credito_sin_factura'])) unset($_SESSION['aplicar_credito_sin_factura']);
 break;
 
 
@@ -2697,6 +2698,7 @@ if (!isset($_SESSION['aplicar_credito_sin_factura'])) {
 
 // elimino las dos variables
 unset($_SESSION["factura_actual_print"], $_SESSION["cambio_actual_print"]);
+if(isset($_SESSION['aplicar_credito_sin_factura'])) unset($_SESSION['aplicar_credito_sin_factura']);
 break;
 
 
