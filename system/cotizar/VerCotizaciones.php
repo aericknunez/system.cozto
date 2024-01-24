@@ -225,12 +225,19 @@ if ($r = $db->select("cliente, fecha, correlativo, caduca", "cotizaciones_data",
     $caduca = $r["caduca"]; 
 } unset($r); 
 
-if ($r = $db->select("*", "clientes", "WHERE hash = '".$cliente."' and td = ". $_SESSION["td"] ."")) { 
-    $nombre = $r["nombre"];
-    $documento = $r["documento"];
-    $direccion = $r["direccion"];
-    $municipio = $r["municipio"];
-    $departamento = $r["departamento"];
+  if ($r = $db->query("SELECT nombre, direccion, departamento FROM clientes
+		  					WHERE hash = '".$cliente."' AND td = " . $_SESSION["td"] . "
+		  					UNION
+		  					SELECT Cliente AS nombre, direccion, departamento FROM facturar_documento
+		  					WHERE hash = '".$cliente."' AND td = " . $_SESSION["td"]."")){
+		foreach ($r as $datos) {
+      $nombre = $datos["nombre"];
+      $documento = $datos["documento"];
+      $direccion = $datos["direccion"];
+      //$municipio = $datos["municipio"];
+      $departamento = $datos["departamento"];
+    }
+   
      } unset($r); 
 
 echo '<div class="row">
@@ -320,7 +327,7 @@ $a = $db->query("SELECT * FROM cotizaciones WHERE cotizacion = '".$correlativo."
             echo '</tbody>
               </table>';
         }  $a->close();
-
+        $this->VerImagenCotizacion($correlativo);
   
 echo '<div class="row mt-4">
       <div class="col-12">
@@ -346,13 +353,20 @@ if ($r = $db->select("cliente, fecha, correlativo, caduca", "cotizaciones_data",
  $caduca = $r["caduca"]; 
 } unset($r); 
 
-if ($r = $db->select("*", "clientes", "WHERE hash = '".$cliente."' and td = ". $_SESSION["td"] ."")) { 
- $nombre = $r["nombre"];
- $documento = $r["documento"];
- $direccion = $r["direccion"];
- $municipio = $r["municipio"];
- $departamento = $r["departamento"];
-  } unset($r); 
+if ($r = $db->query("SELECT nombre, direccion, departamento FROM clientes
+WHERE hash = '".$cliente."' AND td = " . $_SESSION["td"] . "
+UNION
+SELECT Cliente AS nombre, direccion, departamento FROM facturar_documento
+WHERE hash = '".$cliente."' AND td = " . $_SESSION["td"]."")){
+foreach ($r as $datos) {
+$nombre = $datos["nombre"];
+$documento = $datos["documento"];
+$direccion = $datos["direccion"];
+//$municipio = $datos["municipio"];
+$departamento = $datos["departamento"];
+}
+
+} unset($r); 
 
 echo '<div class="row">
    <div class="col-8">
@@ -444,7 +458,7 @@ $a = $db->query("SELECT * FROM cotizaciones WHERE cotizacion = '".$correlativo."
          echo '</tbody>
            </table>';
      }  $a->close();
-
+     $this->VerImagenCotizacion($correlativo);
 
 echo '<div class="row mt-4">
    <div class="col-12">
@@ -473,12 +487,19 @@ $correlativo = $r["correlativo"];
 $caduca = $r["caduca"]; 
 } unset($r); 
 
-if ($r = $db->select("*", "clientes", "WHERE hash = '".$cliente."' and td = ". $_SESSION["td"] ."")) { 
-$nombre = $r["nombre"];
-$documento = $r["documento"];
-$direccion = $r["direccion"];
-$municipio = $r["municipio"];
-$departamento = $r["departamento"];
+if ($r = $db->query("SELECT nombre, direccion, departamento FROM clientes
+WHERE hash = '".$cliente."' AND td = " . $_SESSION["td"] . "
+UNION
+SELECT Cliente AS nombre, direccion, departamento FROM facturar_documento
+WHERE hash = '".$cliente."' AND td = " . $_SESSION["td"]."")){
+foreach ($r as $datos) {
+$nombre = $datos["nombre"];
+$documento = $datos["documento"];
+$direccion = $datos["direccion"];
+//$municipio = $datos["municipio"];
+$departamento = $datos["departamento"];
+}
+
 } unset($r); 
 
 echo '<div class="row">
