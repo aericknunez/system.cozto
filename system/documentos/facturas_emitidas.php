@@ -35,9 +35,9 @@ if($primero == $segundo){
 }
 
 if($type == NULL or $type == 0){
-  $a = $db->query("SELECT * FROM ticket_num WHERE $sqlx and td = ".$_SESSION['td']." order by time desc");	
+  $a = $db->query("SELECT * FROM ticket_num WHERE $sqlx and tipo != 99 and td = ".$_SESSION['td']." order by time desc");	
 } else {
-  $a = $db->query("SELECT * FROM ticket_num WHERE $sqlx and td = ".$_SESSION['td']." order by time desc");
+  $a = $db->query("SELECT * FROM ticket_num WHERE $sqlx and tipo != 99 and td = ".$_SESSION['td']." order by time desc");
 }
 
    if ($a->num_rows > 0) {
