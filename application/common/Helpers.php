@@ -95,10 +95,10 @@ class Helpers{
 
     static public function StatusFactura($status){
       switch ($status) {
-        case '1': return 'Recibido';
-        case '2': return 'Firmado';
-        case '3': return 'Rechazado';
-        case '4': return 'Procesado';
+        case '1': return 'RECIBIDO';
+        case '2': return 'FIRMADO';
+        case '3': return 'RECHAZADO';
+        case '4': return 'PROCESADO';
       }
     }
 
@@ -437,6 +437,44 @@ static public function ImpuestoDesc($numero, $impuestos){
 
     return $selectHtml;
 }
+
+
+
+static public function NombreDepartamento($idDepartamento) {
+  $rutaArchivoJson = XSERV . "assets/js/el-salvador.json";
+
+  if (file_exists($rutaArchivoJson)) {
+     $contenidoJson = file_get_contents($rutaArchivoJson);
+     $data = json_decode($contenidoJson, true);
+
+     foreach ($data['departamentos'] as $departamento) {
+        if ($departamento['id'] == $idDepartamento) {
+           return $departamento['nombre'];
+        }
+     }
+  }
+  return null; // Departamento no encontrado
+}
+
+static public function NombreMunicipio($idDepartamento, $idMunicipio) {
+  $rutaArchivoJson = XSERV . "assets/js/el-salvador.json";
+  if (file_exists($rutaArchivoJson)) {
+     $contenidoJson = file_get_contents($rutaArchivoJson);
+     $data = json_decode($contenidoJson, true);
+
+     foreach ($data['departamentos'] as $departamento) {
+        if ($departamento['id'] == $idDepartamento) {
+           foreach ($departamento['municipios'] as $municipio) {
+              if ($municipio['id_mun'] == $idDepartamento."".$idMunicipio) {
+                 return $municipio['nombre'];
+              }
+           }
+        }
+     }
+  }
+  return null; // Municipio no encontrado
+}
+
 
 ///////////// para usos de control de usuario ////////
     static public function GetIp(){

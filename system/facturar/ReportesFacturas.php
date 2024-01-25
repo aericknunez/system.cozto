@@ -206,10 +206,7 @@ public function CajeroVentas($user) {
 
 public function DetallesFacturaElectronica($data) {
 	if (!$data['sistema']) {
-		echo '<div class="font-bold red-text text-center justify-content-center"><strong>
-		ESTE SISTEMA NO ESTA GENERANDO FACTURACION ELECTRONICA
-		</strong></div>';
-		echo '</div>';
+		Alerts::Mensajex("ESTE SISTEMA NO ESTA GENERANDO FACTURACION ELECTRONICA", "info");
 		return;
 	}
 	$url = 'https://api-factura-electronica.hibridosv.com/api/documents/'. $data['cod'].'/'.$data['sistema'];
@@ -225,17 +222,30 @@ public function DetallesFacturaElectronica($data) {
 	curl_close($curl);
 	
 	$response = json_decode($response, true);
-	$contenido = 'https://admin.factura.gob.sv/consultaPublica?ambiente='.$response['documento_json']['identificacion']['ambiente'].'&codGen='.$response['documento_json']['identificacion']['codigoGeneracion'].'&fechaEmi='. $response['documento_json']['identificacion']['fecEmi'];
 
-$archivoQR = "../../assets/img/mi_codigo_qr.png";
-$tamaño = 5; // Ajusta según tus necesidades
-QRcode::png($contenido, $archivoQR, QR_ECLEVEL_L, $tamaño);
-echo '<div class="p-4">';
-echo '<img src="assets/img/mi_codigo_qr.png" alt="Código QR" width="400">';
+	if ($response['status'] == 4) {
 
-echo '<div class="font-bold red-text text-center justify-content-center"><strong>
-Estado: '.Helpers::StatusFactura($response['status']).'</strong></div>';
-echo '</div>';
+		$contenido = 'https://admin.factura.gob.sv/consultaPublica?ambiente='.$response['documento_json']['identificacion']['ambiente'].'&codGen='.$response['documento_json']['identificacion']['codigoGeneracion'].'&fechaEmi='. $response['documento_json']['identificacion']['fecEmi'];
+
+		if (file_exists('../../assets/img/qr/'.$data['sistema'].'.png')) {
+			unlink('../../assets/img/qr/'.$data['sistema'].'.png');
+		}
+		$archivoQR = "../../assets/img/qr/".$data['sistema'].".png";
+		$tamaño = 5; // Ajusta según tus necesidades
+		QRcode::png($contenido, $archivoQR, QR_ECLEVEL_L, $tamaño);
+		echo '<div class="p-4 text-center justify-content-center">';
+		echo '<img src="assets/img/qr/'.$data['sistema'].'.png?'.Helpers::TimeId().'" alt="Código QR" width="350">';
+	} else {
+		Alerts::Mensajex("Ha ocurrido un error en el envío del documento electrónico", "danger");
+	}
+
+	// si es procesado pero rechazado muestro las observaciones
+	if ($response['status'] == 3) {
+		print_r($response['descripcion']);
+	}
+	echo '<div class="font-bold red-text text-center justify-content-center"><strong>
+	Estado: '.Helpers::StatusFactura($response['status']).'</strong></div>';
+	echo '</div>';
 
 }
 

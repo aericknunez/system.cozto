@@ -4,4 +4,4 @@ ALTER TABLE `config_root` ADD `id_sistema` VARCHAR(100) NOT NULL AFTER `factura_
 ALTER TABLE `ticket_num` ADD `codigo_generacion` VARCHAR(100) NOT NULL AFTER `tipo`;
 
 ALTER TABLE `facturar_documento` ADD `municipio` VARCHAR(100) NOT NULL AFTER `departamento`;
-
+ALTER TABLE `facturar_documento` ADD `email` VARCHAR(50) NOT NULL AFTER `municipio`, ADD `telefono1` VARCHAR(25) NOT NULL AFTER `email`;

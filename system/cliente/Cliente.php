@@ -252,10 +252,6 @@ echo '  <p  class="mt-1">Fecha de Nacimiento: <strong>'.Fechas::FechaEscrita($r[
                     <th colspan="2">Direcci&oacuten: '.$r["direccion"].'</th>
                   </tr>
                   <tr>
-                    <td>Departamento: '.$r["departamento"].'</td>
-                    <td>Municipio: '.$r["municipio"].'</td>
-                  </tr>
-                  <tr>
                     <td>Email: '.$r["email"].'</td>
                     <td>Comentarios: '.$r["comentarios"].'</td>
                   </tr>

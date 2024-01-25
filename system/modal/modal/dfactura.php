@@ -17,19 +17,21 @@ if(isset($_REQUEST["add"])){
 <span class="alert-danger" id="error-mensaje" style="display: block; text-align: center; margin-top: 10px;"></span>
 
 <form class="text-center border border-light p-3" id="form-documento" name="form-documento"> 
-<input type="text" id="cliente" name="cliente" autocomplete="off" class="form-control mb-3" placeholder="Cliente">  
-<input type="text" id="documento" name="documento" autocomplete="off" class="form-control mb-3" placeholder="<?php echo $_SESSION['config_nombre_documento']; ?>">
+<input required type="text" id="cliente" name="cliente" autocomplete="off" class="form-control mb-3" placeholder="Cliente">  
+<input required type="text" id="documento" name="documento" autocomplete="off" class="form-control mb-3" placeholder="<?php echo $_SESSION['config_nombre_documento']; ?>">
 
-<input type="text" id="giro" name="giro" autocomplete="off" class="form-control mb-3" placeholder="Giro"> 
-<input type="text" id="registro" name="registro" autocomplete="off" class="form-control mb-3" placeholder="Registro"> 
+<input required type="text" id="giro" name="giro" autocomplete="off" class="form-control mb-3" placeholder="Giro"> 
+<input required type="text" id="registro" name="registro" autocomplete="off" class="form-control mb-3" placeholder="Registro"> 
 
-<input type="text" id="direccion" name="direccion" autocomplete="off" class="form-control mb-3" placeholder="Direccion"> 
+<input required type="text" id="direccion" name="direccion" autocomplete="off" class="form-control mb-3" placeholder="Direccion"> 
 <?
 echo Helpers::generarSelectDepartamentos();
 ?>
 <select class="mdb-select md-form colorful-select dropdown-dark" name="municipio" id="municipio">
 <option>Municipio</option>
 </select>
+<input required type="email" id="email" name="email" autocomplete="off" class="form-control mb-3" placeholder="Email"> 
+<input required type="text" id="telefono1" name="telefono1" autocomplete="off" class="form-control mb-3" placeholder="Telefono"> 
 
   <input class="form-check-input" type="checkbox" value="1" name="tipo_contribuyente" id="tipo_contribuyente" >
   <label class="form-check-label" for="tipo_contribuyente">

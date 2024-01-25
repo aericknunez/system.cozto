@@ -149,7 +149,8 @@ class CambioDatosCliente{
   echo '  <p  class="mt-1">Documento: <strong>'.$r["documento"].'</strong> </p>';
   echo '  <p  class="mt-1">Giro: <strong>'.$r["giro"].'</strong> </p>';
   echo '  <p  class="mt-1">Dirección: <strong>'.$r["direccion"].'</strong> </p>';
-  echo '  <p  class="mt-1">Departamento: <strong>'.$r["departamento"].'</strong> </p>';
+  echo '  <p  class="mt-1">Departamento: <strong>'.$r["departamento"].', '.$r["municipio"].'</strong> </p>';
+  echo '  <p  class="mt-1">Email: <strong>'.$r["email"].'</strong> </p>';
   
         }  unset($r); 
   
