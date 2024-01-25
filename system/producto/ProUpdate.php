@@ -56,8 +56,13 @@ class ProUpdate{
   }
 
   public function Redirect($datos){
+    if($datos["compuesto"] === "on" || $datos["servicio"] === "on" || $datos["dependiente"] === "on" ){
+      $step = 1;
+    }else{
+      $step = 2;
+    }
         echo '<script>
-        window.location.href="?modal=proadd&key='. $datos["cod"] .'&step=2&cad='. $datos["caduca"] .'&com='. $datos["compuesto"] .'&dep='. $datos["dependiente"] .'";
+        window.location.href="?modal=proadd&key='. $datos["cod"] .'&step='.$step.'&cad='. $datos["caduca"] .'&com='. $datos["compuesto"] .'&dep='. $datos["dependiente"] .'";
         </script>';
   }
 
