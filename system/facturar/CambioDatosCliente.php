@@ -50,7 +50,7 @@ class CambioDatosCliente{
                         <td>'.$b["documento"].'</td>
                         <td>'.$b["giro"].'</td>
                         <td>'.$b["registro"].'</td>
-                        <td>'.$b["direccion"].', '.$b["departamento"].'</td>
+                        <td>'.$b["direccion"].'</td>
                         <td><a id="xver" op="68-CF" key="'.$b["documento"].'"><i class="fas fa-search fa-lg green-text"></i></a></td>
 
                         <td><a id="xdelete"  iden="'. $b["hash"] .'" op="321"><i class="fas fa-trash fa-lg red-text ml-2"></i></a>';
@@ -149,7 +149,6 @@ class CambioDatosCliente{
   echo '  <p  class="mt-1">Documento: <strong>'.$r["documento"].'</strong> </p>';
   echo '  <p  class="mt-1">Giro: <strong>'.$r["giro"].'</strong> </p>';
   echo '  <p  class="mt-1">Dirección: <strong>'.$r["direccion"].'</strong> </p>';
-  echo '  <p  class="mt-1">Departamento: <strong>'.$r["departamento"].', '.$r["municipio"].'</strong> </p>';
   echo '  <p  class="mt-1">Email: <strong>'.$r["email"].'</strong> </p>';
   
         }  unset($r); 
