@@ -123,7 +123,7 @@ $(document).ready(function(){
         url: "application/src/routes.php?op=147",
         data:'keyword='+$(this).val(),
         beforeSend: function(){
-            $("#muestra-busqueda").css("background","#FFF url(assets/img/LoaderIcon.gif) no-repeat 550px");
+            $("#muestra-busqueda");
         },
         success: function(data){
             $("#muestra-busqueda").show();

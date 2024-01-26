@@ -295,7 +295,7 @@ Descripci&oacuten
   <option value="2">CHEQUERA</option>
   <option value="3" selected>CUENTA BANCARIA</option>
   <option value="4"><?php
-  strtoupper($_SESSION['root_tarjeta']);
+  echo strtoupper($_SESSION['root_tarjeta']);
   ?></option>
   <option value="5">CAJA CHICA</option>
 </select>
