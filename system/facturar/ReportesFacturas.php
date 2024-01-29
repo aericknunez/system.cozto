@@ -209,7 +209,7 @@ public function DetallesFacturaElectronica($data) {
 		Alerts::Mensajex("ESTE SISTEMA NO ESTA GENERANDO FACTURACION ELECTRONICA", "info");
 		return;
 	}
-	$url = 'https://api-factura-electronica.hibridosv.com/api/documents/'. $data['cod'].'/'.$data['sistema'];
+	$url = 'https://api-connect.hibridosv.com/api/documents/'. $data['cod'].'/'.$data['sistema'];
 	$curl = curl_init($url);
 	curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 	curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);  // Desactivar la verificación del certificado SSL
