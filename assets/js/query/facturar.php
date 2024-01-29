@@ -121,7 +121,7 @@ function sendDTE(parametros){
     console.log("Datos: ", parametros)
     $.ajax({
         type: "POST",
-        url: "https://api-factura-electronica.hibridosv.com/api/documents",
+        url: "https://api-connect.hibridosv.com/api/documents",
         data: parametros,
         dataType: 'json',
         contentType: "application/json",
