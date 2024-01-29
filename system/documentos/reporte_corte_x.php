@@ -102,19 +102,19 @@ $objPHPExcel->setActiveSheetIndex(0)
  
 
 
-if ($r = $db->select("sum(stotal)", "ticket", "WHERE edo = 1 and tipo = 1 and td = ".$_SESSION["td"]." and time BETWEEN '".$aperturaF."' and '".$cierreF."'")) { 
+if ($r = $db->select("sum(stotal)", "ticket", "WHERE edo = 1 and tipo = 1 and num_fac != 0 and td = ".$_SESSION["td"]." and time BETWEEN '".$aperturaF."' and '".$cierreF."'")) { 
     $t_ticket = $r["sum(stotal)"];
 } unset($r);  
 
-if ($r = $db->select("sum(stotal)", "ticket", "WHERE edo = 1 and tipo = 2 and td = ".$_SESSION["td"]." and time BETWEEN '".$aperturaF."' and '".$cierreF."'")) { 
+if ($r = $db->select("sum(stotal)", "ticket", "WHERE edo = 1 and tipo = 2 and num_fac != 0 and td = ".$_SESSION["td"]." and time BETWEEN '".$aperturaF."' and '".$cierreF."'")) { 
     $t_factura = $r["sum(stotal)"];
 } unset($r);  
 
-if ($r = $db->select("sum(stotal)", "ticket", "WHERE edo = 1 and tipo = 3 and td = ".$_SESSION["td"]." and time BETWEEN '".$aperturaF."' and '".$cierreF."'")) { 
+if ($r = $db->select("sum(stotal)", "ticket", "WHERE edo = 1 and tipo = 3 and num_fac != 0 and td = ".$_SESSION["td"]." and time BETWEEN '".$aperturaF."' and '".$cierreF."'")) { 
     $t_credito = $r["sum(stotal)"];
 } unset($r);  
 
-if ($r = $db->select("sum(imp)", "ticket", "WHERE edo = 1 and td = ".$_SESSION["td"]." and time BETWEEN '".$aperturaF."' and '".$cierreF."'")) { 
+if ($r = $db->select("sum(imp)", "ticket", "WHERE edo = 1 and num_fac != 0 and td = ".$_SESSION["td"]." and time BETWEEN '".$aperturaF."' and '".$cierreF."'")) { 
     $t_imp = $r["sum(imp)"];
 } unset($r);  
 
@@ -193,7 +193,7 @@ $objPHPExcel->setActiveSheetIndex(0)
 
 
 
-$a = $db->query("SELECT * FROM ticket WHERE time BETWEEN '$aperturaF' AND '$cierreF' and edo = 1 and tipo_pago != 8 and td = ".$_SESSION['td']." order by time desc");
+$a = $db->query("SELECT * FROM ticket WHERE time BETWEEN '$aperturaF' AND '$cierreF' and edo = 1 and num_fac != 0 and tipo_pago != 8 and td = ".$_SESSION['td']." order by time desc");
 
 $c = $db->query("SELECT * FROM creditos_abonos WHERE time BETWEEN '$aperturaF' AND '$cierreF' and edo = 1  and td = ".$_SESSION['td']." order by time desc");
 

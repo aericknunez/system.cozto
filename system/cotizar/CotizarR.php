@@ -461,7 +461,12 @@ $_SESSION["venta_agrupado"] = TRUE;
   public function ClienteBusqueda($dato){ // Busqueda para cliente
     $db = new dbConn();
 
-          $a = $db->query("SELECT * FROM clientes WHERE (nombre like '%".$dato["keyword"]."%' or documento like '%".$dato["keyword"]."%') and td = ".$_SESSION["td"]." limit 10");
+          //$a = $db->query("SELECT * FROM clientes WHERE (nombre like '%".$dato["keyword"]."%' or documento like '%".$dato["keyword"]."%') and td = ".$_SESSION["td"]." limit 10");
+		  $a = $db->query("SELECT nombre, documento, hash FROM clientes
+		  					WHERE nombre LIKE '%" . $dato["keyword"] . "%' AND td = " . $_SESSION["td"] . "
+		  					UNION
+		  					SELECT cliente AS nombre, documento, hash FROM facturar_documento
+		  					WHERE cliente LIKE '%" . $dato["keyword"] . "%' AND td = " . $_SESSION["td"]." LIMIT 10");
            if($a->num_rows > 0){
             echo '<table class="table table-sm table-hover">';
     foreach ($a as $b) {
@@ -580,8 +585,14 @@ if($dir == "asc") $dir2 = "desc";
         <tbody>';
         foreach ($a as $b) {
         // obtener el nombre y detalles del producto
-    if ($r = $db->select("nombre", "clientes", "WHERE hash = '".$b["cliente"]."' and td = ". $_SESSION["td"] ."")) { 
-        $cliente = $r["nombre"]; } unset($r); 
+    //if ($r = $db->select("nombre", "clientes", "WHERE hash = '".$b["cliente"]."' and td = ". $_SESSION["td"] ."")) { 
+		if ($r = $db->query("SELECT nombre FROM clientes
+		  					WHERE hash = '".$b["cliente"]."' AND td = " . $_SESSION["td"] . "
+		  					UNION
+		  					SELECT Cliente AS nombre FROM facturar_documento
+		  					WHERE hash = '".$b["cliente"]."' AND td = " . $_SESSION["td"]."")){
+		$nombre = mysqli_fetch_array($r); 
+        $cliente = $nombre["nombre"]; } unset($r); 
 
        if($b["caducaF"] < Fechas::Format(date("d-m-Y"))){ 
        	$edo = '<div class="text-danger font-weight-bold">Caducada<div>'; 

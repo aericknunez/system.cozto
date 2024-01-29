@@ -36,14 +36,21 @@ echo '<div class="display-4 text-center font-weight-bold">'. Helpers::Dinero($to
    <form id="form-facturar" name="form-facturar">
      
      <?php if(isset($_SESSION["cliente_c"])) { ?>
-
+      <?php if($_SESSION['aplicar_credito_sin_factura'] == 1) { 
+      $imagen = "assets/img/imagenes/credito2.png" ;
+      $mensaje = "Efectuar Credito sin factura" ;
+     }else{
+      $imagen = "assets/img/imagenes/credito.png" ;
+      $mensaje = "Efectuar nota de credito" ;
+     } ?>
      <div class="form-group row justify-content-center align-items-center">
       <div class="col-xs-2">
-        <label for="ex1">Efectuar nota de credito</label>
+        <label for="ex1"><?php echo $mensaje ?></label>
         <input name="efectivo" type="hidden" id="efectivo" size="8" />
       </div>
     </div>
-    <input type="image" src="assets/img/imagenes/credito.png"  id="btn-facturar" name="btn-facturar" >
+    
+    <input type="image" src="<?php echo $imagen ?>"  id="btn-facturar" name="btn-facturar" >
     
     <?php if($_SESSION['aplicar_credito_sin_factura'] == 1) { echo '<div class="text-danger font-weight-bold">
       Este credito se facturará al final de la cancelación</div>'; } ?>
