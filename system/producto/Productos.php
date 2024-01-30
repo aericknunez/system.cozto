@@ -1436,7 +1436,7 @@ $page <= 1 ? $enable = 'disabled' : $enable = '';
 $limit = 15;
 $adjacents = 2;
 if($npagina == NULL) $npagina = 1;
-$a = $db->query("SELECT * FROM producto WHERE (cod like '%".$search."%' or descripcion like '%".$search."%') and td = ". $_SESSION['td'] ."");
+$a = $db->query("SELECT producto.cod, producto.descripcion, producto_categoria_sub.subcategoria FROM producto INNER JOIN producto_categoria_sub ON producto.categoria = producto_categoria_sub.hash and (producto.cod like '%".$search."%' or producto.descripcion like '%".$search."%' or producto_categoria_sub.subcategoria like '%".$search."%' ) and producto.td = ".$_SESSION["td"]."");
 $total_rows = $a->num_rows;
 $a->close();
 
@@ -1453,7 +1453,7 @@ if(isset($npagina) && $npagina != NULL) {
 if($dir == "desc") $dir2 = "asc";
 if($dir == "asc") $dir2 = "desc";
 
-$a = $db->query("SELECT producto.cod, producto.descripcion, producto.cantidad, producto.existencia_minima, producto.compuesto, producto.dependiente, producto.servicio, producto_categoria_sub.subcategoria FROM producto INNER JOIN producto_categoria_sub ON producto.categoria = producto_categoria_sub.hash and (producto.cod like '%".$search."%' or producto.descripcion like '%".$search."%') and producto.td = ".$_SESSION["td"]." order by ".$orden." ".$dir." limit $offset, $limit");
+$a = $db->query("SELECT producto.cod, producto.descripcion, producto.cantidad, producto.existencia_minima, producto.compuesto, producto.dependiente, producto.servicio, producto_categoria_sub.subcategoria FROM producto INNER JOIN producto_categoria_sub ON producto.categoria = producto_categoria_sub.hash and (producto.cod like '%".$search."%' or producto.descripcion like '%".$search."%' or producto_categoria_sub.subcategoria like '%".$search."%' ) and producto.td = ".$_SESSION["td"]." order by ".$orden." ".$dir." limit $offset, $limit");
     
     if($a->num_rows > 0){
         echo '<div class="table-responsive">
@@ -1589,7 +1589,7 @@ echo '<div class="row justify-content-center">
       </div>';
 
 
-       echo '<div class="text-right"><a href="system/documentos/inventario.php" >Descargar Excel</a></div>';      
+       echo '<div class="text-right"><a href="system/documentos/inventario.php?search='.$search.'" >Descargar Excel</a></div>';      
 
 } // termina productos
 
