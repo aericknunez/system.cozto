@@ -7,6 +7,7 @@ include_once '../../application/includes/DataLogin.php';
 $db = new dbConn();
 $seslog = new Login();
 $seslog->sec_session_start();
+if($_SERVER['HTTP_REFERER'] == NULL) $dir = "http://". $_SERVER['HTTP_HOST'] . "/cozto"; else $dir = $_SERVER['HTTP_REFERER'];
 
 
 if ($seslog->login_check() == TRUE) {
