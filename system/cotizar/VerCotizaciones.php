@@ -6,11 +6,11 @@ class VerCotizaciones{
         if ($_SESSION['td'] == 55) { // 55 f&f
             $this->IndustriasFF($cot);
         }
-        if ($_SESSION['td'] == 91) { // 91  DDALTEC
-              $this->ddaltec($cot);  
+        elseif ($_SESSION['td'] == 91) { // 91  DDALTEC
+            $this->ddaltec($cot);  
         } 
-        if ($_SESSION['td'] == 102) { //  102 PUBLI-INK
-          $this->publiInk($cot);
+        elseif ($_SESSION['td'] == 102) { //  102 PUBLI-INK
+            $this->publiInk($cot);
         }else {
             $this->general($cot);
         }
