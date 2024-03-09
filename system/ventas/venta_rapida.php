@@ -261,3 +261,40 @@ if($_SESSION["config_pesaje"] == "on"){
     </div>
   </div>
 </div>
+
+<!-- Modal cambio precio-->
+<div class="modal bounceIn" id="ModalCambioPrecio" tabindex="-1" role="dialog" aria-labelledby="ModalCambioPrecio"
+  aria-hidden="true" data-backdrop="false">
+  <div class="modal-dialog modal-md" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">CAMBIAR NOMBRE</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+<!-- CONTENIDO -->
+  <div class="col-md-12 z-depth-2 justify-content-center">
+  <div id="msj_comment" class="mt-2 font-weight-bold red-text"></div>
+
+      <div class="md-form mt-0">
+        <form id="form-precio">
+        <input type="hidden" id="identidad" name="identidad" value="">
+        <input class="form-control form-control-md" type="text" placeholder="Nombre Producto" id="nombre" name="nombre" autofocus>
+        <input class="form-control form-control-md" type="number" placeholder="Precio" id="precio" name="precio" step="any">
+        <div class="col-md-12 d-flex justify-content-center">
+         <button class="btn aqua-gradient btn-rounded btn-sm" type="submit" id="btn-precio" name="btn-precio">Aceptar</button>
+        </div>
+        </form>
+      </div>
+  </div>
+
+<!-- CONTENIDO -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>

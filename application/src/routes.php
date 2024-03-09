@@ -3601,7 +3601,11 @@ case "722":
 	header("location: ../../?creditos");
 break;
 
-
+case "723": // Agrega comentario a producto
+	include_once '../../system/ventas/VentasR.php';
+		$datos = new Ventas();
+		$datos->cambiarNombre($_POST['identidad'], $_POST['nombre'], $_POST['precio']);
+break;
 
 
 
