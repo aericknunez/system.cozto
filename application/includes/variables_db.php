@@ -6,14 +6,14 @@ if(Helpers::ServerDomain() == TRUE){
 	if(Helpers::ServerDemo() == TRUE){
 		define("HOST", "db5001821073.hosting-data.io");  
 		define("USER", "dbu687558"); 					
-		define("PASSWORD", Encrypt::decrypt('RnhOK3hpcWU2UnpBN2Foc2FKTU93Zz09', 'https://hibridosv.com')); 				
+		define("PASSWORD", Encrypt::decrypt('ZmdEV09vNnBIU2pOTVVWczBMR2dnZz09', 'https://hibridosv.com')); 				
 		define("DATABASE", "dbs1499036");
 		define("XSERV", "cozto.hibridosv.com/demo/");
 		define("TYPE", "Demo");	
 	} elseif(Helpers::ServerPractica() == TRUE){
 		define("HOST", "db5001821462.hosting-data.io");	
 		define("USER", "dbu666364"); 				
-		define("PASSWORD", Encrypt::decrypt('RnhOK3hpcWU2UnpBN2Foc2FKTU93Zz09', 'https://hibridosv.com')); 				
+		define("PASSWORD", Encrypt::decrypt('ZmdEV09vNnBIU2pOTVVWczBMR2dnZz09', 'https://hibridosv.com')); 				
 		define("DATABASE", "dbs1499280");
 		define("XSERV", "http://cozto.hibridosv.com/practica/");
 		define("TYPE", "Practica");			
@@ -24,14 +24,14 @@ if(Helpers::ServerDomain() == TRUE){
 		 or $_SERVER["SERVER_NAME"] == "farmaciagenesissv.com"){
 			define("HOST", "db5001821416.hosting-data.io");	 
 			define("USER", "dbu690380"); 					
-			define("PASSWORD", Encrypt::decrypt('RnhOK3hpcWU2UnpBN2Foc2FKTU93Zz09', 'https://hibridosv.com')); 			
+			define("PASSWORD", Encrypt::decrypt('ZmdEV09vNnBIU2pOTVVWczBMR2dnZz09', 'https://hibridosv.com')); 			
 			define("DATABASE", "dbs1499253");
 			define("XSERV", "http://sistema.hibridosv.com/");
 			define("TYPE", "OnLine");			
 		} else { // para data de los instalados
 			define("HOST", "db5001931634.hosting-data.io");
 			define("USER", "dbu1170340"); 
-			define("PASSWORD", Encrypt::decrypt('RnhOK3hpcWU2UnpBN2Foc2FKTU93Zz09', 'https://hibridosv.com')); 				
+			define("PASSWORD", Encrypt::decrypt('ZmdEV09vNnBIU2pOTVVWczBMR2dnZz09', 'https://hibridosv.com')); 				
 			define("DATABASE", "dbs1580854");
 			define("XSERV", "datos.hibridosv.com/");
 			define("TYPE", "Respaldos");	
