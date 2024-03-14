@@ -230,7 +230,7 @@ Esconder();
 
 
 // evita que se digite una cantidad mayor a la que hay en productos
-    $("#producto-busqueda").keyup(function(){ /// para la caja de busqueda
+  /*   $("#producto-busqueda").keyup(function(){ /// para la caja de busqueda
         $.ajax({
         type: "POST",
         url: "application/src/routes.php?op=75",
@@ -245,7 +245,7 @@ Esconder();
             Esconder();
         }
         });
-    });
+    }); */
 
 
 

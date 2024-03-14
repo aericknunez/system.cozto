@@ -175,11 +175,29 @@ return false;
 
 //// buscar productos
 
-    $("#producto-busqueda").keyup(function(){ /// para la caja de busqueda
+function delay(callback, ms) {
+    var timer = 0;
+    return function() {
+      var context = this, args = arguments;
+      clearTimeout(timer);
+      timer = setTimeout(function () {
+        callback.apply(context, args);
+      }, ms || 0);
+    };
+  }
+  
+  
+  // Example usage:
+  
+  $('#producto-busqueda').keyup(delay(function (e) {
+    Search();
+  }, 300));
+
+  function Search(){
         $.ajax({
         type: "POST",
         url: "application/src/routes.php?op=75",
-        data:'keyword='+$(this).val(),
+        data:'keyword='+$('#producto-busqueda').val(),
         beforeSend: function(){
             $("#muestra-busqueda").css("background","#FFF url(assets/img/LoaderIcon.gif) no-repeat 550px");
         },
@@ -189,7 +207,7 @@ return false;
             $("#producto-busqueda").css("background","#FFF");
         }
         });
-    });
+    };
 
 
 

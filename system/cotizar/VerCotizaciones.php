@@ -6,11 +6,11 @@ class VerCotizaciones{
         if ($_SESSION['td'] == 55) { // 55 f&f
             $this->IndustriasFF($cot);
         }
-        if ($_SESSION['td'] == 91) { // 91  DDALTEC
-              $this->ddaltec($cot);  
+        elseif ($_SESSION['td'] == 91) { // 91  DDALTEC
+            $this->ddaltec($cot);  
         } 
-        if ($_SESSION['td'] == 102) { //  102 PUBLI-INK
-          $this->publiInk($cot);
+        elseif ($_SESSION['td'] == 102) { //  102 PUBLI-INK
+            $this->publiInk($cot);
         }else {
             $this->general($cot);
         }
@@ -615,7 +615,7 @@ echo '<ul>
   <li>Anticipe a su orden si desea crédito fiscal o factura consumidor final.</li>
   <li>Precios sujetos a cambios sin previo aviso, y sujetos a disponibilidad, tiempos de entrega  (15 dias hábiles aproximadamente)</li>
   <li>Nuestra oferta tiene vigencia de 15 días hábiles.</li>
-  <li>Cheque a nombre de Ileana Vanessa Pérez de Chicas.</li>
+  <li>Cheque a nombre de Verónica Sofía Pérez Hernández.</li>
   <li>Precios incluyen iva.</li>
 </ul>';
 

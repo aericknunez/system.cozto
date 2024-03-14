@@ -18,9 +18,28 @@ include_once '../../application/common/Alerts.php';
 
 
 // $objPHPExcel->getColumnDimension('C')->setAutoSize(true);
+if($_REQUEST["search"] != NULL){
+  $search = $_REQUEST["search"];
+  }else{
+    $search = "";
+  }
 
-
- $a = $db->query("SELECT producto.cod, producto.descripcion, producto.cantidad, producto.existencia_minima, producto.compuesto, producto.dependiente, producto.servicio, producto_categoria_sub.subcategoria FROM producto INNER JOIN producto_categoria_sub ON producto.categoria = producto_categoria_sub.hash and producto.td = ".$_SESSION["td"]."");
+ $a = $db->query("SELECT 
+                  producto.cod, 
+                  producto.descripcion, 
+                  producto.cantidad, 
+                  producto.existencia_minima, 
+                  producto.compuesto, 
+                  producto.dependiente, 
+                  producto.servicio, 
+                  producto_categoria_sub.subcategoria 
+                  FROM 
+                  producto 
+                  INNER JOIN 
+                  producto_categoria_sub ON producto.categoria = producto_categoria_sub.hash 
+                  WHERE 
+                  (producto.cod LIKE '%".$search."%' OR producto.descripcion LIKE '%".$search."%' OR producto_categoria_sub.subcategoria LIKE '%".$search."%') 
+                  AND producto.td = ".$_SESSION["td"]."");
 
     if($a->num_rows > 0){
 
