@@ -1291,10 +1291,12 @@ public function cambiarNombre($identidad, $nombre, $precio){
 	$stot = Helpers::STotalDesc($precio, $_SESSION['config_imp']);
 	$imp=$total - $stot;
 
-    $cambio = array();
-    $cambio["producto"] = $nombre;
-	Helpers::UpdateId("ticket", $cambio, "hash = '".$identidad."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."");
-
+	if($nombre!= NULL){
+		$cambio = array();
+		$cambio["producto"] = $nombre;
+		Helpers::UpdateId("ticket", $cambio, "hash = '".$identidad."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."");
+	}
+    
 	if($precio != NULL){
 	$cambiox = array();
 	$cambiox["pv"] = $precio;
