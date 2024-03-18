@@ -578,7 +578,7 @@ if ($r = $db->select("sum(existencia)", "producto_ingresado", "WHERE existencia 
 							echo '<td>'.$productox.'</td>';
 						}
 
-						if ($_SESSION["td"] == 86) {
+						if ($_SESSION["cambio_nombre_precio"] == "on") {
 							echo '<td><a id="selectPrecio" iden="'.$b["hash"].'">'.$b["pv"].'</a></td>';
 						} else {
 							echo '<td>'.$b["pv"].'</td>';

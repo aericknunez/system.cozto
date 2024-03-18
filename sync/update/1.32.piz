@@ -1,0 +1,1 @@
+ALTER TABLE `config_root` ADD `cambio_nombre_precio` VARCHAR(100) NOT NULL AFTER `credito_sin_factura`;
