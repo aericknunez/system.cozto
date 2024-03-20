@@ -237,7 +237,15 @@ $r = $db->select("*", "config_root", "where td = ".$_SESSION['td']."")
           </div>
       </td>
       <td>
-
+          <div class="switch mt-4">
+            <label>
+             Cambio nombre y precio a producto ||  Off
+              <input type="checkbox" <?php if(Encrypt::Decrypt($r["cambio_nombre_precio"],$_SESSION['secret_key']) == "on") echo "checked"; ?> id="cambio_nombre_precio" name="cambio_nombre_precio" >
+              <span class="lever"></span> On 
+            </label>
+          </div>
+      </td>
+      <td>
       </td>
   </tr>
 

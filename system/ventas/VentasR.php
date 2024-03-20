@@ -578,8 +578,13 @@ if ($r = $db->select("sum(existencia)", "producto_ingresado", "WHERE existencia 
 							echo '<td>'.$productox.'</td>';
 						}
 
-						echo '<td>'.$b["pv"].'</td>
-						      <td>'.$b["stotal"].'</td>
+						if ($_SESSION["cambio_nombre_precio"] == "on") {
+							echo '<td><a id="selectPrecio" iden="'.$b["hash"].'">'.$b["pv"].'</a></td>';
+						} else {
+							echo '<td>'.$b["pv"].'</td>';
+						}
+
+						echo '<td>'.$b["stotal"].'</td>
 						      <td>'.$b["imp"].'</td>
 						      <td>
 						      <a id="xdescuento" dcodigo="'.$b["cod"].'" dcantidad="'.$b["cant"].'" ddescuento="'.$b["descuento"].'" dporcentaje="'.$porcentaje.'">'.$b["total"].'</a>
@@ -1279,6 +1284,28 @@ public function restarRetencion() { //Resta la retencion del 1% a los productos 
 		} $productos->close();
 }
 
+public function cambiarNombre($identidad, $nombre, $precio){
+	$db = new dbConn();
+
+	$total = $precio;
+	$stot = Helpers::STotalDesc($precio, $_SESSION['config_imp']);
+	$imp=$total - $stot;
+
+	if($nombre!= NULL){
+		$cambio = array();
+		$cambio["producto"] = $nombre;
+		Helpers::UpdateId("ticket", $cambio, "hash = '".$identidad."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."");
+	}
+    
+	if($precio != NULL){
+	$cambiox = array();
+	$cambiox["pv"] = $precio;
+	$cambiox["stotal"] = $stot;
+	$cambiox["imp"] = $imp;
+	$cambiox["total"] = $precio;
+	Helpers::UpdateId("ticket", $cambiox, "hash = '".$identidad."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."");
+	}
+}
 
 } // Termina la lcase
 ?>

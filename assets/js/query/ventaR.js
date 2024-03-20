@@ -648,4 +648,44 @@ function QueryGo(dir){
        
        VerCreditoSinFactura();
 
+
+
+        $("body").on("click","#selectPrecio",function(){
+        $('#ModalCambioPrecio').modal('show');
+        var iden = $(this).attr('iden');
+        $('#identidad').attr("value", iden);
+        var op = "701";
+        var dataString = 'op='+op+'&iden='+iden;
+
+        $.ajax({
+            type: "POST",
+            url: "application/src/routes.php",
+            data: dataString,
+            success: function(data) {            
+                $("#msj_comment").html(data);
+            }
+        });    
+       
+        });
+    
+
+        $('#btn-precio').click(function(e){ /// cambia la cantidad de los productos
+            e.preventDefault();
+            console.log($("#form-precio").serialize())
+            $.ajax({
+                url: "application/src/routes.php?op=723",
+                method: "POST",
+                data: $("#form-precio").serialize(),
+                beforeSend: function () {
+                    $('#btn-precio').html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>Loading...').addClass('disabled');
+                },
+                success: function(data){
+                   $('#btn-precio').html('Agregar').removeClass('disabled');
+                   $("#form-precio").trigger("reset");
+                   $('#ModalCambioPrecio').modal('hide');
+                   window.location.reload();
+                }
+            })
+        })
+
 }); // termina query

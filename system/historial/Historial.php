@@ -396,9 +396,12 @@ if ($r = $db->select("sum(cant) as canti", "producto_ingresado", "WHERE producto
         $ingreso = $r["canti"];
     } unset($r);    
 
-
-$precio_costo = $herramientas->ObtenerPrecioCosto($x["cod"]);
-
+	if($cantidad <= 0) {
+		$precio_costo = Helpers::GetData("producto_ingresado", "precio_costo", "producto", $x["cod"]);;
+	}else{
+		$precio_costo = $herramientas->ObtenerPrecioCosto($x["cod"]);
+	}
+	
 // productos vendidos
     if ($r = $db->select("sum(cant) as cantid, sum(pv) as prev, sum(total) as tota", "ticket", "WHERE cod = '".$x["cod"]."' and td = ". $_SESSION["td"] ." and edo = 1 and fechaF BETWEEN '$primero' and '$segundo'")) { 
         $vcantidad = $r["cantid"];
