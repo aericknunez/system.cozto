@@ -135,12 +135,13 @@ class Kardex{
         <div class="table-responsive">
         <table class="table table-sm table-striped border ">
     <thead>
-        <th class= "border" colspan="3">Código: '.$cod.'</th>
+        <th class= "border" colspan="4">Código: '.$cod.'</th>
         <th class= "border text-center" colspan="2">Entradas</th>
         <th class= "border text-center" colspan="2">Salidas</th>
         <th class= "text-center" colspan="2">Saldos</th>
         <tr>
         <th class= "border" scope="col">Fecha</th>
+        <th class= "border" scope="col">Documento</th>
         <th class= "border" scope="col">Detalle</th>
         <th class= "border" scope="col">Costo U</th>
         <th class= "border" scope="col">Cantidad</th>
@@ -155,9 +156,13 @@ class Kardex{
     <tbody>';
 
     foreach ($a as $b) {
+
+    $tipoDocumento = Helpers::TipoFacturaVentas(Helpers::GetData("ticket", "tipo", "hash", $b["iden"]));
+    $documento = Helpers::GetData("ticket", "num_fac", "hash", $b["iden"]);
     
     echo '<tr>
-      <th class= "border" scope="row">'. $b["fecha"] .'</th>
+      <th class= "border" scope="row">'. $b["fecha"] .' - '. $b["hora"] .'</th>
+      <td class= "border">'. $tipoDocumento.'  '. $documento.'</td>
       <td class= "border">'. $b["detalle"] .'</td>
       <td class= "border"> $ '. Helpers::Format4D($b["valor_unitario"]) .'</td>
       <td class= "border">'. Helpers::Entero($b["entrada_cantidad"]) .'</td>

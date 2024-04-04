@@ -55,17 +55,19 @@ foreach ($ag as $bg) {
 	$orden = $bg["orden"];
 	$tipo = $bg["tipo"];
 	if($b["edo"] == 1){
+		$fechaFactura = $b["fecha"].' '.$b["hora"];	
 		$estado = "Activo";
 		$class = "";
 	}else{
 		$estado = "Anulado";
 		$class = "text-danger";
+		$fechaFactura = 'Facturado: '.$b["fecha"].' '.$b["hora"] .'<br> Anulado:' .date('d-m-Y H:i:s', $b["time"]);
 	}
 	
 } $ag->close();
 
 	echo '<tr class = "'.$class.'" >
-		   <th>'.$b["fecha"].' '.$b["hora"].'</th>					       
+		   <th>'.$fechaFactura.'</th>					       
 		   <th>'.Helpers::TipoFacturaVentas($b["tipo"]).'</th>
 		   <th>'.$b["num_fac"].'</th>
 		   <th>'.$estado.'</th>
