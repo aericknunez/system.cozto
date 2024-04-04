@@ -73,7 +73,7 @@ foreach ($ag as $bg) {
 		   <th>'.$estado.'</th>
 		   <th>'.$this->ClienteProducto($orden, $tipo, $numeroFactura, $b["time"]).'</th>
 		   <th>'.Helpers::TipoPago($tipo_pago).'</th>
-		   <th>'.$this->CajeroVentas($cajero).'</th>
+		   <th>'.Helpers::GetUser("login_userdata", "nombre", "user", $cajero).'</th>
 		   <th>'.$cant.'</th>
 		   <th class="text-right">'.Helpers::Dinero($total).'</th>	  
 		 </tr>';
@@ -191,34 +191,6 @@ echo '<div class="custom-control custom-radio custom-control-inline">
 
 
 }// termina le funcion
-
-
-
-
-public function CajeroVentas($user) {
-		$db = new dbConn();
-
-	if ($r = $db->select("nombre", "login_userdata", 
-		"WHERE user = '$user' and td = ".$_SESSION['td']."")) { 
-	return $r["nombre"];
-	} unset($r);  
-
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 } // fin de la clase

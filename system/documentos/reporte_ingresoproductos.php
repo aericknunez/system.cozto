@@ -89,7 +89,7 @@ $objPHPExcel->setActiveSheetIndex(0)
           ->setCellValue('H' . $fila, $b["precio_costo"])
           ->setCellValue('I' . $fila, Helpers::GetData("proveedores", "nombre", "hash", $b["proveedor"]))
           ->setCellValue('J' . $fila, $b["caduca"])
-          ->setCellValue('K' . $fila, Helpers::GetData("login_userdata", "nombre", "user", $b["user"]));
+          ->setCellValue('K' . $fila, Helpers::GetUser("login_userdata", "nombre", "user", $b["user"]));
 
         } 
 
