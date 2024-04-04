@@ -89,7 +89,7 @@ $fila = 1;
     }
 
 $numeroFactura = $b["num_fac"];
-$ag = $db->query("SELECT sum(cant), sum(total), sum(stotal), sum(imp), cajero, tipo_pago, orden, tipo FROM ticket where num_fac = '".$b["num_fac"]."' and tipo = '".$b["tipo"]."' and td = ".$_SESSION['td']."");
+$ag = $db->query("SELECT sum(cant), sum(total), sum(stotal), sum(imp), cajero, tipo_pago, orden, tipo FROM ticket where num_fac = '".$b["num_fac"]."' and orden = '".$b["orden"]."' and tipo = '".$b["tipo"]."' and td = ".$_SESSION['td']."");
 foreach ($ag as $bg) { 
 	$cant = $bg["sum(cant)"];
 	$total = $bg["sum(total)"];
