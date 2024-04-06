@@ -1,0 +1,1 @@
+ALTER TABLE `cotizaciones` CHANGE `cant` `cant` FLOAT(4,2) NOT NULL;
