@@ -389,7 +389,7 @@ if($primero == $segundo){
 		   <th>'.Helpers::GetData("proveedores", "nombre", "hash", $b["proveedor"]).'</th>
 		   <th>'.$b["comentarios"].'</th>
 		   <th>'.$b["caduca"].'</th>
-		   <th>'.Helpers::GetData("login_userdata", "nombre", "user", $b["user"]).'</th>  
+		   <th>'.Helpers::GetUser("login_userdata", "nombre", "user", $b["user"]).'</th>  
 		 </tr>';
     }    
 
@@ -472,7 +472,7 @@ echo '<tr class="text-black font-weight-bold">
 	   <th>'.$b["producto"]. ' - ' .Helpers::GetData("producto", "descripcion", "cod", $b["producto"]).'</th>
 	   <th>'.$b["cant"].'</th>
 	   <th>'.$b["comentarios"].'</th>
-	   <th>'.Helpers::GetData("login_userdata", "nombre", "user", $b["usuario"]).'</th>  
+	   <th>'.Helpers::GetUser("login_userdata", "nombre", "user", $b["usuario"]).'</th>  
 	 </tr>';
 }    
 
@@ -552,7 +552,7 @@ public function EstadisticaCostos($cod) {
 		 <th>'.Helpers::Dinero($getPrecioVenta).'</th>
 		 <th>'.Helpers::Dinero($getPrecioVenta - $b["precio_costo"]).'</th>
 		 <th>'.Helpers::porcentaje($b["precio_costo"], $getPrecioVenta).' %</th>
-		 <th>'.Helpers::GetData("login_userdata", "nombre", "user", $b["user"]).'</th>  
+		 <th>'.Helpers::GetUser("login_userdata", "nombre", "user", $b["user"]).'</th>  
 	   </tr>';
   }    
   

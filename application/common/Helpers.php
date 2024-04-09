@@ -579,6 +579,23 @@ static public function GetData($tabla, $campo, $tabla_id, $hash) {
 
 }
 
+static public function GetUser($tabla, $campo, $tabla_id, $hash) {
+  // tabla a buscar
+  // campo a retornar
+  // nombre de la tabla a identificar
+  // valor del campo
+    $db = new dbConn();
+
+  if($r = $db->select($campo, $tabla, "WHERE $tabla_id = '".$hash."'")) { 
+    if ($r[$campo]) {
+      return $r[$campo]; 
+    } else {
+      return false;
+    }
+  } unset($r); 
+
+}
+
 public function ClienteProducto($orden, $tipo, $numeroFactura, $time) {
 	$db = new dbConn();
 $timemas = $time + 60;

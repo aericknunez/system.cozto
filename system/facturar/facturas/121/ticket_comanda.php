@@ -110,7 +110,7 @@ if($totalregistros > 0){
                     <?php echo $municipio;  ?>
                     <?php echo "Teléfono: ". $telefono; ?><br> 
                     <?php echo "Nota :".$comentarios; ?><br> 
-                    <?php echo "Vendedor : " .Helpers::GetData("login_userdata", "nombre", "user", $b["user"]); ?>
+                    <?php echo "Vendedor : " .Helpers::GetUser("login_userdata", "nombre", "user", $b["user"]); ?>
                     <div style="clear:both;"></div>
                     <table class="table table-striped table-condensed" style="padding-top: -10px;">
                         <thead>

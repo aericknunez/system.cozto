@@ -77,7 +77,7 @@ $objPHPExcel->setActiveSheetIndex(0)
           ->setCellValue('B' . $fila, $b["producto"]. ' - ' .Helpers::GetData("producto", "descripcion", "cod", $b["producto"]))
           ->setCellValue('C' . $fila, $b["cant"])
           ->setCellValue('D' . $fila, $b["comentarios"])
-          ->setCellValue('E' . $fila, Helpers::GetData("login_userdata", "nombre", "user", $b["usuario"]));
+          ->setCellValue('E' . $fila, Helpers::GetUser("login_userdata", "nombre", "user", $b["usuario"]));
 
 
 

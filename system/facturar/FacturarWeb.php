@@ -211,8 +211,9 @@ if($_SESSION["tipoticket"] == 3){
 
     if(isset($_SESSION['credito_sin_factura'])) { 
 
-        if ($r = $db->select("hash", "creditos", "WHERE factura = '".$parametros["num_fac"]."' and orden = '".$_SESSION["orden_print"]."' and tx = " . $_SESSION["tx"] . " and td = " .  $_SESSION["td"])) { 
+        if ($r = $db->select("nombre, hash", "creditos", "WHERE factura = '".$parametros["num_fac"]."' and orden = '".$_SESSION["orden_print"]."' and tx = " . $_SESSION["tx"] . " and td = " .  $_SESSION["td"])) { 
             $credito = $r["hash"];
+            $nombre = $r["nombre"];
         } unset($r);  
         
         $parametros["credito"] = $credito;
@@ -222,6 +223,14 @@ if($_SESSION["tipoticket"] == 3){
         }unset($abonos); 
     
         $parametros["abonos"] = $totalAbonos;
+
+        if ($r = $db->select("cliente, giro, registro, direccion, departamento", "facturar_documento", "WHERE cliente = '$nombre' and td = " .  $_SESSION["td"])) { 
+            $parametros["cliente"] = $r["cliente"];
+            $parametros["giro"] = $r["giro"];
+            $parametros["registro"] = $r["registro"];
+            $parametros["direccion"] = $r["direccion"];
+            $parametros["departamento"] = $r["departamento"];
+        } unset($r);  
     }
 
 
