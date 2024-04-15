@@ -27,7 +27,7 @@ class Search{
                   echo '<a class="btn-floating btn-lg grey darken-1 waves-effect waves-light ml-auto" title="Imprimir Factura"><i class="fas fa-print"></i></a>';
                   echo '<a class="btn-floating btn-lg grey darken-1 waves-effect waves-light" title="Elimiar Factura"><i class="fas fa-trash-alt"></i></a>';
                 } else {
-                  echo '<a id="imprimir" class="btn-floating btn-lg btn-mdb-color waves-effect waves-light ml-auto" title="Imprimir Factura"><i class="fas fa-print"></i></a>';
+                  echo '<a id="imprimir" orden="'.$orden['orden'].'" class="btn-floating btn-lg btn-mdb-color waves-effect waves-light ml-auto" title="Imprimir Factura"><i class="fas fa-print"></i></a>';
                   echo '<a id="xdelete" orden="'.$orden['orden'].'" class="btn-floating btn-lg btn-danger waves-effect waves-light " title="Elimiar Factura"><i class="fas fa-trash-alt"></i></a>';
                 };
                '</div>';

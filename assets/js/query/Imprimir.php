@@ -8,7 +8,8 @@ if($_SESSION["root_plataforma"] == 0){
 /// imprimir factura
     $("body").on("click","#imprimir",function(){ 
         var op = "583";
-        var dataString = 'op='+op;
+        var orden = $(this).attr('orden');
+        var dataString = 'op='+op+'&orden='+orden;
 
         $.ajax({
             type: "POST",
@@ -34,17 +35,20 @@ if($_SESSION["root_plataforma"] == 0){
 
 <script>
     $("body").on("click","#imprimir",function(){ 
-        LoadData();
+        var orden = $(this).attr('orden');
+        LoadData(orden);
     });
 
 
 
 
 
-function LoadData(){
+function LoadData(orden){
+    var dataString = 'orden='+orden;
     $.ajax({
         type: "POST",
         url: "application/src/routes.php?op=584",
+        data: dataString,
         datatype: 'json',
         success: function(data) {  
             var datos = data;  
