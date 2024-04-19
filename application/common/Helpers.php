@@ -596,10 +596,10 @@ static public function GetUser($tabla, $campo, $tabla_id, $hash) {
 
 }
 
-public function ClienteProducto($orden, $tipo, $numeroFactura, $time) {
+static function ClienteProducto($orden, $tipo, $numeroFactura, $time) {
 	$db = new dbConn();
 $timemas = $time + 60;
-if ($tipo == 2){
+if ($tipo == 0 || $tipo == 1 || $tipo == 2 || $tipo == 12){
 	if ($r = $db->select("cliente", "ticket_cliente", 
 	"WHERE orden = '$orden' and td = ".$_SESSION['td']."")) { 
 		$cliente = $r["cliente"];
@@ -610,7 +610,7 @@ if ($tipo == 2){
 	return $r["nombre"];
 	} unset($r);  
 }
-if ($tipo == 3){
+if ($tipo == 3 || $tipo == 13){
 	if ($r = $db->select("cliente", "facturar_documento_factura", 
 		"WHERE factura = '$numeroFactura' and td = ".$_SESSION['td']." and time BETWEEN ".$time." and ".$timemas."")) { 
 	return $r["cliente"];

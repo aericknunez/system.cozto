@@ -104,7 +104,7 @@ echo '</tbody>
 public function ClienteProducto($orden, $tipo, $numeroFactura, $time) {
 	$db = new dbConn();
 $timemas = $time + 60;
-if ($tipo == 1 || $tipo == 2 || $tipo == 12){
+if ($tipo == 0 || $tipo == 1 || $tipo == 2 || $tipo == 12){
 	if ($r = $db->select("cliente", "ticket_cliente", 
 	"WHERE orden = '$orden' and td = ".$_SESSION['td']."")) { 
 		$cliente = $r["cliente"];

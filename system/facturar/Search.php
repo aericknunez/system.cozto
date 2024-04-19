@@ -18,7 +18,7 @@ class Search{
               if($orden['edo'] == 2){
                 Alerts::Mensajex(Helpers::TipoFacturaVentas($_SESSION["tipoticket"])." N° " .$factura . " orden N° " .$orden['orden']." ha sido anulado/a", "danger");
               }else{
-                Alerts::Mensajex(Helpers::TipoFacturaVentas($_SESSION["tipoticket"])." No. " . $factura." orden N° " .$orden['orden']  ,"info");
+                Alerts::Mensajex(Helpers::TipoFacturaVentas($_SESSION["tipoticket"])." No. " . $factura." <a href='system/facturar/facturas/".$_SESSION["td"]."/ticket_web.php?orden=".$orden['orden']."' target='_blank' style='color: #0c5460'> orden N° " .$orden['orden']. "</a>" ,"info");
               } 
               echo '<table id="dtMaterialDesignExample" class="table table-striped" table-sm cellspacing="0" width="100%">
               
@@ -26,8 +26,8 @@ class Search{
                 if($orden['edo'] == 2){
                   echo '<a class="btn-floating btn-lg grey darken-1 waves-effect waves-light ml-auto" title="Imprimir Factura"><i class="fas fa-print"></i></a>';
                   echo '<a class="btn-floating btn-lg grey darken-1 waves-effect waves-light" title="Elimiar Factura"><i class="fas fa-trash-alt"></i></a>';
-                } else {
-                  echo '<a id="imprimir" class="btn-floating btn-lg btn-mdb-color waves-effect waves-light ml-auto" title="Imprimir Factura"><i class="fas fa-print"></i></a>';
+                } else { 
+                  echo '<a id="imprimir" orden="'.$orden['orden'].'" class="btn-floating btn-lg btn-mdb-color waves-effect waves-light ml-auto" title="Imprimir Factura"><i class="fas fa-print"></i></a>';
                   echo '<a id="xdelete" orden="'.$orden['orden'].'" class="btn-floating btn-lg btn-danger waves-effect waves-light " title="Elimiar Factura"><i class="fas fa-trash-alt"></i></a>';
                 };
                '</div>';
