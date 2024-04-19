@@ -2903,8 +2903,8 @@ case "583": // imprimir factura
 	include_once '../../system/facturar/facturas/'.$_SESSION["td"].'/Impresiones.php'; // tiene las 
 	require_once ('../ticket/autoload.php'); 
 
-if ($r = $db->select("orden, efectivo", "ticket_num", "WHERE num_fac = '".$_SESSION["search"]."' and edo = 1 and tipo = '".$_SESSION["tipoticket"]."' and td = ".$_SESSION["td"]."")) { 
-	$_SESSION["orden_actual_print"] = $r["orden"]; 
+if ($r = $db->select("orden, efectivo", "ticket_num", "WHERE num_fac = '".$_SESSION["search"]."' and orden = '".$_POST["orden"]."'and edo = 1 and tipo = '".$_SESSION["tipoticket"]."' and td = ".$_SESSION["td"]."")) { 
+	$_SESSION["orden_actual_print"] = $_POST["orden"]; 
    	$_SESSION["cambio_actual_print"] = $r["efectivo"];
 } unset($r);  
 
