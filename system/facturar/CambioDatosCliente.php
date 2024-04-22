@@ -3,13 +3,13 @@ class CambioDatosCliente{
 
 
     
-    public function VerClientes($npagina, $orden, $dir){
+    public function VerClientes($npagina, $orden, $dir, $search=null){
         $db = new dbConn();
-  
+ 
     $limit = 35;
     $adjacents = 2;
     if($npagina == NULL) $npagina = 1;
-    $a = $db->query("SELECT * FROM facturar_documento WHERE td = ". $_SESSION['td'] ."");
+    $a = $db->query("SELECT * FROM facturar_documento WHERE cliente like '%".$search."%' and td = ". $_SESSION['td'] ."");
     $total_rows = $a->num_rows;
     $a->close();
   
@@ -26,7 +26,7 @@ class CambioDatosCliente{
   if($dir == "desc") $dir2 = "asc";
   if($dir == "asc") $dir2 = "desc";
   
-   $a = $db->query("SELECT * FROM facturar_documento WHERE td = ".$_SESSION["td"]." order by ".$orden." ".$dir." limit $offset, $limit");
+   $a = $db->query("SELECT * FROM facturar_documento WHERE cliente like '%".$search."%' and td = ".$_SESSION["td"]." order by ".$orden." ".$dir." limit $offset, $limit");
         
         if($a->num_rows > 0){
             echo '<div class="table table-responsive">
