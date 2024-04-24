@@ -19,25 +19,10 @@ class Controles{
 		} $a->close();
 	}
 
-	public function CreditoPendiente(){ /// total de productos registrados
-		$db = new dbConn();
-		$a = $db->query("SELECT sum(abono) FROM creditos_abonos WHERE edo = 1 and td = ".$_SESSION["td"]."");
-			foreach ($a as $b) {
-			$abonos = $b["sum(abono)"];
-		} $a->close();
-
-		$a = $db->query("SELECT sum(total) FROM ticket WHERE edo = 1 and tipo_pago = 3 and td = ".$_SESSION["td"]."");
-			foreach ($a as $b) {
-			$creditos = $b["sum(total)"];
-		} $a->close();
-
-		return 	$creditos - $abonos;
-	}
-
-
 
 	public function CuentasPendientes(){ /// total de productos registrados
 		$db = new dbConn();
+
 		$a = $db->query("SELECT sum(abono) FROM cuentas_abonos WHERE edo = 1 and td = ".$_SESSION["td"]."");
 			foreach ($a as $b) {
 			$abonos = $b["sum(abono)"];
@@ -82,6 +67,7 @@ class Controles{
 			}$a->close();
 			return $ValorInventario;
 			}
+
 
 } // Termina la lcase
 ?>

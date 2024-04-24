@@ -81,9 +81,9 @@ $objPHPExcel->setActiveSheetIndex(0)
           ->setCellValue('A' . $fila, $b["nombre"])
           ->setCellValue('B' . $fila, $b["fecha"]. ' ' . $b["hora"])
           ->setCellValue('C' . $fila, $b["factura"])
-          ->setCellValue('D' . $fila, Helpers::Entero($total))
-          ->setCellValue('E' . $fila, Helpers::Entero($abonado))
-          ->setCellValue('F' . $fila, Helpers::Entero($saldo))
+          ->setCellValue('D' . $fila, $total)
+          ->setCellValue('E' . $fila, $abonado)
+          ->setCellValue('F' . $fila, $saldo)
           ->setCellValue('G' . $fila, $edo);
  
         } 

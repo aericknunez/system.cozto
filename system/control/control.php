@@ -5,10 +5,12 @@ include_once 'application/common/Alerts.php';
 include_once 'system/control/Controles.php';
 include_once 'system/corte/Corte.php';
 include_once 'application/common/Fechas.php';
+require_once 'system/credito/Creditos.php';
 
 $cut = new Corte();
 
-$control = new Controles(); 
+$control = new Controles();
+$credito = new Creditos(); 
 ?>
 
 
@@ -67,7 +69,7 @@ $control = new Controles();
     <div class="col-xl-3 col-md-6 mb-4  col-sm-6 col-6">
       <div class="card-counter info">
         <i class="fas fa-barcode"></i>
-        <span class="count-numbers"><h5 class="font-weight-bold"><?php echo Helpers::Dinero($control->CreditoPendiente()); ?></h5></span>
+        <span class="count-numbers"><h5 class="font-weight-bold"><?php echo Helpers::Dinero($credito->CreditoPendiente()); ?></h5></span>
         <span class="count-name">Creditos Por Cobrar</span>
       </div>
     </div>
