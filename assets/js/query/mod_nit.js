@@ -113,7 +113,54 @@ $('#btn-documento').click(function(e){ /// Nuevo Documento
     })
 })
 
+//Busqueda de Clientes Credito Fiscal
+///////////// llamar modal para buscar Cliente
+$("body").on("click","#buscarCliente",function(){ 
+        
+    $('#ModalBuscarCliente').modal('show');
+    
+});
 
+
+function delay(callback, ms) {
+    var timer = 0;
+    return function() {
+      var context = this, args = arguments;
+      clearTimeout(timer);
+      timer = setTimeout(function () {
+        callback.apply(context, args);
+      }, ms || 0);
+    };
+  }
+  
+  
+  // Example usage:
+  
+  $('#clienteSearch').keyup(delay(function (e) {
+    Search();
+  }, 1000));
+
+
+$('#btn-busqueda').click(function(e){ /// agregar un producto 
+	e.preventDefault();
+	
+        Search();
+
+	});
+
+    function Search(){
+        $.ajax({
+            type: "POST",
+            url: "application/src/routes.php?op=320x",
+            data:'keyword='+$("#clienteSearch").val(),
+            beforeSend: function(){
+                $("#muestra-busqueda").css("background","#FFF url(assets/img/LoaderIcon.gif) no-repeat 550px");
+            },
+            success: function(data){
+                $("#contenido").html(data);
+            }
+        });
+    } // Termina busqueda de clientes de credito fiscal
 
 
 

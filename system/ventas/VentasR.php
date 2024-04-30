@@ -780,7 +780,7 @@ if ($r = $db->select("sum(existencia)", "producto_ingresado", "WHERE existencia 
 	public function DescontarProducto($factura, $orden) { // Descuenta los productods del inventario segun factura
 		$db = new dbConn();
 
-	    $ax = $db->query("SELECT * FROM ticket WHERE num_fac = '$factura' and orden = '$orden'  and tipo = '".$_SESSION["tipoticket"]."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."");
+	    $ax = $db->query("SELECT * FROM ticket WHERE num_fac = '$factura' and orden = '$orden'  and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."");
 	    foreach ($ax as $bx) {
 
 		// primero verifico si el producto es un compuesto. si es compuesto o dependiente actualizo todos los productos que este conlleva . si es un servicio no se hace nada

@@ -2044,10 +2044,16 @@ break;
 
 
 
-case "320": // paginar facturas
+case "320": // ver clientes de Credito Fiscal
 	include_once '../../system/facturar/CambioDatosCliente.php';
 		$fac = new CambioDatosCliente;
 		$fac->VerClientes($_POST["iden"], $_POST["orden"], $_POST["dir"]);
+break;
+
+case "320x": // ver busqueda de clientes de credito fiscal
+	include_once '../../system/facturar/CambioDatosCliente.php';
+		$fac = new CambioDatosCliente;
+		$fac->VerClientes(1, "id", "asc", $_POST["keyword"]);
 break;
 
 

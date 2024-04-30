@@ -47,17 +47,14 @@ if($dir == "asc") $dir2 = "desc";
           </tr>
         </thead>
         <tbody>';
-        $TotalCreditosPendientes = 0;
+
         foreach ($a as $b) {
         // obtener el nombre y detalles del producto
     if ($r = $db->select("*", "pro_dependiente", "WHERE iden = ".$b["producto"]." and td = ". $_SESSION["td"] ."")) { 
         $producto = $r["nombre"]; } unset($r); 
-
-          $total = $this->ObtenerTotal($b["factura"], $b["tx"], $b["orden"]);
-          $abonado = $this->TotalAbono($b["hash"]);
-          $saldo = $total - $abonado;
-          $TotalCreditosPendientes += $saldo;
-          
+        $total = $this->ObtenerTotal($b["factura"], $b["tx"], $b["orden"]);
+        $abonado = $this->TotalAbono($b["hash"]);
+        $saldo = $total - $abonado;
           if ($r = $db->select("tipo", "ticket_num", "WHERE num_fac = ".$b["factura"]." and orden = ".$b["orden"]." and td = ". $_SESSION["td"] ."")) { 
             $tipo = $r["tipo"]; } unset($r); 
 
@@ -110,7 +107,7 @@ if($dir == "asc") $dir2 = "desc";
   }
 
 /// se establece cuanto es el total en credito pendiente
-echo '<div class="font-weight-bold">Total Credito Pendiente: ' . Helpers::Dinero($TotalCreditosPendientes) . '</div><br>';
+echo '<div class="font-weight-bold">Total Credito Pendiente: ' . Helpers::Dinero($this->CreditoPendiente()) . '</div><br>';
 
 
 echo $total_rows . " Registros encontrados";
@@ -396,7 +393,7 @@ public function VerAbonos($credito) { //leva el control del autoincremento de lo
   public function CreditosPendientes($npagina, $orden, $dir){
       $db = new dbConn();
 
-  $limit = 35;
+  $limit = 15;
   $adjacents = 2;
   if($npagina == NULL) $npagina = 1;
   $a = $db->query("SELECT * FROM creditos WHERE edo = 1 and td = ". $_SESSION['td'] ."");
@@ -434,17 +431,14 @@ if($dir == "asc") $dir2 = "desc";
           </tr>
         </thead>
         <tbody>';
-        $TotalCreditosPendientes = 0;
         foreach ($a as $b) {
         // obtener el nombre y detalles del producto
     if ($r = $db->select("*", "pro_dependiente", "WHERE iden = ".$b["producto"]." and td = ". $_SESSION["td"] ."")) { 
         $producto = $r["nombre"]; } unset($r); 
 
-        
         $total = $this->ObtenerTotal($b["factura"], $b["tx"], $b["orden"]);
         $abonado = $this->TotalAbono($b["hash"]);
         $saldo = $total - $abonado;
-        $TotalCreditosPendientes += $saldo;
 
         if ($r = $db->select("tipo", "ticket_num", "WHERE num_fac = ".$b["factura"]." and orden = ".$b["orden"]." and td = ". $_SESSION["td"] ."")) { 
           $tipo = $r["tipo"]; } unset($r); 
@@ -499,7 +493,7 @@ if($dir == "asc") $dir2 = "desc";
   }
 
 /// se establece cuanto es el total en credito pendiente
-echo '<div class="font-weight-bold">Total Credito Pendiente: ' . Helpers::Dinero($TotalCreditosPendientes) . '</div><br>';
+echo '<div class="font-weight-bold">Total Credito Pendiente: ' . Helpers::Dinero($this->CreditoPendiente()) . '</div><br>';
 
 echo $total_rows . " Registros encontrados";
 
@@ -766,7 +760,23 @@ if ($tipo == 1) {
 }
 
 
+public function CreditoPendiente(){ /// total de productos registrados
+  $db = new dbConn();
+  $TotalCreditosPendientes = 0;
+  $a = $db->query("SELECT * FROM creditos WHERE edo = 1 and td = ".$_SESSION["td"]."");
+  if($a->num_rows > 0){
+    foreach ($a as $b) {
+      $total = $this->ObtenerTotal($b["factura"], $b["tx"], $b["orden"]);
+      $abonado = $this->TotalAbono($b["hash"]);
+      $saldo = $total - $abonado;
+      $TotalCreditosPendientes += $saldo;
 
+    }
+  } $a->close();
+  
+  return $TotalCreditosPendientes;
+
+}
 
 
 
