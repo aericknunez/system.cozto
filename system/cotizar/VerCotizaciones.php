@@ -6,6 +6,9 @@ class VerCotizaciones{
         if ($_SESSION['td'] == 55) { // 55 f&f
             $this->IndustriasFF($cot);
         }
+        elseif ($_SESSION['td'] == 81) { // 81  SUBLIMA SOYAPANGO
+          $this->sublima($cot);  
+        }
         elseif ($_SESSION['td'] == 91) { // 91  DDALTEC
             $this->ddaltec($cot);  
         } 
@@ -206,12 +209,126 @@ echo '<tr>
    
  </div>';
 }
+public function sublima($cotizacion){
+  $db = new dbConn();
+  
+
+if ($r = $db->select("cliente, fecha, correlativo, caduca", "cotizaciones_data", "WHERE id = '".$cotizacion."' and td = ". $_SESSION["td"] ."")) { 
+$cliente = $r["cliente"]; 
+$fecha = $r["fecha"]; 
+$correlativo = $r["correlativo"]; 
+$caduca = $r["caduca"]; 
+} unset($r); 
+
+if ($r = $db->query("SELECT nombre, direccion, departamento FROM clientes
+           WHERE hash = '".$cliente."' AND td = " . $_SESSION["td"] . "
+           UNION
+           SELECT Cliente AS nombre, direccion, departamento FROM facturar_documento
+           WHERE hash = '".$cliente."' AND td = " . $_SESSION["td"]."")){
+foreach ($r as $datos) {
+ $nombre = $datos["nombre"];
+ $documento = $datos["documento"];
+ $direccion = $datos["direccion"];
+ //$municipio = $datos["municipio"];
+ $departamento = $datos["departamento"];
+}
+
+} unset($r); 
+
+echo '<div class="row">
+ <div class="col-8">
+         <div class="text-center">
+         <h3>'. $_SESSION['config_cliente'] .'</h3>
+         </div>
+         <div><h3>
+         Dirección: '. $_SESSION['config_direccion'] .'
+         </h3></div>
+         <div><h3>
+         Teléfono: '. $_SESSION['config_telefono'] .'
+         </h3></div>
+
+ </div>
+
+   <div class="col-4 text-right">
+   <img alt="" src="'.XSERV.'assets/img/logo/'.$_SESSION['config_imagen'].'" height="200" id="logo-neg" class="img-fluid" />
+   </div>
+</div>
+
+<hr />';
+
+echo '<div class="row">
+ <div class="col-8">
+         <div>
+         <h4>Cliente: '. $nombre .'</h4>
+         </div>
+         <div><h4>
+         Dirección: '. $direccion .' '.$municipio.' '.$departamento.'
+         </h4></div>
+
+ </div>
+   <div class="col-4 text-right">
+  
+      <div>
+         <h4>Creada : '. $fecha .'</h4>
+        </div>
+ <div>
+         <h4>Cotización : '. $correlativo .'</h4>
+        </div>
+   </div>
+</div>
+
+
+<pre>Detalles de la cotización</pre>';
+
+$a = $db->query("SELECT * FROM cotizaciones WHERE cotizacion = '".$correlativo."' and td = ".$_SESSION["td"]."");
+
+   if($a->num_rows > 0){
+       echo '<table class="table table-striped table-sm">
+       <thead>
+         <tr>
+           <th scope="col">Cant</th>
+           <th scope="col">Producto</th>
+           <th scope="col">Precio</th>
+           <th scope="col">Total</th>
+         </tr>
+       </thead>
+       <tbody>';
+       $pv = 0; $st=0; $im=0; $to=0;
+       foreach ($a as $b) {
+       $pv = $pv + $b["pv"]; 
+       $st = $st + $b["stotal"]; 
+       $im = $im + $b["imp"]; 
+       $to = $to + $b["total"];
+       echo '<tr>
+             <th scope="row">'.$b["cant"].'</th>
+             <td>'.$b["producto"].'</td>
+             <td>'.$b["pv"].'</td>
+             <td>'.$b["total"].'</td>
+           </tr>';
+       }
+       echo '<tr>
+             <td></td>
+             <td></td>
+             <th>Total</th>
+             <th>'.Helpers::Dinero($to).'</th>
+           </tr>';
+
+       echo '</tbody>
+         </table>';
+   }  $a->close();
+   $this->VerImagenCotizacion($correlativo);
+
+echo '<div class="row mt-4">
+ <div class="col-12">
+         <div>
+         <h3> Cotización válida hasta el: '. Fechas::FechaEscrita($caduca) .'</h3>
+         </div>
+ </div>
+</div>';
 
 
 
-
-
-    
+}
 
 
   public function general($cotizacion){
