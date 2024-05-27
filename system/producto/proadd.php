@@ -12,6 +12,7 @@ $producto = new Productos();
 
 
 <div id="msj"></div>
+<span class="alert-danger" id="error-mensaje" style="display: block; text-align: center; margin-top: 10px;"></span>
 
 	<form id="form-proadd">
   
