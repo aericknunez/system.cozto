@@ -17,9 +17,24 @@ $(document).ready(function(){
 
     $('.mdb-select').materialSelect();
 
+	//validar que en el campo codigo no vayan caracteres especiales
+	function validarCodigoProducto() {
+		var codigo = document.getElementById("cod").value;
+		var regex = /^[^*+\@$%"'¿?¡!&$()#]+$/;
+		var errorMensaje = document.getElementById('error-mensaje');
 
+		if (!regex.test(codigo)) {
+			errorMensaje.textContent = 'El codigo del Producto no debe contener caracteres especiales como *+"@$&¿?¡!';
+			return false;
+		}
+
+		return true;
+	}
+
+	
 	$('#btn-proadd').click(function(e){ /// para el formulario
 	e.preventDefault();
+	if(validarCodigoProducto() == true){
 	$.ajax({
 			url: "application/src/routes.php?op=20",
 			method: "POST",
@@ -30,6 +45,7 @@ $(document).ready(function(){
 				// window.location.href="?modal=proadd&key=0000";
 			}
 		})
+		}
 	})
     
 
