@@ -415,31 +415,30 @@ echo '</select>';
 
 
 
-   static public function MostrarCategorias() { 
-    $db = new dbConn();
-
-      $a = $db->query("SELECT * FROM gastos_categorias WHERE edo = 1 and td = ".$_SESSION["td"]."");
-
-echo '<table class="table table-sm">
-  <thead>
-    <tr>
-      <th scope="col">Categoria</th>
-      <th scope="col">Eliminar</th>
-    </tr>
-  </thead>
-  <tbody>';
-      foreach ($a as $b) {  
-    echo '<tr>
-      <td>'. $b["categoria"] .'</td>
-      <td><a><span class="badge red"><i class="fas fa-trash-alt" aria-hidden="true"></i></span></a></td>
-    </tr>';
-      } $a->close(); 
-      
-echo '</tbody>
-</table>';
-    }
-
-
+	static public function MostrarCategorias() { 
+		$db = new dbConn();
+	
+		$a = $db->query("SELECT * FROM gastos_categorias WHERE edo = 1 and td = ".$_SESSION["td"]."");
+	
+		echo '<table class="table table-sm" id="categorias-table">
+			<thead>
+				<tr>
+					<th scope="col">Categoria</th>
+					<th scope="col">Editar</th>
+				</tr>
+			</thead>
+			<tbody>';
+		foreach ($a as $b) {  
+			echo '<tr id="'.$b["hash"].'">
+				<td>'. $b["categoria"] .'</td>
+				<td><a class="editar-btn" categoria="'. $b["categoria"] .'" hash="'.$b["hash"].'"><span class="badge blue"><i class="fas fa-edit" aria-hidden="true"></i></span></a></td>
+			</tr>';
+		} 
+		$a->close(); 
+		  
+		echo '</tbody>
+		</table>';
+	}
 
 
 	public function AddCategoria($data){
@@ -457,6 +456,26 @@ echo '</tbody>
 			    } else {
 			    	Alerts::Alerta("error","Error","Error desconocido, no se agrego el registro!");
 			    }
+		} else {
+			Alerts::Alerta("error","Error","Faltan Datos!");
+		}
+			$this->MostrarCategorias();
+
+	}
+
+// Editar categorias de gastos
+	public function EditCategoria($data){
+
+	    if($data["editCategoria"] != NULL){
+			$hash = $data["hash"];
+			$cambio = array();
+			$cambio["categoria"] = $data["editCategoria"];
+			
+			if (Helpers::UpdateId("gastos_categorias", $cambio, "hash='$hash' and td = ".$_SESSION["td"]."")) {
+				Alerts::Alerta("success","","El registo se ha actualizado correctamente!");
+			} else {
+				Alerts::Alerta("error","Error","No se pudo actualizar!"); 
+			}
 		} else {
 			Alerts::Alerta("error","Error","Faltan Datos!");
 		}

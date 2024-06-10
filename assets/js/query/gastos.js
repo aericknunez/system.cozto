@@ -362,13 +362,7 @@ $("#muestra_b").hide();
     });
     
 
-
-
-
-
-
-
-    $("body").on("click","#verdetallesbanco",function(){ 
+      $("body").on("click","#verdetallesbanco",function(){ 
         
         var op = "183";
         var hash =  $(this).attr('hash');
@@ -386,6 +380,56 @@ $("#muestra_b").hide();
             }
         });
 
+    });
+
+ //Funcion para editar las categorias de gastos
+    $(document).ready(function() {
+        $(document).on('click', '.editar-btn', function(e) {
+            e.preventDefault();
+
+            var categoriaNombre = $(this).attr('categoria');
+            var categoriaHash = $(this).attr('hash');
+            
+            // formulario HTML para editar
+            var formHtml = `
+                <tr id="edit-form-row">
+                    <td colspan="2">
+                        <form id="edit-form">
+                            <div class="form-group row d-flex justify-content-center m-0">
+                                <input type="text" class="form-control" id="hash" name="hash" value="${categoriaHash}" hidden>
+                                <input type="text" class="form-control" id="editCategoria" name="editCategoria" value="${categoriaNombre}">
+                                <button type="submit" class="btn btn-primary" id="btn-edit">Guardar</button>
+                            </div>
+                        </form>
+                    </td>
+                </tr>
+            `;
+    
+            // Eliminar cualquier formulario anterior antes de agregar uno nuevo
+            $('#edit-form-row').remove();
+    
+            // Agregar el formulario al final de la tabla
+            $('#' + categoriaHash).after(formHtml);
+        });
+        
+        // envío del formulario para editar la categoria de gastos
+        $(document).on('submit', '#edit-form', function(e) {
+            e.preventDefault();
+            $.ajax({
+                url: "application/src/routes.php?op=184",
+                method: "POST",
+                data: $("#edit-form").serialize(),
+                beforeSend: function () {
+                    $('#btn-edit').html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>Loading...').addClass('disabled');
+                },
+                success: function(data){
+                    $("#vista_categoria").html(data); 
+                    $("#muestra_categoria").load('application/src/routes.php?op=182');
+                    $('#edit-form-row').remove();
+                }
+            })
+
+        });
     });
 
 

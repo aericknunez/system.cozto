@@ -1832,6 +1832,12 @@ case "183":  // muestra el select de las categorias de gastos
 		$cuenta->TransaccionesBanco($_POST["hash"]);
 break;
 
+case "184": // Editar categorias de gastos
+	include_once '../../system/gastos/Gasto.php';
+		$gastos = new Gastos;
+		$gastos->EditCategoria($_POST);
+	break;
+
 
 case "200": // ventas detallado
 	include_once '../../system/reportes/Reportes.php';
