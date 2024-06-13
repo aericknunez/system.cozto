@@ -7,34 +7,51 @@ class Cotizar{
 
 
    public function SumaVenta($datos){ // Rapida
-
-  		if($this->ObtenerCantidad($datos["cod"]) > 0){
-  			if($_SESSION["cotizacion"] == NULL){ $this->AddOrden(); }
-  			
-  			/// aqui determino si agrego o actualizo
-  			if($datos["cantidad"] == NULL or $datos["cantidad"] == 0) $datos["cantidad"] = 1;
-  			$product = $this->ObtenerCantidadTicket($datos["cod"]);
-  			if($datos["cantidad"] == 1){
-	  			$datos["cantidad"] = $product + 1;
-  			}
-
-
-  			if($product > 0){  				
-  				$this->Actualiza($datos, null); // null es resta
-  			} else {
-  				$this->Agregar($datos);
-  			}
+	
+	
+  		if($this->ObtenerCantidad($datos["cod"]) <= 0 || $this->ObtenerCantidad($datos["cod"]) < $this->ObtenerCantidadTicket($datos["cod"]) + 1 || $this->ObtenerCantidad($datos["cod"]) < $datos["cantidad"]){
+			if ($_SESSION["config_agotado"] == "on"){
+				Alerts::Alerta("error","Error!","No dispone de suficiente Existencia del producto!");
+			} else{
+				if($_SESSION["cotizacion"] == NULL){ $this->AddOrden(); }
+				
+					/// aqui determino si agrego o actualizo
+				if($datos["cantidad"] == NULL or $datos["cantidad"] == 0) $datos["cantidad"] = 1;
+				$product = $this->ObtenerCantidadTicket($datos["cod"]);
+				if($datos["cantidad"] == 1){
+						$datos["cantidad"] = $product + 1;
+				}
+	
+				if($product > 0){  			
+						$this->Actualiza($datos, null); // null es resta
+				} else {
+						$this->Agregar($datos);
+				}
+			}
   		} else {
-  			 Alerts::Alerta("error","Error!","No se encontro el producto!");
+			if($_SESSION["cotizacion"] == NULL){ $this->AddOrden(); }
+  			
+				/// aqui determino si agrego o actualizo
+				if($datos["cantidad"] == NULL or $datos["cantidad"] == 0) $datos["cantidad"] = 1;
+				$product = $this->ObtenerCantidadTicket($datos["cod"]);
+				if($datos["cantidad"] == 1){
+					$datos["cantidad"] = $product + 1;
+				}
+  
+				if($product > 0){  			
+					$this->Actualiza($datos, null); // null es resta
+				} else {
+					$this->Agregar($datos);
+				}
   		}
-  	$this->VerProducto();
-	  if ($this->cuentaMateriales() > 0) {
-		echo '<hr>'; 
-		echo '<hr>'; 
-		echo '<h4>Materiales</h4>'; 
-		$this->VerMateriales();
 
-	  }
+		$this->VerProducto();
+		if ($this->cuentaMateriales() > 0) {
+			echo '<hr>'; 
+			echo '<hr>'; 
+			echo '<h4>Materiales</h4>'; 
+			$this->VerMateriales();
+		}
    }
 
 
@@ -448,10 +465,12 @@ $_SESSION["venta_agrupado"] = TRUE;
 
 
 	public function Sonar(){
-		echo '<audio id="audioplayer" autoplay=true>
-				  <source src="assets/sound/bleep.mp3" type="audio/mpeg">
-				  <source src="assets/sound/bleep.ogg" type="audio/ogg">
-				</audio>';
+		if($_SESSION["config_sonido"] == "on"){
+			echo '<audio id="audioplayer" autoplay=true>
+			<source src="assets/sound/bleep.mp3" type="audio/mpeg">
+			<source src="assets/sound/bleep.ogg" type="audio/ogg">
+		  </audio>';
+		}
 	}
 
 
