@@ -106,7 +106,7 @@ $(document).ready(function(){
             //    $("#ver").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt=""></div>');
             // },
             success: function(data) {            
-                $("#ver").load('application/src/routes.php?op=153'); // ver productos de la orden 
+                $("#ver").html(data); // ver productos de la orden 
                 $("#lateral").load('application/src/routes.php?op=146'); // caraga el lateral
             }
         });
@@ -300,7 +300,7 @@ $('#ModalBusqueda').on('shown.bs.modal', function() { // para autofocus en el mo
             },
             success: function(data){
                 $("#form-descuento").trigger("reset");
-                 $("#ver").html(data); // lo que regresa de la busquea 
+                $("#ver").html(data); // lo que regresa de la busquea 
             }
         })
     })
