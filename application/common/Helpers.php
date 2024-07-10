@@ -14,6 +14,7 @@ class Helpers{
           or $_SERVER["SERVER_NAME"] == "www.farmaciagenesissv.com"
           or $_SERVER["SERVER_NAME"] == "farmaciagenesissv.com"
           or $_SERVER["SERVER_NAME"] == "sistema.hibridosv.com"
+          or $_SERVER["SERVER_NAME"] == "system.hibridosv.com"
           or $_SERVER["SERVER_NAME"] == "datos.hibridosv.com"
           or $_SERVER["SERVER_NAME"] == "cozto.hibridosv.com"){
             return TRUE;

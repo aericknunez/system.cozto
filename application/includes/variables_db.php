@@ -20,13 +20,14 @@ if(Helpers::ServerDomain() == TRUE){
 	} else { /// para sistema normal online
 
 		if($_SERVER["SERVER_NAME"] == "sistema.hibridosv.com"
+		 or $_SERVER["SERVER_NAME"] == "system.hibridosv.com"
 		 or $_SERVER["SERVER_NAME"] == "arguetaautomotriz.com"
 		 or $_SERVER["SERVER_NAME"] == "farmaciagenesissv.com"){
 			define("HOST", "db5001821416.hosting-data.io");	 
 			define("USER", "dbu690380"); 					
 			define("PASSWORD", Encrypt::decrypt('ZmdEV09vNnBIU2pOTVVWczBMR2dnZz09', 'https://hibridosv.com')); 			
 			define("DATABASE", "dbs1499253");
-			define("XSERV", "http://sistema.hibridosv.com/");
+			define("XSERV", "http://system.hibridosv.com/");
 			define("TYPE", "OnLine");			
 		} else { // para data de los instalados
 			define("HOST", "db5001931634.hosting-data.io");
