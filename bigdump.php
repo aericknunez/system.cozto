@@ -38,10 +38,10 @@ error_reporting(E_ALL);
 
 // Database configuration
 
-$db_server   = 'db5001931638.hosting-data.io';
-$db_name     = 'dbs1580858';
-$db_username = 'dbu307080';
-$db_password = 'Caca007125-'; 
+$db_server   = '127.0.0.1';
+$db_name     = Encrypt::decrypt('elM4cFozL1pMN2dFWWxRMXk2VGIvUT09', 'https://hibridosv.com');
+$db_username = Encrypt::decrypt('SmhpQU5jT0FGUkdSTXZRZUpnM1BCUT09', 'https://hibridosv.com');
+$db_password = Encrypt::decrypt('eTB5TmNOcHBMaFJkemRGSW1ISmdUd0ZRTHdyNWhLVVd2cklIRk9kZmRoOD0=', 'https://hibridosv.com'); 
 
 // Connection charset should be the same as the dump file charset (utf8, latin1, cp1251, koi8r etc.)
 // See http://dev.mysql.com/doc/refman/5.0/en/charset-charsets.html for the full list
