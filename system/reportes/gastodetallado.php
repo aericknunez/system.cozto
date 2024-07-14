@@ -17,7 +17,7 @@ include_once 'system/historial/Historial.php';
 
   <div class="row justify-content-md-center">
     <div class="col-12 col-md-auto text-center">
-    <button class="btn btn-info my-2 btn-rounded btn-sm waves-effect" type="submit" id="btn-gastodetallado" name="btn-gastodetallado">Mostra Datos</button>
+    <button class="btn btn-info my-2 btn-rounded btn-sm waves-effect" type="submit" id="btn-gastodetallado" name="btn-gastodetallado">Mostrar Datos</button>
       </form> 
     </div>
   </div>

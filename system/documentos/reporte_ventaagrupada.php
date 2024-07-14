@@ -19,6 +19,9 @@ if($_REQUEST["inicio"] != NULL){
 
 $primero = Fechas::Format($_REQUEST["inicio"]);
 $segundo = Fechas::Format($_REQUEST["fin"]);
+$diaA = strtotime('+1 day', $segundo);
+$diaA = date('d-m-Y', $diaA);
+$tercero = Fechas::Format($diaA);
 
 // $objPHPExcel->getColumnDimension('C')->setAutoSize(true);
 
@@ -29,7 +32,7 @@ $a = $db->query("select cod, sum(cant), sum(total), producto, pv, pc, sum(descue
   GROUP BY cod order by sum(cant) desc");
 } else {
 $a = $db->query("select cod, sum(cant), sum(total), producto, pv, pc, sum(descuento) FROM ticket WHERE 
-  time BETWEEN '$primero' AND '$segundo' and edo = 1 and tipo_pago != 8 and td = ".$_SESSION['td']." 
+  time BETWEEN '$primero' AND '$tercero' and edo = 1 and tipo_pago != 8 and td = ".$_SESSION['td']." 
   GROUP BY cod order by sum(cant) desc");
 }
 
