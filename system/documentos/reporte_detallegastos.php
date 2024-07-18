@@ -19,6 +19,9 @@ if($_REQUEST["inicio"] != NULL){
 
 $primero = Fechas::Format($_REQUEST["inicio"]);
 $segundo = Fechas::Format($_REQUEST["fin"]);
+$diaA = strtotime('+1 day', $segundo);
+$diaA = date('d-m-Y', $diaA);
+$tercero = Fechas::Format($diaA);
 
 // $objPHPExcel->getColumnDimension('C')->setAutoSize(true);
 
@@ -26,7 +29,7 @@ $segundo = Fechas::Format($_REQUEST["fin"]);
 if($primero == $segundo){
   $a = $db->query("SELECT * FROM gastos WHERE edo = 1 and fechaF = '$segundo' and td = ".$_SESSION['td']." order by time desc");
 } else {
-  $a = $db->query("SELECT * FROM gastos WHERE edo = 1 and time BETWEEN '$primero' AND '$segundo' and td = ".$_SESSION['td']." order by time desc");
+  $a = $db->query("SELECT * FROM gastos WHERE edo = 1 and time BETWEEN '$primero' AND '$tercero' and td = ".$_SESSION['td']." order by time desc");
 }
 
 

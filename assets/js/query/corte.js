@@ -68,6 +68,7 @@ return false;
 				$("#form-cancelar").trigger("reset");
 				$("#contenido").load('application/src/routes.php?op=119');
 				$('#modalConfirmDelete').modal('hide');
+                location.reload();
 			}
 		})
 	})

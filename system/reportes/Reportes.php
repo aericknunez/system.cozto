@@ -12,11 +12,14 @@ public function VentasDetallado($inicio, $fin, $type = NULL) {
 		$db = new dbConn();
 		$primero = Fechas::Format($inicio);
 		$segundo = Fechas::Format($fin);
+		$diaA = strtotime('+1 day', $segundo);
+		$diaA = date('d-m-Y', $diaA);
+		$tercero = Fechas::Format($diaA);
 
 if($primero == $segundo){
 	$a = $db->query("SELECT * FROM ticket WHERE fechaF = '$segundo' and edo = 1 and tipo_pago != 8 and td = ".$_SESSION['td']." order by time desc");
 } else {
-	$a = $db->query("SELECT * FROM ticket WHERE time BETWEEN '$primero' AND '$segundo' and edo = 1 and tipo_pago != 8 and td = ".$_SESSION['td']." order by time desc");
+	$a = $db->query("SELECT * FROM ticket WHERE time BETWEEN '$primero' AND '$tercero' and edo = 1 and tipo_pago != 8 and td = ".$_SESSION['td']." order by time desc");
 }
 
    if ($a->num_rows > 0) {
@@ -108,6 +111,9 @@ public function VentasAgrupado($inicio, $fin, $type = NULL) {
 		$db = new dbConn();
 		$primero = Fechas::Format($inicio);
 		$segundo = Fechas::Format($fin);
+		$diaA = strtotime('+1 day', $segundo);
+		$diaA = date('d-m-Y', $diaA);
+		$tercero = Fechas::Format($diaA);
 
 
 if($primero == $segundo){
@@ -116,7 +122,7 @@ $a = $db->query("select cod, sum(cant), sum(total), producto, pv, pc, sum(descue
 	GROUP BY cod order by sum(cant) desc");
 } else {
 $a = $db->query("select cod, sum(cant), sum(total), producto, pv, pc, sum(descuento) FROM ticket WHERE 
-	time BETWEEN '$primero' AND '$segundo' and edo = 1 and tipo_pago != 8 and td = ".$_SESSION['td']." 
+	time BETWEEN '$primero' AND '$tercero' and edo = 1 and tipo_pago != 8 and td = ".$_SESSION['td']." 
 	GROUP BY cod order by sum(cant) desc");
 }
 
@@ -203,11 +209,14 @@ public function GastosDetallado($inicio, $fin, $type = NULL) {
 		$db = new dbConn();
 		$primero = Fechas::Format($inicio);
 		$segundo = Fechas::Format($fin);
+		$diaA = strtotime('+1 day', $segundo);
+		$diaA = date('d-m-Y', $diaA);
+		$tercero = Fechas::Format($diaA);
 
 if($primero == $segundo){
   $a = $db->query("SELECT * FROM gastos WHERE edo = 1 and fechaF = '$segundo' and td = ".$_SESSION['td']." order by time desc");
 } else {
-  $a = $db->query("SELECT * FROM gastos WHERE edo = 1 and time BETWEEN '$primero' AND '$segundo' and td = ".$_SESSION['td']." order by time desc");
+  $a = $db->query("SELECT * FROM gastos WHERE edo = 1 and time BETWEEN '$primero' AND '$tercero' and td = ".$_SESSION['td']." order by time desc");
 }
 
 
@@ -440,11 +449,14 @@ public function ProductoAveriado($inicio, $fin, $type = NULL) {
 	$db = new dbConn();
 	$primero = Fechas::Format($inicio);
 	$segundo = Fechas::Format($fin);
+	$diaA = strtotime('+1 day', $segundo);
+	$diaA = date('d-m-Y', $diaA);
+	$tercero = Fechas::Format($diaA);
 
 if($primero == $segundo){
 $a = $db->query("SELECT * FROM producto_averias WHERE time = '$segundo' and td = ".$_SESSION['td']." order by time ASC");
 } else {
-$a = $db->query("SELECT * FROM producto_averias WHERE time BETWEEN '$primero' AND '$segundo' and td = ".$_SESSION['td']." order by time ASC");
+$a = $db->query("SELECT * FROM producto_averias WHERE time BETWEEN '$primero' AND '$tercero' and td = ".$_SESSION['td']." order by time ASC");
 }
 
 
