@@ -151,10 +151,8 @@ $printer -> text("Cajero: " . $_SESSION['nombre']);
 $printer->feed();
 $printer->text("Maximo 15 dias para retirar su orden ");
 $printer->feed();
-$printer -> setJustification(Printer::JUSTIFY_CENTER);
 $printer -> text("GRACIAS POR SU PREFERENCIA...");
-$printer -> setJustification();
-
+$printer -> setJustification(Printer::JUSTIFY_CENTER);
 
 
 
