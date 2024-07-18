@@ -297,9 +297,9 @@ if($ramdom == $num){
 	    	$_SESSION["caja_apertura"] = $hash;
 	    	Alerts::Alerta("success","Exito!","Corte Anulado Correctamente");
 	    }
-	} else {
-	Alerts::Alerta("error","Error!","Codigo Invalido!!");
-	}
+	} 
+	}else {
+		Alerts::Alerta("error","Error!","Codigo Invalido!!");
 }
 
 }
