@@ -35,40 +35,27 @@ $printer -> setLineSpacing(80);
 // $printer->bitImage($logo);
 
 $printer -> setJustification(Printer::JUSTIFY_CENTER);
-$printer->text("ARTDESIGN");
-
-
+$printer->text("ARTDESIGN, S.A. DE C.V.");
 $printer->feed();
 $printer->text("2da Av. Nte entre 3ra y 5ta calle pte.");
 $printer->feed();
 $printer->text("Santa Ana, Santa Ana");
-
 $printer->feed();
 $printer->text("Tel: 2407-5729 y 7178-2357");
-
-
+$printer->feed();
+$printer->text("NRC: 342463-7 NIT: 0210-021203-102-0");
 $printer->feed();
 $printer->text("Giro: Publicidad ");
 $printer->feed();
-$printer->text("Maximo 15 dias para retirar su orden ");
-
-
-// $printer->feed();
-// $printer->text("NIT: 1010-291061-002-4   NRC: 33274-7");
-
-// $printer->feed();
-// $printer->text("GIRO: Clinica Veterinaria y venta de productos Agropecuarios");
-
-
-// $printer->feed();
-// $printer->text("Autorizacion: ASC-15041-036310-2021");
-
-// $printer->feed();
-// $printer->text("DEL: 21SV00000001-1  AL: 21SV00000001-50000");
-
-// $printer->feed();
-// $printer->text("FECHA DE AUTORIZACION: 09/01/2021");
-
+$printer->text("Resolución N°: 30108-RES-CR-53695-2024");
+$printer->feed();
+$printer->text("Autorizacion N°: ASC-15041-056323-2024");
+$printer->feed();
+$printer->text("SERIE N°: 24SA0000000-1");
+$printer->feed();
+$printer->text("RANGO AUTORIZADO DEL 1 AL 50000");
+$printer->feed();
+$printer->text("FECHA DE AUTORIZACION: 17/07/2024");
 $printer->feed();
 $printer->text("CAJA: 1.  TICKET NUMERO: " . $numero);
 
@@ -89,7 +76,7 @@ $printer -> setEmphasis(false);
 
 $subtotalf = 0;
 
-$a = $db->query("select cod, cant, producto, pv, total, fecha, hora, num_fac from ticket where num_fac = '".$numero."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]." and tipo = ".$_SESSION["tipoticket"]." group by cod");
+$a = $db->query("select cod, cant, producto, pv, total, fecha, hora, num_fac from ticket where num_fac = '".$numero."' and orden = '".$_SESSION["orden_actual_print"]."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]." and tipo = ".$_SESSION["tipoticket"]." group by cod");
   
     foreach ($a as $b) {
  
@@ -101,7 +88,7 @@ $subtotalf = $subtotalf + $b["total"];
 
 
 
-if ($sx = $db->select("sum(total)", "ticket", "WHERE num_fac = '".$numero."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."  and tipo = ".$_SESSION["tipoticket"]."" )) { 
+if ($sx = $db->select("sum(total)", "ticket", "WHERE num_fac = '".$numero."' and orden = '".$_SESSION["orden_actual_print"]."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."  and tipo = ".$_SESSION["tipoticket"]."" )) { 
        $stotalx=$sx["sum(total)"];
     } unset($sx); 
  
@@ -146,7 +133,7 @@ $printer->feed();
 
 
 
-if ($x = $db->select("fecha, hora", "ticket", "WHERE num_fac = '".$numero."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."  and tipo = ".$_SESSION["tipoticket"]."" )) { 
+if ($x = $db->select("fecha, hora", "ticket", "WHERE num_fac = '".$numero."' and orden = '".$_SESSION["orden_actual_print"]."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."  and tipo = ".$_SESSION["tipoticket"]."" )) { 
 $fechaf=$x["fecha"];
 $horaf=$x["hora"];
 } unset($x); 
@@ -161,7 +148,8 @@ $printer -> text($this->DosCol($fechaf, 30, $horaf, 20));
 
 $printer->feed();
 $printer -> text("Cajero: " . $_SESSION['nombre']);
-
+$printer->feed();
+$printer->text("Maximo 15 dias para retirar su orden ");
 $printer->feed();
 $printer -> setJustification(Printer::JUSTIFY_CENTER);
 $printer -> text("GRACIAS POR SU PREFERENCIA...");
@@ -662,36 +650,29 @@ $printer->feed();
 
 
 $printer -> setJustification(Printer::JUSTIFY_CENTER);
-$printer->text("ARTDESIGN");
-
-
+$printer->text("ARTDESIGN, S.A. DE C.V.");
 $printer->feed();
 $printer->text("2da Av. Nte entre 3ra y 5ta calle pte.");
 $printer->feed();
 $printer->text("Santa Ana, Santa Ana");
-
 $printer->feed();
 $printer->text("Tel: 2407-5729 y 7178-2357");
-
-
+$printer->feed();
+$printer->text("NRC: 342463-7 NIT: 0210-021203-102-0");
 $printer->feed();
 $printer->text("Giro: Publicidad ");
 $printer->feed();
+$printer->text("Resolución N°: 30108-RES-CR-53695-2024");
+$printer->feed();
+$printer->text("Autorizacion N°: ASC-15041-056323-2024");
+$printer->feed();
+$printer->text("SERIE N°: 24SA0000000-1");
+$printer->feed();
+$printer->text("RANGO AUTORIZADO DEL 1 AL 50000");
+$printer->feed();
+$printer->text("FECHA DE AUTORIZACION: 17/07/2024");
+$printer->feed();
 $printer->text("Maximo 15 dias para retirar su orden ");
-
-
-
-// $printer->feed();
-// $printer->text("NIT: 1010-291061-002-4   NRC: 33274-7");
-
-// $printer->feed();
-// $printer->text("GIRO: Clinica Veterinaria y venta de productos Agropecuarios");
-
-
-// $printer->feed();
-// $printer->text("CAJA: 1.");
-
-
 
 //// obtener lor datos del corte
 if ($r = $db->select("*", "corte_diario", "WHERE hash = '$hash'")) { 
@@ -960,37 +941,30 @@ $printer->feed();
 /* Items */
 
 $printer -> setJustification(Printer::JUSTIFY_CENTER);
-$printer->text("ARTDESIGN");
-
-
+$printer->text("ARTDESIGN, S.A. DE C.V.");
 $printer->feed();
 $printer->text("2da Av. Nte entre 3ra y 5ta calle pte.");
 $printer->feed();
 $printer->text("Santa Ana, Santa Ana");
-
 $printer->feed();
 $printer->text("Tel: 2407-5729 y 7178-2357");
-
-
+$printer->feed();
+$printer->text("NRC: 342463-7 NIT: 0210-021203-102-0");
 $printer->feed();
 $printer->text("Giro: Publicidad ");
 $printer->feed();
-$printer->text("Maximo 15 dias para retirar su orden ");
-
-
-// $printer->feed();
-// $printer->text("NIT: 1010-291061-002-4   NRC: 33274-7");
-
-// $printer->feed();
-// $printer->text("GIRO: Clinica Veterinaria y venta de productos Agropecuarios");
-
-
+$printer->text("Resolución N°: 30108-RES-CR-53695-2024");
 $printer->feed();
-$printer->text("CAJA: 1.");
-
-
-
-
+$printer->text("Autorizacion N°: ASC-15041-056323-2024");
+$printer->feed();
+$printer->text("SERIE N°: 24SA0000000-1");
+$printer->feed();
+$printer->text("RANGO AUTORIZADO DEL 1 AL 50000");
+$printer->feed();
+$printer->text("FECHA DE AUTORIZACION: 17/07/2024");
+$printer->feed();
+$printer->text("Maximo 15 dias para retirar su orden ");
+$printer->feed();
 
 $printer->feed();
 $printer->text("FECHA: " .  Fechas::FechaEscrita($fechax));
