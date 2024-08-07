@@ -1,6 +1,7 @@
 <?php
 
 error_reporting(E_ALL);
+include_once 'application/common/Encrypt.php'; // 
 
 // BigDump ver. 0.36b from 2015-04-30
 // Staggered import of an large MySQL Dump (like phpMyAdmin 2.x Dump)
