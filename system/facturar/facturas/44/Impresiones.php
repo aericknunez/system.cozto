@@ -22,11 +22,11 @@ $connector = new WindowsPrintConnector($nombre_impresora);
 $printer = new Printer($connector);
 $printer -> initialize();
 
-$printer -> setFont(Printer::FONT_B);
+$printer -> setFont(Printer::FONT_A);
 // $printer -> selectPrintMode(Printer::MODE_DOUBLE_HEIGHT);
 // $printer -> selectPrintMode(Printer::MODE_DOUBLE_WIDTH);
 
-$printer -> setTextSize(1, 2);
+$printer -> setTextSize(2, 2);
 $printer -> setLineSpacing(80);
 
 
@@ -37,6 +37,8 @@ $printer -> setLineSpacing(80);
 $printer -> setJustification(Printer::JUSTIFY_CENTER);
 $printer->text("ARTDESIGN, S.A. DE C.V.");
 $printer->feed();
+$printer -> setFont(Printer::FONT_B);
+$printer -> setTextSize(1, 2);
 $printer->text("2da Av. Nte entre 3ra y 5ta calle pte.");
 $printer->feed();
 $printer->text("Santa Ana, Santa Ana");
@@ -765,11 +767,11 @@ if($t_ticket > 0){
   $printer->feed();
   $printer -> text($this->Col4("HORA - TICKET", 0,  "SUBTOTAL", 15,  "IVA", 10, "TOTAL", 10));
 
-  $a = $db->query("SELECT num_fac, hora FROM ticket_num WHERE edo = 1 and tipo = 1 and td = ".$_SESSION["td"]." and time BETWEEN '".$aperturaF."' and '".$cierreF."'");
+  $a = $db->query("SELECT num_fac, hora, orden FROM ticket_num WHERE edo = 1 and tipo = 1 and td = ".$_SESSION["td"]." and time BETWEEN '".$aperturaF."' and '".$cierreF."'");
       $cant_t = $a->num_rows;
       foreach ($a as $b) {
 
-  if ($r = $db->select("sum(stotal), sum(imp), sum(total)", "ticket", "WHERE num_fac = '".$b["num_fac"]."' and tipo = 1 and td = ".$_SESSION["td"]."")) { 
+  if ($r = $db->select("sum(stotal), sum(imp), sum(total)", "ticket", "WHERE num_fac = '".$b["num_fac"]."' and orden = '".$b["orden"]."' and tipo = 1 and td = ".$_SESSION["td"]."")) { 
       $stotalt = $r["sum(stotal)"];
       $impt = $r["sum(imp)"];
       $totalt = $r["sum(total)"];
@@ -779,6 +781,7 @@ if($t_ticket > 0){
   }  $a->close();
 
 }
+
 // FACTURA - subtotal, iva, total, hora
 if($t_factura > 0){
 
@@ -786,11 +789,11 @@ if($t_factura > 0){
   $printer->feed();
   $printer -> text($this->Col4("HORA - FACTURA", 0,  "SUBTOTAL", 15,  "IVA", 10, "TOTAL", 10));
 
-  $a = $db->query("SELECT num_fac, hora FROM ticket_num WHERE edo = 1 and tipo = 2 and td = ".$_SESSION["td"]." and time BETWEEN '".$aperturaF."' and '".$cierreF."'");
+  $a = $db->query("SELECT num_fac, hora, orden FROM ticket_num WHERE edo = 1 and tipo = 2 and td = ".$_SESSION["td"]." and time BETWEEN '".$aperturaF."' and '".$cierreF."'");
       $cant_f = $a->num_rows;
       foreach ($a as $b) {
 
-  if ($r = $db->select("sum(stotal), sum(imp), sum(total)", "ticket", "WHERE num_fac = '".$b["num_fac"]."' and tipo = 2 and td = ".$_SESSION["td"]."")) { 
+  if ($r = $db->select("sum(stotal), sum(imp), sum(total)", "ticket", "WHERE num_fac = '".$b["num_fac"]."' and orden = '".$b["orden"]."' and tipo = 2 and td = ".$_SESSION["td"]."")) { 
       $stotalp = $r["sum(stotal)"];
       $impp = $r["sum(imp)"];
       $totalp = $r["sum(total)"];
@@ -808,11 +811,11 @@ if($t_credito > 0){
   $printer->feed();
   $printer -> text($this->Col4("HORA - CCF", 0,  "SUBTOTAL", 15,  "IVA", 10, "TOTAL", 10));
 
-  $a = $db->query("SELECT num_fac, hora FROM ticket_num WHERE edo = 1 and tipo = 3 and td = ".$_SESSION["td"]." and time BETWEEN '".$aperturaF."' and '".$cierreF."'");
+  $a = $db->query("SELECT num_fac, hora, orden FROM ticket_num WHERE edo = 1 and tipo = 3 and td = ".$_SESSION["td"]." and time BETWEEN '".$aperturaF."' and '".$cierreF."'");
     $cant_c = $a->num_rows;
       foreach ($a as $b) {
 
-  if ($r = $db->select("sum(stotal), sum(imp), sum(total)", "ticket", "WHERE num_fac = '".$b["num_fac"]."' and tipo = 3 and td = ".$_SESSION["td"]."")) { 
+  if ($r = $db->select("sum(stotal), sum(imp), sum(total)", "ticket", "WHERE num_fac = '".$b["num_fac"]."' and orden = '".$b["orden"]."' and tipo = 3 and td = ".$_SESSION["td"]."")) { 
       $stotalc = $r["sum(stotal)"];
       $impc = $r["sum(imp)"];
       $totalc = $r["sum(total)"];
@@ -1037,11 +1040,11 @@ if($t_ticket > 0){
   $printer->feed();
   $printer -> text($this->Col4("HORA - TICKET", 0,  "SUBTOTAL", 15,  "IVA", 10, "TOTAL", 10));
 
-  $a = $db->query("SELECT num_fac, hora FROM ticket_num WHERE edo = 1 and tipo = 1 and td = ".$_SESSION["td"]." and fecha = '$fechax'");
+  $a = $db->query("SELECT num_fac, hora, orden FROM ticket_num WHERE edo = 1 and tipo = 1 and td = ".$_SESSION["td"]." and fecha = '$fechax'");
       $cant_t = $a->num_rows;
       foreach ($a as $b) {
 
-  if ($r = $db->select("sum(stotal), sum(imp), sum(total)", "ticket", "WHERE num_fac = '".$b["num_fac"]."' and tipo = 1 and td = ".$_SESSION["td"]."")) { 
+  if ($r = $db->select("sum(stotal), sum(imp), sum(total)", "ticket", "WHERE num_fac = '".$b["num_fac"]."' and orden = '".$b["orden"]."' and tipo = 1 and td = ".$_SESSION["td"]."")) { 
       $stotalt = $r["sum(stotal)"];
       $impt = $r["sum(imp)"];
       $totalt = $r["sum(total)"];
@@ -1058,11 +1061,11 @@ if($t_factura > 0){
   $printer->feed();
   $printer -> text($this->Col4("HORA - FACTURA", 0,  "SUBTOTAL", 15,  "IVA", 10, "TOTAL", 10));
 
-  $a = $db->query("SELECT num_fac, hora FROM ticket_num WHERE edo = 1 and tipo = 2 and td = ".$_SESSION["td"]." and fecha = '$fechax'");
+  $a = $db->query("SELECT num_fac, hora, orden FROM ticket_num WHERE edo = 1 and tipo = 2 and td = ".$_SESSION["td"]." and fecha = '$fechax'");
       $cant_f = $a->num_rows;
       foreach ($a as $b) {
 
-  if ($r = $db->select("sum(stotal), sum(imp), sum(total)", "ticket", "WHERE num_fac = '".$b["num_fac"]."' and tipo = 2 and td = ".$_SESSION["td"]."")) { 
+  if ($r = $db->select("sum(stotal), sum(imp), sum(total)", "ticket", "WHERE num_fac = '".$b["num_fac"]."' and orden = '".$b["orden"]."' and tipo = 2 and td = ".$_SESSION["td"]."")) { 
       $stotalp = $r["sum(stotal)"];
       $impp = $r["sum(imp)"];
       $totalp = $r["sum(total)"];
@@ -1080,11 +1083,11 @@ if($t_credito > 0){
   $printer->feed();
   $printer -> text($this->Col4("HORA - CCF", 0,  "SUBTOTAL", 15,  "IVA", 10, "TOTAL", 10));
 
-  $a = $db->query("SELECT num_fac, hora FROM ticket_num WHERE edo = 1 and tipo = 3 and td = ".$_SESSION["td"]." and fecha = '$fechax'");
+  $a = $db->query("SELECT num_fac, hora, orden FROM ticket_num WHERE edo = 1 and tipo = 3 and td = ".$_SESSION["td"]." and fecha = '$fechax'");
     $cant_c = $a->num_rows;
       foreach ($a as $b) {
 
-  if ($r = $db->select("sum(stotal), sum(imp), sum(total)", "ticket", "WHERE num_fac = '".$b["num_fac"]."' and tipo = 3 and td = ".$_SESSION["td"]."")) { 
+  if ($r = $db->select("sum(stotal), sum(imp), sum(total)", "ticket", "WHERE num_fac = '".$b["num_fac"]."' and orden = '".$b["orden"]."' and tipo = 3 and td = ".$_SESSION["td"]."")) { 
       $stotalc = $r["sum(stotal)"];
       $impc = $r["sum(imp)"];
       $totalc = $r["sum(total)"];
