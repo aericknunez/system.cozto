@@ -730,16 +730,10 @@ $printer -> setJustification(Printer::JUSTIFY_CENTER);
 $printer->text("MINI SUPER 24/7 EL DIVINO NIÑO");
 
 $printer->feed();
-$printer->text("JAYUMI S.A. DE C.V.");
-$printer->feed();
 $printer->text("Calle principal, cton. El Jocotillo Crio. Puente Arce,");
 $printer->feed();
 $printer->text("Contiguo a gasolinera Emanuel, San Francisco Menendez");
-
 $printer->feed();
-$printer->text("NRC: 285464-2 NIT: 0108-091019-101-0");
-$printer->feed();
-$printer->text("Giro:Otros servicios relacionados con la salud NCP");
 //$printer->text("de Construccion y articulos conexos ");
 
 
@@ -858,7 +852,6 @@ $printer->feed();
 $printer->text("RANGO AUTORIZADO DEL 1 AL 100000");
 $printer->feed();
 $printer->text("FECHA DE AUTORIZACION: 19/12/2019");*/
-
 
 $printer->feed();
 $printer->feed();

@@ -205,7 +205,7 @@ echo '<label>Tipo de Cuenta</label>
 	public function EliminarUsuario($iden, $username) {
 			$db = new dbConn();
 			
-			if ( $db->delete("login_members", "WHERE id='$iden'")) {
+			if ( $db->delete("login_members", "WHERE username='$username'")) {
         	
         		if ( $db->delete("login_userdata", "WHERE user='$username'")) {
 	     		Alerts::Alerta("success","Usuario Eliminado","Usuario eliminado correctamente! Inicie nuevamente");

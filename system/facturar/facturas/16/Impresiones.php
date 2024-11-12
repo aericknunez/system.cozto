@@ -15,8 +15,7 @@ class Impresiones{
  public function Ticket($efectivo, $numero){
   $db = new dbConn();
   $nombre_impresora = "EPSON2";
-  // $img  = "C:/AppServ/www/pizto/assets/img/logo_factura/grosera.jpg";
-
+  $img  = "C:/AppServ/www/cozto\system/facturar/facturas/16/logo.jpg";
 
 $connector = new WindowsPrintConnector($nombre_impresora);
 $printer = new Printer($connector);
@@ -30,9 +29,9 @@ $printer -> setTextSize(1, 2);
 $printer -> setLineSpacing(80);
 
 
-// $printer -> setJustification(Printer::JUSTIFY_CENTER);
-// $logo = EscposImage::load($img, false);
-// $printer->bitImage($logo);
+$printer -> setJustification(Printer::JUSTIFY_CENTER);
+$logo = EscposImage::load($img, false);
+$printer->bitImage($logo);
 
 $printer -> setJustification(Printer::JUSTIFY_CENTER);
 $printer->text("ANIMAL PET'S");
@@ -62,7 +61,7 @@ $printer->feed();
 $printer->text("Autorizacion: ASC-15041-036310-2021");
 
 $printer->feed();
-$printer->text("DEL: 21SV00000001-1  AL: 21SV00000001-50000");
+$printer->text("DEL: 24VS00000001-1  AL: 24VS00000001-100000");
 
 $printer->feed();
 $printer->text("FECHA DE AUTORIZACION: 09/01/2021");
@@ -87,7 +86,7 @@ $printer -> setEmphasis(false);
 
 $subtotalf = 0;
 
-$a = $db->query("select cod, cant, producto, pv, total, fecha, hora, num_fac from ticket where num_fac = '".$numero."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]." and tipo = ".$_SESSION["tipoticket"]." group by cod");
+$a = $db->query("select cod, cant, producto, pv, total, fecha, hora, num_fac from ticket where num_fac = '".$numero."' and orden = '".$_SESSION["orden_actual_print"]."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]." and tipo = ".$_SESSION["tipoticket"]." group by cod");
   
     foreach ($a as $b) {
  
@@ -99,7 +98,7 @@ $subtotalf = $subtotalf + $b["total"];
 
 
 
-if ($sx = $db->select("sum(total)", "ticket", "WHERE num_fac = '".$numero."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."  and tipo = ".$_SESSION["tipoticket"]."" )) { 
+if ($sx = $db->select("sum(total)", "ticket", "WHERE num_fac = '".$numero."' and orden = '".$_SESSION["orden_actual_print"]."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."  and tipo = ".$_SESSION["tipoticket"]."" )) { 
        $stotalx=$sx["sum(total)"];
     } unset($sx); 
  
@@ -144,7 +143,7 @@ $printer->feed();
 
 
 
-if ($x = $db->select("fecha, hora", "ticket", "WHERE num_fac = '".$numero."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."  and tipo = ".$_SESSION["tipoticket"]."" )) { 
+if ($x = $db->select("fecha, hora", "ticket", "WHERE num_fac = '".$numero."' and orden = '".$_SESSION["orden_actual_print"]."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]."  and tipo = ".$_SESSION["tipoticket"]."" )) { 
 $fechaf=$x["fecha"];
 $horaf=$x["hora"];
 } unset($x); 
