@@ -749,11 +749,11 @@ Helpers::UpdateId("ubicacion_asig", $cambio, "ubicacion = '".$datos["ubicacion"]
 							echo '<td>'.$productox.'</td>';
 						}
 
-						echo '<td>'.$b["pv"].'</td>
-						      <td>'.$b["stotal"].'</td>
-						      <td>'.$b["imp"].'</td>
+						echo '<td>'.Helpers::Format($b["pv"]).'</td>
+						      <td>'.Helpers::Format($b["stotal"]).'</td>
+						      <td>'.Helpers::Format($b["imp"]).'</td>
 						      <td>
-						      <a id="xdescuento" dcodigo="'.$b["cod"].'" dcantidad="'.$b["cant"].'" ddescuento="'.$b["descuento"].'" dporcentaje="'.$porcentaje.'">'.$b["total"].'</a>
+						      <a id="xdescuento" dcodigo="'.$b["cod"].'" dcantidad="'.$b["cant"].'" ddescuento="'.$b["descuento"].'" dporcentaje="'.$porcentaje.'">'.Helpers::Format($b["total"]).'</a>
 						      </td>
 						      <td><a id="borrar-ticket" op="81" hash="'.$b["hash"].'"><i class="fas fa-times-circle red-text fa-lg"></i></a></td>
 					</tr>';
