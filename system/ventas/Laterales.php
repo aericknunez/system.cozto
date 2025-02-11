@@ -45,7 +45,7 @@ class Laterales{
 			    <div class="card">
 			        <div class="card-body">
 			            <h4 class="card-title">TOTAL</h4>
-			            <p class="black-text display-3"> '. $_SESSION['config_moneda_simbolo'] ." ". $this->ObtenerTotal($orden) .'</p>
+			            <p class="black-text display-3"> '. $_SESSION['config_moneda_simbolo'] ." ". number_format($this->ObtenerTotal($orden), 2)  .'</p>
 			            <div id="vticket">'. $this->NombreTicket() .'</div>
 			        </div>
 			    </div>

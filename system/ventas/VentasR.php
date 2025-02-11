@@ -584,10 +584,10 @@ if ($r = $db->select("sum(existencia)", "producto_ingresado", "WHERE existencia 
 							echo '<td>'.$b["pv"].'</td>';
 						}
 
-						echo '<td>'.$b["stotal"].'</td>
-						      <td>'.$b["imp"].'</td>
+						echo '<td>'.Helpers::Format($b["stotal"]).'</td>
+						      <td>'.Helpers::Format($b["imp"]).'</td>
 						      <td>
-						      <a id="xdescuento" dcodigo="'.$b["cod"].'" dcantidad="'.$b["cant"].'" ddescuento="'.$b["descuento"].'" dporcentaje="'.$porcentaje.'">'.$b["total"].'</a>
+						      <a id="xdescuento" dcodigo="'.$b["cod"].'" dcantidad="'.$b["cant"].'" ddescuento="'.$b["descuento"].'" dporcentaje="'.$porcentaje.'">'.Helpers::Format($b["total"]).'</a>
 						      </td>
 			    			<td>';
 
