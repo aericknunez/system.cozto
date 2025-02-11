@@ -5,6 +5,12 @@
 if($_SESSION["root_plataforma"] == 0){
  ?>
 <script>
+
+function advertenciaAntesDeSalir(event) {
+    event.preventDefault();
+    event.returnValue = "¿Estás seguro de que quieres salir de esta página?";
+}
+
 $('#btn-facturar').click(function(e){ /// agregar un producto 
 e.preventDefault();
 $.ajax({
@@ -12,13 +18,19 @@ $.ajax({
         method: "POST",
         data: $("#form-facturar").serialize(),
         beforeSend: function () {
+ // Agregar el evento beforeunload usando la función definida
+ window.addEventListener("beforeunload", advertenciaAntesDeSalir);
+
            $("#formularios").hide();
            $("#btn-regresar").hide()
            $("#btn-te").hide(); // esconde boton tarjeta y efectivo 
            $("#link-to").addClass('disabled'); // esconde link para no regresar
-           $("#resultado").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt="">Procesando venta por favor espere... </div>');
+           $("#resultado").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt="">Procesando venta por favor espere...</div>');
         },
         success: function(data){
+            // Eliminar el evento beforeunload usando la misma función definida
+            window.removeEventListener("beforeunload", advertenciaAntesDeSalir);
+
             $("#formularios").hide();
             $("#btn-regresar").show()
             $("#btn-te").hide(); // esconde boton tarjeta y efectivo
@@ -40,6 +52,10 @@ if(isset($_SESSION["orden"])){
 }?>
 
 <script>
+    function advertenciaAntesDeSalir(event) {
+    event.preventDefault();
+    event.returnValue = "¿Estás seguro de que quieres salir de esta página?";
+}
 $('#btn-facturar').click(function(e){ /// agregar un producto 
 e.preventDefault();
 $.ajax({
@@ -47,6 +63,7 @@ $.ajax({
         method: "POST",
         data: $("#form-facturar").serialize(),
         beforeSend: function () {
+            window.addEventListener("beforeunload", advertenciaAntesDeSalir);
            $("#formularios").hide();
            $("#btn-regresar").hide()
            $("#btn-te").hide(); // esconde boton tarjeta y efectivo 
@@ -55,6 +72,7 @@ $.ajax({
            $("#resultado").html('<div class="row justify-content-center" ><img src="assets/img/loa.gif" alt="">Procesando venta por favor espere... </div>');
         },
         success: function(data){
+            window.removeEventListener("beforeunload", advertenciaAntesDeSalir);
             $("#form-facturar").trigger("reset");
             $("#formularios").hide();
             $("#btn-regresar").show()
