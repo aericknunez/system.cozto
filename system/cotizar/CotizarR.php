@@ -341,8 +341,8 @@ $_SESSION["venta_agrupado"] = TRUE;
 						      <th scope="row"><a href="?modal=cantidadc&cant='.$b["cant"].'&cod='.$b["cod"].'">'.$b["cant"].'</a></th>
 						      <td>'.$b["producto"].'</td>
 						      <td>'.$b["pv"].'</td>
-						      <td>'.$b["stotal"].'</td>
-						      <td>'.$b["imp"].'</td>
+						      <td>'.Helpers::Format($b["stotal"]).'</td>
+						      <td>'.Helpers::Format($b["imp"]).'</td>
 							  <td>
 							  <a id="xdescuento" dcodigo="'.$b["cod"].'" dcantidad="'.$b["cant"].'" ddescuento="'.$b["descuento"].'" dporcentaje="'.$porcentaje.'">'.$b["total"].'</a>
 						      </td>
