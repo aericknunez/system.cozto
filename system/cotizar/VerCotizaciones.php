@@ -427,8 +427,8 @@ $a = $db->query("SELECT * FROM cotizaciones WHERE cotizacion = '".$correlativo."
                   <th scope="row">'.$b["cant"].'</th>
                   <td>'.$b["producto"].'</td>
                   <td>'.$b["pv"].'</td>
-                  <td>'.$b["stotal"].'</td>
-                  <td>'.$b["imp"].'</td>
+                  <td>'.Helpers::Format($b["stotal"]).'</td>
+                  <td>'.Helpers::Format($b["imp"]).'</td>
                   <td>'.$b["total"].'</td>
                 </tr>';
             }
@@ -558,8 +558,8 @@ $a = $db->query("SELECT * FROM cotizaciones WHERE cotizacion = '".$correlativo."
                <th scope="row">'.$b["cant"].'</th>
                <td>'.$b["producto"].'</td>
                <td>'.$b["pv"].'</td>
-               <td>'.$b["stotal"].'</td>
-               <td>'.$b["imp"].'</td>
+               <td>'.Helpers::Format($b["stotal"]).'</td>
+               <td>'.Helpers::Format($b["imp"]).'</td>
                <td>'.$b["total"].'</td>
              </tr>';
          }
@@ -690,8 +690,8 @@ $a = $db->query("SELECT * FROM cotizaciones WHERE cotizacion = '".$correlativo."
              <th scope="row">'.$b["cant"].'</th>
              <td>'.$b["producto"].'</td>
              <td>'.$b["pv"].'</td>
-             <td>'.$b["stotal"].'</td>
-             <td>'.$b["imp"].'</td>
+             <td>'.Helpers::Format($b["stotal"]).'</td>
+             <td>'.Helpers::Format($b["imp"]).'</td>
              <td>'.$b["total"].'</td>
            </tr>';
         if($b["descuento"] > 0){

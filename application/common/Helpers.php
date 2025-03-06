@@ -313,8 +313,9 @@ class Helpers{
   static public function STotalDesc($numero, $impuestos){  
     $imp = ($impuestos / 100)+1;
     $st = $numero / $imp;
-    return number_format($st, 2,'.',',');
+    return number_format($st, 4,'.',',');
  } 
+ 
 
 
 static public function ImpuestoDesc($numero, $impuestos){  
