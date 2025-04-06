@@ -12,7 +12,7 @@ class VerCotizaciones{
         elseif ($_SESSION['td'] == 91) { // 91  DDALTEC
             $this->ddaltec($cot);  
         } 
-        elseif ($_SESSION['td'] == 21) { //  102 PUBLI-INK
+        elseif ($_SESSION['td'] == 102) { //  102 PUBLI-INK
             $this->publiInk($cot);
         }else {
             $this->general($cot);
