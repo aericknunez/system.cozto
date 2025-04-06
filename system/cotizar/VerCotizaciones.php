@@ -12,7 +12,7 @@ class VerCotizaciones{
         elseif ($_SESSION['td'] == 91) { // 91  DDALTEC
             $this->ddaltec($cot);  
         } 
-        elseif ($_SESSION['td'] == 102) { //  102 PUBLI-INK
+        elseif ($_SESSION['td'] == 21) { //  102 PUBLI-INK
             $this->publiInk($cot);
         }else {
             $this->general($cot);
@@ -427,8 +427,8 @@ $a = $db->query("SELECT * FROM cotizaciones WHERE cotizacion = '".$correlativo."
                   <th scope="row">'.$b["cant"].'</th>
                   <td>'.$b["producto"].'</td>
                   <td>'.$b["pv"].'</td>
-                  <td>'.$b["stotal"].'</td>
-                  <td>'.$b["imp"].'</td>
+                  <td>'.Helpers::Format($b["stotal"]).'</td>
+                  <td>'.Helpers::Format($b["imp"]).'</td>
                   <td>'.$b["total"].'</td>
                 </tr>';
             }
@@ -558,8 +558,8 @@ $a = $db->query("SELECT * FROM cotizaciones WHERE cotizacion = '".$correlativo."
                <th scope="row">'.$b["cant"].'</th>
                <td>'.$b["producto"].'</td>
                <td>'.$b["pv"].'</td>
-               <td>'.$b["stotal"].'</td>
-               <td>'.$b["imp"].'</td>
+               <td>'.Helpers::Format($b["stotal"]).'</td>
+               <td>'.Helpers::Format($b["imp"]).'</td>
                <td>'.$b["total"].'</td>
              </tr>';
          }
@@ -690,8 +690,8 @@ $a = $db->query("SELECT * FROM cotizaciones WHERE cotizacion = '".$correlativo."
              <th scope="row">'.$b["cant"].'</th>
              <td>'.$b["producto"].'</td>
              <td>'.$b["pv"].'</td>
-             <td>'.$b["stotal"].'</td>
-             <td>'.$b["imp"].'</td>
+             <td>'.Helpers::Format($b["stotal"]).'</td>
+             <td>'.Helpers::Format($b["imp"]).'</td>
              <td>'.$b["total"].'</td>
            </tr>';
         if($b["descuento"] > 0){
@@ -727,20 +727,32 @@ echo '<div class="row mt-4">
  </div>
 </div>';
 
-echo '<ul>
-  <li>Para contratar nuestros servicios necesitamos el 50% del monto total a pagar por anticipado, dejando el completo a contra entrega de lo contratado.</li>
-  <li>Anticipe a su orden si desea crédito fiscal o factura consumidor final.</li>
-  <li>Precios sujetos a cambios sin previo aviso, y sujetos a disponibilidad, tiempos de entrega  (15 dias hábiles aproximadamente)</li>
-  <li>Nuestra oferta tiene vigencia de 15 días hábiles.</li>
-  <li>Cheque a nombre de Verónica Sofía Pérez Hernández.</li>
-  <li>Precios incluyen iva.</li>
-</ul>';
 
-echo '<footer>
-   <div class="col-4 text-right" style="position: absolute;bottom: 0; width: 100%;">
-   <img alt="" src="'.XSERV.'assets/img/logo_factura/publi-ink.jpg" width="1100" />
-   </div>
-   </footer>';
+echo 
+'<ul>
+    <li>Las cotizaciones se realizan en base a la información brindada, verifique cantidades, materiales o si estas mismas incluyen instalación descritas en cada ítem, por lo que nos exoneramos en productos terminados erróneos cuando no se realizan mediciones por nuestro personal.</li>
+    <li>Para contratar nuestros servicios solicitamos el 50% del monto total a pagar por anticipado, cancelando el complemento el día de la instalación y esta antes de ser finalizada. Si necesita otras opciones pago consultarlas por anticipado para evitar retrasos o inconvenientes en la instalación.</li>
+    <li>Anticipe a su orden si desea crédito fiscal o factura consumidor final.</li>
+    <li>Se tomará por aceptada la cotización con firma y sello de la persona responsable</li>
+    <li>Una vez confirmado por medios escritos y abonado el anticipo, no se podrán realizar cambios en la rotulación solicitada, así mismo si solicita cancelación en alguno de nuestros servicios nos reservamos el derecho de reintegro debido a gastos en materiales y procesos.</li>
+    <li>Precios sujetos a cambios sin previo aviso, y sujetos a disponibilidad, tiempos de entrega  (15 días hábiles aproximadamente)</li>
+    <li>Nuestra oferta tiene vigencia de 15 días hábiles.</li>
+    <li>Cheque a nombre de Verónica Sofía Pérez Hernández.</li>
+    <li>Las rotulaciones con iluminación deberán tener lista la conexión eléctrica disponible para empalmar y este no deberá ser un metraje mayor 5 metros, así evitar cargos extras en la facturación total el día de la instalación. Estas tendrán una garantía de 60 días por desperfectos de fábrica si así aplicaran.</li>
+    <li>Precios incluyen IVA.</li>
+  </ul>
+
+  <div class="row">
+    <div class="col text-start">
+      <br>
+      <div class="mt-3 mb-4">Firma Autorizada: ______________________________________________________________</div>
+      <div class="mb-4">Nombre y Cargo del signatario: _________________________________________________</div>
+    </div>
+  </div>
+
+<footer style="width: 100%; text-align: right;">
+  <img alt="" src="'.XSERV.'assets/img/logo_factura/publi-ink.jpg" width="1100" />
+</footer>';
 
 }
 
