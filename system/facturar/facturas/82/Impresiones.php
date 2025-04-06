@@ -180,30 +180,32 @@ $printer->close();
 
 
 
+public function Factura($efectivo, $numero){
+ $this->Factura2($efectivo, $numero);
+ $this->Factura2($efectivo, $numero);
 
+}
 
-
-
- public function Factura($efectivo, $numero){
+ public function Factura2($efectivo, $numero){
   $db = new dbConn();
 
-$txt1   = "15"; 
-$txt2   = "5";
-$txt3   = "0";
-$txt4   = "0";
-$n1   = "15";
-$n2   = "60";
-$n3   = "30";
-$n4   = "0";
-
-
-$col1 = 65;
-$col2 = 135;
-$col3 = 670; //400
-$col4 = 870; //565
-$col5 = 500;
+  $txt1   = "30"; 
+  $txt2   = $txt1/1.6;
+  $txt3   = "0";
+  $txt4   = "0";
+  $n1   = "75";
+  $n2   = "240";
+  $n3   = "30";
+  $n4   = "0";
+  
+  
+  $col1 = 100;
+  $col2 = 250;
+  $col3 = 1100;
+  $col4 = 1560;
+  $col5 = 500;
 // $print
-$print = "FACTURA";
+$print = "EPSON L380 Series";
 
 $handle = printer_open($print);
 printer_set_option($handle, PRINTER_MODE, "RAW");
@@ -220,14 +222,14 @@ printer_select_font($handle, $font);
 $oi=75;
 //// comienza la factura
 
-$oi=$oi+$n1;
-printer_draw_text($handle, date("d") . " - " . Fechas::MesEscrito(date("m")) ." - " . date("Y"), 800, $oi-5);
+$oi=$oi;
+printer_draw_text($handle, $numero, 1500, $oi-5);
 
 
-$oi=75;
+$oi=500;
 
 
-if ($r = $db->select("orden", "ticket_num", "WHERE num_fac = '$numero' and tx = " . $_SESSION["tx"] . " and tipo = ".$_SESSION["tipoticket"]." and td = " .  $_SESSION["td"])) { 
+if ($r = $db->select("orden", "ticket_num", "WHERE num_fac = '$numero' and orden = '".$_SESSION["orden_actual_print"]."' and tx = " . $_SESSION["tx"] . " and tipo = ".$_SESSION["tipoticket"]." and td = " .  $_SESSION["td"])) { 
     $orden = $r["orden"];
 } unset($r);
 
@@ -243,20 +245,18 @@ if ($r = $db->select("orden", "ticket_num", "WHERE num_fac = '$numero' and tx = 
     } unset($r);  
 
 
+$oi=$oi;
+printer_draw_text($handle, date("d") . "-" . Fechas::MesEscrito(date("m")) ."-" . date("Y"), 1200, $oi+40);
 $oi=$oi+$n1;
-printer_draw_text($handle, $nombre, 110, $oi);
-
+printer_draw_text($handle, $nombre, 300, $oi+40);
 $oi=$oi+$n1;
-printer_draw_text($handle, $direccion, 120, $oi);
-printer_draw_text($handle, $documento, 670, $oi);
-
-$oi=$oi+$n1+$n1;
-printer_draw_text($handle, "CONTADO", 730, $oi);
+printer_draw_text($handle, $direccion, 350, $oi+40);
+printer_draw_text($handle, $documento, 1400, $oi+$n1+40);
 
 
-$oi=162; // salto de linea
+$oi=860; // salto de linea
 
-$a = $db->query("select cod, cant, producto, pv, total, fecha, hora, num_fac from ticket where num_fac = '".$numero."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]." and tipo = ".$_SESSION["tipoticket"]." group by cod");
+$a = $db->query("select cod, cant, producto, pv, total, fecha, hora, num_fac from ticket where num_fac = '".$numero."' and orden = '".$_SESSION["orden_actual_print"]."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]." and tipo = ".$_SESSION["tipoticket"]." group by cod");
   
     foreach ($a as $b) {
  
@@ -275,18 +275,18 @@ $a = $db->query("select cod, cant, producto, pv, total, fecha, hora, num_fac fro
     }    $a->close();
 
 
-if ($sx = $db->select("sum(stotal), sum(imp), sum(total)", "ticket", "WHERE num_fac = '".$numero."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]." and tipo = ".$_SESSION["tipoticket"]."")) { 
+if ($sx = $db->select("sum(stotal), sum(imp), sum(total)", "ticket", "WHERE num_fac = '".$numero."' and orden = '".$_SESSION["orden_actual_print"]."' and tx = ".$_SESSION["tx"]." and td = ".$_SESSION["td"]." and tipo = ".$_SESSION["tipoticket"]."")) { 
        $stotalx=$sx["sum(stotal)"];
        $impx=$sx["sum(imp)"];
        $totalx=$sx["sum(total)"];
     } unset($sx); 
  
 /// salto de linea
-$oi=315;
+$oi=2260;
 
 
 // valores en letras
-printer_draw_text($handle, Dinero::DineroEscrito($totalx), $col2, $oi);
+printer_draw_text($handle, Dinero::DineroEscrito($totalx), $col2-30, $oi+$n1);
 // echo wordwrap($cadena, 15, "<br>" ,FALSE);
 
 
@@ -300,11 +300,11 @@ $oi=$oi+$n1;
 // printer_draw_text($handle, Helpers::Format(Helpers::Impuesto(Helpers::STotal($totalx, $_SESSION['config_imp']), $_SESSION['config_imp'])), $col4, $oi);
 
 
-$oi=$oi+$n1+8;
+$oi=$oi+$n1;
 printer_draw_text($handle, Helpers::Format($totalx), $col4, $oi);
 
 
-$oi=$oi+$n1+$n1+25;
+$oi=$oi+$n1+$n1+$n1;
 printer_draw_text($handle, Helpers::Format($totalx), $col4, $oi);
 
 
